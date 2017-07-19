@@ -1,0 +1,26 @@
+{
+  "name": "db",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1"
+  },
+  "babel": {
+    "presets": [
+      "latest",
+      "stage-3"
+    ]
+  },
+  "scripts": {
+    "build": "yarn run clean && babel src --out-dir build --copy-files",
+    "clean": "rm -r build",
+    "createDb": "babel-node src/createDb.js"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "sequelize": "^4.3.2"
+  }
+}

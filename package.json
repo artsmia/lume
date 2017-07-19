@@ -1,0 +1,9 @@
+{
+  "name": "knight",
+  "version": "0.0.1",
+  "description": "the repo for a grant",
+  "main": "index.js",
+  "repository": "https://github.com/artsmia/knight.git",
+  "author": "Carl Peaslee <cpeaslee@gmail.com>",
+  "license": "MIT"
+}
