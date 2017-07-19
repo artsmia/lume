@@ -1,10 +1,10 @@
-##object
+##item
 - id
 - type
 - json
 
 
-##objectExtended
+##itemExtended
 - id
 - groupId
 - json
@@ -14,7 +14,7 @@
 - id
 - title
 - json
-- objectExtendedId
+- itemExtendedId
 - featureId
 - groupTypeId
 
@@ -22,7 +22,7 @@
 - id
 - title
 - groupJsonSchema
-- objectExtendedSchema
+- itemExtendedSchema
 
 
 ##feature
