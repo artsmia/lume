@@ -17,7 +17,13 @@ class ItemThumb extends Component {
     } = this.props
     return (
       <Link
-        href={`/main/${id}`}
+        href={{
+          query: {
+            itemId: id,
+            groupTitle: 'main'
+          }
+        }}
+        as={`/main/${id}`}
       >
         <Thumb
           src={`https://1.api.artsmia.org/${id}.jpg`}

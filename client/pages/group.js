@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import fetch from 'isomorphic-unfetch'
 import ItemList from '../ui/web/ItemList'
+import oldData from '../oldData'
 
 
 class Group extends Component {
@@ -8,17 +8,13 @@ class Group extends Component {
 
   static getInitialProps = async () => {
     try {
-      const response = await fetch('https://new.artsmia.org/crashpad/')
 
-      const data = await response.json()
-
-      const itemIds = Object.keys(data.objects)
+      const itemIds = Object.keys(oldData.objects)
       const items = itemIds.map((id)=>{
-        return data.objects[id]
+        return oldData.objects[id]
       })
 
       return {
-        data,
         items
       }
     } catch (ex) {

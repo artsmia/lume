@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import oldData from '../oldData'
 
 class Item extends Component {
 
@@ -8,11 +8,7 @@ class Item extends Component {
 
       const {itemId} = context.query
 
-      const response = await fetch('https://new.artsmia.org/crashpad/')
-
-      const data = await response.json()
-
-      const item = data.objects[itemId]
+      const item = oldData.objects[itemId]
 
       return {
         item

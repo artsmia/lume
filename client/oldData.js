@@ -1,4 +1,4 @@
-{
+const data = {
     "objects": {
         "97": {
             "id": "97",
@@ -28526,3 +28526,5 @@
         }
     }
 }
+
+export default data
