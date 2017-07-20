@@ -10,7 +10,7 @@ app.prepare().then(() => {
 
   server.get('/:groupTitle', (req, res) => {
     const actualPage = '/group'
-    const {groupTitle, itemId} = req.params
+    const {groupTitle} = req.params
     const queryParams = {
       groupTitle,
     }

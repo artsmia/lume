@@ -1,0 +1,14 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "react-app",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "plugins": [
+    "jsx-a11y"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/href-no-hash": "off"
+  }
+}

@@ -9,12 +9,9 @@ class ItemThumb extends Component {
 
   render() {
     const {
-      item,
-      item: {
-        id,
-        title
-      }
-    } = this.props
+      id,
+      title
+    } = this.props.item
     return (
       <Link
         href={{
