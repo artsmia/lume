@@ -9,19 +9,22 @@ class ItemThumb extends Component {
 
   render() {
     const {
-      id,
-      title
-    } = this.props.item
+      item: {
+        id,
+        title
+      },
+      groupTitle
+    } = this.props
     return (
       <Link
         href={{
           pathname: "/item",
           query: {
-            groupTitle: "main",
+            groupTitle,
             itemId: id
           }
         }}
-        as={`/main/${id}`}
+        as={`/${groupTitle}/${id}`}
       >
         <Thumb
           src={`https://1.api.artsmia.org/${id}.jpg`}

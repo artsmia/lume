@@ -5,8 +5,10 @@ import fetch from 'isomorphic-unfetch'
 class Group extends Component {
 
 
-  static getInitialProps = async () => {
+  static getInitialProps = async (context) => {
     try {
+
+      const {groupTitle} = context.query
 
       const response = await fetch('https://new.artsmia.org/crashpad/')
 
@@ -17,7 +19,8 @@ class Group extends Component {
         return data.objects[id]
       })
       return {
-        items
+        items,
+        groupTitle
       }
     } catch (ex) {
       console.error(ex)
@@ -25,11 +28,12 @@ class Group extends Component {
   }
 
   render() {
-    const {items} = this.props
+    const {items, groupTitle} = this.props
     return (
       <div>
         <ItemList
           items={items}
+          groupTitle={groupTitle}
         />
       </div>
     )
