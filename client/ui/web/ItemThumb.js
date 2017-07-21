@@ -15,9 +15,10 @@ class ItemThumb extends Component {
     return (
       <Link
         href={{
+          pathname: "/item",
           query: {
-            itemId: id,
-            groupTitle: 'main'
+            groupTitle: "main",
+            itemId: id
           }
         }}
         as={`/main/${id}`}

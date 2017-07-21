@@ -10,6 +10,8 @@
     "react-dom": "^15.6.1"
   },
   "scripts": {
-    "dev": "node server"
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "next start"
   }
 }
