@@ -13,7 +13,9 @@ export default () => (
       }}
       as={`/main`}
     >
-      main
+      <a>
+        main
+      </a>
     </Link>
   </div>
 )

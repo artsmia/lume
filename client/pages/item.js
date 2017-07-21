@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import fetch from 'isomorphic-unfetch'
+import Item from '../ui/web/Item'
 
-class Item extends Component {
+class ItemPage extends Component {
 
   static getInitialProps = async (context) => {
     try {
 
-      const {itemId} = context.query
+      const {itemId, groupTitle} = context.query
 
       const response = await fetch('https://new.artsmia.org/crashpad/')
 
@@ -15,7 +16,8 @@ class Item extends Component {
       const item = data.objects[itemId]
 
       return {
-        item
+        item,
+        groupTitle
       }
     } catch (ex) {
       console.error(ex)
@@ -23,13 +25,17 @@ class Item extends Component {
   }
 
   render() {
-    const {item} = this.props
+    const {
+      item,
+      groupTitle
+    } = this.props
     return (
-      <div>
-        <h2>{item.title}</h2>
-      </div>
+      <Item
+        item={item}
+        groupTitle={groupTitle}
+      />
     )
   }
 }
 
-export default Item
+export default ItemPage

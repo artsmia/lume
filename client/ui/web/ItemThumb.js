@@ -26,11 +26,13 @@ class ItemThumb extends Component {
         }}
         as={`/${groupTitle}/${id}`}
       >
-        <Thumb
-          src={`https://1.api.artsmia.org/${id}.jpg`}
-          title={title}
-          alt={title}
-        />
+        <a>
+          <Thumb
+            src={`https://1.api.artsmia.org/${id}.jpg`}
+            title={title}
+            alt={title}
+          />
+        </a>
       </Link>
     )
   }

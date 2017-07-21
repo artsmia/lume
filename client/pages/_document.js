@@ -9,7 +9,7 @@ export default class ClientDocument extends Document {
     return (
       <html lang="en">
         <Head>
-          <title>My page</title>
+          <title>Knight Client</title>
           {styleTags}
         </Head>
         <body>
