@@ -1,5 +1,5 @@
 export default () => (
   <div>
-    <p>group page</p>
+    <p>item editor</p>
   </div>
 )

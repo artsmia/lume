@@ -8,10 +8,11 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express()
 
-  server.get('/:groupTitle', (req, res) => {
+  server.get('/:groupId', (req, res) => {
     const actualPage = '/group'
-    const {groupTitle} = req.params
+    const {groupTitle, groupId} = req.params
     const queryParams = {
+      groupId,
       groupTitle,
     }
     app.render(req, res, actualPage, queryParams)

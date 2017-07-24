@@ -17,11 +17,12 @@ class ItemList extends Component {
 
   itemList = () => {
     const {items, groupTitle} = this.props
-    return items.map( (item) => {
+    const itemIds = Object.keys(items)
+    return itemIds.map( (id) => {
       return (
         <ItemThumb
-          item={item}
-          key={item.id}
+          item={items[id]}
+          key={id}
           groupTitle={groupTitle}
         />
       )

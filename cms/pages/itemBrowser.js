@@ -1,5 +1,7 @@
+
+
 export default () => (
   <div>
-    <p>group page</p>
+    <p>item browser</p>
   </div>
 )

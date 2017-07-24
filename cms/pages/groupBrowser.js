@@ -1,5 +1,10 @@
-export default () => (
-  <div>
-    <p>group page</p>
-  </div>
-)
+import React, {Component} from 'react'
+import GroupBrowser from '../ui/web/GroupBrowser'
+
+export default class GroupBrowserPage extends Component {
+  render() {
+    return (
+      <GroupBrowser/>
+    )
+  }
+}

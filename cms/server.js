@@ -8,6 +8,20 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express()
 
+  server.get('/groups', (req, res) => {
+    const actualPage = '/groupBrowser'
+    //const {} = req.params
+    const queryParams = {}
+    app.render(req, res, actualPage, queryParams)
+  })
+
+  server.get('/items', (req, res) => {
+    const actualPage = '/itemBrowser'
+    //const {} = req.params
+    const queryParams = {}
+    app.render(req, res, actualPage, queryParams)
+  })
+
   server.get('*', (req, res) => {
     return handle(req, res)
   })
