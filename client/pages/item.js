@@ -7,7 +7,7 @@ class ItemPage extends Component {
   static getInitialProps = async (context) => {
     try {
 
-      const {itemId, groupTitle, tab, stories} = context.query
+      const {itemId, groupTitle, tab} = context.query
 
       const response = await fetch('https://new.artsmia.org/crashpad/')
 
