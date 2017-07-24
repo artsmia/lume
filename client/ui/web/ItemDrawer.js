@@ -26,7 +26,6 @@ class ItemDrawer extends Component {
       },
       more
     } = this
-    console.log("item", item )
     return (
       <Column>
         <Link

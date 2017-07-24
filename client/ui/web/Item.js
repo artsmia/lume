@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import ItemDrawer from './ItemDrawer'
+import LeafletViewer from './LeafletViewer'
+
 
 class Item extends Component {
   render() {
@@ -20,9 +22,12 @@ class Item extends Component {
           {...props}
         />
         <ImgContainer>
-          <img
-            src={`https://1.api.artsmia.org/${id}.jpg`}
+          <LeafletViewer
+            item={item}
           />
+          {/* <img
+            src={`https://1.api.artsmia.org/${id}.jpg`}
+          /> */}
         </ImgContainer>
       </Container>
     )
@@ -42,7 +47,6 @@ const ImgContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 70%;
-  background-color: lightgrey;
 `
 
 export default Item
