@@ -22,10 +22,9 @@ class LeafletViewer extends Component {
       const {
         height,
         width,
-        name
+        name,
+        tileSize
       } = json
-
-      console.log(json)
 
       this.map = L.map(this.refs.map, {
         crs: L.CRS.Simple,
@@ -38,7 +37,7 @@ class LeafletViewer extends Component {
         id,
         width,
         height,
-        tileSize: 512
+        tileSize: tileSize || 256
       })
 
 

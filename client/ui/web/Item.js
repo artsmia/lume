@@ -13,7 +13,8 @@ class Item extends Component {
         item,
         item: {
           id
-        }
+        },
+        tab
       }
     } = this
     return (
@@ -24,6 +25,7 @@ class Item extends Component {
         <ImgContainer>
           <LeafletViewer
             item={item}
+            tab={tab}
           />
           {/* <img
             src={`https://1.api.artsmia.org/${id}.jpg`}
@@ -47,6 +49,7 @@ const ImgContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 70%;
+  height: 100%;
 `
 
 export default Item

@@ -17,12 +17,13 @@ app.prepare().then(() => {
     app.render(req, res, actualPage, queryParams)
   })
 
-  server.get('/:groupTitle/:itemId', (req, res) => {
+  server.get('/:groupTitle/:itemId/:tab', (req, res) => {
     const actualPage = '/item'
-    const {groupTitle, itemId} = req.params
+    const {groupTitle, itemId, tab} = req.params
     const queryParams = {
       groupTitle,
-      itemId
+      itemId,
+      tab
     }
 
     app.render(req, res, actualPage, queryParams)

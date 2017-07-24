@@ -21,10 +21,11 @@ class ItemThumb extends Component {
           pathname: "/item",
           query: {
             groupTitle,
-            itemId: id
+            itemId: id,
+            tab: "about"
           }
         }}
-        as={`/${groupTitle}/${id}`}
+        as={`/${groupTitle}/${id}/about`}
       >
         <a>
           <Thumb

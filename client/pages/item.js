@@ -7,7 +7,7 @@ class ItemPage extends Component {
   static getInitialProps = async (context) => {
     try {
 
-      const {itemId, groupTitle} = context.query
+      const {itemId, groupTitle, tab, stories} = context.query
 
       const response = await fetch('https://new.artsmia.org/crashpad/')
 
@@ -17,7 +17,9 @@ class ItemPage extends Component {
 
       return {
         item,
-        groupTitle
+        groupTitle,
+        tab,
+        data
       }
     } catch (ex) {
       console.error(ex)
@@ -27,12 +29,16 @@ class ItemPage extends Component {
   render() {
     const {
       item,
-      groupTitle
+      groupTitle,
+      tab,
+      data
     } = this.props
     return (
       <Item
         item={item}
         groupTitle={groupTitle}
+        tab={tab}
+        data={data}
       />
     )
   }

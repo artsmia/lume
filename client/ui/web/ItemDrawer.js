@@ -1,13 +1,10 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import Tab from './Tab'
 
 
-class ItemDrawer extends Component {
-
-  state = {
-    selectedTab: "about"
-  }
+export default class ItemDrawer extends Component {
 
   render() {
     const {
@@ -16,13 +13,10 @@ class ItemDrawer extends Component {
         groupTitle,
         item,
         item: {
-          id,
+          id: itemId,
           title,
-        }
-      },
-      selectTab,
-      state: {
-        selectedTab
+        },
+        tab
       },
       more
     } = this
@@ -46,19 +40,43 @@ class ItemDrawer extends Component {
 
         <Tabs>
           <Tab
-            onClick={()=>selectTab("about")}
+            href={{
+              pathname: "/item",
+              query: {
+                itemId,
+                groupTitle,
+                tab: "about"
+              }
+            }}
+            as={`/${groupTitle}/${itemId}/about`}
           >
             About
           </Tab>
           <Tab
-            onClick={()=>selectTab("details")}
+            href={{
+              pathname: "/item",
+              query: {
+                itemId,
+                groupTitle,
+                tab: "details"
+              }
+            }}
+            as={`/${groupTitle}/${itemId}/details`}
           >
             Details
           </Tab>
           <Tab
-            onClick={()=>selectTab("more")}
+            href={{
+              pathname: "/item",
+              query: {
+                itemId,
+                groupTitle,
+                tab: "stories"
+              }
+            }}
+            as={`/${groupTitle}/${itemId}/stories`}
           >
-            More
+            Stories
           </Tab>
 
         </Tabs>
@@ -67,33 +85,55 @@ class ItemDrawer extends Component {
     )
   }
 
-  selectTab = (selectedTab) => {
-    this.setState({selectedTab})
-  }
-
   more = () => {
     const {
-      state: {
-        selectedTab
-      },
       props: {
         item: {
-          description
+          description,
+          relatedStories,
+          views
+        },
+        tab,
+        data: {
+          stories
         }
       }
     } = this
-    switch (selectedTab) {
+    switch (tab) {
       case "details": {
+        let annotations = []
+        views.forEach( (view) => {
+          view.annotations.forEach( (annotation, index) => {
+            annotations.push(
+              <div>
+                <h4
+                  key={index}
+                >
+                  {index}: {annotation.title}
+                </h4>
+              </div>
+            )
+          })
+        })
         return (
           <div>
-            selectedTab: {selectedTab}
+            {annotations}
           </div>
         )
       }
-      case "more": {
+      case "stories": {
         return (
           <div>
-            selectedTab: {selectedTab}
+            tab: {tab}
+
+            {relatedStories.map( (storyId) => {
+              const story = stories[storyId]
+              return (
+                <h3>
+                  {story.title}
+                </h3>
+              )
+            })}
           </div>
         )
       }
@@ -127,11 +167,3 @@ const Tabs = styled.div`
   justify-content: space-between;
   align-items: stretch;
 `
-
-const Tab = styled.button`
-  width: 100%;
-  height: 50px;
-  background-color: ${({selected}) => {(selected) ? 'grey' : ''}}
-`
-
-export default ItemDrawer
