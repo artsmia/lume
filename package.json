@@ -5,5 +5,11 @@
   "main": "index.js",
   "repository": "https://github.com/artsmia/knight.git",
   "author": "Carl Peaslee <cpeaslee@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^20.0.4"
+  },
+  "scripts": {
+    "test": "jest"
+  }
 }
