@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
-import styled from 'styled-components'
 import Link from 'next/link'
 import Tab from './Tab'
-
+import {Column, Tabs} from './styled'
 
 export default class ItemDrawer extends Component {
 
@@ -18,7 +17,7 @@ export default class ItemDrawer extends Component {
         },
         tab
       },
-      more
+      More
     } = this
     return (
       <Column>
@@ -80,12 +79,12 @@ export default class ItemDrawer extends Component {
           </Tab>
 
         </Tabs>
-        {more()}
+        <More/>
       </Column>
     )
   }
 
-  more = () => {
+  More = () => {
     const {
       props: {
         item: {
@@ -96,7 +95,8 @@ export default class ItemDrawer extends Component {
         tab,
         data: {
           stories
-        }
+        },
+        groupTitle
       }
     } = this
     switch (tab) {
@@ -129,9 +129,23 @@ export default class ItemDrawer extends Component {
             {relatedStories.map( (storyId) => {
               const story = stories[storyId]
               return (
-                <h3>
-                  {story.title}
-                </h3>
+                <Link
+                  href={{
+                    pathname: "/story",
+                    query: {
+                      storyId,
+                      groupTitle
+                    }
+                  }}
+                  as={`/${groupTitle}/story/${storyId}`}
+                  key={storyId}
+                >
+                  <a>
+                    <h3>
+                      {story.title}
+                    </h3>
+                  </a>
+                </Link>
               )
             })}
           </div>
@@ -151,19 +165,3 @@ export default class ItemDrawer extends Component {
   }
 
 }
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 30%;
-  min-width: 300px;
-  padding: 20px;
-`
-
-const Tabs = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: stretch;
-`

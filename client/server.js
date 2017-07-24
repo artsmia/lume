@@ -17,6 +17,18 @@ app.prepare().then(() => {
     app.render(req, res, actualPage, queryParams)
   })
 
+  server.get('/:groupTitle/story/:storyId', (req, res) => {
+    const actualPage = '/story'
+    const {groupTitle, storyId} = req.params
+    const queryParams = {
+      groupTitle,
+      storyId
+    }
+
+    app.render(req, res, actualPage, queryParams)
+  })
+
+
   server.get('/:groupTitle/:itemId/:tab', (req, res) => {
     const actualPage = '/item'
     const {groupTitle, itemId, tab} = req.params
