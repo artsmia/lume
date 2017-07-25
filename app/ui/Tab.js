@@ -27,5 +27,5 @@ export default Tab
 const TabA = styled.a`
   width: 100%;
   height: 50px;
-  background-color: ${({selected}) => {(selected) ? 'grey' : ''}}
+  background-color: ${({selected}) => (selected) ? 'grey' : ''}
 `

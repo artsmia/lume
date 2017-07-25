@@ -15,8 +15,8 @@ export default class IndexPage extends Component {
     } = this.state
     return (
       <div>
-        {
-          Object.keys(groups).map( (id) => {
+        <div>
+          {Object.keys(groups).map( (id) => {
             let {title} = groups[id]
             return (
               <Link
@@ -35,8 +35,32 @@ export default class IndexPage extends Component {
                 </h4>
               </Link>
             )
-          })
-        }
+          })}
+        </div>
+        <div>
+          <h1>CMS</h1>
+
+          <Link
+            href={{
+              pathname: "/groupBrowser",
+            }}
+            as={`/groups`}
+          >
+            <a>
+              Groups
+            </a>
+          </Link>
+          <Link
+            href={{
+              pathname: "/itemBrowser",
+            }}
+            as={`/items`}
+          >
+            <a>
+              Items
+            </a>
+          </Link>
+        </div>
       </div>
     )
   }

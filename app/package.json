@@ -10,15 +10,17 @@
     "next": "^2.4.7",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2",
     "styled-components": "^2.1.1",
     "uuid": "^3.1.0"
   },
   "scripts": {
-    "dev": "node server.js",
-    "lint": "eslint pages ui server.js",
+    "dev": "node server",
+    "lint": "eslint pages ui server utils",
     "test": "jest",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

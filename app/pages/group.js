@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
-import ItemList from '../ui/web/ItemList'
-import fetch from 'isomorphic-unfetch'
+import ItemList from '../ui/ItemList'
 import {getGroups} from '../utils'
 
-class Group extends Component {
+export default class Group extends Component {
 
   state = {
     items: {}
@@ -64,6 +63,7 @@ class Group extends Component {
     try {
       const {groupId, groupTitle} = this.props
       const groups = await getGroups()
+      console.log("groupId", groupId )
       if (groupId) {
         const {items} = groups[groupId]
         this.setState({items})
@@ -81,7 +81,3 @@ class Group extends Component {
     }
   }
 }
-
-
-
-export default Group

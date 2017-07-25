@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {getGroups, createGroup} from '../../utils'
+import {getGroups, createGroup} from '../utils'
 
 export default class GroupBrowser extends Component {
 
