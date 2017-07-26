@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "jest": "^20.0.4"
+  },
+  "scripts": {
+    "build": "yarn run clean && babel src --out-dir build --copy-files",
+    "start": "babel-node src",
+    "clean": "rm -r build",
+    "test": "jest"
+  },
+  "babel": {
+    "presets": [
+      "latest"
+    ]
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "pg": "^7.0.2",
+    "sequelize": "^4.4.2"
+  }
+}
