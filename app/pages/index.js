@@ -1,21 +1,14 @@
 import Link from 'next/link'
 import React, {Component} from 'react'
-import {getGroups} from '../utils'
+// import connectToLocalStorage from '../redux'
 
-
-export default class IndexPage extends Component {
-
-  state = {
-    groups: {}
-  }
+class IndexPage extends Component {
 
   render() {
-    const {
-      groups
-    } = this.state
     return (
       <div>
-        <div>
+
+        {/* <div>
           {Object.keys(groups).map( (id) => {
             let {title} = groups[id]
             return (
@@ -60,26 +53,12 @@ export default class IndexPage extends Component {
               Items
             </a>
           </Link>
-        </div>
+        </div> */}
       </div>
     )
   }
-
-  componentDidMount(){
-    try {
-      this.getGroups()
-    } catch (e) {
-      console.error("localStorage and json parsing failed in groupbrowser", e)
-    }
-  }
-
-  getGroups = async () => {
-    try {
-      const groups = await getGroups()
-      this.setState({groups})
-    } catch (e) {
-      console.error("there was an error", e)
-
-    }
-  }
 }
+
+// IndexPage = connectToLocalStorage(IndexPage)
+
+export default IndexPage
