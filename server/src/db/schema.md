@@ -1,3 +1,8 @@
+## user
+- email
+- password
+
+
 ## item
 - id
 - type

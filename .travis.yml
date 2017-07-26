@@ -3,3 +3,4 @@ node_js:
   - "node"
 notifications:
     slack: artsmia:XuPlydSpfoILZdCPIbOYQq59
+    email: false
