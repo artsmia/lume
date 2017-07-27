@@ -1,6 +1,15 @@
 ## user
+- id
 - email
 - password
+- groupIds
+- itemIds
+- organizationIds
+
+## organization
+- id
+- name
+- memberIds
 
 
 ## item
@@ -19,15 +28,16 @@
 - id
 - title
 - json
-- itemExtendedId
-- featureId
+- itemExtendedIds
+- featureIds
 - groupTypeId
+
 
 ## groupType
 - id
 - title
-- groupJsonSchema
-- itemExtendedSchema
+- jsonGroupSchema
+- jsonItemExtendedSchema
 
 
 ## feature
@@ -41,5 +51,5 @@
 ## featureType
 - id
 - title
-- featureSchema
+- jsonFeatureSchema
 - featureId
