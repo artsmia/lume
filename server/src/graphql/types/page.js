@@ -1,12 +1,12 @@
 import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLList
+  GraphQLInt
 } from 'graphql'
-import itemType from './item'
+import bookType from './book'
 
-const group = new GraphQLObjectType({
-  name: "group",
+const page = new GraphQLObjectType({
+  name: "page",
   fields: ()=> ({
     id: {
       type: GraphQLString
@@ -17,10 +17,13 @@ const group = new GraphQLObjectType({
     text: {
       type: GraphQLString
     },
-    items: {
-      type: new GraphQLList(itemType)
+    index: {
+      type: GraphQLInt
+    },
+    book: {
+      type: bookType
     },
   })
 })
 
-export default group
+export default page

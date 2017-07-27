@@ -10,8 +10,8 @@ import user from './user'
 item.belongsToMany(group, { as: 'groups', through: 'item_group', foreignKey: 'itemId' })
 group.belongsToMany(item, { as: 'items', through: 'item_group', foreignKey: 'groupId' })
 
-item.belongsToMany(book, { as: 'books', through: 'item_book', foreignKey: 'itemId' })
-book.belongsToMany(item, { as: 'items', through: 'item_book', foreignKey: 'bookId' })
+item.belongsToMany(book, { as: 'relatedBooks', through: 'item_book', foreignKey: 'itemId' })
+book.belongsToMany(item, { as: 'relatedItems', through: 'item_book', foreignKey: 'bookId' })
 
 item.hasOne(detail, {as: "detail"})
 detail.belongsTo(item, {as: "item"})

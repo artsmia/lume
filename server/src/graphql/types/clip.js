@@ -2,23 +2,27 @@ import {
   GraphQLObjectType,
   GraphQLString
 } from 'graphql'
+import detailType from './detail'
 
-const user = new GraphQLObjectType({
-  name: "user",
+const clip = new GraphQLObjectType({
+  name: "clip",
   fields: ()=> ({
     id: {
       type: GraphQLString
     },
-    email: {
+    title: {
       type: GraphQLString
     },
-    password: {
+    text: {
       type: GraphQLString
     },
-    token: {
+    coordinates: {
       type: GraphQLString
+    },
+    detail: {
+      type: detailType
     },
   })
 })
 
-export default user
+export default clip
