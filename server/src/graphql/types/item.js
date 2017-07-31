@@ -30,7 +30,7 @@ const item = new GraphQLObjectType({
     accessionNumber: {
       type: GraphQLString
     },
-    galleryLocation: {
+    currentLocation: {
       type: GraphQLString
     },
     creditLine: {

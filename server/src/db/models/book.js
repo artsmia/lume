@@ -7,6 +7,7 @@ const book = db.define('book', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
+  miaId:Sequelize.STRING,
   title: Sequelize.STRING,
 }, {
   freezeTableName: true

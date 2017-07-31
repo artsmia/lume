@@ -26,7 +26,7 @@ const editOrCreateItem = {
     accessionNumber: {
       type: GraphQLString
     },
-    galleryLocation: {
+    currentLocation: {
       type: GraphQLString
     },
     creditLine: {
@@ -51,7 +51,7 @@ const editOrCreateItem = {
         artist,
         dated,
         accessionNumber,
-        galleryLocation,
+        currentLocation,
         creditLine,
         text,
         type,
@@ -67,7 +67,7 @@ const editOrCreateItem = {
           artist,
           dated,
           accessionNumber,
-          galleryLocation,
+          currentLocation,
           creditLine,
           text,
           type,
@@ -84,7 +84,7 @@ const editOrCreateItem = {
           artist,
           dated,
           accessionNumber,
-          galleryLocation,
+          currentLocation,
           creditLine,
           text,
           type,

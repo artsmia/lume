@@ -18,11 +18,13 @@
   "dependencies": {
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
+    "chalk": "^2.0.1",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "express-graphql": "^0.6.6",
     "graphql": "^0.10.5",
+    "isomorphic-unfetch": "^2.0.0",
     "jsonwebtoken": "^7.4.1",
     "pg": "^7.0.2",
     "sequelize": "^4.4.2"

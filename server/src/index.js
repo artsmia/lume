@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import db from './db'
+import {initalizeDb} from './db'
 import graphqlHTTP from 'express-graphql'
 import schema from './graphql'
 
@@ -27,3 +27,5 @@ server.use('/', graphqlHTTP((req) =>{
 server.listen(server.get('port'), ()=>{
   console.log(`Server is running at port ${server.get('port')}`)
 })
+
+initalizeDb()

@@ -4,6 +4,7 @@ import {
 import userType from '../types/user'
 import userModel from '../../db/models/user'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 
 const createUser = {
@@ -37,8 +38,13 @@ const createUser = {
       })
 
 
+      const token = await jwt.sign({
+        exp: Math.floor(Date.now() / 1000) + 172800  //two days
+      }, process.env.jwtSecret)
+
       return {
-        email: user.email
+        email: user.email,
+        token
       }
     } catch (ex) {
       console.log("createUser error", ex)
