@@ -1,12 +1,14 @@
 import chalk from 'chalk'
 import db from './connect'
-import models from './models'
+import {createAssociations} from './associations'
 import populate from './populate'
 
 
 async function createTables() {
   try {
-    const synced = await db.sync({force: true})
+    await createAssociations()
+
+    await db.sync({force: true})
 
     console.log(chalk.cyan("DB Synced"))
 
@@ -18,7 +20,7 @@ async function createTables() {
 
 async function populateData(){
   try {
-    const populated = await populate()
+    await populate()
     console.log(chalk.cyan("DB populated"))
 
   } catch (ex) {
@@ -30,6 +32,7 @@ export async function initalizeDb(){
   try {
     await createTables()
     await populateData()
+
     console.log(chalk.cyan("DB initialized"))
 
   } catch (ex) {

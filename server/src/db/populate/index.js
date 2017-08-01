@@ -2,13 +2,7 @@ import chalk from 'chalk'
 import fetch from 'isomorphic-unfetch'
 import itemModel from '../models/item'
 import bookModel from '../models/book'
-
-
-function logEx (msg) {
-  console.log(chalk.red("Error Message: \n"))
-  console.log(msg)
-}
-
+import pageModel from '../models/page'
 
 export default async function() {
   try {
@@ -21,10 +15,69 @@ export default async function() {
 
     await createBooks(json)
 
+    await createPages(json)
+
   } catch (ex) {
-    logEx("big function exception", ex)
+    console.error("big function exception", ex)
   }
 }
+
+
+
+
+async function createPages(json){
+  try {
+    const oldBooks = json.stories
+
+    const oldBookKeys = Object.keys(oldBooks)
+
+    const pages = await Promise.all(
+      oldBookKeys.map( miaId => pageSet(oldBooks[miaId]) )
+    )
+
+
+  } catch (ex) {
+    console.error("createPages exception", ex)
+  }
+}
+
+
+async function pageSet(oldBook){
+  try {
+
+    const newPages = oldBook.pages.map( (page, index) => {
+      const {
+        type,
+        text,
+        video
+      } = page
+      return {
+        type,
+        text,
+        index,
+        video
+      }
+    })
+
+    const book = await bookModel.findOne({
+      where: {
+        miaId: oldBook.id
+      }
+    })
+
+    const pages = await pageModel.bulkCreate(newPages)
+
+
+    const createdPages = await book.addPages(pages)
+
+
+  } catch (ex) {
+    console.error("pageSet exception", ex)
+
+  }
+}
+
+
 
 
 async function createBooks(json){
@@ -43,7 +96,7 @@ async function createBooks(json){
     await bookModel.bulkCreate(bookData)
 
   } catch (ex) {
-    logEx("createBooks exception", ex)
+    console.error("createBooks exception", ex)
   }
 }
 
@@ -67,7 +120,7 @@ async function createItems(json){
 
 
   } catch (ex) {
-
+    console.error("creatItems error", ex)
   }
 }
 

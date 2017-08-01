@@ -7,9 +7,15 @@ const page = db.define('page', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
-  title: Sequelize.STRING,
-  text: Sequelize.STRING,
-  index: Sequelize.INTEGER,
+  text: Sequelize.TEXT,
+  pageIndex: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  type: {
+    type: Sequelize.STRING,
+  },
+  video: Sequelize.STRING,
 }, {
   freezeTableName: true
 })
