@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import fetch from 'isomorphic-unfetch'
+import fetch from 'isomorphic-fetch'
 import styled from 'styled-components'
-const L = (typeof window !== "undefined") ? require('../../utils/museumTileLayer') : false
+const L = (typeof window !== "undefined") ? require('../utils/museumTileLayer') : false
 // const L = (typeof window !== "undefined") ? require('leaflet') : false
 
 class LeafletViewer extends Component {
