@@ -1,11 +1,13 @@
-import book from './book'
-import clip from './clip'
-import detail from './detail'
-import group from './group'
-import image from './image'
-import item from './item'
-import page from './page'
-import user from './user'
+import {
+  book,
+  clip,
+  detail,
+  group,
+  image,
+  item,
+  page,
+  user
+} from './models'
 
 export async function createAssociations() {
   try {
@@ -16,11 +18,9 @@ export async function createAssociations() {
     item.belongsToMany(book, { as: 'relatedBooks', through: 'item_book', foreignKey: 'itemId' })
     book.belongsToMany(item, { as: 'relatedItems', through: 'item_book', foreignKey: 'bookId' })
 
-    item.hasOne(detail, {as: "detail"})
-    detail.belongsTo(item, {as: "item"})
+    item.hasOne(detail)
 
-    detail.hasMany(clip, {as: "clips"})
-    clip.belongsTo(detail, {as: "detail"})
+    detail.hasMany(clip)
 
     book.hasMany(page, {as: "pages"})
     page.belongsTo(book, {as: "book"})

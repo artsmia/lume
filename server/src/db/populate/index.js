@@ -3,6 +3,9 @@ import fetch from 'isomorphic-unfetch'
 import itemModel from '../models/item'
 import bookModel from '../models/book'
 import pageModel from '../models/page'
+import detailModel from '../models/detail'
+import clipModel from '../models/clip'
+
 
 export default async function() {
   try {
@@ -17,12 +20,114 @@ export default async function() {
 
     await createPages(json)
 
+    await associateBooksAndItems(json)
+
+    await createDetails(json)
+
   } catch (ex) {
     console.error("big function exception", ex)
   }
 }
 
 
+async function createDetailAndClips(oldItem) {
+  try {
+    const item = await itemModel.findOne({
+      where: {
+        miaId: oldItem.id
+      }
+    })
+
+    const detail = await item.createDetail()
+
+
+    const newClips = oldItem.views[0].annotations.map( (clip, index) => {
+      const {
+        title,
+        description
+      } = clip
+      return {
+        title,
+        description,
+        index
+      }
+    })
+
+    const clips = await clipModel.bulkCreate(newClips)
+
+    await detail.addClips(clips)
+
+
+  } catch (ex) {
+    console.error("createDetailAndClips exception", ex)
+
+  }
+}
+
+async function createDetails(json) {
+  try {
+    const oldItems = json.objects
+
+    const oldItemKeys = Object.keys(oldItems)
+
+    await Promise.all(
+      oldItemKeys.map( itemId => createDetailAndClips(oldItems[itemId]) )
+    )
+
+
+  } catch (ex) {
+    console.error("createDetails exception", ex)
+
+  }
+}
+
+
+
+async function associateBooksAndItems(json) {
+  try {
+    const oldItems = json.objects
+
+    const oldItemKeys = Object.keys(oldItems)
+
+    await Promise.all(
+      oldItemKeys.map( itemId => bookAndItem(oldItems[itemId]) )
+    )
+
+
+  } catch (ex) {
+    console.error("associateBooksAndItems exception", ex)
+
+  }
+}
+
+async function bookAndItem(oldItem) {
+  try {
+    const item = await itemModel.findOne({
+      where: {
+        miaId: oldItem.id
+      }
+    })
+
+    const {
+      relatedStories: relatedBookMiaIds
+    } = oldItem
+
+    const relatedBooks = await Promise.all(
+      relatedBookMiaIds.map( miaId => bookModel.findOne({
+        where: {
+          miaId: miaId.toString()
+        }
+      }))
+    )
+    if (relatedBooks.length > 0) {
+      await item.addRelatedBooks(relatedBooks)
+    }
+
+  } catch (ex) {
+    console.error("bookAndItem exception", ex)
+
+  }
+}
 
 
 async function createPages(json){

@@ -9,6 +9,11 @@ const clip = db.define('clip', {
   },
   coordinates: Sequelize.STRING,
   title: Sequelize.STRING,
+  description: Sequelize.TEXT,
+  index: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+  }
 }, {
   freezeTableName: true
 })

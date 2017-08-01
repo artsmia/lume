@@ -8,9 +8,9 @@ const page = db.define('page', {
     primaryKey: true
   },
   text: Sequelize.TEXT,
-  pageIndex: {
+  index: {
     type: Sequelize.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
   },
   type: {
     type: Sequelize.STRING,
