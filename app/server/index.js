@@ -17,11 +17,12 @@ app.prepare().then(() => {
   //   app.render(req, res, actualPage, queryParams)
   // })
   //
-  server.get('/:itemId', (req, res) => {
+  server.get('/:itemId/:tab', (req, res) => {
     const actualPage = '/live/item'
-    const {itemId} = req.params
+    const {itemId, tab} = req.params
     const queryParams = {
-      itemId
+      itemId,
+      tab
     }
     app.render(req, res, actualPage, queryParams)
   })

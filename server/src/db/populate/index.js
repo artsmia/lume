@@ -38,7 +38,9 @@ async function createDetailAndClips(oldItem) {
       }
     })
 
-    const detail = await item.createDetail()
+    const detail = await detailModel.build()
+
+    await detail.setItem(item)
 
 
     const newClips = oldItem.views[0].annotations.map( (clip, index) => {

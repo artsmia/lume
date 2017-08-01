@@ -15,8 +15,6 @@ export default async function(query){
 
     const {data} = await response.json()
 
-    console.log(data)
-
     return data
   } catch (ex) {
     console.log("apiFetch ex", ex)

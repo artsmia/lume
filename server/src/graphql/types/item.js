@@ -7,7 +7,7 @@ import itemEnumType from './enums/itemType'
 import imageType from './image'
 import detailType from './detail'
 import bookType from './book'
-
+import detailModel from '../../db/models/detail'
 
 const item = new GraphQLObjectType({
   name: "item",
@@ -52,7 +52,20 @@ const item = new GraphQLObjectType({
       type: new GraphQLList(item)
     },
     detail: {
-      type: detailType
+      type: detailType,
+      resolve: async (item) => {
+        try {
+          const detail = await detailModel.findOne({
+            where: {
+              itemId: item.id
+            },
+          })
+
+          return detail
+        } catch (ex) {
+
+        }
+      }
     },
     relatedBooks: {
       type: new GraphQLList(bookType)

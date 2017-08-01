@@ -38,4 +38,11 @@ server.listen(server.get('port'), ()=>{
   console.log(`Server is running at port ${server.get('port')}`)
 })
 
-initalizeDb()
+
+const {
+  initDb
+} = process.env
+
+if (initDb === "true") {
+  initalizeDb()
+}

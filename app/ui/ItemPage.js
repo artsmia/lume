@@ -7,14 +7,6 @@ export default class Item extends Component {
   render() {
     const {
       props,
-      props: {
-        groupTitle,
-        item,
-        item: {
-          id
-        },
-        tab
-      }
     } = this
     return (
       <Container>
@@ -22,10 +14,10 @@ export default class Item extends Component {
           {...props}
         />
         <ImgContainer>
-          <LeafletViewer
-            item={item}
-            tab={tab}
-          />
+          {/* <LeafletViewer
+            {...props}
+
+          /> */}
         </ImgContainer>
       </Container>
     )

@@ -3,10 +3,10 @@ import db from './connect'
 import {createAssociations} from './associations'
 import populate from './populate'
 
+createAssociations()
 
 async function createTables() {
   try {
-    await createAssociations()
 
     await db.sync({force: true})
 
@@ -30,8 +30,9 @@ async function populateData(){
 
 export async function initalizeDb(){
   try {
-    //await createTables()
-    //await populateData()
+
+    await createTables()
+    await populateData()
 
     console.log(chalk.cyan("DB initialized"))
 

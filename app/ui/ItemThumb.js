@@ -20,10 +20,11 @@ export default class ItemThumb extends Component {
         href={{
           pathname: "/live/item",
           query: {
-            itemId: id
+            itemId: id,
+            tab: "about"
           }
         }}
-        as={`/${id}`}
+        as={`/${id}/about`}
       >
         <Thumb
           src={`https://1.api.artsmia.org/${miaId}.jpg`}

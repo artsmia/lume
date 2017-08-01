@@ -6,18 +6,27 @@ export default class LifeItem extends Component {
 
   static getInitialProps = async (context) => {
     try {
-      const {itemId} = context.query
+      const {itemId, tab} = context.query
       const {item} = await apiFetch(`{
         item (id: "${itemId}") {
           id
           miaId
           title
+          text
+          detail {
+            id
+            clips {
+              id
+              title
+            }
+          }
         }
       }`)
 
 
       return {
-        item
+        item,
+        tab
       }
     } catch (ex) {
       console.error(ex)
@@ -26,15 +35,11 @@ export default class LifeItem extends Component {
 
   render() {
     const {
-      // props,
-      props: {
-        item
-      },
-
+      props
     } = this
     return (
       <ItemPage
-        item={item}
+        {...props}
       />
     )
   }

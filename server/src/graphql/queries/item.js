@@ -3,6 +3,7 @@ import {
 } from 'graphql'
 import itemType from '../types/item'
 import itemModel from '../../db/models/item'
+import detailModel from '../../db/models/detail'
 
 const item = {
   type: itemType,
@@ -14,10 +15,17 @@ const item = {
   resolve: async (src, {id}) => {
     try {
 
-      const result = await itemModel.findById(id)
-      return result
+      const itemInst = await itemModel.findById(id)
+
+
+      //const detail = await itemInst.getDetail()
+
+
+      return {
+        ...itemInst.dataValues,
+      }
     } catch (ex) {
-      console.log("Item error")
+      console.log("Item error", ex)
       return "Item error"
     }
   }

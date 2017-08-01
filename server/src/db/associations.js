@@ -18,7 +18,7 @@ export async function createAssociations() {
     item.belongsToMany(book, { as: 'relatedBooks', through: 'item_book', foreignKey: 'itemId' })
     book.belongsToMany(item, { as: 'relatedItems', through: 'item_book', foreignKey: 'bookId' })
 
-    item.hasOne(detail)
+    detail.belongsTo(item, {as: "item"})
 
     detail.hasMany(clip)
 

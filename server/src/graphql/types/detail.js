@@ -1,8 +1,13 @@
 import {
   GraphQLObjectType,
-  GraphQLString
+  GraphQLString,
+  GraphQLList
 } from 'graphql'
 import itemType from './item'
+import clipType from './clip'
+import itemModel from '../../db/models/item'
+import clipModel from '../../db/models/clip'
+
 
 const detail = new GraphQLObjectType({
   name: "detail",
@@ -14,7 +19,30 @@ const detail = new GraphQLObjectType({
       type: GraphQLString
     },
     item: {
-      type: itemType
+      type: itemType,
+      resolve: async ({itemId}) => {
+        try {
+          const item = await itemModel.findById(itemId)
+          return item
+        } catch (ex) {
+
+        }
+      }
+    },
+    clips: {
+      type: new GraphQLList(clipType),
+      resolve: async (detail) => {
+        try {
+          const clips = await clipModel.findAll({
+            where: {
+              detailId: detail.id
+            }
+          })
+          return clips
+        } catch (ex) {
+
+        }
+      }
     }
   })
 })
