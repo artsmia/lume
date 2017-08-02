@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import ItemDrawer from './ItemDrawer'
-import LeafletViewer from './LeafletViewer'
+// import LeafletViewer from './LeafletViewer'
 import styled from 'styled-components'
+import Link from './Link'
+import Leaflet from './Leaflet'
 
 export default class Item extends Component {
   render() {
@@ -10,15 +12,21 @@ export default class Item extends Component {
     } = this
     return (
       <Container>
+        <Link
+          href={{
+            pathname: "/",
+          }}
+          as={"/"}
+        >
+          Home
+        </Link>
         <ItemDrawer
           {...props}
         />
-        <ImgContainer>
-          {/* <LeafletViewer
-            {...props}
+        <Leaflet
+          {...props}
+        />
 
-          /> */}
-        </ImgContainer>
       </Container>
     )
   }
@@ -31,12 +39,4 @@ export const Container = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
-`
-
-export const ImgContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 70%;
-  height: 100%;
 `

@@ -4,7 +4,7 @@ import Link from './Link'
 
 export default class ItemDrawer extends Component {
 
-  tabs = ["about", "details", "stories"]
+  tabs = ["about", "details", "more"]
 
   render() {
     const {
@@ -18,9 +18,9 @@ export default class ItemDrawer extends Component {
       },
       tabLinks,
       about,
-      details
+      details,
+      more
     } = this
-    console.log(props)
     return (
       <Column>
         <h2>{title}</h2>
@@ -29,6 +29,7 @@ export default class ItemDrawer extends Component {
         </Tabs>
         {about}
         {details}
+        {more}
       </Column>
     )
   }
@@ -95,7 +96,6 @@ export default class ItemDrawer extends Component {
           }
         },
         item: {
-          text,
           detail: {
             clips
           }
@@ -106,12 +106,53 @@ export default class ItemDrawer extends Component {
     if (tab === "details") {
       return (
         <div>
-          {clips.map( ({id, title}) => (
-            <h3
+          {clips.map( ({id, title, description}) => (
+            <div
               key={id}
             >
-              {title}
-            </h3>
+              <h3>
+                {title}
+              </h3>
+              <div>
+                {description}
+              </div>
+            </div>
+
+          ))}
+        </div>
+      )
+    }
+
+    return null
+  }
+
+
+  get more() {
+    const {
+      props: {
+        url: {
+          query: {
+            tab
+          }
+        },
+        item: {
+          relatedBooks
+        }
+      },
+    } = this
+
+    if (tab === "more") {
+      return (
+        <div>
+          {relatedBooks.map( ({id, title}) => (
+            <div
+              key={id}
+            >
+              <h3>
+                {title}
+              </h3>
+            </div>
+
           ))}
         </div>
       )

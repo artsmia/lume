@@ -25,7 +25,7 @@ const detail = new GraphQLObjectType({
           const item = await itemModel.findById(itemId)
           return item
         } catch (ex) {
-
+          console.log(ex)
         }
       }
     },
@@ -40,6 +40,7 @@ const detail = new GraphQLObjectType({
           })
           return clips
         } catch (ex) {
+          console.log(ex)
 
         }
       }

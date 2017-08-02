@@ -13,7 +13,7 @@ const clip = new GraphQLObjectType({
     title: {
       type: GraphQLString
     },
-    text: {
+    description: {
       type: GraphQLString
     },
     coordinates: {

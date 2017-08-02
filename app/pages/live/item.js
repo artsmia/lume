@@ -18,7 +18,12 @@ export default class LifeItem extends Component {
             clips {
               id
               title
+              description
             }
+          }
+          relatedBooks {
+            id
+            title
           }
         }
       }`)

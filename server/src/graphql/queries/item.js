@@ -17,12 +17,8 @@ const item = {
 
       const itemInst = await itemModel.findById(id)
 
-
-      //const detail = await itemInst.getDetail()
-
-
       return {
-        ...itemInst.dataValues,
+        ...itemInst.dataValues
       }
     } catch (ex) {
       console.log("Item error", ex)

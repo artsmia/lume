@@ -8,6 +8,9 @@ import imageType from './image'
 import detailType from './detail'
 import bookType from './book'
 import detailModel from '../../db/models/detail'
+import bookModel from '../../db/models/book'
+import itemModel from '../../db/models/item'
+
 
 const item = new GraphQLObjectType({
   name: "item",
@@ -53,22 +56,35 @@ const item = new GraphQLObjectType({
     },
     detail: {
       type: detailType,
-      resolve: async (item) => {
+      resolve: async (obj) => {
         try {
           const detail = await detailModel.findOne({
             where: {
-              itemId: item.id
+              itemId: obj.id
             },
           })
 
           return detail
         } catch (ex) {
+          console.log("detail ex", ex)
 
         }
       }
     },
     relatedBooks: {
-      type: new GraphQLList(bookType)
+      type: new GraphQLList(bookType),
+      resolve: async (item) => {
+        try {
+
+          const itemInst = await itemModel.findById(item.id)
+
+          const relatedBooks = await itemInst.getRelatedBooks()
+
+          return relatedBooks
+        } catch (ex) {
+          console.log("relatedBooks ex", ex)
+        }
+      }
     },
   })
 })

@@ -4,6 +4,8 @@ import {
   GraphQLList
 } from 'graphql'
 import itemType from './item'
+import groupModel from '../../db/models/group'
+
 
 const group = new GraphQLObjectType({
   name: "group",
@@ -18,7 +20,19 @@ const group = new GraphQLObjectType({
       type: GraphQLString
     },
     items: {
-      type: new GraphQLList(itemType)
+      type: new GraphQLList(itemType),
+      resolve: async (group) => {
+        try {
+
+          const groupInst = await groupModel.findById(group.id)
+
+          const items = await groupInst.getItems()
+
+          return items
+        } catch (ex) {
+          console.log(ex)
+        }
+      }
     },
   })
 })

@@ -4,6 +4,7 @@ import {
   GraphQLInt
 } from 'graphql'
 import bookType from './book'
+import bookModel from '../../db/models/book'
 
 const page = new GraphQLObjectType({
   name: "page",
@@ -21,7 +22,14 @@ const page = new GraphQLObjectType({
       type: GraphQLInt
     },
     book: {
-      type: bookType
+      type: bookType,
+      resolve: async ({bookId}) => {
+        try {
+          return await bookModel.findById(bookId)
+        } catch (ex) {
+          console.log(ex)
+        }
+      }
     },
   })
 })
