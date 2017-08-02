@@ -32,7 +32,7 @@ export default class Leaflet extends Component {
 
   componentDidMount(){
     this.setLeafDimensions()
-    this.createLeaflet()
+    this.museumTiler()
   }
 
 
@@ -48,31 +48,35 @@ export default class Leaflet extends Component {
 
   }
 
-  createLeaflet = async () => {
+  museumTiler = async () => {
     try {
       const {
         miaId: id
       } = this.props.item
-
       const response = await fetch(`https://tiles.dx.artsmia.org/${id}.json`)
-      const {tileSize, height, width} = await response.json()
+      const json = await response.json()
+      console.log(json)
+      const {tileSize, height, width} = json
+      var L = require('../utils/museumTileLayer')
 
-      this.map = L.map(this.refs.leaf)
-
+      this.map = L.map(this.refs.leaf, {
+        crs: L.CRS.Simple,
+        zoomControl: false
+      })
       this.map.setView([width / 2, height / 2], 0)
 
-
-      this.tileLayer = L.tileLayer(`https://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png`, {
+      this.tiles = L.museumTileLayer(`https://{s}.tiles.dx.artsmia.org/{id}/{z}/{x}/{y}.png`, {
         id,
-        tileSize: tileSize || 256
+        width,
+        height,
+        tileSize: tileSize || 256,
+        minZoom: 1
       })
-
-      this.tileLayer.addTo(this.map)
-
-
-
+      this.tiles.addTo(this.map)
     } catch (ex) {
-      console.log(ex)
+      console.error(ex)
     }
+
   }
+
 }
