@@ -33,7 +33,6 @@ export default class Leaflet extends Component {
   componentDidMount(){
     this.setLeafDimensions()
     this.createLeaflet()
-
   }
 
 
@@ -69,6 +68,9 @@ export default class Leaflet extends Component {
       })
 
       this.tileLayer.addTo(this.map)
+
+
+
     } catch (ex) {
       console.log(ex)
     }

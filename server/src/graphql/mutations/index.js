@@ -4,6 +4,7 @@ import {
 import createUser from './createUser'
 import loginUser from './loginUser'
 import editOrCreateItem from './editOrCreateItem'
+import editOrCreateGroup from './editOrCreateGroup'
 
 
 const mutation = new GraphQLObjectType({
@@ -11,7 +12,8 @@ const mutation = new GraphQLObjectType({
   fields: {
     createUser,
     loginUser,
-    editOrCreateItem
+    editOrCreateItem,
+    editOrCreateGroup
   }
 })
 

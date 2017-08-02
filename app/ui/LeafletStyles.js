@@ -2,9 +2,7 @@ import styled from 'styled-components'
 
 export default styled.div`
   width: 100%;
-
 /* required styles */
-
 .leaflet-pane,
 .leaflet-tile,
 .leaflet-marker-icon,
@@ -53,7 +51,6 @@ export default styled.div`
 .leaflet-container img.leaflet-image-layer {
   max-width: none !important;
   }
-
 .leaflet-container.leaflet-touch-zoom {
   -ms-touch-action: pan-x pan-y;
   touch-action: pan-x pan-y;
@@ -89,19 +86,15 @@ export default styled.div`
 .leaflet-overlay-pane svg {
   -moz-user-select: none;
   }
-
 .leaflet-pane         { z-index: 400; }
-
 .leaflet-tile-pane    { z-index: 200; }
 .leaflet-overlay-pane { z-index: 400; }
 .leaflet-shadow-pane  { z-index: 500; }
 .leaflet-marker-pane  { z-index: 600; }
 .leaflet-tooltip-pane   { z-index: 650; }
 .leaflet-popup-pane   { z-index: 700; }
-
 .leaflet-map-pane canvas { z-index: 100; }
 .leaflet-map-pane svg    { z-index: 200; }
-
 .leaflet-vml-shape {
   width: 1px;
   height: 1px;
@@ -111,10 +104,7 @@ export default styled.div`
   display: inline-block;
   position: absolute;
   }
-
-
 /* control positioning */
-
 .leaflet-control {
   position: relative;
   z-index: 800;
@@ -158,10 +148,7 @@ export default styled.div`
 .leaflet-right .leaflet-control {
   margin-right: 10px;
   }
-
-
 /* zoom and fade animations */
-
 .leaflet-fade-anim .leaflet-tile {
   will-change: opacity;
   }
@@ -196,14 +183,10 @@ export default styled.div`
        -o-transition: none;
           transition: none;
   }
-
 .leaflet-zoom-anim .leaflet-zoom-hide {
   visibility: hidden;
   }
-
-
 /* cursors */
-
 .leaflet-interactive {
   cursor: pointer;
   }
@@ -226,7 +209,6 @@ export default styled.div`
   cursor: -webkit-grabbing;
   cursor:    -moz-grabbing;
   }
-
 /* marker & overlays interactivity */
 .leaflet-marker-icon,
 .leaflet-marker-shadow,
@@ -235,16 +217,13 @@ export default styled.div`
 .leaflet-tile-container {
   pointer-events: none;
   }
-
 .leaflet-marker-icon.leaflet-interactive,
 .leaflet-image-layer.leaflet-interactive,
 .leaflet-pane > svg path.leaflet-interactive {
   pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
   pointer-events: auto;
   }
-
 /* visual tweaks */
-
 .leaflet-container {
   background: #ddd;
   outline: 0;
@@ -259,16 +238,11 @@ export default styled.div`
   border: 2px dotted #38f;
   background: rgba(255,255,255,0.5);
   }
-
-
 /* general typography */
 .leaflet-container {
   font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
   }
-
-
 /* general toolbar styles */
-
 .leaflet-bar {
   box-shadow: 0 1px 5px rgba(0,0,0,0.65);
   border-radius: 4px;
@@ -308,7 +282,6 @@ export default styled.div`
   background-color: #f4f4f4;
   color: #bbb;
   }
-
 .leaflet-touch .leaflet-bar a {
   width: 30px;
   height: 30px;
@@ -322,22 +295,16 @@ export default styled.div`
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   }
-
 /* zoom control */
-
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
   font: bold 18px 'Lucida Console', Monaco, monospace;
   text-indent: 1px;
   }
-
 .leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
   font-size: 22px;
   }
-
-
 /* layers control */
-
 .leaflet-control-layers {
   box-shadow: 0 1px 5px rgba(0,0,0,0.4);
   background: #fff;
@@ -386,15 +353,11 @@ export default styled.div`
   border-top: 1px solid #ddd;
   margin: 5px -10px 5px -6px;
   }
-
 /* Default icon URLs */
 .leaflet-default-icon-path {
   background-image: url(images/marker-icon.png);
   }
-
-
 /* attribution and scale controls */
-
 .leaflet-container .leaflet-control-attribution {
   background: #fff;
   background: rgba(255, 255, 255, 0.7);
@@ -431,7 +394,6 @@ export default styled.div`
   overflow: hidden;
   -moz-box-sizing: border-box;
        box-sizing: border-box;
-
   background: #fff;
   background: rgba(255, 255, 255, 0.5);
   }
@@ -443,7 +405,6 @@ export default styled.div`
 .leaflet-control-scale-line:not(:first-child):not(:last-child) {
   border-bottom: 2px solid #777;
   }
-
 .leaflet-touch .leaflet-control-attribution,
 .leaflet-touch .leaflet-control-layers,
 .leaflet-touch .leaflet-bar {
@@ -454,10 +415,7 @@ export default styled.div`
   border: 2px solid rgba(0,0,0,0.2);
   background-clip: padding-box;
   }
-
-
 /* popup */
-
 .leaflet-popup {
   position: absolute;
   text-align: center;
@@ -488,9 +446,7 @@ export default styled.div`
   width: 17px;
   height: 17px;
   padding: 1px;
-
   margin: -10px auto 0;
-
   -webkit-transform: rotate(45deg);
      -moz-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
@@ -526,37 +482,29 @@ export default styled.div`
   border-bottom: 1px solid #ddd;
   border-top: 1px solid #ddd;
   }
-
 .leaflet-oldie .leaflet-popup-content-wrapper {
   zoom: 1;
   }
 .leaflet-oldie .leaflet-popup-tip {
   width: 24px;
   margin: 0 auto;
-
   -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
   filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
   }
 .leaflet-oldie .leaflet-popup-tip-container {
   margin-top: -1px;
   }
-
 .leaflet-oldie .leaflet-control-zoom,
 .leaflet-oldie .leaflet-control-layers,
 .leaflet-oldie .leaflet-popup-content-wrapper,
 .leaflet-oldie .leaflet-popup-tip {
   border: 1px solid #999;
   }
-
-
 /* div icon */
-
 .leaflet-div-icon {
   background: #fff;
   border: 1px solid #666;
   }
-
-
 /* Tooltip */
 /* Base styles for the element that has a tooltip */
 .leaflet-tooltip {
@@ -588,9 +536,7 @@ export default styled.div`
   background: transparent;
   content: "";
   }
-
 /* Directions */
-
 .leaflet-tooltip-bottom {
   margin-top: 6px;
 }
