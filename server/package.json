@@ -20,7 +20,8 @@
     "dev-db": "initDb=true babel-node src",
     "start": "NODE_ENV=production node build",
     "clean": "rm -rf build",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "now && now alias"
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
@@ -35,5 +36,8 @@
     "jsonwebtoken": "^7.4.1",
     "pg": "^7.0.2",
     "sequelize": "^4.4.2"
+  },
+  "now": {
+    "alias": "api.knight.u100.io"
   }
 }

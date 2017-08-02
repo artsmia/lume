@@ -1,25 +1,16 @@
 import React, {Component} from 'react'
-import ItemDrawer from './ItemDrawer'
-// import LeafletViewer from './LeafletViewer'
 import styled from 'styled-components'
 import Link from './Link'
+import ItemDrawer from './ItemDrawer'
 import Leaflet from './Leaflet'
 
-export default class Item extends Component {
+export default class BookPage extends Component {
   render() {
     const {
       props,
     } = this
     return (
       <Container>
-        <Link
-          href={{
-            pathname: "/",
-          }}
-          as={"/"}
-        >
-          Home
-        </Link>
         <ItemDrawer
           {...props}
         />

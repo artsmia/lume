@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import apiFetch from '../../utils/apiFetch'
 import ItemPage from '../../ui/ItemPage'
 
-export default class LifeItem extends Component {
+export default class LiveItem extends Component {
 
   static getInitialProps = async (context) => {
     try {

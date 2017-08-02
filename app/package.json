@@ -24,7 +24,8 @@
     "lint": "eslint pages ui server utils",
     "test": "jest",
     "build": "next build",
-    "start": "NODE_ENV=production node server"
+    "start": "NODE_ENV=production node server",
+    "deploy": "now && now alias"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
@@ -41,8 +42,6 @@
     "react-test-renderer": "^15.5.4"
   },
   "now": {
-    "name": "knight-app",
-    "alias": "knight.u100.io",
-    "public": true
+    "alias": "knight.u100.io"
   }
 }

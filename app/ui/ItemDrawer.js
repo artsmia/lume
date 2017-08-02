@@ -23,6 +23,14 @@ export default class ItemDrawer extends Component {
     } = this
     return (
       <Column>
+        <Link
+          href={{
+            pathname: "/",
+          }}
+          as={"/"}
+        >
+          Home
+        </Link>
         <h2>{title}</h2>
         <Tabs>
           {tabLinks}
@@ -113,9 +121,10 @@ export default class ItemDrawer extends Component {
               <h3>
                 {title}
               </h3>
-              <div>
-                {description}
-              </div>
+              <div
+                dangerouslySetInnerHTML={{__html: description}}
+              />
+
             </div>
 
           ))}
@@ -148,9 +157,20 @@ export default class ItemDrawer extends Component {
             <div
               key={id}
             >
-              <h3>
-                {title}
-              </h3>
+              <Link
+                href={{
+                  pathname: '/live/book',
+                  query: {
+                    bookId: id,
+                    pageIndex: 0
+                  }
+                }}
+                as={`/book/${id}/0`}
+              >
+                <h3>
+                  {title}
+                </h3>
+              </Link>
             </div>
 
           ))}

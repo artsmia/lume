@@ -27,6 +27,16 @@ app.prepare().then(() => {
     app.render(req, res, actualPage, queryParams)
   })
 
+  server.get('/book/:bookId/:pageIndex', (req, res) => {
+    const actualPage = '/live/book'
+    const {bookId, pageIndex} = req.params
+    const queryParams = {
+      bookId,
+      pageIndex
+    }
+    app.render(req, res, actualPage, queryParams)
+  })
+
   // server.get('/:groupTitle', (req, res) => {
   //   const actualPage = '/group'
   //   const {groupTitle, groupId} = req.params

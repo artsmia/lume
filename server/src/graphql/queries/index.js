@@ -4,6 +4,7 @@ import {
 import allUsers from './allUsers'
 import allItems from './allItems'
 import item from './item'
+import book from './book'
 
 
 const query = new GraphQLObjectType({
@@ -11,7 +12,8 @@ const query = new GraphQLObjectType({
   fields: {
     allUsers,
     allItems,
-    item
+    item,
+    book
   }
 })
 
