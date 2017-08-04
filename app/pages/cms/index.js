@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import apiFetch from '../../utils/apiFetch'
-import CmsPage from '../../ui/CmsPage'
+import MiaUI from '../../mia-ui'
+import CmsTemplate from '../../mia-ui/cms/Template'
+
 
 export default class CmsIndex extends Component {
 
@@ -28,9 +30,11 @@ export default class CmsIndex extends Component {
       props
     } = this
     return (
-      <CmsPage
-        {...props}
-      />
+      <MiaUI>
+        <CmsTemplate>
+          <h2>Hello</h2>
+        </CmsTemplate>
+      </MiaUI>
     )
   }
 }

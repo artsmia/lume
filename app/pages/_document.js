@@ -14,7 +14,7 @@ export default class ClientDocument extends Document {
         </Head>
         <body>
           <div className='root'>
-            {main}
+              {main}
           </div>
           <NextScript />
         </body>

@@ -15,6 +15,16 @@ app.prepare().then(() => {
     app.render(req, res, actualPage)
   })
 
+  server.get('/cms/items', (req, res) => {
+    const actualPage = '/cms/browse/items'
+    app.render(req, res, actualPage)
+  })
+
+  server.get('/cms/groups', (req, res) => {
+    const actualPage = '/cms/browse/groups'
+    app.render(req, res, actualPage)
+  })
+
   server.get('/:itemId/:tab', (req, res) => {
     const actualPage = '/live/item'
     const {itemId, tab} = req.params

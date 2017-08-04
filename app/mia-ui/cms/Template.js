@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import SideMenu from './SideMenu'
-import MenuItem from './MenuItem'
+import {SideMenu, MenuItem} from '../menus'
 
 
 export default class Template extends Component {
@@ -41,9 +40,6 @@ export default class Template extends Component {
       </Container>
     )
   }
-
-
-
 }
 
 
@@ -56,6 +52,7 @@ const Container = styled.div`
 const Content = styled.div`
   grid-column: left / 2;
   grid-row: head / 2;
+  padding-left: 150px;
 `
 
 
