@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import MiaUI from '../../../mia-ui'
-import CmsTemplate from '../../../mia-ui/cms/Template'
-import {Table, Row, Cell, Header, TBody} from '../../../mia-ui/tables'
+import MiaUI from '../../../ui'
+import CmsTemplate, {Top, Bottom} from '../../../ui/cms/Template'
+import {Table, Row, Cell, Header, TBody} from '../../../ui/tables'
 import apiFetch from '../../../utils/apiFetch'
 
 
@@ -35,33 +35,39 @@ export default class extends Component {
     return (
       <MiaUI>
         <CmsTemplate>
-          <Table>
-            <TBody>
-              <Row
-                key="header"
-              >
-                <Header
-                  width={"30%"}
-                >
-                  Title
-                </Header>
-                <Header>
-                  Id
-                </Header>
-              </Row>
-              {items.map( ({id, title}) => (
+          <Top>
+            <h1>Hello</h1>
+          </Top>
+          <Bottom>
+            <Table>
+              <TBody>
                 <Row
-                  key={id}
+                  key="header"
                 >
-                  <Cell
+                  <Header
                     width={"30%"}
-                  >{title}</Cell>
-                  <Cell>{id}</Cell>
+                  >
+                    Title
+                  </Header>
+                  <Header>
+                    Id
+                  </Header>
                 </Row>
-              ))}
-            </TBody>
+                {items.map( ({id, title}) => (
+                  <Row
+                    key={id}
+                  >
+                    <Cell
+                      width={"30%"}
+                    >{title}</Cell>
+                    <Cell>{id}</Cell>
+                  </Row>
+                ))}
+              </TBody>
 
-          </Table>
+            </Table>
+          </Bottom>
+
 
         </CmsTemplate>
       </MiaUI>

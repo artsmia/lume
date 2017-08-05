@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import MiaUI from '../../../mia-ui'
-import CmsTemplate from '../../../mia-ui/cms/Template'
-import {Table, Row, Cell} from '../../../mia-ui/tables'
+import MiaUI from '../../../ui'
+import CmsTemplate from '../../../ui/cms/Template'
+import {Table, Row, Cell} from '../../../ui/tables'
 import apiFetch from '../../../utils/apiFetch'
 
 

@@ -4,7 +4,7 @@ import Link from './Link'
 import ItemDrawer from './ItemDrawer'
 import Leaflet from './Leaflet'
 
-export default class BookPage extends Component {
+export default class ItemPage extends Component {
   render() {
     const {
       props,
@@ -27,7 +27,6 @@ export default class BookPage extends Component {
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  position: absolute;
-  height: 100%;
+  height: 100vh;
   width: 100%;
 `

@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import apiFetch from '../../utils/apiFetch'
-import BookPage from '../../ui/BookPage'
+import BookPage from '../../components/BookPage'
 
-export default class LiveBook extends Component {
+export default class extends Component {
 
   static getInitialProps = async (context) => {
     try {

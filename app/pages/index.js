@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import apiFetch from '../utils/apiFetch'
-import ItemThumbList from '../ui/ItemThumbList'
+import ItemThumbList from '../components/ItemThumbList'
 
 
-export default class IndexPage extends Component {
+export default class extends Component {
 
   static getInitialProps = async (context) => {
     try {

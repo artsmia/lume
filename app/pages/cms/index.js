@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import apiFetch from '../../utils/apiFetch'
-import MiaUI from '../../mia-ui'
-import CmsTemplate from '../../mia-ui/cms/Template'
+import MiaUI from '../../ui'
+import CmsTemplate from '../../ui/cms/Template'
 
 
-export default class CmsIndex extends Component {
+export default class extends Component {
 
   static getInitialProps = async (context) => {
     try {

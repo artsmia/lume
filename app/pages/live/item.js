@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import apiFetch from '../../utils/apiFetch'
-import ItemPage from '../../ui/ItemPage'
+import ItemPage from '../../components/ItemPage'
 
-export default class LiveItem extends Component {
+export default class extends Component {
 
   static getInitialProps = async (context) => {
     try {

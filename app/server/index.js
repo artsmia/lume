@@ -25,6 +25,16 @@ app.prepare().then(() => {
     app.render(req, res, actualPage)
   })
 
+  server.get('/cms/item/:itemId', (req, res) => {
+    const actualPage = '/cms/edit/item'
+    const {itemId} = req.params
+    const queryParams = {
+      itemId,
+    }
+    app.render(req, res, actualPage, queryParams)
+  })
+
+
   server.get('/:itemId/:tab', (req, res) => {
     const actualPage = '/live/item'
     const {itemId, tab} = req.params

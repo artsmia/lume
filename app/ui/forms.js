@@ -4,6 +4,9 @@ export const Form = styled.form`
   margin: 0em 1.5em;
 `
 
+export const Label = styled.label`
+`
+
 export const Input = styled.input`
   padding: .65em;
   border-radius: 2px;

@@ -40,6 +40,8 @@ export const Header = styled.th`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  justify-content: flex-start;
 `
 export const TBody = styled.tbody`
   width: 100%;
