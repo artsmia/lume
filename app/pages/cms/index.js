@@ -8,17 +8,10 @@ export default class extends Component {
 
   static getInitialProps = async (context) => {
     try {
-      // const {} = context.query
-      const {allItems: items} = await apiFetch(`{
-        allItems {
-          id
-          title
-        }
-      }`)
-
+      console.log(context.query)
 
       return {
-        items,
+
       }
     } catch (ex) {
       console.error(ex)

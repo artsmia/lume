@@ -8,6 +8,10 @@ const organization = db.define('organization', {
     primaryKey: true
   },
   name: Sequelize.STRING,
+  subdomain: {
+    type: Sequelize.STRING,
+    unique: true
+  }
 }, {
   freezeTableName: true
 })

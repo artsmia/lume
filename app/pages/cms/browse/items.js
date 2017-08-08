@@ -3,7 +3,7 @@ import MiaUI from '../../../ui'
 import CmsTemplate, {Top, Bottom} from '../../../ui/cms/Template'
 import {Table, Row, Cell, Header, TBody} from '../../../ui/tables'
 import apiFetch from '../../../utils/apiFetch'
-
+import {Link} from '../../../ui/links'
 
 export default class extends Component {
 
@@ -24,6 +24,10 @@ export default class extends Component {
     } catch (ex) {
       console.error(ex)
     }
+  }
+
+  state = {
+    closed: false
   }
 
   render() {
@@ -59,7 +63,19 @@ export default class extends Component {
                   >
                     <Cell
                       width={"30%"}
-                    >{title}</Cell>
+                    >
+                      <Link
+                        href={{
+                          pathname: '/cms/edit/item',
+                          query: {
+                            itemId: id
+                          }
+                        }}
+                        as={`/cms/item/${id}`}
+                      >
+                        {title}
+                      </Link>
+                    </Cell>
                     <Cell>{id}</Cell>
                   </Row>
                 ))}

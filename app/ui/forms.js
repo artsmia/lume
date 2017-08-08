@@ -5,6 +5,7 @@ export const Form = styled.form`
 `
 
 export const Label = styled.label`
+  font-family: ${({theme}) => theme.fonts.regular}
 `
 
 export const Input = styled.input`
