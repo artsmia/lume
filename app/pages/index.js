@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {createLock} from '../auth/client'
+import {createLock} from '../auth'
 
 export default class extends Component {
 

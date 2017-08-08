@@ -1,12 +1,19 @@
 import fetch from 'isomorphic-fetch'
 import {apiUrl} from '../config'
 
-export default async function(query){
+
+export default async function(query, IDToken){
   try {
+
+    const authHeaders = (IDToken) ? {
+      "Authorization": `Bearer ${IDToken}`
+    } : {}
+
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
+        ...authHeaders
       },
       body: JSON.stringify({
         query: query

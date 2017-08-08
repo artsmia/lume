@@ -12,7 +12,10 @@ app.prepare().then(() => {
   const server = express()
 
 
-  server.use(cookieParser())
+  server.use(
+    cookieParser(),
+    authMiddleware
+  )
 
   server.get('/auth', (req, res) => {
     const actualPage = '/auth'
@@ -20,24 +23,30 @@ app.prepare().then(() => {
   })
 
 
-  server.get('/cms', (req, res) => {
-    jwt.verify(req.cookies.idToken, process.env.auth0Secret, {
-      algorithms: ["HS256"]
-    }, (err, decoded) => {
-      if (decoded) {
-        const actualPage = '/cms'
-        const queryParams = {
-          decoded
-        }
-        app.render(req, res, actualPage, queryParams)
+  server.get('/:orgSub/cms', (req, res) => {
+    verify(req).then(decoded => {
+      const actualPage = '/cms'
+      const queryParams = {
+        decoded
       }
+      app.render(req, res, actualPage, queryParams)
+    }).catch((ex) => {
+      console.loc(ex)
+      const actualPage = '/'
+      app.render(req, res, actualPage)
     })
 
   })
 
   server.get('/cms/items', (req, res) => {
+    const queryParams = {
+      userId: req.userId,
+      IDToken: req.IDToken
+    }
     const actualPage = '/cms/browse/items'
-    app.render(req, res, actualPage)
+
+    app.render(req, res, actualPage, queryParams)
+
   })
 
   server.get('/cms/groups', (req, res) => {
@@ -89,3 +98,37 @@ app.prepare().then(() => {
   console.error(ex.stack)
   process.exit(1)
 })
+
+async function authMiddleware(req,res,next) {
+  try {
+    const {
+      IDToken
+    } = req.cookies
+    if (
+      IDToken
+    ) {
+      const decoded = await verify(IDToken)
+      req.IDToken = IDToken
+      req.userId = decoded.sub
+      next()
+    }
+  } catch (ex) {
+    next()
+  }
+
+}
+
+function verify(IDToken) {
+  return new Promise( (resolve, reject) => {
+    jwt.verify(
+      IDToken,
+      process.env.auth0Secret, {
+      algorithms: ["HS256"]
+    },(err, decoded) => {
+      if (err) {
+        reject(err)
+      }
+      resolve(decoded)
+    })
+  })
+}

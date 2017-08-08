@@ -4,18 +4,19 @@ import CmsTemplate, {Top, Bottom} from '../../../ui/cms/Template'
 import {Table, Row, Cell, Header, TBody} from '../../../ui/tables'
 import apiFetch from '../../../utils/apiFetch'
 import {Link} from '../../../ui/links'
+import {getIDToken} from '../../../auth'
 
 export default class extends Component {
 
   static getInitialProps = async (context) => {
     try {
-      // const {} = context.query
+      const IDToken = await getIDToken(context)
       const {allItems: items} = await apiFetch(`{
         allItems {
           id
           title
         }
-      }`)
+      }`, IDToken)
 
 
       return {

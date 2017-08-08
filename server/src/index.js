@@ -9,6 +9,7 @@ import schema from './graphql'
 import chalk from 'chalk'
 import imageRoute from './images'
 import multer from 'multer'
+import {authMiddleware} from './auth'
 
 const upload = multer()
 
@@ -21,11 +22,13 @@ server.set('port', port)
 server.use(
   cors(),
   bodyParser.json(),
+  authMiddleware,
 )
 
 server.use("/image", upload.single("file") , imageRoute)
 
 server.use('/', graphqlHTTP((req) =>{
+  console.log(req.userId)
   return {
     schema: schema,
     graphiql: true,

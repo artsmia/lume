@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {hashToCookies} from '../auth/client'
+import {hashToCookies} from '../auth'
 
 export default class extends Component {
 

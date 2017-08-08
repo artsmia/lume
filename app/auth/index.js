@@ -15,10 +15,28 @@ export function createLock () {
 export async function hashToCookies() {
   try {
     const hash = window.location.hash
-    const idToken = hash.split('id_token=')[1].split('&')[0]
-    Cookies.set('idToken', idToken)
+    const IDToken = hash.split('id_token=')[1].split('&')[0]
+    Cookies.set('IDToken', IDToken)
   } catch (ex) {
     console.log(ex)
   }
 
+}
+
+
+export async function getIDToken(context){
+  try {
+    if (
+      process.browser &&
+      Cookies.get('IDToken')
+    ) {
+      return Cookies.get('IDToken')
+    } else if (
+      context.query.IDToken
+    ) {
+      return context.query.IDToken
+    }
+  } catch (ex) {
+    console.log(ex)
+  }
 }
