@@ -5,8 +5,8 @@ import group from './group'
 import image from './image'
 import item from './item'
 import page from './page'
-import user from './user'
-
+import organization from './organization'
+import userOrganization from './userOrganization'
 
 export {
   book,
@@ -16,5 +16,6 @@ export {
   image,
   item,
   page,
-  user
+  organization,
+  userOrganization
 }

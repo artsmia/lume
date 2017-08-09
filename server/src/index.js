@@ -28,7 +28,6 @@ server.use(
 server.use("/image", upload.single("file") , imageRoute)
 
 server.use('/', graphqlHTTP((req) =>{
-  console.log(req.userId)
   return {
     schema: schema,
     graphiql: true,

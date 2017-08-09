@@ -1,19 +1,18 @@
 import {
   GraphQLObjectType,
 } from 'graphql'
-import createUser from './createUser'
-import loginUser from './loginUser'
 import editOrCreateItem from './editOrCreateItem'
 import editOrCreateGroup from './editOrCreateGroup'
-
+import editOrCreateOrganization from './editOrCreateOrganization'
+import addUserToOrganization from './addUserToOrganization'
 
 const mutation = new GraphQLObjectType({
   name: "RootMutation",
   fields: {
-    createUser,
-    loginUser,
     editOrCreateItem,
-    editOrCreateGroup
+    editOrCreateGroup,
+    editOrCreateOrganization,
+    addUserToOrganization
   }
 })
 

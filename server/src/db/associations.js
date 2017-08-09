@@ -6,9 +6,10 @@ import {
   image,
   item,
   page,
-  user,
-  organization
+  organization,
 } from './models'
+
+
 
 export async function createAssociations() {
   try {
@@ -34,9 +35,7 @@ export async function createAssociations() {
 
     item.belongsToMany(item, {as: "relatedItems", through: "item_item"})
 
-    // user.belongsToMany(organization, {as: 'organizations', through: 'user_organization', foreignKey: 'userId'})
-    //
-    // organization.belongsToMany(user, {as: 'users', through: 'user_organization', foreignKey: 'organizationId'})
+
 
 
   } catch (ex) {

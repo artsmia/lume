@@ -23,66 +23,66 @@ app.prepare().then(() => {
   })
 
 
-  server.get('/:orgSub/cms', (req, res) => {
-    verify(req).then(decoded => {
-      const actualPage = '/cms'
-      const queryParams = {
-        decoded
-      }
-      app.render(req, res, actualPage, queryParams)
-    }).catch((ex) => {
-      console.loc(ex)
-      const actualPage = '/'
-      app.render(req, res, actualPage)
-    })
-
-  })
-
-  server.get('/cms/items', (req, res) => {
-    const queryParams = {
-      userId: req.userId,
-      IDToken: req.IDToken
-    }
-    const actualPage = '/cms/browse/items'
-
-    app.render(req, res, actualPage, queryParams)
-
-  })
-
-  server.get('/cms/groups', (req, res) => {
-    const actualPage = '/cms/browse/groups'
-    app.render(req, res, actualPage)
-  })
-
-  server.get('/cms/item/:itemId', (req, res) => {
-    const actualPage = '/cms/edit/item'
-    const {itemId} = req.params
-    const queryParams = {
-      itemId,
-    }
-    app.render(req, res, actualPage, queryParams)
-  })
-
-
-  server.get('/:itemId/:tab', (req, res) => {
-    const actualPage = '/live/item'
-    const {itemId, tab} = req.params
-    const queryParams = {
-      itemId,
-      tab
-    }
-    app.render(req, res, actualPage, queryParams)
-  })
-
-  server.get('/book/:bookId/:pageIndex', (req, res) => {
-    const actualPage = '/live/book'
-    const {bookId, pageIndex} = req.params
-    const queryParams = {
-      bookId,
-      pageIndex
-    }
-    app.render(req, res, actualPage, queryParams)
-  })
+  // server.get('/:orgSub/cms', (req, res) => {
+  //   verify(req).then(decoded => {
+  //     const actualPage = '/cms'
+  //     const queryParams = {
+  //       decoded
+  //     }
+  //     app.render(req, res, actualPage, queryParams)
+  //   }).catch((ex) => {
+  //     console.loc(ex)
+  //     const actualPage = '/'
+  //     app.render(req, res, actualPage)
+  //   })
+  //
+  // })
+  //
+  // server.get('/cms/items', (req, res) => {
+  //   const queryParams = {
+  //     userId: req.userId,
+  //     IDToken: req.IDToken
+  //   }
+  //   const actualPage = '/cms/browse/items'
+  //
+  //   app.render(req, res, actualPage, queryParams)
+  //
+  // })
+  //
+  // server.get('/cms/groups', (req, res) => {
+  //   const actualPage = '/cms/browse/groups'
+  //   app.render(req, res, actualPage)
+  // })
+  //
+  // server.get('/cms/item/:itemId', (req, res) => {
+  //   const actualPage = '/cms/edit/item'
+  //   const {itemId} = req.params
+  //   const queryParams = {
+  //     itemId,
+  //   }
+  //   app.render(req, res, actualPage, queryParams)
+  // })
+  //
+  //
+  // server.get('/:itemId/:tab', (req, res) => {
+  //   const actualPage = '/live/item'
+  //   const {itemId, tab} = req.params
+  //   const queryParams = {
+  //     itemId,
+  //     tab
+  //   }
+  //   app.render(req, res, actualPage, queryParams)
+  // })
+  //
+  // server.get('/book/:bookId/:pageIndex', (req, res) => {
+  //   const actualPage = '/live/book'
+  //   const {bookId, pageIndex} = req.params
+  //   const queryParams = {
+  //     bookId,
+  //     pageIndex
+  //   }
+  //   app.render(req, res, actualPage, queryParams)
+  // })
 
 
   server.get('*', (req, res) => {

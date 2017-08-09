@@ -17,6 +17,7 @@ export async function hashToCookies() {
     const hash = window.location.hash
     const IDToken = hash.split('id_token=')[1].split('&')[0]
     Cookies.set('IDToken', IDToken)
+    
   } catch (ex) {
     console.log(ex)
   }

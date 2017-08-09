@@ -32,7 +32,7 @@ export async function initalizeDb(){
   try {
 
     await createTables()
-    await populateData()
+    //await populateData()
 
     console.log(chalk.cyan("DB initialized"))
 
