@@ -11,13 +11,14 @@ const user = {
       type: GraphQLString
     },
   },
-  resolve: async (src, {id}) => {
+  resolve: async (src, {id}, context) => {
     try {
 
-      const user = await getUser(id)
+
+      const user = await getUser(context.userId)
       user.id = user["user_id"]
 
-      
+
 
       return user
     } catch (ex) {

@@ -1,73 +1,66 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import MiaUI from '../index.js'
 import {SideMenu, MenuItem} from '../menus'
-
+import Drawer from '../drawer'
 
 export default class Template extends Component {
+
+  static defaultProps = {
+    drawer: true
+  }
+
   render() {
     const {
-      children
-    } = this.props
+      props: {
+        drawer
+      }
+    } = this
     return (
-      <Container>
+      <MiaUI>
+        <Container>
+          {(drawer) ? (
+            <Drawer>
+              <SideMenu>
+                <MenuItem>
+                  Hello
+                </MenuItem>
+              </SideMenu>
+            </Drawer>
 
-        <SideMenuContainer>
-          <SideMenu>
-            <MenuItem
-              href={{
-                pathname: `/cms/browse/groups`
-              }}
-              as={`/cms/groups`}
-            >
-              Groups
-            </MenuItem>
-            <MenuItem
-              href={{
-                pathname: `/cms/browse/items`
-              }}
-              as={`/cms/items`}
-            >
-              Items
-            </MenuItem>
-          </SideMenu>
-        </SideMenuContainer>
-
-        {children}
+          ) : null}
 
 
-      </Container>
+          {this.props.children}
+
+
+        </Container>
+      </MiaUI>
     )
   }
+
+
+
 }
 
 
 const Container = styled.div`
   display: grid;
   width: 100%;
-  grid-template-columns: [side] 150px [left] 1fr [right] 1fr;
-  grid-template-rows: [bar] 50px [head] 250px [rest] auto;
-`
-//
-// export const Content = styled.div`
-//   grid-column: left / 2;
-//   grid-row: rest;
-//   padding-left: 150px;
-// `
-
-
-const SideMenuContainer = styled.div`
-  grid-column: side / left;
-  grid-row: head / span 2;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 50px 400px auto;
+  padding: 0px 10px;
 `
 
-export const Top = styled.div`
-  grid-column: left / span 2;
-  grid-row: head;
-  padding-left: 150px;
-`
-
-export const Bottom = styled.div`
-  grid-column: left / span 2;
-  grid-row: rest;
-  padding-left: 150px;
+export const Centered = styled.div`
+  height: 100%;
+  width: 100%;
+  grid-column: 2 / 6;
+  grid-row: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
+  padding: 20px;
 `

@@ -16,6 +16,7 @@ const Li = styled.li`
   padding: 10px 5px;
   background-color: ${({theme}) => theme.colors.white};
   transition: .2s all;
+  box-sizing: border-box;
   &:hover {
     background-color: ${({theme}) => theme.colors.grey};
   }

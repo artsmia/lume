@@ -18,10 +18,16 @@ const Container = styled.div`
 `
 const Toggler = styled.button`
   position: fixed;
-  top: 0;
-  left: ${({width}) => width}px;
+  top: 5;
+  left: ${({width}) => width + 5}px;
   transform: translate(${({width, closed}) => (closed) ? `-${width}` : 0}px, 0);
   transition: .2s all;
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+  background-color: ${({theme}) => theme.colors.gray};
+  border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
+  outline: none;
 `
 
 
@@ -39,11 +45,14 @@ export default class extends Component {
 
   render() {
     const {
-      width
-    } = this.props
-    const {
-      closed
-    } = this.state
+      toggle,
+      props: {
+        width
+      },
+      state: {
+        closed
+      },
+    } = this
     return (
       <div>
         <Container
@@ -51,23 +60,25 @@ export default class extends Component {
           closed={closed}
         >
 
-          <h2>hello</h2>
+          {this.props.children}
 
         </Container>
         <Toggler
           width={width}
           closed={closed}
-          onClick={()=> {
-            this.setState( (prevState) => {
-              return {
-                closed: !prevState.closed
-              }
-            })
-          }}
+          onClick={toggle}
         >
-          Toggle
+          Menu
         </Toggler>
       </div>
     )
+  }
+
+  toggle = () => {
+    this.setState( (prevState) => {
+      return {
+        closed: !prevState.closed
+      }
+    })
   }
 }

@@ -22,21 +22,18 @@ app.prepare().then(() => {
     app.render(req, res, actualPage)
   })
 
+  server.get('/new', (req, res) => {
+    const actualPage = '/cms/org/joinOrCreate'
+    app.render(req, res, actualPage)
+  })
 
-  // server.get('/:orgSub/cms', (req, res) => {
-  //   verify(req).then(decoded => {
-  //     const actualPage = '/cms'
-  //     const queryParams = {
-  //       decoded
-  //     }
-  //     app.render(req, res, actualPage, queryParams)
-  //   }).catch((ex) => {
-  //     console.loc(ex)
-  //     const actualPage = '/'
-  //     app.render(req, res, actualPage)
-  //   })
-  //
-  // })
+  server.get('/:orgSub/cms', (req, res) => {
+    const actualPage = '/cms/org'
+    const queryParams = {
+        orgSub: req.orgSub,
+    }
+    app.render(req, res, actualPage, queryParams)
+  })
   //
   // server.get('/cms/items', (req, res) => {
   //   const queryParams = {
@@ -110,8 +107,8 @@ async function authMiddleware(req,res,next) {
       const decoded = await verify(IDToken)
       req.IDToken = IDToken
       req.userId = decoded.sub
-      next()
     }
+    next()
   } catch (ex) {
     next()
   }

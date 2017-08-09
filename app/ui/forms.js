@@ -1,11 +1,14 @@
 import styled from 'styled-components'
 
 export const Form = styled.form`
-  margin: 0em 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 `
 
 export const Label = styled.label`
-  font-family: ${({theme}) => theme.fonts.regular}
+  font-family: ${({theme}) => theme.fonts.regular};
 `
 
 export const Input = styled.input`
@@ -15,4 +18,14 @@ export const Input = styled.input`
   border: solid 1px rgba(35,31,32, 0.3);
   color: inherit;
   outline: none;
+`
+
+
+export const Select = styled.select`
+  width: 200px;
+  height: 20px;
+  outline: none;
+  background-color: ${({theme}) => theme.colors.white};
+`
+export const Option = styled.option`
 `

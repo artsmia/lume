@@ -34,7 +34,6 @@ export async function refreshToken(){
 
 export async function getUser(id){
   try {
-    console.log(managementToken)
     if (
       !managementToken ||
       Date.now() > expiration
