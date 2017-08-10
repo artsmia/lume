@@ -5,8 +5,8 @@ const next = require('next')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
-const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
+const authMiddleware = require('./auth')
 
 app.prepare().then(() => {
   const server = express()
@@ -29,57 +29,34 @@ app.prepare().then(() => {
 
   server.get('/:orgSub/cms', (req, res) => {
     const actualPage = '/cms/org'
+    const {orgSub} = req.params
     const queryParams = {
-        orgSub: req.orgSub,
+        orgSub,
     }
     app.render(req, res, actualPage, queryParams)
   })
-  //
-  // server.get('/cms/items', (req, res) => {
-  //   const queryParams = {
-  //     userId: req.userId,
-  //     IDToken: req.IDToken
-  //   }
-  //   const actualPage = '/cms/browse/items'
-  //
-  //   app.render(req, res, actualPage, queryParams)
-  //
-  // })
-  //
-  // server.get('/cms/groups', (req, res) => {
-  //   const actualPage = '/cms/browse/groups'
-  //   app.render(req, res, actualPage)
-  // })
-  //
-  // server.get('/cms/item/:itemId', (req, res) => {
-  //   const actualPage = '/cms/edit/item'
-  //   const {itemId} = req.params
-  //   const queryParams = {
-  //     itemId,
-  //   }
-  //   app.render(req, res, actualPage, queryParams)
-  // })
-  //
-  //
-  // server.get('/:itemId/:tab', (req, res) => {
-  //   const actualPage = '/live/item'
-  //   const {itemId, tab} = req.params
-  //   const queryParams = {
-  //     itemId,
-  //     tab
-  //   }
-  //   app.render(req, res, actualPage, queryParams)
-  // })
-  //
-  // server.get('/book/:bookId/:pageIndex', (req, res) => {
-  //   const actualPage = '/live/book'
-  //   const {bookId, pageIndex} = req.params
-  //   const queryParams = {
-  //     bookId,
-  //     pageIndex
-  //   }
-  //   app.render(req, res, actualPage, queryParams)
-  // })
+
+  server.get('/:orgSub/cms/items', (req, res) => {
+    const actualPage = '/cms/browse/items'
+    const {orgSub} = req.params
+    const queryParams = {
+        orgSub,
+    }
+    app.render(req, res, actualPage, queryParams)
+  })
+
+  server.get('/:orgSub/cms/item/:itemId', (req, res) => {
+    const actualPage = '/cms/edit/item'
+    const {orgSub, itemId} = req.params
+    const queryParams = {
+        orgSub,
+        itemId
+    }
+    app.render(req, res, actualPage, queryParams)
+  })
+
+
+
 
 
   server.get('*', (req, res) => {
@@ -95,37 +72,3 @@ app.prepare().then(() => {
   console.error(ex.stack)
   process.exit(1)
 })
-
-async function authMiddleware(req,res,next) {
-  try {
-    const {
-      IDToken
-    } = req.cookies
-    if (
-      IDToken
-    ) {
-      const decoded = await verify(IDToken)
-      req.IDToken = IDToken
-      req.userId = decoded.sub
-    }
-    next()
-  } catch (ex) {
-    next()
-  }
-
-}
-
-function verify(IDToken) {
-  return new Promise( (resolve, reject) => {
-    jwt.verify(
-      IDToken,
-      process.env.auth0Secret, {
-      algorithms: ["HS256"]
-    },(err, decoded) => {
-      if (err) {
-        reject(err)
-      }
-      resolve(decoded)
-    })
-  })
-}

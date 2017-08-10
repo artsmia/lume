@@ -1,93 +1,39 @@
 import React, {Component} from 'react'
-import MiaUI from '../../../ui'
-import CmsTemplate, {Top, Bottom} from '../../../ui/cms/Template'
-import {Table, Row, Cell, Header, TBody} from '../../../ui/tables'
+import BrowseItems from '../../../components/BrowseItems'
 import apiFetch from '../../../utils/apiFetch'
-import {Link} from '../../../ui/links'
-import {getIDToken} from '../../../auth'
 
 export default class extends Component {
 
   static getInitialProps = async (context) => {
     try {
-      const IDToken = await getIDToken(context)
-      const {allItems: items} = await apiFetch(`{
-        allItems {
+      const {orgSub} = context.query
+      const {organization} = await apiFetch(`{
+        organization (
+          subdomain: "${orgSub}"
+        ) {
           id
-          title
+          name
+          subdomain
+          items {
+            title
+            id
+          }
         }
-      }`, IDToken)
-
+      }`)
 
       return {
-        items,
+        organization
       }
     } catch (ex) {
       console.error(ex)
     }
   }
 
-  state = {
-    closed: false
-  }
-
   render() {
-    const {
-      props: {
-        items
-      }
-    } = this
     return (
-      <MiaUI>
-        <CmsTemplate>
-          <Top>
-            <h1>Hello</h1>
-          </Top>
-          <Bottom>
-            <Table>
-              <TBody>
-                <Row
-                  key="header"
-                >
-                  <Header
-                    width={"30%"}
-                  >
-                    Title
-                  </Header>
-                  <Header>
-                    Id
-                  </Header>
-                </Row>
-                {items.map( ({id, title}) => (
-                  <Row
-                    key={id}
-                  >
-                    <Cell
-                      width={"30%"}
-                    >
-                      <Link
-                        href={{
-                          pathname: '/cms/edit/item',
-                          query: {
-                            itemId: id
-                          }
-                        }}
-                        as={`/cms/item/${id}`}
-                      >
-                        {title}
-                      </Link>
-                    </Cell>
-                    <Cell>{id}</Cell>
-                  </Row>
-                ))}
-              </TBody>
-
-            </Table>
-          </Bottom>
-
-
-        </CmsTemplate>
-      </MiaUI>
+      <BrowseItems
+        {...this.props}
+      />
     )
   }
 }

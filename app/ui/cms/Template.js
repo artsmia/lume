@@ -48,13 +48,12 @@ const Container = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 50px 400px auto;
+  grid-template-rows: 80px 400px auto;
   padding: 0px 10px;
+  box-sizing: border-box;
 `
 
 export const Centered = styled.div`
-  height: 100%;
-  width: 100%;
   grid-column: 2 / 6;
   grid-row: 2 / 3;
   display: flex;
@@ -63,4 +62,23 @@ export const Centered = styled.div`
   align-items: flex-start;
   border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
   padding: 20px;
+`
+
+export const EditContainer = styled.div`
+  grid-column: 1 / span 6;
+  grid-row: 2 / span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
+`
+
+export const EditTabContainer = styled.div`
+  grid-column: 1 / span 6;
+  grid-row: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
 `

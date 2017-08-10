@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Table = styled.table`
+export const Table = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@ export const Table = styled.table`
   align-items: center;
 `
 
-export const Row = styled.tr`
+export const Row = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -22,7 +22,7 @@ export const Row = styled.tr`
   }
 `
 
-export const Cell = styled.td`
+export const Cell = styled.div`
   font-family: ${({theme}) => theme.fonts.light};
   margin: 10px 5px;
   width: 100%;
@@ -32,7 +32,7 @@ export const Cell = styled.td`
   white-space: nowrap;
 `
 
-export const Header = styled.th`
+export const Header = styled.div`
   font-family: ${({theme}) => theme.fonts.regular};
   margin: 10px 5px;
   width: 100%;
@@ -43,7 +43,7 @@ export const Header = styled.th`
   display: flex;
   justify-content: flex-start;
 `
-export const TBody = styled.tbody`
+export const Body = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;

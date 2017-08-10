@@ -145,17 +145,32 @@ export default class extends Component {
         throw "Error"
       }
 
-      await apiFetch(`
+      const {
+        addUserToOrganization: {
+          organizations: [
+            org
+          ]
+        }
+      } = await apiFetch(`
         mutation {
           addUserToOrganization(
             organizationId: "${organizationId}"
             userId: "${userId}"
           ) {
             id
+            organizations {
+              subdomain
+            }
           }
         }
       `)
 
+      router.push({
+        pathname: '/cms/org',
+        query: {
+          orgSub: org.subdomain
+        }
+      }, `/${org.subdomain}/cms`)
 
     } catch (ex) {
       console.error(ex)

@@ -1,13 +1,23 @@
 import React, {Component} from 'react'
-
+import OrgHome from '../../../components/OrgHome'
+import apiFetch from '../../../utils/apiFetch'
 
 export default class extends Component {
 
   static getInitialProps = async (context) => {
     try {
-      console.log(context)
+      const {orgSub} = context.query
+      const {organization} = await apiFetch(`{
+        organization (
+          subdomain: "${orgSub}"
+        ) {
+          id
+          name
+        }
+      }`)
 
       return {
+        organization
       }
     } catch (ex) {
       console.error(ex)
@@ -16,9 +26,9 @@ export default class extends Component {
 
   render() {
     return (
-      <div>
-        <h2>org subdomain</h2>
-      </div>
+      <OrgHome
+        {...this.props}
+      />
     )
   }
 }

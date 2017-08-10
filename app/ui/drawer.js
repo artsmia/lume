@@ -18,7 +18,7 @@ const Container = styled.div`
 `
 const Toggler = styled.button`
   position: fixed;
-  top: 5;
+  top: 5px;
   left: ${({width}) => width + 5}px;
   transform: translate(${({width, closed}) => (closed) ? `-${width}` : 0}px, 0);
   transition: .2s all;
@@ -40,7 +40,7 @@ export default class extends Component {
   }
 
   state = {
-    closed: false
+    closed: true
   }
 
   render() {

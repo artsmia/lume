@@ -19,7 +19,7 @@ switch (environment) {
     apiUrl = "http://localhost:5000"
     auth0ID = "j8pjiCmNfc74AYnuP8MR0PZAbk68syv6"
     auth0Domain = "artsmia.auth0.com"
-    url = "https://localhost:3000"
+    url = "http://localhost:3000"
   }
 }
 
@@ -27,5 +27,6 @@ switch (environment) {
 export {
   apiUrl,
   auth0ID,
-  auth0Domain
+  auth0Domain,
+  url
 }
