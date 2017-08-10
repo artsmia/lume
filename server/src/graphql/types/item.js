@@ -18,7 +18,7 @@ const item = new GraphQLObjectType({
     id: {
       type: GraphQLString
     },
-    miaId: {
+    localId: {
       type: GraphQLString
     },
     title: {

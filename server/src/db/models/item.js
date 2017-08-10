@@ -7,7 +7,7 @@ const item = db.define('item', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
-  miaId: {
+  localId: {
     type: Sequelize.STRING
   },
   title: Sequelize.STRING,
@@ -18,10 +18,6 @@ const item = db.define('item', {
   currentLocation: Sequelize.STRING,
   creditLine: Sequelize.TEXT,
   text: Sequelize.TEXT,
-  // itemType: {
-  //   type: Sequelize.ENUM,
-  //   values: ["DEFAULT", "MIA"]
-  // },
 }, {
   freezeTableName: true
 })

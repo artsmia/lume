@@ -8,6 +8,7 @@ import allOrganizations from './allOrganizations'
 import user from './user'
 import item from './item'
 import book from './book'
+import organization from './organization'
 
 
 const query = new GraphQLObjectType({
@@ -19,6 +20,7 @@ const query = new GraphQLObjectType({
     item,
     book,
     user,
+    organization
   }
 })
 

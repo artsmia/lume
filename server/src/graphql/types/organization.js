@@ -4,6 +4,7 @@ import {
   GraphQLList
 } from 'graphql'
 import userType from './user'
+import itemType from './item'
 
 const organization = new GraphQLObjectType({
   name: "organization",
@@ -17,19 +18,30 @@ const organization = new GraphQLObjectType({
     subdomain: {
       type: GraphQLString
     },
-    users: {
-      type: new GraphQLList(userType),
+    // users: {
+    //   type: new GraphQLList(userType),
+    //   resolve: async (organization) => {
+    //     try {
+    //
+    //
+    //
+    //       return {}
+    //     } catch (ex) {
+    //       console.log(ex)
+    //     }
+    //   }
+    // },
+    items: {
+      type: new GraphQLList(itemType),
       resolve: async (organization) => {
         try {
-
-
-
-          return {}
+          const items = await organization.getItems()
+          return items
         } catch (ex) {
-          console.log(ex)
+          console.error(ex)
         }
       }
-    },
+    }
   })
 })
 

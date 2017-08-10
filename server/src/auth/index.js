@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 
 export async function authMiddleware(req, res, next) {
   try {
-    console.log("middleware")
     if (req.headers.authorization) {
       const IDToken = req.headers.authorization.split('Bearer ')[1]
       const decoded = await verify(IDToken)

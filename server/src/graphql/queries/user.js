@@ -14,9 +14,13 @@ const user = {
   resolve: async (src, {id}, context) => {
     try {
 
+      let userId = (id) ? id : context.userId
 
-      const user = await getUser(context.userId)
-      user.id = user["user_id"]
+      const user = await getUser(userId)
+
+      if (!user.id) {
+        user.id = user["user_id"]
+      }
 
 
 

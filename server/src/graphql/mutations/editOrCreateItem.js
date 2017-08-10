@@ -1,9 +1,11 @@
 import {
-  GraphQLString
+  GraphQLString,
+  GraphQLList
 } from 'graphql'
 import itemType from '../types/item'
 import itemEnumType from '../types/enums/itemType'
 import itemModel from '../../db/models/item'
+import organizationModel from '../../db/models/organization'
 
 const editOrCreateItem = {
   type: itemType,
@@ -38,9 +40,9 @@ const editOrCreateItem = {
     type: {
       type: itemEnumType
     },
-    // mainImageId: {
-    //   type: GraphQLString
-    // },
+    addOrganizationsById: {
+      type: new GraphQLList(GraphQLString)
+    },
   },
   resolve: async (src, argItem) => {
     try {
@@ -55,7 +57,7 @@ const editOrCreateItem = {
         creditLine,
         text,
         type,
-        //mainImageId
+        addOrganizationsById
       } = argItem
 
       let item
@@ -91,13 +93,18 @@ const editOrCreateItem = {
         })
       }
 
+      if (addOrganizationsById) {
+        const organizations = await Promise.all(
+          addOrganizationsById.map( id => organizationModel.findById(id))
+        )
+        await item.addOrganizations(organizations)
+      }
+
       if (!item) {
         throw "some item error..."
       }
 
-      return {
-        ...item.dataValues
-      }
+      return item
     } catch (ex) {
       console.log("editOrCreateItem error", ex)
       return "editOrCreateItem error"
