@@ -12,7 +12,7 @@ import {authMiddleware} from './auth'
 import {
   graphqlExpress,
   graphiqlExpress,
-} from 'graphql-server-express'
+} from 'apollo-server-express'
 
 const upload = multer()
 
@@ -31,13 +31,18 @@ server.use(
 server.use("/image", upload.single("file") , imageRoute)
 
 
-server.use('/graphql', graphqlExpress({
-  schema
-}));
-
 server.use('/graphiql', graphiqlExpress({
-  endpointURL: '/graphql'
-}));
+  endpointURL: '/'
+}))
+
+server.use('/', graphqlExpress((req, res) => {
+  return {
+    schema,
+    context: req
+  }
+}))
+
+
 
 
 server.listen(server.get('port'), ()=>{

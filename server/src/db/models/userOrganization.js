@@ -12,6 +12,8 @@ const userOrganization = db.define("user_organization", {
       key: "id"
     }
   }
+},{
+  freezeTableName: true
 })
 
 export default userOrganization

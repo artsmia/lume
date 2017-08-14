@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import JoinOrCreate from '../../../components/JoinOrCreate'
 import Cookie from 'js-cookie'
+import withData from '../../../apollo/withData'
 
-export default class extends Component {
+class New extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
@@ -24,3 +25,5 @@ export default class extends Component {
     )
   }
 }
+
+export default withData(New)

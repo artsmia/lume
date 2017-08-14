@@ -109,7 +109,8 @@ const typeDefs = `
     ): Item
 
     organization (
-        id: ID!
+        id: ID
+        subdomain: String
     ): Organization
 
     page (
@@ -117,10 +118,12 @@ const typeDefs = `
     ): Page
 
     user (
-        id: ID!
+        id: ID
     ): User
 
     items: [Item]
+
+    organizations: [Organization]
 
   }
 
@@ -128,6 +131,13 @@ const typeDefs = `
     editOrCreateItem(
       item: ItemInput
     ): Item
+
+    editOrCreateOrganization(
+      id: ID
+      name: String
+      subdomain: String
+      newUserIds: [ID]
+    ): Organization
   }
 
 

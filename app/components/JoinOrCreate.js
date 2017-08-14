@@ -1,17 +1,16 @@
 import React, {Component} from 'react'
+import { gql, graphql, compose } from 'react-apollo'
 import Template, {Centered} from '../ui/cms/Template'
 import {H2} from '../ui/h'
 import {Form, Label, Input, Select, Option} from '../ui/forms'
-import apiFetch from '../utils/apiFetch'
 import {Row, Column} from '../ui/layout'
 import {Button} from '../ui/buttons'
 import router from 'next/router'
 
-export default class extends Component {
+class JoinOrCreate extends Component {
 
   state = {
     organizations: [],
-    organizationId: "",
     name: "",
     subdomain: ""
   }
@@ -20,7 +19,6 @@ export default class extends Component {
     const {
       addUserToOrganization,
       change,
-      createAndJoinOrganization,
       state: {
         organizations,
         organizationId,
@@ -93,7 +91,7 @@ export default class extends Component {
                 </Form>
                 <Button
                   disabled={(!name || !subdomain)}
-                  onClick={createAndJoinOrganization}
+                  onClick={addUserToOrganization}
                 >
                   Create and Join
                 </Button>
@@ -108,120 +106,50 @@ export default class extends Component {
     )
   }
 
-  componentDidMount(){
-    this.getOrgs()
+  componentWillReceiveProps(newProps){
+    if (this.state.organizations.length === 0 && !newProps.data.loading){
+      const {
+        organizations
+      } = this.props.data
+
+      this.setState({organizations})
+    }
   }
 
   change = ({target: {name, value}}) => this.setState({[name]: value})
 
-  getOrgs = async () => {
-    try {
-      const {allOrganizations: organizations} = await apiFetch(`{
-        allOrganizations {
-          id
-          name
-        }
-      }`)
-
-      this.setState({organizations})
-
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
 
   addUserToOrganization = async () => {
     try {
+
       const {
         props: {
-          userId
+          userId,
         },
         state: {
+          name,
+          subdomain,
           organizationId
         }
       } = this
 
-      if (!organizationId || !userId) {
-        throw "Error"
-      }
 
-      const {
-        addUserToOrganization: {
-          organizations: [
-            org
-          ]
+      const {data: {editOrCreateOrganization: {subdomain: orgSub}}} = await this.props.addUserToOrganization({
+        variables: {
+          orgId: organizationId,
+          newUserIds: [userId],
+          name,
+          subdomain
         }
-      } = await apiFetch(`
-        mutation {
-          addUserToOrganization(
-            organizationId: "${organizationId}"
-            userId: "${userId}"
-          ) {
-            id
-            organizations {
-              subdomain
-            }
-          }
-        }
-      `)
+      })
 
       router.push({
         pathname: '/cms/org',
         query: {
-          orgSub: org.subdomain
+          orgSub
         }
-      }, `/${org.subdomain}/cms`)
+      }, `/${orgSub}/cms`)
 
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  createAndJoinOrganization = async () => {
-    try {
-      const {
-        props: {
-          userId
-        },
-        state: {
-          name,
-          subdomain
-        }
-      } = this
-
-      if (!name || !subdomain) {
-        throw "error"
-      }
-
-      const {
-        editOrCreateOrganization: {
-          id: organizationId
-        }
-      } = await apiFetch(`
-        mutation {
-          editOrCreateOrganization(
-            name: "${name}"
-            subdomain: "${subdomain}"
-          ) {
-            id
-          }
-        }
-      `)
-
-      if (!organizationId || !userId) {
-        throw "error"
-      }
-
-      await apiFetch(`
-        mutation {
-          addUserToOrganization(
-            organizationId: "${organizationId}"
-            userId: "${userId}"
-          ) {
-            id
-          }
-        }
-      `)
 
     } catch (ex) {
       console.error(ex)
@@ -230,3 +158,42 @@ export default class extends Component {
 
 
 }
+
+const organizations = gql`
+  query organizations {
+    organizations {
+      id
+      name
+      subdomain
+    }
+  }
+`
+
+const addUserToOrganization = gql`
+  mutation editOrCreateOrganization (
+    $orgId: ID
+    $newUserIds: [ID]
+    $name: String
+    $subdomain: String
+  ) {
+    editOrCreateOrganization (
+      id: $orgId
+      newUserIds: $newUserIds
+      name: $name
+      subdomain: $subdomain
+    ) {
+      id
+      name
+      subdomain
+    }
+  }
+`
+
+export default compose(
+  graphql(organizations),
+  graphql(addUserToOrganization, {
+    name: "addUserToOrganization",
+  })
+)(
+  JoinOrCreate
+)

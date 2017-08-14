@@ -1,16 +1,23 @@
 import React, {Component} from 'react'
+import { gql, graphql } from 'react-apollo'
 import Template, {Centered} from '../ui/cms/Template'
 import {H2} from '../ui/h'
 
-export default class extends Component {
+class Home extends Component {
 
 
 
   render() {
+
+    if (this.props.data.loading) {
+      return null
+    }
     const {
       props: {
-        organization: {
-          name
+        data: {
+          organization: {
+            name
+          }
         }
       }
     } = this
@@ -26,3 +33,30 @@ export default class extends Component {
   }
 
 }
+
+const org = gql`
+  query organization ($subdomain: String) {
+    organization  (
+      subdomain: $subdomain
+    ) {
+      id
+      name
+    }
+  }
+`
+
+export default graphql(
+  org, {
+    options: (stuff) => {
+      const {url: {query: {orgSub}}} = stuff
+      console.log(stuff)
+      return {
+        variables: {
+          subdomain: orgSub
+        }
+      }
+    }
+  }
+)(
+  Home
+)
