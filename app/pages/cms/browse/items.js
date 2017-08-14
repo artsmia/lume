@@ -1,29 +1,12 @@
 import React, {Component} from 'react'
 import BrowseItems from '../../../components/BrowseItems'
-import apiFetch from '../../../utils/apiFetch'
+import withData from '../../../apollo/withData'
 
-export default class extends Component {
+class Items extends Component {
 
-  static getInitialProps = async (context) => {
+  static getInitialProps = async (ctx) => {
     try {
-      const {orgSub} = context.query
-      const {organization} = await apiFetch(`{
-        organization (
-          subdomain: "${orgSub}"
-        ) {
-          id
-          name
-          subdomain
-          items {
-            title
-            id
-          }
-        }
-      }`)
 
-      return {
-        organization
-      }
     } catch (ex) {
       console.error(ex)
     }
@@ -37,3 +20,5 @@ export default class extends Component {
     )
   }
 }
+
+export default withData(Items)

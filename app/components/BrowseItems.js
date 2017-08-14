@@ -1,25 +1,23 @@
 import React, {Component} from 'react'
+import { gql, graphql } from 'react-apollo'
 import Template, {Centered} from '../ui/cms/Template'
 import {H2} from '../ui/h'
 import {Table, Header, Row, Cell, Body} from '../ui/tables'
 import {Link} from '../ui/links'
 
 
-export default class extends Component {
+class BrowseItems extends Component {
 
 
 
   render() {
     const {
       props: {
-        organization: {
-          name,
-          subdomain,
+        data: {
           items
         }
       }
     } = this
-    console.log(this.props)
     return (
       <Template>
         <Centered>
@@ -40,7 +38,7 @@ export default class extends Component {
                   key={item.id}
                 >
                   <Cell>
-                    <Link
+                    {/* <Link
                       href={{
                         pathname: "/cms/edit/item",
                         query: {
@@ -49,9 +47,9 @@ export default class extends Component {
                         }
                       }}
                       as={`/${subdomain}/cms/item/${item.id}`}
-                    >
+                    > */}
                       {item.title}
-                    </Link>
+                    {/* </Link> */}
                   </Cell>
                   <Cell>
                     {item.id}
@@ -67,3 +65,19 @@ export default class extends Component {
   }
 
 }
+
+
+const items = gql`
+  query items {
+    items {
+      id
+      title
+    }
+  }
+`
+
+export default graphql(
+  items,
+)(
+  BrowseItems
+)

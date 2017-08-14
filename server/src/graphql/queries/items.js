@@ -1,8 +1,9 @@
 import itemModel from '../../db/models/item'
 
-export default async function item(src, {id}, ctx){
+
+export default async function items(src, args, ctx){
   try {
-    return await itemModel.findById(id)
+    return await itemModel.findAll()
   } catch (ex) {
     console.error(ex)
   }

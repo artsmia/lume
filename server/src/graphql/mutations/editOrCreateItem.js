@@ -1,115 +1,18 @@
-import {
-  GraphQLString,
-  GraphQLList
-} from 'graphql'
-import itemType from '../types/item'
-import itemEnumType from '../types/enums/itemType'
 import itemModel from '../../db/models/item'
-import organizationModel from '../../db/models/organization'
 
-const editOrCreateItem = {
-  type: itemType,
-  args: {
-    id: {
-      type: GraphQLString
-    },
-    title: {
-      type: GraphQLString
-    },
-    medium: {
-      type: GraphQLString
-    },
-    artist: {
-      type: GraphQLString
-    },
-    dated: {
-      type: GraphQLString
-    },
-    accessionNumber: {
-      type: GraphQLString
-    },
-    currentLocation: {
-      type: GraphQLString
-    },
-    creditLine: {
-      type: GraphQLString
-    },
-    text: {
-      type: GraphQLString
-    },
-    type: {
-      type: itemEnumType
-    },
-    addOrganizationsById: {
-      type: new GraphQLList(GraphQLString)
-    },
-  },
-  resolve: async (src, argItem) => {
-    try {
-      const {
-        id,
-        title,
-        medium,
-        artist,
-        dated,
-        accessionNumber,
-        currentLocation,
-        creditLine,
-        text,
-        type,
-        addOrganizationsById
-      } = argItem
 
-      let item
-
-      if (id) {
-        item = await itemModel.update({
-          title,
-          medium,
-          artist,
-          dated,
-          accessionNumber,
-          currentLocation,
-          creditLine,
-          text,
-          type,
-        },{
-          where: {
-            id
-          }
-        })
-        item = await itemModel.findById(id)
-      } else {
-        item = await itemModel.create({
-          title,
-          medium,
-          artist,
-          dated,
-          accessionNumber,
-          currentLocation,
-          creditLine,
-          text,
-          type,
-        })
-      }
-
-      if (addOrganizationsById) {
-        const organizations = await Promise.all(
-          addOrganizationsById.map( id => organizationModel.findById(id))
-        )
-        await item.addOrganizations(organizations)
-      }
-
-      if (!item) {
-        throw "some item error..."
-      }
-
-      return item
-    } catch (ex) {
-      console.log("editOrCreateItem error", ex)
-      return "editOrCreateItem error"
+export default async function editOrCreateItem(src, args, ctx){
+  try {
+    if (!args.id) {
+      return await itemModel.create({
+        ...args
+      })
+    } else {
+      return await itemModel.upsert({
+        ...args
+      })
     }
+  } catch (ex) {
+    console.error(ex)
   }
 }
-
-export default editOrCreateItem

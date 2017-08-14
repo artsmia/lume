@@ -4,12 +4,15 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import {initalizeDb} from './db'
-import graphqlHTTP from 'express-graphql'
 import schema from './graphql'
 import chalk from 'chalk'
 import imageRoute from './images'
 import multer from 'multer'
 import {authMiddleware} from './auth'
+import {
+  graphqlExpress,
+  graphiqlExpress,
+} from 'graphql-server-express'
 
 const upload = multer()
 
@@ -27,12 +30,14 @@ server.use(
 
 server.use("/image", upload.single("file") , imageRoute)
 
-server.use('/', graphqlHTTP((req) =>{
-  return {
-    schema: schema,
-    graphiql: true,
-  }
-}))
+
+server.use('/graphql', graphqlExpress({
+  schema
+}));
+
+server.use('/graphiql', graphiqlExpress({
+  endpointURL: '/graphql'
+}));
 
 
 server.listen(server.get('port'), ()=>{
