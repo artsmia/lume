@@ -10,7 +10,7 @@ export default async function user(src, {id}, ctx){
 
 
     if (!user.id) {
-      user.id = user["user_id"]
+      user.id = userId
     }
 
     return user

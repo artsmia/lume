@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { gql, graphql } from 'react-apollo'
-import Template, {Centered} from './Template'
+import Template from './CMSTemplate'
+import {Centered} from './CMSTemplate/Template'
 import {H2} from '../ui/h'
 import {Table, Header, Row, Cell, Body} from '../ui/tables'
 import {Link} from '../ui/links'
@@ -19,7 +20,9 @@ class BrowseItems extends Component {
       }
     } = this
     return (
-      <Template>
+      <Template
+        {...this.props}
+      >
         <Centered>
           <Table>
             <Header>

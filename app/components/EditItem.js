@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { gql, graphql, compose } from 'react-apollo'
-import Template, {EditContainer, EditTabContainer} from './Template'
+import Template, {EditContainer, EditTabContainer} from './CMSTemplate'
 import {H2} from '../ui/h'
 import {Tab} from '../ui/buttons'
 import {Form, Label, Input} from '../ui/forms'

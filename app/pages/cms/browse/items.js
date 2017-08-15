@@ -6,11 +6,17 @@ class Items extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
-
+      const userId = (ctx.req) ? ctx.req.userId : Cookie.get("userId")
+      const {orgSub} = ctx.query
+      return {
+        userId,
+        orgSub
+      }
     } catch (ex) {
       console.error(ex)
     }
   }
+
 
   render() {
     return (

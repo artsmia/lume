@@ -1,6 +1,5 @@
 const typeDefs = `
 
-
   type Book {
     id: ID!
     title: String
@@ -130,6 +129,12 @@ const typeDefs = `
   type Mutation {
     editOrCreateItem(
       item: ItemInput
+      newOrganizationIds: [ID]
+      mainImageId: ID
+      newRelatedItemIds: [ID]
+      newDetailIds: [ID]
+      newRelatedBookIds: [ID]
+      newGroupIds: [ID]
     ): Item
 
     editOrCreateOrganization(

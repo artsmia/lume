@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import MiaUI from '../ui'
-import {SideMenu, MenuItem} from '../ui/menus'
-import Drawer from '../ui/drawer'
+import MiaUI from '../../ui'
+import {SideMenu, MenuItem} from '../../ui/menus'
+import Drawer from '../../ui/drawer'
 
 export default class Template extends Component {
 
@@ -11,10 +11,19 @@ export default class Template extends Component {
   }
 
   render() {
+    if (this.props.data.loading) {
+      return null
+    }
     const {
       props: {
-        drawer
-      }
+        drawer,
+        data: {
+          user: {
+            email
+          }
+        },
+        orgSub,
+      },
     } = this
     return (
       <MiaUI>
@@ -22,8 +31,17 @@ export default class Template extends Component {
           {(drawer) ? (
             <Drawer>
               <SideMenu>
-                <MenuItem>
-                  Hello
+                <h2>{email}</h2>
+                <MenuItem
+                  href={{
+                    pathname: 'cms/browse/items',
+                    query: {
+                      orgSub
+                    }
+                  }}
+                  as={`/${orgSub}/cms/items`}
+                >
+                  Items
                 </MenuItem>
               </SideMenu>
             </Drawer>

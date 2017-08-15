@@ -1,3 +1,4 @@
+import organizationModel from '../../db/models/organization'
 import userOrganizationModel from '../../db/models/userOrganization'
 import {getUser} from '../../auth/management'
 
@@ -21,6 +22,15 @@ const Organization = {
       })
 
       return users
+    } catch (ex) {
+      console.error(ex)
+    }
+  },
+  async items(organization){
+    try {
+      const organization = await organizationModel.findById(organization.id)
+
+      return await oranization.getItems()
     } catch (ex) {
       console.error(ex)
     }
