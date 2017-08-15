@@ -1,26 +1,26 @@
 import React, {Component} from 'react'
-import Template, {EditContainer, EditTabContainer} from '../ui/cms/Template'
+import { gql, graphql, compose } from 'react-apollo'
+import Template, {EditContainer, EditTabContainer} from './Template'
 import {H2} from '../ui/h'
 import {Tab} from '../ui/buttons'
 import {Form, Label, Input} from '../ui/forms'
 import {Column} from '../ui/layout'
 import {Button} from '../ui/buttons'
-import apiFetch from '../utils/apiFetch'
 
-export default class extends Component {
+class EditItem extends Component {
 
   inputs = ["title", "medium", "artist", "dated", "accessionNumber", "currentLocation", "creditLine", "text"]
 
   constructor(props){
     super(props)
-    console.log(props)
     this.inputs.forEach( name => {
       this.state = {
         ...this.state,
-        [name]: props.item[name] || ""
+        [name]: ""
       }
     })
   }
+
 
   render() {
     const {
@@ -66,36 +66,99 @@ export default class extends Component {
     )
   }
 
+  componentWillReceiveProps(newProps){
+    this.inputs.forEach( name => {
+      this.setState({
+        [name]: newProps.data.item[name] || ""
+      })
+    })
+  }
+
   change = ({target: {name, value}}) => this.setState({[name]: value})
 
   saveItem = async () => {
     try {
       const {
-        artist
-      } = this.state
-      const {
-        organization: {
-          id: orgId
+        state: {
+          artist,
+          title
         },
-        item: {
-          id
-        }
-      } = this.props
-
-
-      await apiFetch(`
-        mutation {
-          editOrCreateItem(
-            id: "${id}"
-            artist: "${artist}"
-          ) {
-            id
+        props: {
+          data: {
+            item: {
+              id: itemId
+            }
           }
         }
-      `)
+      } = this
+
+      const response = await this.props.editItem({
+        variables: {
+          itemId,
+          artist,
+          title
+        }
+      })
+
+      console.log(response)
+
     } catch (ex) {
       console.error(ex)
     }
   }
 
 }
+
+const pageData = gql`
+  query pageData (
+    $itemId: ID!
+    $userId: ID
+  ) {
+    item (id: $itemId) {
+      id
+      title
+      artist
+      medium
+    }
+    user (id: $userId) {
+      id
+      email
+    }
+  }
+`
+
+const editItem = gql`
+  mutation editOrCreateItem (
+    $itemId: ID
+    $title: String
+    $artist: String
+  ) {
+    editOrCreateItem (
+      item: {
+        id: $itemId
+        title: $title
+        artist: $artist
+      }
+    ) {
+      id
+      artist
+      medium
+    }
+  }
+`
+
+export default compose(
+  graphql(pageData, {
+    options: ({userId, url: {query: {itemId}}}) => ({
+      variables: {
+        itemId,
+        userId
+      }
+    })
+  }),
+  graphql(editItem, {
+    name: "editItem",
+  })
+)(
+  EditItem
+)

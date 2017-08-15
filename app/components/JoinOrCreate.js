@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { gql, graphql, compose } from 'react-apollo'
-import Template, {Centered} from '../ui/cms/Template'
+import Template, {Centered} from './Template'
 import {H2} from '../ui/h'
 import {Form, Label, Input, Select, Option} from '../ui/forms'
 import {Row, Column} from '../ui/layout'

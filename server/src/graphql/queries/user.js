@@ -5,7 +5,9 @@ export default async function user(src, {id}, ctx){
 
     let userId = (id) ? id : ctx.userId
 
+
     const user = await getUser(userId)
+
 
     if (!user.id) {
       user.id = user["user_id"]

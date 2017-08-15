@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import MiaUI from '../index.js'
-import {SideMenu, MenuItem} from '../menus'
-import Drawer from '../drawer'
+import MiaUI from '../ui'
+import {SideMenu, MenuItem} from '../ui/menus'
+import Drawer from '../ui/drawer'
 
 export default class Template extends Component {
 

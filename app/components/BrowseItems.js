@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { gql, graphql } from 'react-apollo'
-import Template, {Centered} from '../ui/cms/Template'
+import Template, {Centered} from './Template'
 import {H2} from '../ui/h'
 import {Table, Header, Row, Cell, Body} from '../ui/tables'
 import {Link} from '../ui/links'
