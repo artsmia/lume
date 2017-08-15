@@ -57,7 +57,7 @@ export async function createAssociations() {
       as: "mainImage"
     })
 
-    detail.hasMany(image, {
+    clip.hasMany(image, {
       as: "additionalImages"
     })
 
@@ -90,6 +90,17 @@ export async function createAssociations() {
       foreignKey: "organizationId"
     })
 
+    book.belongsToMany(organization, {
+      as: "organizations",
+      through: "book_organization",
+      foreignKey: "bookId"
+    })
+
+    organization.belongsToMany(book, {
+      as:"books",
+      through: "book_organization",
+      foreignKey: "organizationId"
+    })
 
 
 

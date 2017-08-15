@@ -11,6 +11,9 @@ const organization = db.define('organization', {
   subdomain: {
     type: Sequelize.STRING,
     unique: true
+  },
+  emailDomain: {
+    type: Sequelize.STRING
   }
 }, {
   freezeTableName: true

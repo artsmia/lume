@@ -11,6 +11,10 @@ const userOrganization = db.define("user_organization", {
       model: "organization",
       key: "id"
     }
+  },
+  role: {
+    type: Sequelize.ENUM("ADMIN", "BASIC", "PENDING"),
+    defaultValue: "PENDING"
   }
 },{
   freezeTableName: true

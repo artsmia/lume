@@ -1,4 +1,5 @@
 import organizationModel from '../../db/models/organization'
+import groupModel from '../../db/models/group'
 import userOrganizationModel from '../../db/models/userOrganization'
 import {getUser} from '../../auth/management'
 
@@ -30,11 +31,29 @@ const Organization = {
     try {
       const organization = await organizationModel.findById(organization.id)
 
-      return await oranization.getItems()
+      return await organization.getItems()
     } catch (ex) {
       console.error(ex)
     }
-  }
+  },
+  async groups(organization){
+    try {
+      const organization = await organizationModel.findById(organization.id)
+
+      return await organization.getGroups()
+    } catch (ex) {
+      console.error(ex)
+    }
+  },
+  async books(organization){
+    try {
+      const organization = await organizationModel.findById(organization.id)
+
+      return await organization.getBooks()
+    } catch (ex) {
+      console.error(ex)
+    }
+  },
 }
 
 export default Organization

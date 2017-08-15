@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
-import { gql, graphql, compose } from 'react-apollo'
-import Template, {EditContainer, EditTabContainer} from './CMSTemplate'
-import {H2} from '../ui/h'
-import {Tab} from '../ui/buttons'
-import {Form, Label, Input} from '../ui/forms'
-import {Column} from '../ui/layout'
-import {Button} from '../ui/buttons'
+import Template from '../CMSTemplate'
+import {EditContainer, EditTabContainer} from '../CMSTemplate/Template'
+import {H2} from '../../ui/h'
+import {Tab} from '../../ui/buttons'
+import {Form, Label, Input} from '../../ui/forms'
+import {Column} from '../../ui/layout'
+import {Button} from '../../ui/buttons'
 
-class EditItem extends Component {
+export default class EditItem extends Component {
 
   inputs = ["title", "medium", "artist", "dated", "accessionNumber", "currentLocation", "creditLine", "text"]
 
@@ -30,7 +30,9 @@ class EditItem extends Component {
       saveItem
     } = this
     return (
-      <Template>
+      <Template
+        {...this.props}
+      >
         <EditTabContainer>
           <Tab>
             Edit
@@ -108,57 +110,3 @@ class EditItem extends Component {
   }
 
 }
-
-const pageData = gql`
-  query pageData (
-    $itemId: ID!
-    $userId: ID
-  ) {
-    item (id: $itemId) {
-      id
-      title
-      artist
-      medium
-    }
-    user (id: $userId) {
-      id
-      email
-    }
-  }
-`
-
-const editItem = gql`
-  mutation editOrCreateItem (
-    $itemId: ID
-    $title: String
-    $artist: String
-  ) {
-    editOrCreateItem (
-      item: {
-        id: $itemId
-        title: $title
-        artist: $artist
-      }
-    ) {
-      id
-      artist
-      medium
-    }
-  }
-`
-
-export default compose(
-  graphql(pageData, {
-    options: ({userId, url: {query: {itemId}}}) => ({
-      variables: {
-        itemId,
-        userId
-      }
-    })
-  }),
-  graphql(editItem, {
-    name: "editItem",
-  })
-)(
-  EditItem
-)

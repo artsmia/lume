@@ -61,9 +61,11 @@ const typeDefs = `
     id: ID!
     name: String
     subdomain: String
+    emailDomain: String
     items: [Item]
     users: [User]
-    administrators: [User]
+    groups: [Group]
+    books: [Book]
   }
 
   type Page {
@@ -141,6 +143,7 @@ const typeDefs = `
       id: ID
       name: String
       subdomain: String
+      emailDomain: String
       newUserIds: [ID]
     ): Organization
   }
