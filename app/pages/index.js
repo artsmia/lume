@@ -1,30 +1,27 @@
 import React, {Component} from 'react'
-import {createLock} from '../auth'
-import router from 'next/router'
-import Cookies from 'js-cookie'
+import Root from '../components/Root'
+import withData from '../apollo/withData'
 
-export default class extends Component {
+class Index extends Component {
 
+  static getInitialProps = async (context) => {
+    try {
+      return {
 
+      }
+    } catch (ex) {
 
-  render() {
-    return (
-      <div>
-
-      </div>
-    )
-  }
-
-  componentDidMount(){
-
-    const IDToken = Cookies.get('IDToken')
-    const userId = Cookies.get('userId')
-    if (IDToken && userId) {
-      router.replace('/auth')
-    } else {
-      const lock = createLock()
-      lock.show()  
     }
   }
 
+  render() {
+    return (
+      <Root
+        {...this.props}
+      />
+    )
+  }
+
 }
+
+export default withData(Index)

@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
-import { gql, graphql, compose } from 'react-apollo'
-import Template, {Centered} from './CMSTemplate'
-import {H2} from '../ui/h'
-import {Form, Label, Input, Select, Option} from '../ui/forms'
-import {Row, Column} from '../ui/layout'
-import {Button} from '../ui/buttons'
+import Template from '../CMSTemplate'
+import {Centered} from '../CMSTemplate/Template'
+import {H2} from '../../ui/h'
+import {Form, Label, Input, Select, Option} from '../../ui/forms'
+import {Row, Column} from '../../ui/layout'
+import {Button} from '../../ui/buttons'
 import router from 'next/router'
 
-class JoinOrCreate extends Component {
+export default class JoinOrCreate extends Component {
 
   state = {
     organizations: [],
@@ -19,6 +19,7 @@ class JoinOrCreate extends Component {
     const {
       addUserToOrganization,
       change,
+      props,
       state: {
         organizations,
         organizationId,
@@ -29,6 +30,7 @@ class JoinOrCreate extends Component {
     return (
       <Template
         drawer={false}
+        {...props}
       >
         <Centered>
           <Row>
@@ -158,42 +160,3 @@ class JoinOrCreate extends Component {
 
 
 }
-
-const organizations = gql`
-  query organizations {
-    organizations {
-      id
-      name
-      subdomain
-    }
-  }
-`
-
-const addUserToOrganization = gql`
-  mutation editOrCreateOrganization (
-    $orgId: ID
-    $newUserIds: [ID]
-    $name: String
-    $subdomain: String
-  ) {
-    editOrCreateOrganization (
-      id: $orgId
-      newUserIds: $newUserIds
-      name: $name
-      subdomain: $subdomain
-    ) {
-      id
-      name
-      subdomain
-    }
-  }
-`
-
-export default compose(
-  graphql(organizations),
-  graphql(addUserToOrganization, {
-    name: "addUserToOrganization",
-  })
-)(
-  JoinOrCreate
-)

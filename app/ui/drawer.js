@@ -28,6 +28,7 @@ const Toggler = styled.button`
   background-color: ${({theme}) => theme.colors.gray};
   border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
   outline: none;
+  z-index: 2;
 `
 
 
