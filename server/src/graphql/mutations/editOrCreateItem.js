@@ -5,9 +5,6 @@ export default async function editOrCreateItem(src, args, ctx){
   try {
     const {
       item: argItem,
-      item: {
-        id
-      },
       newOrganizationIds,
       mainImageId,
       newRelatedItemIds,
@@ -16,16 +13,20 @@ export default async function editOrCreateItem(src, args, ctx){
       newGroupIds,
     } = args
     let item
-    if (!id) {
+    if (!argItem) {
       item = await itemModel.create(argItem)
     }
 
-    await itemModel.update(argItem, {
-      where: {
-        id: id
-      }
-    })
-    item = await itemModel.findById(argItem.id)
+    if (argItem) {
+      item = await itemModel.update(argItem, {
+        where: {
+          id: argItem.id
+        }
+      })
+      item = await itemModel.findById(argItem.id)
+
+    }
+
 
 
     if (newOrganizationIds) {
@@ -33,7 +34,7 @@ export default async function editOrCreateItem(src, args, ctx){
     }
 
     if (mainImageId) {
-      await item.addMainImage(mainImageId)
+      await item.setMainImage(mainImageId)
     }
 
     if (newRelatedItemIds) {
@@ -48,7 +49,7 @@ export default async function editOrCreateItem(src, args, ctx){
       await item.addRelatedBooks(newRelatedBookIds)
     }
 
-    if (newRelatedGroupIds) {
+    if (newGroupIds) {
       await item.addGroups(newRelatedGroupIds)
     }
 

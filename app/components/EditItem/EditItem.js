@@ -4,12 +4,14 @@ import {EditContainer, EditTabContainer} from '../CMSTemplate/Template'
 import {H2} from '../../ui/h'
 import {Tab} from '../../ui/buttons'
 import {Form, Label, Input} from '../../ui/forms'
-import {Column} from '../../ui/layout'
+import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
+import Dropzone from '../Dropzone'
+import ImagePicker from '../ImagePicker/ImagePicker'
 
 export default class EditItem extends Component {
 
-  inputs = ["title", "medium", "artist", "dated", "accessionNumber", "currentLocation", "creditLine", "text"]
+  inputs = ["title", "localId", "medium", "artist", "dated", "accessionNumber", "currentLocation", "creditLine", "text"]
 
   constructor(props){
     super(props)
@@ -23,11 +25,22 @@ export default class EditItem extends Component {
 
 
   render() {
+
+    if (this.props.data.loading) return null
+
     const {
       state,
       inputs,
       change,
-      saveItem
+      saveItem,
+      props: {
+        data: {
+          organization,
+          organization: {
+            images
+          }
+        }
+      }
     } = this
     return (
       <Template
@@ -42,27 +55,44 @@ export default class EditItem extends Component {
           </Tab>
         </EditTabContainer>
         <EditContainer>
-          <Form>
-            {inputs.map( name => (
-              <Column
-                key={name}
+          <Row>
+            <Column>
+              <Form>
+                {inputs.map( name => (
+                  <Column
+                    key={name}
+                  >
+                    <Label>
+                      {name}
+                    </Label>
+                    <Input
+                      name={name}
+                      onChange={change}
+                      value={state[name]}
+                    />
+                  </Column>
+                ))}
+              </Form>
+              <Button
+                onClick={saveItem}
               >
-                <Label>
-                  {name}
-                </Label>
-                <Input
-                  name={name}
-                  onChange={change}
-                  value={state[name]}
-                />
-              </Column>
-            ))}
-          </Form>
-          <Button
-            onClick={saveItem}
-          >
-            Save Item
-          </Button>
+                Save Item
+              </Button>
+            </Column>
+            <Column>
+              <Label>
+                Main Image
+              </Label>
+              <ImagePicker
+                organization={organization}
+                images={images}
+              />
+              <Dropzone
+                orgId={organization.id}
+              />
+            </Column>
+          </Row>
+
         </EditContainer>
       </Template>
     )
@@ -83,7 +113,14 @@ export default class EditItem extends Component {
       const {
         state: {
           artist,
-          title
+          title,
+          localId,
+          medium,
+          dated,
+          accessionNumber,
+          currentLocation,
+          creditLine,
+          text
         },
         props: {
           data: {
@@ -98,11 +135,17 @@ export default class EditItem extends Component {
         variables: {
           itemId,
           artist,
-          title
+          title,
+          localId,
+          medium,
+          dated,
+          accessionNumber,
+          currentLocation,
+          creditLine,
+          text
         }
       })
 
-      console.log(response)
 
     } catch (ex) {
       console.error(ex)

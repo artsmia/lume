@@ -66,6 +66,7 @@ const typeDefs = `
     users: [User]
     groups: [Group]
     books: [Book]
+    images: [Image]
   }
 
   type Page {
@@ -146,6 +147,11 @@ const typeDefs = `
       emailDomain: String
       newUserIds: [ID]
     ): Organization
+
+    editOrCreateImage(
+      id: ID
+      organizationId: ID
+    ): Image
   }
 
 

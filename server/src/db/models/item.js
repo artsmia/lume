@@ -10,7 +10,10 @@ const item = db.define('item', {
   // localId: {
   //   type: Sequelize.STRING
   // },
-  title: Sequelize.STRING,
+  title: {
+    type: Sequelize.STRING,
+    defaultValue: "New Item"
+  },
   medium: Sequelize.STRING,
   artist: Sequelize.STRING,
   dated: Sequelize.STRING,

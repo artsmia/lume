@@ -1,28 +1,22 @@
-export default async function(e) {
+import {apiUrl} from '../config'
+
+export default async function(file, orgId) {
   try {
-    const file = e.target.files[0]
 
-    let data = new FormData()
-    data.append('file', file)
+    let form = new FormData()
+    form.append('file', file)
+    form.append("bucket", orgId)
 
-    const resp = await fetch("http://localhost:5000/image",{
+    const resp = await fetch(`${apiUrl}/image`,{
       method: "POST",
-      body: data
+      body: form
     })
 
-    const json = await resp.json()
+    const {data} = await resp.json()
 
-    console.log(json)
+    return data
 
   } catch (ex) {
     console.error(ex)
   }
 }
-
-        // <input
-        //   type={"file"}
-        //   name={"myPic"}
-        //   accept={"image/*"}
-        //   onChange={handleChange}
-        // />
-        //

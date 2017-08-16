@@ -16,6 +16,9 @@ export default class JoinOrCreate extends Component {
   }
 
   render() {
+
+    if (this.props.data.loading) return null
+
     const {
       addUserToOrganization,
       change,

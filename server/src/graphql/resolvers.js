@@ -19,6 +19,8 @@ import User from './root/User'
 //mutations
 import editOrCreateItem from './mutations/editOrCreateItem'
 import editOrCreateOrganization from './mutations/editOrCreateOrganization'
+import editOrCreateImage from './mutations/editOrCreateImage'
+
 
 const resolvers = {
   Query: {
@@ -35,7 +37,8 @@ const resolvers = {
   },
   Mutation: {
     editOrCreateItem,
-    editOrCreateOrganization
+    editOrCreateOrganization,
+    editOrCreateImage
   },
   Item,
   User,

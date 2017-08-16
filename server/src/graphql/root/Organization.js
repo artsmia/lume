@@ -4,11 +4,14 @@ import userOrganizationModel from '../../db/models/userOrganization'
 import {getUser} from '../../auth/management'
 
 const Organization = {
-  async users(organization){
+  async users(obj, args){
     try {
+      const {
+        id
+      } = obj.dataValues
       const userOrgs = await userOrganizationModel.findAll({
         where: {
-          organizationId: organization.id
+          organizationId: id
         }
       })
 
@@ -27,29 +30,33 @@ const Organization = {
       console.error(ex)
     }
   },
-  async items(organization){
+  async items(obj, args){
     try {
-      const organization = await organizationModel.findById(organization.id)
 
-      return await organization.getItems()
+
+      return await obj.getItems()
     } catch (ex) {
       console.error(ex)
     }
   },
-  async groups(organization){
+  async groups(obj, args){
     try {
-      const organization = await organizationModel.findById(organization.id)
 
-      return await organization.getGroups()
+      return await obj.getGroups()
     } catch (ex) {
       console.error(ex)
     }
   },
-  async books(organization){
+  async books(obj, args){
     try {
-      const organization = await organizationModel.findById(organization.id)
-
-      return await organization.getBooks()
+      return await obj.getBooks()
+    } catch (ex) {
+      console.error(ex)
+    }
+  },
+  async images(obj, args){
+    try {
+      return await obj.getImages()
     } catch (ex) {
       console.error(ex)
     }

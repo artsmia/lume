@@ -49,6 +49,14 @@ export async function createAssociations() {
       as: "book"
     })
 
+    image.belongsTo(organization, {
+      as: "organization"
+    })
+
+    organization.hasMany(image, {
+      as: "images"
+    })
+
     page.hasMany(image, {
       as: "images"
     })

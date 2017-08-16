@@ -18,6 +18,10 @@ export const Input = styled.input`
   border: solid 1px rgba(35,31,32, 0.3);
   color: inherit;
   outline: none;
+  &:placeholder {
+    color: ${({theme}) => theme.colors.lightMediumGray};
+    font-family: ${({theme}) => theme.fonts.light};
+  }
 `
 
 

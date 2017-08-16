@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import BrowseItems from '../../../components/BrowseItems'
 import withData from '../../../apollo/withData'
+import Cookie from 'js-cookie'
 
 class Items extends Component {
 

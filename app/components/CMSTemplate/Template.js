@@ -34,7 +34,7 @@ export default class Template extends Component {
                 <h2>{email}</h2>
                 <MenuItem
                   href={{
-                    pathname: 'cms/browse/items',
+                    pathname: '/cms/browse/items',
                     query: {
                       orgSub
                     }
