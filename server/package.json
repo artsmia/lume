@@ -41,7 +41,8 @@
     "jsonwebtoken": "^7.4.2",
     "multer": "^1.3.0",
     "pg": "^7.0.2",
-    "sequelize": "^4.4.2"
+    "sequelize": "^4.4.2",
+    "sharp": "^0.18.2"
   },
   "now": {
     "alias": "api.knight.u100.io"

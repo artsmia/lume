@@ -20,28 +20,29 @@ export default class extends Component {
       }
     } = this
     return (
-      <Column>
         <Dropzone
           accept={'image/*'}
           onDropAccepted={handleDrop}
           style={{
-            width: "400px",
-            height: "600px",
-            border: "2px dashed grey",
-            display: "flex",
-            alignItems: "center"
+            width: '100%',
+            height: '600px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            border: '2px dashed lightgray',
+            boxSizing: 'border-box'
           }}
         >
           <Preview
             src={file.preview}
           />
+          <Button
+            onClick={save}
+          >
+            Save
+          </Button>
         </Dropzone>
-        <Button
-          onClick={save}
-        >
-          Save
-        </Button>
-      </Column>
     )
   }
 
@@ -67,4 +68,5 @@ export default class extends Component {
 
 const Preview = styled.img`
   width: 100%;
+  object-fit: contain;
 `

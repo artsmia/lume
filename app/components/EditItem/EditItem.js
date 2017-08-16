@@ -13,6 +13,10 @@ export default class EditItem extends Component {
 
   inputs = ["title", "localId", "medium", "artist", "dated", "accessionNumber", "currentLocation", "creditLine", "text"]
 
+  state = {
+    upload: true
+  }
+
   constructor(props){
     super(props)
     this.inputs.forEach( name => {
@@ -40,7 +44,11 @@ export default class EditItem extends Component {
             images
           }
         }
-      }
+      },
+      state: {
+        upload
+      },
+      toggleUpload
     } = this
     return (
       <Template
@@ -80,16 +88,21 @@ export default class EditItem extends Component {
               </Button>
             </Column>
             <Column>
-              <Label>
-                Main Image
-              </Label>
-              <ImagePicker
-                organization={organization}
-                images={images}
-              />
-              <Dropzone
-                orgId={organization.id}
-              />
+              <Button
+                onClick={toggleUpload}
+              >
+                {(upload) ? "Upload" : "Choose"}
+              </Button>
+              {(upload) ? (
+                <ImagePicker
+                  organization={organization}
+                  images={images}
+                />
+              ) : (
+                <Dropzone
+                  orgId={organization.id}
+                />
+              )}
             </Column>
           </Row>
 
@@ -105,6 +118,8 @@ export default class EditItem extends Component {
       })
     })
   }
+
+  toggleUpload = () => this.setState( ({upload}) => ({upload: !upload}))
 
   change = ({target: {name, value}}) => this.setState({[name]: value})
 

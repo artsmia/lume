@@ -2,39 +2,52 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
+import {Container, ThumbColumn, Right, Preview, ImgThumb} from './styled'
 
 export default class ImagePicker extends Component {
 
+  state = {
+    selectedImageId: false,
+  }
 
   render() {
     const {
-      organization,
-      images
-    } = this.props
+      props: {
+        organization,
+        images,
+      },
+      state: {
+        selectedImageId,
+      },
+      selectImage,
+    } = this
     return (
-      <Column>
-        <Row>
-          <Column>
-            {images.map( (image) => (
-              <Thumb
+      <Container>
+        <ThumbColumn>
+          {
+            images.map( (image) => (
+              <ImgThumb
                 key={image.id}
-                src={`https://s3.amazonaws.com/${organization.id}/${image.id}`}
+                src={`https://s3.amazonaws.com/${organization.id}/${image.id}--s`}
+                onClick={()=>{selectImage(image.id)}}
               />
-            ))}
-          </Column>
-        </Row>
-        <Button>
-          Choose Image
-        </Button>
-      </Column>
+            ))
+          }
+        </ThumbColumn>
+        <Right>
+          <Preview
+            src={`https://s3.amazonaws.com/${organization.id}/${selectedImageId}`}
+          />
+
+        </Right>
+
+      </Container>
     )
   }
 
+  selectImage = (selectedImageId) => {
+    this.setState({selectedImageId})
+    this.props.onImageSelection(selectedImageId)
+  }
+
 }
-
-
-const Thumb = styled.img`
-  width: 100px;
-  height: 80px;
-  object-fit: cover;
-`

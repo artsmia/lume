@@ -8,7 +8,7 @@ const Book = {
     } catch (ex) {
       console.error(ex)
     }
-  }
+  },
   async relatedItems(book){
     try {
       const book = await bookModel.findById(book.id)

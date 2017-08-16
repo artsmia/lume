@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk'
 import uuid from 'uuid/v4'
+import sharp from 'sharp'
 
 const s3 = new AWS.S3()
 
@@ -31,6 +32,9 @@ export default async function (req,res, next) {
       })
     }
 
+    const thumb = await sharp(buffer).resize(100).toBuffer()
+
+
     const result = await upload({
       Key: fileId,
       Bucket: bucket,
@@ -38,6 +42,16 @@ export default async function (req,res, next) {
       ACL: "public-read",
       ContentType: mimetype
     })
+
+    const thumbResult = await upload({
+      Key: `${fileId}--s`,
+      Bucket: bucket,
+      Body: thumb,
+      ACL: "public-read",
+      ContentType: mimetype
+    })
+
+    console.log(thumbResult)
 
     req.body = {
       query: `mutation {
