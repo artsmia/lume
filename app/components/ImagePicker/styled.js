@@ -46,4 +46,5 @@ export const ImgThumb = styled.img`
   height: 100px;
   object-fit: cover;
   margin: 5px;
+  box-shadow: ${({selected}) => (selected) ? '0 0 10px blue' : 'none'};
 `

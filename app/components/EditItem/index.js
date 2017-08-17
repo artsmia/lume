@@ -18,6 +18,9 @@ const pageData = gql`
       currentLocation
       creditLine
       text
+      mainImage {
+        id
+      }
     }
     user (id: $userId) {
       id
@@ -45,6 +48,7 @@ const editItem = gql`
     $currentLocation: String
     $creditLine: String
     $text: String
+    $mainImageId: ID
   ) {
     editOrCreateItem (
       item: {
@@ -58,6 +62,7 @@ const editItem = gql`
         creditLine: $creditLine
         text: $text
       }
+      mainImageId: $mainImageId
     ) {
       id
       title
@@ -69,6 +74,9 @@ const editItem = gql`
       currentLocation
       creditLine
       text
+      mainImage {
+        id
+      }
     }
   }
 `

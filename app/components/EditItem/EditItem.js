@@ -42,13 +42,17 @@ export default class EditItem extends Component {
           organization,
           organization: {
             images
+          },
+          item: {
+            mainImage
           }
         }
       },
       state: {
         upload
       },
-      toggleUpload
+      toggleUpload,
+      onImageSelection
     } = this
     return (
       <Template
@@ -97,6 +101,8 @@ export default class EditItem extends Component {
                 <ImagePicker
                   organization={organization}
                   images={images}
+                  onImageSelection={onImageSelection}
+                  initialImageId={mainImage.id}
                 />
               ) : (
                 <Dropzone
@@ -123,6 +129,10 @@ export default class EditItem extends Component {
 
   change = ({target: {name, value}}) => this.setState({[name]: value})
 
+  onImageSelection = (selectedImageId) => {
+    this.setState({mainImageId: selectedImageId})
+  }
+
   saveItem = async () => {
     try {
       const {
@@ -135,7 +145,8 @@ export default class EditItem extends Component {
           accessionNumber,
           currentLocation,
           creditLine,
-          text
+          text,
+          mainImageId
         },
         props: {
           data: {
@@ -157,7 +168,8 @@ export default class EditItem extends Component {
           accessionNumber,
           currentLocation,
           creditLine,
-          text
+          text,
+          mainImageId
         }
       })
 
