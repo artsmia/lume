@@ -11,9 +11,7 @@ export default class Template extends Component {
 
 
   render() {
-    if (this.props.data.loading) {
-      return null
-    }
+
     const {
       props: {
         drawer
@@ -22,13 +20,6 @@ export default class Template extends Component {
     return (
       <MiaUI>
         <Container>
-          {(drawer) ? (
-            <Drawer>
-              <h2>Hello</h2>
-            </Drawer>
-
-          ) : null}
-
 
           {this.props.children}
 
@@ -46,26 +37,16 @@ export default class Template extends Component {
 const Container = styled.div`
   display: grid;
   width: 100%;
+  height: 100%;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 80px 400px auto;
-  padding: 0px 10px;
+  padding: 0px;
   box-sizing: border-box;
 `
 
-export const Centered = styled.div`
-  grid-column: 3 / 10;
-  grid-row: 2 / 3;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
-  padding: 20px;
-`
-
 export const ItemsContainer = styled.div`
-  position: fixed;
-  left: 300px;
+  grid-column: 4 / 12;
+  grid-row: 1 / 4;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -74,4 +55,25 @@ export const ItemsContainer = styled.div`
   flex-wrap: wrap;
   padding: 20px;
   box-sizing: border-box;
+`
+
+export const SideContainer = styled.div`
+  grid-column: 1 / 4;
+  grid-row: 1 / 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10px;
+`
+
+export const FeatureContainer = styled.div`
+  grid-column: 4 / 13;
+  grid-row: 1 / 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({theme}) => theme.colors.gray};
+  max-height: 100vh;
 `

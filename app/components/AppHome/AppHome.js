@@ -1,21 +1,19 @@
 import React, {Component} from 'react'
 import AppTemplate from '../AppTemplate/Template'
-import {ItemsContainer} from '../AppTemplate/Template'
+import {ItemsContainer, SideContainer} from '../AppTemplate/Template'
 import {H2, H3} from '../../ui/h'
 import {Button} from '../../ui/buttons'
 import {Link} from '../../ui/links'
 import {Column} from '../../ui/layout'
-import styled from 'styled-components'
-
-const TestImage = styled.div`
-  display: flex;
-  min-width: 250px;
-  height: 200px;
-  background-color: salmon;
-  margin: 10px;
-`
+import {AppSearchImage} from '../../ui/images'
+import {s3Url} from '../../config'
+import {Search} from '../../ui/search'
 
 export default class AppHome extends Component {
+
+  state = {
+    search: ""
+  }
 
   render() {
 
@@ -24,25 +22,52 @@ export default class AppHome extends Component {
     }
 
     const {
-      showLock,
       props,
       props: {
         data: {
-          organization
+          organization,
+          organization: {
+            items
+          }
         }
-      }
+      },
+      state: {
+        search
+      },
+      handleChange
     } = this
-    const array = new Array(10).fill("Yo")
     return (
       <AppTemplate
         {...props}
-        drawer={true}
       >
+        <SideContainer>
+          <H2>Search Art Stories</H2>
+          <Search
+            name={"search"}
+            value={search}
+            onChange={handleChange}
+          />
+        </SideContainer>
         <ItemsContainer>
-          {array.map((item, index) => <TestImage key={index}/>)}
+          {items.map((item, index) => (
+            <AppSearchImage
+              key={index}
+              src={`${s3Url}/${organization.id}/${item.mainImage.id}--m`}
+              href={{
+                pathname: 'app/item',
+                query: {
+                  orgSub: organization.subdomain,
+                  itemId: item.id
+                }
+              }}
+              as={`/${organization.subdomain}/item/${item.id}`}
+            />
+          ))}
         </ItemsContainer>
       </AppTemplate>
     )
   }
+
+  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
 }

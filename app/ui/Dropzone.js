@@ -50,7 +50,7 @@ export default class extends Component {
         <Button
           onClick={save}
         >
-          Save
+          Upload
         </Button>
       </Container>
     )

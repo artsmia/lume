@@ -7,6 +7,7 @@ import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import ImageModule from '../../ui/ImageModule'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
+import {PreviewAppItem} from '../AppItem'
 
 
 export default class EditItem extends Component {
@@ -49,9 +50,8 @@ export default class EditItem extends Component {
         }
       },
       state: {
-        upload
+        mainImageId
       },
-      toggleUpload,
       onImageSelection
     } = this
     return (
@@ -112,6 +112,22 @@ export default class EditItem extends Component {
               </Row>
 
             </TabBody>
+            <TabBody
+              name={"preview"}
+            >
+              <PreviewAppItem
+                data={{
+                  loading: false,
+                  organization,
+                  item: {
+                    ...state,
+                    mainImage: {
+                      id: mainImageId
+                    }
+                  }
+                }}
+              />
+            </TabBody>
           </TabContainer>
         </EditContainer>
 
@@ -125,9 +141,9 @@ export default class EditItem extends Component {
         [name]: newProps.data.item[name] || ""
       })
     })
+    this.setState({mainImageId: newProps.data.item.mainImage.id})
   }
 
-  toggleUpload = () => this.setState( ({upload}) => ({upload: !upload}))
 
   change = ({target: {name, value}}) => this.setState({[name]: value})
 

@@ -34,6 +34,7 @@ export default async function (req,res, next) {
 
     const thumb = await sharp(buffer).resize(100).toBuffer()
 
+    const medium = await sharp(buffer).resize(400).toBuffer()
 
     const result = await upload({
       Key: fileId,
@@ -51,7 +52,13 @@ export default async function (req,res, next) {
       ContentType: mimetype
     })
 
-    console.log(thumbResult)
+    const mediumResult = await upload({
+      Key: `${fileId}--m`,
+      Bucket: bucket,
+      Body: medium,
+      ACL: "public-read",
+      ContentType: mimetype
+    })
 
     req.body = {
       query: `mutation {

@@ -121,7 +121,6 @@ export class TabBody extends Component {
 }
 
 const Container = styled.div`
-  height: 800px;
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Button} from './buttons'
 import styled from 'styled-components'
+import {s3Url} from '../config'
 
 export default class ImagePicker extends Component {
 
@@ -26,7 +27,7 @@ export default class ImagePicker extends Component {
           {images.map( (image) => (
             <ImgThumb
               key={image.id}
-              src={`https://s3.amazonaws.com/${organization.id}/${image.id}--s`}
+              src={`${s3Url}/${organization.id}/${image.id}--s`}
               onClick={()=>{selectImage(image.id)}}
               selected={(selectedImageId === image.id)}
             />
@@ -37,7 +38,7 @@ export default class ImagePicker extends Component {
         </ThumbColumn>
         <Right>
           <Preview
-            src={`https://s3.amazonaws.com/${organization.id}/${selectedImageId}`}
+            src={`${s3Url}/${organization.id}/${selectedImageId}`}
           />
 
         </Right>

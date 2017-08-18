@@ -6,6 +6,7 @@ let apiUrl
 let auth0ID
 let auth0Domain
 let url
+let s3Url
 
 switch (environment) {
   case "production": {
@@ -13,6 +14,7 @@ switch (environment) {
     auth0ID = "j8pjiCmNfc74AYnuP8MR0PZAbk68syv6"
     auth0Domain = "artsmia.auth0.com"
     url = "https://knight.u100.io"
+    s3Url = "https://s3.amazonaws.com"
     break
   }
   default: {
@@ -20,6 +22,7 @@ switch (environment) {
     auth0ID = "j8pjiCmNfc74AYnuP8MR0PZAbk68syv6"
     auth0Domain = "artsmia.auth0.com"
     url = "http://localhost:3000"
+    s3Url = "https://s3.amazonaws.com"
   }
 }
 
@@ -28,5 +31,6 @@ export {
   apiUrl,
   auth0ID,
   auth0Domain,
-  url
+  url,
+  s3Url
 }
