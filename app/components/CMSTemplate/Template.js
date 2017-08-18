@@ -84,7 +84,7 @@ export const Centered = styled.div`
 
 export const EditContainer = styled.div`
   grid-column: 1 / span 6;
-  grid-row: 2 / span 2;
+  grid-row: 1 / span 3;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

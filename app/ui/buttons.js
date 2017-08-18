@@ -25,10 +25,3 @@ export const Button = styled.button`
   }
 
 `
-
-export const Tab = styled(Button)`
-  background-color: ${({theme}) => theme.colors.white};
-  color: ${({theme}) => theme.colors.black};
-  border: ${({theme}) => `1px solid ${theme.colors.mediumGray}`};
-  margin: 0;
-`

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import NextLink from 'next/link'
 
-const LinkStyled = styled.a`
+export const LinkStyled = styled.a`
   color: ${({theme}) => theme.colors.black};
   border-bottom: 1px solid ${({theme}) => theme.colors.transparent};
   text-decoration: none;
@@ -13,7 +13,7 @@ const LinkStyled = styled.a`
   }
 `
 
-const BoldLinkStyled = styled(LinkStyled)`
+export const BoldLinkStyled = styled(LinkStyled)`
   font-family: ${({theme}) => theme.fonts.bold};
   text-transform: uppercase;
   font-size: 1.1rem;

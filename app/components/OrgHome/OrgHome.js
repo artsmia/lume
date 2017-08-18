@@ -26,9 +26,7 @@ export default class Home extends Component {
         {...props}
       >
         <Centered>
-          <H2>
-            {name}
-          </H2>
+
         </Centered>
       </CMSTemplate>
     )
