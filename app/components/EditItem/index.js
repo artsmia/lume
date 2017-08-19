@@ -83,7 +83,7 @@ const editItem = gql`
 
 export default compose(
   graphql(pageData, {
-    options: ({userId, orgSub, url: {query: {itemId}}}) => ({
+    options: ({userId, orgSub, itemId}) => ({
       variables: {
         itemId,
         userId,

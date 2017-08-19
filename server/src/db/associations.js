@@ -14,6 +14,7 @@ import {
 export async function createAssociations() {
   try {
 
+
     item.belongsToMany(group, {
       as: 'groups',
       through: 'item_group',
@@ -36,11 +37,16 @@ export async function createAssociations() {
       foreignKey: 'bookId'
     })
 
-    detail.belongsTo(item, {
-      as: "item"
+    item.hasMany(detail, {
+      as: "details"
     })
 
-    detail.hasMany(clip)
+    detail.belongsTo(item, {
+      as: "item",
+      constraints: false
+    })
+
+    clip.hasOne(detail)
 
     book.hasMany(page, {
       as: "pages"
@@ -48,6 +54,15 @@ export async function createAssociations() {
     page.belongsTo(book, {
       as: "book"
     })
+
+    detail.belongsTo(image, {
+      as: "image"
+    })
+
+    image.hasMany(detail, {
+      as: "details"
+    })
+
 
     image.belongsTo(organization, {
       as: "organization"
@@ -109,6 +124,7 @@ export async function createAssociations() {
       through: "book_organization",
       foreignKey: "organizationId"
     })
+
 
 
 

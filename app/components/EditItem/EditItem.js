@@ -31,6 +31,7 @@ export default class EditItem extends Component {
 
   render() {
 
+
     if (this.props.data.loading) return null
 
     const {
@@ -54,6 +55,7 @@ export default class EditItem extends Component {
       },
       onImageSelection
     } = this
+
     return (
       <Template
         {...this.props}
@@ -106,7 +108,7 @@ export default class EditItem extends Component {
                     organization={organization}
                     images={images}
                     onImageSelection={onImageSelection}
-                    initialImageId={mainImage.id}
+                    initialImageId={mainImageId}
                   />
                 </Column>
               </Row>
@@ -136,12 +138,19 @@ export default class EditItem extends Component {
   }
 
   componentWillReceiveProps(newProps){
+    const {
+      mainImage
+    } = newProps.data.item
     this.inputs.forEach( name => {
       this.setState({
         [name]: newProps.data.item[name] || ""
       })
     })
-    this.setState({mainImageId: newProps.data.item.mainImage.id})
+    if (mainImage) {
+      this.setState({mainImageId: newProps.data.item.mainImage.id})
+    } else {
+      this.setState({mainImageId: ""})
+    }
   }
 
 

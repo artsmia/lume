@@ -7,9 +7,9 @@ const item = db.define('item', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
-  // localId: {
-  //   type: Sequelize.STRING
-  // },
+  localId: {
+    type: Sequelize.STRING
+  },
   title: {
     type: Sequelize.STRING,
     defaultValue: "New Item"

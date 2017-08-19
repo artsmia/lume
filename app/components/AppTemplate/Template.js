@@ -77,3 +77,15 @@ export const FeatureContainer = styled.div`
   background-color: ${({theme}) => theme.colors.gray};
   max-height: 100vh;
 `
+
+
+export const Centered = styled.div`
+  grid-column: 3 / 10;
+  grid-row: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
+  padding: 20px;
+`

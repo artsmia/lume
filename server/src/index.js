@@ -13,6 +13,7 @@ import {
   graphqlExpress,
   graphiqlExpress,
 } from 'apollo-server-express'
+import iiif, {info} from './iiif'
 
 const upload = multer()
 
@@ -34,6 +35,10 @@ server.use("/image", upload.single("file") , imageRoute)
 server.use('/graphiql', graphiqlExpress({
   endpointURL: '/'
 }))
+
+server.use('/iiif/:identifier/info.json', info)
+
+server.use('/iiif/:identifier/:region/:size/:rotation/:quality.:format', iiif)
 
 server.use('/', graphqlExpress((req, res) => {
   return {
