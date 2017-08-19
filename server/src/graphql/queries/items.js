@@ -1,9 +1,34 @@
 import itemModel from '../../db/models/item'
+import organizationModel from '../../db/models/organization'
 
-
-export default async function items(src, args, ctx){
+export default async function items(src, {organizationId, groupId, search}, ctx){
   try {
-    return await itemModel.findAll()
+
+    let options = []
+
+    if (search) {
+      options.push({
+        where: {
+          title: {
+            $iRegexp: search
+          }
+        }
+      })
+    }
+
+    if (organizationId){
+      options.push({
+        include: [{
+          model: organizationModel,
+          as: "organizations",
+          where: {
+            id: organizationId
+          }
+        }]
+      })
+    }
+
+    return await itemModel.findAll(...options)
   } catch (ex) {
     console.error(ex)
   }

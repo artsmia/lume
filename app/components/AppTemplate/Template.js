@@ -42,6 +42,7 @@ const Container = styled.div`
   grid-template-rows: 80px 400px auto;
   padding: 0px;
   box-sizing: border-box;
+  min-height: 100vh;
 `
 
 export const ItemsContainer = styled.div`
@@ -75,7 +76,7 @@ export const FeatureContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({theme}) => theme.colors.gray};
-  max-height: 100vh;
+  max-height: 100%;
 `
 
 

@@ -69,13 +69,13 @@ export default class extends Component {
           </TabContainer>
         </SideContainer>
         <FeatureContainer>
-          <Zoomer
+          {/* <Zoomer
             organizationId={organization.id}
             imageId={mainImage.id}
-          />
-          {/* <LargeImage
-            src={`${s3Url}/${organization.id}/${mainImage.id}/original`}
           /> */}
+          <LargeImage
+            src={`${s3Url}/${organization.id}/${mainImage.id}/original`}
+          />
         </FeatureContainer>
       </AppTemplate>
     )

@@ -123,7 +123,11 @@ const typeDefs = `
         id: ID
     ): User
 
-    items: [Item]
+    items (
+      organizationId: ID
+      groupId: ID
+      search: String
+    ): [Item]
 
     organizations: [Organization]
 
