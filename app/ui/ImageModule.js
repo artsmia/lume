@@ -15,7 +15,7 @@ export default class extends Component {
         organization,
         images,
         onImageSelection,
-        initialImageId
+        mainImageId
       }
     } = this
     return (
@@ -44,7 +44,7 @@ export default class extends Component {
             name={"current"}
           >
             <LargeImage
-              src={`${s3Url}/${organization.id}/${initialImageId}`}
+              src={`${s3Url}/${organization.id}/${mainImageId}/m`}
             />
           </TabBody>
           <TabBody
@@ -54,7 +54,7 @@ export default class extends Component {
               organization={organization}
               images={images}
               onImageSelection={onImageSelection}
-              initialImageId={initialImageId}
+              mainImageId={mainImageId}
             />
           </TabBody>
           <TabBody

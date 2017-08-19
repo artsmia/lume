@@ -1,11 +1,15 @@
 import info from './info'
 import sharp from 'sharp'
 import fetch from 'node-fetch'
+import imageModel from '../db/models/image'
 
 export default async function(req, res, next){
   try {
+
+    console.log("why here")
+
     const {
-      identifier,
+      identifier: imageId,
       region,
       size,
       rotation,
@@ -13,13 +17,12 @@ export default async function(req, res, next){
       format
     } = req.params
 
-    const [
-      orgId,
-      imageId
-    ] = identifier.split("|")
+    const {
+      organizationId
+    } = await imageModel.findById(imageId)
 
     const response = await fetch(
-      `https://s3.amazonaws.com/${orgId}/${imageId}`, {
+      `https://s3.amazonaws.com/${organizationId}/${imageId}/original`, {
       method: 'GET'
     })
 
@@ -198,6 +201,8 @@ export default async function(req, res, next){
 
   } catch (ex) {
     console.error(ex)
+    res.status(400)
+    res.send("Bad Request")
   }
 }
 

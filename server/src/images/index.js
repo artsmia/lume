@@ -1,6 +1,8 @@
 import AWS from 'aws-sdk'
 import uuid from 'uuid/v4'
 import sharp from 'sharp'
+import fs from 'fs'
+import rimraf from 'rimraf'
 
 const s3 = new AWS.S3()
 
@@ -32,33 +34,46 @@ export default async function (req,res, next) {
       })
     }
 
-    const thumb = await sharp(buffer).resize(100).toBuffer()
+    const s = await sharp(buffer).resize(100).toBuffer()
 
-    const medium = await sharp(buffer).resize(400).toBuffer()
+    const m = await sharp(buffer).resize(400).toBuffer()
 
-    const result = await upload({
-      Key: fileId,
+
+    await upload({
+      Key: `${fileId}/original`,
       Bucket: bucket,
       Body: buffer,
       ACL: "public-read",
       ContentType: mimetype
     })
 
-    const thumbResult = await upload({
-      Key: `${fileId}--s`,
+    await upload({
+      Key: `${fileId}/s`,
       Bucket: bucket,
-      Body: thumb,
+      Body: s,
       ACL: "public-read",
       ContentType: mimetype
     })
 
-    const mediumResult = await upload({
-      Key: `${fileId}--m`,
+    await upload({
+      Key: `${fileId}/m`,
       Bucket: bucket,
-      Body: medium,
+      Body: m,
       ACL: "public-read",
       ContentType: mimetype
     })
+
+    await sharp(buffer).png().tile({size: 512, layout: 'zoomify'}).toFile(`src/images/${fileId}`)
+
+    const files = await readDir(`/${fileId}/TileGroup0`)
+
+
+    await Promise.all(
+      files.map( file => bulkUpload(file, fileId, bucket))
+    )
+
+    await deleteDirectory(`/${fileId}`)
+
 
     req.body = {
       query: `mutation {
@@ -103,6 +118,48 @@ function createBucket(params){
     s3.createBucket(params, (err, data) => {
       if (err) reject(err)
       resolve(data)
+    })
+  })
+}
+
+function readFile(path){
+  return new Promise( (resolve, reject) => {
+    fs.readFile(__dirname + path, (err, data) => {
+      if (err) reject(err)
+      resolve(data)
+    })
+  })
+}
+
+function readDir(path){
+  return new Promise( (resolve, reject) => {
+    fs.readdir(__dirname + path, (err, data) => {
+      if (err) reject(err)
+      resolve(data)
+    })
+  })
+}
+
+async function bulkUpload(file, fileId, bucket){
+  try {
+    const buffer = await readFile(`/${fileId}/TileGroup0/${file}`)
+    await upload({
+      Key: `${fileId}/tiles/${file}`,
+      Bucket: bucket,
+      Body: buffer,
+      ACL: "public-read",
+      ContentType: 'image/png'
+    })
+  } catch (ex) {
+    console.error(ex)
+  }
+}
+
+function deleteDirectory(path){
+  return new Promise( (resolve, reject) => {
+    rimraf(`${__dirname}${path}`, (err) => {
+      console.log(err)
+      resolve()
     })
   })
 }

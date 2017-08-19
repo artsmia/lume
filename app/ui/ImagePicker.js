@@ -6,7 +6,7 @@ import {s3Url} from '../config'
 export default class ImagePicker extends Component {
 
   state = {
-    selectedImageId: this.props.initialImageId,
+    selectedImageId: "",
   }
 
   render() {
@@ -14,10 +14,11 @@ export default class ImagePicker extends Component {
       props: {
         organization,
         images,
-        initialImageId
+        initialImageId,
+        mainImageId
       },
       state: {
-        selectedImageId,
+        selectedImageId
       },
       selectImage,
     } = this
@@ -27,7 +28,7 @@ export default class ImagePicker extends Component {
           {images.map( (image) => (
             <ImgThumb
               key={image.id}
-              src={`${s3Url}/${organization.id}/${image.id}--s`}
+              src={`${s3Url}/${organization.id}/${image.id}/s`}
               onClick={()=>{selectImage(image.id)}}
               selected={(selectedImageId === image.id)}
             />
@@ -38,7 +39,7 @@ export default class ImagePicker extends Component {
         </ThumbColumn>
         <Right>
           <Preview
-            src={`${s3Url}/${organization.id}/${selectedImageId}`}
+            src={`${s3Url}/${organization.id}/${(selectedImageId) ? selectedImageId : mainImageId}/m`}
           />
 
         </Right>
@@ -51,6 +52,10 @@ export default class ImagePicker extends Component {
   selectImage = (selectedImageId) => {
     this.setState({selectedImageId})
     this.props.onImageSelection(selectedImageId)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({selectedImageId: nextProps.initialImageId})
   }
 
 }

@@ -2,11 +2,29 @@ import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-export const LargeImage = styled.img`
+const LIContainer = styled.div`
+  height: 100vh;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
+
+const LImg = styled.img`
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: scale-down;
+`
+
+export const LargeImage = ({src}) => (
+  <LIContainer>
+    <LImg
+      src={src}
+    />
+  </LIContainer>
+)
+
+
 export const SearchImage = styled.img`
   display: flex;
   width: 250px;

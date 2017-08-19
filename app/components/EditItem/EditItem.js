@@ -45,6 +45,7 @@ export default class EditItem extends Component {
           organization: {
             images
           },
+          item,
           item: {
             mainImage
           }
@@ -108,7 +109,7 @@ export default class EditItem extends Component {
                     organization={organization}
                     images={images}
                     onImageSelection={onImageSelection}
-                    initialImageId={mainImageId}
+                    mainImageId={mainImageId}
                   />
                 </Column>
               </Row>

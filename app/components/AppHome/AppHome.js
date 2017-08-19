@@ -52,7 +52,7 @@ export default class AppHome extends Component {
           {items.map((item, index) => (
             <AppSearchImage
               key={index}
-              src={`${s3Url}/${organization.id}/${item.mainImage.id}--m`}
+              src={`${s3Url}/${organization.id}/${item.mainImage.id}/m`}
               href={{
                 pathname: 'app/item',
                 query: {
