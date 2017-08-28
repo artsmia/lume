@@ -86,6 +86,6 @@ const Container = styled.div`
 `
 
 const Preview = styled.img`
-  width: 100%;
+  height: 100%;
   object-fit: contain;
 `

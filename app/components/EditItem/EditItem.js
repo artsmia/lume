@@ -2,13 +2,13 @@ import React, {Component} from 'react'
 import Template from '../CMSTemplate'
 import {EditContainer} from '../CMSTemplate/Template'
 import {H2} from '../../ui/h'
-import {Form, Label, Input} from '../../ui/forms'
+import {Form, Label, Input, TextArea} from '../../ui/forms'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import ImageModule from '../../ui/ImageModule'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import {PreviewAppItem} from '../AppItem'
-
+import DetailEditor from '../DetailEditor/DetailEditor'
 
 export default class EditItem extends Component {
 
@@ -35,6 +35,7 @@ export default class EditItem extends Component {
     if (this.props.data.loading) return null
 
     const {
+      addDetail,
       state,
       inputs,
       change,
@@ -47,14 +48,15 @@ export default class EditItem extends Component {
           },
           item,
           item: {
-            mainImage
+            mainImage,
+            details
           }
         }
       },
       state: {
         mainImageId
       },
-      onImageSelection
+      onImageSelection,
     } = this
 
     return (
@@ -82,6 +84,9 @@ export default class EditItem extends Component {
             >
               <Row>
                 <Column>
+                  <H2>
+                    Information
+                  </H2>
                   <Form>
                     {inputs.map( name => (
                       <Column
@@ -90,11 +95,19 @@ export default class EditItem extends Component {
                         <Label>
                           {name}
                         </Label>
-                        <Input
-                          name={name}
-                          onChange={change}
-                          value={state[name]}
-                        />
+                        {(name === "text") ? (
+                          <TextArea
+                            name={name}
+                            onChange={change}
+                            value={state[name]}
+                          />
+                        ): (
+                          <Input
+                            name={name}
+                            onChange={change}
+                            value={state[name]}
+                          />
+                        )}
                       </Column>
                     ))}
                   </Form>
@@ -105,6 +118,9 @@ export default class EditItem extends Component {
                   </Button>
                 </Column>
                 <Column>
+                  <H2>
+                    Item Main Image
+                  </H2>
                   <ImageModule
                     organization={organization}
                     images={images}
@@ -114,6 +130,17 @@ export default class EditItem extends Component {
                 </Column>
               </Row>
 
+              <Column>
+                { (details) ?
+                  details.map( detail => <DetailEditor detail={detail} />)
+                  : null
+                }
+                <Button
+                  onClick={addDetail}
+                >
+                  Add Detail
+                </Button>
+              </Column>
             </TabBody>
             <TabBody
               name={"preview"}
@@ -139,6 +166,7 @@ export default class EditItem extends Component {
   }
 
   componentWillReceiveProps(newProps){
+
     const {
       mainImage
     } = newProps.data.item
@@ -148,7 +176,7 @@ export default class EditItem extends Component {
       })
     })
     if (mainImage) {
-      this.setState({mainImageId: newProps.data.item.mainImage.id})
+      this.setState({mainImageId: mainImage.id})
     } else {
       this.setState({mainImageId: ""})
     }
@@ -181,11 +209,12 @@ export default class EditItem extends Component {
             item: {
               id: itemId
             }
-          }
+          },
+          editItem
         }
       } = this
 
-      const response = await this.props.editItem({
+      await editItem({
         variables: {
           itemId,
           artist,
@@ -201,6 +230,30 @@ export default class EditItem extends Component {
         }
       })
 
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  addDetail = async () => {
+    try {
+      const {
+        props: {
+          data: {
+            item: {
+              id: itemId
+            }
+          },
+          editOrCreateDetail
+        },
+      } = this
+
+      await editOrCreateDetail({
+        variables: {
+          itemId
+        }
+      })
 
     } catch (ex) {
       console.error(ex)

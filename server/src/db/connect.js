@@ -1,12 +1,12 @@
 import Sequelize from 'sequelize'
 
 const {
-  db_host: host,
-  db_port: port,
-  db_username: username,
-  db_password: password,
-  db_database: database,
-  db_dialect: dialect
+  mysql_host: host,
+  mysql_port: port,
+  mysql_user: username,
+  mysql_password: password,
+  mysql_database: database,
+  mysql_dialect: dialect
 } = process.env
 
 console.log(host)

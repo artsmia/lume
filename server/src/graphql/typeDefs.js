@@ -20,7 +20,7 @@ const typeDefs = `
     title: String
     item: Item
     clips: [Clip]
-    images: [Image]
+    image: Image
   }
 
   type Group {
@@ -55,6 +55,7 @@ const typeDefs = `
     relatedBooks: [Book]
     groups: [Group]
     organizations: [Organization]
+    details: [Detail]
   }
 
   type Organization {
@@ -156,6 +157,12 @@ const typeDefs = `
       id: ID
       organizationId: ID
     ): Image
+
+    editOrCreateDetail(
+      id: ID
+      title: String
+      itemId: ID
+    ): Detail
   }
 
 

@@ -26,6 +26,7 @@ export async function createAssociations() {
       foreignKey: 'groupId'
     })
 
+
     item.belongsToMany(book, {
       as: 'relatedBooks',
       through: 'item_book',
@@ -41,12 +42,12 @@ export async function createAssociations() {
       as: "details"
     })
 
-    detail.belongsTo(item, {
-      as: "item",
-      constraints: false
-    })
+    // detail.belongsTo(item, {
+    //   as: "item",
+    //   constraints: false
+    // })
 
-    clip.hasOne(detail)
+    clip.belongsTo(detail, {as: "detail"})
 
     book.hasMany(page, {
       as: "pages"
@@ -59,9 +60,9 @@ export async function createAssociations() {
       as: "image"
     })
 
-    image.hasMany(detail, {
-      as: "details"
-    })
+    // image.hasMany(detail, {
+    //   as: "details"
+    // })
 
 
     image.belongsTo(organization, {
@@ -80,8 +81,16 @@ export async function createAssociations() {
       as: "mainImage"
     })
 
-    clip.hasMany(image, {
-      as: "additionalImages"
+    clip.belongsToMany(image, {
+      as: "additionalImages",
+      through: "clip_image",
+      foreignKey: "clipId"
+    })
+
+    image.belongsToMany(clip, {
+      as:"clips",
+      through: "clip_image",
+      foreignKey: "imageId"
     })
 
     item.belongsToMany(item, {

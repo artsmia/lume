@@ -156,4 +156,5 @@ const TabBodyContainer = styled.div`
   display: ${({selected}) => (selected) ? "flex" : "none"};
   width: 100%;
   height: 100%;
+  flex-direction: column;
 `

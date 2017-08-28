@@ -7,7 +7,9 @@ const detail = db.define('detail', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
-
+  title: {
+    type: Sequelize.STRING,
+  },
 }, {
   freezeTableName: true
 })

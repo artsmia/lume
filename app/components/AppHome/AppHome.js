@@ -8,7 +8,7 @@ import {Column} from '../../ui/layout'
 import {AppSearchImage} from '../../ui/images'
 import {s3Url} from '../../config'
 import {Search} from '../../ui/search'
-
+import AppItemList from '../AppItemList'
 export default class AppHome extends Component {
 
   state = {
@@ -17,19 +17,12 @@ export default class AppHome extends Component {
 
   render() {
 
-    if (this.props.data.loading) {
-      return null
-    }
+    if (this.props.data.loading) return null
 
     const {
       props,
       props: {
-        data: {
-          organization,
-          organization: {
-            items
-          }
-        }
+        orgSub,
       },
       state: {
         search
@@ -48,7 +41,11 @@ export default class AppHome extends Component {
             onChange={handleChange}
           />
         </SideContainer>
-        <ItemsContainer>
+        <AppItemList
+          orgSub={orgSub}
+          search={search}
+        />
+        {/* <ItemsContainer>
           {items.map((item, index) => (
             <AppSearchImage
               key={index}
@@ -63,7 +60,7 @@ export default class AppHome extends Component {
               as={`/${organization.subdomain}/item/${item.id}`}
             />
           ))}
-        </ItemsContainer>
+        </ItemsContainer> */}
       </AppTemplate>
     )
   }

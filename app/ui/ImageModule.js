@@ -43,9 +43,11 @@ export default class extends Component {
           <TabBody
             name={"current"}
           >
-            <LargeImage
-              src={`${s3Url}/${organization.id}/${mainImageId}/m`}
-            />
+            {(mainImageId) ? (
+              <LargeImage
+                src={`${s3Url}/${organization.id}/${mainImageId}/m`}
+              />
+            ) : null}
           </TabBody>
           <TabBody
             name={"choose"}

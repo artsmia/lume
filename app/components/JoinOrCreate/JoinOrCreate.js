@@ -117,7 +117,7 @@ export default class JoinOrCreate extends Component {
         organizations
       } = this.props.data
 
-      this.setState({organizations})
+      this.setState({organizations: organizations || []})
     }
   }
 

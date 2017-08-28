@@ -20,6 +20,7 @@ import User from './root/User'
 import editOrCreateItem from './mutations/editOrCreateItem'
 import editOrCreateOrganization from './mutations/editOrCreateOrganization'
 import editOrCreateImage from './mutations/editOrCreateImage'
+import editOrCreateDetail from './mutations/editOrCreateDetail'
 
 
 const resolvers = {
@@ -38,7 +39,8 @@ const resolvers = {
   Mutation: {
     editOrCreateItem,
     editOrCreateOrganization,
-    editOrCreateImage
+    editOrCreateImage,
+    editOrCreateDetail
   },
   Item,
   User,

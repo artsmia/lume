@@ -37,6 +37,15 @@ const Item = {
       console.error(ex)
     }
   },
+  async details(argItem) {
+    try {
+      const item = await itemModel.findById(argItem.id)
+
+      return await item.getDetails()
+    } catch (ex) {
+      console.error(ex)
+    }
+  },
   async mainImage(argItem) {
     try {
       const item = await itemModel.findById(argItem.id)

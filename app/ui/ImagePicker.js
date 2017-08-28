@@ -14,7 +14,6 @@ export default class ImagePicker extends Component {
       props: {
         organization,
         images,
-        initialImageId,
         mainImageId
       },
       state: {
@@ -38,9 +37,11 @@ export default class ImagePicker extends Component {
           ):null}
         </ThumbColumn>
         <Right>
-          <Preview
-            src={`${s3Url}/${organization.id}/${(selectedImageId) ? selectedImageId : mainImageId}/m`}
-          />
+          {(selectedImageId) ? (
+            <Preview
+              src={`${s3Url}/${organization.id}/${selectedImageId}/m`}
+            />
+          ): <p>Choose an image from the left</p>}
 
         </Right>
 
@@ -55,7 +56,7 @@ export default class ImagePicker extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({selectedImageId: nextProps.initialImageId})
+    this.setState({selectedImageId: nextProps.mainImageId})
   }
 
 }

@@ -21,6 +21,9 @@ const pageData = gql`
       mainImage {
         id
       }
+      details {
+        id
+      }
     }
     user (id: $userId) {
       id
@@ -81,6 +84,23 @@ const editItem = gql`
   }
 `
 
+const editOrCreateDetail = gql`
+  mutation editOrCreateDetail (
+    $detailId: ID
+    $itemId: ID
+    $title: String
+  ) {
+    editOrCreateDetail (
+      id: $detailId
+      itemId: $itemId
+      title: $title
+    ) {
+      id
+      title
+    }
+  }
+`
+
 export default compose(
   graphql(pageData, {
     options: ({userId, orgSub, itemId}) => ({
@@ -93,6 +113,9 @@ export default compose(
   }),
   graphql(editItem, {
     name: "editItem",
+  }),
+  graphql(editOrCreateDetail, {
+    name: "editOrCreateDetail",
   })
 )(
   EditItem

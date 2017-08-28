@@ -10,7 +10,7 @@ export default async function items(src, {organizationId, groupId, search}, ctx)
       options.push({
         where: {
           title: {
-            $iRegexp: search
+            $regexp: search
           }
         }
       })
