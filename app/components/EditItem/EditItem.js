@@ -8,7 +8,7 @@ import {Button} from '../../ui/buttons'
 import ImageModule from '../../ui/ImageModule'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import {PreviewAppItem} from '../AppItem'
-import DetailEditor from '../DetailEditor/DetailEditor'
+import DetailEditor from '../DetailEditor'
 import PropTypes from 'prop-types'
 import Snackbar from '../../ui/Snackbar'
 
@@ -152,7 +152,7 @@ export default class EditItem extends Component {
                   details.map( detail => (
                     <DetailEditor
                       key={detail.id}
-                      detail={detail}
+                      detailId={detail.id}
                     />
                   ))
                   : null
