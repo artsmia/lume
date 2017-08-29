@@ -1,7 +1,7 @@
 import itemModel from '../../db/models/item'
 import organizationModel from '../../db/models/organization'
 
-export default async function items(src, {organizationId, groupId, search}, ctx){
+export default async function items(src, {organizationId, orgSub, groupId, search}, ctx){
   try {
 
     let options = []
@@ -23,6 +23,18 @@ export default async function items(src, {organizationId, groupId, search}, ctx)
           as: "organizations",
           where: {
             id: organizationId
+          }
+        }]
+      })
+    }
+
+    if (orgSub){
+      options.push({
+        include: [{
+          model: organizationModel,
+          as: "organizations",
+          where: {
+            subdomain: orgSub
           }
         }]
       })

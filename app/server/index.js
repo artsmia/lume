@@ -1,4 +1,5 @@
 require('dotenv').config()
+const rimraf = require('rimraf')
 const express = require('express')
 const next = require('next')
 
@@ -9,6 +10,7 @@ const cookieParser = require('cookie-parser')
 const authMiddleware = require('./auth')
 
 app.prepare().then(() => {
+
   const server = express()
 
 
@@ -87,6 +89,8 @@ app.prepare().then(() => {
     if (err) throw err
     console.log('> Ready on http://localhost:3000')
   })
+
+
 })
 .catch((ex) => {
   console.error(ex.stack)

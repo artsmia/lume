@@ -18,9 +18,7 @@ export default class BrowseItems extends Component {
       props: {
         orgSub,
         data: {
-          organization: {
-            items
-          }
+          items
         }
       }
     } = this
@@ -89,7 +87,7 @@ export default class BrowseItems extends Component {
         }
       } = this.props
 
-      const {data: { editOrCreateItem: item}} = await newItem({
+      const {data: {editOrCreateItem: item}} = await newItem({
         variables: {
           newOrganizationIds: [id]
         }

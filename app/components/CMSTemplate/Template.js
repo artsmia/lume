@@ -74,7 +74,7 @@ const Container = styled.div`
 
 export const Centered = styled.div`
   grid-column: 2 / 6;
-  grid-row: 2 / 3;
+  grid-row: 2 / span 2;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

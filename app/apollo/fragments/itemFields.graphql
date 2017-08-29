@@ -1,0 +1,13 @@
+fragment itemFields on Item {
+  id
+  title
+  localId
+  medium
+  artist
+  dated
+  accessionNumber
+  currentLocation
+  creditLine
+  text
+  type
+}

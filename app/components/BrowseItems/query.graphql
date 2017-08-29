@@ -1,0 +1,18 @@
+#import "../../apollo/fragments/itemFields.graphql"
+
+query allItems (
+  $orgSub: String
+  $search: String
+) {
+  items (
+    search: $search
+    orgSub: $orgSub
+  ) {
+    ...itemFields
+  }
+  organization (
+    subdomain: $orgSub
+  ) {
+    id
+  }
+}

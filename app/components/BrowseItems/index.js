@@ -1,58 +1,57 @@
 import { gql, graphql, compose } from 'react-apollo'
 import BrowseItems from './BrowseItems'
+import ItemsQuery from './query.graphql'
+import newItem from './newItem.graphql'
 
-const query = gql`
-  query browseItems (
-    $orgSub: String
-    $userId: ID
-  ) {
-    organization (
-      subdomain: $orgSub
-    ) {
-      id
-      name
-      items {
-        id
-        title
-      }
-    }
-    user (
-      id: $userId
-    ) {
-      id
-    }
-  }
-`
 
 const queryConfig = {
-  options: ({orgSub, userId}) => ({
+  options: ({orgSub}) => ({
     variables: {
       orgSub,
-      userId
-    }
+    },
   })
 }
 
-const mutation = gql`
-  mutation editOrCreateItem (
-    $newOrganizationIds: [ID]
-  ) {
-    editOrCreateItem (
-      newOrganizationIds: $newOrganizationIds
-    ) {
-      id
-    }
-  }
-`
 
 
 const mutationConfig = {
   name: "newItem",
+  options: ({orgSub, search}) => ({
+    optimisticResponse: {
+      editOrCreateItem: {
+        id: -1
+      }
+    },
+    update: (store, {data: {editOrCreateItem}}) => {
+      let data = store.readQuery({
+        query: ItemsQuery,
+        variables: {
+          orgSub,
+          search
+        }
+      })
+      data.items.push(editOrCreateItem)
+      store.writeQuery({
+        query: ItemsQuery,
+        variables: {
+          orgSub,
+          search
+        },
+        data
+      })
+    }
+  })
 }
 
+
+const query = graphql(ItemsQuery, queryConfig)
+
+
+
+
 export default compose(
-  graphql(query, queryConfig),
-  graphql(mutation, mutationConfig)
+  query,
+  graphql(newItem, mutationConfig)
 )(
   BrowseItems
 )

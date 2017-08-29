@@ -1,0 +1,11 @@
+#import "../../apollo/fragments/itemFields.graphql"
+
+mutation newItem (
+  $newOrganizationIds: [ID]
+) {
+  editOrCreateItem (
+    newOrganizationIds: $newOrganizationIds
+  ) {
+    ...itemFields
+  }
+}

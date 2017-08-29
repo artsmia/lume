@@ -125,6 +125,7 @@ const typeDefs = `
     ): User
 
     items (
+      orgSub: String
       organizationId: ID
       groupId: ID
       search: String
@@ -179,6 +180,7 @@ const typeDefs = `
     text: String
     type: String
   }
+  
 
 `
 
