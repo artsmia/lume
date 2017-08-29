@@ -1,0 +1,43 @@
+mutation editOrCreateItem (
+  $itemId: ID
+  $title: String
+  $artist: String
+  $medium: String
+  $dated: String
+  $accessionNumber: String
+  $currentLocation: String
+  $creditLine: String
+  $text: String
+  $mainImageId: ID
+  $newOrganizationIds: [ID]
+) {
+  editOrCreateItem (
+    item: {
+      id: $itemId
+      title: $title
+      artist: $artist
+      medium: $medium
+      dated: $dated
+      accessionNumber: $accessionNumber
+      currentLocation: $currentLocation
+      creditLine: $creditLine
+      text: $text
+    }
+    mainImageId: $mainImageId
+    newOrganizationIds: $newOrganizationIds
+  ) {
+    id
+    title
+    artist
+    medium
+    artist
+    dated
+    accessionNumber
+    currentLocation
+    creditLine
+    text
+    mainImage {
+      id
+    }
+  }
+}

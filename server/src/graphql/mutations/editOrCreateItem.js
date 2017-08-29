@@ -13,11 +13,9 @@ export default async function editOrCreateItem(src, args, ctx){
       newGroupIds,
     } = args
     let item
-    if (!argItem) {
+    if (!argItem.id) {
       item = await itemModel.create(argItem)
-    }
-
-    if (argItem) {
+    } else {
       item = await itemModel.update(argItem, {
         where: {
           id: argItem.id

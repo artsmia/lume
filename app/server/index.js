@@ -1,5 +1,4 @@
 require('dotenv').config()
-const rimraf = require('rimraf')
 const express = require('express')
 const next = require('next')
 

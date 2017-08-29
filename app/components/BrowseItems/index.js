@@ -1,7 +1,7 @@
 import { gql, graphql, compose } from 'react-apollo'
 import BrowseItems from './BrowseItems'
 import ItemsQuery from './query.graphql'
-import newItem from './newItem.graphql'
+import newItem from '../../apollo/mutations/editOrCreateItem.graphql'
 
 
 const queryConfig = {
@@ -19,7 +19,8 @@ const mutationConfig = {
   options: ({orgSub, search}) => ({
     optimisticResponse: {
       editOrCreateItem: {
-        id: -1
+        id: -1,
+        __typename: "Item"
       }
     },
     update: (store, {data: {editOrCreateItem}}) => {

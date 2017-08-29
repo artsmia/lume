@@ -1,0 +1,36 @@
+query editItemQuery (
+  $itemId: ID!
+  $userId: ID
+  $orgSub: String
+) {
+  item (id: $itemId) {
+    id
+    title
+    artist
+    medium
+    artist
+    dated
+    accessionNumber
+    currentLocation
+    creditLine
+    text
+    mainImage {
+      id
+    }
+    details {
+      id
+    }
+  }
+  user (id: $userId) {
+    id
+    email
+  }
+  organization (
+    subdomain: $orgSub
+  ) {
+    id
+    images {
+      id
+    }
+  }
+}

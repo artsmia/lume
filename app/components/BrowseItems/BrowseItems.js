@@ -6,15 +6,22 @@ import {Table, Header, Row, Cell, Body} from '../../ui/tables'
 import {Link} from '../../ui/links'
 import {Button} from '../../ui/buttons'
 import router from 'next/router'
+import PropTypes from 'prop-types'
 
 export default class BrowseItems extends Component {
+
+  static propTypes = {
+    newItem: PropTypes.func,
+    orgSub: PropTypes.string,
+    data: PropTypes.object
+  }
 
   render() {
 
     if (this.props.data.loading) return null
 
     const {
-      newItem,
+      handleNewItem,
       props: {
         orgSub,
         data: {
@@ -28,7 +35,7 @@ export default class BrowseItems extends Component {
       >
         <Centered>
           <Button
-            onClick={newItem}
+            onClick={handleNewItem}
           >
             New Item
           </Button>
@@ -75,7 +82,7 @@ export default class BrowseItems extends Component {
     )
   }
 
-  newItem = async () => {
+  handleNewItem = async () => {
     try {
       const {
         newItem,

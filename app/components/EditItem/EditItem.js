@@ -9,8 +9,15 @@ import ImageModule from '../../ui/ImageModule'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import {PreviewAppItem} from '../AppItem'
 import DetailEditor from '../DetailEditor/DetailEditor'
+import PropTypes from 'prop-types'
 
 export default class EditItem extends Component {
+
+  static propTypes = {
+    editItem: PropTypes.func,
+    editOrCreateDetail: PropTypes.func,
+    data: PropTypes.object
+  }
 
   inputs = ["title", "localId", "medium", "artist", "dated", "accessionNumber", "currentLocation", "creditLine", "text"]
 

@@ -11,6 +11,7 @@ if (!process.browser) {
 
 function create (initialState) {
   return new ApolloClient({
+    addTypename: true,
     initialState,
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     networkInterface: createNetworkInterface({

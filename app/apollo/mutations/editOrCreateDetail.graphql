@@ -1,0 +1,14 @@
+mutation editOrCreateDetail (
+  $detailId: ID
+  $itemId: ID
+  $title: String
+) {
+  editOrCreateDetail (
+    id: $detailId
+    itemId: $itemId
+    title: $title
+  ) {
+    id
+    title
+  }
+}
