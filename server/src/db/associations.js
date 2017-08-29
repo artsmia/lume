@@ -38,14 +38,17 @@ export async function createAssociations() {
       foreignKey: 'bookId'
     })
 
+    detail.belongsTo(item, {
+      as: "item",
+    })
+
     item.hasMany(detail, {
       as: "details"
     })
 
-    // detail.belongsTo(item, {
-    //   as: "item",
-    //   constraints: false
-    // })
+    detail.belongsTo(image, {
+      as: "image",
+    })
 
     clip.belongsTo(detail, {as: "detail"})
 
@@ -55,15 +58,6 @@ export async function createAssociations() {
     page.belongsTo(book, {
       as: "book"
     })
-
-    detail.belongsTo(image, {
-      as: "image"
-    })
-
-    // image.hasMany(detail, {
-    //   as: "details"
-    // })
-
 
     image.belongsTo(organization, {
       as: "organization"

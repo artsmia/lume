@@ -1,4 +1,5 @@
 import itemModel from '../../db/models/item'
+import detailModel from '../../db/models/detail'
 
 
 export default async function editOrCreateItem(src, args, ctx){
@@ -8,9 +9,9 @@ export default async function editOrCreateItem(src, args, ctx){
       newOrganizationIds,
       mainImageId,
       newRelatedItemIds,
-      newDetailIds,
       newRelatedBookIds,
       newGroupIds,
+      createAndAddDetail
     } = args
     let item
     if (!argItem.id) {
@@ -39,9 +40,6 @@ export default async function editOrCreateItem(src, args, ctx){
       await item.addRelatedItems(newRelatedItemIds)
     }
 
-    if (newDetailIds) {
-      await item.addDetails(newDetailIds)
-    }
 
     if (newRelatedBookIds) {
       await item.addRelatedBooks(newRelatedBookIds)
@@ -49,6 +47,18 @@ export default async function editOrCreateItem(src, args, ctx){
 
     if (newGroupIds) {
       await item.addGroups(newRelatedGroupIds)
+    }
+
+    if (createAndAddDetail) {
+      const {
+        itemId,
+        imageId
+      } = createAndAddDetail
+      const detail = await detailModel.create({
+        itemId,
+        imageId
+      })
+
     }
 
     return item

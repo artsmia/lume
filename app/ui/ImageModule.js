@@ -15,7 +15,10 @@ export default class extends Component {
         orgId,
         images,
         onImageSelection,
-        initialImageId
+        currentImageId,
+        onImageSave,
+        onImageUploaded,
+        selectedImageId
       }
     } = this
     return (
@@ -43,11 +46,11 @@ export default class extends Component {
           <TabBody
             name={"current"}
           >
-            {(initialImageId) ? (
+            {(currentImageId) ? (
               <LargeImage
-                src={`${s3Url}/${orgId}/${initialImageId}/m`}
+                src={`${s3Url}/${orgId}/${currentImageId}/m`}
               />
-            ) : null}
+            ) : <p>Select an image or upload a new one</p>}
           </TabBody>
           <TabBody
             name={"choose"}
@@ -56,7 +59,9 @@ export default class extends Component {
               orgId={orgId}
               images={images}
               onImageSelection={onImageSelection}
-              initialImageId={initialImageId}
+              currentImageId={currentImageId}
+              onImageSave={onImageSave}
+              selectedImageId={selectedImageId}
             />
           </TabBody>
           <TabBody
@@ -65,6 +70,7 @@ export default class extends Component {
             <Dropzone
               orgId={orgId}
               onImageSelection={onImageSelection}
+              onImageUploaded={onImageUploaded}
             />
           </TabBody>
         </TabContainer>

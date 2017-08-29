@@ -19,6 +19,12 @@ query editItemQuery (
     }
     details {
       id
+      image {
+        id
+        organization {
+          id
+        }
+      }
     }
   }
   user (id: $userId) {

@@ -40,7 +40,6 @@ const Item = {
   async details(argItem) {
     try {
       const item = await itemModel.findById(argItem.id)
-
       return await item.getDetails()
     } catch (ex) {
       console.error(ex)

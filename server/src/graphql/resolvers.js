@@ -15,6 +15,9 @@ import items from './queries/items'
 import Organization from './root/Organization'
 import Item from './root/Item'
 import User from './root/User'
+import Image from './root/Image'
+import Detail from './root/Detail'
+
 
 //mutations
 import editOrCreateItem from './mutations/editOrCreateItem'
@@ -44,7 +47,9 @@ const resolvers = {
   },
   Item,
   User,
-  Organization
+  Organization,
+  Image,
+  Detail
 }
 
 export default resolvers

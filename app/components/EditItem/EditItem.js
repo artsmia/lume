@@ -63,10 +63,11 @@ export default class EditItem extends Component {
         }
       },
       state: {
-        mainImageId,
-        snack
+        snack,
+        selectedImageId
       },
       onImageSelection,
+      refreshQuery
     } = this
     return (
       <Template
@@ -138,7 +139,10 @@ export default class EditItem extends Component {
                     orgId={organization.id}
                     images={images}
                     onImageSelection={onImageSelection}
-                    initialImageId={mainImageId}
+                    currentImageId={(mainImage) ? mainImage.id : false}
+                    onImageSave={saveItem}
+                    onImageUploaded={refreshQuery}
+                    selectedImageId={selectedImageId}
                   />
                 </Column>
               </Row>
@@ -170,7 +174,7 @@ export default class EditItem extends Component {
                   item: {
                     ...state,
                     mainImage: {
-                      id: mainImageId
+                      id: (mainImage) ? mainImage.id : false
                     }
                   }
                 }}
@@ -183,19 +187,12 @@ export default class EditItem extends Component {
   }
 
   componentWillReceiveProps(newProps){
-
-    const {
-      mainImage
-    } = newProps.data.item
-    this.inputs.forEach( name => {
-      this.setState({
-        [name]: newProps.data.item[name] || ""
+    if (!newProps.data.loading) {
+      this.inputs.forEach( name => {
+        this.setState({
+          [name]: newProps.data.item[name] || ""
+        })
       })
-    })
-    if (mainImage) {
-      this.setState({mainImageId: mainImage.id})
-    } else {
-      this.setState({mainImageId: ""})
     }
   }
 
@@ -203,7 +200,7 @@ export default class EditItem extends Component {
   change = ({target: {name, value}}) => this.setState({[name]: value})
 
   onImageSelection = (selectedImageId) => {
-    this.setState({mainImageId: selectedImageId})
+    this.setState({selectedImageId})
   }
 
   saveItem = async () => {
@@ -219,7 +216,7 @@ export default class EditItem extends Component {
           currentLocation,
           creditLine,
           text,
-          mainImageId
+          selectedImageId
         },
         props: {
           data: {
@@ -243,7 +240,7 @@ export default class EditItem extends Component {
           currentLocation,
           creditLine,
           text,
-          mainImageId
+          mainImageId: selectedImageId
         }
       })
 
@@ -257,25 +254,35 @@ export default class EditItem extends Component {
   addDetail = async () => {
     try {
       const {
-        props: {
-          data: {
-            item: {
-              id: itemId,
-              mainImage: {
-                id: imageId
-              }
-            }
-          },
-          editOrCreateDetail
+        data: {
+          item,
+          item: {
+            id: createDetailItemId,
+            mainImage
+          }
         },
-      } = this
+        editItem
+      } = this.props
 
-      await editOrCreateDetail({
+
+      const data = await editItem({
         variables: {
-          itemId,
-          imageId
+          itemId: item.id,
+          createDetailItemId,
+          createDetailImageId: (mainImage) ? mainImage.id : undefined
         }
       })
+
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  refreshQuery = async () => {
+    try {
+      this.props.data.refetch()
+      this.setState({snack: "Uploaded!"})
 
     } catch (ex) {
       console.error(ex)

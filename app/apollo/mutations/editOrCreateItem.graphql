@@ -10,6 +10,8 @@ mutation editOrCreateItem (
   $text: String
   $mainImageId: ID
   $newOrganizationIds: [ID]
+  $createDetailItemId: ID
+  $createDetailImageId: ID
 ) {
   editOrCreateItem (
     item: {
@@ -25,6 +27,10 @@ mutation editOrCreateItem (
     }
     mainImageId: $mainImageId
     newOrganizationIds: $newOrganizationIds
+    createAndAddDetail: {
+      itemId: $createDetailItemId
+      imageId: $createDetailImageId
+    }
   ) {
     id
     title
@@ -38,6 +44,15 @@ mutation editOrCreateItem (
     text
     mainImage {
       id
+    }
+    details {
+      id
+      image {
+        id
+        organization {
+          id
+        }
+      }
     }
   }
 }

@@ -9,15 +9,17 @@ import {H4} from './h'
 export default class extends Component {
 
   state = {
-    file: {}
+    file: {},
+    uploading: false
   }
 
   render() {
     const {
       handleDrop,
-      save,
+      upload,
       state: {
-        file
+        file,
+        uploading
       }
     } = this
     return (
@@ -48,7 +50,8 @@ export default class extends Component {
 
         </Dropzone>
         <Button
-          onClick={save}
+          onClick={upload}
+          disabled={(uploading)}
         >
           Upload
         </Button>
@@ -65,7 +68,7 @@ export default class extends Component {
     }
   }
 
-  save = async () => {
+  upload = async () => {
     try {
       const {
         state: {
@@ -73,12 +76,16 @@ export default class extends Component {
         },
         props: {
           orgId,
-          onImageSelection
+          onImageSelection,
+          onImageUploaded,
         }
       } = this
+      this.setState({uploading: true})
       const image = await apiFile(file, orgId)
+      await onImageUploaded()
+      await onImageSelection(image.id)
+      this.setState({uploading: false})
 
-      onImageSelection(image.id)
     } catch (ex) {
       console.error(ex)
     }

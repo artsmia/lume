@@ -34,7 +34,7 @@ const typeDefs = `
 
   type Image {
     id: ID!
-    bucket: String
+    organization: Organization
   }
 
   type Item {
@@ -136,12 +136,13 @@ const typeDefs = `
   }
 
   type Mutation {
+
     editOrCreateItem(
       item: ItemInput
       newOrganizationIds: [ID]
       mainImageId: ID
       newRelatedItemIds: [ID]
-      newDetailIds: [ID]
+      createAndAddDetail: CreateAndAddDetailInput
       newRelatedBookIds: [ID]
       newGroupIds: [ID]
     ): Item
@@ -167,6 +168,10 @@ const typeDefs = `
     ): Detail
   }
 
+  input CreateAndAddDetailInput {
+    itemId: ID
+    imageId: ID
+  }
 
   input ItemInput {
     id: ID

@@ -6,7 +6,7 @@ import {s3Url} from '../config'
 export default class ImagePicker extends Component {
 
   state = {
-    selectedImageId: "",
+    selectedImageId: (this.props.images.length >= 1) ? this.props.images[0].id : "",
   }
 
   render() {
@@ -14,7 +14,7 @@ export default class ImagePicker extends Component {
       props: {
         orgId,
         images,
-        initialImageId
+        onImageSave,
       },
       state: {
         selectedImageId
@@ -42,7 +42,11 @@ export default class ImagePicker extends Component {
               src={`${s3Url}/${orgId}/${selectedImageId}/m`}
             />
           ): <p>Choose an image from the left</p>}
-
+          <Button
+            onClick={onImageSave}
+          >
+            Save
+          </Button>
         </Right>
 
       </Container>
@@ -56,7 +60,12 @@ export default class ImagePicker extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({selectedImageId: nextProps.initialImageId})
+    if (!this.state.selectedImageId && nextProps.currentImageId) {
+      this.setState({selectedImageId: nextProps.currentImageId})
+    }
+    if (nextProps.selectedImageId) {
+      this.setState({selectedImageId: nextProps.selectedImageId})
+    }
   }
 
 }

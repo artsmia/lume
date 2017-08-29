@@ -8,7 +8,12 @@ createAssociations()
 async function createTables() {
   try {
 
+    // await db.query("SET FOREIGN_KEY_CHECKS = 0;")
+
     await db.sync({force: true})
+
+    // await db.query("SET FOREIGN_KEY_CHECKS = 1;")
+
 
     console.log(chalk.cyan("DB Synced"))
 

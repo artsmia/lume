@@ -73,9 +73,12 @@ export default class extends Component {
             organizationId={organization.id}
             imageId={mainImage.id}
           /> */}
-          <LargeImage
-            src={`${s3Url}/${organization.id}/${mainImage.id}/original`}
-          />
+          {(mainImage.id) ? (
+            <LargeImage
+              src={`${s3Url}/${organization.id}/${mainImage.id}/original`}
+            />
+          ): null}
+
         </FeatureContainer>
       </AppTemplate>
     )
