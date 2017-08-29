@@ -12,10 +12,10 @@ export default class extends Component {
   render() {
     const {
       props: {
-        organization,
+        orgId,
         images,
         onImageSelection,
-        mainImageId
+        initialImageId
       }
     } = this
     return (
@@ -43,9 +43,9 @@ export default class extends Component {
           <TabBody
             name={"current"}
           >
-            {(mainImageId) ? (
+            {(initialImageId) ? (
               <LargeImage
-                src={`${s3Url}/${organization.id}/${mainImageId}/m`}
+                src={`${s3Url}/${orgId}/${initialImageId}/m`}
               />
             ) : null}
           </TabBody>
@@ -53,17 +53,18 @@ export default class extends Component {
             name={"choose"}
           >
             <ImagePicker
-              organization={organization}
+              orgId={orgId}
               images={images}
               onImageSelection={onImageSelection}
-              mainImageId={mainImageId}
+              initialImageId={initialImageId}
             />
           </TabBody>
           <TabBody
             name={"upload"}
           >
             <Dropzone
-              organization={organization}
+              orgId={orgId}
+              onImageSelection={onImageSelection}
             />
           </TabBody>
         </TabContainer>

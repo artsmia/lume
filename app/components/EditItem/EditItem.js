@@ -10,6 +10,7 @@ import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import {PreviewAppItem} from '../AppItem'
 import DetailEditor from '../DetailEditor/DetailEditor'
 import PropTypes from 'prop-types'
+import Snackbar from '../../ui/Snackbar'
 
 export default class EditItem extends Component {
 
@@ -22,7 +23,8 @@ export default class EditItem extends Component {
   inputs = ["title", "localId", "medium", "artist", "dated", "accessionNumber", "currentLocation", "creditLine", "text"]
 
   state = {
-    upload: true
+    upload: true,
+    snack: ""
   }
 
   constructor(props){
@@ -61,15 +63,18 @@ export default class EditItem extends Component {
         }
       },
       state: {
-        mainImageId
+        mainImageId,
+        snack
       },
       onImageSelection,
     } = this
-
     return (
       <Template
         {...this.props}
       >
+        <Snackbar
+          message={snack}
+        />
         <EditContainer>
           <TabContainer
             initialTab={"edit"}
@@ -94,6 +99,7 @@ export default class EditItem extends Component {
                   <H2>
                     Information
                   </H2>
+
                   <Form>
                     {inputs.map( name => (
                       <Column
@@ -129,17 +135,22 @@ export default class EditItem extends Component {
                     Item Main Image
                   </H2>
                   <ImageModule
-                    organization={organization}
+                    orgId={organization.id}
                     images={images}
                     onImageSelection={onImageSelection}
-                    mainImageId={mainImageId}
+                    initialImageId={mainImageId}
                   />
                 </Column>
               </Row>
 
               <Column>
                 { (details) ?
-                  details.map( detail => <DetailEditor detail={detail} />)
+                  details.map( detail => (
+                    <DetailEditor
+                      key={detail.id}
+                      detail={detail}
+                    />
+                  ))
                   : null
                 }
                 <Button
@@ -167,7 +178,6 @@ export default class EditItem extends Component {
             </TabBody>
           </TabContainer>
         </EditContainer>
-
       </Template>
     )
   }
@@ -237,6 +247,7 @@ export default class EditItem extends Component {
         }
       })
 
+      this.setState({snack: "Saved!"})
 
     } catch (ex) {
       console.error(ex)
@@ -249,7 +260,10 @@ export default class EditItem extends Component {
         props: {
           data: {
             item: {
-              id: itemId
+              id: itemId,
+              mainImage: {
+                id: imageId
+              }
             }
           },
           editOrCreateDetail
@@ -258,7 +272,8 @@ export default class EditItem extends Component {
 
       await editOrCreateDetail({
         variables: {
-          itemId
+          itemId,
+          imageId
         }
       })
 

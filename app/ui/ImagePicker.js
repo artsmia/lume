@@ -12,9 +12,9 @@ export default class ImagePicker extends Component {
   render() {
     const {
       props: {
-        organization,
+        orgId,
         images,
-        mainImageId
+        initialImageId
       },
       state: {
         selectedImageId
@@ -27,7 +27,7 @@ export default class ImagePicker extends Component {
           {images.map( (image) => (
             <ImgThumb
               key={image.id}
-              src={`${s3Url}/${organization.id}/${image.id}/s`}
+              src={`${s3Url}/${orgId}/${image.id}/s`}
               onClick={()=>{selectImage(image.id)}}
               selected={(selectedImageId === image.id)}
             />
@@ -39,7 +39,7 @@ export default class ImagePicker extends Component {
         <Right>
           {(selectedImageId) ? (
             <Preview
-              src={`${s3Url}/${organization.id}/${selectedImageId}/m`}
+              src={`${s3Url}/${orgId}/${selectedImageId}/m`}
             />
           ): <p>Choose an image from the left</p>}
 
@@ -56,7 +56,7 @@ export default class ImagePicker extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({selectedImageId: nextProps.mainImageId})
+    this.setState({selectedImageId: nextProps.initialImageId})
   }
 
 }

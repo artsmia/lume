@@ -163,6 +163,7 @@ const typeDefs = `
       id: ID
       title: String
       itemId: ID
+      imageId: ID
     ): Detail
   }
 
@@ -180,7 +181,7 @@ const typeDefs = `
     text: String
     type: String
   }
-  
+
 
 `
 

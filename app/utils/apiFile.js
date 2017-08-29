@@ -12,9 +12,9 @@ export default async function(file, orgId) {
       body: form
     })
 
-    const {data} = await resp.json()
+    const {data: {editOrCreateImage}} = await resp.json()
 
-    return data
+    return editOrCreateImage
 
   } catch (ex) {
     console.error(ex)

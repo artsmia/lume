@@ -12,7 +12,7 @@ export default class BrowseItems extends Component {
 
   static propTypes = {
     newItem: PropTypes.func,
-    orgSub: PropTypes.string,
+    orgSub: PropTypes.string.isRequired,
     data: PropTypes.object
   }
 

@@ -1,0 +1,63 @@
+
+import React, {Component} from 'react'
+import styled from 'styled-components'
+
+export default class SnackBar extends Component {
+
+
+  state = {
+    show: false
+  }
+
+  render() {
+    const {
+      props: {
+        message
+      },
+      state: {
+        show
+      },
+    } = this
+    return (
+      <Container
+        show={show}
+      >
+        {message}
+      </Container>
+    )
+  }
+
+  componentWillReceiveProps(nextProps, prevProps){
+    if (nextProps.message && nextProps.message !== prevProps.message) {
+      this.activate()
+    }
+  }
+
+  activate = () => {
+    this.setState({show: true})
+    setTimeout( () => {
+      this.setState({show: false})
+    }, 4000)
+  }
+
+
+}
+
+const Container = styled.div`
+  display: flex;
+  opacity: ${({show}) => (show) ? '.9': '0'};
+  border-radius: 5px;
+  position: fixed;
+  width: 300px;
+  height: 50px;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) ${({show}) => (show) ? '': 'translateY(100%)'};;
+  background-color:  ${({theme}) => theme.colors.purple};
+  justify-content: center;
+  align-items: center;
+  color: ${({theme}) => theme.colors.white};
+  font-family: ${({theme}) => theme.fonts.regular};
+  font-size: 20px;
+  transition: all .4s;
+`

@@ -67,8 +67,18 @@ export default class extends Component {
 
   save = async () => {
     try {
-      const data = await apiFile(this.state.file, this.props.organization.id)
-      console.log(data)
+      const {
+        state: {
+          file
+        },
+        props: {
+          orgId,
+          onImageSelection
+        }
+      } = this
+      const image = await apiFile(file, orgId)
+
+      onImageSelection(image.id)
     } catch (ex) {
       console.error(ex)
     }

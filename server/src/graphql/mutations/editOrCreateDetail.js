@@ -2,7 +2,7 @@ import detailModel from '../../db/models/detail'
 import itemModel from '../../db/models/item'
 
 
-export default async function editOrCreateImage(src, {id, itemId, title}, ctx){
+export default async function editOrCreateImage(src, {id, itemId, title, imageId}, ctx){
   try {
 
     let detail
@@ -17,6 +17,10 @@ export default async function editOrCreateImage(src, {id, itemId, title}, ctx){
     if (itemId) {
       let item = await itemModel.findById(itemId)
       await item.addDetail(detail)
+    }
+
+    if (imageId) {
+      detail = await detail.setImage(imageId)
     }
 
     return detail
