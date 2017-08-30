@@ -17,6 +17,7 @@ import Item from './root/Item'
 import User from './root/User'
 import Image from './root/Image'
 import Detail from './root/Detail'
+import Clip from './root/Clip'
 
 
 //mutations
@@ -24,6 +25,7 @@ import editOrCreateItem from './mutations/editOrCreateItem'
 import editOrCreateOrganization from './mutations/editOrCreateOrganization'
 import editOrCreateImage from './mutations/editOrCreateImage'
 import editOrCreateDetail from './mutations/editOrCreateDetail'
+import editOrCreateClip from './mutations/editOrCreateClip'
 
 
 const resolvers = {
@@ -43,13 +45,15 @@ const resolvers = {
     editOrCreateItem,
     editOrCreateOrganization,
     editOrCreateImage,
-    editOrCreateDetail
+    editOrCreateDetail,
+    editOrCreateClip
   },
   Item,
   User,
   Organization,
   Image,
-  Detail
+  Detail,
+  Clip
 }
 
 export default resolvers

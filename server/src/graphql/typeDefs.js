@@ -11,8 +11,7 @@ const typeDefs = `
     id: ID!
     title: String
     description: String
-    detail: [Detail]
-    image: Image
+    detail: Detail
   }
 
   type Detail {
@@ -166,6 +165,14 @@ const typeDefs = `
       itemId: ID
       imageId: ID
     ): Detail
+
+    editOrCreateClip(
+      id: ID
+      title: String
+      description: String
+      coordinates: String
+      detailId: ID
+    ): Clip
   }
 
   input CreateAndAddDetailInput {

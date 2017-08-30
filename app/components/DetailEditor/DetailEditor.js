@@ -17,6 +17,7 @@ export default class extends Component {
     if (this.props.data.loading) return null
 
     const {
+      newClip,
       props: {
         data: {
           detail: {
@@ -62,7 +63,11 @@ export default class extends Component {
             >
               <Row>
                 <Column>
-
+                  <Button
+                    onClick={newClip}
+                  >
+                    New Clip
+                  </Button>
                 </Column>
                 <Column>
                   <DetailImg
@@ -85,6 +90,26 @@ export default class extends Component {
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+
+  newClip = async () => {
+    try {
+      console.log(this.props)
+      const {
+        editOrCreateClip,
+        detailId,
+      } = this.props
+
+      console.log(
+        await editOrCreateClip({
+          detailId
+        })
+      )
+
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
 }
 
 const DetailThumb = styled.img`
