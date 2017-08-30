@@ -8,14 +8,9 @@ query DetailQuery (
     title
     image {
       id
-      organization {
-        id
-      }
     }
     clips {
       id
-      title
-      description
     }
   }
 }

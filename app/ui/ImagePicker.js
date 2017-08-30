@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+  import React, {Component} from 'react'
 import {Button} from './buttons'
 import styled from 'styled-components'
 import {s3Url} from '../config'
@@ -59,8 +59,8 @@ export default class ImagePicker extends Component {
     this.props.onImageSelection(selectedImageId)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.state.selectedImageId && nextProps.currentImageId) {
+  componentWillReceiveProps(nextProps, prevProps) {
+    if (prevProps.currentImageId !== nextProps.currentImageId) {
       this.setState({selectedImageId: nextProps.currentImageId})
     }
     if (nextProps.selectedImageId) {
@@ -85,12 +85,13 @@ export const ThumbColumn = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: space-around;
   align-content: flex-start;
   flex-wrap: wrap;
   margin: 10px;
   width: 40%;
   border: 1px solid black;
+  overflow-y: scroll;
 `
 
 export const Right = styled.div`

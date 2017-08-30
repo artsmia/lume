@@ -7,6 +7,7 @@ import {s3Url} from '../../config'
 import {Input, Label} from '../../ui/forms'
 import {ExpanderContainer, Expander} from '../../ui/expander'
 import ClipEditor from '../ClipEditor'
+import Image from '../Image'
 
 export default class extends Component {
 
@@ -24,9 +25,6 @@ export default class extends Component {
           detail: {
             image: {
               id: imageId,
-              organization: {
-                id: orgId
-              }
             },
             clips
           }
@@ -50,8 +48,10 @@ export default class extends Component {
                 onChange={handleChange}
               />
             </Column>
-            <DetailThumb
-              src={`${s3Url}/${orgId}/${imageId}/m`}
+            <Image
+              imageId={imageId}
+              height={"50px"}
+              quality={"s"}
             />
           </Row>
         )}
@@ -140,8 +140,3 @@ export default class extends Component {
     }
   }
 }
-
-const DetailThumb = styled.img`
-  height: 50px;
-  object-fit: contain;
-`

@@ -6,16 +6,16 @@ export default class SnackBar extends Component {
 
 
   state = {
-    show: false
+    show: false,
+    message: "",
+    snackIds: []
   }
 
   render() {
     const {
-      props: {
-        message
-      },
       state: {
-        show
+        show,
+        message
       },
     } = this
     return (
@@ -27,16 +27,23 @@ export default class SnackBar extends Component {
     )
   }
 
-  componentWillReceiveProps(nextProps, prevProps){
-    if (nextProps.message && nextProps.message !== prevProps.message) {
-      this.activate()
+  componentWillReceiveProps({message, snackId}){
+    if (message && !this.state.snackIds.includes(snackId)) {
+      this.activate(message, snackId)
     }
   }
 
-  activate = () => {
-    this.setState({show: true})
+  activate = (message, snackId) => {
+    this.setState((prevState) => ({
+      show: true,
+      message,
+      snackIds: [...prevState.snackIds, snackId]
+    }))
     setTimeout( () => {
-      this.setState({show: false})
+      this.setState({
+        show: false,
+        message: ""
+      })
     }, 4000)
   }
 

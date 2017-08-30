@@ -26,7 +26,8 @@ export default class EditItem extends Component {
 
   state = {
     upload: true,
-    snack: ""
+    snack: "",
+    snackId: ""
   }
 
   constructor(props){
@@ -66,6 +67,7 @@ export default class EditItem extends Component {
       },
       state: {
         snack,
+        snackId,
         selectedImageId
       },
       onImageSelection,
@@ -77,6 +79,7 @@ export default class EditItem extends Component {
       >
         <Snackbar
           message={snack}
+          snackId={snackId}
         />
         <EditContainer>
           <TabContainer
@@ -164,7 +167,7 @@ export default class EditItem extends Component {
                   onClick={addDetail}
                 >
                   Add Detail
-                </Button>              
+                </Button>
               </Column>
 
             </TabBody>
@@ -248,7 +251,10 @@ export default class EditItem extends Component {
         }
       })
 
-      this.setState({snack: "Saved!"})
+      this.setState({
+        snack: "Saved!",
+        snackId: Math.random()
+      })
 
     } catch (ex) {
       console.error(ex)
@@ -286,7 +292,10 @@ export default class EditItem extends Component {
   refreshQuery = async () => {
     try {
       this.props.data.refetch()
-      this.setState({snack: "Uploaded!"})
+      this.setState({
+        snack: "Uploaded!",
+        snackId: Math.random()
+      })
 
     } catch (ex) {
       console.error(ex)

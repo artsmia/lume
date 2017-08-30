@@ -5,6 +5,7 @@ import {Button} from '../../ui/buttons'
 import {s3Url} from '../../config'
 import {Input, Label, TextArea} from '../../ui/forms'
 import {Expander} from '../../ui/expander'
+import Image from '../Image'
 
 export default class extends Component {
 
@@ -25,9 +26,6 @@ export default class extends Component {
               id: detailId,
               image: {
                 id: imageId,
-                organization: {
-                  id: orgId
-                }
               }
             }
           }
@@ -72,8 +70,10 @@ export default class extends Component {
             />
           </Column>
           <Column>
-            <DetailImage
-              src={`${s3Url}/${orgId}/${imageId}/m`}
+            <Image
+              imageId={imageId}
+              height={'200px'}
+              quality={"m"}
             />
           </Column>
         </Row>
@@ -121,8 +121,3 @@ export default class extends Component {
     }
   }
 }
-
-const DetailImage = styled.img`
-  height: 200px;
-  object-fit: contain;
-`

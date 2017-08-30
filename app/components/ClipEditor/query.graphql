@@ -11,9 +11,6 @@ query ClipQuery (
       id
       image {
         id
-        organization {
-          id
-        }
       }
     }
   }
