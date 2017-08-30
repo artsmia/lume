@@ -164,6 +164,7 @@ const typeDefs = `
       title: String
       itemId: ID
       imageId: ID
+      createAndAddClip: CreateAndAddClipInput
     ): Detail
 
     editOrCreateClip(
@@ -178,6 +179,10 @@ const typeDefs = `
   input CreateAndAddDetailInput {
     itemId: ID
     imageId: ID
+  }
+
+  input CreateAndAddClipInput {
+    detailId: ID
   }
 
   input ItemInput {

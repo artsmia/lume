@@ -6,6 +6,7 @@ import {Button} from '../../ui/buttons'
 import {s3Url} from '../../config'
 import {Input, Label} from '../../ui/forms'
 import {ExpanderContainer, Expander} from '../../ui/expander'
+import ClipEditor from '../ClipEditor'
 
 export default class extends Component {
 
@@ -21,65 +22,66 @@ export default class extends Component {
       props: {
         data: {
           detail: {
-            id: detailId,
-            title,
             image: {
               id: imageId,
               organization: {
                 id: orgId
               }
-            }
+            },
+            clips
           }
         }
       },
       state: {
         detailTitle
-      }
+      },
+      save,
+      handleChange
     } = this
     return (
-      <Row>
-        <Column>
-          <ExpanderContainer>
-            <Expander
-              header={(
-                <Row>
-                  <Column>
-                    <Label>Detail Title</Label>
-                    <Input
-                      name={"detailTitle"}
-                      value={detailTitle}
-                    />
-                  </Column>
-                  <DetailThumb
-                    src={`${s3Url}/${orgId}/${imageId}/m`}
-                  />
-                </Row>
-              )}
-              footer={(
-                <Button>
-                  Save Detail
-                </Button>
-              )}
-            >
-              <Row>
-                <Column>
-                  <Button
-                    onClick={newClip}
-                  >
-                    New Clip
-                  </Button>
-                </Column>
-                <Column>
-                  <DetailImg
-                    src={`${s3Url}/${orgId}/${imageId}/m`}
-                  />
-                </Column>
-              </Row>
-            </Expander>
-          </ExpanderContainer>
-        </Column>
+      <Expander
+        header={(
+          <Row>
+            <Column>
+              <Label>Detail Title</Label>
+              <Input
+                name={"detailTitle"}
+                value={detailTitle}
+                onChange={handleChange}
+              />
+            </Column>
+            <DetailThumb
+              src={`${s3Url}/${orgId}/${imageId}/m`}
+            />
+          </Row>
+        )}
+        footer={(
+          <Button
+            onClick={save}
+          >
+            Save Detail
+          </Button>
+        )}
+      >
+        <Row>
+          <Column>
+            <ExpanderContainer>
+              {clips.map( clip => (
+                <ClipEditor
+                  key={clip.id}
+                  clipId={clip.id}
+                />
+              ))}
 
-      </Row>
+            </ExpanderContainer>
+            <Button
+              onClick={newClip}
+            >
+              New Clip
+            </Button>
+          </Column>
+        </Row>
+      </Expander>
     )
   }
 
@@ -93,19 +95,46 @@ export default class extends Component {
 
   newClip = async () => {
     try {
-      console.log(this.props)
       const {
-        editOrCreateClip,
+        editOrCreateDetail,
         detailId,
       } = this.props
 
-      console.log(
-        await editOrCreateClip({
-          detailId
-        })
-      )
+      let newClipDetailId = detailId
+
+      await editOrCreateDetail({
+        variables: {
+          detailId,
+          newClipDetailId: detailId
+        }
+      })
 
 
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  save = async () => {
+    try {
+      const {
+        props: {
+          editOrCreateDetail,
+          detailId,
+        },
+        state: {
+          detailTitle: title
+        }
+      } = this
+
+      let newClipDetailId = detailId
+
+      await editOrCreateDetail({
+        variables: {
+          detailId,
+          title
+        }
+      })
     } catch (ex) {
       console.error(ex)
     }
@@ -114,10 +143,5 @@ export default class extends Component {
 
 const DetailThumb = styled.img`
   height: 50px;
-  object-fit: contain;
-`
-
-const DetailImg = styled.img`
-  height: 200px;
   object-fit: contain;
 `

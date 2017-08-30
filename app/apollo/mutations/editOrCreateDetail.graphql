@@ -3,15 +3,29 @@ mutation editOrCreateDetail (
   $itemId: ID
   $title: String
   $imageId: ID
+  $newClipDetailId: ID
 ) {
   editOrCreateDetail (
     id: $detailId
     itemId: $itemId
     title: $title
     imageId: $imageId
+    createAndAddClip: {
+      detailId: $newClipDetailId
+    }
   ) {
     id
     title
-    imageId
+    image {
+      id
+      organization {
+        id
+      }
+    }
+    clips {
+      id
+      title
+      description
+    }
   }
 }

@@ -11,6 +11,8 @@ import {PreviewAppItem} from '../AppItem'
 import DetailEditor from '../DetailEditor'
 import PropTypes from 'prop-types'
 import Snackbar from '../../ui/Snackbar'
+import {ExpanderContainer} from '../../ui/expander'
+
 
 export default class EditItem extends Component {
 
@@ -146,23 +148,25 @@ export default class EditItem extends Component {
                   />
                 </Column>
               </Row>
-
               <Column>
-                { (details) ?
-                  details.map( detail => (
-                    <DetailEditor
-                      key={detail.id}
-                      detailId={detail.id}
-                    />
-                  ))
-                  : null
-                }
+                <ExpanderContainer>
+                  { (details) ?
+                    details.map( detail => (
+                      <DetailEditor
+                        key={detail.id}
+                        detailId={detail.id}
+                      />
+                    ))
+                    : null
+                  }
+                </ExpanderContainer>
                 <Button
                   onClick={addDetail}
                 >
                   Add Detail
-                </Button>
+                </Button>              
               </Column>
+
             </TabBody>
             <TabBody
               name={"preview"}

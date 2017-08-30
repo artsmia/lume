@@ -95,9 +95,9 @@ const ExpBody = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  height: ${({expanded}) => (expanded) ? '200px' : '0px'};
+  min-height: ${({expanded}) => (expanded) ? '200px' : '0px'};
+  height: ${({expanded}) => (expanded) ? '' : '0px'};
   transition: all .2s;
-  overflow: hidden;
   border-bottom: ${({theme, expanded})=> (expanded) ? `1px solid ${theme.colors.lightMediumGray}` : ''};
   border-top: ${({theme, expanded})=> (expanded) ? `1px solid ${theme.colors.lightMediumGray}` : ''};
   padding: ${({expanded}) => (expanded) ? '10px' : '0'};

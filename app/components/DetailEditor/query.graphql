@@ -12,5 +12,10 @@ query DetailQuery (
         id
       }
     }
+    clips {
+      id
+      title
+      description
+    }
   }
 }

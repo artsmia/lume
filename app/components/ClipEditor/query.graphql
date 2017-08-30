@@ -1,0 +1,20 @@
+query ClipQuery (
+  $clipId: ID!
+) {
+  clip (
+    id: $clipId
+  ) {
+    id
+    title
+    description
+    detail {
+      id
+      image {
+        id
+        organization {
+          id
+        }
+      }
+    }
+  }
+}

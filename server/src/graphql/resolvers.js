@@ -7,6 +7,8 @@ import item from './queries/item'
 import organization from './queries/organization'
 import page from './queries/page'
 import user from './queries/user'
+import clip from './queries/clip'
+
 
 import organizations from './queries/organizations'
 import items from './queries/items'
@@ -31,6 +33,7 @@ import editOrCreateClip from './mutations/editOrCreateClip'
 const resolvers = {
   Query: {
     book,
+    clip,
     detail,
     group,
     image,

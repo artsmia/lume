@@ -1,7 +1,7 @@
 import { graphql, compose } from 'react-apollo'
 import DetailEditor from './DetailEditor'
 import DetailQuery from './query.graphql'
-import editOrCreateClip from '../../apollo/mutations/editOrCreateClip.graphql'
+import editOrCreateDetail from '../../apollo/mutations/editOrCreateDetail.graphql'
 
 
 const queryConfig = {
@@ -15,7 +15,7 @@ const queryConfig = {
 
 
 const mutationConfig = {
-  name: "editOrCreateClip",
+  name: "editOrCreateDetail",
   // options: (props) => ({
   //   optimisticResponse: {
   //     editOrCreateItem: {
@@ -52,7 +52,7 @@ const query = graphql(DetailQuery, queryConfig)
 
 export default compose(
   query,
-  graphql(editOrCreateClip, mutationConfig)
+  graphql(editOrCreateDetail, mutationConfig)
 )(
   DetailEditor
 )
