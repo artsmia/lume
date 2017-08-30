@@ -60,8 +60,4 @@ injectGlobal`
     font-style: normal;
   }
 
-  body {
-    margin: 0;
-  }
-
 `

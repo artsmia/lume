@@ -68,7 +68,6 @@ const Container = styled.div`
   width: 100%;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 80px 400px auto;
-  padding: 0px 10px;
   box-sizing: border-box;
 `
 
@@ -92,5 +91,4 @@ export const EditContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
-  padding-top: 20px;
 `

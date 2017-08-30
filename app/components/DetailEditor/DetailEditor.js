@@ -8,6 +8,11 @@ import {Input, Label} from '../../ui/forms'
 import {ExpanderContainer, Expander} from '../../ui/expander'
 
 export default class extends Component {
+
+  state = {
+    detailTitle: ""
+  }
+
   render () {
     if (this.props.data.loading) return null
 
@@ -25,28 +30,50 @@ export default class extends Component {
             }
           }
         }
+      },
+      state: {
+        detailTitle
       }
     } = this
     return (
       <Row>
         <Column>
           <ExpanderContainer>
-            <Expander>
+            <Expander
+              header={(
+                <Row>
+                  <Column>
+                    <Label>Detail Title</Label>
+                    <Input
+                      name={"detailTitle"}
+                      value={detailTitle}
+                    />
+                  </Column>
+                  <DetailThumb
+                    src={`${s3Url}/${orgId}/${imageId}/m`}
+                  />
+                </Row>
+              )}
+              footer={(
+                <Button>
+                  Save Detail
+                </Button>
+              )}
+            >
+              <Row>
+                <Column>
 
+                </Column>
+                <Column>
+                  <DetailImg
+                    src={`${s3Url}/${orgId}/${imageId}/m`}
+                  />
+                </Column>
+              </Row>
             </Expander>
           </ExpanderContainer>
-          {/* <Label>
-            Detail Title
-          </Label>
-          <Input
-            name={"detailTitle"}
-          /> */}
         </Column>
-        <Column>
-          <DetailImg
-            src={`${s3Url}/${orgId}/${imageId}/m`}
-          />
-        </Column>
+
       </Row>
     )
   }
@@ -60,6 +87,10 @@ export default class extends Component {
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 }
 
+const DetailThumb = styled.img`
+  height: 50px;
+  object-fit: contain;
+`
 
 const DetailImg = styled.img`
   height: 200px;

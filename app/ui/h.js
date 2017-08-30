@@ -2,10 +2,8 @@ import styled from 'styled-components'
 
 function hStyles(props) {
   return`
-    margin-bottom: 1.875rem;
     letter-spacing: -.025em;
     font-family: ${props.theme.fonts.black};
-    margin: 0 0 1rem 0;
     line-height: 1;
   `
 }

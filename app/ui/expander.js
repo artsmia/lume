@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import {H3} from './h'
 
 export class ExpanderContainer extends Component {
   render(){
@@ -30,6 +31,11 @@ export class Expander extends Component {
       toggle,
       state: {
         expanded
+      },
+      props: {
+        header,
+        footer,
+        children
       }
     } = this
     return (
@@ -42,16 +48,17 @@ export class Expander extends Component {
               expanded={expanded}
             />
           </Button>
+          {header}
         </ExpHeader>
         <ExpBody
           expanded={expanded}
         >
-
+          {children}
         </ExpBody>
         <ExpFooter
           expanded={expanded}
         >
-
+          {footer}
         </ExpFooter>
       </ExpContainer>
     )
@@ -67,36 +74,47 @@ const ExpContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
+  border-radius: 2px;
+  border: 1px solid ${({theme})=> theme.colors.lightMediumGray};
+  margin: 10px 10px;;
 `
 
 const ExpHeader = styled.div`
-  height: 50px;
+  min-height: 50px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  border: 1px solid red;
   transition: all .2s;
+  padding: 10px;
 `
 
 const ExpBody = styled.div`
   display: flex;
+  visibility: ${({expanded}) => (expanded) ? 'visible' : 'hidden'};
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  border: 1px solid green;
   height: ${({expanded}) => (expanded) ? '200px' : '0px'};
   transition: all .2s;
+  overflow: hidden;
+  border-bottom: ${({theme, expanded})=> (expanded) ? `1px solid ${theme.colors.lightMediumGray}` : ''};
+  border-top: ${({theme, expanded})=> (expanded) ? `1px solid ${theme.colors.lightMediumGray}` : ''};
+  padding: ${({expanded}) => (expanded) ? '10px' : '0'};
+  opacity: ${({expanded}) => (expanded) ? '1' : '0'};
 `
 
 const ExpFooter = styled.div`
   display: flex;
+  visibility: ${({expanded}) => (expanded) ? 'visible' : 'hidden'};
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  border: 1px solid blue;
   height: ${({expanded}) => (expanded) ? '50px' : '0px'};
   transition: all .2s;
+  overflow: hidden;
+  padding: ${({expanded}) => (expanded) ? '10px' : '0'};
+  opacity: ${({expanded}) => (expanded) ? '1' : '0'};
 `
 const Button = styled.button`
   height: 40px;
@@ -104,6 +122,8 @@ const Button = styled.button`
   border-radius: 40px;
   background-color: transparent;
   border: none;
+  margin-right: 10px;
+  outline: none;
 `
 
 const Arrow = styled.i`

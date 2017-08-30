@@ -1,6 +1,13 @@
 import fonts from './fonts'
 import theme from './theme'
-import {ThemeProvider} from 'styled-components'
+import {ThemeProvider, injectGlobal} from 'styled-components'
+
+injectGlobal`
+  body {
+    margin: 0;
+    font-family: "Mia Regular", "Helvetica Neue", Helvetica, san-serif
+  }
+`
 
 export default ({children}) => (
   <ThemeProvider
