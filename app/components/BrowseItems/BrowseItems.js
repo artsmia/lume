@@ -7,6 +7,7 @@ import {Link} from '../../ui/links'
 import {Button} from '../../ui/buttons'
 import router from 'next/router'
 import PropTypes from 'prop-types'
+import Image from '../Image'
 
 export default class BrowseItems extends Component {
 
@@ -48,36 +49,45 @@ export default class BrowseItems extends Component {
           <Table>
             <Header>
               <Row>
-                <Cell>
-                  Title
+                <Cell
+                  width={"100px"}
+                >
+                  Thumb
                 </Cell>
                 <Cell>
-                  id
+                  Title
                 </Cell>
               </Row>
             </Header>
             <Body>
-              {items.map( item => (
+              {items.map( ({mainImage, id: itemId, title}) => (
                 <Row
-                  key={item.id}
+                  key={itemId}
                 >
+                  <Cell
+                    width={"100px"}
+                  >
+                    <Image
+                      imageId={(mainImage) ? mainImage.id : false}
+                      size={"50px"}
+                      thumb
+                    />
+                  </Cell>
                   <Cell>
                     <Link
                       href={{
                         pathname: "/cms/edit/item",
                         query: {
                           orgSub,
-                          itemId: item.id
+                          itemId: itemId
                         }
                       }}
-                      as={`/${orgSub}/cms/item/${item.id}`}
+                      as={`/${orgSub}/cms/item/${itemId}`}
                     >
-                      {item.title}
+                      {title}
                     </Link>
                   </Cell>
-                  <Cell>
-                    {item.id}
-                  </Cell>
+
                 </Row>
               ))}
             </Body>

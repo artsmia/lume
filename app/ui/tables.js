@@ -30,6 +30,8 @@ export const Cell = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
 `
 
 export const Header = styled.div`
