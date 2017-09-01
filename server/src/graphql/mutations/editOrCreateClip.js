@@ -1,8 +1,11 @@
 import clipModel from '../../db/models/clip'
 
-export default async function editOrCreateClip(src, {clipId, title, description, detailId}, ctx){
+export default async function editOrCreateClip(src, {id: clipId, title, description, detailId, newAdditionalImageIds}, ctx){
   try {
     let clip
+
+    console.log(clipId, newAdditionalImageIds)
+
     if (clipId) {
       clip = await clipModel.findById(clipId)
     } else {
@@ -14,6 +17,11 @@ export default async function editOrCreateClip(src, {clipId, title, description,
       description,
       detailId
     })
+
+    if (newAdditionalImageIds) {
+      await clip.addAdditionalImages(newAdditionalImageIds)
+    }
+
 
     return clip
   } catch (ex) {

@@ -6,12 +6,18 @@ import {s3Url} from '../../config'
 import {Input, Label, TextArea} from '../../ui/forms'
 import {Expander} from '../../ui/expander'
 import Image from '../Image'
+import ImageManager from '../ImageManager'
+import Modal from '../../ui/modal'
+import Snackbar from '../../ui/Snackbar'
 
 export default class extends Component {
 
   state = {
     clipTitle: "",
-    clipDescription: ""
+    clipDescription: "",
+    additionalImagesModal: false,
+    snackMessage: "",
+    snackId: ""
   }
 
   render () {
@@ -19,36 +25,44 @@ export default class extends Component {
 
     const {
       props: {
+        orgId,
         data: {
           clip: {
             id: clipId,
             detail: {
               id: detailId,
               image
-            }
+            },
+            additionalImages
           }
         }
       },
       state: {
         clipTitle,
-        clipDescription
+        clipDescription,
+        additionalImagesModal,
+        snackMessage,
+        snackId
       },
       save,
-      handleChange
+      handleChange,
+      openModal,
+      handleAdditionalImageSave
     } = this
+
+    console.log(this.props.data)
+
     return (
       <Expander
         header={(
-          <Row>
-            <Column>
-              <Label>Clip Title</Label>
-              <Input
-                name={"clipTitle"}
-                value={clipTitle}
-                onChange={handleChange}
-              />
-            </Column>
-          </Row>
+          <Column>
+            <Label>Clip Title</Label>
+            <Input
+              name={"clipTitle"}
+              value={clipTitle}
+              onChange={handleChange}
+            />
+          </Column>
         )}
         footer={(
           <Button
@@ -65,6 +79,34 @@ export default class extends Component {
               name={"clipDescription"}
               value={clipDescription}
               onChange={handleChange}
+            />
+            <Row>
+              {additionalImages.map( image => (
+                <Image
+                  key={image.id}
+                  imageId={image.id}
+                  size={"50px"}
+                  thumb
+                />
+              ))}
+            </Row>
+            <Button
+              onClick={openModal}
+            >
+              New Additional Image
+            </Button>
+            <Modal
+              header={"Add New Additional Image to Clip"}
+              open={additionalImagesModal}
+            >
+              <ImageManager
+                orgId={orgId}
+                onImageSave={handleAdditionalImageSave}
+              />
+            </Modal>
+            <Snackbar
+              message={snackMessage}
+              snackId={snackId}
             />
           </Column>
           <Column>
@@ -118,4 +160,37 @@ export default class extends Component {
       console.error(ex)
     }
   }
+
+  handleAdditionalImageSave = async (newAdditionalImageId) => {
+    try {
+      const {
+        clipId,
+        editOrCreateClip,
+        data: {
+          refetch
+        }
+      } = this.props
+
+
+      await editOrCreateClip({
+        variables: {
+          clipId,
+          newAdditionalImageIds: [newAdditionalImageId]
+        }
+      })
+
+      await refetch()
+
+      this.setState({
+        imageModal: false,
+        snackId: Math.random(),
+        snackMessage: "Additional Clip Image Added"
+      })
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  openModal = () => this.setState({additionalImagesModal: true})
 }

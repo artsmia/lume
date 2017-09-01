@@ -1,7 +1,7 @@
 import { graphql, compose } from 'react-apollo'
 import ClipEditor from './ClipEditor'
 import ClipQuery from './query.graphql'
-import editOrCreateDetail from '../../apollo/mutations/editOrCreateDetail.graphql'
+import editOrCreateClip from '../../apollo/mutations/editOrCreateClip.graphql'
 
 
 const queryConfig = {
@@ -26,7 +26,7 @@ const query = graphql(ClipQuery, queryConfig)
 
 export default compose(
   query,
-  graphql(editOrCreateDetail, mutationConfig)
+  graphql(editOrCreateClip, mutationConfig)
 )(
   ClipEditor
 )

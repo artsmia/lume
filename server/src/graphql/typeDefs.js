@@ -12,6 +12,7 @@ const typeDefs = `
     title: String
     description: String
     detail: Detail
+    additionalImages: [Image]
   }
 
   type Detail {
@@ -173,6 +174,7 @@ const typeDefs = `
       description: String
       coordinates: String
       detailId: ID
+      newAdditionalImageIds: [ID]
     ): Clip
   }
 

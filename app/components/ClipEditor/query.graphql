@@ -13,5 +13,8 @@ query ClipQuery (
         id
       }
     }
+    additionalImages {
+      id
+    }
   }
 }

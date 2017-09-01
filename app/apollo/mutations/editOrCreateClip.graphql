@@ -4,6 +4,7 @@ mutation editOrCreateClip (
   $description: String
   $coordinates: String
   $detailId: ID
+  $newAdditionalImageIds: [ID]
 
 ) {
   editOrCreateClip (
@@ -12,11 +13,15 @@ mutation editOrCreateClip (
     description: $description
     coordinates: $coordinates
     detailId: $detailId
+    newAdditionalImageIds: $newAdditionalImageIds
   ) {
     id
     title
     description
     detail {
+      id
+    }
+    additionalImages {
       id
     }
   }

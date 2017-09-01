@@ -98,6 +98,7 @@ export default class extends Component {
                 <ClipEditor
                   key={clip.id}
                   clipId={clip.id}
+                  orgId={orgId}
                 />
               ))}
 
