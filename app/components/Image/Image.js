@@ -9,13 +9,18 @@ export default class extends Component {
     quality: "m",
     width: "",
     thumb: false,
-    size: "50px"
+    size: "50px",
+    selected: false
   }
 
   render () {
     if (
       this.props.data.loading
     ) return null
+
+    if (!this.props.imageId) {
+      return null
+    }
 
     const {
       props: {
@@ -30,18 +35,23 @@ export default class extends Component {
         quality,
         thumb,
         size,
+        selected,
+        onClick,
+        height,
+        width
       },
       src
     } = this
 
-    if (!imageId) {
-      return null
-    }
+
 
     if (thumb) {
       return (
         <Thumb
           src={src("s")}
+          selected={selected}
+          onClick={onClick}
+          size={size}
         />
       )
     }
@@ -50,6 +60,9 @@ export default class extends Component {
     return (
       <Img
         src={src()}
+        onClick={onClick}
+        height={height}
+        width={width}
       />
     )
   }
@@ -86,5 +99,8 @@ const Img = styled.img`
 
 const Thumb = styled.img`
   height: ${({size}) => size};
-  height: ${({size}) => size};
+  width: ${({size}) => size};
+  box-shadow: 0 0 10px ${({theme, selected}) => (selected) ? theme.colors.purple : ""};
+  object-fit: cover;
+  margin: 10px;
 `

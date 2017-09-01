@@ -1,0 +1,10 @@
+query orgImageQuery (
+  $orgId: ID
+) {
+  organization (id: $orgId) {
+    id
+    images {
+      id
+    }
+  }
+}

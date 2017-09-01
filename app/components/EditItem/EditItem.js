@@ -5,14 +5,14 @@ import {H2} from '../../ui/h'
 import {Form, Label, Input, TextArea} from '../../ui/forms'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
-import ImageModule from '../../ui/ImageModule'
+// import ImageModule from '../../ui/ImageModule'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import {PreviewAppItem} from '../AppItem'
 import DetailEditor from '../DetailEditor'
 import PropTypes from 'prop-types'
 import Snackbar from '../../ui/Snackbar'
 import {ExpanderContainer} from '../../ui/expander'
-
+import ImageManager from '../ImageManager'
 
 export default class EditItem extends Component {
 
@@ -56,6 +56,7 @@ export default class EditItem extends Component {
         data: {
           organization,
           organization: {
+            id: orgId,
             images
           },
           item,
@@ -68,10 +69,9 @@ export default class EditItem extends Component {
       state: {
         snack,
         snackId,
-        selectedImageId
       },
       onImageSelection,
-      refreshQuery
+      onImageSave
     } = this
     return (
       <Template
@@ -105,7 +105,6 @@ export default class EditItem extends Component {
                   <H2>
                     Information
                   </H2>
-
                   <Form>
                     {inputs.map( name => (
                       <Column
@@ -140,14 +139,10 @@ export default class EditItem extends Component {
                   <H2>
                     Item Main Image
                   </H2>
-                  <ImageModule
-                    orgId={organization.id}
-                    images={images}
-                    onImageSelection={onImageSelection}
-                    currentImageId={(mainImage) ? mainImage.id : false}
-                    onImageSave={saveItem}
-                    onImageUploaded={refreshQuery}
-                    selectedImageId={selectedImageId}
+                  <ImageManager
+                    orgId={orgId}
+                    imageId={(mainImage) ? mainImage.id : undefined}
+                    onImageSave={onImageSave}
                   />
                 </Column>
               </Row>
@@ -158,6 +153,7 @@ export default class EditItem extends Component {
                       <DetailEditor
                         key={detail.id}
                         detailId={detail.id}
+                        orgId={orgId}
                       />
                     ))
                     : null
@@ -206,8 +202,34 @@ export default class EditItem extends Component {
 
   change = ({target: {name, value}}) => this.setState({[name]: value})
 
-  onImageSelection = (selectedImageId) => {
-    this.setState({selectedImageId})
+  onImageSave = async (selectedImageId) => {
+    try {
+      const {
+        props: {
+          editItem,
+          data: {
+            item: {
+              id: itemId
+            }
+          }
+        }
+
+      } = this
+      await editItem({
+        variables: {
+          itemId,
+          mainImageId: selectedImageId
+        }
+      })
+
+      this.setState({
+        snack: "Image Selection Saved",
+        snackId: Math.random()
+      })
+
+    } catch (ex) {
+      console.error(ex)
+    }
   }
 
   saveItem = async () => {
@@ -223,7 +245,6 @@ export default class EditItem extends Component {
           currentLocation,
           creditLine,
           text,
-          selectedImageId
         },
         props: {
           data: {
@@ -247,12 +268,11 @@ export default class EditItem extends Component {
           currentLocation,
           creditLine,
           text,
-          mainImageId: selectedImageId
         }
       })
 
       this.setState({
-        snack: "Saved!",
+        snack: "Saved",
         snackId: Math.random()
       })
 
@@ -289,17 +309,5 @@ export default class EditItem extends Component {
     }
   }
 
-  refreshQuery = async () => {
-    try {
-      this.props.data.refetch()
-      this.setState({
-        snack: "Uploaded!",
-        snackId: Math.random()
-      })
-
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
 
 }

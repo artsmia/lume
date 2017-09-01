@@ -16,6 +16,12 @@ export default class BrowseItems extends Component {
     data: PropTypes.object
   }
 
+  static defaultProps = {
+    data: {
+      items: []
+    }
+  }
+
   render() {
 
     if (this.props.data.loading) return null

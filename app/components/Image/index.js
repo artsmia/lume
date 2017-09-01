@@ -1,5 +1,5 @@
 import { graphql, compose } from 'react-apollo'
-import ImageEditor from './ImageEditor'
+import Image from './Image'
 import ImageQuery from './query.graphql'
 
 const queryConfig = {
@@ -25,5 +25,5 @@ const query = graphql(ImageQuery, queryConfig)
 export default compose(
   query,
 )(
-  ImageEditor
+  Image
 )

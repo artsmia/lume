@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Dropzone from 'react-dropzone'
 import styled from 'styled-components'
-import apiFile from '../utils/apiFile'
 import {Column} from './layout'
 import {Button} from './buttons'
 import {H4} from './h'
@@ -16,7 +15,9 @@ export default class extends Component {
   render() {
     const {
       handleDrop,
-      upload,
+      props: {
+        onImageUpload,
+      },
       state: {
         file,
         uploading
@@ -50,7 +51,7 @@ export default class extends Component {
 
         </Dropzone>
         <Button
-          onClick={upload}
+          onClick={() => {onImageUpload(file)}}
           disabled={(uploading)}
         >
           Upload
@@ -63,29 +64,6 @@ export default class extends Component {
     try {
       console.log(files[0])
       this.setState({file: files[0]})
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  upload = async () => {
-    try {
-      const {
-        state: {
-          file
-        },
-        props: {
-          orgId,
-          onImageSelection,
-          onImageUploaded,
-        }
-      } = this
-      this.setState({uploading: true})
-      const image = await apiFile(file, orgId)
-      await onImageUploaded()
-      await onImageSelection(image.id)
-      this.setState({uploading: false})
-
     } catch (ex) {
       console.error(ex)
     }

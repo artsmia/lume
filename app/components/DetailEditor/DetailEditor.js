@@ -1,18 +1,23 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {Row, Column} from '../../ui/layout'
-import ImageModule from '../../ui/ImageModule'
+import ImageManager from '../ImageManager'
 import {Button} from '../../ui/buttons'
 import {s3Url} from '../../config'
 import {Input, Label} from '../../ui/forms'
 import {ExpanderContainer, Expander} from '../../ui/expander'
 import ClipEditor from '../ClipEditor'
 import Image from '../Image'
+import Modal from '../../ui/modal'
+import Snackbar from '../../ui/Snackbar'
 
 export default class extends Component {
 
   state = {
-    detailTitle: ""
+    detailTitle: "",
+    imageModal: false,
+    snackMessage: "",
+    snackId: ""
   }
 
   render () {
@@ -23,18 +28,22 @@ export default class extends Component {
       props: {
         data: {
           detail: {
-            image: {
-              id: imageId,
-            },
+            image,
             clips
           }
-        }
+        },
+        orgId
       },
       state: {
-        detailTitle
+        detailTitle,
+        imageModal,
+        snackMessage,
+        snackId
       },
       save,
-      handleChange
+      handleChange,
+      openImageModal,
+      handleImageSave
     } = this
     return (
       <Expander
@@ -49,9 +58,28 @@ export default class extends Component {
               />
             </Column>
             <Image
-              imageId={imageId}
+              imageId={(image) ? image.id : false}
               height={"50px"}
               quality={"s"}
+            />
+            <Button
+              onClick={openImageModal}
+            >
+              Change Image
+            </Button>
+            <Modal
+              open={imageModal}
+              header={"Change Detail Image"}
+            >
+              <ImageManager
+                imageId={(image) ? image.id : false}
+                orgId={orgId}
+                onImageSave={handleImageSave}
+              />
+            </Modal>
+            <Snackbar
+              snackId={snackId}
+              message={snackMessage}
             />
           </Row>
         )}
@@ -139,4 +167,33 @@ export default class extends Component {
       console.error(ex)
     }
   }
+
+  handleImageSave = async(imageId) => {
+    try {
+      const {
+        props: {
+          editOrCreateDetail,
+          detailId
+        }
+      } = this
+      await editOrCreateDetail({
+        variables: {
+          detailId,
+          imageId
+        }
+      })
+
+      this.setState({
+        imageModal: false,
+        snackId: Math.random(),
+        snackMessage: "Detail Image Changed"
+      })
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  openImageModal = () => this.setState({imageModal: true})
+
 }

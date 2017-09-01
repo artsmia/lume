@@ -43,6 +43,7 @@ export class Expander extends Component {
         <ExpHeader>
           <Button
             onClick={toggle}
+            aria-label={"Expand Detail"}
           >
             <Arrow
               expanded={expanded}

@@ -24,9 +24,7 @@ export default class extends Component {
             id: clipId,
             detail: {
               id: detailId,
-              image: {
-                id: imageId,
-              }
+              image
             }
           }
         }
@@ -71,7 +69,7 @@ export default class extends Component {
           </Column>
           <Column>
             <Image
-              imageId={imageId}
+              imageId={(image) ? image.id : false}
               height={'200px'}
               quality={"m"}
             />

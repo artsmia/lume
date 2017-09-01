@@ -1,35 +1,49 @@
-  import React, {Component} from 'react'
-import {Button} from './buttons'
+import React, {Component} from 'react'
+import {Button} from '../../ui/buttons'
 import styled from 'styled-components'
-import {s3Url} from '../config'
+import PropTypes from 'prop-types'
+import Image from '../Image'
 
 export default class ImagePicker extends Component {
 
+  static defaultProps = {
+    images: [],
+    imageId: ""
+  }
+
+  static propTypes = {
+    images: PropTypes.array,
+    imageId: PropTypes.string,
+    onImageSave: PropTypes.func,
+  }
+
   state = {
-    selectedImageId: (this.props.images.length >= 1) ? this.props.images[0].id : "",
+    selectedImageId: "",
   }
 
   render() {
     const {
       props: {
-        orgId,
         images,
-        onImageSave,
+        imageId,
+        onImageSave
       },
       state: {
         selectedImageId
       },
-      selectImage,
+      selectImage
     } = this
     return (
       <Container>
         <ThumbColumn>
           {images.map( (image) => (
-            <ImgThumb
+            <Image
               key={image.id}
-              src={`${s3Url}/${orgId}/${image.id}/s`}
+              imageId={image.id}
               onClick={()=>{selectImage(image.id)}}
               selected={(selectedImageId === image.id)}
+              size={"80px"}
+              thumb
             />
           ))}
           {(images.length < 1) ? (
@@ -38,12 +52,12 @@ export default class ImagePicker extends Component {
         </ThumbColumn>
         <Right>
           {(selectedImageId) ? (
-            <Preview
-              src={`${s3Url}/${orgId}/${selectedImageId}/m`}
+            <Image
+              imageId={selectedImageId}
             />
           ): <p>Choose an image from the left</p>}
           <Button
-            onClick={onImageSave}
+            onClick={()=> {onImageSave(selectedImageId)}}
           >
             Save
           </Button>
@@ -56,16 +70,19 @@ export default class ImagePicker extends Component {
 
   selectImage = (selectedImageId) => {
     this.setState({selectedImageId})
-    this.props.onImageSelection(selectedImageId)
   }
 
-  componentWillReceiveProps(nextProps, prevProps) {
-    if (prevProps.currentImageId !== nextProps.currentImageId) {
-      this.setState({selectedImageId: nextProps.currentImageId})
+  componentWillReceiveProps({imageId, images}) {
+    if (imageId) {
+      this.setState({selectedImageId: imageId})
     }
-    if (nextProps.selectedImageId) {
-      this.setState({selectedImageId: nextProps.selectedImageId})
+    if (
+      !imageId &&
+      images.length > 0
+    ) {
+      this.setState({selectedImageId: images[0].id})
     }
+
   }
 
 }
@@ -102,20 +119,4 @@ export const Right = styled.div`
   margin: 10px;
   width: 60%;
   border: 1px solid black;
-`
-export const Preview = styled.img`
-  width: 100%;
-  height: 100%;
-  margin: auto;
-  object-fit: contain;
-  padding: 10px;
-  box-sizing: border-box;
-`
-
-export const ImgThumb = styled.img`
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  margin: 5px;
-  box-shadow: ${({selected}) => (selected) ? '0 0 10px blue' : 'none'};
 `
