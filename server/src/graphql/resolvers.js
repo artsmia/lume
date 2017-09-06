@@ -28,7 +28,7 @@ import editOrCreateOrganization from './mutations/editOrCreateOrganization'
 import editOrCreateImage from './mutations/editOrCreateImage'
 import editOrCreateDetail from './mutations/editOrCreateDetail'
 import editOrCreateClip from './mutations/editOrCreateClip'
-
+import deleteItem from './mutations/deleteItem'
 
 const resolvers = {
   Query: {
@@ -49,7 +49,8 @@ const resolvers = {
     editOrCreateOrganization,
     editOrCreateImage,
     editOrCreateDetail,
-    editOrCreateClip
+    editOrCreateClip,
+    deleteItem
   },
   Item,
   User,

@@ -12,7 +12,7 @@ export const Button = styled.button`
   vertical-align: middle;
   transition: all .4s ease-in-out;
   margin-right: .5em;
-  color: ${({theme, color}) => (color) ? theme.colors.black : theme.colors.white};
+  color: ${({theme, color}) => (color === "white") ? theme.colors.black : theme.colors.white};
   text-transform: uppercase;
 
   &:hover {

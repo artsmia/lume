@@ -1,0 +1,9 @@
+mutation deleteItem (
+  $itemId: ID!
+) {
+  deleteItem(
+    id: $itemId
+  ) {
+    message
+  }
+}

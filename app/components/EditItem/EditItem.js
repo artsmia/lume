@@ -13,6 +13,8 @@ import PropTypes from 'prop-types'
 import Snackbar from '../../ui/Snackbar'
 import {ExpanderContainer} from '../../ui/expander'
 import ImageManager from '../ImageManager'
+import Modal from '../../ui/modal'
+import router from 'next/router'
 
 export default class EditItem extends Component {
 
@@ -27,7 +29,8 @@ export default class EditItem extends Component {
   state = {
     upload: true,
     snack: "",
-    snackId: ""
+    snackId: "",
+    deleteItemModal: false
   }
 
   constructor(props){
@@ -69,9 +72,12 @@ export default class EditItem extends Component {
       state: {
         snack,
         snackId,
+        deleteItemModal
       },
       onImageSelection,
-      onImageSave
+      onImageSave,
+      openDeleteItemModal,
+      deleteItem
     } = this
     return (
       <Template
@@ -134,6 +140,25 @@ export default class EditItem extends Component {
                   >
                     Save Item
                   </Button>
+                  <Button
+                    onClick={openDeleteItemModal}
+                    color={"red"}
+                  >
+                    Delete this Item
+                  </Button>
+                  <Modal
+                    open={deleteItemModal}
+                    footer={(
+                      <Button
+                        onClick={deleteItem}
+                        color={"red"}
+                      >
+                        Delete Item
+                      </Button>
+                    )}
+                  >
+                    Do you want to delete this item?
+                  </Modal>
                 </Column>
                 <Column>
                   <H2>
@@ -309,5 +334,42 @@ export default class EditItem extends Component {
     }
   }
 
+  openDeleteItemModal = async () => {
+    try {
+      this.setState({deleteItemModal: true})
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  deleteItem = async () => {
+    try {
+
+      const {
+        props: {
+          deleteItem,
+          data: {
+            item: {
+              id: itemId
+            }
+          }
+        }
+      } = this
+
+      const response = await deleteItem({
+        variables: {
+          itemId
+        }
+      })
+
+      console.log(response)
+
+      router.push('/')
+
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
 
 }

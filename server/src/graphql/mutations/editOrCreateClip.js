@@ -4,8 +4,6 @@ export default async function editOrCreateClip(src, {id: clipId, title, descript
   try {
     let clip
 
-    console.log(clipId, newAdditionalImageIds)
-
     if (clipId) {
       clip = await clipModel.findById(clipId)
     } else {

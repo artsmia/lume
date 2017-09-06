@@ -50,8 +50,6 @@ export default class extends Component {
       handleAdditionalImageSave
     } = this
 
-    console.log(this.props.data)
-
     return (
       <Expander
         header={(

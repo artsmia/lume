@@ -85,6 +85,10 @@ const typeDefs = `
     organizations: [Organization]
   }
 
+  type DeleteMessage {
+    message: String
+  }
+
   type Query {
 
     book (
@@ -176,6 +180,11 @@ const typeDefs = `
       detailId: ID
       newAdditionalImageIds: [ID]
     ): Clip
+
+
+    deleteItem(
+      id: ID!
+    ): DeleteMessage
   }
 
   input CreateAndAddDetailInput {
