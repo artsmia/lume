@@ -5,7 +5,7 @@ import {LargeImage} from '../../ui/images'
 import {H2, H3} from '../../ui/h'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import {s3Url} from '../../config'
-import Zoomer from '../../ui/zoomer/Zoomer'
+import Zoomer from '../Zoomer'
 
 export default class extends Component {
 
@@ -69,15 +69,10 @@ export default class extends Component {
           </TabContainer>
         </SideContainer>
         <FeatureContainer>
-          {/* <Zoomer
-            organizationId={organization.id}
+          <Zoomer
             imageId={mainImage.id}
-          /> */}
-          {(mainImage.id) ? (
-            <LargeImage
-              src={`${s3Url}/${organization.id}/${mainImage.id}/original`}
-            />
-          ): null}
+          />
+
 
         </FeatureContainer>
       </AppTemplate>

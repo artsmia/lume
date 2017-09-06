@@ -1,0 +1,12 @@
+query ImageQuery (
+  $imageId: ID!
+) {
+  image (
+    id: $imageId
+  ) {
+    id
+    organization {
+      id
+    }
+  }
+}
