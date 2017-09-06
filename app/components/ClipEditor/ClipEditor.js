@@ -17,7 +17,8 @@ export default class extends Component {
     clipDescription: "",
     additionalImagesModal: false,
     snackMessage: "",
-    snackId: ""
+    snackId: "",
+    deleteClipModal: false
   }
 
   render () {
@@ -42,12 +43,14 @@ export default class extends Component {
         clipDescription,
         additionalImagesModal,
         snackMessage,
-        snackId
+        snackId,
+        deleteClipModal
       },
       save,
       handleChange,
       openModal,
-      handleAdditionalImageSave
+      handleAdditionalImageSave,
+      deleteClip
     } = this
 
     return (
@@ -63,11 +66,35 @@ export default class extends Component {
           </Column>
         )}
         footer={(
-          <Button
-            onClick={save}
-          >
-            Save Clip
-          </Button>
+          <Row>
+            <Button
+              color={"red"}
+              onClick={()=>this.setState({deleteClipModal: true})}
+            >
+              Delete Clip
+            </Button>
+            <Modal
+              open={deleteClipModal}
+              onClose={()=>this.setState({deleteClipModal: false})}
+              footer={(
+                <Row>
+                  <Button
+                    color={"red"}
+                    onClick={deleteClip}
+                  >
+                    Delete Clip
+                  </Button>
+                </Row>
+              )}
+            >
+              Are you sure you want to delete this clip?
+            </Modal>
+            <Button
+              onClick={save}
+            >
+              Save Clip
+            </Button>
+          </Row>
         )}
       >
         <Row>
@@ -89,11 +116,12 @@ export default class extends Component {
               ))}
             </Row>
             <Button
-              onClick={openModal}
+              onClick={()=>this.setState({additionalImagesModal: true})}
             >
               New Additional Image
             </Button>
             <Modal
+              onClose={()=>this.setState({additionalImagesModal: false})}
               header={"Add New Additional Image to Clip"}
               open={additionalImagesModal}
             >
@@ -191,4 +219,25 @@ export default class extends Component {
   }
 
   openModal = () => this.setState({additionalImagesModal: true})
+
+  deleteClip = async () => {
+    try {
+      const {
+        clipId,
+        deleteClip
+      } = this.props
+
+      this.setState({deleteClipModal: false})
+
+      await deleteClip({
+        variables: {
+          clipId
+        }
+      })
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
 }

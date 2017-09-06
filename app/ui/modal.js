@@ -7,23 +7,17 @@ export default class Modal extends Component {
     open: false
   }
 
-  state = {
-    open: false,
-  }
-
   render() {
 
     const {
-      state: {
-        open
-      },
-      toggle,
+      close,
       stopPropagation,
       escapeKey,
       props: {
         children,
         header,
-        footer
+        footer,
+        open
       }
     } = this
 
@@ -33,20 +27,24 @@ export default class Modal extends Component {
     return (
       <Overlay
         open={open}
-        onClick={toggle}
+        onClick={close}
       >
         <Container
           onClick={stopPropagation}
         >
           <Close
-            onClick={toggle}
+            onClick={close}
             aria-label={"Close"}
             onKeyUp={escapeKey}
             innerRef={ref => {this.closeButton = ref}}
           />
-          <Header>
-            {header}
-          </Header>
+
+          {(header) ? (
+            <Header>
+              {header}
+            </Header>
+          ): null}
+
           <Body>
             {children}
           </Body>
@@ -58,13 +56,9 @@ export default class Modal extends Component {
     )
   }
 
-
-  componentWillReceiveProps({open}) {
-    this.setState({open})
+  close = () => {
+    this.props.onClose()
   }
-
-
-  toggle = () => this.setState( ({open}) => ({open: !open}))
 
   stopPropagation = (e) => e.stopPropagation()
 
@@ -119,7 +113,7 @@ const Body = styled.div`
   display: flex;
   width: 100%;
   padding: 10px;
-  min-height: 100px;
+  min-height: 50px;
   overflow-y: scroll;
   z-index: 3;
   box-sizing: border-box;

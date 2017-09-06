@@ -1,0 +1,12 @@
+mutation deleteClip (
+  $clipId: ID!
+) {
+  deleteClip(
+    id: $clipId
+  ) {
+    id
+    clips {
+      id
+    }
+  }
+}

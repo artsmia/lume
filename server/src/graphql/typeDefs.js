@@ -185,6 +185,14 @@ const typeDefs = `
     deleteItem(
       id: ID!
     ): DeleteMessage
+
+    deleteDetail(
+      id: ID!
+    ): Item
+
+    deleteClip(
+      id: ID!
+    ): Detail
   }
 
   input CreateAndAddDetailInput {

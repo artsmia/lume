@@ -5,7 +5,6 @@ import {H2} from '../../ui/h'
 import {Form, Label, Input, TextArea} from '../../ui/forms'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
-// import ImageModule from '../../ui/ImageModule'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import {PreviewAppItem} from '../AppItem'
 import DetailEditor from '../DetailEditor'
@@ -57,12 +56,10 @@ export default class EditItem extends Component {
       saveItem,
       props: {
         data: {
-          organization,
           organization: {
             id: orgId,
             images
           },
-          item,
           item: {
             mainImage,
             details
@@ -74,9 +71,7 @@ export default class EditItem extends Component {
         snackId,
         deleteItemModal
       },
-      onImageSelection,
       onImageSave,
-      openDeleteItemModal,
       deleteItem
     } = this
     return (
@@ -141,13 +136,14 @@ export default class EditItem extends Component {
                     Save Item
                   </Button>
                   <Button
-                    onClick={openDeleteItemModal}
+                    onClick={()=>this.setState({deleteItemModal: true})}
                     color={"red"}
                   >
                     Delete this Item
                   </Button>
                   <Modal
                     open={deleteItemModal}
+                    onClose={()=>this.setState({deleteItemModal: false})}
                     footer={(
                       <Button
                         onClick={deleteItem}
@@ -197,8 +193,6 @@ export default class EditItem extends Component {
             >
               <PreviewAppItem
                 data={{
-                  loading: false,
-                  organization,
                   item: {
                     ...state,
                     mainImage: {
@@ -334,13 +328,6 @@ export default class EditItem extends Component {
     }
   }
 
-  openDeleteItemModal = async () => {
-    try {
-      this.setState({deleteItemModal: true})
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
 
   deleteItem = async () => {
     try {
@@ -352,19 +339,24 @@ export default class EditItem extends Component {
             item: {
               id: itemId
             }
-          }
+          },
+          orgSub
         }
       } = this
 
-      const response = await deleteItem({
+      await deleteItem({
         variables: {
           itemId
         }
       })
 
-      console.log(response)
 
-      router.push('/')
+      router.push({
+        pathname: '/cms/browse/items',
+        query: {
+          orgSub,
+        }
+      }, `/${orgSub}/cms/items`)
 
 
     } catch (ex) {

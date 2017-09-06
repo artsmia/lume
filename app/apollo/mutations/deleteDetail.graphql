@@ -1,0 +1,12 @@
+mutation deleteDetail (
+  $detailId: ID!
+) {
+  deleteDetail(
+    id: $detailId
+  ) {
+    id
+    details {
+      id
+    }
+  }
+}

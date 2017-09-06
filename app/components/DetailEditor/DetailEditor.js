@@ -38,12 +38,13 @@ export default class extends Component {
         detailTitle,
         imageModal,
         snackMessage,
-        snackId
+        snackId,
+        deleteModal
       },
       save,
       handleChange,
-      openImageModal,
-      handleImageSave
+      handleImageSave,
+      deleteDetail
     } = this
     return (
       <Expander
@@ -63,12 +64,13 @@ export default class extends Component {
               quality={"s"}
             />
             <Button
-              onClick={openImageModal}
+              onClick={()=>this.setState({imageModal: true})}
             >
               Change Image
             </Button>
             <Modal
               open={imageModal}
+              onClose={()=>this.setState({imageModal: false})}
               header={"Change Detail Image"}
             >
               <ImageManager
@@ -84,11 +86,39 @@ export default class extends Component {
           </Row>
         )}
         footer={(
-          <Button
-            onClick={save}
-          >
-            Save Detail
-          </Button>
+          <Row>
+            <Button
+              color={"red"}
+              onClick={()=>this.setState({deleteModal: true})}
+            >
+              Delete Detail
+            </Button>
+            <Modal
+              open={deleteModal}
+              onClose={()=>this.setState({deleteModal: false})}
+              footer={(
+                <Row>
+                  <Button>
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={deleteDetail}
+                    color={"red"}
+                  >
+                    Delete Detail
+                  </Button>
+                </Row>
+              )}
+            >
+              Do you want to delete this detail?
+            </Modal>
+            <Button
+              onClick={save}
+            >
+              Save Detail
+            </Button>
+          </Row>
+
         )}
       >
         <Row>
@@ -196,5 +226,30 @@ export default class extends Component {
   }
 
   openImageModal = () => this.setState({imageModal: true})
+
+
+  deleteDetail = async () => {
+    try {
+      const {
+        detailId,
+        deleteDetail,
+        data: {
+          refetch
+        }
+      } = this.props
+
+      this.setState({deleteModal: false})
+
+      await deleteDetail({
+        variables: {
+          detailId
+        }
+      })
+
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
 
 }

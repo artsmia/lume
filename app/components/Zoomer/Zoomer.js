@@ -1,4 +1,4 @@
-import react, {Component} from 'react'
+import {Component} from 'react'
 import styled from 'styled-components'
 import LeafletCss from './LeafletCss'
 import {s3Url, apiUrl} from '../../config'
@@ -7,10 +7,13 @@ const L = (typeof window === 'object') ? require('./MuseumTileLayer') : null
 
 export default class extends Component {
 
+  state = {
+    zoomerCreated: false
+  }
+
   render() {
 
     if (this.props.data.loading) return null
-
     return (
       <LeafletCss>
         <ZoomerMap
@@ -20,13 +23,19 @@ export default class extends Component {
     )
   }
 
-  componentDidMount(){
-    this.createZoomer()
+  componentWillReceiveProps(nextProps){
+    const {
+      zoomerCreated
+    } = this.state
+    if (!nextProps.data.loading && !zoomerCreated && nextProps.imageId) {
+      this.createZoomer()
+    }
   }
 
 
   createZoomer = async () => {
     try {
+
       const {
         mapRef,
         props: {
@@ -66,6 +75,8 @@ export default class extends Component {
       })
 
       this.tiles.addTo(this.map)
+
+      this.setState({zoomerCreated: true})
 
 
     } catch (ex) {

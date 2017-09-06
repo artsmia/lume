@@ -21,8 +21,7 @@ export default class extends Component {
             artist,
             mainImage,
             text
-          },
-          organization
+          }
         }
       }
     } = this
