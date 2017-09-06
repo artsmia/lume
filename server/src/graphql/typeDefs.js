@@ -42,8 +42,10 @@ const typeDefs = `
     title: String
     localId: String
     medium: String
-    artist: String
-    dated: String
+    dimensions: String
+    attribution: String
+    date: String
+    culture: String
     accessionNumber: String
     currentLocation: String
     creditLine: String
@@ -209,8 +211,10 @@ const typeDefs = `
     title: String
     localId: String
     medium: String
-    artist: String
-    dated: String
+    attribution: String
+    dimensions: String
+    culture: String
+    date: String
     accessionNumber: String
     currentLocation: String
     creditLine: String

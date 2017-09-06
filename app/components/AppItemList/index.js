@@ -1,33 +1,7 @@
 import { gql, graphql, compose } from 'react-apollo'
 import AppItemList from './AppItemList'
+import query from './query.graphql'
 
-
-const data = gql`
-  query itemListData (
-    $orgSub: String
-    $search: String
-  ) {
-    organization (
-      subdomain: $orgSub
-    ) {
-      id
-      name
-      subdomain
-
-    }
-    items (
-      search: $search
-    ) {
-      id
-      mainImage {
-        id
-      }
-      organization {
-        id
-      }
-    }
-  }
-`
 
 const config = {
   options: ({orgSub, search}) => ({
@@ -39,7 +13,7 @@ const config = {
 }
 
 export default compose(
-  graphql(data, config),
+  graphql(query, config),
 )(
   AppItemList
 )

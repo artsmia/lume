@@ -1,9 +1,11 @@
 mutation editOrCreateItem (
   $itemId: ID
   $title: String
-  $artist: String
+  $attribution: String
   $medium: String
-  $dated: String
+  $culture: String
+  $date: String
+  $dimensions: String
   $accessionNumber: String
   $currentLocation: String
   $creditLine: String
@@ -17,13 +19,15 @@ mutation editOrCreateItem (
     item: {
       id: $itemId
       title: $title
-      artist: $artist
+      attribution: $attribution
       medium: $medium
-      dated: $dated
+      date: $date
+      dimensions: $dimensions
       accessionNumber: $accessionNumber
       currentLocation: $currentLocation
       creditLine: $creditLine
       text: $text
+      culture: $culture
     }
     mainImageId: $mainImageId
     newOrganizationIds: $newOrganizationIds
@@ -34,10 +38,12 @@ mutation editOrCreateItem (
   ) {
     id
     title
-    artist
+    attribution
     medium
-    artist
-    dated
+    culture
+    attribution
+    dimensions
+    date
     accessionNumber
     currentLocation
     creditLine

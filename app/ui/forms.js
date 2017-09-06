@@ -12,6 +12,8 @@ export const Label = styled.label`
 `
 
 export const Input = styled.input`
+  box-sizing: border-box;
+  min-width: 150px;
   padding: .65em;
   border-radius: 2px;
   box-shadow: inset 0 0px 0px rgba(255,255,255, 0);
@@ -26,12 +28,14 @@ export const Input = styled.input`
 
 
 export const TextArea = styled.textarea`
+  box-sizing: border-box;
   padding: .65em;
   border-radius: 2px;
   box-shadow: inset 0 0px 0px rgba(255,255,255, 0);
   border: solid 1px rgba(35,31,32, 0.3);
   color: inherit;
   outline: none;
+  width: 100%;
 `
 
 export const Select = styled.select`

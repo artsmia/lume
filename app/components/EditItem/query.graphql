@@ -6,10 +6,11 @@ query editItemQuery (
   item (id: $itemId) {
     id
     title
-    artist
+    attribution
+    culture
+    dimensions
     medium
-    artist
-    dated
+    date
     accessionNumber
     currentLocation
     creditLine

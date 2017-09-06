@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import AppTemplate from '../AppTemplate/Template'
 import {SideContainer, FeatureContainer} from '../AppTemplate/Template'
-import {LargeImage} from '../../ui/images'
 import {H2, H3} from '../../ui/h'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
-import {s3Url} from '../../config'
 import Zoomer from '../Zoomer'
+import {ExpanderContainer, Expander} from '../../ui/expander'
 
 export default class extends Component {
 
@@ -18,9 +17,10 @@ export default class extends Component {
         data: {
           item: {
             title,
-            artist,
+            attribution,
             mainImage,
-            text
+            text,
+            details
           }
         }
       }
@@ -29,7 +29,7 @@ export default class extends Component {
       <AppTemplate>
         <SideContainer>
           <H2>{title}</H2>
-          <H3>{artist}</H3>
+          <H3>{attribution}</H3>
           <TabContainer
             initialTab={"about"}
           >
@@ -63,7 +63,29 @@ export default class extends Component {
             <TabBody
               name={"details"}
             >
-              details
+              <ExpanderContainer>
+                {
+                  details.map( detail => (
+                    <Expander
+                      key={detail.id}
+                      header={detail.title}
+                    >
+                      <ExpanderContainer>
+                        {
+                          detail.clips.map( clip => (
+                            <Expander
+                              key={clip.id}
+                              header={clip.title}
+                            >
+                              {clip.description}
+                            </Expander>
+                          ))
+                        }
+                      </ExpanderContainer>
+                    </Expander>
+                  ))
+                }
+              </ExpanderContainer>
             </TabBody>
           </TabContainer>
         </SideContainer>

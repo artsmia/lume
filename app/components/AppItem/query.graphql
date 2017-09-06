@@ -1,0 +1,31 @@
+query ItemQuery (
+  $itemId: ID!
+) {
+  item (
+    id: $itemId
+  ) {
+    id
+    title
+    medium
+    attribution
+    date
+    mainImage {
+      id
+    }
+    details {
+      id
+      title
+      image {
+        id
+      }
+      clips {
+        id
+        title
+        description
+        additionalImages {
+          id
+        }
+      }
+    }
+  }
+}

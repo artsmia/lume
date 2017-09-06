@@ -3,8 +3,9 @@ fragment itemFields on Item {
   title
   localId
   medium
-  artist
-  dated
+  attribution
+  culture
+  date
   accessionNumber
   currentLocation
   creditLine

@@ -65,6 +65,7 @@ export default class extends Component {
             />
             <Button
               onClick={()=>this.setState({imageModal: true})}
+              color={"white"}
             >
               Change Image
             </Button>
@@ -83,10 +84,6 @@ export default class extends Component {
               snackId={snackId}
               message={snackMessage}
             />
-          </Row>
-        )}
-        footer={(
-          <Row>
             <Button
               color={"red"}
               onClick={()=>this.setState({deleteModal: true})}
@@ -118,7 +115,6 @@ export default class extends Component {
               Save Detail
             </Button>
           </Row>
-
         )}
       >
         <Row>
@@ -131,13 +127,14 @@ export default class extends Component {
                   orgId={orgId}
                 />
               ))}
-
+              <Button
+                color={"white"}
+                onClick={newClip}
+              >
+                New Clip
+              </Button>
             </ExpanderContainer>
-            <Button
-              onClick={newClip}
-            >
-              New Clip
-            </Button>
+
           </Column>
         </Row>
       </Expander>

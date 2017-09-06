@@ -23,11 +23,11 @@ export default class extends Component {
     )
   }
 
-  componentWillReceiveProps(nextProps){
+  componentDidUpdate(){
     const {
       zoomerCreated
     } = this.state
-    if (!nextProps.data.loading && !zoomerCreated && nextProps.imageId) {
+    if (!zoomerCreated && !this.props.data.loading && this.props.imageId) {
       this.createZoomer()
     }
   }

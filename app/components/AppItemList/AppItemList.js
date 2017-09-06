@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {ItemsContainer} from '../AppTemplate/Template'
-import {AppSearchImage} from '../../ui/images'
 import {s3Url} from '../../config'
+import Link from 'next/link'
+import Image from '../Image'
 
 export default class extends Component {
   render(){
@@ -11,27 +12,32 @@ export default class extends Component {
     const {
       props: {
         data: {
-          organization,
           items
-        }
+        },
+        orgSub
       }
     } = this
 
     return (
       <ItemsContainer>
         {items.map((item, index) => (
-          <AppSearchImage
+          <Link
             key={index}
-            src={`${s3Url}/${organization.id}/${item.mainImage.id}/m`}
             href={{
               pathname: 'app/item',
               query: {
-                orgSub: organization.subdomain,
+                orgSub: orgSub,
                 itemId: item.id
               }
             }}
-            as={`/${organization.subdomain}/item/${item.id}`}
-          />
+            as={`/${orgSub}/item/${item.id}`}
+          >
+            <Image
+              imageId={item.mainImage.id}
+              height={"200px"}
+              quality={"m"}
+            />
+          </Link>
         ))}
       </ItemsContainer>
     )

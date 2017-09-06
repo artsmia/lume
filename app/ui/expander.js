@@ -56,11 +56,16 @@ export class Expander extends Component {
         >
           {children}
         </ExpBody>
-        <ExpFooter
-          expanded={expanded}
-        >
-          {footer}
-        </ExpFooter>
+
+        {(footer) ? (
+          <ExpFooter
+            expanded={expanded}
+          >
+            {footer}
+          </ExpFooter>
+        ): null}
+
+
       </ExpContainer>
     )
   }
@@ -96,7 +101,7 @@ const ExpBody = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  min-height: ${({expanded}) => (expanded) ? '200px' : '0px'};
+  min-height: ${({expanded}) => (expanded) ? '50px' : '0px'};
   height: ${({expanded}) => (expanded) ? '' : '0px'};
   transition: all .2s;
   border-bottom: ${({theme, expanded})=> (expanded) ? `1px solid ${theme.colors.lightMediumGray}` : ''};

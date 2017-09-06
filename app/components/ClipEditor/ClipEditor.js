@@ -56,17 +56,15 @@ export default class extends Component {
     return (
       <Expander
         header={(
-          <Column>
-            <Label>Clip Title</Label>
-            <Input
-              name={"clipTitle"}
-              value={clipTitle}
-              onChange={handleChange}
-            />
-          </Column>
-        )}
-        footer={(
           <Row>
+            <Column>
+              <Label>Clip Title</Label>
+              <Input
+                name={"clipTitle"}
+                value={clipTitle}
+                onChange={handleChange}
+              />
+            </Column>
             <Button
               color={"red"}
               onClick={()=>this.setState({deleteClipModal: true})}

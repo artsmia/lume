@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import styled from 'styled-components'
 import Template from '../CMSTemplate'
 import {EditContainer} from '../CMSTemplate/Template'
 import {H2} from '../../ui/h'
@@ -23,24 +24,23 @@ export default class EditItem extends Component {
     data: PropTypes.object
   }
 
-  inputs = ["title", "localId", "medium", "artist", "dated", "accessionNumber", "currentLocation", "creditLine", "text"]
 
   state = {
     upload: true,
     snack: "",
     snackId: "",
-    deleteItemModal: false
+    deleteItemModal: false,
+    title: "",
+    attribution: "",
+    medium: "",
+    dimensions: "",
+    culture: "",
+    accessionNumber: "",
+    text: "",
+    creditLine: "",
+    currentLocation: ""
   }
 
-  constructor(props){
-    super(props)
-    this.inputs.forEach( name => {
-      this.state = {
-        ...this.state,
-        [name]: ""
-      }
-    })
-  }
 
 
   render() {
@@ -69,7 +69,17 @@ export default class EditItem extends Component {
       state: {
         snack,
         snackId,
-        deleteItemModal
+        deleteItemModal,
+        title,
+        attribution,
+        date,
+        medium,
+        dimensions,
+        culture,
+        accessionNumber,
+        text,
+        creditLine,
+        currentLocation
       },
       onImageSave,
       deleteItem
@@ -103,62 +113,112 @@ export default class EditItem extends Component {
             >
               <Row>
                 <Column>
-                  <H2>
-                    Information
-                  </H2>
-                  <Form>
-                    {inputs.map( name => (
-                      <Column
-                        key={name}
-                      >
-                        <Label>
-                          {name}
-                        </Label>
-                        {(name === "text") ? (
-                          <TextArea
-                            name={name}
-                            onChange={change}
-                            value={state[name]}
-                          />
-                        ): (
+                  <Row>
+                    <SectionContainer>
+                      <H2>Information</H2>
+                      <Row>
+                        <Column>
+                          <Label>Title</Label>
                           <Input
-                            name={name}
+                            name={"title"}
+                            value={title}
                             onChange={change}
-                            value={state[name]}
                           />
-                        )}
-                      </Column>
-                    ))}
-                  </Form>
-                  <Button
-                    onClick={saveItem}
-                  >
-                    Save Item
-                  </Button>
-                  <Button
-                    onClick={()=>this.setState({deleteItemModal: true})}
-                    color={"red"}
-                  >
-                    Delete this Item
-                  </Button>
-                  <Modal
-                    open={deleteItemModal}
-                    onClose={()=>this.setState({deleteItemModal: false})}
-                    footer={(
-                      <Button
-                        onClick={deleteItem}
-                        color={"red"}
-                      >
-                        Delete Item
-                      </Button>
-                    )}
-                  >
-                    Do you want to delete this item?
-                  </Modal>
+                          <Label>Date</Label>
+                          <Input
+                            name={"date"}
+                            value={date}
+                            onChange={change}
+                          />
+                          <Label>Culture</Label>
+                          <Input
+                            name={"culture"}
+                            value={culture}
+                            onChange={change}
+                          />
+                          <Label>Dimensions</Label>
+                          <Input
+                            name={"dimensions"}
+                            value={dimensions}
+                            onChange={change}
+                          />
+                          <Label>Culture</Label>
+                          <Input
+                            name={"accessionNumber"}
+                            value={accessionNumber}
+                            onChange={change}
+                          />
+                        </Column>
+                        <Column>
+                          <Label>Attribution</Label>
+                          <TextArea
+                            name={"attribution"}
+                            value={attribution}
+                            onChange={change}
+                          />
+                          <Label>Medium</Label>
+                          <TextArea
+                            name={"medium"}
+                            value={medium}
+                            onChange={change}
+                          />
+                          <Label>Credit Line</Label>
+                          <TextArea
+                            name={"creditLine"}
+                            value={creditLine}
+                            onChange={change}
+                          />
+                          <Label>Current Location</Label>
+                          <TextArea
+                            name={"creditLine"}
+                            value={creditLine}
+                            onChange={change}
+                          />
+                        </Column>
+                      </Row>
+                      <Label>
+                        About
+                      </Label>
+                      <TextArea
+                        name={"text"}
+                        value={text}
+                        onChange={change}
+                      />
+                      <Row>
+                        <Button
+                          onClick={saveItem}
+                        >
+                          Save
+                        </Button>
+                        <Button
+                          onClick={()=>this.setState({deleteItemModal: true})}
+                          color={"red"}
+                        >
+                          Delete this Item
+                        </Button>
+                        <Modal
+                          open={deleteItemModal}
+                          onClose={()=>this.setState({deleteItemModal: false})}
+                          footer={(
+                            <Button
+                              onClick={deleteItem}
+                              color={"red"}
+                            >
+                              Delete Item
+                            </Button>
+                          )}
+                        >
+                          Do you want to delete this item?
+                        </Modal>
+                      </Row>
+                    </SectionContainer>
+                  </Row>
+
+
                 </Column>
                 <Column>
                   <H2>
-                    Item Main Image
+                    Main Image
                   </H2>
                   <ImageManager
                     orgId={orgId}
@@ -167,31 +227,39 @@ export default class EditItem extends Component {
                   />
                 </Column>
               </Row>
-              <Column>
-                <ExpanderContainer>
-                  { (details) ?
-                    details.map( detail => (
-                      <DetailEditor
-                        key={detail.id}
-                        detailId={detail.id}
-                        orgId={orgId}
-                      />
-                    ))
-                    : null
-                  }
-                </ExpanderContainer>
-                <Button
-                  onClick={addDetail}
-                >
-                  Add Detail
-                </Button>
-              </Column>
+              <Row>
+                <SectionContainer>
+                  <H2>
+                    Details
+                  </H2>
+                  <ExpanderContainer>
+                    { (details) ?
+                      details.map( detail => (
+                        <DetailEditor
+                          key={detail.id}
+                          detailId={detail.id}
+                          orgId={orgId}
+                        />
+                      ))
+                      : null
+                    }
+                    <Button
+                      onClick={addDetail}
+                      color={"white"}
+                    >
+                      Add Detail
+                    </Button>
+                  </ExpanderContainer>
+
+                </SectionContainer>
+              </Row>
+
 
             </TabBody>
             <TabBody
               name={"preview"}
             >
-              <PreviewAppItem
+              {/* <PreviewAppItem
                 data={{
                   item: {
                     ...state,
@@ -200,7 +268,7 @@ export default class EditItem extends Component {
                     }
                   }
                 }}
-              />
+              /> */}
             </TabBody>
           </TabContainer>
         </EditContainer>
@@ -210,9 +278,9 @@ export default class EditItem extends Component {
 
   componentWillReceiveProps(newProps){
     if (!newProps.data.loading) {
-      this.inputs.forEach( name => {
+      Object.keys(newProps.data.item).forEach( key => {
         this.setState({
-          [name]: newProps.data.item[name] || ""
+          [key]: newProps.data.item[key] || ""
         })
       })
     }
@@ -255,11 +323,12 @@ export default class EditItem extends Component {
     try {
       const {
         state: {
-          artist,
+          attribution,
           title,
           localId,
           medium,
-          dated,
+          date,
+          culture,
           accessionNumber,
           currentLocation,
           creditLine,
@@ -278,15 +347,16 @@ export default class EditItem extends Component {
       await editItem({
         variables: {
           itemId,
-          artist,
+          attribution,
           title,
           localId,
           medium,
-          dated,
+          date,
           accessionNumber,
           currentLocation,
           creditLine,
           text,
+          culture
         }
       })
 
@@ -365,3 +435,10 @@ export default class EditItem extends Component {
   }
 
 }
+
+
+const SectionContainer = styled(Column)`
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid ${({theme}) => theme.colors.black};
+`

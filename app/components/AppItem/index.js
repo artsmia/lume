@@ -1,43 +1,17 @@
 import { gql, graphql, compose } from 'react-apollo'
 import AppItem from './AppItem'
-
-
-const data = gql`
-  query organization (
-    $orgSub: String
-    $itemId: ID!
-  ) {
-    organization (
-      subdomain: $orgSub
-    ) {
-      id
-    }
-    item (
-      id: $itemId
-    ) {
-      id
-      title
-      medium
-      artist
-      dated
-      mainImage {
-        id
-      }
-    }
-  }
-`
+import query from './query.graphql'
 
 const config = {
-  options: ({orgSub, itemId}) => ({
+  options: ({itemId}) => ({
     variables: {
-      orgSub,
       itemId
     }
   })
 }
 
 export default compose(
-  graphql(data, config),
+  graphql(query, config),
 )(
   AppItem
 )
