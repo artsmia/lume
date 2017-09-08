@@ -1,14 +1,10 @@
 import React, {Component} from 'react'
-import AppTemplate from '../AppTemplate/Template'
-import {ItemsContainer, SideContainer} from '../AppTemplate/Template'
-import {H2, H3} from '../../ui/h'
-import {Button} from '../../ui/buttons'
-import {Link} from '../../ui/links'
-import {Column} from '../../ui/layout'
-import {AppSearchImage} from '../../ui/images'
-import {s3Url} from '../../config'
+import styled from 'styled-components'
+import {H2} from '../../ui/h'
+import Template from '../Template/Template'
 import {Search} from '../../ui/search'
 import AppItemList from '../AppItemList'
+
 export default class AppHome extends Component {
 
   state = {
@@ -17,7 +13,6 @@ export default class AppHome extends Component {
 
   render() {
 
-    if (this.props.data.loading) return null
 
     const {
       props,
@@ -30,7 +25,8 @@ export default class AppHome extends Component {
       handleChange
     } = this
     return (
-      <AppTemplate
+      <Template
+        drawer={false}
         {...props}
       >
         <SideContainer>
@@ -45,26 +41,18 @@ export default class AppHome extends Component {
           orgSub={orgSub}
           search={search}
         />
-        {/* <ItemsContainer>
-          {items.map((item, index) => (
-            <AppSearchImage
-              key={index}
-              src={`${s3Url}/${organization.id}/${item.mainImage.id}/m`}
-              href={{
-                pathname: 'app/item',
-                query: {
-                  orgSub: organization.subdomain,
-                  itemId: item.id
-                }
-              }}
-              as={`/${organization.subdomain}/item/${item.id}`}
-            />
-          ))}
-        </ItemsContainer> */}
-      </AppTemplate>
+      </Template>
     )
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
 }
+
+const SideContainer = styled.div`
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+`

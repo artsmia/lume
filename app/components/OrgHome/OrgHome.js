@@ -1,8 +1,5 @@
 import React, {Component} from 'react'
-import { gql, graphql } from 'react-apollo'
-import CMSTemplate from '../CMSTemplate'
-import {Centered} from '../CMSTemplate/Template'
-import {H2} from '../../ui/h'
+import Template from '../Template'
 
 export default class Home extends Component {
 
@@ -22,13 +19,12 @@ export default class Home extends Component {
       }
     } = this
     return (
-      <CMSTemplate
+      <Template
+        drawer
         {...props}
       >
-        <Centered>
 
-        </Centered>
-      </CMSTemplate>
+      </Template>
     )
   }
 

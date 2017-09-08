@@ -8,7 +8,8 @@ const L = (typeof window === 'object') ? require('./MuseumTileLayer') : null
 export default class extends Component {
 
   state = {
-    zoomerCreated: false
+    zoomCreated: false,
+    zoomLoading: false
   }
 
   render() {
@@ -25,9 +26,10 @@ export default class extends Component {
 
   componentDidUpdate(){
     const {
-      zoomerCreated
+      zoomLoading,
+      zoomLoaded
     } = this.state
-    if (!zoomerCreated && !this.props.data.loading && this.props.imageId) {
+    if (!zoomLoading && !zoomLoaded) {
       this.createZoomer()
     }
   }
@@ -35,6 +37,14 @@ export default class extends Component {
 
   createZoomer = async () => {
     try {
+
+      await this.promiseState( (prevState) => {
+        return {
+          zoomLoading: true
+        }
+      })
+
+
 
       const {
         mapRef,
@@ -62,21 +72,39 @@ export default class extends Component {
 
 
       this.map = L.map(mapRef, {
-        crs: L.CRS.Simple
+        crs: L.CRS.Simple,
       })
 
-      this.map.setView([width / 2, height / 2], 0)
-
-      this.tiles = L.museumTileLayer(`${s3Url}/${bucketId}/{imageId}/tiles/{z}-{x}-{y}.png`, {
+      this.tiles = L.tileLayer(`${s3Url}/${bucketId}/{imageId}/tiles/{z}-{x}-{y}.png`, {
         imageId,
         height,
         width,
         tileSize: 512
       })
 
+      this.map.setView([-256,256], 0)
+
+
+      // this.map.setView([0,0], this.map.getMaxZoom())
+      //
+      //
+      // this.tiles = L.museumTileLayer(`${s3Url}/${bucketId}/{imageId}/tiles/{z}-{x}-{y}.png`, {
+      //   imageId,
+      //   height,
+      //   width,
+      //   tileSize: 512
+      // })
+
+
+
       this.tiles.addTo(this.map)
 
-      this.setState({zoomerCreated: true})
+
+      await this.promiseState( (prevState) => {
+        return {
+          zoomLoaded: true
+        }
+      })
 
 
     } catch (ex) {
@@ -84,6 +112,14 @@ export default class extends Component {
     }
   }
 
+  promiseState = (newState) => {
+    return new Promise( (resolve, reject) => {
+      this.setState(
+        newState,
+        resolve
+      )
+    })
+  }
 
 }
 

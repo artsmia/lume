@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ItemsContainer} from '../AppTemplate/Template'
+import styled from 'styled-components'
 import {s3Url} from '../../config'
 import Link from 'next/link'
 import Image from '../Image'
@@ -43,3 +43,15 @@ export default class extends Component {
     )
   }
 }
+
+const ItemsContainer = styled.div`
+  min-height: 100vh;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  padding: 20px;
+  box-sizing: border-box;
+`

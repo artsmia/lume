@@ -1,17 +1,6 @@
 import OrgHome from './OrgHome'
 import { gql, graphql, compose } from 'react-apollo'
-
-const organization = gql`
-  query organization ($subdomain: String) {
-    organization  (
-      subdomain: $subdomain
-    ) {
-      id
-      name
-    }
-  }
-`
-
+import query from './query.graphql'
 const options = {
   options: (props) => {
     const {url: {query: {orgSub}}} = props
@@ -25,7 +14,7 @@ const options = {
 
 
 export default compose(
-  graphql(organization, options)
+  graphql(query, options)
 )(
   OrgHome
 )

@@ -110,6 +110,9 @@ export class TabBody extends Component {
         selectedTab
       }
     } = this
+
+    if (selectedTab !== name) return null
+
     return (
       <TabBodyContainer
         selected={(selectedTab === name)}

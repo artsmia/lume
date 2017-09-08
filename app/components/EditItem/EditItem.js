@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Template from '../CMSTemplate'
-import {EditContainer} from '../CMSTemplate/Template'
+import Template from '../Template'
 import {H2} from '../../ui/h'
 import {Form, Label, Input, TextArea} from '../../ui/forms'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
-import {PreviewAppItem} from '../AppItem'
+import AppItem from '../AppItem'
 import DetailEditor from '../DetailEditor'
 import PropTypes from 'prop-types'
 import Snackbar from '../../ui/Snackbar'
@@ -61,6 +60,7 @@ export default class EditItem extends Component {
             images
           },
           item: {
+            id: itemId,
             mainImage,
             details
           }
@@ -86,6 +86,7 @@ export default class EditItem extends Component {
     } = this
     return (
       <Template
+        drawer
         {...this.props}
       >
         <Snackbar
@@ -259,16 +260,9 @@ export default class EditItem extends Component {
             <TabBody
               name={"preview"}
             >
-              {/* <PreviewAppItem
-                data={{
-                  item: {
-                    ...state,
-                    mainImage: {
-                      id: (mainImage) ? mainImage.id : false
-                    }
-                  }
-                }}
-              /> */}
+              <AppItem
+                itemId={itemId}
+              />
             </TabBody>
           </TabContainer>
         </EditContainer>
@@ -436,6 +430,14 @@ export default class EditItem extends Component {
 
 }
 
+
+const EditContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+`
 
 const SectionContainer = styled(Column)`
   margin: 20px;

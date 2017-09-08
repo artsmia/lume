@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-import Template from '../CMSTemplate'
-import {Centered} from '../CMSTemplate/Template'
-import {H2} from '../../ui/h'
+import Template from '../Template'
+import styled from 'styled-components'
 import {Table, Header, Row, Cell, Body} from '../../ui/tables'
 import {Link} from '../../ui/links'
 import {Button} from '../../ui/buttons'
@@ -128,3 +127,12 @@ export default class BrowseItems extends Component {
   }
 
 }
+
+const Centered = styled.div`
+  width: 50%;
+  margin: auto;
+  display: flex;
+  margin-top: 50px;
+  flex-direction: column;
+  align-items: flex-start;
+`

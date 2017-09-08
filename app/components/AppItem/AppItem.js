@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import AppTemplate from '../AppTemplate/Template'
-import {SideContainer, FeatureContainer} from '../AppTemplate/Template'
+import styled from 'styled-components'
+import Template from '../Template/Template'
 import {H2, H3} from '../../ui/h'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import Zoomer from '../Zoomer'
@@ -25,8 +25,11 @@ export default class extends Component {
         }
       }
     } = this
+
     return (
-      <AppTemplate>
+      <Template
+        drawer={false}
+      >
         <SideContainer>
           <H2>{title}</H2>
           <H3>{attribution}</H3>
@@ -96,9 +99,23 @@ export default class extends Component {
 
 
         </FeatureContainer>
-      </AppTemplate>
+      </Template>
     )
   }
 
 
 }
+
+
+const SideContainer = styled.div`
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+`
+
+const FeatureContainer = styled.div`
+  width: 70%;
+  display: flex;
+`

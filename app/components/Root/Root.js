@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import AppTemplate from '../AppTemplate/Template'
-import {Centered} from '../AppTemplate/Template'
+import styled from 'styled-components'
+import Template from '../Template/Template'
 import {H2, H3} from '../../ui/h'
 import {createLock} from '../../auth'
 import {Button} from '../../ui/buttons'
@@ -25,7 +25,7 @@ export default class Root extends Component {
       }
     } = this
     return (
-      <AppTemplate
+      <Template
         {...props}
         drawer={false}
       >
@@ -58,7 +58,7 @@ export default class Root extends Component {
             ))}
           </Column>
         </Centered>
-      </AppTemplate>
+      </Template>
     )
   }
 
@@ -68,3 +68,12 @@ export default class Root extends Component {
   }
 
 }
+
+const Centered = styled.div`
+  width: 50%;
+  margin: auto;
+  display: flex;
+  margin-top: 50px;
+  flex-direction: column;
+  align-items: flex-start;
+`
