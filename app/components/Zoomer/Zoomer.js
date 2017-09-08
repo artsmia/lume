@@ -65,36 +65,79 @@ export default class extends Component {
         method: "GET"
       })
 
-      const {
+      let {
         height,
         width
       } = await response.json()
 
 
+
+      const larger = Math.max(height, width)
+      const tileSize = 512
+
+      let maxTiles = Math.ceil(larger / tileSize)
+
+      let maxZoom = Math.log2(maxTiles)
+
+      while (
+        height > tileSize ||
+        width > tileSize
+      ) {
+        height = height / 2
+        width = width / 2
+      }
+
+
+      let ne = L.latLng(0, width)
+      let sw = L.latLng(-1 * height, 0)
+
+
+
+      const bounds = L.latLngBounds(sw, ne)
+
+      console.log(bounds)
+
       this.map = L.map(mapRef, {
         crs: L.CRS.Simple,
+        maxBounds: bounds,
+        zoomSnap: 0
       })
+
+      const container = this.map.getContainer()
+
+      const containerWidth = container.clientWidth
+      const containerHeight = container.clientHeight
+
+      const longDimension = Math.max(containerWidth, containerHeight)
+
+      const initialZoom = Math.log2(longDimension / tileSize)
+
+
 
       this.tiles = L.tileLayer(`${s3Url}/${bucketId}/{imageId}/tiles/{z}-{x}-{y}.png`, {
         imageId,
-        height,
-        width,
-        tileSize: 512
+        tileSize,
+        maxNativeZoom: maxZoom,
+        minNativeZoom: 0,
+        noWrap: true,
+        bounds,
+        minZoom: initialZoom
       })
 
-      this.map.setView([-256,256], 0)
 
+      this.map.setView([-256,256], initialZoom)
 
-      // this.map.setView([0,0], this.map.getMaxZoom())
-      //
-      //
-      // this.tiles = L.museumTileLayer(`${s3Url}/${bucketId}/{imageId}/tiles/{z}-{x}-{y}.png`, {
-      //   imageId,
-      //   height,
-      //   width,
-      //   tileSize: 512
-      // })
+      this.map.on('zoomstart', (e) => {
 
+        let zoomReq = e.target._zoom
+
+        if (zoomReq < initialZoom) {
+          e.target._zoom = initialZoom
+        } else {
+          e.target._zoom = Math.round(zoomReq * 2) / 2
+        }
+
+      })
 
 
       this.tiles.addTo(this.map)
