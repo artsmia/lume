@@ -17,7 +17,6 @@ export default class extends Component {
         orgSub
       }
     } = this
-
     return (
       <ItemsContainer>
         {items.map((item, index) => (

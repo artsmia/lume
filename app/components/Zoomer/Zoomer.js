@@ -95,7 +95,6 @@ export default class extends Component {
 
       const bounds = L.latLngBounds(sw, ne)
 
-      console.log(bounds)
 
       this.map = L.map(mapRef, {
         crs: L.CRS.Simple,
@@ -113,7 +112,6 @@ export default class extends Component {
       const initialZoom = Math.log2(longDimension / tileSize)
 
 
-
       this.tiles = L.tileLayer(`${s3Url}/${bucketId}/{imageId}/tiles/{z}-{x}-{y}.png`, {
         imageId,
         tileSize,
@@ -125,7 +123,7 @@ export default class extends Component {
       })
 
 
-      this.map.setView([-256,256], initialZoom)
+      this.map.setView([height / 2, -1 * width / 2], initialZoom)
 
       this.map.on('zoomstart', (e) => {
 
@@ -141,6 +139,9 @@ export default class extends Component {
 
 
       this.tiles.addTo(this.map)
+
+      this.map.invalidateSize()
+      this.map.fitBounds(bounds)
 
 
       await this.promiseState( (prevState) => {
