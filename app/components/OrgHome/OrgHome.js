@@ -23,7 +23,6 @@ export default class Home extends Component {
         drawer
         {...props}
       >
-
       </Template>
     )
   }

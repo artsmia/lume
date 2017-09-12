@@ -7,6 +7,7 @@ import Image from '../Image'
 import {PropTypes} from 'prop-types'
 import apiFile from '../../utils/apiFile'
 import Snackbar from '../../ui/Snackbar'
+import Zoomer from '../Zoomer'
 
 export default class extends Component {
 
@@ -19,7 +20,8 @@ export default class extends Component {
 
   state = {
     snackMessage: "",
-    snackId: ""
+    snackId: "",
+    uploading: false
   }
 
   render() {
@@ -39,7 +41,8 @@ export default class extends Component {
       },
       state: {
         snackMessage,
-        snackId
+        snackId,
+        uploading
       },
       onImageUpload,
     } = this
@@ -73,7 +76,7 @@ export default class extends Component {
             name={"current"}
           >
             {(imageId) ? (
-              <Image
+              <Zoomer
                 imageId={imageId}
               />
             ) : <p>Select an image or upload a new one</p>}
@@ -93,6 +96,7 @@ export default class extends Component {
             <Dropzone
               orgId={orgId}
               onImageUpload={onImageUpload}
+              uploading={uploading}
             />
           </TabBody>
         </TabContainer>
@@ -109,8 +113,11 @@ export default class extends Component {
         orgId
       } = this.props
 
+      await this.promiseState({uploading: true})
 
       await apiFile(file,orgId)
+
+      await this.promiseState({uploading: false})
 
       this.setState({
         snackMessage: "Image Uploaded",
@@ -124,11 +131,19 @@ export default class extends Component {
     }
   }
 
+  promiseState = (newState) => {
+    return new Promise( (resolve, reject) => {
+      this.setState(
+        newState,
+        resolve
+      )
+    })
+  }
+
 }
 
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
-  max-height: 600px;
+  height: 600px;
 `

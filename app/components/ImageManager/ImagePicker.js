@@ -8,7 +8,6 @@ export default class ImagePicker extends Component {
 
   static defaultProps = {
     images: [],
-    imageId: ""
   }
 
   static propTypes = {
@@ -33,6 +32,7 @@ export default class ImagePicker extends Component {
       },
       selectImage
     } = this
+    console.log(this)
     return (
       <Container>
         <ThumbColumn>
@@ -70,6 +70,15 @@ export default class ImagePicker extends Component {
 
   selectImage = (selectedImageId) => {
     this.setState({selectedImageId})
+  }
+
+  componentDidMount(){
+    const {
+      imageId
+    } = this.props
+    if (imageId) {
+      this.setState({selectedImageId: imageId})
+    }
   }
 
   componentWillReceiveProps({imageId, images}) {

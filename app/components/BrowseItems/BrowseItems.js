@@ -38,6 +38,7 @@ export default class BrowseItems extends Component {
     return (
       <Template
         {...this.props}
+        drawer={true}
       >
         <Centered>
           <Button

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const LeafletStyles = styled.div`
-  height: 100vh;
+  height: 100%;
   width: 100%;
   position: 100%;
   /* required styles */

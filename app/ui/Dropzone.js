@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import {Column} from './layout'
 import {Button} from './buttons'
 import {H4} from './h'
+import {Loading} from './spinner'
+
 
 export default class extends Component {
 
@@ -17,14 +19,15 @@ export default class extends Component {
       handleDrop,
       props: {
         onImageUpload,
+        uploading
       },
       state: {
         file,
-        uploading
       }
     } = this
     return (
       <Container>
+        {(uploading) ? <Loading/> : null }
         <Dropzone
           accept={'image/*'}
           onDropAccepted={handleDrop}

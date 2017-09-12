@@ -43,8 +43,6 @@ export default class extends Component {
       src
     } = this
 
-
-
     if (thumb) {
       return (
         <Thumb
@@ -100,7 +98,7 @@ const Img = styled.img`
 const Thumb = styled.img`
   height: ${({size}) => size};
   width: ${({size}) => size};
-  box-shadow: 0 0 10px ${({theme, selected}) => (selected) ? theme.colors.purple : ""};
+  box-shadow:  ${({theme, selected}) => (selected) ? `0 0 10px 5px ${theme.colors.purple}` : ""};
   object-fit: cover;
   margin: 10px;
 `

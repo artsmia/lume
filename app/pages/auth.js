@@ -3,6 +3,9 @@ import {hashToCookies} from '../auth'
 import apiFetch from '../utils/apiFetch'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
+import {Loading} from '../ui/spinner'
+import Template from '../components/Template/Template'
+
 
 export default class extends Component {
 
@@ -18,9 +21,9 @@ export default class extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Hello</h2>
-      </div>
+      <Template>
+        <Loading/>
+      </Template>
     )
   }
 

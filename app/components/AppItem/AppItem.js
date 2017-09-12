@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import Template from '../Template/Template'
-import {H2, H3} from '../../ui/h'
+import {H1, H2, H3, H4} from '../../ui/h'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import Zoomer from '../Zoomer'
 import {ExpanderContainer, Expander} from '../../ui/expander'
@@ -31,7 +31,7 @@ export default class extends Component {
         drawer={false}
       >
         <SideContainer>
-          <H2>{title}</H2>
+          <H1>{title}</H1>
           <H3>{attribution}</H3>
           <TabContainer
             initialTab={"about"}
@@ -71,14 +71,21 @@ export default class extends Component {
                   details.map( detail => (
                     <Expander
                       key={detail.id}
-                      header={detail.title}
+                      header={(
+                        <H2>
+                          {detail.title}
+                        </H2>)}
                     >
                       <ExpanderContainer>
                         {
                           detail.clips.map( clip => (
                             <Expander
                               key={clip.id}
-                              header={clip.title}
+                              header={(
+                                <H3>
+                                  {clip.title}
+                                </H3>
+                              )}
                             >
                               {clip.description}
                             </Expander>

@@ -47,7 +47,7 @@ export default class Root extends Component {
                 key={id}
                 href={{
                   pathname: "/app",
-                  href: {
+                  query: {
                     orgSub: subdomain
                   }
                 }}

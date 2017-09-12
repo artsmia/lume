@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import Template from '../CMSTemplate'
-import {Centered} from '../CMSTemplate/Template'
+import styled from 'styled-components'
+import Template from '../Template'
 import {H2} from '../../ui/h'
 import {Form, Label, Input, Select, Option} from '../../ui/forms'
 import {Row, Column} from '../../ui/layout'
@@ -163,3 +163,9 @@ export default class JoinOrCreate extends Component {
 
 
 }
+
+const Centered = styled.div`
+  display: flex;
+  width: 50%;
+  margin: auto; 
+`
