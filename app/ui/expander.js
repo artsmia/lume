@@ -51,11 +51,14 @@ export class Expander extends Component {
           </Button>
           {header}
         </ExpHeader>
-        <ExpBody
-          expanded={expanded}
-        >
-          {children}
-        </ExpBody>
+        {(expanded) ? (
+          <ExpBody
+            expanded={expanded}
+          >
+            {children}
+          </ExpBody>
+        ): null}
+
 
         {(footer) ? (
           <ExpFooter

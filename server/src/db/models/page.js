@@ -7,13 +7,16 @@ const page = db.define('page', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
+  title: {
+    type: Sequelize.STRING,
+  },
   text: Sequelize.TEXT,
   index: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
   },
   type: {
-    type: Sequelize.STRING,
+    type: Sequelize.ENUM('image', 'video', 'comparison'),
   },
   video: Sequelize.STRING,
 }, {

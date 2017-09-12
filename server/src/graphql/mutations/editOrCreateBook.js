@@ -5,20 +5,24 @@ export default async function editOrCreateBook(src, args, ctx){
   try {
     const {
       newOrganizationIds,
-      createAndAddPage
+      createAndAddPage,
+      previewImageId
     } = args
 
-    let book = args
+    let book
 
 
 
-    if (!book.id){
+    if (!args.id){
       book = await bookModel.create()
     } else {
-      book = await bookModel.findById(book.id)
-      book = await book.update({
-        title: book.title
+      book = await bookModel.update(args, {
+        where: {
+          id: args.id
+        }
       })
+      book = await bookModel.findById(args.id)
+
     }
 
     if (newOrganizationIds) {
@@ -32,7 +36,10 @@ export default async function editOrCreateBook(src, args, ctx){
       await pageModel.create({
         bookId,
       })
+    }
 
+    if (previewImageId) {
+      await book.setPreviewImage(previewImageId)
     }
 
     return book

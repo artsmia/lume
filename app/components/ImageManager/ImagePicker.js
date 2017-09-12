@@ -32,7 +32,6 @@ export default class ImagePicker extends Component {
       },
       selectImage
     } = this
-    console.log(this)
     return (
       <Container>
         <ThumbColumn>

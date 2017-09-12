@@ -1,0 +1,24 @@
+mutation editOrCreatePage (
+  $pageId: ID
+  $title: String
+  $text: String
+  $imagesIds: [ID]
+  $type: String
+) {
+  editOrCreatePage (
+    id: $pageId
+    title: $title
+    text: $text
+    imagesIds: $imagesIds
+    type: $type
+  ) {
+    id
+    title
+    text
+    type
+    images {
+      id
+    }
+    video
+  }
+}

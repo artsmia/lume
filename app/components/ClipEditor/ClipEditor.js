@@ -9,6 +9,7 @@ import Image from '../Image'
 import ImageManager from '../ImageManager'
 import Modal from '../../ui/modal'
 import Snackbar from '../../ui/Snackbar'
+import Zoomer from '../Zoomer'
 
 export default class extends Component {
 
@@ -52,7 +53,6 @@ export default class extends Component {
       handleAdditionalImageSave,
       deleteClip
     } = this
-
     return (
       <Expander
         header={(
@@ -134,11 +134,11 @@ export default class extends Component {
             />
           </Column>
           <Column>
-            <Image
-              imageId={(image) ? image.id : false}
-              height={'200px'}
-              quality={"m"}
-            />
+            {(image) ? (
+              <Zoomer
+                imageId={image.id}
+              />
+            ) : null}
           </Column>
         </Row>
 

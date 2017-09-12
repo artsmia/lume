@@ -79,6 +79,17 @@ app.prepare().then(() => {
   })
 
 
+  server.get('/:orgSub/cms/book/:bookId', (req, res) => {
+    const actualPage = '/cms/edit/book'
+    const {orgSub, bookId} = req.params
+    const queryParams = {
+        orgSub,
+        bookId
+    }
+    app.render(req, res, actualPage, queryParams)
+  })
+
+
   server.get('/:orgSub', (req, res) => {
     const actualPage = '/app'
     const {orgSub} = req.params

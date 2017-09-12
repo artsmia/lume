@@ -77,9 +77,11 @@ const typeDefs = `
     id: ID!
     title: String
     text: String
+    type: String
     index: Int
     book: Book
-    image: Image
+    images: [Image]
+    video: String
   }
 
   type User {
@@ -181,6 +183,15 @@ const typeDefs = `
       id: ID
       organizationId: ID
     ): Image
+
+    editOrCreatePage(
+      id: ID
+      type: String
+      title: String
+      text: String
+      imagesIds: [ID]
+      video: String
+    ): Page
 
     editOrCreateDetail(
       id: ID

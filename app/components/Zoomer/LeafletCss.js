@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 const LeafletStyles = styled.div`
+  min-height: 500px;
+  min-width: 500px;
   height: 100%;
   width: 100%;
   position: 100%;

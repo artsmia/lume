@@ -22,6 +22,7 @@ import Image from './root/Image'
 import Detail from './root/Detail'
 import Clip from './root/Clip'
 import Book from './root/Book'
+import Page from './root/Page'
 
 
 //mutations
@@ -31,6 +32,10 @@ import editOrCreateImage from './mutations/editOrCreateImage'
 import editOrCreateDetail from './mutations/editOrCreateDetail'
 import editOrCreateClip from './mutations/editOrCreateClip'
 import editOrCreateBook from './mutations/editOrCreateBook'
+import editOrCreatePage from './mutations/editOrCreatePage'
+
+
+
 import deleteItem from './mutations/deleteItem'
 import deleteDetail from './mutations/deleteDetail'
 import deleteClip from './mutations/deleteClip'
@@ -57,6 +62,7 @@ const resolvers = {
     editOrCreateDetail,
     editOrCreateClip,
     editOrCreateBook,
+    editOrCreatePage,
     deleteItem,
     deleteDetail,
     deleteClip
@@ -67,7 +73,8 @@ const resolvers = {
   Image,
   Detail,
   Clip,
-  Book
+  Book,
+  Page
 }
 
 export default resolvers

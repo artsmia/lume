@@ -8,7 +8,7 @@ query booksQuery (
   ) {
     id
     title
-    pages {
+    previewImage {
       id
     }
   }

@@ -49,6 +49,11 @@ export default class BrowseBooks extends Component {
           <Table>
             <Header>
               <Row>
+                <Cell
+                  width={"60px"}
+                >
+
+                </Cell>
                 <Cell>
                   Id
                 </Cell>
@@ -58,10 +63,21 @@ export default class BrowseBooks extends Component {
               </Row>
             </Header>
             <Body>
-              {books.map( ({id: bookId, title}) => (
+              {books.map( ({id: bookId, title, previewImage}) => (
                 <Row
                   key={bookId}
                 >
+                  <Cell
+                    width={"60px"}
+                  >
+                    {(previewImage) ? (
+                      <Image
+                        imageId={previewImage.id}
+                        thumb
+                        size={"50px"}
+                      />
+                    ): null}
+                  </Cell>
                   <Cell>
                     <Link
                       href={{
