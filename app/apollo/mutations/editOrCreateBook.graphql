@@ -1,0 +1,26 @@
+mutation editOrCreateBook (
+  $bookId: ID
+  $title: String
+  $previewImageId: ID
+  $newOrganizationIds: [ID]
+  $createPageBookId: ID
+) {
+  editOrCreateBook (
+    id: $bookId
+    title: $title
+    previewImageId: $previewImageId
+    newOrganizationIds: $newOrganizationIds
+    createAndAddPage: {
+      bookId: $createPageBookId
+    }
+  ) {
+    id
+    title
+    previewImage {
+      id
+    }
+    pages {
+      id
+    }
+  }
+}

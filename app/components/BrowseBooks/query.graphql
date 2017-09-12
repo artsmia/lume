@@ -1,0 +1,20 @@
+query booksQuery (
+  $orgSub: String
+  $search: String
+) {
+  books (
+    search: $search
+    orgSub: $orgSub
+  ) {
+    id
+    title
+    pages {
+      id
+    }
+  }
+  organization (
+    subdomain: $orgSub
+  ) {
+    id
+  }
+}

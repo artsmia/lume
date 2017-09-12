@@ -26,6 +26,18 @@ export async function createAssociations() {
       foreignKey: 'groupId'
     })
 
+    book.belongsToMany(group, {
+      as: 'groups',
+      through: 'book_group',
+      foreignKey: 'bookId'
+    })
+    group.belongsToMany(book, {
+      as: 'books',
+      through: 'book_group',
+      foreignKey: 'groupId'
+    })
+
+
 
     item.belongsToMany(book, {
       as: 'relatedBooks',
@@ -73,6 +85,10 @@ export async function createAssociations() {
 
     item.hasOne(image, {
       as: "mainImage"
+    })
+
+    book.hasOne(image, {
+      as: "previewImage"
     })
 
     clip.belongsToMany(image, {

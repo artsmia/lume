@@ -2,6 +2,7 @@ const typeDefs = `
 
   type Book {
     id: ID!
+    previewImage: Image
     title: String
     pages: [Page]
     relatedItems: [Item]
@@ -130,6 +131,12 @@ const typeDefs = `
         id: ID
     ): User
 
+    books (
+      orgSub: String
+      organizationId: ID
+      search: String
+    ): [Book]
+
     items (
       orgSub: String
       organizationId: ID
@@ -152,6 +159,15 @@ const typeDefs = `
       newRelatedBookIds: [ID]
       newGroupIds: [ID]
     ): Item
+
+    editOrCreateBook(
+      id: ID
+      title: String
+      newOrganizationIds: [ID]
+      previewImageId: ID
+      createAndAddPage: CreateAndAddPageInput
+    ): Book
+
 
     editOrCreateOrganization(
       id: ID
@@ -200,6 +216,10 @@ const typeDefs = `
   input CreateAndAddDetailInput {
     itemId: ID
     imageId: ID
+  }
+
+  input CreateAndAddPageInput {
+    bookId: ID
   }
 
   input CreateAndAddClipInput {

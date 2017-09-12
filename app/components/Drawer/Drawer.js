@@ -44,6 +44,17 @@ export default class Template extends Component {
           >
             Items
           </MenuItem>
+          <MenuItem
+            href={{
+              pathname: '/cms/browse/books',
+              query: {
+                orgSub
+              }
+            }}
+            as={`/${orgSub}/cms/books`}
+          >
+            Books
+          </MenuItem>
         </SideMenu>
       </Drawer>
     )
