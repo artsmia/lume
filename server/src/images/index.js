@@ -63,7 +63,12 @@ export default async function (req,res, next) {
       ContentType: mimetype
     })
 
-    await sharp(buffer).png().tile({size: 512, layout: 'zoomify'}).toFile(`src/images/${fileId}`)
+    let filePath = `${__dirname}`
+    filePath = filePath.split('server/')[1]
+
+    await sharp(buffer).png().tile({size: 512, layout: 'zoomify'}).toFile(`${filePath}/${fileId}`)
+
+
 
     const files = await readDir(`/${fileId}/TileGroup0`)
 

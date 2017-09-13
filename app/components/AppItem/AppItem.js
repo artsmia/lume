@@ -100,11 +100,11 @@ export default class extends Component {
           </TabContainer>
         </SideContainer>
         <FeatureContainer>
-          <Zoomer
-            imageId={mainImage.id}
-          />
-
-
+          {(mainImage) ? (
+            <Zoomer
+              imageId={mainImage.id}
+            />
+          ): null}
         </FeatureContainer>
       </Template>
     )

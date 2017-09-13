@@ -215,6 +215,14 @@ const typeDefs = `
       id: ID!
     ): DeleteMessage
 
+    deleteBook(
+      id: ID!
+    ): DeleteMessage
+
+    deletePage(
+      id: ID!
+    ): Book
+
     deleteDetail(
       id: ID!
     ): Item

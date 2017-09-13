@@ -1,0 +1,9 @@
+mutation deleteBook (
+  $bookId: ID!
+) {
+  deleteBook(
+    id: $bookId
+  ) {
+    message
+  }
+}

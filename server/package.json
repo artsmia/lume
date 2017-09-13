@@ -21,7 +21,7 @@
     "start": "NODE_ENV=production node build",
     "clean": "rm -rf build",
     "test": "jest",
-    "deploy": "now && now alias"
+    "deploy": "now --docker && now alias"
   },
   "dependencies": {
     "apollo-server-express": "^1.1.0",

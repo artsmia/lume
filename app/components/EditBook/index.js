@@ -2,7 +2,7 @@ import { graphql, compose } from 'react-apollo'
 import EditBook from './EditBook'
 import query from './query.graphql'
 import editOrCreateBook from '../../apollo/mutations/editOrCreateBook.graphql'
-// import deleteItem from '../../apollo/mutations/deleteItem.graphql'
+import deleteBook from '../../apollo/mutations/deleteBook.graphql'
 
 
 const queryOptions = {
@@ -20,9 +20,9 @@ export default compose(
   graphql(editOrCreateBook, {
     name: "editBook",
   }),
-  // graphql(deleteItem, {
-  //   name: "deleteItem",
-  // })
+  graphql(deleteBook, {
+    name: "deleteBook",
+  })
 )(
   EditBook
 )

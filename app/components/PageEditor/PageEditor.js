@@ -146,7 +146,7 @@ export default class extends Component {
             </Select>
           </Column>
           <Column>
-            
+
           </Column>
         </Row>
       </Expander>
@@ -243,8 +243,8 @@ export default class extends Component {
   deletePage = async () => {
     try {
       const {
-        detailId,
-        deleteDetail,
+        pageId,
+        deletePage,
         data: {
           refetch
         }
@@ -252,9 +252,9 @@ export default class extends Component {
 
       this.setState({deleteModal: false})
 
-      await deleteDetail({
+      await deletePage({
         variables: {
-          detailId
+          pageId
         }
       })
 

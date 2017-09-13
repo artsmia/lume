@@ -1,0 +1,12 @@
+mutation deletePage (
+  $pageId: ID!
+) {
+  deletePage(
+    id: $pageId
+  ) {
+    id
+    pages {
+      id
+    }
+  }
+}

@@ -67,12 +67,11 @@ export default class EditBook extends Component {
       state: {
         snack,
         snackId,
-        deleteItemModal,
+        deleteBookModal,
         title,
       },
       onImageSave,
     } = this
-    console.log(this.props)
     return (
       <Template
         drawer
@@ -129,7 +128,7 @@ export default class EditBook extends Component {
                           Delete this Book
                         </Button>
                         <Modal
-                          open={deleteItemModal}
+                          open={deleteBookModal}
                           onClose={()=>this.setState({deleteBookModal: false})}
                           footer={(
                             <Button

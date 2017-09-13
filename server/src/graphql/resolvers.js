@@ -39,6 +39,8 @@ import editOrCreatePage from './mutations/editOrCreatePage'
 import deleteItem from './mutations/deleteItem'
 import deleteDetail from './mutations/deleteDetail'
 import deleteClip from './mutations/deleteClip'
+import deleteBook from './mutations/deleteBook'
+import deletePage from './mutations/deletePage'
 
 const resolvers = {
   Query: {
@@ -65,7 +67,9 @@ const resolvers = {
     editOrCreatePage,
     deleteItem,
     deleteDetail,
-    deleteClip
+    deleteClip,
+    deleteBook,
+    deletePage
   },
   Item,
   User,

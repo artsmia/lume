@@ -2,7 +2,7 @@ import { graphql, compose } from 'react-apollo'
 import PageEditor from './PageEditor'
 import PageQuery from './query.graphql'
 import editOrCreatePage from '../../apollo/mutations/editOrCreatePage.graphql'
-// import deleteDetail from '../../apollo/mutations/deleteDetail.graphql'
+import deletePage from '../../apollo/mutations/deletePage.graphql'
 
 
 const queryConfig = {
@@ -19,10 +19,10 @@ const editOrCreatePageConfig = {
   name: "editOrCreatePage",
 }
 
-//
-// const deleteDetailConfig = {
-//   name: "deleteDetail",
-// }
+
+const deletePageConfig = {
+  name: "deletePage",
+}
 
 
 const query = graphql(PageQuery, queryConfig)
@@ -33,7 +33,7 @@ const query = graphql(PageQuery, queryConfig)
 export default compose(
   query,
   graphql(editOrCreatePage, editOrCreatePageConfig),
-  //graphql(deleteDetail, deleteDetailConfig),
+  graphql(deletePage, deletePageConfig),
 )(
   PageEditor
 )
