@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import Template from '../Template'
-import {H2} from '../../ui/h'
-import {Form, Label, Input, TextArea} from '../../ui/forms'
+import {H2, H3} from '../../ui/h'
+import {Form, Label, Input, TextArea, Select, Option} from '../../ui/forms'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
@@ -37,7 +37,10 @@ export default class EditItem extends Component {
     accessionNumber: "",
     text: "",
     creditLine: "",
-    currentLocation: ""
+    currentLocation: "",
+    newRelatedBookIds: [],
+    removeRelatedBookIds: [],
+    availableBooks: []
   }
 
 
@@ -49,10 +52,9 @@ export default class EditItem extends Component {
 
     const {
       addDetail,
-      state,
-      inputs,
       change,
       saveItem,
+      multiChange,
       props: {
         data: {
           organization: {
@@ -62,8 +64,10 @@ export default class EditItem extends Component {
           item: {
             id: itemId,
             mainImage,
-            details
-          }
+            details,
+            relatedBooks,
+          },
+          books
         }
       },
       state: {
@@ -79,10 +83,14 @@ export default class EditItem extends Component {
         accessionNumber,
         text,
         creditLine,
-        currentLocation
+        newRelatedBookIds,
+        removeRelatedBookIds,
+        availableBooks
       },
       onImageSave,
-      deleteItem
+      deleteItem,
+      addRelatedBooks,
+      removeRelatedBooks
     } = this
     return (
       <Template
@@ -230,6 +238,67 @@ export default class EditItem extends Component {
               </Row>
               <Row>
                 <SectionContainer>
+                  <H3>
+                    Related Books
+                  </H3>
+                  <Row>
+                    <Column>
+                      <Label>
+                        All Books
+                      </Label>
+                      <Select
+                        name={"newRelatedBookIds"}
+                        onChange={multiChange}
+                        multiple
+                        value={newRelatedBookIds}
+                      >
+                        {availableBooks.map( ({id, title}) => (
+                          <Option
+                            key={id}
+                            value={id}
+                          >
+                            {title}
+                          </Option>
+                        ))}
+                      </Select>
+                      <Button
+                        onClick={addRelatedBooks}
+                      >
+                        Add Related Books
+                      </Button>
+                    </Column>
+                    <Column>
+                      <Label>
+                        Related Books
+                      </Label>
+                      <Select
+                        name={"removeRelatedBookIds"}
+                        onChange={multiChange}
+                        multiple
+                        value={removeRelatedBookIds}
+                      >
+                        {relatedBooks.map( ({id, title}) => (
+                          <Option
+                            key={id}
+                            value={id}
+                          >
+                            {title}
+                          </Option>
+                        ))}
+                      </Select>
+                      <Button
+                        onClick={removeRelatedBooks}
+                      >
+                        Remove Related Books
+                      </Button>
+                    </Column>
+                  </Row>
+
+                </SectionContainer>
+              </Row>
+
+              <Row>
+                <SectionContainer>
                   <H2>
                     Details
                   </H2>
@@ -270,18 +339,31 @@ export default class EditItem extends Component {
     )
   }
 
-  componentWillReceiveProps(newProps){
-    if (!newProps.data.loading) {
-      Object.keys(newProps.data.item).forEach( key => {
+  componentWillReceiveProps({data}){
+    if (!data.loading) {
+      Object.keys(data.item).forEach( key => {
         this.setState({
-          [key]: newProps.data.item[key] || ""
+          [key]: data.item[key] || ""
         })
       })
+
+      let relatedBookIds = data.item.relatedBooks.map(({id}) => id)
+      let availableBooks = data.books.filter( ({id}) => !relatedBookIds.includes(id))
+      this.setState({availableBooks})
     }
   }
 
 
   change = ({target: {name, value}}) => this.setState({[name]: value})
+
+  multiChange = (e) => {
+    const {
+      name,
+      options
+    } = e.target
+    let values = [...options].filter(({selected}) => selected).map(({value}) => value)
+    this.setState({[name]: values})
+  }
 
   onImageSave = async (selectedImageId) => {
     try {
@@ -378,7 +460,7 @@ export default class EditItem extends Component {
       } = this.props
 
 
-      const data = await editItem({
+      await editItem({
         variables: {
           itemId: item.id,
           createDetailItemId,
@@ -421,6 +503,58 @@ export default class EditItem extends Component {
           orgSub,
         }
       }, `/${orgSub}/cms/items`)
+
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  addRelatedBooks = async () => {
+    try {
+      const {
+        props: {
+          itemId,
+          editItem
+        },
+        state: {
+          newRelatedBookIds
+        }
+      } = this
+
+
+      await editItem({
+        variables: {
+          itemId,
+          newRelatedBookIds
+        }
+      })
+
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  removeRelatedBooks = async () => {
+    try {
+      const {
+        props: {
+          itemId,
+          editItem
+        },
+        state: {
+          removeRelatedBookIds
+        }
+      } = this
+
+
+      await editItem({
+        variables: {
+          itemId,
+          removeRelatedBookIds
+        }
+      })
 
 
     } catch (ex) {

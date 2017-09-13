@@ -40,9 +40,12 @@ export const TextArea = styled.textarea`
 
 export const Select = styled.select`
   width: 200px;
-  height: 20px;
+  height: ${({multiple}) => (multiple) ? 'auto' : '20px'};
+  max-height: 100px;
   outline: none;
   background-color: ${({theme}) => theme.colors.white};
 `
+
+
 export const Option = styled.option`
 `

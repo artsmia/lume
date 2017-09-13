@@ -27,6 +27,10 @@ query editItemQuery (
         }
       }
     }
+    relatedBooks {
+      id
+      title
+    }
   }
   user (id: $userId) {
     id
@@ -40,4 +44,14 @@ query editItemQuery (
       id
     }
   }
+  books (
+    orgSub: $orgSub
+  ) {
+    id
+    title
+    previewImage {
+      id
+    }
+  }
+
 }

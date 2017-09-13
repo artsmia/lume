@@ -11,7 +11,8 @@ export default async function editOrCreateItem(src, args, ctx){
       newRelatedItemIds,
       newRelatedBookIds,
       newGroupIds,
-      createAndAddDetail
+      createAndAddDetail,
+      removeRelatedBookIds
     } = args
     let item
     if (!argItem.id) {
@@ -43,6 +44,10 @@ export default async function editOrCreateItem(src, args, ctx){
 
     if (newRelatedBookIds) {
       await item.addRelatedBooks(newRelatedBookIds)
+    }
+
+    if (removeRelatedBookIds) {
+      await item.removeRelatedBooks(removeRelatedBookIds)
     }
 
     if (newGroupIds) {

@@ -159,6 +159,7 @@ const typeDefs = `
       newRelatedItemIds: [ID]
       createAndAddDetail: CreateAndAddDetailInput
       newRelatedBookIds: [ID]
+      removeRelatedBookIds: [ID]
       newGroupIds: [ID]
     ): Item
 
