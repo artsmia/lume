@@ -9,7 +9,10 @@ query PageQuery (
     type
     text
     video
-    images {
+    mainImage {
+      id
+    }
+    comparisonImages {
       id
     }
   }

@@ -80,7 +80,8 @@ const typeDefs = `
     type: String
     index: Int
     book: Book
-    images: [Image]
+    mainImage: Image
+    comparisonImages: [Image]
     video: String
   }
 
@@ -190,7 +191,8 @@ const typeDefs = `
       type: String
       title: String
       text: String
-      imagesIds: [ID]
+      comparisonImageIds: [ID]
+      mainImageId: ID
       video: String
     ): Page
 

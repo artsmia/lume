@@ -19,8 +19,11 @@ export default class extends Component {
     text: "",
     video: "",
     imageModal: false,
+    comparisonModal0: false,
+    comparisonModal1: false,
     snackMessage: "",
-    snackId: ""
+    snackId: "",
+    images: []
   }
 
   render () {
@@ -32,15 +35,22 @@ export default class extends Component {
         text,
         type,
         imageModal,
+        comparisonModal0,
+        comparisonModal1,
         snackMessage,
         snackId,
         deleteModal,
-        video
+        video,
+        comparisonImages,
+        mainImage
       },
       save,
       handleChange,
       handleImageSave,
       deletePage,
+      props: {
+        orgId
+      },
     } = this
     return (
       <Expander
@@ -54,28 +64,6 @@ export default class extends Component {
                 onChange={handleChange}
               />
             </Column>
-            {/* <Image
-              imageId={(image) ? image.id : false}
-              height={"50px"}
-              quality={"s"}
-            />
-            <Button
-              onClick={()=>this.setState({imageModal: true})}
-              color={"white"}
-            >
-              Change Image
-            </Button>
-            <Modal
-              open={imageModal}
-              onClose={()=>this.setState({imageModal: false})}
-              header={"Change Detail Image"}
-            >
-              <ImageManager
-                imageId={(image) ? image.id : false}
-                orgId={orgId}
-                onImageSave={handleImageSave}
-              />
-            </Modal> */}
             <Snackbar
               snackId={snackId}
               message={snackMessage}
@@ -147,6 +135,87 @@ export default class extends Component {
                 comparison
               </Option>
             </Select>
+
+            {(type === "image") ? (
+              <Row>
+                <Image
+                  imageId={(mainImage) ? mainImage.id : false}
+                  height={"50px"}
+                  quality={"s"}
+                />
+                <Button
+                  onClick={()=>this.setState({imageModal: true})}
+                  color={"white"}
+                >
+                  Change Main Image
+                </Button>
+                <Modal
+                  open={imageModal}
+                  onClose={()=>this.setState({imageModal: false})}
+                  header={"Change Page Image"}
+                >
+                  <ImageManager
+                    imageId={(mainImage) ? mainImage.id : false}
+                    orgId={orgId}
+                    onImageSave={handleImageSave}
+                  />
+                </Modal>
+              </Row>
+            ): null}
+
+            {(type === "comparison") ? (
+              <Row>
+                <Image
+                  imageId={(comparisonImages[0]) ? comparisonImages[0].id : false}
+                  height={"50px"}
+                  quality={"s"}
+                />
+                <Button
+                  onClick={()=>this.setState({comparisonModal0: true})}
+                  color={"white"}
+                >
+                  Change Comparison Image
+                </Button>
+                <Modal
+                  open={comparisonModal0}
+                  onClose={()=>this.setState({comparisonModal0: false})}
+                  header={"Change Page Comparison Image"}
+                >
+                  <ImageManager
+                    imageId={(comparisonImages[0]) ? comparisonImages[0].id : false}
+                    orgId={orgId}
+                    onImageSave={(imageId) => {
+                      handleImageSave(imageId, 0)
+                    }}
+                  />
+                </Modal>
+                <Image
+                  imageId={(comparisonImages[1]) ? comparisonImages[1].id : false}
+                  height={"50px"}
+                  quality={"s"}
+                />
+                <Button
+                  onClick={()=>this.setState({comparisonModal1: true})}
+                  color={"white"}
+                >
+                  Change Comparison Image
+                </Button>
+                <Modal
+                  open={comparisonModal1}
+                  onClose={()=>this.setState({comparisonModal1: false})}
+                  header={"Change Page Comparison Image"}
+                >
+                  <ImageManager
+                    imageId={(comparisonImages[1]) ? comparisonImages[1].id : false}
+                    orgId={orgId}
+                    onImageSave={(imageId) => {
+                      handleImageSave(imageId, 1)
+                    }}
+                  />
+                </Modal>
+
+              </Row>
+            ): null}
 
             {(type === "video") ? (
               <Column>
@@ -233,25 +302,55 @@ export default class extends Component {
     }
   }
 
-  handleImageSave = async(imageId) => {
+  handleImageSave = async(imageId, comparisonIndex) => {
     try {
       const {
         props: {
-          editOrCreateDetail,
-          detailId
+          editOrCreatePage,
+          pageId,
+        },
+        state: {
+          type,
+          comparisonImages,
+          text,
+          title
         }
       } = this
-      await editOrCreateDetail({
-        variables: {
-          detailId,
-          imageId
-        }
-      })
+
+      if (type === "image") {
+        await editOrCreatePage({
+          variables: {
+            pageId,
+            mainImageId: imageId,
+            type,
+            text,
+            title
+          }
+        })
+      }
+
+      if (type === "comparison") {
+
+        let comparisonImageIds = comparisonImages.map( ({id}) => id)
+
+        comparisonImageIds[comparisonIndex] = imageId
+
+        await editOrCreatePage({
+          variables: {
+            pageId,
+            comparisonImageIds,
+            type,
+            text,
+            title
+          }
+        })
+      }
+
 
       this.setState({
         imageModal: false,
         snackId: Math.random(),
-        snackMessage: "Detail Image Changed"
+        snackMessage: "Page Image Changed"
       })
 
     } catch (ex) {

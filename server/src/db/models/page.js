@@ -17,6 +17,7 @@ const page = db.define('page', {
   },
   type: {
     type: Sequelize.ENUM('image', 'video', 'comparison'),
+    defaultValue: 'image'
   },
   video: Sequelize.STRING,
 }, {

@@ -3,7 +3,8 @@ import pageModel from '../../db/models/page'
 export default async function editOrCreatePage(src, args, ctx){
   try {
     const {
-      imagesIds,
+      mainImageId,
+      comparisonImageIds,
       title,
       text,
       video,
@@ -31,8 +32,12 @@ export default async function editOrCreatePage(src, args, ctx){
 
     }
 
-    if (imagesIds) {
-      await page.setImages(imagesIds)
+    if (comparisonImageIds) {
+      await page.setComparisonImages(comparisonImageIds)
+    }
+
+    if (mainImageId) {
+      await page.setMainPageImage(mainImageId)
     }
 
     return page

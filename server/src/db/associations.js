@@ -80,7 +80,11 @@ export async function createAssociations() {
     })
 
     page.hasMany(image, {
-      as: "images"
+      as: "comparisonImages"
+    })
+
+    page.hasOne(image, {
+      as: "mainPageImage"
     })
 
     item.hasOne(image, {
