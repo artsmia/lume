@@ -16,8 +16,7 @@ export const Button = styled.button`
   text-transform: uppercase;
   height: 40px;
   white-space: nowrap;
-
-
+  z-index: inherit;
 
   &:hover {
     opacity: 0.75;

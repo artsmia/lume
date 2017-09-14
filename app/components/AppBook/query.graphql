@@ -8,6 +8,7 @@ query BookQuery (
     title
     pages {
       id
+      index
     }
   }
 }

@@ -1,0 +1,20 @@
+query PageQuery (
+  $pageId: ID!
+) {
+  page (
+    id: $pageId
+  ) {
+    id
+    index
+    title
+    text
+    type
+    mainImage {
+      id
+    }
+    comparisonImages {
+      id
+    }
+    video
+  }
+}

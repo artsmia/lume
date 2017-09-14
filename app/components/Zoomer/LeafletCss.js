@@ -5,7 +5,6 @@ const LeafletStyles = styled.div`
   min-width: 500px;
   height: 100%;
   width: 100%;
-  position: 100%;
   /* required styles */
 
   .leaflet-pane,

@@ -4,11 +4,18 @@ import Template from '../Template/Template'
 import {H1, H2, H3, H4} from '../../ui/h'
 import Zoomer from '../Zoomer'
 import {Column, Row} from '../../ui/layout'
+import {Button} from '../../ui/buttons'
+import AppPage from '../AppPage'
 
 export default class extends Component {
 
+  state = {
+    pageIndex: 0
+  }
+
 
   render() {
+
     if (this.props.data.loading) return null
 
     const {
@@ -19,32 +26,84 @@ export default class extends Component {
             pages
           }
         }
-      }
+      },
+      state: {
+        pageIndex
+      },
+      changePage
     } = this
+
+    let page = pages.find( page => page.index === pageIndex)
 
     return (
       <Template
         drawer={false}
       >
+        <PageButtonContainer>
+          {(pageIndex !== 0) ? (
+            <Button
+            onClick={()=>changePage(-1)}
+            >
+              Back
+            </Button>
+          ): <div/>}
+          {(pageIndex < pages.length - 1) ? (
+            <Button
+              onClick={()=>changePage(1)}
+            >
+              Forward
+            </Button>
+          ): <div/>}
+
+        </PageButtonContainer>
         <Container>
-          <BookHeader>
+          <BookHeaderFooter>
             <H3>
               {title}
             </H3>
-          </BookHeader>
-          <BookContainer>
-            <FeatureContainer>
-
-            </FeatureContainer>
-            <SideContainer>
-
-            </SideContainer>
-          </BookContainer>
+          </BookHeaderFooter>
+          <AppPage
+            pageId={page.id}
+          />
+          <BookHeaderFooter>
+            <H3>
+              Page {pageIndex + 1} of {pages.length}
+            </H3>
+          </BookHeaderFooter>
         </Container>
 
 
       </Template>
     )
+  }
+
+  changePage = (change) => {
+    const {
+      state: {
+        pageIndex
+      },
+      props: {
+        data: {
+          book: {
+            pages
+          }
+        }
+      }
+    } = this
+
+    let newPageIndex = pageIndex + change
+
+    let maxIndex = pages.length - 1
+    let minIndex = 0
+
+    if (newPageIndex > maxIndex || newPageIndex < minIndex) {
+      return
+    }
+
+    this.setState({
+      pageIndex: newPageIndex
+    })
+
   }
 
 
@@ -57,28 +116,23 @@ const Container = styled.div`
   width: 100%;
 `
 
-const BookHeader = styled.div`
+const BookHeaderFooter = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 100px;
+  height: 50px;
+  background-color: ${({theme}) => theme.colors.black};
+  color: ${({theme}) => theme.colors.white};
 `
 
-const BookContainer = styled.div`
-  display: flex;
-  height: 100%;
-`
 
-const SideContainer = styled.div`
-  width: 30%;
-  height: 100%;
+const PageButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-`
-
-const FeatureContainer = styled.div`
-  width: 70%;
-  height: 100%;
-  display: flex;
+  position: fixed;
+  top: 50%;
+  transform: translateY(%50);
+  width: 100%;
+  justify-content: space-between;
+  z-index: 1001;
 `

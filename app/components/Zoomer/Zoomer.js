@@ -29,7 +29,7 @@ export default class extends Component {
       zoomLoading,
       zoomLoaded
     } = this.state
-    if (!zoomLoading && !zoomLoaded) {
+    if (!zoomLoading && !zoomLoaded && !this.props.data.loading) {
       this.createZoomer()
     }
   }
@@ -44,7 +44,7 @@ export default class extends Component {
         }
       })
 
-
+      console.log(this)
 
       const {
         mapRef,

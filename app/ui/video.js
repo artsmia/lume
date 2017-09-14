@@ -1,4 +1,5 @@
 import react, {Component} from 'react'
+import styled from 'styled-components'
 const VimeoPlayer = (typeof window === "object") ? require('@vimeo/player') : null
 
 export class Vimeo extends Component {
@@ -31,7 +32,8 @@ export class Vimeo extends Component {
     if (vimeoId.length !== 9) return null
 
     return (
-      <div
+      <Container
+        innerRef={ref => {this.container = ref}}
         id={"vimeo"}
       />
     )
@@ -39,13 +41,16 @@ export class Vimeo extends Component {
 
   componentDidMount(){
     const {
-      vimeoId
-    } = this.state
+      state: {
+        vimeoId
+      },
+      container
+    } = this
 
     if (vimeoId) {
-      const player = new VimeoPlayer('vimeo', {
+      const player = new VimeoPlayer(container, {
         id: vimeoId,
-        width: 640
+        width: container.clientWidth - 50
       })
     }
   }
@@ -68,6 +73,7 @@ export class Vimeo extends Component {
       vimeoId
     } = this.state
 
+
     if (vimeoId) {
       const player = new VimeoPlayer('vimeo', {
         id: vimeoId,
@@ -77,3 +83,11 @@ export class Vimeo extends Component {
   }
 
 }
+
+const Container = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center
+`
