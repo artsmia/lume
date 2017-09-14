@@ -42,7 +42,7 @@ export default class extends Component {
         deleteModal,
         video,
         comparisonImages,
-        mainImage
+        mainImage,
       },
       save,
       handleChange,

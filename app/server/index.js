@@ -39,6 +39,15 @@ app.prepare().then(() => {
     app.render(req, res, actualPage, queryParams)
   })
 
+  server.get('/:orgSub/book/:bookId', (req, res) => {
+    const actualPage = '/app/book'
+    const {orgSub, bookId} = req.params
+    const queryParams = {
+        orgSub,
+        bookId
+    }
+    app.render(req, res, actualPage, queryParams)
+  })
 
   server.get('/:orgSub/cms', (req, res) => {
     const actualPage = '/cms/org'

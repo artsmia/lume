@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import Template from '../Template'
 import {H2} from '../../ui/h'
-import {Form, Label, Input, TextArea} from '../../ui/forms'
+import {Form, Label, Input, TextArea, Select, Option} from '../../ui/forms'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
@@ -37,7 +37,9 @@ export default class EditBook extends Component {
     accessionNumber: "",
     text: "",
     creditLine: "",
-    currentLocation: ""
+    currentLocation: "",
+    selectedPage: [],
+    pages: []
   }
 
 
@@ -60,7 +62,6 @@ export default class EditBook extends Component {
           book: {
             id: bookId,
             previewImage,
-            pages
           }
         }
       },
@@ -69,8 +70,12 @@ export default class EditBook extends Component {
         snackId,
         deleteBookModal,
         title,
+        pages,
+        selectedPage
       },
       onImageSave,
+      indexSelect,
+      pageIndexChange
     } = this
     return (
       <Template
@@ -163,6 +168,35 @@ export default class EditBook extends Component {
                   <H2>
                     Pages
                   </H2>
+                  <Row>
+                    <Select
+                      multiple
+                      name={"selectedPage"}
+                      value={selectedPage}
+                      onChange={indexSelect}
+                    >
+                      {pages.map( ({id, title}) => (
+                        <Option
+                          key={id}
+                          value={id}
+                        >
+                          {title}
+                        </Option>
+                      ))}
+                    </Select>
+                    <Column>
+                      <Button
+                        onClick={()=> pageIndexChange(-1)}
+                      >
+                        Up
+                      </Button>
+                      <Button
+                        onClick={()=> pageIndexChange(1)}
+                      >
+                        Down
+                      </Button>
+                    </Column>
+                  </Row>
                   <ExpanderContainer>
                     { (pages) ?
                       pages.map( page => (
@@ -200,18 +234,36 @@ export default class EditBook extends Component {
     )
   }
 
-  componentWillReceiveProps(newProps){
-    if (!newProps.data.loading) {
-      Object.keys(newProps.data.book).forEach( key => {
+  componentWillReceiveProps({data}){
+    if (!data.loading) {
+      Object.keys(data.book).forEach( key => {
+
         this.setState({
-          [key]: newProps.data.book[key] || ""
+          [key]: data.book[key] || ""
         })
+
+        if (key === "pages") {
+          let pages = data.book.pages.slice()
+          console.log(pages)
+          pages.sort(
+            (a,b) => {
+              return a.index - b.index
+            }
+          )
+          this.setState({
+            pages
+          })
+        }
       })
     }
   }
 
 
   change = ({target: {name, value}}) => this.setState({[name]: value})
+
+  indexSelect = ({target:{name, value}}) => {
+    this.setState({[name]: [value]})
+  }
 
   onImageSave = async (selectedImageId) => {
     try {
@@ -294,6 +346,52 @@ export default class EditBook extends Component {
         }
       })
 
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  pageIndexChange = async (change) => {
+    try {
+      const {
+        state: {
+          selectedPage,
+          pages
+        },
+        props: {
+          editPage
+        }
+      } = this
+
+      let selectedPageId = selectedPage[0]
+
+      let page = pages.find(({id}) => id === selectedPageId)
+      let oldIndex = page.index
+      let newIndex = oldIndex + change
+
+      let allIndex = pages.map(({index}) => index)
+
+      if (newIndex > Math.max(...allIndex) || newIndex < Math.min(...allIndex)) {
+        return
+      }
+
+      let swapPage = pages.find(({index}) => index === newIndex)
+
+      await editPage({
+        variables: {
+          pageId: page.id,
+          index: newIndex
+        }
+      })
+
+
+      await editPage({
+        variables: {
+          pageId: swapPage.id,
+          index: oldIndex
+        }
+      })
 
     } catch (ex) {
       console.error(ex)

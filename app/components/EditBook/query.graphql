@@ -11,6 +11,8 @@ query BookQuery (
     }
     pages {
       id
+      title
+      index
     }
   }
   user (id: $userId) {

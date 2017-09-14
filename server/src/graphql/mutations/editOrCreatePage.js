@@ -8,7 +8,8 @@ export default async function editOrCreatePage(src, args, ctx){
       title,
       text,
       video,
-      type
+      type,
+      index
     } = args
 
     let page
@@ -22,7 +23,8 @@ export default async function editOrCreatePage(src, args, ctx){
         title,
         text,
         video,
-        type
+        type,
+        index
       }, {
         where: {
           id: args.id
@@ -39,6 +41,7 @@ export default async function editOrCreatePage(src, args, ctx){
     if (mainImageId) {
       await page.setMainPageImage(mainImageId)
     }
+
 
     return page
   } catch (ex) {

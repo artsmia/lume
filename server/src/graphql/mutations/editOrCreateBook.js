@@ -33,8 +33,12 @@ export default async function editOrCreateBook(src, args, ctx){
       const {
         bookId,
       } = createAndAddPage
+
+      let pages = await book.getPages()
+
       await pageModel.create({
         bookId,
+        index: pages.length
       })
     }
 

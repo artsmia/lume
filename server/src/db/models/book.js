@@ -7,7 +7,10 @@ const book = db.define('book', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
-  title: Sequelize.STRING,
+  title: {
+    type: Sequelize.STRING,
+    defaultValue: "New Book"
+  },
 }, {
   freezeTableName: true
 })

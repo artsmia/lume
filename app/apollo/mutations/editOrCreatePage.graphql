@@ -6,6 +6,7 @@ mutation editOrCreatePage (
   $mainImageId: ID
   $type: String
   $video: String
+  $index: Int
 ) {
   editOrCreatePage (
     id: $pageId
@@ -15,11 +16,13 @@ mutation editOrCreatePage (
     mainImageId: $mainImageId
     type: $type
     video: $video
+    index: $index
   ) {
     id
     title
     text
     type
+    index
     mainImage {
       id
     }

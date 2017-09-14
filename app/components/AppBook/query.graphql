@@ -1,0 +1,13 @@
+query BookQuery (
+  $bookId: ID!
+) {
+  book (
+    id: $bookId
+  ) {
+    id
+    title
+    pages {
+      id
+    }
+  }
+}

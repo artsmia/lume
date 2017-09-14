@@ -21,6 +21,8 @@ mutation editOrCreateBook (
     }
     pages {
       id
+      title
+      index
     }
   }
 }

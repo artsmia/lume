@@ -7,6 +7,8 @@ mutation deletePage (
     id
     pages {
       id
+      index
+      title
     }
   }
 }

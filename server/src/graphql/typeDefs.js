@@ -194,6 +194,7 @@ const typeDefs = `
       comparisonImageIds: [ID]
       mainImageId: ID
       video: String
+      index: Int
     ): Page
 
     editOrCreateDetail(
