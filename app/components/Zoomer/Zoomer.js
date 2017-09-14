@@ -2,7 +2,7 @@ import {Component} from 'react'
 import styled from 'styled-components'
 import LeafletCss from './LeafletCss'
 import {s3Url, apiUrl} from '../../config'
-const L = (typeof window === 'object') ? require('./MuseumTileLayer') : null
+const L = (typeof window === 'object') ? require('leaflet') : null
 
 
 export default class extends Component {
@@ -43,8 +43,6 @@ export default class extends Component {
           zoomLoading: true
         }
       })
-
-      console.log(this)
 
       const {
         mapRef,
@@ -111,9 +109,25 @@ export default class extends Component {
 
       const initialZoom = Math.log2(longDimension / tileSize)
 
+      L.TileLayer.Knight = L.TileLayer.extend({
+        createTile({z,x,y}) {
+          let tile = document.createElement("div")
+          let image = document.createElement("img")
+          image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y)
+          image.style["object-fit"] = "contain"
+          tile.appendChild(image)
+          // tile.style.outline = '1px solid red'
 
-      this.tiles = L.tileLayer(`${s3Url}/${bucketId}/{imageId}/tiles/{z}-{x}-{y}.png`, {
-        imageId,
+          return tile
+        }
+      })
+
+      L.tileLayer.knight = function(...args){
+        return new L.TileLayer.Knight(...args)
+      }
+
+
+      this.tiles = L.tileLayer.knight(`${s3Url}/${bucketId}/${imageId}/tiles/{z}-{x}-{y}.png`, {
         tileSize,
         maxNativeZoom: maxZoom,
         minNativeZoom: 0,
