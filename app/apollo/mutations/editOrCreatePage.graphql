@@ -4,6 +4,7 @@ mutation editOrCreatePage (
   $text: String
   $imagesIds: [ID]
   $type: String
+  $video: String
 ) {
   editOrCreatePage (
     id: $pageId
@@ -11,6 +12,7 @@ mutation editOrCreatePage (
     text: $text
     imagesIds: $imagesIds
     type: $type
+    video: $video
   ) {
     id
     title

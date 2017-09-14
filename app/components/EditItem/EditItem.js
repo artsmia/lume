@@ -59,7 +59,6 @@ export default class EditItem extends Component {
         data: {
           organization: {
             id: orgId,
-            images
           },
           item: {
             id: itemId,
@@ -67,7 +66,6 @@ export default class EditItem extends Component {
             details,
             relatedBooks,
           },
-          books
         }
       },
       state: {

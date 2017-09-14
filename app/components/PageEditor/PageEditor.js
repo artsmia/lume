@@ -10,12 +10,14 @@ import ClipEditor from '../ClipEditor'
 import Image from '../Image'
 import Modal from '../../ui/modal'
 import Snackbar from '../../ui/Snackbar'
+import {Vimeo} from '../../ui/video'
 
 export default class extends Component {
 
   state = {
     title: "",
     text: "",
+    video: "",
     imageModal: false,
     snackMessage: "",
     snackId: ""
@@ -32,12 +34,13 @@ export default class extends Component {
         imageModal,
         snackMessage,
         snackId,
-        deleteModal
+        deleteModal,
+        video
       },
       save,
       handleChange,
       handleImageSave,
-      deletePage
+      deletePage,
     } = this
     return (
       <Expander
@@ -144,9 +147,28 @@ export default class extends Component {
                 comparison
               </Option>
             </Select>
+
+            {(type === "video") ? (
+              <Column>
+                <Label>
+                  Video URL
+                </Label>
+                <Input
+                  name={"video"}
+                  value={video}
+                  onChange={handleChange}
+                />
+              </Column>
+            ): null}
+
+
           </Column>
           <Column>
-
+            {(type === "video" && video.includes("vimeo.com/")) ? (
+              <Vimeo
+                url={video}
+              />
+            ): null}
           </Column>
         </Row>
       </Expander>
@@ -169,6 +191,7 @@ export default class extends Component {
 
     }
   }
+
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
@@ -198,7 +221,6 @@ export default class extends Component {
         }
       })
 
-      console.log(response)
 
       this.setState({
         imageModal: false,

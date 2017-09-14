@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@vimeo/player": "^2.2.0",
     "auth0-lock": "^10.19.0",
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
@@ -21,6 +22,7 @@
     "react-dom": "^15.6.1",
     "react-dropzone": "^4.0.0",
     "react-modal": "^2.3.1",
+    "react-vimeo": "^1.0.0",
     "styled-components": "^2.1.1",
     "uuid": "^3.1.0"
   },

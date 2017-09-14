@@ -6,6 +6,7 @@ query ItemQuery (
   ) {
     id
     title
+    text
     medium
     attribution
     date
@@ -26,6 +27,14 @@ query ItemQuery (
           id
         }
       }
+    }
+    relatedBooks {
+      id
+      title
+    }
+    relatedItems {
+      id
+      title
     }
   }
 }

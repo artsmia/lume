@@ -20,7 +20,8 @@ export default class extends Component {
             attribution,
             mainImage,
             text,
-            details
+            details,
+            relatedBooks
           }
         }
       }
@@ -59,11 +60,6 @@ export default class extends Component {
               <p>{text}</p>
             </TabBody>
             <TabBody
-              name={"more"}
-            >
-              more
-            </TabBody>
-            <TabBody
               name={"details"}
             >
               <ExpanderContainer>
@@ -96,6 +92,16 @@ export default class extends Component {
                   ))
                 }
               </ExpanderContainer>
+            </TabBody>
+            <TabBody
+              name={"more"}
+            >
+              <H3>
+                Related Books
+              </H3>
+              {
+                relatedBooks.map(({id, title}) => (<p key={id}>{title}</p>))
+              }
             </TabBody>
           </TabContainer>
         </SideContainer>
