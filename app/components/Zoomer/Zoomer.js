@@ -13,6 +13,7 @@ export default class extends Component {
   }
 
   state = {
+    image: false,
     zoomCreated: false,
     zoomLoading: false,
     cropperLoading: false,
@@ -23,7 +24,6 @@ export default class extends Component {
   }
 
   render() {
-
     if (this.props.data.loading) return null
     return (
       <LeafletCss>
@@ -37,16 +37,29 @@ export default class extends Component {
   constructor(props){
     super(props)
     const {
-      geometry
-    } = props
+      image,
+      detail,
+      clip
+    } = props.data
     this.state = {
       ...this.state,
-      geometry
+      image: (detail) ? detail.image : image,
+      geometry: (clip) ? clip.geometry : false
     }
+
+
   }
 
-  componentWillReceiveProps({geometry}){
-    this.setState({geometry})
+  componentWillReceiveProps(nextProps){
+    if (nextProps.clipId) {
+      if (nextProps.data.clip.id !== this.props.data.clip.id) {
+        this.setState({
+          geometry: nextProps.data.clip.geometry,
+          geometryLoading: false,
+          geometryCreated: false
+        })
+      }
+    }
   }
 
   componentDidUpdate(){
@@ -120,7 +133,7 @@ export default class extends Component {
         this.map.highlight = L.polygon(bounds, {
           stroke: false,
           fillColor: "black",
-          fillOpacity: .5,
+          fillOpacity: .8,
         })
         this.map.highlight.addTo(this.map)
       }
@@ -374,13 +387,11 @@ export default class extends Component {
 
       const {
         mapRef,
-        props: {
-          imageId,
-          data: {
-            image: {
-              organization: {
-                id: bucketId
-              }
+        state: {
+          image: {
+            id: imageId,
+            organization: {
+              id: bucketId
             }
           }
         }

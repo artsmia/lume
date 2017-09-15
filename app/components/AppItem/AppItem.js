@@ -5,6 +5,7 @@ import {H1, H2, H3, H4} from '../../ui/h'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import Zoomer from '../Zoomer'
 import {ExpanderContainer, Expander} from '../../ui/expander'
+import AppDetail from '../AppDetail'
 
 export default class extends Component {
 
@@ -32,10 +33,10 @@ export default class extends Component {
       state: {
         selectedDetail,
         selectedClip
-      }
+      },
+      handleDetailSelection,
+      handleClipSelection
     } = this
-
-    console.log(this)
     return (
       <Template
         drawer={false}
@@ -71,41 +72,16 @@ export default class extends Component {
             <TabBody
               name={"details"}
             >
-              <ExpanderContainer>
-                {
-                  details.map( detail => (
-                    <Expander
-                      key={detail.id}
-                      header={(
-                        <H2
-                          onClick={()=>this.setState({selectedDetail: detail})}
-                        >
-                          {detail.title}
-                        </H2>)}
-                    >
-                      <ExpanderContainer>
-                        {
-                          detail.clips.map( clip => (
-                            <Expander
-                              key={clip.id}
-                              header={(
-                                <H3
-                                  onClick={()=>this.setState({selectedClip: clip})}
-
-                                >
-                                  {clip.title}
-                                </H3>
-                              )}
-                            >
-                              {clip.description}
-                            </Expander>
-                          ))
-                        }
-                      </ExpanderContainer>
-                    </Expander>
-                  ))
-                }
-              </ExpanderContainer>
+              {details.map(detail => (
+                <AppDetail
+                  key={detail.id}
+                  detailId={detail.id}
+                  onDetailSelection={handleDetailSelection}
+                  selected={(detail.id === selectedDetail.id)}
+                  handleClipSelection={handleClipSelection}
+                  selectedClip={selectedClip}
+                />
+              ))}
             </TabBody>
             <TabBody
               name={"more"}
@@ -127,13 +103,21 @@ export default class extends Component {
           ): null}
           {(selectedDetail && selectedDetail.image) ? (
             <Zoomer
-              imageId={selectedDetail.image.id}
-              geometry={selectedClip.geometry}
+              detailId={selectedDetail.id}
+              clipId={selectedClip.id}
             />
           ): null}
         </FeatureContainer>
       </Template>
     )
+  }
+
+  handleDetailSelection = (selectedDetail) => {
+    this.setState({selectedDetail})
+  }
+
+  handleClipSelection = (selectedClip) => {
+    this.setState({selectedClip})
   }
 
 

@@ -1,5 +1,7 @@
-query ImageQuery (
+query ZoomerQuery (
   $imageId: ID!
+  $detailId: ID!
+  $clipId: ID!
 ) {
   image (
     id: $imageId
@@ -7,6 +9,26 @@ query ImageQuery (
     id
     organization {
       id
+    }
+  }
+  detail (
+    id: $detailId
+  ) {
+    id
+    image {
+      id
+      organization {
+        id
+      }
+    }
+  }
+  clip(
+    id: $clipId
+  ) {
+    id
+    geometry {
+      type
+      coordinates
     }
   }
 }
