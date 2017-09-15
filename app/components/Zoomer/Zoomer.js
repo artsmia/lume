@@ -8,12 +8,20 @@ const L = (typeof window === 'object') ? require('leaflet') : null
 
 export default class extends Component {
 
+  static propTypes = {
+    imageId: PropTypes.string,
+    detailId: PropTypes.string,
+    clipId: PropTypes.string,
+    onCrop: PropTypes.func,
+    crop: PropTypes.boolean
+  }
+
   static defaultProps = {
     crop: false,
     onCrop(geometry){console.log(geometry)}
   }
 
-  initialState = {
+  state = {
     image: false,
     zoomCreated: false,
     zoomLoading: false,
@@ -22,22 +30,6 @@ export default class extends Component {
     geometryLoading: false,
     geometryCreated: false,
     geometry: false
-  }
-
-  state = {
-    ...this.initialState
-  }
-
-  render() {
-    if (this.props.data.loading || !this.state.image) return null
-
-    return (
-      <LeafletCss>
-        <ZoomerMap
-          innerRef={mapRef => this.mapRef = mapRef}
-        />
-      </LeafletCss>
-    )
   }
 
   constructor(props){
@@ -52,7 +44,18 @@ export default class extends Component {
       image: (detail) ? detail.image : image,
       geometry: (clip) ? clip.geometry : false
     }
+  }
 
+  render() {
+    if (this.props.data.loading || !this.state.image) return null
+
+    return (
+      <LeafletCss>
+        <ZoomerMap
+          innerRef={mapRef => this.mapRef = mapRef}
+        />
+      </LeafletCss>
+    )
   }
 
   componentWillReceiveProps(nextProps){
@@ -108,6 +111,7 @@ export default class extends Component {
   componentDidUpdate(){
     this.setup()
   }
+
 
   setup = async() => {
     try {
@@ -264,51 +268,83 @@ export default class extends Component {
   }
 
   handleMouseDown = ({latlng}) => {
-    if (!this.map.cropStart && this.map.cropping) {
-      this.map.cropStart = this.createMarker(latlng)
-      this.map.cropStart.on("moveend", ({latlng}) => {
-        this.highlight()
-        this.saveGeometry()
+    if (
+      !this.map.cropStart &&
+      this.map.cropping
+    ) {
 
-      })
-      this.map.cropStart.on("drag", ({latlng}) => {
-        this.highlight()
-      })
+      this.map.cropStart = this.createMarker(latlng)
+
+      this.map.cropStart.on(
+        "moveend",
+        this.handleCropEnd
+      )
+
+      this.map.cropStart.on(
+        "drag",
+        this.highlight
+      )
+
       this.map.cropStart.addTo(this.map)
     }
   }
 
   handleMouseMove = ({latlng}) => {
 
-    if (this.map.cropping && this.map.cropStart && this.map.cropEnd){
+    if (
+      this.map.cropping &&
+      this.map.cropStart &&
+      this.map.cropEnd
+    ){
+
       this.map.cropEnd.setLatLng(latlng)
       this.map.cropEnd.setLatLng(latlng)
       this.highlight()
-    }else if (this.map.cropping && this.map.cropStart && !this.map.cropEnd) {
+
+    } else if (
+      this.map.cropping &&
+      this.map.cropStart &&
+      !this.map.cropEnd
+    ) {
+
       this.map.cropEnd = this.createMarker(latlng)
 
       this.map.cropEnd.addTo(this.map)
-      this.map.cropEnd.on("moveend", ({latlng}) => {
-        this.highlight()
-        this.saveGeometry()
-      })
-      this.map.cropEnd.on("drag", ({latlng}) => {
-        this.highlight()
-      })
+
+      this.map.cropEnd.on(
+        "moveend",
+        this.handleCropEnd
+      )
+
+      this.map.cropEnd.on(
+        "drag",
+        this.highlight
+      )
     }
   }
 
   handleMouseUp =({latlng}) => {
 
-    if (this.map.cropEnd && this.map.cropping) {
+    if (
+      this.map.cropEnd &&
+      this.map.cropping
+    ) {
+
       this.map.cropEnd.setLatLng(latlng)
-      this.saveGeometry()
+
       this.map.cropping = false
       this.map._container.style.cursor = ""
       this.map.dragging._draggable._enabled = true
-      this.highlight()
+
+      this.handleCropEnd()
     }
   }
+
+  handleCropEnd = () => {
+    this.highlight()
+    this.saveGeometry()
+  }
+
 
   get cropIcon() {
     return L.icon({
@@ -352,11 +388,9 @@ export default class extends Component {
         this.handleMouseUp
       )
 
-      await this.promiseState( (prevState) => {
-        return {
-          cropperLoading: false,
-          cropperCreated: true
-        }
+      await this.promiseState({
+        cropperLoading: false,
+        cropperCreated: true
       })
 
 
@@ -369,13 +403,13 @@ export default class extends Component {
   createZoomer = async () => {
     try {
 
-      await this.promiseState( (prevState) => {
-        return {
-          zoomLoading: true
-        }
+      await this.promiseState({
+        zoomLoading: true
       })
 
-      if (this.map) {
+      if (
+        this.map
+      ) {
         this.map.remove()
       }
 
@@ -391,7 +425,6 @@ export default class extends Component {
         }
       } = this
 
-
       const response = await fetch(`${apiUrl}/iiif/${imageId}/info.json`, {
         method: "GET"
       })
@@ -400,8 +433,6 @@ export default class extends Component {
         height,
         width
       } = await response.json()
-
-
 
       const larger = Math.max(height, width)
       const tileSize = 512
@@ -418,14 +449,10 @@ export default class extends Component {
         width = width / 2
       }
 
-
       let ne = L.latLng(0, width)
       let sw = L.latLng(-1 * height, 0)
 
-
-
       const bounds = L.latLngBounds(sw, ne)
-
 
       this.map = L.map(mapRef, {
         crs: L.CRS.Simple,
@@ -442,22 +469,6 @@ export default class extends Component {
 
       const initialZoom = Math.log2(longDimension / tileSize)
 
-      L.TileLayer.Knight = L.TileLayer.extend({
-        createTile({z,x,y}) {
-          let tile = document.createElement("div")
-          let image = document.createElement("img")
-          image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y)
-          image.style["object-fit"] = "contain"
-          tile.appendChild(image)
-          return tile
-        }
-      })
-
-      L.tileLayer.knight = function(...args){
-        return new L.TileLayer.Knight(...args)
-      }
-
-
       this.tiles = L.tileLayer.knight(
         `${s3Url}/${bucketId}/${imageId}/tiles/{z}-{x}-{y}.png`, {
           tileSize,
@@ -470,34 +481,32 @@ export default class extends Component {
         }
       )
 
-
-      this.map.setView([height / 2, -1 * width / 2], initialZoom)
+      this.map.setView(
+        [height / 2, -1 * width / 2],
+        initialZoom
+      )
 
       this.map.on('zoomstart', (e) => {
 
         let zoomReq = e.target._zoom
 
-        if (zoomReq < initialZoom) {
+        if (
+          zoomReq < initialZoom
+        ) {
           e.target._zoom = initialZoom
         } else {
           e.target._zoom = Math.round(zoomReq)
         }
-
       })
-
 
       this.tiles.addTo(this.map)
 
       this.map.invalidateSize()
       this.map.fitBounds(bounds)
 
-
-      await this.promiseState( (prevState) => {
-        return {
-          zoomCreated: true
-        }
+      await this.promiseState({
+        zoomCreated: true
       })
-
 
     } catch (ex) {
       console.error(ex)
@@ -587,5 +596,20 @@ if (typeof window === 'object') {
 
   L.control.cropper = function(...args){
     return new L.Control.Cropper(...args)
+  }
+
+  L.TileLayer.Knight = L.TileLayer.extend({
+    createTile({z,x,y}) {
+      let tile = document.createElement("div")
+      let image = document.createElement("img")
+      image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y)
+      image.style["object-fit"] = "contain"
+      tile.appendChild(image)
+      return tile
+    }
+  })
+
+  L.tileLayer.knight = function(...args){
+    return new L.TileLayer.Knight(...args)
   }
 }
