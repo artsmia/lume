@@ -26,6 +26,10 @@ query ItemQuery (
         additionalImages {
           id
         }
+        geometry {
+          type
+          coordinates
+        }
       }
     }
     relatedBooks {

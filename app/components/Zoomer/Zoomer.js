@@ -7,9 +7,19 @@ const L = (typeof window === 'object') ? require('leaflet') : null
 
 export default class extends Component {
 
+  static defaultProps = {
+    geometry: false,
+    onCrop(geometry){console.log(geometry)}
+  }
+
   state = {
     zoomCreated: false,
     zoomLoading: false,
+    cropperLoading: false,
+    cropperCreated: false,
+    geometryLoading: false,
+    geometryCreated: false,
+    geometry: false
   }
 
   render() {
@@ -24,27 +34,117 @@ export default class extends Component {
     )
   }
 
-  componentDidUpdate(){
+  constructor(props){
+    super(props)
     const {
-      zoomLoading,
-      zoomLoaded,
-      cropStart,
-      cropEnd
-    } = this.state
-    if (!zoomLoading && !zoomLoaded && !this.props.data.loading) {
-      this.createZoomer()
+      geometry
+    } = props
+    this.state = {
+      ...this.state,
+      geometry
     }
+  }
 
-    if (cropStart && cropEnd) {
-      this.props.onCrop([
-        [cropStart.lat, cropStart.lng],
-        [cropEnd.lat, cropEnd.lng]
-      ])
+  componentWillReceiveProps({geometry}){
+    this.setState({geometry})
+  }
+
+  componentDidUpdate(){
+    this.setup()
+  }
+
+  setup = async() => {
+    try {
+
+      if (!this.state.zoomLoading && !this.state.zoomLoaded && !this.props.data.loading) {
+        await this.createZoomer()
+      }
+
+      if (this.state.zoomLoaded && this.props.crop && !this.state.cropperLoading && !this.state.cropperCreated) {
+        await this.createCropper()
+      }
+
+      if (this.state.zoomLoaded && this.state.geometry && !this.state.geometryLoading && !this.state.geometryCreated) {
+        await this.showCrop()
+      }
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  showCrop = async () => {
+    try {
+
+      await this.promiseState( (prevState) => {
+        return {
+          geometryLoading: true
+        }
+      })
+
+      let {_northEast, _southWest} = this.map.getBounds()
+      let north = _northEast.lat
+      let south = _southWest.lat
+      let east = _northEast.lng
+      let west = _southWest.lng
+
+      let [
+        coordinates
+      ] = this.state.geometry.coordinates
+
+      let lats = coordinates.map(([lat,lng]) => lat)
+      let lngs = coordinates.map(([lat,lng]) => lng)
+
+      let top = Math.max(...lats)
+      let bottom = Math.min(...lats)
+      let left = Math.min(...lngs)
+      let right = Math.max(...lngs)
+
+
+      let bounds = [
+        [
+          [north, west],
+          [north, east],
+          [south, east],
+          [south, west]],
+        [
+          [top, left],
+          [top, right],
+          [bottom, right],
+          [bottom, left]
+        ]
+      ]
+
+      if (this.map.highlight) {
+        this.map.highlight.setLatLngs(bounds)
+      } else {
+        this.map.highlight = L.polygon(bounds, {
+          stroke: false,
+          fillColor: "black",
+          fillOpacity: .5,
+        })
+        this.map.highlight.addTo(this.map)
+      }
+
+      await this.promiseState( (prevState) => {
+        return {
+          geometryLoading: false,
+          geometryCreated: true
+        }
+      })
+
+    } catch (ex) {
+      console.error(ex)
     }
   }
 
   createCropper = async () => {
     try {
+
+      await this.promiseState( (prevState) => {
+        return {
+          cropperLoading: true
+        }
+      })
 
       const {
         topleft,
@@ -61,7 +161,6 @@ export default class extends Component {
           map.cropStart = false
           map.cropEnd = false
           map.cropping = false
-          map.highlight = false
 
           this.button = L.DomUtil.create('button')
           L.DomUtil.setClass(this.button, "crop-button")
@@ -72,10 +171,20 @@ export default class extends Component {
             (e)=>{
               if (!map.cropping && !map.cropStart && !map.cropEnd) {
                 map.cropping = true
+                map._container.style.cursor = "crosshair"
+                map.dragging._draggable._enabled = false
+                map.highlight.remove()
+                map.highlight = false
               } else if (!map.cropping && map.cropStart && map.cropEnd) {
                 map.cropping = true
+                map.cropStart.remove()
                 map.cropStart = false
+                map.cropEnd.remove()
                 map.cropEnd = false
+                map.highlight.remove()
+                map.highlight = false
+                map.dragging._draggable._enabled = false
+                map._container.style.cursor = "crosshair"
               }
             }
           )
@@ -103,6 +212,35 @@ export default class extends Component {
           icon,
           draggable: true
         })
+      }
+
+      const saveGeometryToState  = () => {
+        let lats = [
+          this.map.cropStart._latlng.lat,
+          this.map.cropEnd._latlng.lat
+        ]
+        let lngs = [
+          this.map.cropStart._latlng.lng,
+          this.map.cropEnd._latlng.lng
+        ]
+        let top = Math.max(...lats)
+        let bottom = Math.min(...lats)
+        let left = Math.min(...lngs)
+        let right = Math.max(...lngs)
+
+        const geometry = {
+          type: "Polygon",
+          coordinates: [[
+            [top,left],
+            [top, right],
+            [bottom, right],
+            [bottom, left],
+            [top, left]
+          ]]
+        }
+
+        this.setState({geometry})
+        this.props.onCrop(geometry)
       }
 
       const highlightSelection = () =>{
@@ -162,10 +300,8 @@ export default class extends Component {
             this.map.cropStart = createMarker(latlng)
             this.map.cropStart.on("moveend", ({latlng}) => {
               highlightSelection()
-              this.setState({
-                cropStart: this.map.cropStart,
-                cropEnd: this.map.cropEnd
-              })
+              saveGeometryToState()
+
             })
             this.map.cropStart.on("drag", ({latlng}) => {
               highlightSelection()
@@ -189,10 +325,7 @@ export default class extends Component {
             this.map.cropEnd.addTo(this.map)
             this.map.cropEnd.on("moveend", ({latlng}) => {
               highlightSelection()
-              this.setState({
-                cropStart: this.map.cropStart._latlng,
-                cropEnd: this.map.cropEnd._latlng
-              })
+              saveGeometryToState()
             })
             this.map.cropEnd.on("drag", ({latlng}) => {
               highlightSelection()
@@ -207,15 +340,22 @@ export default class extends Component {
 
           if (this.map.cropEnd && this.map.cropping) {
             this.map.cropEnd.setLatLng(latlng)
-            this.setState({
-              cropStart: this.map.cropStart._latlng,
-              cropEnd: this.map.cropEnd._latlng
-            })
+            saveGeometryToState()
             this.map.cropping = false
+            this.map._container.style.cursor = ""
+            this.map.dragging._draggable._enabled = true
             highlightSelection()
           }
         }
       )
+
+      await this.promiseState( (prevState) => {
+        return {
+          cropperLoading: false,
+          cropperCreated: true
+        }
+      })
+
 
     } catch (ex) {
       console.error(ex)
@@ -286,15 +426,12 @@ export default class extends Component {
         crs: L.CRS.Simple,
         maxBounds: bounds,
         zoomSnap: 0,
-        dragging: false
       })
 
       const container = this.map.getContainer()
 
       const containerWidth = container.clientWidth
       const containerHeight = container.clientHeight
-
-      console.log(containerWidth, containerHeight)
 
       const longDimension = Math.max(containerWidth, containerHeight)
 
@@ -350,10 +487,6 @@ export default class extends Component {
       this.map.fitBounds(bounds)
 
 
-      if (this.props.crop) {
-        this.createCropper()
-      }
-
       await this.promiseState( (prevState) => {
         return {
           zoomLoaded: true
@@ -386,7 +519,12 @@ const ZoomerMap = styled.div`
     background: url("${url}/static/crop.png") center;
     background-size: cover;
     background-color: white;
-    border: 2px solid grey;
+    border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
+    box-shadow: 0 0 2px ${({theme}) => theme.colors.mediumGray};
     border-radius: 2px;
+    &:active {
+      background-color: grey;
+    }
   }
+
 `

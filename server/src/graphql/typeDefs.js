@@ -14,6 +14,7 @@ const typeDefs = `
     description: String
     detail: Detail
     additionalImages: [Image]
+    geometry: Geometry
   }
 
   type Detail {
@@ -89,6 +90,18 @@ const typeDefs = `
     id: ID!
     email: String
     organizations: [Organization]
+  }
+
+  type Geometry {
+    type: GeoEnum!
+    coordinates: [[[Float]]]
+  }
+
+
+  enum GeoEnum {
+    Point
+    Polygon
+    LineString
   }
 
   type DeleteMessage {
@@ -209,7 +222,7 @@ const typeDefs = `
       id: ID
       title: String
       description: String
-      coordinates: String
+      geometry: GeometryInput
       detailId: ID
       newAdditionalImageIds: [ID]
     ): Clip
@@ -263,6 +276,11 @@ const typeDefs = `
     creditLine: String
     text: String
     type: String
+  }
+
+  input GeometryInput {
+    type: GeoEnum!
+    coordinates: [[[Float]]]
   }
 
 

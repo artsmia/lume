@@ -2,7 +2,7 @@ mutation editOrCreateClip (
   $clipId: ID
   $title: String
   $description: String
-  $coordinates: String
+  $geometry: GeometryInput
   $detailId: ID
   $newAdditionalImageIds: [ID]
 
@@ -11,13 +11,17 @@ mutation editOrCreateClip (
     id: $clipId
     title: $title
     description: $description
-    coordinates: $coordinates
+    geometry: $geometry
     detailId: $detailId
     newAdditionalImageIds: $newAdditionalImageIds
   ) {
     id
     title
     description
+    geometry {
+      type
+      coordinates
+    }
     detail {
       id
     }

@@ -8,6 +8,10 @@ import {ExpanderContainer, Expander} from '../../ui/expander'
 
 export default class extends Component {
 
+  state = {
+    selectedDetail: false,
+    selectedClip: false
+  }
 
   render() {
     if (this.props.data.loading) return null
@@ -24,9 +28,14 @@ export default class extends Component {
             relatedBooks
           }
         }
+      },
+      state: {
+        selectedDetail,
+        selectedClip
       }
     } = this
 
+    console.log(this)
     return (
       <Template
         drawer={false}
@@ -68,7 +77,9 @@ export default class extends Component {
                     <Expander
                       key={detail.id}
                       header={(
-                        <H2>
+                        <H2
+                          onClick={()=>this.setState({selectedDetail: detail})}
+                        >
                           {detail.title}
                         </H2>)}
                     >
@@ -78,7 +89,10 @@ export default class extends Component {
                             <Expander
                               key={clip.id}
                               header={(
-                                <H3>
+                                <H3
+                                  onClick={()=>this.setState({selectedClip: clip})}
+
+                                >
                                   {clip.title}
                                 </H3>
                               )}
@@ -106,9 +120,15 @@ export default class extends Component {
           </TabContainer>
         </SideContainer>
         <FeatureContainer>
-          {(mainImage) ? (
+          {(mainImage && !selectedDetail) ? (
             <Zoomer
               imageId={mainImage.id}
+            />
+          ): null}
+          {(selectedDetail && selectedDetail.image) ? (
+            <Zoomer
+              imageId={selectedDetail.image.id}
+              geometry={selectedClip.geometry}
             />
           ): null}
         </FeatureContainer>

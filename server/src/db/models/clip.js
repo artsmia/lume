@@ -7,7 +7,9 @@ const clip = db.define('clip', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
-  coordinates: Sequelize.STRING,
+  geometry: {
+    type: Sequelize.GEOMETRY("POLYGON")
+  },
   title: Sequelize.STRING,
   description: Sequelize.TEXT,
   index: {

@@ -1,6 +1,6 @@
 import clipModel from '../../db/models/clip'
 
-export default async function editOrCreateClip(src, {id: clipId, title, description, detailId, newAdditionalImageIds}, ctx){
+export default async function editOrCreateClip(src, {id: clipId, title, description, detailId, newAdditionalImageIds, geometry}, ctx){
   try {
     let clip
 
@@ -13,7 +13,8 @@ export default async function editOrCreateClip(src, {id: clipId, title, descript
     clip = await clip.update({
       title,
       description,
-      detailId
+      detailId,
+      geometry
     })
 
     if (newAdditionalImageIds) {

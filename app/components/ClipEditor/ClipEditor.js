@@ -35,7 +35,8 @@ export default class extends Component {
               id: detailId,
               image
             },
-            additionalImages
+            additionalImages,
+            geometry
           }
         }
       },
@@ -52,7 +53,7 @@ export default class extends Component {
       openModal,
       handleAdditionalImageSave,
       deleteClip,
-      handleCrop
+      saveGeometry
     } = this
     return (
       <Expander
@@ -139,7 +140,8 @@ export default class extends Component {
               <Zoomer
                 imageId={image.id}
                 crop={true}
-                onCrop={handleCrop}
+                onCrop={saveGeometry}
+                geometry={geometry}
               />
             ) : null}
           </ZoomerContainer>
@@ -161,6 +163,26 @@ export default class extends Component {
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
+
+  saveGeometry = async (geometry) => {
+    try {
+      const {
+        props: {
+          editOrCreateClip,
+          clipId,
+        },
+      } = this
+
+      console.log(await editOrCreateClip({
+        variables: {
+          clipId,
+          geometry
+        }
+      }))
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
 
   save = async () => {
     try {
@@ -239,10 +261,6 @@ export default class extends Component {
     } catch (ex) {
       console.error(ex)
     }
-  }
-
-  handleCrop = async (geo) => {
-    console.log(geo)
   }
 
 }
