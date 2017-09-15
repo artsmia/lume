@@ -24,7 +24,8 @@ export default class extends Component {
   }
 
   render() {
-    if (this.props.data.loading) return null
+    if (this.props.data.loading || !this.state.image) return null
+
     return (
       <LeafletCss>
         <ZoomerMap
@@ -47,11 +48,10 @@ export default class extends Component {
       geometry: (clip) ? clip.geometry : false
     }
 
-
   }
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.clipId) {
+    if (nextProps.data.clip && this.props.data.clip) {
       if (nextProps.data.clip.id !== this.props.data.clip.id) {
         this.setState({
           geometry: nextProps.data.clip.geometry,
@@ -59,6 +59,17 @@ export default class extends Component {
           geometryCreated: false
         })
       }
+    }
+    if (!this.state.image && !nextProps.data.loading) {
+      const {
+        detail,
+        image,
+        clip
+      } = nextProps.data
+      this.setState({
+        image: (detail) ? detail.image : image,
+        geometry: (clip) ? clip.geometry: false
+      })
     }
   }
 

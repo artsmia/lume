@@ -33,7 +33,6 @@ export default class extends Component {
             id: clipId,
             detail: {
               id: detailId,
-              image
             },
             additionalImages,
             geometry
@@ -136,12 +135,12 @@ export default class extends Component {
             />
           </Column>
           <ZoomerContainer>
-            {(image) ? (
+            {(detailId && clipId) ? (
               <Zoomer
-                imageId={image.id}
+                detailId={detailId}
+                clipId={clipId}
                 crop={true}
                 onCrop={saveGeometry}
-                geometry={geometry}
               />
             ) : null}
           </ZoomerContainer>
@@ -173,12 +172,12 @@ export default class extends Component {
         },
       } = this
 
-      console.log(await editOrCreateClip({
+      await editOrCreateClip({
         variables: {
           clipId,
           geometry
         }
-      }))
+      })
     } catch (ex) {
       console.error(ex)
     }

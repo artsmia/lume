@@ -21,6 +21,7 @@ export default async function editOrCreateClip(src, {id: clipId, title, descript
       await clip.addAdditionalImages(newAdditionalImageIds)
     }
 
+    clip = await clipModel.findById(clip.id)
 
     return clip
   } catch (ex) {
