@@ -16,7 +16,10 @@ export default async function editOrCreateItem(src, args, ctx){
     } = args
     let item
     if (!argItem.id) {
-      item = await itemModel.create(argItem)
+      item = await itemModel.create({
+        ...argItem,
+        title: "New Item"
+      })
     } else {
       item = await itemModel.update(argItem, {
         where: {

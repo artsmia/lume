@@ -224,9 +224,7 @@ export default class EditBook extends Component {
             <TabBody
               name={"preview"}
             >
-              {/* <AppItem
-                itemId={itemId}
-              /> */}
+
             </TabBody>
           </TabContainer>
         </EditContainer>
@@ -244,7 +242,6 @@ export default class EditBook extends Component {
 
         if (key === "pages") {
           let pages = data.book.pages.slice()
-          console.log(pages)
           pages.sort(
             (a,b) => {
               return a.index - b.index

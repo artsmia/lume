@@ -9,7 +9,6 @@ const page = db.define('page', {
   },
   title: {
     type: Sequelize.STRING,
-    defaultValue: "New Page"
   },
   text: Sequelize.TEXT,
   index: {
@@ -17,7 +16,6 @@ const page = db.define('page', {
   },
   type: {
     type: Sequelize.ENUM('image', 'video', 'comparison'),
-    defaultValue: 'image'
   },
   video: Sequelize.STRING,
 }, {

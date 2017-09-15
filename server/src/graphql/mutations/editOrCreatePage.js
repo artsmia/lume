@@ -14,10 +14,11 @@ export default async function editOrCreatePage(src, args, ctx){
 
     let page
 
-    console.log(args)
 
     if (!args.id){
-      page = await pageModel.create()
+      page = await pageModel.create({
+        title: "New Page"
+      })
     } else {
       page = await pageModel.update({
         title,

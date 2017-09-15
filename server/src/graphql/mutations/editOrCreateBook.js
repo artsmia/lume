@@ -14,7 +14,9 @@ export default async function editOrCreateBook(src, args, ctx){
 
 
     if (!args.id){
-      book = await bookModel.create()
+      book = await bookModel.create({
+        title: "New Book"
+      })
     } else {
       book = await bookModel.update(args, {
         where: {
