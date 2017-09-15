@@ -10,9 +10,6 @@ export default class extends Component {
   state = {
     zoomCreated: false,
     zoomLoading: false,
-    topleft: false,
-    bottomright: false,
-    cropping: false
   }
 
   render() {
@@ -30,10 +27,19 @@ export default class extends Component {
   componentDidUpdate(){
     const {
       zoomLoading,
-      zoomLoaded
+      zoomLoaded,
+      cropStart,
+      cropEnd
     } = this.state
     if (!zoomLoading && !zoomLoaded && !this.props.data.loading) {
       this.createZoomer()
+    }
+
+    if (cropStart && cropEnd) {
+      this.props.onCrop([
+        [cropStart.lat, cropStart.lng],
+        [cropEnd.lat, cropEnd.lng]
+      ])
     }
   }
 
@@ -46,6 +52,7 @@ export default class extends Component {
       } = this.state
 
 
+
       L.Control.Cropper = L.Control.extend({
 
 
@@ -56,7 +63,7 @@ export default class extends Component {
           map.cropping = false
           map.highlight = false
 
-          this.button = L.DomUtil.create('div')
+          this.button = L.DomUtil.create('button')
           L.DomUtil.setClass(this.button, "crop-button")
 
           L.DomEvent.on(
@@ -183,8 +190,8 @@ export default class extends Component {
             this.map.cropEnd.on("moveend", ({latlng}) => {
               highlightSelection()
               this.setState({
-                cropStart: this.map.cropStart,
-                cropEnd: this.map.cropEnd
+                cropStart: this.map.cropStart._latlng,
+                cropEnd: this.map.cropEnd._latlng
               })
             })
             this.map.cropEnd.on("drag", ({latlng}) => {
@@ -201,8 +208,8 @@ export default class extends Component {
           if (this.map.cropEnd && this.map.cropping) {
             this.map.cropEnd.setLatLng(latlng)
             this.setState({
-              cropStart: this.map.cropStart,
-              cropEnd: this.map.cropEnd
+              cropStart: this.map.cropStart._latlng,
+              cropEnd: this.map.cropEnd._latlng
             })
             this.map.cropping = false
             highlightSelection()
@@ -287,6 +294,8 @@ export default class extends Component {
       const containerWidth = container.clientWidth
       const containerHeight = container.clientHeight
 
+      console.log(containerWidth, containerHeight)
+
       const longDimension = Math.max(containerWidth, containerHeight)
 
       const initialZoom = Math.log2(longDimension / tileSize)
@@ -340,7 +349,10 @@ export default class extends Component {
       this.map.invalidateSize()
       this.map.fitBounds(bounds)
 
-      this.createCropper()
+
+      if (this.props.crop) {
+        this.createCropper()
+      }
 
       await this.promiseState( (prevState) => {
         return {
@@ -369,13 +381,12 @@ const ZoomerMap = styled.div`
   height: 100%;
   width: 100%;
   .crop-button {
-    height: 50px;
-    width: 50px;
-    background-color: purple;
-  }
-  .crop-button-clicked {
-    height: 50px;
-    width: 50px;
-    background-color: yellow;
+    height: 30px;
+    width: 30px;
+    background: url("${url}/static/crop.png") center;
+    background-size: cover;
+    background-color: white;
+    border: 2px solid grey;
+    border-radius: 2px;
   }
 `

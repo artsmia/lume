@@ -51,7 +51,8 @@ export default class extends Component {
       handleChange,
       openModal,
       handleAdditionalImageSave,
-      deleteClip
+      deleteClip,
+      handleCrop
     } = this
     return (
       <Expander
@@ -133,13 +134,15 @@ export default class extends Component {
               snackId={snackId}
             />
           </Column>
-          <Column>
+          <ZoomerContainer>
             {(image) ? (
               <Zoomer
                 imageId={image.id}
+                crop={true}
+                onCrop={handleCrop}
               />
             ) : null}
-          </Column>
+          </ZoomerContainer>
         </Row>
 
 
@@ -238,4 +241,13 @@ export default class extends Component {
     }
   }
 
+  handleCrop = async (geo) => {
+    console.log(geo)
+  }
+
 }
+
+const ZoomerContainer = styled.div`
+  display: flex;
+  height: 500px;
+`

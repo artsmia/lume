@@ -55,7 +55,7 @@ export class Expander extends Component {
           <ExpBody
             expanded={expanded}
           >
-            {children}
+            {(expanded) ? children : null}
           </ExpBody>
         ): null}
 
