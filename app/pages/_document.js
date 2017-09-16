@@ -10,6 +10,10 @@ export default class ClientDocument extends Document {
       <html lang="en">
         <Head>
           <title>Knight Client</title>
+          <link
+            rel='shortcut icon'
+            type='image/x-icon'
+            href='/static/favicon.png'/>
           {styleTags}
         </Head>
         <body>

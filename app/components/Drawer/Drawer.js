@@ -2,8 +2,10 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import {SideMenu, MenuItem} from '../../ui/menus'
 import Drawer from '../../ui/drawer'
+import {logout} from '../../auth'
+import {Button} from '../../ui/buttons'
 
-export default class Template extends Component {
+export default class extends Component {
 
   static defaultProps = {
     drawer: true,
@@ -55,6 +57,13 @@ export default class Template extends Component {
           >
             Books
           </MenuItem>
+
+          <Button
+            onClick={logout}
+            color={"red"}
+          >
+            Logout
+          </Button>
         </SideMenu>
       </Drawer>
     )

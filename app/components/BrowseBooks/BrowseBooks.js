@@ -55,9 +55,6 @@ export default class BrowseBooks extends Component {
 
                 </Cell>
                 <Cell>
-                  Id
-                </Cell>
-                <Cell>
                   Title
                 </Cell>
               </Row>
@@ -89,11 +86,8 @@ export default class BrowseBooks extends Component {
                       }}
                       as={`/${orgSub}/cms/book/${bookId}`}
                     >
-                      {bookId}
+                      {title}
                     </Link>
-                  </Cell>
-                  <Cell>
-                    {title}
                   </Cell>
                 </Row>
               ))}

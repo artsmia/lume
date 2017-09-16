@@ -66,7 +66,8 @@ export default class EditItem extends Component {
             details,
             relatedBooks,
           },
-        }
+        },
+        orgSub
       },
       state: {
         snack,
@@ -329,6 +330,7 @@ export default class EditItem extends Component {
             >
               <AppItem
                 itemId={itemId}
+                orgSub={orgSub}
               />
             </TabBody>
           </TabContainer>

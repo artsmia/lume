@@ -35,6 +35,9 @@ query ItemQuery (
     relatedBooks {
       id
       title
+      previewImage {
+        id
+      }
     }
     relatedItems {
       id

@@ -6,6 +6,8 @@ import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import Zoomer from '../Zoomer'
 import {ExpanderContainer, Expander} from '../../ui/expander'
 import AppDetail from '../AppDetail'
+import Image from '../Image'
+import Link from 'next/link'
 
 export default class extends Component {
 
@@ -28,7 +30,8 @@ export default class extends Component {
             details,
             relatedBooks
           }
-        }
+        },
+        orgSub
       },
       state: {
         selectedDetail,
@@ -90,7 +93,31 @@ export default class extends Component {
                 Related Books
               </H3>
               {
-                relatedBooks.map(({id, title}) => (<p key={id}>{title}</p>))
+                relatedBooks.map(({id: bookId, title, previewImage}) => (
+                  <Link
+                    key={bookId}
+                    href={{
+                      pathname: '/app/book',
+                      query: {
+                        bookId,
+                        orgSub
+                      }
+                    }}
+                    as={`/${orgSub}/book/${bookId}`}
+                  >
+                    <RelatedContainer>
+                      <H4>
+                        {title}
+                      </H4>
+                      {(previewImage) ? (
+                        <Image
+                          imageId={previewImage.id}
+                          thumb
+                        />
+                      ): null}
+                    </RelatedContainer>
+                  </Link>
+                ))
               }
             </TabBody>
           </TabContainer>
@@ -135,4 +162,15 @@ const SideContainer = styled.div`
 const FeatureContainer = styled.div`
   width: 70%;
   display: flex;
+`
+
+const RelatedContainer = styled.div`
+  border: 1px solid ${({theme}) => theme.colors.black};
+  display: flex;
+  align-items: center;
+  margin: 15px 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  justify-content: space-between;
+  cursor: pointer;
 `

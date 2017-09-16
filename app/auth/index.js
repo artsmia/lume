@@ -43,3 +43,14 @@ export async function getIDToken(context){
     console.log(ex)
   }
 }
+
+
+export async function logout(){
+  try {
+    Cookies.remove('IDToken')
+    Cookies.remove('userId')
+    router.push('/')
+  } catch (ex) {
+    console.error(ex)
+  }
+}

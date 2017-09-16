@@ -13,7 +13,7 @@ export default class extends Component {
     detailId: PropTypes.string,
     clipId: PropTypes.string,
     onCrop: PropTypes.func,
-    crop: PropTypes.boolean
+    crop: PropTypes.bool
   }
 
   static defaultProps = {
@@ -458,6 +458,7 @@ export default class extends Component {
         crs: L.CRS.Simple,
         maxBounds: bounds,
         zoomSnap: 0,
+        attributionControl: false
       })
 
       const container = this.map.getContainer()
