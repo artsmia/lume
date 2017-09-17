@@ -14,6 +14,7 @@ import {ExpanderContainer} from '../../ui/expander'
 import ImageManager from '../ImageManager'
 import Modal from '../../ui/modal'
 import router from 'next/router'
+import Sorter from '../../ui/drag/Sorter'
 
 export default class EditItem extends Component {
 
@@ -302,7 +303,7 @@ export default class EditItem extends Component {
                     Details
                   </H2>
                   <ExpanderContainer>
-                    { (details) ?
+                    {/* { (details) ?
                       details.map( detail => (
                         <DetailEditor
                           key={detail.id}
@@ -311,7 +312,19 @@ export default class EditItem extends Component {
                         />
                       ))
                       : null
+                    } */}
+
+                    {
+                      (details) ? (
+                        <Sorter
+                          sortables={details}
+                          idKey={"detailId"}
+                          onNewOrder={(newOrder) => console.log(newOrder)}
+                          Component={DetailEditor}
+                        />
+                      ): null
                     }
+
                     <Button
                       onClick={addDetail}
                       color={"white"}
@@ -578,3 +591,16 @@ const SectionContainer = styled(Column)`
   padding: 10px;
   border: 1px solid ${({theme}) => theme.colors.black};
 `
+const DefaultComponent = (props) => (
+  <div
+    style={{
+      height: "50px",
+      width: "100px",
+      backgroundColor: "salmon",
+      margin: "10px",
+      textAlign: "center"
+    }}
+  >
+    {props.id}
+  </div>
+)

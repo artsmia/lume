@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
+import styled from 'styled-components'
 import Template from '../Template'
 
 export default class Home extends Component {
+
 
   render() {
 
@@ -9,20 +11,15 @@ export default class Home extends Component {
       return null
     }
     const {
-      props,
-      props: {
-        data: {
-          organization: {
-            name
-          }
-        }
-      }
+      props
     } = this
     return (
       <Template
         drawer
         {...props}
       >
+
+
       </Template>
     )
   }

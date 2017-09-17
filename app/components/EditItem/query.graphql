@@ -20,6 +20,7 @@ query editItemQuery (
     }
     details {
       id
+      index
       image {
         id
         organization {

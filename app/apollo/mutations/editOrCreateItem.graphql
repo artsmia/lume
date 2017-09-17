@@ -57,6 +57,7 @@ mutation editOrCreateItem (
     }
     details {
       id
+      index
       image {
         id
         organization {

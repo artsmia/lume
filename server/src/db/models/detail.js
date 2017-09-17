@@ -10,6 +10,9 @@ const detail = db.define('detail', {
   title: {
     type: Sequelize.STRING,
   },
+  index: {
+    type: Sequelize.INTEGER
+  }
 }, {
   freezeTableName: true
 })

@@ -62,9 +62,13 @@ export default async function editOrCreateItem(src, args, ctx){
         itemId,
         imageId
       } = createAndAddDetail
+      let details = await item.getDetails()
+
+
       const detail = await detailModel.create({
         itemId,
-        imageId
+        imageId,
+        index: details.length
       })
 
     }

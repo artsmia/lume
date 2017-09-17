@@ -14,7 +14,6 @@ const clip = db.define('clip', {
   description: Sequelize.TEXT,
   index: {
     type: Sequelize.INTEGER,
-    defaultValue: 0,
   }
 }, {
   freezeTableName: true

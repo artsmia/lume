@@ -15,6 +15,7 @@ const typeDefs = `
     detail: Detail
     additionalImages: [Image]
     geometry: Geometry
+    index: Int
   }
 
   type Detail {
@@ -23,6 +24,7 @@ const typeDefs = `
     item: Item
     clips: [Clip]
     image: Image
+    index: Int
   }
 
   type Group {
@@ -216,6 +218,7 @@ const typeDefs = `
       itemId: ID
       imageId: ID
       createAndAddClip: CreateAndAddClipInput
+      index: Int
     ): Detail
 
     editOrCreateClip(
@@ -225,6 +228,7 @@ const typeDefs = `
       geometry: GeometryInput
       detailId: ID
       newAdditionalImageIds: [ID]
+      index: Int
     ): Clip
 
 
