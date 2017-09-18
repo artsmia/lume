@@ -67,11 +67,7 @@ export default class Sorter extends Component {
       <DragDropContextProvider
         backend={HTML5Backend}
       >
-        <div
-          ref={(ref) => {
-            this.parentRef = ref
-          }}
-        >
+        <div>
           {sortables.map((sortable, index) => (
             <Sortable
               index={index}
@@ -80,7 +76,6 @@ export default class Sorter extends Component {
               moveSortable={this.moveSortable}
               idKey={idKey}
               Component={Component}
-              parentRef={this.parentRef}
             />
         ))}
         </div>

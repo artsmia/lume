@@ -2,7 +2,7 @@ import detailModel from '../../db/models/detail'
 import itemModel from '../../db/models/item'
 import clipModel from '../../db/models/clip'
 
-export default async function editOrCreateDetail(src, {id, itemId, title, imageId, createAndAddClip}, ctx){
+export default async function editOrCreateDetail(src, {id, itemId, title, index, imageId, createAndAddClip}, ctx){
   try {
 
     let detail
@@ -35,6 +35,10 @@ export default async function editOrCreateDetail(src, {id, itemId, title, imageI
 
     if (title) {
       detail.update({title})
+    }
+
+    if (index) {
+      detail.update({index})
     }
 
     return detail

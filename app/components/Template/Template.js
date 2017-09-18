@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import MiaUI from '../../ui'
 import Drawer from '../Drawer'
+import {DragDropContextProvider} from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
 export default class Template extends Component {
 
@@ -18,6 +20,9 @@ export default class Template extends Component {
 
     return (
       <MiaUI>
+        <DragDropContextProvider
+          backend={HTML5Backend}
+        >
         <Container>
           {(drawer) ? (
             <Drawer
@@ -25,10 +30,11 @@ export default class Template extends Component {
             />
           ): null}
 
-          {children}
+              {children}
 
 
         </Container>
+      </DragDropContextProvider>
       </MiaUI>
     )
   }

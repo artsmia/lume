@@ -88,36 +88,41 @@ class Sortable extends Component {
 
   render() {
     const {
-      children,
       isDragging,
       connectDragSource,
       connectDropTarget,
-      connectDragPreview,
       id,
       Component,
       idKey,
-      parentRef,
-      index
     } = this.props
 
-    return connectDragSource(connectDragPreview(
+
+
+    return connectDragSource(connectDropTarget(
       <div
         id={id}
         ref={(ref) => {
           this.sortRef = ref
-
         }}
         style={{
           opacity: (isDragging) ? .5 : 1
         }}
-        key={id}
       >
+
         {createElement(Component, {
           [idKey]: id
         })}
       </div>
     ))
   }
+
+  componentDidMount(){
+    let node = new Image()
+    node.src = '/static/handle.png'
+    this.props.connectDragPreview(node)
+  }
+
+
 }
 
 

@@ -41,7 +41,8 @@ export default class EditItem extends Component {
     currentLocation: "",
     newRelatedBookIds: [],
     removeRelatedBookIds: [],
-    availableBooks: []
+    availableBooks: [],
+    reordering: false
   }
 
 
@@ -85,12 +86,14 @@ export default class EditItem extends Component {
         creditLine,
         newRelatedBookIds,
         removeRelatedBookIds,
-        availableBooks
+        availableBooks,
+        reordering
       },
       onImageSave,
       deleteItem,
       addRelatedBooks,
-      removeRelatedBooks
+      removeRelatedBooks,
+      reorderDetails
     } = this
     return (
       <Template
@@ -302,25 +305,28 @@ export default class EditItem extends Component {
                   <H2>
                     Details
                   </H2>
+                  <Button
+                    onClick={()=>this.setState(({reordering}) => ({reordering: !reordering}))}
+                  >
+                    {(reordering) ? "Done" : "Reorder Details"}
+                  </Button>
                   <ExpanderContainer>
-                    {/* { (details) ?
-                      details.map( detail => (
+                    {
+                      (details && ! reordering) ? details.map( detail => (
                         <DetailEditor
                           key={detail.id}
                           detailId={detail.id}
-                          orgId={orgId}
                         />
-                      ))
-                      : null
-                    } */}
-
+                      )): null
+                    }
                     {
-                      (details) ? (
+                      (details && reordering) ? (
                         <Sorter
                           sortables={details}
                           idKey={"detailId"}
-                          onNewOrder={(newOrder) => console.log(newOrder)}
+                          onNewOrder={reorderDetails}
                           Component={DetailEditor}
+                          reordering={reordering}
                         />
                       ): null
                     }
@@ -488,6 +494,29 @@ export default class EditItem extends Component {
   }
 
 
+  reorderDetails = async (details) => {
+    try {
+      const {
+        editDetail
+      } = this.props
+
+      console.log(details)
+
+
+      let results = await Promise.all(
+        details.map(detail => editDetail({
+          variables: {
+            detailId: detail.id,
+            index: detail.index
+          }
+        }))
+      )
+      console.log(results)
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
   deleteItem = async () => {
     try {
 
@@ -591,16 +620,3 @@ const SectionContainer = styled(Column)`
   padding: 10px;
   border: 1px solid ${({theme}) => theme.colors.black};
 `
-const DefaultComponent = (props) => (
-  <div
-    style={{
-      height: "50px",
-      width: "100px",
-      backgroundColor: "salmon",
-      margin: "10px",
-      textAlign: "center"
-    }}
-  >
-    {props.id}
-  </div>
-)

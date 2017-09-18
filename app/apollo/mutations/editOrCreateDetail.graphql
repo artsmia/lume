@@ -4,12 +4,14 @@ mutation editOrCreateDetail (
   $title: String
   $imageId: ID
   $newClipDetailId: ID
+  $index: Int
 ) {
   editOrCreateDetail (
     id: $detailId
     itemId: $itemId
     title: $title
     imageId: $imageId
+    index: $index
     createAndAddClip: {
       detailId: $newClipDetailId
     }
