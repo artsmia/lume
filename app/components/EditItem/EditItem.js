@@ -316,6 +316,7 @@ export default class EditItem extends Component {
                         <DetailEditor
                           key={detail.id}
                           detailId={detail.id}
+                          orgId={orgId}
                         />
                       )): null
                     }
@@ -327,6 +328,7 @@ export default class EditItem extends Component {
                           onNewOrder={reorderDetails}
                           Component={DetailEditor}
                           reordering={reordering}
+                          orgId={orgId}
                         />
                       ): null
                     }

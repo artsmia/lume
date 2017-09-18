@@ -94,6 +94,7 @@ class Sortable extends Component {
       id,
       Component,
       idKey,
+      orgId
     } = this.props
 
 
@@ -110,7 +111,8 @@ class Sortable extends Component {
       >
 
         {createElement(Component, {
-          [idKey]: id
+          [idKey]: id,
+          orgId
         })}
       </div>
     ))

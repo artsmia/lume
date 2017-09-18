@@ -58,7 +58,8 @@ export default class Sorter extends Component {
       },
       props: {
         Component,
-        idKey
+        idKey,
+        orgId
       }
     } = this
 
@@ -76,6 +77,7 @@ export default class Sorter extends Component {
               moveSortable={this.moveSortable}
               idKey={idKey}
               Component={Component}
+              orgId={orgId}
             />
         ))}
         </div>

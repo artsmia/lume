@@ -25,6 +25,8 @@ export default async function editOrCreateDetail(src, {id, itemId, title, index,
 
     if (createAndAddClip.detailId) {
 
+      console.log(detail)
+
       let clips = await detail.getClips()
 
       await clipModel.create({

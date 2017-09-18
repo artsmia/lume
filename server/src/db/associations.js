@@ -62,7 +62,13 @@ export async function createAssociations() {
       as: "image",
     })
 
-    clip.belongsTo(detail, {as: "detail"})
+    clip.belongsTo(detail, {
+      as: "detail"
+    })
+
+    detail.hasMany(clip, {
+      as: "clips"
+    })
 
     book.hasMany(page, {
       as: "pages"
