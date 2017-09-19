@@ -608,6 +608,20 @@ export default class EditItem extends Component {
 
 }
 
+// 
+// const DetailPreview = (props) => {
+//   return (
+//     <div
+//       style={{
+//         width: "100%",
+//         height: "100px",
+//         backgroundColor: "salmon"
+//       }}
+//     >
+//       {props.title}
+//     </div>
+//   )
+// }
 
 const EditContainer = styled.div`
   width: 100%;

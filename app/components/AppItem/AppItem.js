@@ -1,15 +1,26 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Template from '../Template/Template'
-import {H1, H2, H3, H4} from '../../ui/h'
+import {H1, H3, H4} from '../../ui/h'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import Zoomer from '../Zoomer'
-import {ExpanderContainer, Expander} from '../../ui/expander'
 import AppDetail from '../AppDetail'
 import Image from '../Image'
 import Link from 'next/link'
+import PropTypes from 'prop-types'
+import {validateUuid} from '../../utils/validators'
+import {Loading} from '../../ui/spinner'
 
 export default class extends Component {
+
+  static displayName = "AppItem"
+
+  static propTypes = {
+    itemId: PropTypes.string,
+    data: PropTypes.shape({
+      loading: PropTypes.bool
+    }),
+    orgSub: PropTypes.string
+  }
 
   state = {
     selectedDetail: false,
@@ -17,7 +28,7 @@ export default class extends Component {
   }
 
   render() {
-    if (this.props.data.loading) return null
+    if (this.props.data.loading) return <Loading/>
 
     const {
       props: {
@@ -40,10 +51,9 @@ export default class extends Component {
       handleDetailSelection,
       handleClipSelection
     } = this
+
     return (
-      <Template
-        drawer={false}
-      >
+      <Container>
         <SideContainer>
           <H1>{title}</H1>
           <H3>{attribution}</H3>
@@ -135,7 +145,7 @@ export default class extends Component {
             />
           ): null}
         </FeatureContainer>
-      </Template>
+      </Container>
     )
   }
 
@@ -149,6 +159,13 @@ export default class extends Component {
 
 
 }
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 0px;
+  box-sizing: border-box;
+  min-height: 100vh;
+`
 
 
 const SideContainer = styled.div`

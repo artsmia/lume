@@ -23,23 +23,21 @@ export default class Template extends Component {
         <DragDropContextProvider
           backend={HTML5Backend}
         >
-        <Container>
-          {(drawer) ? (
-            <Drawer
-              {...props}
-            />
-          ): null}
+          <Container>
+            {(drawer) ? (
+              <Drawer
+                {...props}
+              />
+            ): null}
 
-              {children}
+            {children}
 
 
-        </Container>
-      </DragDropContextProvider>
+          </Container>
+        </DragDropContextProvider>
       </MiaUI>
     )
   }
-
-
 
 }
 

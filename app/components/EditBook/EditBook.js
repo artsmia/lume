@@ -14,6 +14,7 @@ import ImageManager from '../ImageManager'
 import Modal from '../../ui/modal'
 import router from 'next/router'
 import PageEditor from '../PageEditor'
+import AppBook from '../AppBook'
 
 export default class EditBook extends Component {
 
@@ -224,7 +225,10 @@ export default class EditBook extends Component {
             <TabBody
               name={"preview"}
             >
-
+              <AppBook
+                bookId={bookId}
+                orgId={orgId}
+              />
             </TabBody>
           </TabContainer>
         </EditContainer>

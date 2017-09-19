@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import AppItem from '../../components/AppItem'
 import withData from '../../apollo/withData'
+import Template from '../../components/Template'
 
 
 class AppIndex extends Component {
@@ -19,9 +20,13 @@ class AppIndex extends Component {
 
   render() {
     return (
-      <AppItem
-        {...this.props}
-      />
+      <Template
+        drawer={false}
+      >
+        <AppItem
+          {...this.props}
+        />
+      </Template>
     )
   }
 }
