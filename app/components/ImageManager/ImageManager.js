@@ -21,7 +21,8 @@ export default class extends Component {
   state = {
     snackMessage: "",
     snackId: "",
-    uploading: false
+    uploading: false,
+    selectedTab: "current"
   }
 
   render() {
@@ -53,7 +54,7 @@ export default class extends Component {
           snackId={snackId}
         />
         <TabContainer
-          initialTab={"current"}
+          selectedTab={"current"}
         >
           <TabHeader>
             <Tab

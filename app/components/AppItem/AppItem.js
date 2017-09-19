@@ -9,6 +9,7 @@ import Link from 'next/link'
 import PropTypes from 'prop-types'
 import {validateUuid} from '../../utils/validators'
 import {Loading} from '../../ui/spinner'
+import AppTombstone from '~/components/AppTombstone'
 
 export default class extends Component {
 
@@ -24,7 +25,8 @@ export default class extends Component {
 
   state = {
     selectedDetail: false,
-    selectedClip: false
+    selectedClip: false,
+    selectedTab: "about"
   }
 
   render() {
@@ -34,6 +36,7 @@ export default class extends Component {
       props: {
         data: {
           item: {
+            id: itemId,
             title,
             attribution,
             mainImage,
@@ -46,7 +49,8 @@ export default class extends Component {
       },
       state: {
         selectedDetail,
-        selectedClip
+        selectedClip,
+        selectedTab
       },
       handleDetailSelection,
       handleClipSelection
@@ -55,10 +59,11 @@ export default class extends Component {
     return (
       <Container>
         <SideContainer>
-          <H1>{title}</H1>
-          <H3>{attribution}</H3>
+          <AppTombstone
+            itemId={itemId}
+          />
           <TabContainer
-            initialTab={"about"}
+            selectedTab={selectedTab}
           >
             <TabHeader>
               <Tab
@@ -80,7 +85,7 @@ export default class extends Component {
             <TabBody
               name={"about"}
             >
-              <p>{text}</p>
+              <AboutText>{text}</AboutText>
             </TabBody>
             <TabBody
               name={"details"}
@@ -102,33 +107,31 @@ export default class extends Component {
               <H3>
                 Related Books
               </H3>
-              {
-                relatedBooks.map(({id: bookId, title, previewImage}) => (
-                  <Link
-                    key={bookId}
-                    href={{
-                      pathname: '/app/book',
-                      query: {
-                        bookId,
-                        orgSub
-                      }
-                    }}
-                    as={`/${orgSub}/book/${bookId}`}
-                  >
-                    <RelatedContainer>
-                      <H4>
-                        {title}
-                      </H4>
-                      {(previewImage) ? (
-                        <Image
-                          imageId={previewImage.id}
-                          thumb
-                        />
-                      ): null}
-                    </RelatedContainer>
-                  </Link>
-                ))
-              }
+              {relatedBooks.map(({id: bookId, title, previewImage}) => (
+                <Link
+                  key={bookId}
+                  href={{
+                    pathname: '/app/book',
+                    query: {
+                      bookId,
+                      orgSub
+                    }
+                  }}
+                  as={`/${orgSub}/book/${bookId}`}
+                >
+                  <RelatedContainer>
+                    <H4>
+                      {title}
+                    </H4>
+                    {(previewImage) ? (
+                      <Image
+                        imageId={previewImage.id}
+                        thumb
+                      />
+                    ): null}
+                  </RelatedContainer>
+                </Link>
+              ))}
             </TabBody>
           </TabContainer>
         </SideContainer>
@@ -174,6 +177,7 @@ const SideContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  padding: 10px;
 `
 
 const FeatureContainer = styled.div`
@@ -190,4 +194,8 @@ const RelatedContainer = styled.div`
   padding: 10px;
   justify-content: space-between;
   cursor: pointer;
+`
+
+const AboutText = styled.p`
+  margin: 15px;
 `

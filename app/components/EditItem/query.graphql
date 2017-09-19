@@ -21,6 +21,7 @@ query editItemQuery (
     details {
       id
       index
+      title
       image {
         id
         organization {

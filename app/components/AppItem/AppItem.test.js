@@ -1,29 +1,32 @@
 import React from "react"
-import { mount } from "enzyme"
+import { mount, shallow} from "enzyme"
 import {toContainReact} from 'jest-enzyme'
 import {Loading} from '../../ui/spinner'
 import AppItem from "./AppItem"
 import {ThemeProvider} from 'styled-components'
 import theme from '../../ui/theme'
-
+import withData from '../../apollo/withData'
 
 describe("AppItem", () => {
   let props
 
   let appItem
 
+
   const mountAppItem = () => {
+    let ApolloAppItem = withData(AppItem)
     appItem = mount(
       <ThemeProvider
         theme={theme}
       >
-        <AppItem
+        <ApolloAppItem
           {...props}
+          serverState={{}}
         />
       </ThemeProvider>
     )
 
-    appItem = appItem.find("AppItem")
+    appItem = appItem.find(AppItem)
   }
 
   beforeEach(() => {
@@ -41,6 +44,7 @@ describe("AppItem", () => {
     props = {
       data: {
         item: {
+          id: "",
           title: "",
           attribution: "",
           mainImage: "",
@@ -49,7 +53,8 @@ describe("AppItem", () => {
           relatedBooks: []
         }
       },
-      orgSub: ""
+      orgSub: "",
+      itemId: "asdf"
     }
 
     mountAppItem()
@@ -57,8 +62,14 @@ describe("AppItem", () => {
   })
 
   it("renders <Loading/> when props.data.loading is true", () => {
-    props.data = {
-      loading: true
+    props = {
+      data: {
+        loading: true,
+        item: {
+          id: "asdf"
+        }
+      },
+      itemId: "asdf"
     }
 
     mountAppItem()

@@ -12,6 +12,8 @@ query DetailQuery (
     }
     clips {
       id
+      index
+      title
     }
   }
 }

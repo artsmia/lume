@@ -5,7 +5,7 @@ mutation editOrCreateClip (
   $geometry: GeometryInput
   $detailId: ID
   $newAdditionalImageIds: [ID]
-
+  $index: Int
 ) {
   editOrCreateClip (
     id: $clipId
@@ -14,8 +14,10 @@ mutation editOrCreateClip (
     geometry: $geometry
     detailId: $detailId
     newAdditionalImageIds: $newAdditionalImageIds
+    index: $index
   ) {
     id
+    index
     title
     description
     geometry {

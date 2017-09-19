@@ -94,7 +94,8 @@ class Sortable extends Component {
       id,
       Component,
       idKey,
-      orgId
+      orgId,
+      title
     } = this.props
 
 
@@ -110,22 +111,42 @@ class Sortable extends Component {
         }}
       >
 
-        {createElement(Component, {
+        {createElement(DetailOrder, {
           [idKey]: id,
-          orgId
+          title,
         })}
       </div>
     ))
   }
 
-  componentDidMount(){
-    let node = new Image()
-    node.src = '/static/handle.png'
-    this.props.connectDragPreview(node)
-  }
+  // componentDidMount(){
+  //   let node = new Image()
+  //   node.src = '/static/handle.png'
+  //   this.props.connectDragPreview(node)
+  // }
 
 
 }
+
+export const DetailOrder = (props) => {
+  return (
+    <div
+      style={{
+        height: "72px",
+        width: "100%",
+        margin: "10px 10px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        border: "1px solid grey",
+        boxSizing: "border-box"
+      }}
+    >
+      {props.title}
+    </div>
+  )
+}
+
 
 
 Sortable = DropTarget(ItemTypes.SORTABLE, targetSpec, targetCollect)(Sortable)

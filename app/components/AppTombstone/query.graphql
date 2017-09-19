@@ -1,0 +1,18 @@
+query TombstoneQuery (
+  $itemId: ID!
+) {
+  item (
+    id: $itemId
+  ) {
+    id
+    accessionNumber
+    attribution
+    creditLine
+    culture
+    currentLocation
+    date
+    dimensions
+    medium
+    title
+  }
+}

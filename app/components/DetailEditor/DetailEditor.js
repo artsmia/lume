@@ -10,6 +10,7 @@ import ClipEditor from '../ClipEditor'
 import Image from '../Image'
 import Modal from '../../ui/modal'
 import Snackbar from '../../ui/Snackbar'
+import Sorter from '~/ui/drag/Sorter'
 
 export default class extends Component {
 
@@ -17,7 +18,9 @@ export default class extends Component {
     detailTitle: "",
     imageModal: false,
     snackMessage: "",
-    snackId: ""
+    snackId: "",
+    reordering: false,
+    clips: []
   }
 
   render () {
@@ -29,7 +32,6 @@ export default class extends Component {
         data: {
           detail: {
             image,
-            clips
           }
         },
         orgId
@@ -39,13 +41,17 @@ export default class extends Component {
         imageModal,
         snackMessage,
         snackId,
-        deleteModal
+        deleteModal,
+        reordering,
+        clips
       },
       save,
       handleChange,
       handleImageSave,
-      deleteDetail
+      deleteDetail,
+      reorderClips
     } = this
+
     return (
       <Expander
         header={(
@@ -120,13 +126,24 @@ export default class extends Component {
         <Row>
           <Column>
             <ExpanderContainer>
-              {clips.map( clip => (
+              <Button
+                onClick={()=>this.setState(({reordering}) => ({reordering: !reordering}))}
+              >
+                {(reordering) ? "Done" : "Reorder Clips"}
+              </Button>
+              {(!reordering) ? clips.map( clip => (
                 <ClipEditor
                   key={clip.id}
                   clipId={clip.id}
                   orgId={orgId}
                 />
-              ))}
+              )):null}
+              {(reordering) ? (
+                <Sorter
+                  sortables={clips}
+                  onNewOrder={reorderClips}
+                />
+              ): null}
               <Button
                 color={"white"}
                 onClick={newClip}
@@ -144,6 +161,32 @@ export default class extends Component {
   componentWillReceiveProps(nextProps){
     if (!nextProps.data.loading) {
       this.setState({detailTitle: nextProps.data.detail.title || ""})
+      let clips = nextProps.data.detail.clips.slice()
+      clips = clips.sort((a,b) => a.index - b.index)
+      console.log(clips)
+      this.setState({clips})
+    }
+  }
+
+  reorderClips = async (clips) => {
+    try {
+      const {
+        editClip
+      } = this.props
+
+
+
+      await Promise.all(
+        clips.map(clip => editClip({
+          variables: {
+            clipId: clip.id,
+            index: clip.index
+          }
+        }))
+      )
+
+    } catch (ex) {
+      console.error(ex)
     }
   }
 

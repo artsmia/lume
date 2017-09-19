@@ -78,6 +78,7 @@ export default class Sorter extends Component {
               idKey={idKey}
               Component={Component}
               orgId={orgId}
+              title={sortable.title}
             />
         ))}
         </div>

@@ -5,6 +5,7 @@ import clipModel from '../../db/models/clip'
 export default async function editOrCreateDetail(src, {id, itemId, title, index, imageId, createAndAddClip}, ctx){
   try {
 
+
     let detail
 
     if (!id) {
@@ -25,8 +26,6 @@ export default async function editOrCreateDetail(src, {id, itemId, title, index,
 
     if (createAndAddClip.detailId) {
 
-      console.log(detail)
-
       let clips = await detail.getClips()
 
       await clipModel.create({
@@ -35,13 +34,20 @@ export default async function editOrCreateDetail(src, {id, itemId, title, index,
       })
     }
 
-    if (title) {
-      detail.update({title})
-    }
+    await detail.update({
+      title,
+      index
+    },{
+      where: {
+        id
+      }
+    })
 
-    if (index) {
-      detail.update({index})
-    }
+
+    detail = await detailModel.findById(id)
+
+    console.log(detail)
+
 
     return detail
   } catch (ex) {

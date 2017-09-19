@@ -42,7 +42,9 @@ export default class EditItem extends Component {
     newRelatedBookIds: [],
     removeRelatedBookIds: [],
     availableBooks: [],
-    reordering: false
+    reordering: false,
+    selectedTab: "edit",
+    details: []
   }
 
 
@@ -65,7 +67,6 @@ export default class EditItem extends Component {
           item: {
             id: itemId,
             mainImage,
-            details,
             relatedBooks,
           },
         },
@@ -87,7 +88,10 @@ export default class EditItem extends Component {
         newRelatedBookIds,
         removeRelatedBookIds,
         availableBooks,
-        reordering
+        reordering,
+        selectedTab,
+        currentLocation,
+        details
       },
       onImageSave,
       deleteItem,
@@ -106,7 +110,7 @@ export default class EditItem extends Component {
         />
         <EditContainer>
           <TabContainer
-            initialTab={"edit"}
+            selectedTab={selectedTab}
           >
             <TabHeader>
               <Tab
@@ -154,7 +158,7 @@ export default class EditItem extends Component {
                             value={dimensions}
                             onChange={change}
                           />
-                          <Label>Culture</Label>
+                          <Label>Accession Number</Label>
                           <Input
                             name={"accessionNumber"}
                             value={accessionNumber}
@@ -182,8 +186,8 @@ export default class EditItem extends Component {
                           />
                           <Label>Current Location</Label>
                           <TextArea
-                            name={"creditLine"}
-                            value={creditLine}
+                            name={"currentLocation"}
+                            value={currentLocation}
                             onChange={change}
                           />
                         </Column>
@@ -312,7 +316,7 @@ export default class EditItem extends Component {
                   </Button>
                   <ExpanderContainer>
                     {
-                      (details && ! reordering) ? details.map( detail => (
+                      (details && !reordering) ? details.map( detail => (
                         <DetailEditor
                           key={detail.id}
                           detailId={detail.id}
@@ -324,11 +328,7 @@ export default class EditItem extends Component {
                       (details && reordering) ? (
                         <Sorter
                           sortables={details}
-                          idKey={"detailId"}
                           onNewOrder={reorderDetails}
-                          Component={DetailEditor}
-                          reordering={reordering}
-                          orgId={orgId}
                         />
                       ): null
                     }
@@ -367,6 +367,10 @@ export default class EditItem extends Component {
           [key]: data.item[key] || ""
         })
       })
+
+      let details = data.item.details.slice()
+      details =  details.sort( (a,b) => a.index - b.index)
+      this.setState({details})
 
       let relatedBookIds = data.item.relatedBooks.map(({id}) => id)
       let availableBooks = data.books.filter( ({id}) => !relatedBookIds.includes(id))
@@ -502,10 +506,7 @@ export default class EditItem extends Component {
         editDetail
       } = this.props
 
-      console.log(details)
-
-
-      let results = await Promise.all(
+      await Promise.all(
         details.map(detail => editDetail({
           variables: {
             detailId: detail.id,
@@ -513,7 +514,6 @@ export default class EditItem extends Component {
           }
         }))
       )
-      console.log(results)
     } catch (ex) {
       console.error(ex)
     }
@@ -608,7 +608,7 @@ export default class EditItem extends Component {
 
 }
 
-// 
+//
 // const DetailPreview = (props) => {
 //   return (
 //     <div

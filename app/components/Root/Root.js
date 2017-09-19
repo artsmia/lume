@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Template from '../Template/Template'
-import {H2, H3} from '../../ui/h'
-import {createLock} from '../../auth'
-import {Button} from '../../ui/buttons'
-import {Link} from '../../ui/links'
-import {Column} from '../../ui/layout'
+import Template from '~/components/Template/Template'
+import {H2, H3} from '~/ui/h'
+import {createLock} from '~/auth'
+import {Button} from '~/ui/buttons'
+import {Link} from '~/ui/links'
+import {Column} from '~/ui/layout'
 
 export default class Root extends Component {
 

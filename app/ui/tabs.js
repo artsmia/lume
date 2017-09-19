@@ -1,4 +1,4 @@
-import react, {Component, cloneElement, Children} from 'react'
+import {Component, cloneElement, Children} from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -6,11 +6,11 @@ import PropTypes from 'prop-types'
 export class TabContainer extends Component {
 
   static propTypes = {
-    initialTab: PropTypes.string.isRequired,
+    selectedTab: PropTypes.string.isRequired,
   }
 
   state = {
-    selectedTab: this.props.initialTab
+    selectedTab: this.props.selectedTab
   }
 
   render(){
@@ -40,9 +40,16 @@ export class TabContainer extends Component {
     )
   }
 
+
+  componentWillReceiveProps({selectedTab}){
+    this.setState({selectedTab})
+  }
+
   selectTab = (tabName) => {
     this.setState({selectedTab: tabName})
   }
+
+
 }
 
 
