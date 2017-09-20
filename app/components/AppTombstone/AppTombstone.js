@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import styled from 'styled-components'
-import {Loading} from '~/ui/spinner'
+import {Loading} from '../../ui/spinner'
 import PropTypes from 'prop-types'
 
 export default class AppTombstone extends Component {

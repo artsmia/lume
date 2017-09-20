@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow} from 'enzyme'
-import AppClip from '~/components/AppClip/AppClip'
+import AppClip from './AppClip'
 
 describe("AppClip", ()=> {
 

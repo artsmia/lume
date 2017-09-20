@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow} from 'enzyme'
-import AppBook from '~/components/AppBook/AppBook'
+import AppBook from './AppBook'
 
 describe("AppBook", ()=> {
 

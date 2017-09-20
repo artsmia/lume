@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {ThemeProvider} from 'styled-components'
-import theme from '~/ui/theme'
-import withData from '~/apollo/withData'
+import theme from '../ui/theme'
+import withData from '../apollo/withData'
 
 export default function(ComponentToWrap){
   let ComponentWithData = withData(ComponentToWrap)

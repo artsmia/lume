@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {H3} from '~/ui/h'
-import {Button} from '~/ui/buttons'
-import AppPage from '~/components/AppPage'
+import {H3} from '../../ui/h'
+import {Button} from '../../ui/buttons'
+import AppPage from '../../components/AppPage'
 import PropTypes from 'prop-types'
 
 export default class AppBook extends Component {

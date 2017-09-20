@@ -9,7 +9,7 @@ import Link from 'next/link'
 import PropTypes from 'prop-types'
 import {validateUuid} from '../../utils/validators'
 import {Loading} from '../../ui/spinner'
-import AppTombstone from '~/components/AppTombstone'
+import AppTombstone from '../AppTombstone'
 
 export default class extends Component {
 

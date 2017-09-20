@@ -2,9 +2,9 @@ import React from 'react'
 import { mount } from 'enzyme'
 import {toContainReact} from 'jest-enzyme'
 import {ThemeProvider} from 'styled-components'
-import {Loading} from '~/ui/spinner'
+import {Loading} from '../../ui/spinner'
 import AppTombstone from './AppTombstone'
-import theme from '~/ui/theme'
+import theme from '../../ui/theme'
 
 
 describe("AppTombstone", () => {

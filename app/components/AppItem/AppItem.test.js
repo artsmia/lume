@@ -1,9 +1,9 @@
 import React from 'react'
 import { mount, shallow} from 'enzyme'
 import {toContainReact} from 'jest-enzyme'
-import {Loading} from '~/ui/spinner'
+import {Loading} from '../../ui/spinner'
 import AppItem from './AppItem'
-import setupTests from '~/utils/setupTests'
+import setupTests from '../../utils/setupTests'
 
 describe("AppItem", () => {
   let props

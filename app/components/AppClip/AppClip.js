@@ -8,7 +8,7 @@ export default class AppClip extends Component {
 
   static defaultProps = {
     selected: false,
-    onSelection(clip){console.log(clip)}
+    onClipSelection(clip){console.log(clip)}
   }
 
   render() {
