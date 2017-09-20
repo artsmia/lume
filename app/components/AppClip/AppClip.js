@@ -4,7 +4,7 @@ import {H4} from '../../ui/h'
 import {Column, Row} from '../../ui/layout'
 import Image from '../Image'
 
-export default class extends Component {
+export default class AppClip extends Component {
 
   static defaultProps = {
     selected: false,

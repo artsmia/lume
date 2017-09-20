@@ -98,6 +98,16 @@ app.prepare().then(() => {
     app.render(req, res, actualPage, queryParams)
   })
 
+  server.get('/:orgSub/cms/settings', (req, res) => {
+    const actualPage = '/cms/org/settings'
+    const {orgSub} = req.params
+    const queryParams = {
+        orgSub,
+    }
+    app.render(req, res, actualPage, queryParams)
+  })
+
+
 
   server.get('/:orgSub', (req, res) => {
     const actualPage = '/app'
@@ -107,6 +117,7 @@ app.prepare().then(() => {
     }
     app.render(req, res, actualPage, queryParams)
   })
+
 
 
 

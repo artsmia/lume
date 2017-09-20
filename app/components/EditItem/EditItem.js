@@ -31,6 +31,7 @@ export default class EditItem extends Component {
     snackId: "",
     deleteItemModal: false,
     title: "",
+    date: "",
     attribution: "",
     medium: "",
     dimensions: "",

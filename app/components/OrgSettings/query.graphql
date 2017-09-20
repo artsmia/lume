@@ -1,0 +1,14 @@
+query OrgSettingQuery ($subdomain: String) {
+  organization  (
+    subdomain: $subdomain
+  ) {
+    id
+    name
+    newUsersRequireApproval
+    users {
+      id
+      email
+      role
+    }
+  }
+}

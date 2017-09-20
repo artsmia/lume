@@ -13,9 +13,8 @@ const userOrganization = db.define("user_organization", {
     }
   },
   role: {
-    type: Sequelize.STRING,
-    // values: ['admin', 'basic', 'pending'],
-    // defaultValue: "pending"
+    type: Sequelize.ENUM,
+    values: ['admin', 'editor', 'contributor', 'pending'],
   }
 },{
   freezeTableName: true

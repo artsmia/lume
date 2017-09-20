@@ -1,13 +1,18 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Template from '../Template/Template'
-import {H1, H2, H3, H4} from '../../ui/h'
-import Zoomer from '../Zoomer'
-import {Column, Row} from '../../ui/layout'
-import {Button} from '../../ui/buttons'
-import AppPage from '../AppPage'
+import {H3} from '~/ui/h'
+import {Button} from '~/ui/buttons'
+import AppPage from '~/components/AppPage'
+import PropTypes from 'prop-types'
 
-export default class extends Component {
+export default class AppBook extends Component {
+
+  static displayName = "AppBook"
+
+  static propTypes = {
+    bookId: PropTypes.string,
+    data: PropTypes.object
+  }
 
   state = {
     pageIndex: 0
@@ -36,9 +41,7 @@ export default class extends Component {
     let page = pages.find( page => page.index === pageIndex)
 
     return (
-      <Template
-        drawer={false}
-      >
+      <Container>
         <PageButtonContainer>
           {(pageIndex !== 0) ? (
             <Button
@@ -56,7 +59,7 @@ export default class extends Component {
           ): <div/>}
 
         </PageButtonContainer>
-        <Container>
+        <BookContainer>
           <BookHeaderFooter>
             <H3>
               {title}
@@ -70,10 +73,10 @@ export default class extends Component {
               Page {pageIndex + 1} of {pages.length}
             </H3>
           </BookHeaderFooter>
-        </Container>
+        </BookContainer>
 
 
-      </Template>
+      </Container>
     )
   }
 
@@ -111,9 +114,15 @@ export default class extends Component {
 
 
 const Container = styled.div`
+  width: 100%;
+  height: 100vh;
+`
+
+const BookContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100vh;
 `
 
 const BookHeaderFooter = styled.div`

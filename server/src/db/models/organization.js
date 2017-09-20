@@ -14,7 +14,11 @@ const organization = db.define('organization', {
   },
   emailDomain: {
     type: Sequelize.STRING
-  }
+  },
+  newUsersRequireApproval: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
 }, {
   freezeTableName: true
 })

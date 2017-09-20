@@ -11,6 +11,10 @@ const book = db.define('book', {
     type: Sequelize.STRING,
     defaultValue: "New Book"
   },
+  visibility: {
+    type: Sequelize.ENUM,
+    values: ['published', 'draft']
+  }
 }, {
   freezeTableName: true
 })

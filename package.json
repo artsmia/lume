@@ -37,6 +37,7 @@
     "babel-eslint": "^7.2.3",
     "babel-plugin-inline-import-graphql-ast": "^2.0.0",
     "babel-plugin-styled-components": "^1.1.7",
+    "babel-plugin-root-import": "^5.1.0",
     "enzyme": "^2.9.1",
     "eslint": "^4.2.0",
     "eslint-config-react-app": "^1.0.5",

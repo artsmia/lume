@@ -1,11 +1,9 @@
-import React from "react"
-import { mount, shallow} from "enzyme"
+import React from 'react'
+import { mount, shallow} from 'enzyme'
 import {toContainReact} from 'jest-enzyme'
-import {Loading} from '../../ui/spinner'
-import AppItem from "./AppItem"
-import {ThemeProvider} from 'styled-components'
-import theme from '../../ui/theme'
-import withData from '../../apollo/withData'
+import {Loading} from '~/ui/spinner'
+import AppItem from './AppItem'
+import setupTests from '~/utils/setupTests'
 
 describe("AppItem", () => {
   let props
@@ -14,16 +12,11 @@ describe("AppItem", () => {
 
 
   const mountAppItem = () => {
-    let ApolloAppItem = withData(AppItem)
+    let PreppedAppItem = setupTests(AppItem)
     appItem = mount(
-      <ThemeProvider
-        theme={theme}
-      >
-        <ApolloAppItem
-          {...props}
-          serverState={{}}
-        />
-      </ThemeProvider>
+      <PreppedAppItem
+        {...props}
+      />
     )
 
     appItem = appItem.find(AppItem)
@@ -51,7 +44,8 @@ describe("AppItem", () => {
           text: "",
           details: [],
           relatedBooks: []
-        }
+        },
+        loading: true
       },
       orgSub: "",
       itemId: "asdf"

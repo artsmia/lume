@@ -163,7 +163,6 @@ export default class extends Component {
       this.setState({detailTitle: nextProps.data.detail.title || ""})
       let clips = nextProps.data.detail.clips.slice()
       clips = clips.sort((a,b) => a.index - b.index)
-      console.log(clips)
       this.setState({clips})
     }
   }

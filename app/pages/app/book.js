@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import AppBook from '../../components/AppBook'
 import withData from '../../apollo/withData'
+import Template from '~/components/Template'
 
 
 class AppBookPage extends Component {
@@ -19,9 +20,13 @@ class AppBookPage extends Component {
 
   render() {
     return (
-      <AppBook
-        {...this.props}
-      />
+      <Template
+        drawer={false}
+      >
+        <AppBook
+          {...this.props}
+        />
+      </Template>
     )
   }
 }

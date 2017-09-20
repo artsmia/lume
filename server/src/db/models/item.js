@@ -23,6 +23,10 @@ const item = db.define('item', {
   currentLocation: Sequelize.STRING,
   creditLine: Sequelize.TEXT,
   text: Sequelize.TEXT,
+  visibility: {
+    type: Sequelize.ENUM,
+    values: ['published', 'draft']
+  }
 }, {
   freezeTableName: true
 })

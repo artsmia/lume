@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 
-export default class Home extends Component {
+export default class OrgSettings extends Component {
 
 
   render() {
 
-    if (this.props.data.loading) {
-      return null
-    }
+    if (this.props.data.loading) return null
+
     const {
       props
     } = this
+
     return (
       <Container>
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {H1, H3, H4} from '../../ui/h'
+import {H3, H4} from '../../ui/h'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import Zoomer from '../Zoomer'
 import AppDetail from '../AppDetail'
@@ -37,8 +37,6 @@ export default class extends Component {
         data: {
           item: {
             id: itemId,
-            title,
-            attribution,
             mainImage,
             text,
             details,

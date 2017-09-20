@@ -32,9 +32,28 @@ export default async function editOrCreateOrganization(src, args, ctx){
       await Promise.all(
         newUserIds.map( userId => userOrganizationModel.create({
           userId,
-          organizationId: organization.id
+          organizationId: organization.id,
+          role: (organization.newUsersRequireApproval) ? "pending" : "contributor"
         }))
       )
+
+      let users = await userOrganizationModel.findAll({
+        where: {
+          organizationId: organization.id
+        }
+      })
+
+      if (users.length === 1) {
+        await userOrganizationModel.update({
+          role: "admin"
+        }, {
+          where: {
+            userId: users[0].userId,
+            organizationId: organization.id
+          }
+        })
+      }
+
     }
     return organization
   } catch (ex) {

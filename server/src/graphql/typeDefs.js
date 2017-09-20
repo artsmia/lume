@@ -6,6 +6,7 @@ const typeDefs = `
     title: String
     pages: [Page]
     relatedItems: [Item]
+    visibility: VisibilityEnum
   }
 
   type Clip {
@@ -55,6 +56,7 @@ const typeDefs = `
     creditLine: String
     text: String
     type: String
+    visibility: VisibilityEnum
     mainImage: Image
     relatedItems: [Item]
     details: [Detail]
@@ -74,6 +76,8 @@ const typeDefs = `
     groups: [Group]
     books: [Book]
     images: [Image]
+    role: RoleEnum
+    newUsersRequireApproval: Boolean
   }
 
   type Page {
@@ -92,6 +96,7 @@ const typeDefs = `
     id: ID!
     email: String
     organizations: [Organization]
+    role: RoleEnum
   }
 
   type Geometry {
@@ -99,6 +104,18 @@ const typeDefs = `
     coordinates: [[[Float]]]
   }
 
+
+  enum RoleEnum {
+    admin
+    editor
+    contributor
+    pending
+  }
+
+  enum VisibilityEnum {
+    draft
+    published
+  }
 
   enum GeoEnum {
     Point

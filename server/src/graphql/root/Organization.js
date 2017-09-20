@@ -17,12 +17,21 @@ const Organization = {
 
 
 
-      const users = await Promise.all(
+      let users = await Promise.all(
         userOrgs.map( ({userId}) => getUser(userId))
       )
 
       users.forEach( user => {
         user.id = user["user_id"]
+
+        let {
+          dataValues: {
+            role
+          }
+        } = userOrgs.find( ({dataValues}) => dataValues.userId === user.id)
+
+        user.role = role
+
       })
 
       return users
