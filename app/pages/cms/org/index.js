@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import OrgHome from '../../../components/OrgHome'
 import withData from '../../../apollo/withData'
 import Cookie from 'js-cookie'
-
+import Template from '../../../components/Template'
 
 class OrgIndex extends Component {
 
@@ -21,9 +21,14 @@ class OrgIndex extends Component {
 
   render() {
     return (
-      <OrgHome
-        {...this.props}
-      />
+      <Template
+        drawer
+        userId={this.props.userId}
+      >
+        <OrgHome
+          {...this.props}
+        />
+      </Template>
     )
   }
 }

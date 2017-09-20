@@ -40,6 +40,7 @@ export async function getUser(id){
     ) {
       await refreshToken()
     }
+
     const options =  {
       method: 'GET',
       headers: {
@@ -52,6 +53,6 @@ export async function getUser(id){
 
     return json
   } catch (ex) {
-    console.log(ex)
+    console.log("getUser ex", ex)
   }
 }

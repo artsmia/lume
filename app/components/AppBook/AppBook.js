@@ -80,6 +80,13 @@ export default class AppBook extends Component {
     )
   }
 
+  componentWillReceiveProps({data}){
+
+    let pageIndex = Math.min(...data.book.pages.map(({index}) => index))
+    this.setState({pageIndex})
+  }
+
+
   changePage = (change) => {
     const {
       state: {

@@ -14,7 +14,7 @@ export default class Template extends Component {
       props,
       props: {
         children,
-        drawer
+        drawer,
       }
     } = this
 
@@ -27,6 +27,7 @@ export default class Template extends Component {
             {(drawer) ? (
               <Drawer
                 {...props}
+
               />
             ): null}
 

@@ -8,6 +8,23 @@ describe("AppBook", ()=> {
 
   let appBook
 
+  let stubProps = {
+    bookId: "1234",
+    data: {
+      book: {
+        id: "1234",
+        title: "A Book",
+        pages: [
+          {
+            id: "0000",
+            index: 1
+          }
+        ]
+      }
+    }
+  }
+
+
   const shallowAppBook = () => {
     let appBook = shallow(
       <AppBook
