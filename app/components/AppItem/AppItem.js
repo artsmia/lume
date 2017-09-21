@@ -7,7 +7,6 @@ import AppDetail from '../AppDetail'
 import Image from '../Image'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
-import {validateUuid} from '../../utils/validators'
 import {Loading} from '../../ui/spinner'
 import AppTombstone from '../AppTombstone'
 
@@ -16,11 +15,9 @@ export default class extends Component {
   static displayName = "AppItem"
 
   static propTypes = {
-    itemId: PropTypes.string,
-    data: PropTypes.shape({
-      loading: PropTypes.bool
-    }),
-    orgSub: PropTypes.string
+    itemId: PropTypes.string.isRequired,
+    data: PropTypes.object,
+    orgSub: PropTypes.string.isRequired
   }
 
   state = {

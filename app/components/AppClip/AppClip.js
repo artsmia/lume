@@ -1,15 +1,18 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H4} from '../../ui/h'
-import {Column, Row} from '../../ui/layout'
-import Image from '../Image'
+import {Column} from '../../ui/layout'
+import PropTypes from 'prop-types'
 
 export default class AppClip extends Component {
 
-  static defaultProps = {
-    selected: false,
-    onClipSelection(clip){console.log(clip)}
+  static propTypes = {
+    selected: PropTypes.bool.isRequired,
+    onClipSelection: PropTypes.func.isRequired,
+    clipId: PropTypes.string.isRequired,
+    data: PropTypes.object
   }
+
 
   render() {
 

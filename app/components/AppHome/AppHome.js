@@ -1,11 +1,17 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H2} from '../../ui/h'
-import Template from '../Template/Template'
 import {Search} from '../../ui/search'
 import AppItemList from '../AppItemList'
+import PropTypes from 'prop-types'
 
 export default class AppHome extends Component {
+
+  static displayName = "AppHome"
+
+  static propTypes = {
+    orgSub: PropTypes.string.isRequired
+  }
 
   state = {
     search: ""
@@ -13,9 +19,7 @@ export default class AppHome extends Component {
 
   render() {
 
-
     const {
-      props,
       props: {
         orgSub,
       },
@@ -24,11 +28,9 @@ export default class AppHome extends Component {
       },
       handleChange
     } = this
+
     return (
-      <Template
-        drawer={false}
-        {...props}
-      >
+      <Container>
         <SideContainer>
           <H2>Search Art Stories</H2>
           <Search
@@ -41,13 +43,19 @@ export default class AppHome extends Component {
           orgSub={orgSub}
           search={search}
         />
-      </Template>
+      </Container>
     )
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
 }
+
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100vh;
+`
 
 const SideContainer = styled.div`
   width: 30%;

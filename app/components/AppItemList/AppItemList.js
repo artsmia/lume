@@ -3,8 +3,18 @@ import styled from 'styled-components'
 import {s3Url} from '../../config'
 import Link from 'next/link'
 import Image from '../Image'
+import PropTypes from 'prop-types'
 
-export default class extends Component {
+export default class AppItemList extends Component {
+
+  static displayName = "AppItemList"
+
+  static propTypes = {
+    search: PropTypes.string,
+    data: PropTypes.object,
+  }
+
+
   render(){
 
     if (this.props.data.loading) return null

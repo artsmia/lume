@@ -63,7 +63,8 @@ describe("AppItem", () => {
           id: "asdf"
         }
       },
-      itemId: "asdf"
+      itemId: "asdf",
+      orgSub: "",
     }
 
     mountAppItem()

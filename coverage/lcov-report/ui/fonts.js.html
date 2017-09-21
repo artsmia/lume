@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ui/fonts.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">ui</a> fonts.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>5/5</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>5/5</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {injectGlobal} from 'styled-components'
+&nbsp;
+export const light = `"Mia Light", "Helvetica Neue", Helvetica, san-serif`
+&nbsp;
+export const regular = `"Mia Regular", "Helvetica Neue", Helvetica, san-serif`
+&nbsp;
+export const bold = `"Mia Bold", "Helvetica Neue", Helvetica, san-serif`
+&nbsp;
+export const black = `"Mia Black", "Helvetica Neue", Helvetica, san-serif`
+&nbsp;
+injectGlobal`
+  @font-face {
+    font-family: 'iconi_mia';
+    src: url("/src/fonts/iconi_mia.eot");
+    src: url("/src/fonts/iconi_mia.eot?#iefix") format('embedded-opentype'),
+         url("/src/fonts/iconi_mia.woff") format('woff'),
+         url("/src/fonts/iconi_mia.ttf") format('truetype'),
+         url("/src/fonts/iconi_mia.svg") format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Mia Light";
+    src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Light.eot");
+    src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Light.eot?#iefix") format('embedded-opentype'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Light.woff") format('woff'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Light.ttf") format('truetype'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Light.svg") format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Mia Regular";
+    src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Regular.eot");
+    src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Regular.eot?#iefix") format('embedded-opentype'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Regular.woff") format('woff'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Regular.ttf") format('truetype'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Regular.svg") format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Mia Bold";
+    src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Bold.eot");
+    src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Bold.eot?#iefix") format('embedded-opentype'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Bold.woff") format('woff'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Bold.ttf") format('truetype'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Bold.svg") format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Mia Black";
+    src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Black.eot");
+    src: url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Black.eot?#iefix") format('embedded-opentype'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Black.woff") format('woff'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Black.ttf") format('truetype'),
+         url("https://mia-grotesk.s3.amazonaws.com/MiaGrotesk-Black.svg") format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+&nbsp;
+`
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 21 2017 09:54:38 GMT-0500 (CDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

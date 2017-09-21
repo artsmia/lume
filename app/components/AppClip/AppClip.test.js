@@ -32,7 +32,9 @@ describe("AppClip", ()=> {
           description: ""
         }
       },
-      clipId: ""
+      clipId: "",
+      selected: false,
+      onClipSelection: () => ({})
     }
 
     shallowAppClip()

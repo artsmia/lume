@@ -1,13 +1,19 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Template from '../Template/Template'
-import {H1, H2, H3, H4} from '../../ui/h'
+import {H3} from '../../ui/h'
 import Zoomer from '../Zoomer'
-import {Column, Row} from '../../ui/layout'
+import {Row} from '../../ui/layout'
 import {Vimeo} from '../../ui/video'
+import PropTypes from 'prop-types'
 
-export default class extends Component {
+export default class AppPage extends Component {
 
+  static displayName = "AppPage"
+
+  static propTypes = {
+    pageId: PropTypes.string.isRequired,
+    data: PropTypes.object,
+  }
 
   render() {
 
