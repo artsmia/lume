@@ -34,6 +34,28 @@ export default class DrawerComponent extends Component {
           <h2>{email}</h2>
           <MenuItem
             href={{
+              pathname: '/app',
+              query: {
+                orgSub
+              }
+            }}
+            as={`/${orgSub}`}
+          >
+            App
+          </MenuItem>
+          <MenuItem
+            href={{
+              pathname: '/cms/org',
+              query: {
+                orgSub
+              }
+            }}
+            as={`/${orgSub}/cms`}
+          >
+            CMS Home
+          </MenuItem>
+          <MenuItem
+            href={{
               pathname: '/cms/browse/items',
               query: {
                 orgSub
@@ -53,6 +75,17 @@ export default class DrawerComponent extends Component {
             as={`/${orgSub}/cms/books`}
           >
             Books
+          </MenuItem>
+          <MenuItem
+            href={{
+              pathname: '/cms/org/settings',
+              query: {
+                orgSub
+              }
+            }}
+            as={`/${orgSub}/cms/settings`}
+          >
+            Settings
           </MenuItem>
 
           <Button

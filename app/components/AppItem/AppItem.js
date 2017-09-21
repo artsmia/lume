@@ -50,7 +50,6 @@ export default class extends Component {
       handleDetailSelection,
       handleClipSelection
     } = this
-
     return (
       <Container>
         <SideContainer>
@@ -85,7 +84,7 @@ export default class extends Component {
             <TabBody
               name={"details"}
             >
-              {details.map(detail => (
+              {(selectedTab === "details") ? details.map(detail => (
                 <AppDetail
                   key={detail.id}
                   detailId={detail.id}
@@ -94,7 +93,7 @@ export default class extends Component {
                   handleClipSelection={handleClipSelection}
                   selectedClip={selectedClip}
                 />
-              ))}
+              )): null}
             </TabBody>
             <TabBody
               name={"more"}

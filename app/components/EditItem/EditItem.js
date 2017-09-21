@@ -15,6 +15,7 @@ import ImageManager from '../ImageManager'
 import Modal from '../../ui/modal'
 import router from 'next/router'
 import Sorter from '../../ui/drag/Sorter'
+import {Loading} from '../../ui/spinner'
 
 export default class EditItem extends Component {
 
@@ -55,7 +56,10 @@ export default class EditItem extends Component {
   render() {
 
 
-    if (this.props.data.loading) return null
+    if (
+      this.props.data.loading ||
+      !this.props.data.item
+    ) return <Loading/>
 
     const {
       addDetail,
@@ -64,16 +68,15 @@ export default class EditItem extends Component {
       multiChange,
       props: {
         data: {
-          organization: {
-            id: orgId,
-          },
+          organization,
           item: {
-            id: itemId,
             mainImage,
             relatedBooks,
+            details
           },
         },
-        orgSub
+        orgSub,
+        itemId
       },
       state: {
         snack,
@@ -94,7 +97,6 @@ export default class EditItem extends Component {
         reordering,
         selectedTab,
         currentLocation,
-        details,
         pullFromCustomApi,
         localId
       },
@@ -103,13 +105,11 @@ export default class EditItem extends Component {
       addRelatedBooks,
       removeRelatedBooks,
       reorderDetails,
-      checkboxChange
+      checkboxChange,
     } = this
+    let sortedDetails = details.slice().sort( (a,b) => a.index - b.index)
     return (
-      <Template
-        drawer
-        {...this.props}
-      >
+      <Container>
         <Snackbar
           message={snack}
           snackId={snackId}
@@ -261,7 +261,7 @@ export default class EditItem extends Component {
                     Main Image
                   </H2>
                   <ImageManager
-                    orgId={orgId}
+                    orgId={organization.id}
                     imageId={(mainImage) ? mainImage.id : undefined}
                     onImageSave={onImageSave}
                   />
@@ -340,18 +340,18 @@ export default class EditItem extends Component {
                   </Button>
                   <ExpanderContainer>
                     {
-                      (details && !reordering) ? details.map( detail => (
+                      (sortedDetails && !reordering) ? sortedDetails.map( detail => (
                         <DetailEditor
                           key={detail.id}
                           detailId={detail.id}
-                          orgId={orgId}
+                          orgId={organization.id}
                         />
                       )): null
                     }
                     {
-                      (details && reordering) ? (
+                      (sortedDetails && reordering) ? (
                         <Sorter
-                          sortables={details}
+                          sortables={sortedDetails}
                           onNewOrder={reorderDetails}
                         />
                       ): null
@@ -373,29 +373,31 @@ export default class EditItem extends Component {
             <TabBody
               name={"preview"}
             >
-              <AppItem
-                itemId={itemId}
-                orgSub={orgSub}
-              />
+              {(selectedTab === "preview") ? (
+                <AppItem
+                  itemId={itemId}
+                  orgSub={orgSub}
+                />
+              ): null}
+
             </TabBody>
           </TabContainer>
         </EditContainer>
-      </Template>
+      </Container>
     )
   }
 
 
   componentWillReceiveProps({data}){
-    if (!data.loading) {
+    if (!data.loading && data.item) {
       Object.keys(data.item).forEach( key => {
-        this.setState({
-          [key]: data.item[key] || ""
-        })
+        if (!Array.isArray(data.item[key])) {
+          this.setState({
+            [key]: (data.item[key] === null) ? "" : data.item[key]
+          })
+        }
       })
 
-      let details = data.item.details.slice()
-      details =  details.sort( (a,b) => a.index - b.index)
-      this.setState({details})
 
       let relatedBookIds = data.item.relatedBooks.map(({id}) => id)
       let availableBooks = data.books.filter( ({id}) => !relatedBookIds.includes(id))
@@ -504,23 +506,23 @@ export default class EditItem extends Component {
     try {
       const {
         data: {
-          item,
           item: {
-            id: createDetailItemId,
+            id: itemId,
             mainImage
           }
         },
         editItem
       } = this.props
 
-
       await editItem({
         variables: {
-          itemId: item.id,
-          createDetailItemId,
+          itemId: itemId,
+          createDetailItemId: itemId,
           createDetailImageId: (mainImage) ? mainImage.id : undefined
         }
       })
+
+      console.log("detail received")
 
 
     } catch (ex) {
@@ -636,6 +638,13 @@ export default class EditItem extends Component {
   }
 
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+`
 
 const EditContainer = styled.div`
   width: 100%;
