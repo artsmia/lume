@@ -15,6 +15,8 @@ query editItemQuery (
     currentLocation
     creditLine
     text
+    localId
+    pullFromCustomApi
     mainImage {
       id
     }
@@ -45,6 +47,9 @@ query editItemQuery (
     images {
       id
     }
+    subdomain
+    customItemApiEnabled
+    customItemApiEndpoint
   }
   books (
     orgSub: $orgSub

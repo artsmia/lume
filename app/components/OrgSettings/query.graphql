@@ -10,5 +10,7 @@ query OrgSettingQuery ($subdomain: String) {
       email
       role
     }
+    customItemApiEnabled
+    customItemApiEndpoint
   }
 }

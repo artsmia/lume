@@ -9,6 +9,8 @@ mutation editOrCreateItem (
   $accessionNumber: String
   $currentLocation: String
   $creditLine: String
+  $localId: String
+  $pullFromCustomApi: Boolean
   $text: String
   $mainImageId: ID
   $newOrganizationIds: [ID]
@@ -25,6 +27,8 @@ mutation editOrCreateItem (
       medium: $medium
       date: $date
       dimensions: $dimensions
+      localId: $localId
+      pullFromCustomApi: $pullFromCustomApi
       accessionNumber: $accessionNumber
       currentLocation: $currentLocation
       creditLine: $creditLine
@@ -48,6 +52,8 @@ mutation editOrCreateItem (
     attribution
     dimensions
     date
+    localId
+    pullFromCustomApi
     accessionNumber
     currentLocation
     creditLine

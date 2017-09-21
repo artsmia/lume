@@ -14,6 +14,7 @@ import {
   graphiqlExpress,
 } from 'apollo-server-express'
 import iiif, {info} from './iiif'
+import customItemEndpoints from './customItemEndpoints'
 
 const upload = multer()
 
@@ -28,6 +29,8 @@ server.use(
   bodyParser.json(),
   authMiddleware,
 )
+
+server.use('/item/:orgSub', customItemEndpoints)
 
 server.use("/image", upload.single("file") , imageRoute)
 

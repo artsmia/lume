@@ -12,7 +12,7 @@ describe("AppPage", ()=> {
     pageId: "",
     data: {
       page: {
-        
+        comparisonImages: []
       }
     }
   }

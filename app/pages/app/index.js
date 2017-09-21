@@ -20,7 +20,7 @@ class AppIndex extends Component {
     return (
       <Template
         drawer={false}
-        {...props}
+        {...this.props}
       >
         <AppHome
           {...this.props}

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import Template from '../Template'
 import {H2, H3} from '../../ui/h'
-import {Form, Label, Input, TextArea, Select, Option} from '../../ui/forms'
+import {Label, Input, TextArea, Select, Option, Checkbox} from '../../ui/forms'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
@@ -33,11 +33,13 @@ export default class EditItem extends Component {
     title: "",
     date: "",
     attribution: "",
+    localId: "",
     medium: "",
     dimensions: "",
     culture: "",
     accessionNumber: "",
     text: "",
+    pullFromCustomApi: false,
     creditLine: "",
     currentLocation: "",
     newRelatedBookIds: [],
@@ -92,13 +94,16 @@ export default class EditItem extends Component {
         reordering,
         selectedTab,
         currentLocation,
-        details
+        details,
+        pullFromCustomApi,
+        localId
       },
       onImageSave,
       deleteItem,
       addRelatedBooks,
       removeRelatedBooks,
-      reorderDetails
+      reorderDetails,
+      checkboxChange
     } = this
     return (
       <Template
@@ -227,6 +232,24 @@ export default class EditItem extends Component {
                         >
                           Do you want to delete this item?
                         </Modal>
+                        <Column>
+                          <Label>
+                            Pull Values From Custom API
+                          </Label>
+                          <Checkbox
+                            name={"pullFromCustomApi"}
+                            checked={pullFromCustomApi}
+                            onChange={checkboxChange}
+                          />
+                        </Column>
+                        <Column>
+                          <Label>Local ID</Label>
+                          <Input
+                            name={"localId"}
+                            value={localId}
+                            onChange={change}
+                          />
+                        </Column>
                       </Row>
                     </SectionContainer>
                   </Row>
@@ -361,6 +384,7 @@ export default class EditItem extends Component {
     )
   }
 
+
   componentWillReceiveProps({data}){
     if (!data.loading) {
       Object.keys(data.item).forEach( key => {
@@ -390,6 +414,8 @@ export default class EditItem extends Component {
     let values = [...options].filter(({selected}) => selected).map(({value}) => value)
     this.setState({[name]: values})
   }
+
+  checkboxChange = ({target: {name, checked}}) => this.setState({[name]: checked})
 
   onImageSave = async (selectedImageId) => {
     try {
@@ -435,6 +461,7 @@ export default class EditItem extends Component {
           currentLocation,
           creditLine,
           text,
+          pullFromCustomApi,
         },
         props: {
           data: {
@@ -458,7 +485,8 @@ export default class EditItem extends Component {
           currentLocation,
           creditLine,
           text,
-          culture
+          culture,
+          pullFromCustomApi
         }
       })
 
@@ -608,21 +636,6 @@ export default class EditItem extends Component {
   }
 
 }
-
-//
-// const DetailPreview = (props) => {
-//   return (
-//     <div
-//       style={{
-//         width: "100%",
-//         height: "100px",
-//         backgroundColor: "salmon"
-//       }}
-//     >
-//       {props.title}
-//     </div>
-//   )
-// }
 
 const EditContainer = styled.div`
   width: 100%;

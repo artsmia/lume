@@ -46,6 +46,19 @@ export const Select = styled.select`
   background-color: ${({theme}) => theme.colors.white};
 `
 
+const CheckboxInput = styled.input`
+
+`
+
+export const Checkbox = (props) => {
+  return (
+    <CheckboxInput
+      type={"checkbox"}
+      {...props}
+    />
+  )
+}
+
 
 export const Option = styled.option`
 `

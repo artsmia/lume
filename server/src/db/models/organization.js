@@ -19,6 +19,13 @@ const organization = db.define('organization', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  customItemApiEnabled: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  customItemApiEndpoint: {
+    type: Sequelize.STRING
+  }
 }, {
   freezeTableName: true
 })

@@ -24,6 +24,7 @@ class OrgSettingsPage extends Component {
     return (
       <Template
         drawer
+        {...this.props}
       >
         <OrgSettings
           {...this.props}

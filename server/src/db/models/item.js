@@ -26,6 +26,10 @@ const item = db.define('item', {
   visibility: {
     type: Sequelize.ENUM,
     values: ['published', 'draft']
+  },
+  pullFromCustomApi: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 }, {
   freezeTableName: true

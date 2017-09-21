@@ -1,20 +1,17 @@
 import React, {Component} from 'react'
-import styled from 'styled-components'
 import {SideMenu, MenuItem} from '../../ui/menus'
 import Drawer from '../../ui/drawer'
 import {logout} from '../../auth'
 import {Button} from '../../ui/buttons'
+import PropTypes from 'prop-types'
 
-export default class extends Component {
+export default class DrawerComponent extends Component {
 
-  static defaultProps = {
-    drawer: true,
-    data: {
-      user: {
-        email: ""
-      }
-    },
-    orgSub: ""
+  static displayName = "DrawerComponent"
+
+  static propTypes = {
+    orgSub: PropTypes.string.isRequired,
+    data: PropTypes.object
   }
 
   render() {

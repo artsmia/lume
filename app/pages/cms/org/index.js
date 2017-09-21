@@ -20,10 +20,13 @@ class OrgIndex extends Component {
   }
 
   render() {
+
+
+
     return (
       <Template
         drawer
-        userId={this.props.userId}
+        {...this.props}
       >
         <OrgHome
           {...this.props}

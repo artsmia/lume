@@ -9,13 +9,17 @@ export default async function editOrCreateOrganization(src, args, ctx){
       id,
       name,
       subdomain,
-      newUserIds
+      newUserIds,
+      customItemApiEnabled,
+      customItemApiEndpoint
     } = args
 
     if (id) {
       await organizationModel.update({
         name,
         subdomain,
+        customItemApiEnabled,
+        customItemApiEndpoint
       }, {
         where: {
           id

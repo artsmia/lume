@@ -1,6 +1,7 @@
 import OrgHome from './OrgSettings'
 import {graphql, compose } from 'react-apollo'
 import query from './query.graphql'
+import editOrCreateOrganization from '../../apollo/mutations/editOrCreateOrganization.graphql'
 
 const options = {
   options: (props) => {
@@ -15,7 +16,10 @@ const options = {
 
 
 export default compose(
-  graphql(query, options)
+  graphql(query, options),
+  graphql(editOrCreateOrganization, {
+    name: "editOrganization"
+  })
 )(
   OrgHome
 )

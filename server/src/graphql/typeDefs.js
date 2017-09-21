@@ -64,6 +64,7 @@ const typeDefs = `
     groups: [Group]
     organizations: [Organization]
     details: [Detail]
+    pullFromCustomApi: Boolean
   }
 
   type Organization {
@@ -78,6 +79,8 @@ const typeDefs = `
     images: [Image]
     role: RoleEnum
     newUsersRequireApproval: Boolean
+    customItemApiEnabled: Boolean
+    customItemApiEndpoint: String
   }
 
   type Page {
@@ -211,6 +214,8 @@ const typeDefs = `
       subdomain: String
       emailDomain: String
       newUserIds: [ID]
+      customItemApiEnabled: Boolean
+      customItemApiEndpoint: String
     ): Organization
 
     editOrCreateImage(
@@ -297,6 +302,7 @@ const typeDefs = `
     creditLine: String
     text: String
     type: String
+    pullFromCustomApi: Boolean
   }
 
   input GeometryInput {

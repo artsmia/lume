@@ -41,11 +41,17 @@ export default class AppItemList extends Component {
             }}
             as={`/${orgSub}/item/${item.id}`}
           >
-            <Image
-              imageId={item.mainImage.id}
-              height={"200px"}
-              quality={"m"}
-            />
+            {(item.mainImage) ? (
+              <Image
+                imageId={item.mainImage.id}
+                height={"200px"}
+                quality={"m"}
+              />
+            ): (
+              <NoImage>
+                {(item.title) ? item.title : ""}
+              </NoImage>
+            )}
           </Link>
         ))}
       </ItemsContainer>
@@ -63,4 +69,13 @@ const ItemsContainer = styled.div`
   flex-wrap: wrap;
   padding: 20px;
   box-sizing: border-box;
+`
+
+const NoImage = styled.div`
+  height: 200px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid grey;
 `
