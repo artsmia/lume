@@ -121,11 +121,13 @@ export default class EditItem extends Component {
             <TabHeader>
               <Tab
                 name={"edit"}
+                onClick={()=>this.setState({selectedTab: "edit"})}
               >
                 Edit
               </Tab>
               <Tab
                 name={"preview"}
+                onClick={()=>this.setState({selectedTab: "preview"})}
               >
                 Preview
               </Tab>
@@ -373,12 +375,14 @@ export default class EditItem extends Component {
             <TabBody
               name={"preview"}
             >
+
               {(selectedTab === "preview") ? (
                 <AppItem
                   itemId={itemId}
                   orgSub={orgSub}
                 />
               ): null}
+
 
             </TabBody>
           </TabContainer>

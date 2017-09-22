@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import BrowseItems from '../../../components/BrowseItems'
 import withData from '../../../apollo/withData'
 import Cookie from 'js-cookie'
+import Template from '../../../components/Template'
 
 class Items extends Component {
 
@@ -21,9 +22,14 @@ class Items extends Component {
 
   render() {
     return (
-      <BrowseItems
+      <Template
+        drawer
         {...this.props}
-      />
+      >
+        <BrowseItems
+          {...this.props}
+        />
+      </Template>
     )
   }
 }

@@ -3,16 +3,26 @@ import styled from 'styled-components'
 import {Row, Column} from '../../ui/layout'
 import ImageManager from '../ImageManager'
 import {Button} from '../../ui/buttons'
-import {s3Url} from '../../config'
 import {Input, Label} from '../../ui/forms'
 import {ExpanderContainer, Expander} from '../../ui/expander'
 import ClipEditor from '../ClipEditor'
 import Image from '../Image'
 import Modal from '../../ui/modal'
 import Snackbar from '../../ui/Snackbar'
-import Sorter from '~/ui/drag/Sorter'
+import Sorter from '../../ui/drag/Sorter'
+import PropTypes from 'prop-types'
 
-export default class extends Component {
+export default class DetailEditor extends Component {
+
+  static displayName = "DetailEditor"
+
+  static propTypes = {
+    orgId: PropTypes.string,
+    detailId: PropTypes.string.isRequired,
+    data: PropTypes.object,
+    editClip: PropTypes.func.isRequired,
+    editOrCreateDetail: PropTypes.func.isRequired
+  }
 
   state = {
     detailTitle: "",

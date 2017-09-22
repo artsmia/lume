@@ -11,7 +11,12 @@ export default async function editOrCreateOrganization(src, args, ctx){
       subdomain,
       newUserIds,
       customItemApiEnabled,
-      customItemApiEndpoint
+      customItemApiEndpoint,
+      customImageApiEnabled,
+      customImageEndpoint,
+      customImageTileEndpoint,
+      customImageThumbEndpoint,
+      customImageInfoEndpoint
     } = args
 
     if (id) {
@@ -19,7 +24,12 @@ export default async function editOrCreateOrganization(src, args, ctx){
         name,
         subdomain,
         customItemApiEnabled,
-        customItemApiEndpoint
+        customItemApiEndpoint,
+        customImageApiEnabled,
+        customImageEndpoint,
+        customImageTileEndpoint,
+        customImageThumbEndpoint,
+        customImageInfoEndpoint
       }, {
         where: {
           id

@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Template from '../Template'
 import styled from 'styled-components'
 import {Table, Header, Row, Cell, Body} from '../../ui/tables'
 import {Link} from '../../ui/links'
@@ -7,24 +6,23 @@ import {Button} from '../../ui/buttons'
 import router from 'next/router'
 import PropTypes from 'prop-types'
 import Image from '../Image'
+import {Loading} from '../../ui/spinner'
 
 export default class BrowseItems extends Component {
 
   static propTypes = {
-    newItem: PropTypes.func,
+    newItem: PropTypes.func.isRequired,
     orgSub: PropTypes.string.isRequired,
     data: PropTypes.object
   }
 
-  static defaultProps = {
-    data: {
-      items: []
-    }
-  }
 
   render() {
 
-    if (this.props.data.loading) return null
+    if (
+      this.props.data.loading ||
+      !this.props.data.items
+    ) return <Loading/>
 
     const {
       handleNewItem,
@@ -36,10 +34,7 @@ export default class BrowseItems extends Component {
       }
     } = this
     return (
-      <Template
-        {...this.props}
-        drawer={true}
-      >
+
         <Centered>
           <Button
             onClick={handleNewItem}
@@ -94,7 +89,6 @@ export default class BrowseItems extends Component {
           </Table>
 
         </Centered>
-      </Template>
     )
   }
 
@@ -115,6 +109,9 @@ export default class BrowseItems extends Component {
           newOrganizationIds: [id]
         }
       })
+
+      console.log(item)
+
       router.push({
         pathname: '/cms/edit/item',
         query: {

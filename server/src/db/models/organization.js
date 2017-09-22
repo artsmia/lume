@@ -25,6 +25,22 @@ const organization = db.define('organization', {
   },
   customItemApiEndpoint: {
     type: Sequelize.STRING
+  },
+  customImageApiEnabled: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  customImageThumbEndpoint: {
+    type: Sequelize.STRING
+  },
+  customImageTileEndpoint: {
+    type: Sequelize.STRING
+  },
+  customImageEndpoint: {
+    type: Sequelize.STRING
+  },
+  customImageInfoEndpoint: {
+    type: Sequelize.STRING    
   }
 }, {
   freezeTableName: true

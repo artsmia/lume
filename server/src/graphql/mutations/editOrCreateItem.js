@@ -11,7 +11,10 @@ export default async function editOrCreateItem(src, args, ctx){
       newRelatedItemIds,
       newRelatedBookIds,
       newGroupIds,
-      createAndAddDetail,
+      createAndAddDetail: {
+        itemId: createAndAddDetailItemId,
+        imageId
+      },
       removeRelatedBookIds
     } = args
     let item
@@ -27,7 +30,6 @@ export default async function editOrCreateItem(src, args, ctx){
         }
       })
       item = await itemModel.findById(argItem.id)
-
     }
 
 
@@ -57,16 +59,13 @@ export default async function editOrCreateItem(src, args, ctx){
       await item.addGroups(newRelatedGroupIds)
     }
 
-    if (createAndAddDetail) {
-      const {
-        itemId,
-        imageId
-      } = createAndAddDetail
+    if (createAndAddDetailItemId) {
+
       let details = await item.getDetails()
 
 
       await detailModel.create({
-        itemId,
+        itemId: createAndAddDetailItemId,
         imageId,
         index: details.length
       })
@@ -74,6 +73,7 @@ export default async function editOrCreateItem(src, args, ctx){
       item = await itemModel.findById(argItem.id)
 
     }
+
 
     return item
   } catch (ex) {

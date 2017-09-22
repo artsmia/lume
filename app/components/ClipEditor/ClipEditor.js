@@ -10,8 +10,18 @@ import ImageManager from '../ImageManager'
 import Modal from '../../ui/modal'
 import Snackbar from '../../ui/Snackbar'
 import Zoomer from '../Zoomer'
+import PropTypes from 'prop-types'
 
-export default class extends Component {
+export default class ClipEditor extends Component {
+
+  static displayName = "ClipEditor"
+
+  static propTypes = {
+    orgId: PropTypes.string,
+    data: PropTypes.object,
+    clipId: PropTypes.string.isRequired,
+    editOrCreateClip: PropTypes.func.isRequired
+  }
 
   state = {
     clipTitle: "",

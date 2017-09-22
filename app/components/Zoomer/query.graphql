@@ -10,6 +10,7 @@ query ZoomerQuery (
     organization {
       id
     }
+    localId
   }
   detail (
     id: $detailId

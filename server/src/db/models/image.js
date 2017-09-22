@@ -7,7 +7,16 @@ const image = db.define('image', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
-  url: Sequelize.STRING,
+  title: Sequelize.STRING,
+  alt: Sequelize.STRING,
+  localId: Sequelize.STRING,
+  type: {
+    type: Sequelize.ENUM,
+    values: ['mia']
+  },
+  metadata: {
+    type: Sequelize.STRING,
+  }
 }, {
   freezeTableName: true
 })

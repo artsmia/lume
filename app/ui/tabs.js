@@ -90,13 +90,14 @@ export class Tab extends Component {
         name,
         children,
         selectedTab,
-        selectTab
+        selectTab,
+        onClick
       }
     } = this
     return (
       <TabButton
         selected={(name === selectedTab)}
-        onClick={()=>selectTab(name)}
+        onClick={onClick}
       >
           {children}
       </TabButton>

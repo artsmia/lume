@@ -43,7 +43,8 @@ export default class extends Component {
       state: {
         snackMessage,
         snackId,
-        uploading
+        uploading,
+        selectedTab
       },
       onImageUpload,
     } = this
@@ -54,21 +55,24 @@ export default class extends Component {
           snackId={snackId}
         />
         <TabContainer
-          selectedTab={"current"}
+          selectedTab={selectedTab}
         >
           <TabHeader>
             <Tab
               name={"current"}
+              onClick={()=>this.setState({selectedTab: "current"})}
             >
               Current
             </Tab>
             <Tab
               name={"select"}
+              onClick={()=>this.setState({selectedTab: "select"})}
             >
               Select
             </Tab>
             <Tab
               name={"upload"}
+              onClick={()=>this.setState({selectedTab: "upload"})}
             >
               Upload
             </Tab>

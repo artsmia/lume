@@ -422,8 +422,9 @@ export default class extends Component {
               id: bucketId
             }
           }
-        }
+        },
       } = this
+
 
       const response = await fetch(`${apiUrl}/iiif/${imageId}/info.json`, {
         method: "GET"

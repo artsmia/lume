@@ -1,51 +1,48 @@
 import chalk from 'chalk'
 import db from './connect'
 import {createAssociations} from './associations'
-import populate from './populate'
-
 createAssociations()
+// import populate from './populate'
 
-async function createTables() {
-  try {
-
-    // await db.query("SET FOREIGN_KEY_CHECKS = 0;")
-
-    await db.sync({force: true})
-
-    // await db.query("SET FOREIGN_KEY_CHECKS = 1;")
-
-
-    console.log(chalk.cyan("DB Synced"))
-
-  } catch (ex) {
-    console.error("db sync error", ex)
-
-  }
-}
-
-async function populateData(){
-  try {
-    await populate()
-    console.log(chalk.cyan("DB populated"))
-
-  } catch (ex) {
-    console.error("db population error", ex)
-  }
-}
-
-export async function initalizeDb(){
-  try {
-
-    await createTables()
-    //await populateData()
-
-    console.log(chalk.cyan("DB initialized"))
-
-  } catch (ex) {
-    console.error("db initialization error", ex)
-
-  }
-}
+// createAssociations()
+//
+// async function createTables() {
+//   try {
+//
+//     await db.sync({force: true})
+//
+//
+//     console.log(chalk.cyan("DB Synced"))
+//
+//   } catch (ex) {
+//     console.error("db sync error", ex)
+//
+//   }
+// }
+//
+// async function populateData(){
+//   try {
+//     await populate()
+//     console.log(chalk.cyan("DB populated"))
+//
+//   } catch (ex) {
+//     console.error("db population error", ex)
+//   }
+// }
+//
+// export async function initalizeDb(){
+//   try {
+//
+//     await createTables()
+//     //await populateData()
+//
+//     console.log(chalk.cyan("DB initialized"))
+//
+//   } catch (ex) {
+//     console.error("db initialization error", ex)
+//
+//   }
+// }
 
 
 export default db

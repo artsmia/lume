@@ -20,6 +20,12 @@ const mutationConfig = {
     optimisticResponse: {
       editOrCreateItem: {
         id: -1,
+        title: "New Item",
+        attribution: "",
+        medium: "",
+        culture: "",
+        dimensions: "",
+        date: "",
         __typename: "Item"
       }
     },

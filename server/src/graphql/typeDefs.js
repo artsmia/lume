@@ -40,6 +40,10 @@ const typeDefs = `
   type Image {
     id: ID!
     organization: Organization
+    title: String
+    alt: String
+    localId: String
+    metadata: String
   }
 
   type Item {
@@ -81,6 +85,11 @@ const typeDefs = `
     newUsersRequireApproval: Boolean
     customItemApiEnabled: Boolean
     customItemApiEndpoint: String
+    customImageApiEnabled: Boolean
+    customImageEndpoint: String
+    customImageTileEndpoint: String
+    customImageThumbEndpoint: String
+    customImageInfoEndpoint: String
   }
 
   type Page {

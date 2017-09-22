@@ -3,7 +3,7 @@ import 'dotenv/config'
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import {initalizeDb} from './db'
+import db from './db'
 import schema from './graphql'
 import chalk from 'chalk'
 import imageRoute from './images'
@@ -58,10 +58,10 @@ server.listen(server.get('port'), ()=>{
 })
 
 
-const {
-  initDb
-} = process.env
-
-if (initDb === "true") {
-  initalizeDb()
-}
+// const {
+//   initDb
+// } = process.env
+//
+// if (initDb === "true") {
+//   initalizeDb()
+// }

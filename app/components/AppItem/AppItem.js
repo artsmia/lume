@@ -62,16 +62,19 @@ export default class extends Component {
             <TabHeader>
               <Tab
                 name={"about"}
+                onClick={()=>this.setState({selectedTab: "about"})}
               >
                 About
               </Tab>
               <Tab
                 name={"details"}
+                onClick={()=>this.setState({selectedTab: "details"})}
               >
                 Details
               </Tab>
               <Tab
                 name={"more"}
+                onClick={()=>this.setState({selectedTab: "more"})}
               >
                 More
               </Tab>
