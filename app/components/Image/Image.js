@@ -93,6 +93,7 @@ const Img = styled.img`
   height: ${({height}) => height};
   width: ${({width}) => width};
   object-fit: contain;
+  margin: 10px;
 `
 
 const Thumb = styled.img`

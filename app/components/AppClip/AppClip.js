@@ -33,7 +33,9 @@ export default class AppClip extends Component {
     } = this
 
     return (
-      <Container>
+      <Container
+        selected={selected}
+      >
         <Header
           onClick={() => onClipSelection(clip)}
         >
@@ -66,11 +68,12 @@ const Container = styled.div`
   width: 100%;
   box-sizing: border-box;
   margin: 5px 0;
+  padding: 10px;
+  transition: .2s all;
 `
 
 const Header = styled.div`
   display: flex;
   align-items: center;
-  margin: 10px;
-
+  margin: 10px 0px;
 `

@@ -155,7 +155,7 @@ export default class extends Component {
                   header={"Change Page Image"}
                 >
                   <ImageManager
-                    imageId={(mainImage) ? mainImage.id : false}
+                    imageId={(mainImage) ? mainImage.id :""}
                     orgId={orgId}
                     onImageSave={handleImageSave}
                   />
@@ -182,7 +182,7 @@ export default class extends Component {
                   header={"Change Page Comparison Image"}
                 >
                   <ImageManager
-                    imageId={(comparisonImages[0]) ? comparisonImages[0].id : false}
+                    imageId={(comparisonImages[0]) ? comparisonImages[0].id : ""}
                     orgId={orgId}
                     onImageSave={(imageId) => {
                       handleImageSave(imageId, 0)

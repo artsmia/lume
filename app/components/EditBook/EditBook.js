@@ -40,7 +40,8 @@ export default class EditBook extends Component {
     creditLine: "",
     currentLocation: "",
     selectedPage: [],
-    pages: []
+    pages: [],
+    selectedTab: "edit"
   }
 
 
@@ -72,7 +73,8 @@ export default class EditBook extends Component {
         deleteBookModal,
         title,
         pages,
-        selectedPage
+        selectedPage,
+        selectedTab
       },
       onImageSave,
       indexSelect,
@@ -89,16 +91,18 @@ export default class EditBook extends Component {
         />
         <EditContainer>
           <TabContainer
-            initialTab={"edit"}
+            selectedTab={selectedTab}
           >
             <TabHeader>
               <Tab
                 name={"edit"}
+                onClick={()=>this.setState({selectedTab:"edit"})}
               >
                 Edit
               </Tab>
               <Tab
                 name={"preview"}
+                onClick={()=>this.setState({selectedTab:"preview"})}
               >
                 Preview
               </Tab>

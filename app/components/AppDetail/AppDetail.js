@@ -35,7 +35,9 @@ export default class extends Component {
     } = this
 
     return (
-      <Container>
+      <Container
+        selected={selected}
+      >
         <Header
           onClick={handleSelection}
         >
@@ -98,6 +100,7 @@ const Container = styled.div`
   align-items: flex-start;
   margin: 10px;
   border: 1px solid lightgrey;
+  transition: .2s all;
 `
 
 const Header = styled.div`

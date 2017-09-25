@@ -5,6 +5,7 @@ function hStyles(props) {
     letter-spacing: -.025em;
     font-family: ${props.theme.fonts.black};
     line-height: 1;
+    margin: 0;
   `
 }
 

@@ -15,6 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  z-index: 1001;
 `
 const Toggler = styled.button`
   position: fixed;
@@ -28,7 +29,8 @@ const Toggler = styled.button`
   background-color: ${({theme}) => theme.colors.gray};
   border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
   outline: none;
-  z-index: 2;
+  z-index: 1002;
+
 `
 
 

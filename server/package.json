@@ -17,7 +17,6 @@
   "scripts": {
     "build": "yarn run clean && babel src --out-dir build --copy-files",
     "dev": "initDb=false nodemon src --exec babel-node src",
-    "dev-db": "initDb=true babel-node src",
     "start": "NODE_ENV=production node build",
     "clean": "rm -rf build",
     "test": "jest",

@@ -101,34 +101,37 @@ export default class extends Component {
             <TabBody
               name={"more"}
             >
-              <H3>
-                Related Books
-              </H3>
-              {relatedBooks.map(({id: bookId, title, previewImage}) => (
-                <Link
-                  key={bookId}
-                  href={{
-                    pathname: '/app/book',
-                    query: {
-                      bookId,
-                      orgSub
-                    }
-                  }}
-                  as={`/${orgSub}/book/${bookId}`}
-                >
-                  <RelatedContainer>
-                    <H4>
-                      {title}
-                    </H4>
-                    {(previewImage) ? (
-                      <Image
-                        imageId={previewImage.id}
-                        thumb
-                      />
-                    ): null}
-                  </RelatedContainer>
-                </Link>
-              ))}
+              <MoreContainer>
+                <H3>
+                  Related Books
+                </H3>
+                {relatedBooks.map(({id: bookId, title, previewImage}) => (
+                  <Link
+                    key={bookId}
+                    href={{
+                      pathname: '/app/book',
+                      query: {
+                        bookId,
+                        orgSub
+                      }
+                    }}
+                    as={`/${orgSub}/book/${bookId}`}
+                  >
+                    <RelatedContainer>
+                      <H4>
+                        {title}
+                      </H4>
+                      {(previewImage) ? (
+                        <Image
+                          imageId={previewImage.id}
+                          thumb
+                        />
+                      ): null}
+                    </RelatedContainer>
+                  </Link>
+                ))}
+              </MoreContainer>
+
             </TabBody>
           </TabContainer>
         </SideContainer>
@@ -194,5 +197,9 @@ const RelatedContainer = styled.div`
 `
 
 const AboutText = styled.p`
+  margin: 15px;
+`
+
+const MoreContainer = styled.div`
   margin: 15px;
 `

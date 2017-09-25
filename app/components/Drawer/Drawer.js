@@ -11,6 +11,7 @@ export default class DrawerComponent extends Component {
 
   static propTypes = {
     orgSub: PropTypes.string.isRequired,
+    userId: PropTypes.string,
     data: PropTypes.object
   }
 

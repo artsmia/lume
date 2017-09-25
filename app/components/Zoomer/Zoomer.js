@@ -478,7 +478,7 @@ export default class extends Component {
           minNativeZoom: 0,
           noWrap: true,
           bounds,
-          minZoom: initialZoom,
+          minZoom: Math.floor(initialZoom),
           maxZoom
         }
       )
