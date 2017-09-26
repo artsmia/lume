@@ -77,7 +77,7 @@ const Overlay = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: ${({theme}) => theme.colors.darkGray};
-  z-index: 1;
+  z-index: 1001;
 `
 
 const Container = styled.div`
@@ -95,7 +95,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   border-radius: 5px;
-  z-index: 2;
+  z-index: 1002;
 `
 
 const Header = styled.div`

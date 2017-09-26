@@ -6,14 +6,17 @@ query DetailQuery (
   ) {
     id
     title
+    description
+    geometry {
+      type
+      coordinates
+    }
     index
     image {
       id
     }
-    clips {
+    additionalImages {
       id
-      index
-      title
     }
   }
 }

@@ -21,7 +21,7 @@
     "clean": "rm -rf build",
     "test": "jest",
     "deploy": "now --docker && now alias",
-    "db-wipe": "babel-node src/db/scripts/reinitialize"
+    "db-reset": "babel-node src/db/scripts/reinitialize"
   },
   "dependencies": {
     "apollo-server-express": "^1.1.0",

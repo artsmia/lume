@@ -3,14 +3,14 @@ import styled from 'styled-components'
 import {Row, Column} from '../../ui/layout'
 import ImageManager from '../ImageManager'
 import {Button} from '../../ui/buttons'
-import {Input, Label} from '../../ui/forms'
+import {Input, Label, TextArea} from '../../ui/forms'
+import {H2} from '../../ui/h'
 import {ExpanderContainer, Expander} from '../../ui/expander'
-import ClipEditor from '../ClipEditor'
 import Image from '../Image'
 import Modal from '../../ui/modal'
 import Snackbar from '../../ui/Snackbar'
-import Sorter from '../../ui/drag/Sorter'
 import PropTypes from 'prop-types'
+import Zoomer from '../Zoomer'
 
 export default class DetailEditor extends Component {
 
@@ -20,60 +20,66 @@ export default class DetailEditor extends Component {
     orgId: PropTypes.string,
     detailId: PropTypes.string.isRequired,
     data: PropTypes.object,
-    editClip: PropTypes.func.isRequired,
     editOrCreateDetail: PropTypes.func.isRequired
   }
 
   state = {
-    detailTitle: "",
+    title: "",
+    description: "",
     imageModal: false,
+    additionalImagesModal: false,
     snackMessage: "",
     snackId: "",
-    reordering: false,
-    clips: []
+    expanded: true
   }
 
   render () {
     if (this.props.data.loading) return null
 
     const {
-      newClip,
       props: {
         data: {
           detail: {
+            id: detailId,
+            index,
             image,
+            additionalImages
           }
         },
         orgId
       },
       state: {
-        detailTitle,
+        title,
+        description,
         imageModal,
         snackMessage,
         snackId,
         deleteModal,
-        reordering,
-        clips
+        additionalImagesModal,
+        expanded
       },
       save,
       handleChange,
       handleImageSave,
+      handleAdditionalImageSave,
+      handleRemoveAdditionalImages,
       deleteDetail,
-      reorderClips
+      saveGeometry
     } = this
-
     return (
       <Expander
+        onArrowClick={()=>this.setState(({expanded}) => ({expanded: !expanded}))}
+        expanded={expanded}
         header={(
           <Row>
-            <Column>
-              <Label>Detail Title</Label>
+            <Row>
+              <H2>{index + 1}</H2>
               <Input
-                name={"detailTitle"}
-                value={detailTitle}
+                name={"title"}
+                value={title}
                 onChange={handleChange}
               />
-            </Column>
+            </Row>
             <Image
               imageId={(image) ? image.id : false}
               height={"50px"}
@@ -125,122 +131,203 @@ export default class DetailEditor extends Component {
             >
               Do you want to delete this detail?
             </Modal>
-            <Button
-              onClick={save}
-            >
-              Save Detail
-            </Button>
           </Row>
         )}
       >
         <Row>
           <Column>
-            <ExpanderContainer>
-              <Button
-                onClick={()=>this.setState(({reordering}) => ({reordering: !reordering}))}
-              >
-                {(reordering) ? "Done" : "Reorder Clips"}
-              </Button>
-              {(!reordering) ? clips.map( clip => (
-                <ClipEditor
-                  key={clip.id}
-                  clipId={clip.id}
-                  orgId={orgId}
-                />
-              )):null}
-              {(reordering) ? (
-                <Sorter
-                  sortables={clips}
-                  onNewOrder={reorderClips}
-                />
-              ): null}
-              <Button
-                color={"white"}
-                onClick={newClip}
-              >
-                New Clip
-              </Button>
-            </ExpanderContainer>
+            <Label>Detail description</Label>
+            <TextArea
+              name={"description"}
+              value={description}
+              onChange={handleChange}
+            />
+            <Row>
+              {additionalImages.map( image => (
+                <Column
+                  key={image.id}
+                >
+                  <Image
+                    imageId={image.id}
+                    size={"50px"}
+                    thumb
+                  />
+                  <Button
+                    color={"red"}
+                    onClick={() => handleRemoveAdditionalImages(image.id)}
+                  >
+                    Remove
+                  </Button>
+                </Column>
 
+              ))}
+            </Row>
+            <Button
+              onClick={()=>this.setState({additionalImagesModal: true})}
+            >
+              New Additional Image
+            </Button>
+            <Modal
+              onClose={()=>this.setState({additionalImagesModal: false})}
+              header={"Add New Additional Image to Detail"}
+              open={additionalImagesModal}
+            >
+              <ImageManager
+                orgId={orgId}
+                onImageSave={handleAdditionalImageSave}
+              />
+            </Modal>
+            <Snackbar
+              message={snackMessage}
+              snackId={snackId}
+            />
           </Column>
+          <ZoomerContainer>
+            {(image) ? (
+              <Zoomer
+                detailId={detailId}
+                crop={true}
+                onCrop={saveGeometry}
+              />
+            ) : null}
+          </ZoomerContainer>
         </Row>
       </Expander>
     )
   }
 
-  componentWillReceiveProps(nextProps){
-    if (!nextProps.data.loading) {
-      this.setState({detailTitle: nextProps.data.detail.title || ""})
-      let clips = nextProps.data.detail.clips.slice()
-      clips = clips.sort((a,b) => a.index - b.index)
-      this.setState({clips})
+  componentWillReceiveProps({data}){
+    if (!data.loading) {
+      let keys = Object.keys(data.detail)
+      keys.forEach( key => this.setState({[key]: data.detail[key] || ""}))
     }
   }
 
-  reorderClips = async (clips) => {
-    try {
-      const {
-        editClip
-      } = this.props
 
 
 
-      await Promise.all(
-        clips.map(clip => editClip({
-          variables: {
-            clipId: clip.id,
-            index: clip.index
-          }
-        }))
-      )
-
-    } catch (ex) {
-      console.error(ex)
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.title !== this.state.title ||
+      prevState.description !== this.state.description
+    ) {
+      this.debounce(this.save)
     }
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
-  newClip = async () => {
+  handleRemoveAdditionalImages = async(removeAdditionalImageId) => {
     try {
       const {
-        editOrCreateDetail,
         detailId,
+        editOrCreateDetail,
+        data: {
+          refetch
+        }
       } = this.props
 
-      let newClipDetailId = detailId
 
       await editOrCreateDetail({
         variables: {
           detailId,
-          newClipDetailId: detailId
+          removeAdditionalImageIds: [removeAdditionalImageId]
         }
       })
 
+      await refetch()
 
+      this.setState({
+        snackId: Math.random(),
+        snackMessage: "Additional Detail Image Removed"
+      })
     } catch (ex) {
       console.error(ex)
     }
   }
 
-  save = async () => {
+  debounce = (func) => {
+    if (this.timer) clearTimeout(this.timer)
+    this.timer = setTimeout(
+      func,
+      2000
+    )
+  }
+
+  saveGeometry = async (geometry) => {
     try {
       const {
         props: {
           editOrCreateDetail,
           detailId,
         },
-        state: {
-          detailTitle: title
-        }
       } = this
-
-      let newClipDetailId = detailId
 
       await editOrCreateDetail({
         variables: {
           detailId,
-          title
+          geometry
+        }
+      })
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+
+  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+
+  handleAdditionalImageSave = async (newAdditionalImageId) => {
+    try {
+      const {
+        detailId,
+        editOrCreateDetail,
+        data: {
+          refetch
+        }
+      } = this.props
+
+
+      await editOrCreateDetail({
+        variables: {
+          detailId,
+          newAdditionalImageIds: [newAdditionalImageId]
+        }
+      })
+
+      await refetch()
+
+      this.setState({
+        imageModal: false,
+        snackId: Math.random(),
+        snackMessage: "Additional Detail Image Added"
+      })
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+
+  save = async () => {
+    try {
+      console.log("saving")
+      const {
+        props: {
+          editOrCreateDetail,
+          detailId,
+        },
+        state: {
+          title,
+          description
+        }
+      } = this
+
+
+      await editOrCreateDetail({
+        variables: {
+          detailId,
+          title,
+          description
         }
       })
     } catch (ex) {
@@ -301,4 +388,14 @@ export default class DetailEditor extends Component {
     }
   }
 
+
+
+
 }
+
+
+const ZoomerContainer = styled.div`
+  width: 100%;
+  display: flex;
+  height: 500px;
+`

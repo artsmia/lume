@@ -1,5 +1,4 @@
 import detailModel from '../../db/models/detail'
-import clipModel from '../../db/models/clip'
 
 const Detail = {
   async image(argDetail) {
@@ -11,14 +10,11 @@ const Detail = {
       console.error(ex)
     }
   },
-  async clips(detail) {
+  async additionalImages(argDetail) {
     try {
+      const detail = await detailModel.findById(argDetail.id)
 
-      return await clipModel.findAll({
-        where: {
-          detailId: detail.id
-        }
-      })
+      return await detail.getAdditionalImages()
     } catch (ex) {
       console.error(ex)
     }

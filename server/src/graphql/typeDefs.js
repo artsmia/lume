@@ -9,23 +9,16 @@ const typeDefs = `
     visibility: VisibilityEnum
   }
 
-  type Clip {
-    id: ID!
-    title: String
-    description: String
-    detail: Detail
-    additionalImages: [Image]
-    geometry: Geometry
-    index: Int
-  }
 
   type Detail {
     id: ID!
     title: String
     item: Item
-    clips: [Clip]
     image: Image
     index: Int
+    additionalImages: [Image]
+    geometry: Geometry
+    description: String
   }
 
   type Group {
@@ -145,9 +138,6 @@ const typeDefs = `
         id: ID!
     ): Book
 
-    clip (
-        id: ID!
-    ): Clip
 
     detail (
         id: ID!
@@ -246,21 +236,14 @@ const typeDefs = `
     editOrCreateDetail(
       id: ID
       title: String
+      description: String
       itemId: ID
       imageId: ID
-      createAndAddClip: CreateAndAddClipInput
       index: Int
-    ): Detail
-
-    editOrCreateClip(
-      id: ID
-      title: String
-      description: String
-      geometry: GeometryInput
-      detailId: ID
       newAdditionalImageIds: [ID]
-      index: Int
-    ): Clip
+      removeAdditionalImageIds: [ID]
+      geometry: GeometryInput
+    ): Detail
 
 
     deleteItem(
@@ -279,9 +262,6 @@ const typeDefs = `
       id: ID!
     ): Item
 
-    deleteClip(
-      id: ID!
-    ): Detail
   }
 
   input CreateAndAddDetailInput {
@@ -293,9 +273,6 @@ const typeDefs = `
     bookId: ID
   }
 
-  input CreateAndAddClipInput {
-    detailId: ID
-  }
 
   input ItemInput {
     id: ID

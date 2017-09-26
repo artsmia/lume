@@ -1,8 +1,7 @@
 import detailModel from '../../db/models/detail'
 import itemModel from '../../db/models/item'
-import clipModel from '../../db/models/clip'
 
-export default async function editOrCreateDetail(src, {id, itemId, title, index, imageId, createAndAddClip}, ctx){
+export default async function editOrCreateDetail(src, {id, itemId, title, index, imageId, description, geometry, newAdditionalImageIds, removeAdditionalImageIds}, ctx){
   try {
 
 
@@ -24,19 +23,20 @@ export default async function editOrCreateDetail(src, {id, itemId, title, index,
       detail = await detail.setImage(imageId)
     }
 
-    if (createAndAddClip.detailId) {
-
-      let clips = await detail.getClips()
-
-      await clipModel.create({
-        detailId: createAndAddClip.detailId,
-        index: clips.length
-      })
+    if (newAdditionalImageIds){
+      await detail.addAdditionalImages(newAdditionalImageIds)
     }
+
+    if (removeAdditionalImageIds){
+      await detail.removeAdditionalImages(removeAdditionalImageIds)
+    }
+
 
     await detail.update({
       title,
-      index
+      index,
+      description,
+      geometry
     },{
       where: {
         id
@@ -45,8 +45,6 @@ export default async function editOrCreateDetail(src, {id, itemId, title, index,
 
 
     detail = await detailModel.findById(id)
-
-    console.log(detail)
 
 
     return detail

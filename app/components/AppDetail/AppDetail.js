@@ -51,7 +51,7 @@ export default class extends Component {
             {title}
           </H3>
         </Header>
-        {(selected) ? (
+
           <ClipsContainer>
             {clips.map( clip => (
               <AppClip
@@ -64,7 +64,7 @@ export default class extends Component {
               </AppClip>
             ))}
           </ClipsContainer>
-        ): null}
+
 
 
       </Container>
@@ -101,6 +101,7 @@ const Container = styled.div`
   margin: 10px;
   border: 1px solid lightgrey;
   transition: .2s all;
+  
 `
 
 const Header = styled.div`

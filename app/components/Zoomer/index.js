@@ -3,11 +3,10 @@ import Zoomer from './Zoomer'
 import ImageQuery from './query.graphql'
 
 const queryConfig = {
-  options: ({imageId = "", detailId = "", clipId = ""}) => ({
+  options: ({imageId = "", detailId = ""}) => ({
     variables: {
       imageId,
       detailId,
-      clipId
     },
   })
 }

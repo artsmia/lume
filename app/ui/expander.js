@@ -29,20 +29,19 @@ export class Expander extends Component {
   render() {
     const {
       toggle,
-      state: {
-        expanded
-      },
       props: {
         header,
         footer,
-        children
+        children,
+        expanded,
+        onArrowClick
       }
     } = this
     return (
       <ExpContainer>
         <ExpHeader>
           <Button
-            onClick={toggle}
+            onClick={onArrowClick}
             aria-label={"Expand Detail"}
           >
             <Arrow

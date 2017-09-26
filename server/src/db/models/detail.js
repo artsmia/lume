@@ -12,7 +12,11 @@ const detail = db.define('detail', {
   },
   index: {
     type: Sequelize.INTEGER
-  }
+  },
+  geometry: {
+    type: Sequelize.GEOMETRY("POLYGON")
+  },
+  description: Sequelize.TEXT,
 }, {
   freezeTableName: true
 })

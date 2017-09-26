@@ -1,7 +1,6 @@
 query ZoomerQuery (
   $imageId: ID!
   $detailId: ID!
-  $clipId: ID!
 ) {
   image (
     id: $imageId
@@ -22,14 +21,10 @@ query ZoomerQuery (
         id
       }
     }
-  }
-  clip(
-    id: $clipId
-  ) {
-    id
     geometry {
       type
       coordinates
     }
   }
+
 }

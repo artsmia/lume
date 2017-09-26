@@ -3,8 +3,12 @@ mutation editOrCreateDetail (
   $itemId: ID
   $title: String
   $imageId: ID
-  $newClipDetailId: ID
   $index: Int
+  $newAdditionalImageIds: [ID]
+  $geometry: GeometryInput
+  $description: String
+  $removeAdditionalImageIds: [ID]
+
 ) {
   editOrCreateDetail (
     id: $detailId
@@ -12,9 +16,10 @@ mutation editOrCreateDetail (
     title: $title
     imageId: $imageId
     index: $index
-    createAndAddClip: {
-      detailId: $newClipDetailId
-    }
+    newAdditionalImageIds: $newAdditionalImageIds
+    removeAdditionalImageIds: $removeAdditionalImageIds
+    geometry: $geometry
+    description: $description
   ) {
     id
     title
@@ -25,11 +30,12 @@ mutation editOrCreateDetail (
         id
       }
     }
-    clips {
+    additionalImages {
       id
-      title
-      index
-      description
+    }
+    geometry {
+      type
+      coordinates
     }
   }
 }

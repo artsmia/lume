@@ -8,7 +8,13 @@ async function reinitialize(){
 
     await createAssociations()
 
+
+    await db.query("SET foreign_key_checks = 0;")
+
     await db.sync({force: true})
+
+    await db.query("SET foreign_key_checks = 1;")
+
 
     console.log("done?")
     process.exit(0)

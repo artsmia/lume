@@ -11,7 +11,6 @@ export default class extends Component {
   static propTypes = {
     imageId: PropTypes.string,
     detailId: PropTypes.string,
-    clipId: PropTypes.string,
     onCrop: PropTypes.func,
     crop: PropTypes.bool
   }
@@ -37,12 +36,11 @@ export default class extends Component {
     const {
       image,
       detail,
-      clip
     } = props.data
     this.state = {
       ...this.state,
       image: (detail) ? detail.image : image,
-      geometry: (clip) ? clip.geometry : false
+      geometry: (detail) ? detail.geometry : false
     }
   }
 
@@ -61,14 +59,14 @@ export default class extends Component {
   componentWillReceiveProps(nextProps){
 
     if (
-      nextProps.data.clip &&
-      this.props.data.clip
+      nextProps.data.detail &&
+      this.props.data.detail
     ) {
       if (
-        nextProps.data.clip.id !== this.props.data.clip.id
+        nextProps.data.detail.id !== this.props.data.detail.id
       ) {
         this.setState({
-          geometry: nextProps.data.clip.geometry,
+          geometry: nextProps.data.detail.geometry,
           geometryLoading: false,
           geometryCreated: false
         })
@@ -80,11 +78,10 @@ export default class extends Component {
       const {
         detail,
         image,
-        clip
       } = nextProps.data
       this.setState({
         image: (detail) ? detail.image : image,
-        geometry: (clip) ? clip.geometry: false
+        geometry: (detail) ? detail.geometry: false
       })
     }
     if (

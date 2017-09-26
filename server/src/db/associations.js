@@ -1,6 +1,5 @@
 import {
   book,
-  clip,
   detail,
   group,
   image,
@@ -62,13 +61,6 @@ export async function createAssociations() {
       as: "image",
     })
 
-    clip.belongsTo(detail, {
-      as: "detail"
-    })
-
-    detail.hasMany(clip, {
-      as: "clips"
-    })
 
     book.hasMany(page, {
       as: "pages"
@@ -101,15 +93,15 @@ export async function createAssociations() {
       as: "previewImage"
     })
 
-    clip.belongsToMany(image, {
+    detail.belongsToMany(image, {
       as: "additionalImages",
-      through: "clip_image",
-      foreignKey: "clipId"
+      through: "detail_image",
+      foreignKey: "detailId"
     })
 
-    image.belongsToMany(clip, {
-      as:"clips",
-      through: "clip_image",
+    image.belongsToMany(detail, {
+      as:"detailAdditionalImages",
+      through: "detail_image",
       foreignKey: "imageId"
     })
 
