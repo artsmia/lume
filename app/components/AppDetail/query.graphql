@@ -9,14 +9,10 @@ query DetailQuery (
     image {
       id
     }
-    clips {
+    index
+    description
+    additionalImages {
       id
-      title
-      description
-      geometry {
-        type
-        coordinates
-      }
     }
   }
 }

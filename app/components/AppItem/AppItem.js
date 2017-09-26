@@ -22,7 +22,6 @@ export default class extends Component {
 
   state = {
     selectedDetail: false,
-    selectedClip: false,
     selectedTab: "about"
   }
 
@@ -44,12 +43,12 @@ export default class extends Component {
       },
       state: {
         selectedDetail,
-        selectedClip,
         selectedTab
       },
       handleDetailSelection,
-      handleClipSelection
     } = this
+
+    let sortedDetails = details.slice().sort((a,b) => a.index - b.index)
     return (
       <Container>
         <SideContainer>
@@ -68,7 +67,10 @@ export default class extends Component {
               </Tab>
               <Tab
                 name={"details"}
-                onClick={()=>this.setState({selectedTab: "details"})}
+                onClick={()=>this.setState({
+                  selectedTab: "details",
+                  selectedDetail: (sortedDetails.length > 0) ? sortedDetails[0] : false
+                })}
               >
                 Details
               </Tab>
@@ -87,14 +89,12 @@ export default class extends Component {
             <TabBody
               name={"details"}
             >
-              {(selectedTab === "details") ? details.map(detail => (
+              {(selectedTab === "details") ? sortedDetails.map(detail => (
                 <AppDetail
                   key={detail.id}
                   detailId={detail.id}
                   onDetailSelection={handleDetailSelection}
                   selected={(detail.id === selectedDetail.id)}
-                  handleClipSelection={handleClipSelection}
-                  selectedClip={selectedClip}
                 />
               )): null}
             </TabBody>
@@ -144,7 +144,6 @@ export default class extends Component {
           {(selectedDetail && selectedDetail.image) ? (
             <Zoomer
               detailId={selectedDetail.id}
-              clipId={selectedClip.id}
             />
           ): null}
         </FeatureContainer>
@@ -156,9 +155,6 @@ export default class extends Component {
     this.setState({selectedDetail})
   }
 
-  handleClipSelection = (selectedClip) => {
-    this.setState({selectedClip})
-  }
 
 
 }

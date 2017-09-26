@@ -30,7 +30,7 @@ export default class DetailEditor extends Component {
     additionalImagesModal: false,
     snackMessage: "",
     snackId: "",
-    expanded: true
+    expanded: false
   }
 
   render () {
@@ -58,7 +58,6 @@ export default class DetailEditor extends Component {
         additionalImagesModal,
         expanded
       },
-      save,
       handleChange,
       handleImageSave,
       handleAdditionalImageSave,
@@ -387,8 +386,6 @@ export default class DetailEditor extends Component {
       console.error(ex)
     }
   }
-
-
 
 
 }

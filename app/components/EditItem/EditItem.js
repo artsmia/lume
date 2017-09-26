@@ -16,6 +16,9 @@ import Modal from '../../ui/modal'
 import router from 'next/router'
 import Sorter from '../../ui/drag/Sorter'
 import {Loading} from '../../ui/spinner'
+import ItemSettingsEditor from '../ItemSettingsEditor'
+import ItemBasicEditor from '../ItemBasicEditor'
+
 
 export default class EditItem extends Component {
 
@@ -31,18 +34,7 @@ export default class EditItem extends Component {
     snack: "",
     snackId: "",
     deleteItemModal: false,
-    title: "",
-    date: "",
-    attribution: "",
-    localId: "",
-    medium: "",
-    dimensions: "",
-    culture: "",
-    accessionNumber: "",
-    text: "",
     pullFromCustomApi: false,
-    creditLine: "",
-    currentLocation: "",
     newRelatedBookIds: [],
     removeRelatedBookIds: [],
     availableBooks: [],
@@ -82,21 +74,12 @@ export default class EditItem extends Component {
         snack,
         snackId,
         deleteItemModal,
-        title,
-        attribution,
-        date,
-        medium,
-        dimensions,
-        culture,
-        accessionNumber,
-        text,
-        creditLine,
+
         newRelatedBookIds,
         removeRelatedBookIds,
         availableBooks,
         reordering,
         selectedTab,
-        currentLocation,
         pullFromCustomApi,
         localId
       },
@@ -137,124 +120,13 @@ export default class EditItem extends Component {
             >
               <Row>
                 <Column>
-                  <Row>
-                    <SectionContainer>
-                      <H2>Information</H2>
-                      <Row>
-                        <Column>
-                          <Label>Title</Label>
-                          <Input
-                            name={"title"}
-                            value={title}
-                            onChange={change}
-                          />
-                          <Label>Date</Label>
-                          <Input
-                            name={"date"}
-                            value={date}
-                            onChange={change}
-                          />
-                          <Label>Culture</Label>
-                          <Input
-                            name={"culture"}
-                            value={culture}
-                            onChange={change}
-                          />
-                          <Label>Dimensions</Label>
-                          <Input
-                            name={"dimensions"}
-                            value={dimensions}
-                            onChange={change}
-                          />
-                          <Label>Accession Number</Label>
-                          <Input
-                            name={"accessionNumber"}
-                            value={accessionNumber}
-                            onChange={change}
-                          />
-                        </Column>
-                        <Column>
-                          <Label>Attribution</Label>
-                          <TextArea
-                            name={"attribution"}
-                            value={attribution}
-                            onChange={change}
-                          />
-                          <Label>Medium</Label>
-                          <TextArea
-                            name={"medium"}
-                            value={medium}
-                            onChange={change}
-                          />
-                          <Label>Credit Line</Label>
-                          <TextArea
-                            name={"creditLine"}
-                            value={creditLine}
-                            onChange={change}
-                          />
-                          <Label>Current Location</Label>
-                          <TextArea
-                            name={"currentLocation"}
-                            value={currentLocation}
-                            onChange={change}
-                          />
-                        </Column>
-                      </Row>
-                      <Label>
-                        About
-                      </Label>
-                      <TextArea
-                        name={"text"}
-                        value={text}
-                        onChange={change}
-                      />
-                      <Row>
-                        <Button
-                          onClick={saveItem}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          onClick={()=>this.setState({deleteItemModal: true})}
-                          color={"red"}
-                        >
-                          Delete this Item
-                        </Button>
-                        <Modal
-                          open={deleteItemModal}
-                          onClose={()=>this.setState({deleteItemModal: false})}
-                          footer={(
-                            <Button
-                              onClick={deleteItem}
-                              color={"red"}
-                            >
-                              Delete Item
-                            </Button>
-                          )}
-                        >
-                          Do you want to delete this item?
-                        </Modal>
-                        <Column>
-                          <Label>
-                            Pull Values From Custom API
-                          </Label>
-                          <Checkbox
-                            name={"pullFromCustomApi"}
-                            checked={pullFromCustomApi}
-                            onChange={checkboxChange}
-                          />
-                        </Column>
-                        <Column>
-                          <Label>Local ID</Label>
-                          <Input
-                            name={"localId"}
-                            value={localId}
-                            onChange={change}
-                          />
-                        </Column>
-                      </Row>
-                    </SectionContainer>
-                  </Row>
+                  <ItemSettingsEditor
+                    itemId={itemId}
+                  />
+                  <ItemBasicEditor
+                    itemId={itemId}
+
+                  />
 
 
                 </Column>
@@ -554,40 +426,7 @@ export default class EditItem extends Component {
     }
   }
 
-  deleteItem = async () => {
-    try {
 
-      const {
-        props: {
-          deleteItem,
-          data: {
-            item: {
-              id: itemId
-            }
-          },
-          orgSub
-        }
-      } = this
-
-      await deleteItem({
-        variables: {
-          itemId
-        }
-      })
-
-
-      router.push({
-        pathname: '/cms/browse/items',
-        query: {
-          orgSub,
-        }
-      }, `/${orgSub}/cms/items`)
-
-
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
 
   addRelatedBooks = async () => {
     try {

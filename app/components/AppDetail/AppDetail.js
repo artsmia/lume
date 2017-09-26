@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import {H3} from '../../ui/h'
 import {Column, Row} from '../../ui/layout'
 import Image from '../Image'
-import AppClip from '../AppClip'
 
 export default class extends Component {
 
@@ -23,13 +22,13 @@ export default class extends Component {
           detail: {
             id: detailId,
             title,
+            index,
+            description,
             image,
-            clips
+            additionalImages
           }
         },
-        selected,
-        selectedClip,
-        handleClipSelection
+        selected
       },
       handleSelection
     } = this
@@ -41,29 +40,24 @@ export default class extends Component {
         <Header
           onClick={handleSelection}
         >
-          {(image) ? (
-            <Image
-              imageId={image.id}
-              thumb
-            />
-          ): null}
+          <H3>
+            {index + 1}
+          </H3>
           <H3>
             {title}
           </H3>
         </Header>
-
-          <ClipsContainer>
-            {clips.map( clip => (
-              <AppClip
-                key={clip.id}
-                clipId={clip.id}
-                onClipSelection={handleClipSelection}
-                selected={(clip.id === selectedClip.id)}
-              >
-                {clip.id}
-              </AppClip>
-            ))}
-          </ClipsContainer>
+        <p>
+          {description}
+        </p>
+        <Row>
+          {additionalImages.map( image => (
+            <Image
+              key={image.id}
+              imageId={image.id}
+            />
+          ))}
+        </Row>
 
 
 
@@ -74,19 +68,12 @@ export default class extends Component {
   handleSelection = () => {
     const {
       onDetailSelection,
-      handleClipSelection,
       data: {
         detail,
-        detail: {
-          clips: [
-            clip
-          ]
-        }
       }
     } = this.props
 
     onDetailSelection(detail)
-    handleClipSelection(clip)
 
   }
 
@@ -101,7 +88,7 @@ const Container = styled.div`
   margin: 10px;
   border: 1px solid lightgrey;
   transition: .2s all;
-  
+
 `
 
 const Header = styled.div`

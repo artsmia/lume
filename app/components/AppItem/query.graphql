@@ -19,18 +19,7 @@ query ItemQuery (
       image {
         id
       }
-      clips {
-        id
-        title
-        description
-        additionalImages {
-          id
-        }
-        geometry {
-          type
-          coordinates
-        }
-      }
+      index
     }
     relatedBooks {
       id

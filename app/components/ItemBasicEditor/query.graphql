@@ -1,0 +1,20 @@
+query ItemBasicQuery (
+  $itemId: ID!
+) {
+  item (
+    id: $itemId
+  ) {
+    id
+    title
+    attribution
+    culture
+    dimensions
+    medium
+    date
+    accessionNumber
+    currentLocation
+    creditLine
+    text
+    localId
+  }
+}

@@ -1,0 +1,10 @@
+query ItemSettingsQuery (
+  $itemId: ID!
+) {
+  item (
+    id: $itemId
+  ) {
+    id
+    
+  }
+}
