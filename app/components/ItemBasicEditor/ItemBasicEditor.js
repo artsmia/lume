@@ -48,8 +48,8 @@ export default class ItemSettingsEditor extends Component {
     } = this
 
     return (
-      <div>
-        <H2>Information</H2>
+      <Container>
+        <Content>
         <Row>
           <Column>
             <Label>Title</Label>
@@ -118,7 +118,8 @@ export default class ItemSettingsEditor extends Component {
           value={text}
           onChange={handleChange}
         />
-      </div>
+      </Content>
+      </Container>
     )
   }
 
@@ -170,3 +171,25 @@ export default class ItemSettingsEditor extends Component {
 
 
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+`
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  border: 1px solid black;
+  box-sizing: border-box;
+
+`

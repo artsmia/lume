@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Template from '../Template'
 import {H2, H3} from '../../ui/h'
-import {Label, Input, TextArea, Select, Option, Checkbox} from '../../ui/forms'
+import {Label, TextArea, Select, Option, Checkbox} from '../../ui/forms'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
@@ -12,8 +11,6 @@ import PropTypes from 'prop-types'
 import Snackbar from '../../ui/Snackbar'
 import {ExpanderContainer} from '../../ui/expander'
 import ImageManager from '../ImageManager'
-import Modal from '../../ui/modal'
-import router from 'next/router'
 import Sorter from '../../ui/drag/Sorter'
 import {Loading} from '../../ui/spinner'
 import ItemSettingsEditor from '../ItemSettingsEditor'
@@ -293,7 +290,6 @@ export default class EditItem extends Component {
     this.setState({[name]: values})
   }
 
-  checkboxChange = ({target: {name, checked}}) => this.setState({[name]: checked})
 
   onImageSave = async (selectedImageId) => {
     try {
@@ -325,58 +321,7 @@ export default class EditItem extends Component {
     }
   }
 
-  saveItem = async () => {
-    try {
-      const {
-        state: {
-          attribution,
-          title,
-          localId,
-          medium,
-          date,
-          culture,
-          accessionNumber,
-          currentLocation,
-          creditLine,
-          text,
-          pullFromCustomApi,
-        },
-        props: {
-          data: {
-            item: {
-              id: itemId
-            }
-          },
-          editItem
-        }
-      } = this
 
-      await editItem({
-        variables: {
-          itemId,
-          attribution,
-          title,
-          localId,
-          medium,
-          date,
-          accessionNumber,
-          currentLocation,
-          creditLine,
-          text,
-          culture,
-          pullFromCustomApi
-        }
-      })
-
-      this.setState({
-        snack: "Saved",
-        snackId: Math.random()
-      })
-
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
 
   addDetail = async () => {
     try {

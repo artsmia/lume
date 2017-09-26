@@ -5,6 +5,7 @@ query ItemSettingsQuery (
     id: $itemId
   ) {
     id
-    
+    pullFromCustomApi
+    localId
   }
 }

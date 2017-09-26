@@ -3,6 +3,7 @@ import {Button} from '../../ui/buttons'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Image from '../Image'
+import Zoomer from '../Zoomer'
 
 export default class ImagePicker extends Component {
 
@@ -51,15 +52,10 @@ export default class ImagePicker extends Component {
         </ThumbColumn>
         <Right>
           {(selectedImageId) ? (
-            <Image
+            <Zoomer
               imageId={selectedImageId}
             />
           ): <p>Choose an image from the left</p>}
-          <Button
-            onClick={()=> {onImageSave(selectedImageId)}}
-          >
-            Save
-          </Button>
         </Right>
 
       </Container>
@@ -69,11 +65,12 @@ export default class ImagePicker extends Component {
 
   selectImage = (selectedImageId) => {
     this.setState({selectedImageId})
+    this.props.onImageSave(selectedImageId)
   }
 
   componentDidMount(){
     const {
-      imageId
+      imageId,
     } = this.props
     if (imageId) {
       this.setState({selectedImageId: imageId})
@@ -88,7 +85,7 @@ export default class ImagePicker extends Component {
       !imageId &&
       images.length > 0
     ) {
-      this.setState({selectedImageId: images[0].id})
+      this.selectImage(images[0].id)
     }
 
   }

@@ -73,7 +73,8 @@ export default class extends Component {
       }
     }
     if (
-      !this.state.image && !nextProps.data.loading
+      !this.state.image &&
+      !nextProps.data.loading
     ) {
       const {
         detail,
@@ -102,6 +103,26 @@ export default class extends Component {
           geometryCreated: false,
         })
       }
+    }
+    if (
+      nextProps.data.image &&
+      this.props.data.image
+    ) {
+      if (
+        nextProps.data.image.id !==
+        this.props.data.image.id
+      ) {
+        this.setState({
+          image: nextProps.data.image,
+          zoomCreated: false,
+          zoomLoading: false,
+          cropperLoading: false,
+          cropperCreated: false,
+          geometryLoading: false,
+          geometryCreated: false,
+        })
+      }
+
     }
   }
 

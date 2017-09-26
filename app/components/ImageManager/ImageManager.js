@@ -1,13 +1,11 @@
 import {Component} from 'react'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import ImagePicker from './ImagePicker'
-import Dropzone from '../../ui/Dropzone'
+import ImageUploader from './ImageUploader'
 import styled from 'styled-components'
-import Image from '../Image'
 import {PropTypes} from 'prop-types'
 import apiFile from '../../utils/apiFile'
 import Snackbar from '../../ui/Snackbar'
-import Zoomer from '../Zoomer'
 
 export default class extends Component {
 
@@ -22,7 +20,7 @@ export default class extends Component {
     snackMessage: "",
     snackId: "",
     uploading: false,
-    selectedTab: "current"
+    selectedTab: "select"
   }
 
   render() {
@@ -59,12 +57,6 @@ export default class extends Component {
         >
           <TabHeader>
             <Tab
-              name={"current"}
-              onClick={()=>this.setState({selectedTab: "current"})}
-            >
-              Current
-            </Tab>
-            <Tab
               name={"select"}
               onClick={()=>this.setState({selectedTab: "select"})}
             >
@@ -77,15 +69,7 @@ export default class extends Component {
               Upload
             </Tab>
           </TabHeader>
-          <TabBody
-            name={"current"}
-          >
-            {(imageId) ? (
-              <Zoomer
-                imageId={imageId}
-              />
-            ) : <p>Select an image or upload a new one</p>}
-          </TabBody>
+
           <TabBody
             name={"select"}
           >
@@ -98,8 +82,7 @@ export default class extends Component {
           <TabBody
             name={"upload"}
           >
-            <Dropzone
-              orgId={orgId}
+            <ImageUploader
               onImageUpload={onImageUpload}
               uploading={uploading}
             />
@@ -109,22 +92,30 @@ export default class extends Component {
     )
   }
 
+  componentDidMount(){
+    if (this.props.data.organization.images.length < 1) {
+      this.setState({selectedtab: "upload"})
+    }
+  }
+
   onImageUpload = async (file) => {
     try {
       const {
         data: {
           refetch
         },
-        orgId
+        orgId,
+        onImageSave
       } = this.props
 
       await this.promiseState({uploading: true})
 
-      await apiFile(file,orgId)
-
-      await this.promiseState({uploading: false})
+      const {id: imageId} = await apiFile(file,orgId)
+      onImageSave(imageId)
 
       this.setState({
+        uploading: false,
+        selectedTab: "select",
         snackMessage: "Image Uploaded",
         snackId: Math.random()
       })
