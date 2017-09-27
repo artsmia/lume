@@ -2,6 +2,7 @@ import {Component} from 'react'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import ImagePicker from './ImagePicker'
 import ImageUploader from './ImageUploader'
+import GdriveImageUploader from './GdriveImageUploader'
 import styled from 'styled-components'
 import {PropTypes} from 'prop-types'
 import apiFile from '../../utils/apiFile'
@@ -20,7 +21,7 @@ export default class extends Component {
     snackMessage: "",
     snackId: "",
     uploading: false,
-    selectedTab: "select"
+    selectedTab: "upload"
   }
 
   render() {
@@ -82,10 +83,13 @@ export default class extends Component {
           <TabBody
             name={"upload"}
           >
-            <ImageUploader
+            <GdriveImageUploader
+
+            />
+            {/* <ImageUploader
               onImageUpload={onImageUpload}
               uploading={uploading}
-            />
+            /> */}
           </TabBody>
         </TabContainer>
       </Container>

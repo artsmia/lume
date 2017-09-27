@@ -15,6 +15,7 @@ import {
 } from 'apollo-server-express'
 import iiif, {info} from './iiif'
 import customItemEndpoints from './customItemEndpoints'
+import gdrive from './gdrive'
 
 const upload = multer()
 
@@ -29,6 +30,9 @@ server.use(
   bodyParser.json(),
   authMiddleware,
 )
+
+
+server.use('/gdrive', upload.single("file"), gdrive)
 
 server.use('/item/:orgSub', customItemEndpoints)
 

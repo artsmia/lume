@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch'
 
-const managementEndpoint = "https://artsmia.auth0.com/api/v2/"
+const managementEndpoint = "https://artsmia.auth0.com/api/v2"
 
 let managementToken
 let expiration
@@ -16,7 +16,7 @@ export async function refreshToken(){
         grant_type: 'client_credentials',
         client_id: '3hrqWKRLV1E85m1EgQ1IiKSImi6JBEvi',
         client_secret: process.env.auth0ManagmentSecret,
-        audience: managementEndpoint
+        audience: `${managementEndpoint}/`
       })
     }
 
@@ -26,6 +26,7 @@ export async function refreshToken(){
 
     expiration = json["expires_in"] * 1000 + Date.now()
     managementToken = json["access_token"]
+
 
   } catch (ex) {
     console.log(ex)
@@ -47,7 +48,7 @@ export async function getUser(id){
         "Authorization": `Bearer ${managementToken}`
       }
     }
-    const response = await fetch(`${managementEndpoint}users/${id}`, options)
+    const response = await fetch(`${managementEndpoint}/users/${id}`, options)
 
     const json = await response.json()
 
@@ -56,3 +57,33 @@ export async function getUser(id){
     console.log("getUser ex", ex)
   }
 }
+
+// export async function getUserGoogleTokens(userId){
+//   try {
+//     if (
+//       !managementToken ||
+//       Date.now() > expiration
+//     ) {
+//       await refreshToken()
+//     }
+//
+//     const options =  {
+//       method: 'GET',
+//       headers: {
+//         "Authorization": `Bearer ${managementToken}`
+//       }
+//     }
+//
+//
+//     const response = await fetch(`${managementEndpoint}/users/${userId}`, options)
+//
+//     const json = await response.json()
+//
+//     console.log(json)
+//
+//     return json
+//
+//   } catch (ex) {
+//     console.error(ex)
+//   }
+// }
