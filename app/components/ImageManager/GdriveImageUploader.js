@@ -74,6 +74,11 @@ export default class extends Component {
             onChange={handleCheckbox}
           />
         </Row> */}
+        {(this.state.newImage) ? (
+          <img
+            src={this.state.newImage}
+          />
+        ) : null}
         <Button
           onClick={handleUpload}
         >
@@ -110,9 +115,9 @@ export default class extends Component {
 
       const response = await fetch(url, options)
 
-      const json = await response.json()
+      const {webContentLink} = await response.json()
 
-      console.log(json)
+      this.setState({newImage: webContentLink})
 
     } catch (ex) {
       console.error(ex)
