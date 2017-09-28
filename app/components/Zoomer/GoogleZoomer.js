@@ -553,9 +553,11 @@ export default class extends Component {
       const {files: [tileDir]} = await dirResponse.json()
 
 
-      const tilesResp = await fetch(`${gdriveSearchUrl}&q='${tileDir.id}' in parents&fields=files(id,name,webContentLink)`)
+      const tilesResp = await fetch(`${gdriveSearchUrl}&q='${tileDir.id}' in parents&fields=files(id,name,webContentLink)&pageSize=1000`)
 
       const {files} = await tilesResp.json()
+
+      console.log(files)
 
       return files
 

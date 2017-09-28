@@ -18,16 +18,12 @@ export function createLock () {
 export async function hashToCookies() {
   try {
     const hash = window.location.hash
-    console.log(hash)
     const IDTokenRegEx = /id_token=([^&]*)/g
-    //const refreshTokenRegEx = /refresh_token=([^&]*)/g
     const accessTokenRegEx = /access_token=([^&]*)/g
     const IDToken = IDTokenRegEx.exec(hash)[1]
     const accessToken = accessTokenRegEx.exec(hash)[1]
-    //const refreshToken = refreshTokenRegEx.exec(hash)[1]
     Cookies.set('IDToken', IDToken)
     Cookies.set("accessToken", accessToken)
-    //Cookies.set("refreshToken", refreshToken)
     router.replace({
       pathname: '/auth'
     })

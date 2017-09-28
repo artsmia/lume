@@ -95,11 +95,6 @@ export default class extends Component {
     )
   }
 
-  componentDidMount(){
-    if (this.props.data.organization.images.length < 1) {
-      this.setState({selectedtab: "upload"})
-    }
-  }
 
   onImageUpload = async (file) => {
     try {

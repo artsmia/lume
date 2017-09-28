@@ -52,8 +52,6 @@ export default class EditItem extends Component {
 
     const {
       addDetail,
-      change,
-      saveItem,
       multiChange,
       props: {
         data: {
@@ -70,21 +68,16 @@ export default class EditItem extends Component {
       state: {
         snack,
         snackId,
-        deleteItemModal,
         newRelatedBookIds,
         removeRelatedBookIds,
         availableBooks,
         reordering,
         selectedTab,
-        pullFromCustomApi,
-        localId
       },
       onImageSave,
-      deleteItem,
       addRelatedBooks,
       removeRelatedBooks,
       reorderDetails,
-      checkboxChange,
     } = this
     let sortedDetails = details.slice().sort( (a,b) => a.index - b.index)
     return (
