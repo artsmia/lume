@@ -37,6 +37,9 @@ const typeDefs = `
     alt: String
     localId: String
     metadata: String
+    host: HostEnum
+    gdriveId: String
+    s3Bucket: String
   }
 
   type Item {
@@ -109,6 +112,11 @@ const typeDefs = `
     coordinates: [[[Float]]]
   }
 
+
+  enum HostEnum {
+    s3
+    gdrive
+  }
 
   enum RoleEnum {
     admin

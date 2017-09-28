@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import {Label, Input, Checkbox} from '../../ui/forms'
 import {Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
+import Cookie from 'js-cookie'
+import {apiUrl} from '../../config'
 
 export default class extends Component {
 
@@ -82,7 +84,7 @@ export default class extends Component {
             uploading
           )}
         >
-          Upload
+          Upload to Google Drive
         </Button>
       </Container>
     )
@@ -95,8 +97,44 @@ export default class extends Component {
 
   handleCheckbox = ({target: {name, checked}}) => this.setState({[name]: checked})
 
-  handleUpload = () => {
-    this.props.onImageUpload(this.state.files[0])
+  handleUpload = async () => {
+    try {
+
+      const {
+        state: {
+          files: [
+            file
+          ],
+          title,
+          alt
+        },
+        props: {
+          orgId
+        }
+      } = this
+
+      let form = new FormData()
+
+      form.append("file", file)
+      form.append("userId", Cookie.get("userId"))
+      form.append("title", title)
+      form.append("alt", alt)
+      form.append("orgId", orgId)
+
+      const url  = `${apiUrl}/gdrive`
+
+      let options = {
+        method: 'POST',
+        body: form
+      }
+
+      const response = await fetch(url, options)
+
+      console.log(await response.json())
+
+    } catch (ex) {
+      console.error(ex)
+    }
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})

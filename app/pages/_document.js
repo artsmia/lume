@@ -14,6 +14,7 @@ export default class ClientDocument extends Document {
             rel='shortcut icon'
             type='image/x-icon'
             href='/static/favicon.png'/>
+
           {styleTags}
         </Head>
         <body>
@@ -25,4 +26,5 @@ export default class ClientDocument extends Document {
       </html>
     )
   }
+
 }

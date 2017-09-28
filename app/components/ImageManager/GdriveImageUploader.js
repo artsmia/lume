@@ -5,6 +5,7 @@ import {Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import {apiUrl} from '../../config'
 import Cookie from 'js-cookie'
+import {googleApiKey, googleClientId} from '../../config'
 
 export default class extends Component {
 
@@ -87,6 +88,31 @@ export default class extends Component {
       </Container>
     )
   }
+
+  // componentDidMount(){
+  //   this.searchFiles()
+  // }
+
+  // searchFiles = async() => {
+  //   try {
+  //
+  //     let parentId = '0BxPL1nKsK1AVS3lTUkZUdjNfME0'
+  //
+  //     let url = `https://www.googleapis.com/drive/v3/files/?key=${googleApiKey}&q='${parentId}' in parents&fields=files(id,name,webContentLink)`
+  //     let options = {
+  //       method: 'GET'
+  //     }
+  //
+  //     const response = await fetch(url, options)
+  //
+  //     const json = await response.json()
+  //
+  //     console.log(json)
+  //
+  //   } catch (ex) {
+  //     console.error(ex)
+  //   }
+  // }
 
 
   handleFile = ({target: {name, files}}) => {

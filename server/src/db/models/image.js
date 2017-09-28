@@ -10,13 +10,15 @@ const image = db.define('image', {
   title: Sequelize.STRING,
   alt: Sequelize.STRING,
   localId: Sequelize.STRING,
-  type: {
-    type: Sequelize.ENUM,
-    values: ['mia']
-  },
   metadata: {
     type: Sequelize.STRING,
-  }
+  },
+  host: {
+    type: Sequelize.ENUM,
+    values: ['s3','gdrive']
+  },
+  s3Bucket: Sequelize.STRING,
+  gdriveId: Sequelize.STRING
 }, {
   freezeTableName: true
 })

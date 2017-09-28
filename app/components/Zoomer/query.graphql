@@ -10,6 +10,8 @@ query ZoomerQuery (
       id
     }
     localId
+    host
+    gdriveId
   }
   detail (
     id: $detailId
@@ -20,6 +22,8 @@ query ZoomerQuery (
       organization {
         id
       }
+      host
+      gdriveId
     }
     geometry {
       type

@@ -5,6 +5,7 @@ import uuid from 'uuid/v4'
 import fs from 'fs'
 import sharp from 'sharp'
 import rimraf from 'rimraf'
+import imageModel from '../db/models/image'
 
 const {
   gdriveClientID,
@@ -30,25 +31,18 @@ const drive = google.drive({
 export default async function(req, res, next){
   try {
 
+    console.log(req.body)
+
     const {
       body: {
-        userId
+        userId,
+        title,
+        alt,
+        orgId
       },
       file
     } = req
 
-    // const drive = new G({
-    //   userId
-    // })
-    //
-    // await drive.getCredentials()
-    //
-    // const results = await drive.list({
-    //   q: `mimeType='${drive.gDirectory}' and name='Knight Images' and appProperties has {key='knight' and value='true'}`,
-    //   fields: 'files(id, name, appProperties, permissions)'
-    // })
-    //
-    // console.log(results)
 
     const {identities} = await getUser(userId)
 
@@ -63,7 +57,7 @@ export default async function(req, res, next){
     google.options({auth})
 
 
-
+    console.log("looking for directory")
 
     let {files} = await driveSearch({
       q: `mimeType='${gDirectory}' and name='Knight Images' and appProperties has {key='knight' and value='true'}`,
@@ -106,7 +100,10 @@ export default async function(req, res, next){
 
     await sharp(file.buffer).png().tile({size: 512, layout: 'zoomify'}).toFile(directory)
 
+    console.log("creating tiles...")
+
     await rename(`${directory}/TileGroup0`, `${directory}/tiles`)
+
 
     await sharp(file.buffer).toFile(`${directory}/original.${file.mimetype.split('/')[1]}`)
 
@@ -114,18 +111,30 @@ export default async function(req, res, next){
 
     await sharp(file.buffer).resize(400).toFile(`${directory}/m.png`)
 
+    console.log("uploading files to gdrive")
 
-    const newImageGdriveId = await uploadDirectoryToDrive(directory,knightDirectoryId)
+    const gdriveId = await uploadDirectoryToDrive(directory,knightDirectoryId)
 
-    const {files: newFiles} = await driveSearch({
-      q: `name contains 'original' and '${newImageGdriveId}' in parents`,
-      fields: 'files( webContentLink, webViewLink)'
-    })
-
+    console.log("cleaning up directories")
 
     await deleteDirectory(directory)
 
-    res.send(newFiles[0])
+
+    console.log("adding new image to database")
+
+    const newImage = await imageModel.create({
+      title,
+      alt,
+      host: 'gdrive',
+      gdriveId
+    })
+
+    await newImage.setOrganization(orgId)
+
+    console.log("done")
+
+
+    res.send({done: "true"})
   } catch (ex) {
     console.error(ex)
   }
@@ -249,6 +258,8 @@ async function uploadDirectoryToDrive(path, rootParentId){
           }
         })
 
+        console.log(`created ${file.name} to gdrive`)
+
         let items = await readdir(file.path)
 
         toRead = toRead.concat(items.map( item => ({
@@ -277,6 +288,9 @@ async function uploadDirectoryToDrive(path, rootParentId){
         }
       })
 
+      console.log(`created ${file.name} to gdrive`)
+
+
     }
 
     return parentId
@@ -285,61 +299,3 @@ async function uploadDirectoryToDrive(path, rootParentId){
     console.error(ex)
   }
 }
-
-
-
-//
-//
-// class G {
-//
-//   constructor({
-//     userId
-//   }) {
-//     this.userId = userId
-//
-//     this.google = google
-//
-//     this.gDirectory = 'application/vnd.google-apps.folder'
-//
-//     this.auth = new this.google.auth.OAuth2(
-//       gdriveClientID,
-//       gdriveClientSecret,
-//       "http://localhost:5000/gdrive"
-//     )
-//
-//     this.drive = this.google.drive({
-//       version: 'v3'
-//     })
-//
-//   }
-//
-//   async getCredentials(){
-//     try {
-//       const {identities} = await getUser(this.userId)
-//
-//       const {access_token} = identities.find(
-//         identity => identity.provider === 'google-oauth2'
-//       )
-//
-//       this.auth.setCredentials({
-//         access_token,
-//       })
-//
-//       this.google.options({auth})
-//
-//     } catch (ex) {
-//       console.error(ex)
-//     }
-//   }
-//
-//
-//   async list(options) {
-//     return new Promise( (resolve, reject) => {
-//       this.drive.files.list(options, (err, response) => {
-//         if (err) reject(err)
-//         resolve(response)
-//       })
-//     })
-//   }
-//
-// }

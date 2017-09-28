@@ -71,7 +71,6 @@ export default class EditItem extends Component {
         snack,
         snackId,
         deleteItemModal,
-
         newRelatedBookIds,
         removeRelatedBookIds,
         availableBooks,

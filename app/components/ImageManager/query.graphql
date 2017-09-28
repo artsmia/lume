@@ -5,6 +5,7 @@ query orgImageQuery (
     id
     images {
       id
+      host
     }
   }
 }

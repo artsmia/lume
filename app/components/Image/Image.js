@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {s3Url} from '../../config'
+import {s3Url, googleApiKey} from '../../config'
+import {Spinner} from '../../ui/spinner'
 
 export default class extends Component {
 
@@ -13,7 +14,12 @@ export default class extends Component {
     selected: false
   }
 
+  state = {
+    src: ""
+  }
+
   render () {
+
     if (
       this.props.data.loading
     ) return null
@@ -24,15 +30,6 @@ export default class extends Component {
 
     const {
       props: {
-        data: {
-          image: {
-            organization: {
-              id: orgId
-            }
-          }
-        },
-        imageId,
-        quality,
         thumb,
         size,
         selected,
@@ -40,13 +37,17 @@ export default class extends Component {
         height,
         width
       },
-      src
+      state: {
+        src
+      }
     } = this
+
+    if (!src) return <Spinner/>
 
     if (thumb) {
       return (
         <Thumb
-          src={src("s")}
+          src={src}
           selected={selected}
           onClick={onClick}
           size={size}
@@ -57,7 +58,7 @@ export default class extends Component {
 
     return (
       <Img
-        src={src()}
+        src={src}
         onClick={onClick}
         height={height}
         width={width}
@@ -65,27 +66,61 @@ export default class extends Component {
     )
   }
 
-  src = (argQuality) => {
-    const {
-      props: {
+  componentWillReceiveProps(nextProps){
+    if (!nextProps.data.loading) {
+      this.generateSrc(nextProps)
+    }
+  }
+
+
+  generateSrc = async (nextProps) => {
+    try {
+
+      const {
         data: {
           image: {
-            organization: {
-              id: orgId
-            }
+            host,
+            gdriveId
           }
         },
-        imageId,
-        thumb,
-        size,
         quality
+      } = nextProps
+
+      let imgQuality = quality || 'm'
+
+      if (
+        host === 'gdrive' &&
+        gdriveId
+      ){
+        let src = await this.getGoogleUrl(gdriveId,imgQuality)
+        this.setState({src})
       }
-    } = this
-
-    let imgQuality = argQuality || quality
-
-    return `${s3Url}/${orgId}/${imageId}/${imgQuality}`
+    } catch (ex) {
+      console.error(ex)
+    }
   }
+
+  getGoogleUrl = async(parentId, imgQuality) => {
+    try {
+
+      let url = `https://www.googleapis.com/drive/v3/files/?key=${googleApiKey}&q='${parentId}' in parents and name contains '${imgQuality}' and mimeType contains 'image'&fields=files(id,name,webContentLink)`
+      let options = {
+        method: 'GET'
+      }
+
+      const response = await fetch(url, options)
+
+      const {files} = await response.json()
+
+      return files[0].webContentLink
+
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+
 
 }
 
