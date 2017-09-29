@@ -107,13 +107,14 @@ class Sortable extends Component {
           this.sortRef = ref
         }}
         style={{
-          opacity: (isDragging) ? .5 : 1
+          opacity: (isDragging) ? .5 : 1,
         }}
       >
 
         {createElement(DetailOrder, {
           [idKey]: id,
           title,
+          isDragging
         })}
       </div>
     ))
@@ -128,21 +129,22 @@ class Sortable extends Component {
 
 }
 
-export const DetailOrder = (props) => {
+export const DetailOrder = ({title, isDragging}) => {
   return (
     <div
       style={{
-        height: "72px",
+        height: "132px",
         width: "100%",
-        margin: "10px 10px",
         display: "flex",
+        marginTop: "10px",
         justifyContent: "center",
         alignItems: "center",
         border: "1px solid grey",
-        boxSizing: "border-box"
+        boxSizing: "border-box",
+        backgroundColor: (isDragging) ? 'grey' : 'white',
       }}
     >
-      {props.title}
+      {(title) ? title : "Detail"}
     </div>
   )
 }

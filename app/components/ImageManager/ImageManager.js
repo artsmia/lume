@@ -95,6 +95,12 @@ export default class extends Component {
     )
   }
 
+  componentWillReceiveProps(nextProps){
+    if (nextProps.data.organization.images.length === 0) {
+      this.setState({selectedTab: "upload"})
+    }
+  }
+
 
   onImageUpload = async (file) => {
     try {

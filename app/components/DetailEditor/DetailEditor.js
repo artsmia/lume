@@ -70,67 +70,72 @@ export default class DetailEditor extends Component {
         onArrowClick={()=>this.setState(({expanded}) => ({expanded: !expanded}))}
         expanded={expanded}
         header={(
-          <Row>
-            <Row>
-              <H2>{index + 1}</H2>
+          <HeaderRow>
+            <Side>
+              <Index>{index + 1}</Index>
               <Input
                 name={"title"}
                 value={title}
                 onChange={handleChange}
               />
-            </Row>
-            <Image
-              imageId={(image) ? image.id : false}
-              height={"50px"}
-              quality={"s"}
-            />
-            <Button
-              onClick={()=>this.setState({imageModal: true})}
-              color={"white"}
-            >
-              Change Image
-            </Button>
-            <Modal
-              open={imageModal}
-              onClose={()=>this.setState({imageModal: false})}
-              header={"Change Detail Image"}
-            >
-              <ImageManager
-                imageId={(image) ? image.id : false}
-                orgId={orgId}
-                onImageSave={handleImageSave}
+            </Side>
+            <Side>
+              <ImageChanger>
+                <Image
+                  imageId={(image) ? image.id : false}
+                  height={"50px"}
+                  quality={"s"}
+                />
+                <Button
+                  onClick={()=>this.setState({imageModal: true})}
+                  color={"white"}
+                >
+                  Change Image
+                </Button>
+              </ImageChanger>
+              <Modal
+                open={imageModal}
+                onClose={()=>this.setState({imageModal: false})}
+                header={"Change Detail Image"}
+              >
+                <ImageManager
+                  imageId={(image) ? image.id : false}
+                  orgId={orgId}
+                  onImageSave={handleImageSave}
+                />
+              </Modal>
+              <Snackbar
+                snackId={snackId}
+                message={snackMessage}
               />
-            </Modal>
-            <Snackbar
-              snackId={snackId}
-              message={snackMessage}
-            />
-            <Button
-              color={"red"}
-              onClick={()=>this.setState({deleteModal: true})}
-            >
-              Delete Detail
-            </Button>
-            <Modal
-              open={deleteModal}
-              onClose={()=>this.setState({deleteModal: false})}
-              footer={(
-                <Row>
-                  <Button>
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={deleteDetail}
-                    color={"red"}
-                  >
-                    Delete Detail
-                  </Button>
-                </Row>
-              )}
-            >
-              Do you want to delete this detail?
-            </Modal>
-          </Row>
+              <Button
+                color={"red"}
+                onClick={()=>this.setState({deleteModal: true})}
+              >
+                Delete Detail
+              </Button>
+              <Modal
+                open={deleteModal}
+                onClose={()=>this.setState({deleteModal: false})}
+                footer={(
+                  <Row>
+                    <Button>
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={deleteDetail}
+                      color={"red"}
+                    >
+                      Delete Detail
+                    </Button>
+                  </Row>
+                )}
+              >
+                Do you want to delete this detail?
+              </Modal>
+            </Side>
+
+          </HeaderRow>
         )}
       >
         <Row>
@@ -199,6 +204,9 @@ export default class DetailEditor extends Component {
     if (!data.loading) {
       let keys = Object.keys(data.detail)
       keys.forEach( key => this.setState({[key]: data.detail[key] || ""}))
+    }
+    if (!data.detail.title) {
+      this.setState({expanded: true})
     }
   }
 
@@ -389,6 +397,30 @@ export default class DetailEditor extends Component {
 
 
 }
+
+const Index = styled(H2)`
+  margin-right: 20px;
+`
+
+const HeaderRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`
+
+const Side = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const ImageChanger = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+`
 
 
 const ZoomerContainer = styled.div`

@@ -31,10 +31,6 @@ export default class JoinOrCreate extends Component {
       },
     } = this
     return (
-      <Template
-        drawer={false}
-        {...props}
-      >
         <Centered>
           <Row>
 
@@ -107,7 +103,6 @@ export default class JoinOrCreate extends Component {
 
 
         </Centered>
-      </Template>
     )
   }
 
@@ -167,5 +162,5 @@ export default class JoinOrCreate extends Component {
 const Centered = styled.div`
   display: flex;
   width: 50%;
-  margin: auto; 
+  margin: auto;
 `

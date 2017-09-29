@@ -557,8 +557,6 @@ export default class extends Component {
 
       const {files} = await tilesResp.json()
 
-      console.log(files)
-
       return files
 
     } catch (ex) {

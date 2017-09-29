@@ -31,6 +31,9 @@ const drive = google.drive({
 export default async function(req, res, next){
   try {
 
+    res.send({status: "Image Received"})
+
+
     console.log(req.body)
 
     const {
@@ -134,7 +137,6 @@ export default async function(req, res, next){
     console.log("done")
 
 
-    res.send({done: "true"})
   } catch (ex) {
     console.error(ex)
   }

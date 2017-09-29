@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {Label, Input, Checkbox} from '../../ui/forms'
-import {Row} from '../../ui/layout'
+import {Row, Column} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import Cookie from 'js-cookie'
 import {apiUrl} from '../../config'
+import Snackbar from '../../ui/Snackbar'
 
 export default class extends Component {
 
@@ -13,7 +14,10 @@ export default class extends Component {
     uploading: false,
     hasRights: false,
     alt: "",
-    title: ""
+    title: "",
+    snackMessage: "",
+    snackId: Math.random(),
+    status: "Your image will be uploaded to google drive."
   }
 
   render() {
@@ -22,70 +26,91 @@ export default class extends Component {
       handleUpload,
       handleChange,
       handleCheckbox,
-      props: {
-        onImageUpload,
-        uploading
-      },
       state: {
         files,
         hasRights,
         alt,
-        title
+        title,
+        uploading,
+        snackId,
+        snackMessage,
+        preview,
+        status
       }
     } = this
     return (
       <Container>
-        <Label>
-          Choose An Image
-        </Label>
-        <input
-          type={"file"}
-          name={"files"}
-          accept={"image/*"}
-          onChange={handleFile}
+        <Snackbar
+          message={snackMessage}
+          snackId={snackId}
         />
         <Row>
-          <Label>
-            Title
-          </Label>
-          <Input
-            name={"title"}
-            value={title}
-            onChange={handleChange}
-          />
+          <Column>
+
+            <Label>
+              Image
+            </Label>
+            <input
+              type={"file"}
+              name={"files"}
+              accept={"image/*"}
+              onChange={handleFile}
+            />
+            <Row>
+              <Label>
+                Title
+              </Label>
+              <Input
+                name={"title"}
+                value={title}
+                onChange={handleChange}
+              />
+            </Row>
+            <Row>
+              <Label>
+                Description
+              </Label>
+              <Input
+                name={"alt"}
+                value={alt}
+                onChange={handleChange}
+              />
+            </Row>
+            <Row>
+              <Label>
+                I have the right to distribute this image.
+              </Label>
+              <Checkbox
+                name={"hasRights"}
+                checked={hasRights}
+                onChange={handleCheckbox}
+              />
+            </Row>
+            <Button
+              onClick={handleUpload}
+              disabled={(
+                !hasRights ||
+                !alt ||
+                !title ||
+                files.length < 1 ||
+                uploading
+              )}
+            >
+              Upload to Google Drive
+            </Button>
+            <Message>
+              {status}
+            </Message>
+          </Column>
+          <Column>
+            {(preview) ? (
+              <Preview
+                src={preview}
+                alt={`Preview of ${alt}`}
+              />
+            ): null}
+          </Column>
         </Row>
-        <Row>
-          <Label>
-            Description
-          </Label>
-          <Input
-            name={"alt"}
-            value={alt}
-            onChange={handleChange}
-          />
-        </Row>
-        <Row>
-          <Label>
-            I have the right to distribute this image.
-          </Label>
-          <Checkbox
-            name={"hasRights"}
-            checked={hasRights}
-            onChange={handleCheckbox}
-          />
-        </Row>
-        <Button
-          onClick={handleUpload}
-          disabled={(
-            !hasRights ||
-            !alt ||
-            !title ||
-            files.length < 1 ||
-            uploading
-          )}
-        >
-          Upload to Google Drive
-        </Button>
       </Container>
     )
   }
@@ -93,6 +118,16 @@ export default class extends Component {
 
   handleFile = ({target: {name, files}}) => {
     this.setState({[name]: files})
+
+    if (files[0]) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        this.setState({preview: e.target.result})
+      }
+
+      reader.readAsDataURL(files[0])
+    }
+
   }
 
   handleCheckbox = ({target: {name, checked}}) => this.setState({[name]: checked})
@@ -130,7 +165,19 @@ export default class extends Component {
 
       const response = await fetch(url, options)
 
-      console.log(await response.json())
+      await response.json()
+
+      this.setState({
+        uploading: false,
+        files: [],
+        hasRights: false,
+        alt: "",
+        title: "",
+        snackMessage: "Image Uploaded",
+        snackId: Math.random(),
+        preview: "",
+        status: "Your image will appear amongst your images once it's been processed. This may take a while. You may upload additional images."
+      })
 
     } catch (ex) {
       console.error(ex)
@@ -140,6 +187,15 @@ export default class extends Component {
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
 }
+
+const Preview = styled.img`
+  height: 300px;
+  object-fit: contain;
+`
+
+const Message = styled.p`
+  font-family: ${({theme}) => theme.fonts.regular};
+`
 
 const Container = styled.div`
   width: 100%;

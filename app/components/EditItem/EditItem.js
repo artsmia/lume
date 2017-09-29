@@ -193,14 +193,17 @@ export default class EditItem extends Component {
 
               <Row>
                 <SectionContainer>
-                  <H2>
-                    Details
-                  </H2>
-                  <Button
-                    onClick={()=>this.setState(({reordering}) => ({reordering: !reordering}))}
-                  >
-                    {(reordering) ? "Done" : "Reorder Details"}
-                  </Button>
+                  <DetailHeader>
+                    <H2>
+                      Details
+                    </H2>
+                    <Button
+                      onClick={()=>this.setState(({reordering}) => ({reordering: !reordering}))}
+                    >
+                      {(reordering) ? "Done" : "Reorder Details"}
+                    </Button>
+                  </DetailHeader>
+
                   <ExpanderContainer>
                     {
                       (sortedDetails && !reordering) ? sortedDetails.map( detail => (
@@ -418,6 +421,15 @@ export default class EditItem extends Component {
   }
 
 }
+
+const DetailHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+`
 
 const Container = styled.div`
   display: flex;
