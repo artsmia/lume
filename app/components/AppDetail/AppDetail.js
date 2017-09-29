@@ -36,28 +36,34 @@ export default class extends Component {
     return (
       <Container
         selected={selected}
+        onClick={handleSelection}
       >
         <Header
-          onClick={handleSelection}
         >
-          <H3>
+          <Index>
             {index + 1}
-          </H3>
+          </Index>
           <H3>
-            {title}
+            {(title) ? title : "Detail"}
           </H3>
         </Header>
-        <p>
-          {description}
-        </p>
-        <Row>
-          {additionalImages.map( image => (
-            <Image
-              key={image.id}
-              imageId={image.id}
-            />
-          ))}
-        </Row>
+
+        {(selected) ? (
+          <More>
+            <Description>
+              {description}
+            </Description>
+            <Row>
+              {additionalImages.map( image => (
+                <Image
+                  key={image.id}
+                  imageId={image.id}
+                />
+              ))}
+            </Row>
+          </More>
+        ): null}
+
 
 
 
@@ -84,22 +90,41 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: stretch;
   margin: 10px;
   border: 1px solid lightgrey;
   transition: .2s all;
-
+  cursor: pointer;
 `
 
 const Header = styled.div`
   display: flex;
   align-items: center;
-`
-
-const ClipsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px 10px 10px 20px;
+  padding: 10px;
   width: 100%;
   box-sizing: border-box;
+  height: 100%;
+`
+const Index = styled.div`
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: ${({theme}) => theme.fonts.black};
+  font-size: 25px;
+  margin: 0 10px;
+`
+
+const More = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`
+
+const Description = styled.p`
+  margin: 0;
 `
