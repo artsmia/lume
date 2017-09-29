@@ -85,7 +85,7 @@ export default class ImagePicker extends Component {
       !imageId &&
       images.length > 0
     ) {
-      this.selectImage(images[0].id)
+      this.setState({selectedImageId: images[0].id})
     }
 
   }

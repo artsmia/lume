@@ -11,7 +11,6 @@ export const Button = styled.button`
   cursor: pointer;
   vertical-align: middle;
   transition: all .4s ease-in-out;
-  margin-right: .5em;
   color: ${({theme, color}) => (color === "white") ? theme.colors.black : theme.colors.white};
   text-transform: uppercase;
   height: 40px;

@@ -30,7 +30,8 @@ export default class DetailEditor extends Component {
     additionalImagesModal: false,
     snackMessage: "",
     snackId: "",
-    expanded: false
+    expanded: false,
+    additionalImageSelection: ''
   }
 
   render () {
@@ -56,7 +57,8 @@ export default class DetailEditor extends Component {
         snackId,
         deleteModal,
         additionalImagesModal,
-        expanded
+        expanded,
+        additionalImageSelection
       },
       handleChange,
       handleImageSave,
@@ -97,6 +99,7 @@ export default class DetailEditor extends Component {
                 open={imageModal}
                 onClose={()=>this.setState({imageModal: false})}
                 header={"Change Detail Image"}
+                width={"60%"}
               >
                 <ImageManager
                   imageId={(image) ? image.id : false}
@@ -146,14 +149,14 @@ export default class DetailEditor extends Component {
               value={description}
               onChange={handleChange}
             />
-            <Row>
+            <ImagesContainer>
               {additionalImages.map( image => (
-                <Column
+                <ImageButtonPair
                   key={image.id}
                 >
                   <Image
                     imageId={image.id}
-                    size={"50px"}
+                    size={"70px"}
                     thumb
                   />
                   <Button
@@ -162,10 +165,10 @@ export default class DetailEditor extends Component {
                   >
                     Remove
                   </Button>
-                </Column>
+                </ImageButtonPair>
 
               ))}
-            </Row>
+            </ImagesContainer>
             <Button
               onClick={()=>this.setState({additionalImagesModal: true})}
             >
@@ -175,11 +178,18 @@ export default class DetailEditor extends Component {
               onClose={()=>this.setState({additionalImagesModal: false})}
               header={"Add New Additional Image to Detail"}
               open={additionalImagesModal}
+              width={"60%"}
             >
               <ImageManager
                 orgId={orgId}
-                onImageSave={handleAdditionalImageSave}
+                onImageSave={(imageId)=>this.setState({additionalImageSelection:imageId })}
+                imageId={additionalImageSelection}
               />
+              <Button
+                onClick={handleAdditionalImageSave}
+              >
+                Save Image
+              </Button>
             </Modal>
             <Snackbar
               message={snackMessage}
@@ -283,30 +293,37 @@ export default class DetailEditor extends Component {
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
-  handleAdditionalImageSave = async (newAdditionalImageId) => {
+  handleAdditionalImageSave = async () => {
     try {
+
       const {
-        detailId,
-        editOrCreateDetail,
-        data: {
-          refetch
+        props: {
+          detailId,
+          editOrCreateDetail,
+          data: {
+            refetch
+          }
+        },
+        state: {
+          additionalImageSelection
         }
-      } = this.props
+      } = this
 
 
       await editOrCreateDetail({
         variables: {
           detailId,
-          newAdditionalImageIds: [newAdditionalImageId]
+          newAdditionalImageIds: [additionalImageSelection]
         }
       })
 
       await refetch()
 
       this.setState({
-        imageModal: false,
+        additionalImagesModal: false,
         snackId: Math.random(),
-        snackMessage: "Additional Detail Image Added"
+        snackMessage: "Additional Detail Image Added",
+        additionalImageSelection: ""
       })
 
     } catch (ex) {
@@ -427,4 +444,17 @@ const ZoomerContainer = styled.div`
   width: 100%;
   display: flex;
   height: 500px;
+`
+
+const ImagesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+`
+
+const ImageButtonPair = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `

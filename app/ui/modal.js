@@ -17,7 +17,8 @@ export default class Modal extends Component {
         children,
         header,
         footer,
-        open
+        open,
+        width
       }
     } = this
 
@@ -31,6 +32,7 @@ export default class Modal extends Component {
       >
         <Container
           onClick={stopPropagation}
+          width={width}
         >
           <Close
             onClick={close}
@@ -85,8 +87,8 @@ const Container = styled.div`
   position: fixed;
   max-height: 80vh;
   min-height: 30vh;
-  min-width: 30%;
-  max-width: 80%;
+  min-width: 300px;
+  max-width: 90%;
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
@@ -96,6 +98,7 @@ const Container = styled.div`
   align-items: flex-start;
   border-radius: 5px;
   z-index: 1002;
+  width: ${({width}) => (width) ? width : ''};
 `
 
 const Header = styled.div`
@@ -111,6 +114,8 @@ const Header = styled.div`
 
 const Body = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
   padding: 10px;
   min-height: 50px;

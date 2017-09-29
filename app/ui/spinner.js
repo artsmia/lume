@@ -10,18 +10,26 @@ const spin = keyframes`
   }
 `
 
-export const Spinner = styled.div`
+export const SpinnerBox = styled.div`
   width: 40px;
   height: 40px;
   background-color: ${({theme}) => theme.colors.black};
-
-  margin: 100px auto;
   animation: ${spin} 1.2s infinite ease-in-out;
+`
+
+export const Box = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 `
 
 const Overlay = styled.div`
   position: fixed;
   display: flex;
+  justify-content: center;
+  align-items: center;
   top: 0;
   left: 0;
   width: 100%;
@@ -31,10 +39,19 @@ const Overlay = styled.div`
   background-color: ${({theme}) => theme.colors.lightMediumGray};
 `
 
+export const Spinner = (props) => {
+  return (
+    <Box>
+      <SpinnerBox/>
+    </Box>
+  )
+}
+
+
 export const Loading = (props) => {
   return (
     <Overlay>
-      <Spinner/>
+      <SpinnerBox/>
     </Overlay>
   )
 }

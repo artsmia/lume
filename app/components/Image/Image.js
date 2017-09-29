@@ -42,7 +42,15 @@ export default class extends Component {
       }
     } = this
 
-    if (!src) return <Spinner/>
+    if (!src) return (
+      <SpinnerBox
+        height={height}
+        width={width}
+        size={size}
+      >
+        <Spinner/>
+      </SpinnerBox>
+    )
 
     if (thumb) {
       return (
@@ -137,4 +145,12 @@ const Thumb = styled.img`
   box-shadow:  ${({theme, selected}) => (selected) ? `0 0 10px 5px ${theme.colors.purple}` : ""};
   object-fit: cover;
   margin: 10px;
+`
+
+const SpinnerBox = styled.div`
+  height: ${({height, size}) => height || size || '50px'};
+  width: ${({width, size}) => width || size || '50px'};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
