@@ -1,12 +1,18 @@
 import pageModel from '../../db/models/page'
+import pageComparisonImageModel from '../../db/models/pageComparisonImage'
 
 const Page = {
-  async comparisonImages({id}){
+  async comparisonImages(page){
     try {
-      const page = await pageModel.findById(id)
 
-      const comparisonImages =  await page.getComparisonImages()
+      const comparisonImages = await pageComparisonImageModel.findAll({
+        where: {
+          pageId: page.id
+        }
+      })
+
       return comparisonImages
+
     } catch (ex) {
       console.error(ex)
     }

@@ -36,8 +36,6 @@ export async function createAssociations() {
       foreignKey: 'groupId'
     })
 
-
-
     item.belongsToMany(book, {
       as: 'relatedBooks',
       through: 'item_book',
@@ -77,8 +75,16 @@ export async function createAssociations() {
       as: "images"
     })
 
-    page.hasMany(image, {
-      as: "comparisonImages"
+    page.belongsToMany(image, {
+      as: "comparisonImages",
+      through: "page_comparisonImage",
+      foreignKey: "pageId"
+    })
+
+    image.belongsToMany(page, {
+      as: "pageComparison",
+      through: "page_comparisonImage",
+      foreignKey: "imageId"
     })
 
     page.hasOne(image, {

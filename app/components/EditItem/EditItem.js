@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H2, H3} from '../../ui/h'
-import {Label, TextArea, Select, Option, Checkbox} from '../../ui/forms'
+import {Label, Select, Option} from '../../ui/forms'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'

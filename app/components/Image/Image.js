@@ -75,7 +75,7 @@ export default class extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (!nextProps.data.loading) {
+    if (nextProps.data.image) {
       this.generateSrc(nextProps)
     }
   }
@@ -83,7 +83,6 @@ export default class extends Component {
 
   generateSrc = async (nextProps) => {
     try {
-
       const {
         data: {
           image: {

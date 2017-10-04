@@ -70,6 +70,7 @@ mutation editOrCreateItem (
         organization {
           id
         }
+        host
       }
     }
     relatedBooks {

@@ -16,41 +16,50 @@ export default class extends Component {
     text: "",
     video: "",
     imageModal: false,
-    comparisonModal0: false,
-    comparisonModal1: false,
     snackMessage: "",
     snackId: "",
-    images: []
+    images: [],
+    expanded: false,
+    type: "image"
   }
 
   render () {
     if (this.props.data.loading) return null
 
     const {
+      state,
       state: {
         title,
         text,
         type,
         imageModal,
-        comparisonModal0,
-        comparisonModal1,
         snackMessage,
         snackId,
         deleteModal,
         video,
-        comparisonImages,
         mainImage,
+        expanded,
+        mainImageSelection,
+        comparisonImage0,
+        comparisonImage1,
+        comparisonModal0,
+        comparisonModal1,
+        comparisonImage0Selection,
+        comparisonImage1Selection
       },
       save,
       handleChange,
       handleImageSave,
+      handleComparisonImageSave,
       deletePage,
       props: {
-        orgId
+        orgId,
       },
     } = this
     return (
       <Expander
+        expanded={expanded}
+        onArrowClick={()=>this.setState(({expanded}) => ({expanded: !expanded}))}
         header={(
           <Row>
             <Column>
@@ -126,11 +135,11 @@ export default class extends Component {
               >
                 video
               </Option>
-              <Option
+              {/* <Option
                 value={"comparison"}
               >
                 comparison
-              </Option>
+              </Option> */}
             </Select>
 
             {(type === "image") ? (
@@ -150,67 +159,84 @@ export default class extends Component {
                   open={imageModal}
                   onClose={()=>this.setState({imageModal: false})}
                   header={"Change Page Image"}
+                  width={"60%"}
                 >
                   <ImageManager
-                    imageId={(mainImage) ? mainImage.id :""}
+                    imageId={(mainImageSelection) ? mainImageSelection :""}
                     orgId={orgId}
-                    onImageSave={handleImageSave}
+                    onImageSave={(mainImageSelection)=>this.setState({mainImageSelection})}
                   />
+                  <Button
+                    onClick={()=>handleImageSave(mainImageSelection)}
+                  >
+                    Save Image
+                  </Button>
                 </Modal>
               </Row>
             ): null}
 
             {(type === "comparison") ? (
               <Row>
-                <Image
-                  imageId={(comparisonImages[0]) ? comparisonImages[0].id : false}
-                  height={"50px"}
-                  quality={"s"}
-                />
-                <Button
-                  onClick={()=>this.setState({comparisonModal0: true})}
-                  color={"white"}
-                >
-                  Change Comparison Image
-                </Button>
-                <Modal
-                  open={comparisonModal0}
-                  onClose={()=>this.setState({comparisonModal0: false})}
-                  header={"Change Page Comparison Image"}
-                >
-                  <ImageManager
-                    imageId={(comparisonImages[0]) ? comparisonImages[0].id : ""}
-                    orgId={orgId}
-                    onImageSave={(imageId) => {
-                      handleImageSave(imageId, 0)
-                    }}
-                  />
-                </Modal>
-                <Image
-                  imageId={(comparisonImages[1]) ? comparisonImages[1].id : false}
-                  height={"50px"}
-                  quality={"s"}
-                />
-                <Button
-                  onClick={()=>this.setState({comparisonModal1: true})}
-                  color={"white"}
-                >
-                  Change Comparison Image
-                </Button>
-                <Modal
-                  open={comparisonModal1}
-                  onClose={()=>this.setState({comparisonModal1: false})}
-                  header={"Change Page Comparison Image"}
-                >
-                  <ImageManager
-                    imageId={(comparisonImages[1]) ? comparisonImages[1].id : false}
-                    orgId={orgId}
-                    onImageSave={(imageId) => {
-                      handleImageSave(imageId, 1)
-                    }}
-                  />
-                </Modal>
-
+                  <Column>
+                    <Image
+                      imageId={(comparisonImage0) ? comparisonImage0.id : false}
+                      height={"50px"}
+                      quality={"s"}
+                    />
+                    <Button
+                      onClick={()=>this.setState({comparisonModal0: true})}
+                      color={"white"}
+                    >
+                      Change
+                    </Button>
+                  </Column>
+                  <Column>
+                    <Image
+                      imageId={(comparisonImage1) ? comparisonImage1.id : ""}
+                      height={"50px"}
+                      quality={"s"}
+                    />
+                    <Button
+                      onClick={()=>this.setState({comparisonModal1: true})}
+                      color={"white"}
+                    >
+                      Change
+                    </Button>
+                  </Column>
+                  <Modal
+                    open={comparisonModal0}
+                    onClose={()=>this.setState({comparisonModal0: ""})}
+                    header={"Change Comparison Image"}
+                    width={"60%"}
+                  >
+                    <ImageManager
+                        imageId={comparisonImage0Selection}
+                      orgId={orgId}
+                      onImageSave={(comparisonImage0Selection)=>this.setState({comparisonImage0Selection})}
+                    />
+                    <Button
+                      onClick={handleComparisonImageSave}
+                    >
+                      Save Image
+                    </Button>
+                  </Modal>
+                  <Modal
+                    open={comparisonModal1}
+                    onClose={()=>this.setState({comparisonModal0: false})}
+                    header={"Change Comparison Image"}
+                    width={"60%"}
+                  >
+                    <ImageManager
+                        imageId={comparisonImage1Selection}
+                      orgId={orgId}
+                      onImageSave={(comparisonImage1Selection)=>this.setState({comparisonImage1Selection})}
+                    />
+                    <Button
+                      onClick={handleComparisonImageSave}
+                    >
+                      Save Image
+                    </Button>
+                  </Modal>
               </Row>
             ): null}
 
@@ -255,6 +281,23 @@ export default class extends Component {
         })
       })
 
+
+      let comparisonImage0 = page.comparisonImages.find(image => image.index === 0)
+
+      if (comparisonImage0){
+        this.setState({comparisonImage0})
+      }
+
+      let comparisonImage1 = page.comparisonImages.find(image => image.index === 1)
+
+      if (comparisonImage1){
+        this.setState({comparisonImage1})
+      }
+
+
+    }
+    if (!nextProps.data.page.title){
+      this.setState({expanded: true})
     }
   }
 
@@ -299,7 +342,50 @@ export default class extends Component {
     }
   }
 
-  handleImageSave = async(imageId, comparisonIndex) => {
+  handleComparisonImageSave = async () => {
+    try {
+
+      const {
+        state: {
+          comparisonImage0,
+          comparisonImage1,
+          comparisonImage0Selection,
+          comparisonImage1Selection
+
+        },
+        props: {
+          editOrCreatePage,
+          pageId
+        }
+      } = this
+
+      await editOrCreatePage({
+        variables: {
+          pageId,
+          comparisonImages: [
+            {
+              id: (comparisonImage0Selection) ? comparisonImage0Selection : comparisonImage0.id,
+              index: 0,
+            },
+            {
+              id: (comparisonImage1Selection) ? comparisonImage1Selection : comparisonImage1.id,
+              index: 1
+            }
+          ]
+        }
+      })
+
+      this.setState({
+        comparisonModal0: false,
+        comparisonModal1: false
+      })
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  handleImageSave = async(imageId) => {
     try {
       const {
         props: {
@@ -308,47 +394,21 @@ export default class extends Component {
         },
         state: {
           type,
-          comparisonImages,
           text,
           title
         }
       } = this
 
-      if (type === "image") {
-        await editOrCreatePage({
-          variables: {
-            pageId,
-            mainImageId: imageId,
-            type,
-            text,
-            title
-          }
-        })
-      }
-
-      if (type === "comparison") {
-
-        let comparisonImageIds = comparisonImages.map( ({id}) => id)
-
-        comparisonImageIds[comparisonIndex] = imageId
-
-        await editOrCreatePage({
-          variables: {
-            pageId,
-            comparisonImageIds,
-            type,
-            text,
-            title
-          }
-        })
-      }
-
-
-      this.setState({
-        imageModal: false,
-        snackId: Math.random(),
-        snackMessage: "Page Image Changed"
+      await editOrCreatePage({
+        variables: {
+          pageId,
+          mainImageId: imageId,
+          type,
+          text,
+          title
+        }
       })
+
 
     } catch (ex) {
       console.error(ex)

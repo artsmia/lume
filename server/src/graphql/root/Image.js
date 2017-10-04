@@ -1,4 +1,5 @@
 import imageModel from '../../db/models/image'
+import pageComparisonImageModel from '../../db/models/pageComparisonImage'
 
 const Image = {
   async organization(argImage) {
@@ -10,6 +11,26 @@ const Image = {
       console.error(ex)
     }
   },
+  // async index(argImage) {
+  //   try {
+  //     const pageComparisonImage = await pageComparisonImageModel.findAll({
+  //       where: {
+  //         imageId: argImage.id
+  //       }
+  //     })
+  //
+  //     let image = {
+  //       ...argImage,
+  //       index: pageComparisonImage
+  //     }
+  //
+  //     return {
+  //       argImage
+  //     }
+  //   } catch (ex) {
+  //     console.error(ex)
+  //   }
+  // },
 }
 
 export default Image

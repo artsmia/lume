@@ -15,6 +15,7 @@ import Modal from '../../ui/modal'
 import router from 'next/router'
 import PageEditor from '../PageEditor'
 import AppBook from '../AppBook'
+import Sorter from '../../ui/drag/Sorter'
 
 export default class EditBook extends Component {
 
@@ -73,13 +74,15 @@ export default class EditBook extends Component {
         deleteBookModal,
         title,
         pages,
-        selectedPage,
-        selectedTab
+        selectedTab,
+        reordering,
       },
       onImageSave,
-      indexSelect,
-      pageIndexChange
+      reorderPages
     } = this
+
+    let sortedPages = pages.slice().sort( (a,b) => a.index - b.index)
+
     return (
       <Template
         drawer
@@ -173,37 +176,14 @@ export default class EditBook extends Component {
                   <H2>
                     Pages
                   </H2>
-                  <Row>
-                    <Select
-                      multiple
-                      name={"selectedPage"}
-                      value={selectedPage}
-                      onChange={indexSelect}
-                    >
-                      {pages.map( ({id, title}) => (
-                        <Option
-                          key={id}
-                          value={id}
-                        >
-                          {title}
-                        </Option>
-                      ))}
-                    </Select>
-                    <Column>
-                      <Button
-                        onClick={()=> pageIndexChange(-1)}
-                      >
-                        Up
-                      </Button>
-                      <Button
-                        onClick={()=> pageIndexChange(1)}
-                      >
-                        Down
-                      </Button>
-                    </Column>
-                  </Row>
+                  <Button
+                    onClick={()=>this.setState(({reordering}) => ({reordering: !reordering}))}
+                  >
+                    {(reordering) ? "Done" : "Reorder Pages"}
+                  </Button>
+
                   <ExpanderContainer>
-                    { (pages) ?
+                    { (sortedPages && !reordering) ?
                       pages.map( page => (
                         <PageEditor
                           key={page.id}
@@ -213,6 +193,15 @@ export default class EditBook extends Component {
                       ))
                       : null
                     }
+                    {
+                      (sortedPages && reordering) ? (
+                        <Sorter
+                          sortables={sortedPages}
+                          onNewOrder={reorderPages}
+                        />
+                      ): null
+                    }
+
                     <Button
                       onClick={addPage}
                       color={"white"}
@@ -266,9 +255,6 @@ export default class EditBook extends Component {
 
   change = ({target: {name, value}}) => this.setState({[name]: value})
 
-  indexSelect = ({target:{name, value}}) => {
-    this.setState({[name]: [value]})
-  }
 
   onImageSave = async (selectedImageId) => {
     try {
@@ -344,7 +330,7 @@ export default class EditBook extends Component {
       } = this.props
 
 
-      const data = await editBook({
+      await editBook({
         variables: {
           bookId,
           createPageBookId: bookId,
@@ -357,47 +343,21 @@ export default class EditBook extends Component {
     }
   }
 
-  pageIndexChange = async (change) => {
+
+  reorderPages = async (pages) => {
     try {
       const {
-        state: {
-          selectedPage,
-          pages
-        },
-        props: {
-          editPage
-        }
-      } = this
+        editPage
+      } = this.props
 
-      let selectedPageId = selectedPage[0]
-
-      let page = pages.find(({id}) => id === selectedPageId)
-      let oldIndex = page.index
-      let newIndex = oldIndex + change
-
-      let allIndex = pages.map(({index}) => index)
-
-      if (newIndex > Math.max(...allIndex) || newIndex < Math.min(...allIndex)) {
-        return
-      }
-
-      let swapPage = pages.find(({index}) => index === newIndex)
-
-      await editPage({
-        variables: {
-          pageId: page.id,
-          index: newIndex
-        }
-      })
-
-
-      await editPage({
-        variables: {
-          pageId: swapPage.id,
-          index: oldIndex
-        }
-      })
-
+      await Promise.all(
+        pages.map(page => editPage({
+          variables: {
+            pageId: page.id,
+            index: page.index
+          }
+        }))
+      )
     } catch (ex) {
       console.error(ex)
     }

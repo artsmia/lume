@@ -40,7 +40,9 @@ const typeDefs = `
     host: HostEnum
     gdriveId: String
     s3Bucket: String
+    index: Int
   }
+
 
   type Item {
     id: ID!
@@ -235,7 +237,7 @@ const typeDefs = `
       type: String
       title: String
       text: String
-      comparisonImageIds: [ID]
+      comparisonImages: [ComparisonImageInput]
       mainImageId: ID
       video: String
       index: Int
@@ -281,6 +283,10 @@ const typeDefs = `
     bookId: ID
   }
 
+  input ComparisonImageInput {
+    id: ID
+    index: Int
+  }
 
   input ItemInput {
     id: ID

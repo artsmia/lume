@@ -1,10 +1,11 @@
 import pageModel from '../../db/models/page'
+import pageComparisonImageModel from '../../db/models/pageComparisonImage'
 
 export default async function editOrCreatePage(src, args, ctx){
   try {
     const {
       mainImageId,
-      comparisonImageIds,
+      comparisonImages,
       title,
       text,
       video,
@@ -35,8 +36,8 @@ export default async function editOrCreatePage(src, args, ctx){
 
     }
 
-    if (comparisonImageIds) {
-      await page.setComparisonImages(comparisonImageIds)
+    if (comparisonImages) {
+      console.log(comparisonImages)
     }
 
     if (mainImageId) {

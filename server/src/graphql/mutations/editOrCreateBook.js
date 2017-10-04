@@ -40,7 +40,8 @@ export default async function editOrCreateBook(src, args, ctx){
 
       await pageModel.create({
         bookId,
-        index: pages.length
+        index: pages.length,
+        type: 'image'
       })
     }
 

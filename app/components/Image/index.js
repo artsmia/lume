@@ -12,11 +12,6 @@ const queryConfig = {
 
 
 
-const mutationConfig = {
-  name: "editOrCreateClip",
-}
-
-
 const query = graphql(ImageQuery, queryConfig)
 
 
