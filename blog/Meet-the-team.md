@@ -4,7 +4,7 @@ The Minneapolis Institute of Art (Mia) received a Knight Foundation grant to imp
 goal is to deliver a new version of a tool that is already in use at the museum that we call Art Stories. We’re working on adding more
 features, additional flexibility in the formatting of stories, and an improved CMS to ensure these stories are easy to create.
 
-# So who’s getting it done? 
+##### So who’s getting it done? 
 
 Mia has three full-time developers: Andrew David, Head of Web Development, Misty Havens, Web Developer, and Kjell Olsen, Web Developer.
 This is the team that built Art Stories 1.0. The tool had an original use-case that really drove its design and development. Back in 2013,
