@@ -26,7 +26,7 @@ Interactive Media-- partners all focused on ensuring Mia’s digital engagement 
 As with most successful projects, you want to avoid the echo chamber, so relying on voices outside the museum has been crucial. We’re lucky
 enough to have an engaged group of industry experts that make up our advisory group: 
 
-+Brad Dunn, Web and Digital Communications Director, Field Museum of Chicago
+  *Brad Dunn, Web and Digital Communications Director, Field Museum of Chicago
 +Jennifer Foley, Director of Education and Community Engagement, Albright-Knox Art Gallery
 +Jesse Heinzen, Multimedia Director, Minnesota History Center
 +Mike Mouw, Director of Multimedia Technology, The High Museum
