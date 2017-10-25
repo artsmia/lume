@@ -1,9 +1,9 @@
-#What's in a name?
+# What's in a name?
 
 _Carl Peaslee_
 
->_What's in a name? That which we call a rose_
->_By any other name would smell as sweet._
+>_What's in a name? That which we call a rose  
+By any other name would smell as sweet._  
 >**Romeo and Juliet (II, ii, 1-2)**
 
 You'll have to excuse me for getting a bit literary, but as a developer with an MFA in Creative Writing, I'm always intrigued by Computer Science and Writing's shared interest in word choice and nomenclature.
