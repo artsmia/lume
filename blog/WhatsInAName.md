@@ -2,9 +2,11 @@
 
 _Carl Peaslee_
 
->_What's in a name? That which we call a rose
-By any other name would smell as sweet._
-**Romeo and Juliet (II, ii, 1-2)**
+>_What's in a name? That which we call a rose_
+
+>_By any other name would smell as sweet._
+
+>**Romeo and Juliet (II, ii, 1-2)**
 
 You'll have to excuse me for getting a bit literary, but as a developer with an MFA in Creative Writing, I'm always intrigued by Computer Science and Writing's shared interest in word choice and nomenclature.
 
@@ -42,4 +44,4 @@ The phrase "object" was perfect! –– at least until me and my friend Javascri
 
 I won't bore you with specific programming snafus but suffice to say, I decided to make an executive decision and start referring to all of the "stuff" in the application's codebase –– be they art, sculptures, artifacts, photos, sarcophagi, descriptions of purely conceptual works of dance, etc ––  as simply "items".
 
-Perhaps, before the application officially launches, I'll make the curators happy and go through the application and change all of the references to "item" on the frontend to "object". But for right now, for the sake of my sanity, everything is an item. 
+Perhaps, before the application officially launches, I'll make the curators happy and go through the application and change all of the references to "item" on the frontend to "object". But for right now, for the sake of my sanity, everything is an item.
