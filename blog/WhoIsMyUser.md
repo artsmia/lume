@@ -9,15 +9,15 @@ After all, if you don't know who your user is, how can you be sure you're buildi
 
 Thus, "Who is my user?" became the question I kept repeating to myself as I was working (and to my colleagues at every meeting).
 
-As I continued to ask this question, however, it became to clear me that MIA-storytelling, as we'd conceived of it, would be catering to a widely varying audience of users, each of whom would come with different goals, resources, and expectations.
+As I continued to ask this question, however, it became to clear me that Mia-storytelling, as we'd conceived of it, would be catering to a widely varying audience of users, each of whom would come with different goals, resources, and expectations.
 
 To put this question about users in perspective, let's use an example: the spoon. You might think, Wow, now that's a product with a large, diverse audience. And you'd be right. But actually, even though a spoon's audience is incredibly large and varied, each individual user's needs and expectations are actually almost exactly the same: they want to pick up food and get it into their mouth without spilling. Relatively straight forward.
 
-However, when we consider MIA-storytelling more closely, we are effectively building multiple products. There is "the client" –– an app meant to run on iPads in galleries to enhance museum goers ability to connect and engage with the art. And then there is also "the cms" –– a content management system intended for museum staff who intend to create content to accompany works of art.
+However, when we consider Mia-storytelling more closely, we are effectively building multiple products. There is "the client" –– an app meant to run on iPads in galleries to enhance museum goers ability to connect and engage with the art. And then there is also "the cms" –– a content management system intended for museum staff who intend to create content to accompany works of art.
 
 If we take things a step further, we could even say we're building three or four products: not only are we're attempting to make the cms accessible for non-technical users, but we're trying to ensure that it is still powerful and extensible for technically minded users. In keeping with that line of thinking, we could even go so far as to think of the project's open source codebase and documentation themselves as still even another product.
 
-To continue with the spoon metaphor, we're not building just a spoon. We're also building a machine for amateur spoonmakers and advanced spoonmakers to to make spoons as well as an instruction manual so that anyone could build their own custom spoon-maker machine based on ours.
+To continue with the spoon metaphor, we're not building just a spoon. We're also building a machine for amateur spoonmakers and advanced spoonmakers as writing an instruction manual so that anyone could build their own custom spoon-making machine based on ours.
 
 After considering all of this, I tried to sketch out who the users for each of these separate products would be and this is what I ended up with:
 
