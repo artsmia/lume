@@ -15,7 +15,7 @@ export default async function (req,res, next) {
         buffer
       },
       body: {
-        bucket
+        orgId: bucket
       }
     } = req
 

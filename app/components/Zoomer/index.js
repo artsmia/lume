@@ -1,5 +1,6 @@
 import { graphql, compose } from 'react-apollo'
-import Zoomer from './GoogleZoomer'
+// import Zoomer from './GoogleZoomer'
+import Zoomer from './Zoomer'
 import ImageQuery from './query.graphql'
 
 const queryConfig = {

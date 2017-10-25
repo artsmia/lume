@@ -86,8 +86,12 @@ export default class extends Component {
       const {
         data: {
           image: {
+            id: imgId,
             host,
-            gdriveId
+            gdriveId,
+            organization: {
+              id: orgId,
+            },
           }
         },
         quality
@@ -101,6 +105,8 @@ export default class extends Component {
       ){
         let src = await this.getGoogleUrl(gdriveId,imgQuality)
         this.setState({src})
+      } else {
+        this.setState({src: `https://s3.amazonaws.com/${orgId}/${imgId}/${imgQuality}`})
       }
     } catch (ex) {
       console.error(ex)

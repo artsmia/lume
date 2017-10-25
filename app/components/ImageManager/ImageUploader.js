@@ -96,7 +96,7 @@ export default class extends Component {
                 uploading
               )}
             >
-              Upload to Google Drive
+              Upload to S3
             </Button>
             <Message>
               {status}
@@ -156,7 +156,7 @@ export default class extends Component {
       form.append("alt", alt)
       form.append("orgId", orgId)
 
-      const url  = `${apiUrl}/gdrive`
+      const url  = `${apiUrl}/image`
 
       let options = {
         method: 'POST',
