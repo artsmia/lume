@@ -3,7 +3,7 @@
 _Carl Peaslee_
 
 
-My first week of development here at Mia is in the books where I've been tasked with helping Mia create a reboot of their interactive storytelling application, [Art Stories](https://artstories.artsmia.org/#/). The project received generous support from the [Knight Foundation](https://knightfoundation.org/) to pursue the expanded, user-friendly tool and are hopeful that other institutions can use the tool to bring their collections to life.
+My first week of development here at Mia is in the books where I've been tasked with helping Mia create a reboot of their interactive storytelling application, [Art Stories](https://artstories.artsmia.org/#/). The project received generous support from the [Knight Foundation](https://knightfoundation.org/) to pursue the expanded, user-friendly tool. We are hopeful that other institutions can use the tool to bring their collections to life.
 
 As we move through the development process over the next year, I'll be writing periodic updates on our progress. My goal is to make these posts relevant to both technical and non-technical readers alike as I attempt to fulfill both of our grant's goals –– not just to create a storytelling application for fellow museums –– but to also effectively chronicle the creative process both through regular blog posts and a well-documented, open source code repository.
 

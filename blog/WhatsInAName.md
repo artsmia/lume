@@ -24,19 +24,19 @@ We brainstormed a bit but were having difficulty. We couldn't call our applicati
 
 Eventually we gave up on clever or catchy or concise and just decided to call our project what it was. It was a storytelling application built by Mia: Mia-storytelling.
 
-Soon again, I ran into another interesting problem with names.
+Soon later, I ran into another interesting problem with names.
 
 At the core of the application, we are allowing users to create records in our database that correspond to various images, works of art, sculptures, artifacts, and objects.
 
-So what should we call those "things"? They weren't even technically all things! "Art" or "Arts", besides sounding silly, were no-goes. There is, apparently, a fiercely raging and never ending debate on what, exactly, art is –– of which I do my best to stay out.
+So what should we call those "things"? They weren't even technically all things! "Art" or "Arts" sounded silly. Not to mention there is a fiercely raging and never ending debate on what, exactly, art is –– a matter I'd personally like to stay clear of.
 
-"Artifacts" was also a no-go because of some of its connotations. And then "Stuff" just sounded stupid.
+"Artifacts" was also a no-go because of its connotations. And then "Stuff" just sounded stupid.
 
 Thankfully, the curators here at Mia have reached a sort of truce and landed on a term that's almost always accurate, concise, and about as inoffensive as they come: "object".
 
 Van Gogh's _Olive Trees_? It's an object! Coffin of Lady Tashat? You guessed it, it's an object, too!
 
-The phrase "object" was perfect! –– at least until me and my friend Javascript got involved. There aren't too many forbidden "reserved words" in the javascript language but unfortunately "Object" is definitely one of them. Even "object" with a lower-case O would have been alright. But unfortunately, the React framework requires us to capitalize any variable that represents a component!
+The phrase "object" was perfect! –– at least my friend Javascript and I got involved. There aren't too many forbidden or "reserved words" in the javascript language but unfortunately "Object" is definitely one of them. Even "object" with a lower-case O would have been alright. But unfortunately, the React framework requires us to capitalize any variable that represents a component!
 
 (Sidenote: In Javascript, an "Object" is a type of data which reflects an unordered series of key-value pairs (eg. {petName: "Grilled Cheese", species: "cat", coloring: "Tuxedo"}). Even more confusing, objects are sometimes referred to as "maps" or "dictionaries" in other programming languages!)  
 
