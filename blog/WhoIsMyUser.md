@@ -1,5 +1,4 @@
 # Who Is My User?
-======
 
 _Carl Peaslee_
 
