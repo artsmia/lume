@@ -36,10 +36,10 @@ Thankfully, the curators here at Mia have reached a sort of truce and landed on 
 
 Van Gogh's _Olive Trees_? It's an object! Coffin of Lady Tashat? You guessed it, it's an object, too!
 
-The phrase "object" was perfect! –– at least until me and my friend Javascript got involved. There aren't too many forbidden "reserved words" in the javascript language but unfortunately "Object" was definitely one of them. Even "object" with a lower-case O would have been alright. But unfortunately, the React framework requires us to capitalize any variable that represents a component!
+The phrase "object" was perfect! –– at least until me and my friend Javascript got involved. There aren't too many forbidden "reserved words" in the javascript language but unfortunately "Object" is definitely one of them. Even "object" with a lower-case O would have been alright. But unfortunately, the React framework requires us to capitalize any variable that represents a component!
 
-(In javascript, an "Object" is a type of data which reflects an unordered series of key-value pairs (eg. {petName: "Grilled Cheese", species: "cat", coloring: "Tuxedo"}). Even more confusing, objects are sometimes referred to as "maps" or "dictionaries" in other programming languages!)  
+(Sidenote: In Javascript, an "Object" is a type of data which reflects an unordered series of key-value pairs (eg. {petName: "Grilled Cheese", species: "cat", coloring: "Tuxedo"}). Even more confusing, objects are sometimes referred to as "maps" or "dictionaries" in other programming languages!)  
 
-I won't bore you with specific programming snafus but suffice to say, I decided to make an executive decision and start referring to all of the "stuff" in the application's codebase –– be they art, sculptures, artifacts, photos, sarcophagi, descriptions of purely conceptual works of dance, etc ––  as simply "items".
+I won't bore you with any more specific programming snafus but suffice to say, I decided to make an executive decision and start referring to all of the "stuff" in the application's codebase –– be they "arts", sculptures, artifacts, photos, sarcophagi, or descriptions of purely conceptual works of dance ––  as simply "items".
 
 Perhaps, before the application officially launches, I'll make the curators happy and go through the application and change all of the references to "item" on the frontend to "object". But for right now, for the sake of my sanity, everything is an item.
