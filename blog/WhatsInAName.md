@@ -24,7 +24,7 @@ We brainstormed a bit but were having difficulty. We couldn't call our applicati
 
 Eventually we gave up on clever or catchy or concise and just decided to call our project what it was. It was a storytelling application built by Mia: Mia-storytelling.
 
-Soon later, I ran into another interesting problem with names.
+Later, I ran into another interesting problem with names.
 
 At the core of the application, we are allowing users to create records in our database that correspond to various images, works of art, sculptures, artifacts, and objects.
 
