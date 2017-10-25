@@ -14,9 +14,9 @@ If Shakespeare is the most quoted writer when it comes to naming things, than it
 
 In Juliet's famous profession of love to Romeo, we hear her cast aside the importance of individual words. But if we are to listen to Phil Karlton or pay attention to the outcome of Romeo and Juliet (–– or if you have any experience reading other people's code) you'll know that how we choose to name things is not only immensely important but also really really hard.
 
-Interestingly, the mia-storytelling project has been packed full of interesting debates on what to call things.
+Interestingly, the Mia-storytelling project has been packed full of interesting debates on what to call things.
 
-In fact, the current name "mia-storytelling" is a recent christening. The previous iteration of the product had operated under the moniker "griot" (pronounced gree-oh), after the African storyteller –– a result of the application's original use as an extension of a new exhibit on African art.
+In fact, the current name "Mia-storytelling" is a recent christening. The previous iteration of the product had operated under the moniker "griot" (pronounced gree-oh), after the African storyteller –– a result of the application's original use as an extension of a new exhibit on African art.
 
 "Griot", the name, though clever, concise, and unique didn't have a lot of fans. Besides flirting with appropriation, it was a bit academic. It's damning quality, however, was that it was extremely difficult to pronounce when read ("...Gee-Riot?") and equally difficult to spell when heard (_g-r-???-o-???_).
 
