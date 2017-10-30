@@ -4,6 +4,7 @@ import sharp from 'sharp'
 import fs from 'fs'
 import rimraf from 'rimraf'
 
+
 const s3 = new AWS.S3()
 
 export default async function (req,res, next) {
@@ -30,7 +31,7 @@ export default async function (req,res, next) {
     ) {
       await createBucket({
         Bucket: bucket,
-        ACL: "public-read"
+        ACL: "public-read",
       })
     }
 
@@ -122,7 +123,26 @@ function createBucket(params){
   return new Promise( (resolve, reject) => {
     s3.createBucket(params, (err, data) => {
       if (err) reject(err)
-      resolve(data)
+
+      s3.putBucketTagging({
+        Bucket: data.Location.substring(1),
+        Tagging: {
+          TagSet: [
+            {
+              Key: "mia",
+              Value: "",
+            }, {
+              Key: "database",
+              Value: process.env.DATABASE
+            }
+          ]
+        }
+      }, (err, data) => {
+        if (err) reject(err)
+        resolve(data)
+      })
+
+
     })
   })
 }

@@ -126,7 +126,11 @@ export default class ItemSettingsEditor extends Component {
   componentWillReceiveProps({data}){
     if (!data.loading) {
       let keys = Object.keys(data.item)
-      keys.forEach( key => this.setState({[key]: data.item[key] || ""}))
+      keys.forEach( key => {
+        if (!this.state[key]) {
+          this.setState({[key]: data.item[key] || ""})
+        }
+      })
     }
   }
 

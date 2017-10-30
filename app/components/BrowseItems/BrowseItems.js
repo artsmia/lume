@@ -110,7 +110,7 @@ export default class BrowseItems extends Component {
         }
       })
 
-      console.log(item)
+      console.log("item created", item)
 
       router.push({
         pathname: '/cms/edit/item',

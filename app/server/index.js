@@ -8,6 +8,13 @@ const handle = app.getRequestHandler()
 const cookieParser = require('cookie-parser')
 const authMiddleware = require('./auth')
 
+
+console.log(`
+  Starting Server:
+    env: ${process.env.NODE_ENV},
+    api: ${process.env.API_CONFIG}
+`)
+
 app.prepare().then(() => {
 
   const server = express()

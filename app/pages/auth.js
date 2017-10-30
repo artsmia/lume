@@ -40,6 +40,7 @@ export default class extends Component {
           id
           email
           organizations {
+            id
             subdomain
           }
         }

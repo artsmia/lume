@@ -30,11 +30,11 @@
     "uuid": "^3.1.0"
   },
   "scripts": {
-    "start-dev": "API_CONFIG=local node server",
+    "start-local": "API_CONFIG=local node server",
     "lint": "eslint pages ui server utils",
     "test": "jest",
-    "build": "next build",
-    "start": "NODE_ENV=production API_CONFIG=beta node server",
+    "build": "API_CONFIG=beta next build",
+    "start": "NODE_ENV=production node server",
     "deploy-test": "now && now alias knight.u100.io",
     "deploy-beta": "now && now alias beta.u100.io"
   },

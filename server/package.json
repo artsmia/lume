@@ -16,14 +16,14 @@
   },
   "scripts": {
     "build": "yarn run clean && babel src --out-dir dist --copy-files",
-    "start-dev": "NODE_ENV=dev DATABASE=beta nodemon src --exec babel-node src",
+    "start-local": "NODE_ENV=dev DATABASE=dev nodemon src --exec babel-node src",
     "start": "NODE_ENV=production DATABASE=beta node dist",
     "clean": "rm -rf dist",
     "test": "jest",
     "deploy-test": "now --docker && now alias api.knight.u100.io",
     "deploy-beta": "now --docker && now alias api.beta.u100.io",
-    "dev-db-reset": "NODE_ENV=dev babel-node src/db/scripts/reinitialize",
-    "beta-db-reset": "NODE_ENV=production babel-node src/db/scripts/reinitialize"
+    "db-reset-dev": "NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/reinitialize",
+    "db-reset-beta": "NODE_ENV=production DATABASE=beta babel-node src/db/scripts/reinitialize"
   },
   "dependencies": {
     "apollo-server-express": "^1.1.0",

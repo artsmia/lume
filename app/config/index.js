@@ -29,17 +29,6 @@ switch (process.env.API_CONFIG) {
 }
 
 switch (process.env.NODE_ENV) {
-  case "dev": {
-    auth0ID = "j8pjiCmNfc74AYnuP8MR0PZAbk68syv6"
-    auth0Domain = "artsmia.auth0.com"
-    url = "https://knight.u100.io"
-    domain = "knight.u100.io"
-    s3Url = "https://s3.amazonaws.com"
-    googleApiKey = "AIzaSyB74ffA_5MUNzEcNFDZs0SNOhoSGzlbD6M"
-    googleClientId = "386077841817-kpp5vbepavknjo55s7nvh8bp2uv7lp80.apps.googleusercontent.com	"
-    gdriveSearchUrl = `https://www.googleapis.com/drive/v3/files/?key=${googleApiKey}`
-    break
-  }
   case "production": {
     auth0ID = "j8pjiCmNfc74AYnuP8MR0PZAbk68syv6"
     auth0Domain = "artsmia.auth0.com"
@@ -50,21 +39,18 @@ switch (process.env.NODE_ENV) {
     gdriveSearchUrl = `https://www.googleapis.com/drive/v3/files/?key=${googleApiKey}`
     break
   }
-  default: {
-    prefix = "http://"
+  default:
+  case "dev": {
     auth0ID = "j8pjiCmNfc74AYnuP8MR0PZAbk68syv6"
     auth0Domain = "artsmia.auth0.com"
-    domain = "localhost:5000"
     url = "http://localhost:3000"
     s3Url = "https://s3.amazonaws.com"
     googleApiKey = "AIzaSyB74ffA_5MUNzEcNFDZs0SNOhoSGzlbD6M"
     googleClientId = "386077841817-kpp5vbepavknjo55s7nvh8bp2uv7lp80.apps.googleusercontent.com	"
     gdriveSearchUrl = `https://www.googleapis.com/drive/v3/files/?key=${googleApiKey}`
+    break
   }
 }
-
-
-console.log(apiUrl)
 
 
 export {

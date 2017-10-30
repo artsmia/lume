@@ -20,21 +20,9 @@ export default async function editOrCreateOrganization(src, args, ctx){
     } = args
 
     if (id) {
-      await organizationModel.update({
-        name,
-        subdomain,
-        customItemApiEnabled,
-        customItemApiEndpoint,
-        customImageApiEnabled,
-        customImageEndpoint,
-        customImageTileEndpoint,
-        customImageThumbEndpoint,
-        customImageInfoEndpoint
-      }, {
-        where: {
-          id
-        }
-      })
+      // await organizationModel.upsert({
+      //   ...args
+      // })
       organization = await organizationModel.findById(id)
     } else {
       organization = await organizationModel.create({

@@ -20,11 +20,15 @@ export default class JoinOrCreate extends Component {
     if (this.props.data.loading) return null
 
     const {
-      addUserToOrganization,
+      createAndJoinOrg,
+      joinOrg,
       change,
-      props,
+      props: {
+        data: {
+          organizations
+        }
+      },
       state: {
-        organizations,
         organizationId,
         name,
         subdomain
@@ -64,7 +68,7 @@ export default class JoinOrCreate extends Component {
                 </Form>
                 <Button
                   disabled={(!organizationId)}
-                  onClick={addUserToOrganization}
+                  onClick={joinOrg}
                 >
                   Join
                 </Button>
@@ -92,7 +96,7 @@ export default class JoinOrCreate extends Component {
                 </Form>
                 <Button
                   disabled={(!name || !subdomain)}
-                  onClick={addUserToOrganization}
+                  onClick={createAndJoinOrg}
                 >
                   Create and Join
                 </Button>
@@ -106,42 +110,67 @@ export default class JoinOrCreate extends Component {
     )
   }
 
-  componentWillReceiveProps(newProps){
-    if (this.state.organizations.length === 0 && !newProps.data.loading){
-      const {
-        organizations
-      } = this.props.data
-
-      this.setState({organizations: organizations || []})
-    }
-  }
-
-  change = ({target: {name, value}}) => this.setState({[name]: value})
-
-
-  addUserToOrganization = async () => {
+  joinOrg = async() => {
     try {
 
       const {
-        props: {
-          userId,
-        },
         state: {
-          name,
-          subdomain,
-          organizationId
+          organizationId,
+        },
+        props: {
+          userId
         }
       } = this
-
 
       const {data: {editOrCreateOrganization: {subdomain: orgSub}}} = await this.props.addUserToOrganization({
         variables: {
           orgId: organizationId,
           newUserIds: [userId],
+        }
+      })
+
+      router.push({
+        pathname: '/cms/org',
+        query: {
+          orgSub
+        }
+      }, `/${orgSub}/cms`)
+
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+
+  change = ({target: {name, value}}) => this.setState({[name]: value})
+
+
+  createAndJoinOrg = async () => {
+    try {
+
+      const {
+        props: {
+          userId,
+          data: {
+            organizations
+          }
+        },
+        state: {
+          name,
+          subdomain,
+        }
+      } = this
+
+      const {data: {editOrCreateOrganization: {subdomain: orgSub}}} = await this.props.addUserToOrganization({
+        variables: {
+          newUserIds: [userId],
           name,
           subdomain
         }
       })
+
+
 
       router.push({
         pathname: '/cms/org',

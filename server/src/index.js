@@ -17,6 +17,14 @@ import iiif, {info} from './iiif'
 import customItemEndpoints from './customItemEndpoints'
 import gdrive from './gdrive'
 
+
+console.log(`
+  Starting Server:
+    env: ${process.env.NODE_ENV},
+    database: ${process.env.DATABASE}
+`)
+
+
 const upload = multer()
 
 const server = express()
