@@ -5,12 +5,14 @@ export default async function(id){
     let url = `http://search.artsmia.org/id/${id}`
 
     const options = {
-      method: "GET"
+      method: "GET",
     }
 
     const response = await fetch(url,options)
 
     const json = await response.json()
+
+    console.log(json)
 
     const data = {
       item: {

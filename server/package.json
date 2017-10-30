@@ -23,7 +23,8 @@
     "deploy-test": "now --docker && now alias api.knight.u100.io",
     "deploy-beta": "now --docker && now alias api.beta.u100.io",
     "db-reset-dev": "NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/reinitialize",
-    "db-reset-beta": "NODE_ENV=production DATABASE=beta babel-node src/db/scripts/reinitialize"
+    "db-reset-beta": "NODE_ENV=production DATABASE=beta babel-node src/db/scripts/reinitialize",
+    "db-populate": "yarn run db-reset-dev && NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/populate"
   },
   "dependencies": {
     "apollo-server-express": "^1.1.0",
