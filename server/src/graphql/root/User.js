@@ -13,7 +13,7 @@ const User = {
 
       const orgIds = userOrgs.map( ({organizationId}) => organizationId)
 
-      const organizations = organizationModel.findAll({
+      const organizations = await organizationModel.findAll({
         where: {
           $or: [
             {

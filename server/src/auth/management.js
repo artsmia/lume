@@ -57,33 +57,3 @@ export async function getUser(id){
     console.log("getUser ex", ex)
   }
 }
-
-// export async function getUserGoogleTokens(userId){
-//   try {
-//     if (
-//       !managementToken ||
-//       Date.now() > expiration
-//     ) {
-//       await refreshToken()
-//     }
-//
-//     const options =  {
-//       method: 'GET',
-//       headers: {
-//         "Authorization": `Bearer ${managementToken}`
-//       }
-//     }
-//
-//
-//     const response = await fetch(`${managementEndpoint}/users/${userId}`, options)
-//
-//     const json = await response.json()
-//
-//     console.log(json)
-//
-//     return json
-//
-//   } catch (ex) {
-//     console.error(ex)
-//   }
-// }

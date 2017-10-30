@@ -30,12 +30,13 @@
     "uuid": "^3.1.0"
   },
   "scripts": {
-    "dev": "node server",
+    "start-dev": "API_CONFIG=local node server",
     "lint": "eslint pages ui server utils",
     "test": "jest",
     "build": "next build",
-    "start": "NODE_ENV=production node server",
-    "deploy": "now && now alias"
+    "start": "NODE_ENV=production API_CONFIG=beta node server",
+    "deploy-test": "now && now alias knight.u100.io",
+    "deploy-beta": "now && now alias beta.u100.io"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

@@ -24,6 +24,7 @@ export default class Root extends Component {
         }
       }
     } = this
+
     return (
       <Template
         {...props}
@@ -41,22 +42,25 @@ export default class Root extends Component {
           <H3>
             Organization Pages
           </H3>
-          <Column>
-            {organizations.map( ({id, name, subdomain}) => (
-              <Link
-                key={id}
-                href={{
-                  pathname: "/app",
-                  query: {
-                    orgSub: subdomain
-                  }
-                }}
-                as={`/${subdomain}`}
-              >
-                {name}
-              </Link>
-            ))}
-          </Column>
+          {(organizations) ? (
+            <Column>
+              {organizations.map( ({id, name, subdomain}) => (
+                <Link
+                  key={id}
+                  href={{
+                    pathname: "/app",
+                    query: {
+                      orgSub: subdomain
+                    }
+                  }}
+                  as={`/${subdomain}`}
+                >
+                  {name}
+                </Link>
+              ))}
+            </Column>
+          ): null}
+
         </Centered>
       </Template>
     )
