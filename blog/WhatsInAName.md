@@ -16,13 +16,13 @@ In Juliet's famous profession of love to Romeo, we hear her cast aside the impor
 
 Interestingly, the Mia-storytelling project has been packed full of interesting debates on what to call things.
 
-In fact, the current name "Mia-storytelling" is a recent christening. The previous iteration of the product had operated under the moniker "griot" (pronounced gree-oh), after the African storyteller –– a result of the application's original use as an extension of a new exhibit on African art.
+In fact, the current name "Mia-storytelling" is a recent, albeit temporary, christening. The previous iteration of the product had operated under the moniker "griot" (pronounced gree-oh), after the African storyteller –– a result of the application's original use as an extension of a new exhibit on African art.
 
 "Griot", the name, though clever, concise, and unique didn't have a lot of fans. Besides flirting with appropriation, it was a bit academic. Its most damning quality, however, was that it was extremely difficult to pronounce when read ("...Gee-Riot?") and equally difficult to spell when heard (_g-r-???-o-???_).
 
 We brainstormed a bit but were having difficulty. We couldn't call our application art-stories... because what if a user wanted to make a story for an image that wasn't art? And we couldn't call it museum stories... because we didn't want to scare off institutions that weren't technically museums! What about just "Mia-stories"? Oooh, no! That's the name of Mia's blog!
 
-Eventually we gave up on clever or catchy or concise and just decided to call our project what it was. It was a storytelling application built by Mia: Mia-storytelling.
+While we haven't been able to come up with a clever or catchy name for the tool yet, Mia Storytelling tells it like it is-- and for now, that will have to do (stay tuned for a follow up post on the naming exercise conducted to come up with a name).
 
 Later, I ran into another interesting problem with names.
 
