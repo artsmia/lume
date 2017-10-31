@@ -159,6 +159,16 @@ export default class extends Component {
       ) {
         await this.showCrop()
       }
+
+      if (
+        this.state.zoomCreated &&
+        this.state.geometry &&
+        !this.props.data.loading &&
+        this.props.itemId
+      ) {
+        await this.createIndexMarkers()
+      }
+
     } catch (ex) {
       console.error(ex)
     }
@@ -257,7 +267,63 @@ export default class extends Component {
       })
       this.map.highlight.addTo(this.map)
     }
+
   }
+
+
+
+  createIndexMarkers = () => {
+    const {
+      props: {
+        data: {
+          item: {
+            details: allDetails,
+          },
+          detail: {
+            image: {
+              id: detailImageId
+            }
+          }
+        },
+        onDetailSelection
+      }
+    } = this
+
+    let details = allDetails.filter( detail => detail.image.id === detailImageId)
+
+    details.forEach( (detail) => {
+
+      const {
+        index, geometry: {coordinates}
+      } = detail
+
+      let southWest = L.polygon(coordinates).getBounds().getSouthWest()
+
+      let html = `<div class="index-icon"> ${index + 1} </div>`
+
+      let icon = L.divIcon({
+        html
+      })
+
+      let indexMarker = L.marker(southWest, {
+        icon,
+        opacity: .75
+      })
+
+      indexMarker.addTo(this.map)
+
+      indexMarker.on(
+        "click",
+        () => {
+          onDetailSelection(detail)
+        }
+      )
+
+
+    })
+
+  }
+
 
   saveGeometry = () => {
     const geometry = {
@@ -597,6 +663,17 @@ const ZoomerMap = styled.div`
     &:active {
       background-color: grey;
     }
+  }
+  .index-icon {
+    height: 35px;
+    width: 35px;
+    color: white;
+    background-color: black;
+    border-radius: 20px;
+    border: 2px solid white;
+    font-size: 20px;
+    text-align: center;
+    line-height: 35px;
   }
 
 `

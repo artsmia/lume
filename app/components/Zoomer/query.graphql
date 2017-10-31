@@ -1,6 +1,7 @@
 query ZoomerQuery (
   $imageId: ID!
   $detailId: ID!
+  $itemId: ID!
 ) {
   image (
     id: $imageId
@@ -33,5 +34,23 @@ query ZoomerQuery (
       coordinates
     }
   }
-
+  item (
+    id: $itemId
+  ) {
+    id
+    mainImage {
+      id
+    }
+    details {
+      id
+      index
+      image {
+        id
+      }
+      geometry {
+        type
+        coordinates
+      }
+    }
+  }
 }

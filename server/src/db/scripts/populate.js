@@ -55,11 +55,10 @@ async function populate() {
           id: undefined
         }))
 
-        await Promise.all(
-          items.map(item => createItem(item))
-        )
 
-
+        for (let item of items) {
+          await createItem(item)
+        }
 
 
       } catch (ex) {
@@ -121,9 +120,12 @@ async function populate() {
           })
         })
 
-        let newDetails = await Promise.all(
-          details.map( detail => createDetail(detail))
-        )
+        let newDetails = []
+
+        for (let detail of details) {
+          newDetails.push(await createDetail(detail))
+        }
+
 
         await newItem.addDetails(newDetails)
 
@@ -212,9 +214,13 @@ async function populate() {
           }
         })
 
-        await Promise.all(
-          books.map( book => createBook(book))
-        )
+        // await Promise.all(
+        //   books.map( book => createBook(book))
+        // )
+
+        for (let book of books) {
+          await createBook(book)
+        }
 
 
       } catch (ex) {

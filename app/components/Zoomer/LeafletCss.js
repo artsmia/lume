@@ -552,10 +552,10 @@ const LeafletStyles = styled.div`
 
   /* div icon */
 
-  .leaflet-div-icon {
+  ${'' /* .leaflet-div-icon {
   background: #fff;
   border: 1px solid #666;
-  }
+  } */}
 
 
   /* Tooltip */

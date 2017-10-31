@@ -5,7 +5,7 @@ import query from './query.graphql'
 const config = {
   options: ({detailId}) => ({
     variables: {
-      detailId
+      detailId,
     }
   })
 }

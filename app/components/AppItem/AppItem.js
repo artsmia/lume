@@ -148,6 +148,8 @@ export default class extends Component {
           {(selectedDetail && selectedDetail.image) ? (
             <Zoomer
               detailId={selectedDetail.id}
+              itemId={itemId}
+              onDetailSelection={handleDetailSelection}
             />
           ): null}
         </FeatureContainer>
