@@ -1,4 +1,5 @@
 # Meet the Team
+Gretchen Halverson
 
 The Minneapolis Institute of Art (Mia) received a [Knight Foundation](https://knightfoundation.org/) grant to improve its open-source, digital storytelling platform. Our
 goal is to deliver a new version of a tool that is already in use at the museum that we call [Art Stories](artstories.artsmia.org). We’re working on adding more
