@@ -7,11 +7,14 @@ query ImageQuery (
     id
     organization {
       id
+      customImageApiEnabled
+      customImageEndpoint
     }
     host
     gdriveId
     s3Bucket
     title
     alt
+    localId
   }
 }

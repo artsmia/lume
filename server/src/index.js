@@ -14,9 +14,10 @@ import {
   graphiqlExpress,
 } from 'apollo-server-express'
 import iiif, {info} from './iiif'
-import customItemEndpoints from './customItemEndpoints'
-import gdrive from './gdrive'
 
+import miaEndpoints from './miaEndpoints'
+
+import gdrive from './gdrive'
 
 console.log(`
   Starting Server:
@@ -42,7 +43,8 @@ server.use(
 
 server.use('/gdrive', upload.single("file"), gdrive)
 
-server.use('/item/:orgSub', customItemEndpoints)
+server.use('/mia/:type', miaEndpoints)
+
 
 server.use("/image", upload.single("file") , imageRoute)
 

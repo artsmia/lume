@@ -35,12 +35,14 @@ export default class extends Component {
         selected,
         onClick,
         height,
-        width
+        width,
       },
       state: {
         src
       }
     } = this
+
+
 
     if (!src) return (
       <SpinnerBox
@@ -87,10 +89,10 @@ export default class extends Component {
         data: {
           image: {
             id: imgId,
-            host,
-            gdriveId,
+            localId,
             organization: {
               id: orgId,
+              customImageApiEnabled,
             },
           }
         },
@@ -100,10 +102,9 @@ export default class extends Component {
       let imgQuality = quality || 'm'
 
       if (
-        host === 'gdrive' &&
-        gdriveId
+        customImageApiEnabled
       ){
-        let src = await this.getGoogleUrl(gdriveId,imgQuality)
+        let src = `https://cdn.dx.artsmia.org/thumbs/tn_${localId}.jpg`
         this.setState({src})
       } else {
         this.setState({src: `https://s3.amazonaws.com/${orgId}/${imgId}/${imgQuality}`})

@@ -1,4 +1,5 @@
-import getMiaItem from './mia'
+import getMiaItem from './miaItem'
+import getMiaImage from './miaImage'
 
 
 export default async function(req, res, next){
@@ -6,10 +7,13 @@ export default async function(req, res, next){
 
     let data
 
-    switch (req.params.orgSub) {
-      case "mia": {
+    switch (req.params.type) {
+      case "item": {
         data = await getMiaItem(req.body.id)
         break
+      }
+      case "image": {
+        data = await getMiaImage(req.body.id)
       }
       default: {
         break

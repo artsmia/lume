@@ -85,9 +85,6 @@ const typeDefs = `
     customItemApiEndpoint: String
     customImageApiEnabled: Boolean
     customImageEndpoint: String
-    customImageTileEndpoint: String
-    customImageThumbEndpoint: String
-    customImageInfoEndpoint: String
   }
 
   type Page {

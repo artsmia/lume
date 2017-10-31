@@ -34,7 +34,7 @@
     "lint": "eslint pages ui server utils",
     "test": "jest",
     "build": "API_CONFIG=beta next build",
-    "start": "NODE_ENV=production node server",
+    "start": "NODE_ENV=production API_CONFIG=beta node server",
     "deploy-test": "now && now alias knight.u100.io",
     "deploy-beta": "now && now alias beta.u100.io"
   },
