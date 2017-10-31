@@ -22,9 +22,11 @@ query ZoomerQuery (
       id
       organization {
         id
+        customImageApiEnabled
       }
       host
       gdriveId
+      localId
     }
     geometry {
       type

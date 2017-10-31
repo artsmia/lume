@@ -14,6 +14,9 @@ const book = db.define('book', {
   visibility: {
     type: Sequelize.ENUM,
     values: ['published', 'draft']
+  },
+  localId: {
+    type: Sequelize.STRING,    
   }
 }, {
   freezeTableName: true

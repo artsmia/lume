@@ -1,9 +1,11 @@
 query itemListData (
   $search: String
+  $orgSub: String
 ) {
 
   items (
     search: $search
+    orgSub: $orgSub
   ) {
     id
     title

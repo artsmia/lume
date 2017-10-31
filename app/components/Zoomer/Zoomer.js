@@ -196,10 +196,14 @@ export default class extends Component {
       lngs = coordinates.map(([lat,lng]) => lng)
     }
 
-    const top = Math.max(...lats)
-    const bottom = Math.min(...lats)
-    const left = Math.min(...lngs)
-    const right = Math.max(...lngs)
+
+
+    let top = Math.max(...lats)
+    let bottom = Math.min(...lats)
+    let left = Math.min(...lngs)
+    let right = Math.max(...lngs)
+
+
 
     const selectionBounds = [
       [top, left],
@@ -208,6 +212,7 @@ export default class extends Component {
       [bottom, left],
       [top, left]
     ]
+
     return selectionBounds
   }
 

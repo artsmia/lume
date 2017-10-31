@@ -84,7 +84,11 @@ export default class extends Component {
             <TabBody
               name={"about"}
             >
-              <AboutText>{text}</AboutText>
+              <AboutText
+                dangerouslySetInnerHTML={{
+                  __html: text,
+                }}
+              />
             </TabBody>
             <TabBody
               name={"details"}

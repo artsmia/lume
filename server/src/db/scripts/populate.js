@@ -36,6 +36,7 @@ async function populate() {
 
       } catch (ex) {
         console.error(ex)
+        process.exit(1)
       }
     }
 
@@ -49,7 +50,9 @@ async function populate() {
           localId,
           pullFromCustomApi: true,
           organizationId: organization.id,
-          ...json.objects[localId]
+          ...json.objects[localId],
+          text: json.objects[localId].description,
+          id: undefined
         }))
 
         await Promise.all(
@@ -61,8 +64,32 @@ async function populate() {
 
       } catch (ex) {
         console.error(ex)
+        process.exit(1)
       }
     }
+
+    const createDetail = async(detail) => {
+      try {
+
+        const newDetail = await detailModel.create(detail)
+        const [newImage, isNew] = await imageModel.findCreateFind({
+          where: {
+            localId: detail.localImageId,
+          }
+        })
+
+        if (isNew) {
+          await organization.addImage(newImage)
+        }
+
+        await newDetail.setImage(newImage)
+        return newDetail
+      } catch (ex) {
+        console.error(ex)
+        process.exit(1)
+      }
+    }
+
 
     const createItem = async(item) => {
       try {
@@ -70,30 +97,54 @@ async function populate() {
 
         await organization.addItem(newItem)
 
-        const details = item.views[0].annotations.map( (detail, index) => ({
-          ...detail,
-          geometry: detail.geoJSON.geometry,
-          index,
-          id: undefined
-        }))
+        let details = []
 
-        const newDetails = await detailModel.bulkCreate(details)
+        item.views.forEach( (view) => {
+          let index = 0
+          view.annotations.forEach( detail => {
+
+            let {
+              geometry
+            } = detail.geoJSON
+            geometry.coordinates = [
+              geometry.coordinates[0].map( coord => ([coord[1] * 256, coord[0] * 256]) )
+            ]
+
+            details.push({
+              ...detail,
+              geometry,
+              index,
+              id: undefined,
+              localImageId: view.image
+            })
+            index++
+          })
+        })
+
+        let newDetails = await Promise.all(
+          details.map( detail => createDetail(detail))
+        )
 
         await newItem.addDetails(newDetails)
 
-        const imageIds = item.views.map( view => ({
-          localId: view.image,
-        }))
+        const [newMainImage, isNew] = await imageModel.findCreateFind({
+          where: {
+            localId: item.views[0].image
+          }
+        })
 
-        const newMainImage = await imageModel.create(imageIds[0])
+        if (isNew) {
 
-        await newMainImage.setOrganization(organization)
+          await organization.addImage(newMainImage)
+
+        }
 
         await newItem.setMainImage(newMainImage)
 
 
       } catch (ex) {
         console.error(ex)
+        process.exit(1)
       }
     }
 
@@ -103,7 +154,8 @@ async function populate() {
 
         const newBook = await bookModel.create({
           ...book,
-          id: undefined
+          id: undefined,
+          localId: book.id
         })
 
         const pages = await pageModel.bulkCreate(book.pages)
@@ -116,6 +168,7 @@ async function populate() {
 
         itemIds.forEach( id => {
           let relatedStories = json.objects[id].relatedStories || []
+
           if (
             relatedStories.includes(book.localId)
           ) {
@@ -123,20 +176,20 @@ async function populate() {
           }
         })
 
-        const item = await itemModel.findAll({
+        const items = await itemModel.findAll({
           where: {
             localId: itemsToAssociate
           }
         })
 
-        await newBook.addRelatedItems(item)
+        await newBook.addRelatedItems(items)
 
         await organization.addBook(newBook)
 
 
-
       } catch (ex) {
         console.error(ex)
+        process.exit(1)
       }
     }
 
@@ -154,7 +207,7 @@ async function populate() {
           let book = stories[localId]
 
           return {
-            localId,
+            localId: parseInt(localId,10),
             ...book
           }
         })
@@ -166,6 +219,7 @@ async function populate() {
 
       } catch (ex) {
         console.error(ex)
+        process.exit(1)
       }
     }
 

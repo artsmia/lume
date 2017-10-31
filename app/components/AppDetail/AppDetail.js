@@ -50,9 +50,9 @@ export default class extends Component {
 
         {(selected) ? (
           <More>
-            <Description>
-              {description}
-            </Description>
+            <Description
+              dangerouslySetInnerHTML={{__html: description}}
+            />
             <Row>
               {additionalImages.map( image => (
                 <Image
