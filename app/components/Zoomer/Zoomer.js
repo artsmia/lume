@@ -436,25 +436,57 @@ export default class extends Component {
         state: {
           image: {
             id: imageId,
+            localId,
             organization: {
-              id: bucketId
+              id: bucketId,
+              customImageApiEnabled
             }
           }
         },
       } = this
 
+      let tileSize
+      let tileUrl
+      let height
+      let width
 
-      const response = await fetch(`${apiUrl}/iiif/${imageId}/info.json`, {
-        method: "GET"
-      })
 
-      let {
-        height,
-        width
-      } = await response.json()
+      if (
+        customImageApiEnabled &&
+        localId
+      ) {
+
+        const response = await fetch(`https://tiles.dx.artsmia.org/${localId}.tif`, {
+          method: "GET"
+        })
+        let json = await response.json()
+
+        height = json.height
+        width = json.width
+
+        tileUrl = json.tileUrl || json.tiles[0]
+
+        tileSize = json.tileSize || 256
+
+      } else {
+
+        const response = await fetch(`${apiUrl}/iiif/${imageId}/info.json`, {
+          method: "GET"
+        })
+
+        let json = await response.json()
+
+        tileSize = 512
+        tileUrl = `${s3Url}/${bucketId}/${imageId}/tiles/{z}-{x}-{y}.png`
+
+
+
+        height = json.height
+        width = json.width
+
+      }
 
       const larger = Math.max(height, width)
-      const tileSize = 512
 
       let maxTiles = Math.ceil(larger / tileSize)
 
@@ -489,8 +521,9 @@ export default class extends Component {
 
       const initialZoom = Math.log2(longDimension / tileSize)
 
+
       this.tiles = L.tileLayer.knight(
-        `${s3Url}/${bucketId}/${imageId}/tiles/{z}-{x}-{y}.png`, {
+        tileUrl, {
           tileSize,
           maxNativeZoom: maxZoom,
           minNativeZoom: 0,
@@ -620,9 +653,11 @@ if (typeof window === 'object') {
 
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({z,x,y}) {
+
+
       let tile = document.createElement("div")
       let image = document.createElement("img")
-      image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y)
+      image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y).replace("{s}", 0)
       image.style["object-fit"] = "contain"
       tile.appendChild(image)
       return tile

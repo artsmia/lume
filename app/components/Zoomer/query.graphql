@@ -8,6 +8,7 @@ query ZoomerQuery (
     id
     organization {
       id
+      customImageApiEnabled
     }
     localId
     host
