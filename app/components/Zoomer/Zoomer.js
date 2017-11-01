@@ -95,9 +95,16 @@ export default class extends Component {
       this.setState({
         // image: (detail) ? detail.image : image,
         image: displayImage,
-        geometry: (detail) ? detail.geometry: false
       })
     }
+
+    if (
+      !nextProps.data.loading &&
+      nextProps.data.detail
+    ) {
+      this.setState({geometry: nextProps.data.detail.geometry})
+    }
+
     if (
       this.state.image &&
       this.props.data.detail &&

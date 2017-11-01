@@ -21,7 +21,7 @@ export default class extends Component {
   }
 
   state = {
-    selectedDetail: false,
+    selectedDetail: "",
     selectedTab: "about"
   }
 
@@ -49,6 +49,7 @@ export default class extends Component {
     } = this
 
     let sortedDetails = details.slice().sort((a,b) => a.index - b.index)
+
     return (
       <Container>
         <SideContainer>
