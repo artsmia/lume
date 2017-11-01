@@ -151,6 +151,34 @@ async function populate() {
     }
 
 
+    const createPage = async(page) => {
+      try {
+        const newPage = await pageModel.create(page)
+
+        if (page.type === "image") {
+          const [image, isNew] = await imageModel.findCreateFind({
+            where: {
+              localId: page.image
+            }
+          })
+
+          if (isNew) {
+            await organization.addImage(image)
+          }
+
+          await newPage.setMainPageImage(image)
+
+        }
+
+        return newPage
+
+      } catch (ex) {
+        console.error(ex)
+        process.exit(1)
+
+      }
+    }
+
     const createBook = async(book) => {
       try {
 
@@ -160,7 +188,13 @@ async function populate() {
           localId: book.id
         })
 
-        const pages = await pageModel.bulkCreate(book.pages)
+        let pages = []
+
+        for (let page of book.pages) {
+          pages.push(
+            await createPage(page)
+          )
+        }
 
         await newBook.setPages(pages)
 
@@ -213,10 +247,6 @@ async function populate() {
             ...book
           }
         })
-
-        // await Promise.all(
-        //   books.map( book => createBook(book))
-        // )
 
         for (let book of books) {
           await createBook(book)
