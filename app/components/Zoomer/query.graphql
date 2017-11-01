@@ -40,6 +40,11 @@ query ZoomerQuery (
     id
     mainImage {
       id
+      localId
+      organization {
+        id
+        customImageApiEnabled
+      }
     }
     details {
       id

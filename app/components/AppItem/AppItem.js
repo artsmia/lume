@@ -61,7 +61,10 @@ export default class extends Component {
             <TabHeader>
               <Tab
                 name={"about"}
-                onClick={()=>this.setState({selectedTab: "about"})}
+                onClick={ () => this.setState({
+                  selectedTab: "about",
+                  selectedDetail: false
+                })}
               >
                 About
               </Tab>
@@ -69,14 +72,17 @@ export default class extends Component {
                 name={"details"}
                 onClick={()=>this.setState({
                   selectedTab: "details",
-                  selectedDetail: (sortedDetails.length > 0) ? sortedDetails[0] : false
+
                 })}
               >
                 Details
               </Tab>
               <Tab
                 name={"more"}
-                onClick={()=>this.setState({selectedTab: "more"})}
+                onClick={()=>this.setState({
+                  selectedTab: "more",
+                  selectedDetail: false
+                })}
               >
                 More
               </Tab>
@@ -140,18 +146,25 @@ export default class extends Component {
           </TabContainer>
         </SideContainer>
         <FeatureContainer>
-          {(mainImage && !selectedDetail) ? (
+          {(mainImage && selectedTab !== "details") ? (
             <Zoomer
               imageId={mainImage.id}
             />
           ): null}
-          {(selectedDetail && selectedDetail.image) ? (
+          {(selectedTab === "details") ? (
+            <Zoomer
+              itemId={itemId}
+              onDetailSelection={handleDetailSelection}
+              detailId={(selectedDetail) ? selectedDetail.id : ""}
+            />
+          ): null}
+          {/* {(selectedDetail && selectedDetail.image) ? (
             <Zoomer
               detailId={selectedDetail.id}
               itemId={itemId}
               onDetailSelection={handleDetailSelection}
             />
-          ): null}
+          ): null} */}
         </FeatureContainer>
       </Container>
     )

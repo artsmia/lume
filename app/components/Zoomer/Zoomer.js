@@ -79,9 +79,22 @@ export default class extends Component {
       const {
         detail,
         image,
+        item
       } = nextProps.data
+
+      let displayImage
+
+      if (detail) {
+        displayImage = detail.image
+      } else if (image) {
+        displayImage = image
+      } else if (item) {
+        displayImage =  item.mainImage
+      }
+
       this.setState({
-        image: (detail) ? detail.image : image,
+        // image: (detail) ? detail.image : image,
+        image: displayImage,
         geometry: (detail) ? detail.geometry: false
       })
     }
@@ -162,7 +175,6 @@ export default class extends Component {
 
       if (
         this.state.zoomCreated &&
-        this.state.geometry &&
         !this.props.data.loading &&
         this.props.itemId
       ) {
@@ -278,18 +290,21 @@ export default class extends Component {
         data: {
           item: {
             details: allDetails,
-          },
-          detail: {
-            image: {
-              id: detailImageId
+            mainImage: {
+              id: mainImageId
             }
-          }
+          },
         },
-        onDetailSelection
+        onDetailSelection,
+        detailId
       }
     } = this
 
-    let details = allDetails.filter( detail => detail.image.id === detailImageId)
+
+    let matchImageId = detailId || mainImageId
+
+
+    let details = allDetails.filter( detail => detail.image.id === matchImageId)
 
     details.forEach( (detail) => {
 
