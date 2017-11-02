@@ -1,0 +1,23 @@
+query allItems (
+  $orgSub: String
+  $search: String
+  $filter: Filter
+
+) {
+  items (
+    search: $search
+    orgSub: $orgSub
+    filter: $filter
+  ) {
+    id
+    title
+    mainImage {
+      id
+    }
+  }
+  organization (
+    subdomain: $orgSub
+  ) {
+    id
+  }
+}

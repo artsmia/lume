@@ -1,21 +1,33 @@
 import itemModel from '../../db/models/item'
 import organizationModel from '../../db/models/organization'
+import {Op} from 'sequelize'
+
 
 export default async function items(src, {organizationId, orgSub, groupId, search, filter}, ctx){
   try {
 
     let options = {
       include: [],
-      order: []
+      order: [],
+      where: {
+
+      }
     }
 
     if (search) {
-      Object.assign(options, {
-        where: {
-          title: {
-            $regexp: search
+      Object.assign(options.where, {
+        [Op.or]: [
+          {
+            title: {
+              [Op.regexp]: search
+            }
+          },
+          {
+            text: {
+              [Op.regexp]: search
+            }
           }
-        }
+        ]
       })
     }
 
@@ -58,27 +70,6 @@ export default async function items(src, {organizationId, orgSub, groupId, searc
 
     }
 
-    console.log(options)
-
-
-    // Object.assign(options, {
-    //   limit: 10
-    // })
-    //
-    // options.order.push(
-    //   ['updatedAt', 'DESC']
-    // )
-
-
-    // options.push({
-    //   limit: 10
-    // })
-    //
-    // options.push({
-    //   order: [
-    //     "title", "DES"
-    //   ]
-    // })
 
 
     return await itemModel.findAll(options)

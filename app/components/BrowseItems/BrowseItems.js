@@ -7,6 +7,11 @@ import router from 'next/router'
 import PropTypes from 'prop-types'
 import Image from '../Image'
 import {Loading} from '../../ui/spinner'
+import {Search} from '../../ui/search'
+import Svg from '../../ui/icons/Svg'
+import KeyboardArrowDown from '../../ui/icons/KeyboardArrowDown'
+import KeyboardArrowUp from '../../ui/icons/KeyboardArrowUp'
+
 
 export default class BrowseItems extends Component {
 
@@ -16,31 +21,56 @@ export default class BrowseItems extends Component {
     data: PropTypes.object
   }
 
+  state = {
+    search: "",
+    order: {}
+  }
+
 
   render() {
 
     if (
-      this.props.data.loading ||
       !this.props.data.items
     ) return <Loading/>
 
     const {
       handleNewItem,
+      handleChange,
+      handleSearch,
+      handleArrowClick,
       props: {
         orgSub,
         data: {
           items
         }
+      },
+      state: {
+        search,
+        order
       }
     } = this
+
     return (
 
         <Centered>
+
           <Button
             onClick={handleNewItem}
           >
             New Item
           </Button>
+
+          <Search
+            onChange={handleChange}
+            name={"search"}
+            value={search}
+          />
+          <Button
+            onClick={handleSearch}
+          >
+            Search
+          </Button>
+
           <Table>
             <Header>
               <Row>
@@ -51,11 +81,44 @@ export default class BrowseItems extends Component {
                 </Cell>
                 <Cell>
                   Title
+                  <KeyboardArrowUp
+                    onClick={()=>handleArrowClick({
+                      column: "title",
+                      direction: "DESC"
+                    })}
+                    fill={(order.column === "title" && order.direction === "DESC") ? "black" : "grey"}
+                  />
+                  <KeyboardArrowDown
+                    onClick={()=>handleArrowClick({
+                      column: "title",
+                      direction: "ASC"
+                    })}
+                    fill={(order.column === "title" && order.direction === "ASC") ? "black" : "grey"}
+                  />
+                </Cell>
+                <Cell
+                  width={"130px"}
+                >
+                  Last Update
+                  <KeyboardArrowUp
+                    onClick={()=>handleArrowClick({
+                      column: "updatedAt",
+                      direction: "ASC"
+                    })}
+                    fill={(order.column === "updatedAt" && order.direction === "ASC") ? "black" : "grey"}
+                  />
+                  <KeyboardArrowDown
+                    onClick={()=>handleArrowClick({
+                      column: "updatedAt",
+                      direction: "DESC"
+                    })}
+                    fill={(order.column === "updatedAt" && order.direction === "DESC") ? "black" : "grey"}
+                  />
                 </Cell>
               </Row>
             </Header>
             <Body>
-              {items.map( ({mainImage, id: itemId, title}) => (
+              {items.map( ({mainImage, id: itemId, title, updatedAt}) => (
                 <Row
                   key={itemId}
                 >
@@ -81,8 +144,13 @@ export default class BrowseItems extends Component {
                     >
                       {title}
                     </Link>
-                  </Cell>
 
+                  </Cell>
+                  <Cell
+                    width={"130px"}
+                  >
+                    {new Date(updatedAt).toLocaleDateString()}
+                  </Cell>
                 </Row>
               ))}
             </Body>
@@ -90,6 +158,48 @@ export default class BrowseItems extends Component {
 
         </Centered>
     )
+  }
+
+  componentDidUpdate(prevProps, prevState){
+
+
+
+    if (
+      prevState.order.column !== this.state.order.column ||
+      prevState.order.direction !== this.state.order.direction
+    ) {
+      this.props.data.refetch({
+        search: this.state.search,
+        filter: {
+          order: this.state.order,
+          limit: 10
+        }
+      })
+    }
+  }
+
+  handleArrowClick = ({column, direction}) => {
+    this.setState(({order}) => {
+
+      if (
+        order.column === column &&
+        order.direction === direction
+      ) {
+        return {
+          order: {
+            column: "",
+            direction: ""
+          }
+        }
+      } else {
+        return {
+          order: {
+            column,
+            direction
+          }
+        }
+      }
+    })
   }
 
   handleNewItem = async () => {
@@ -110,8 +220,6 @@ export default class BrowseItems extends Component {
         }
       })
 
-      console.log("item created", item)
-
       router.push({
         pathname: '/cms/edit/item',
         query: {
@@ -122,6 +230,23 @@ export default class BrowseItems extends Component {
     } catch (ex) {
       console.error(ex)
     }
+  }
+
+  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+
+  handleSearch = () => {
+    const {
+      search,
+      order
+    } = this.state
+
+    this.props.data.refetch({
+      search,
+      filter: {
+        limit: 10,
+        order
+      }
+    })
   }
 
 }

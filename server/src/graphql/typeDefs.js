@@ -67,6 +67,7 @@ const typeDefs = `
     organizations: [Organization]
     details: [Detail]
     pullFromCustomApi: Boolean
+    updatedAt: String
   }
 
   type Organization {

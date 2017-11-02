@@ -8,6 +8,13 @@ const queryConfig = {
   options: ({orgSub}) => ({
     variables: {
       orgSub,
+      filter: {
+        limit: 10,
+        order: {
+          column: "title",
+          direction: "ASC"
+        }
+      }
     },
   })
 }

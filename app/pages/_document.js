@@ -15,6 +15,7 @@ export default class ClientDocument extends Document {
             type='image/x-icon'
             href='/static/favicon.png'/>
 
+
           {styleTags}
         </Head>
         <body>
