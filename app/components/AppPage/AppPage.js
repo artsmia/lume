@@ -27,7 +27,8 @@ export default class AppPage extends Component {
             type,
             text,
             mainImage,
-            comparisonImages,
+            comparisonImage0,
+            comparisonImage1,
             video
           }
         }
@@ -47,20 +48,22 @@ export default class AppPage extends Component {
               url={video}
             />
           ): null}
-          {(comparisonImages.length === 2 && type === "comparison") ? (
+          {(type === "comparison" && comparisonImage0 && comparisonImage1) ? (
             <Row>
               <Zoomer
-                imageId={comparisonImages[0].id}
+                imageId={comparisonImage0.id}
               />
               <Zoomer
-                imageId={comparisonImages[1].id}
+                imageId={comparisonImage1.id}
               />
             </Row>
           ): null}
         </FeatureContainer>
         <SideContainer>
           <H3>{title}</H3>
-          <p>{text}</p>
+          <TextContainer
+            dangerouslySetInnerHTML={{__html: text}}
+          />
         </SideContainer>
       </PageContainer>
     )
@@ -69,6 +72,10 @@ export default class AppPage extends Component {
 
 }
 
+
+const TextContainer = styled.div`
+  
+`
 
 const PageContainer = styled.div`
   display: flex;

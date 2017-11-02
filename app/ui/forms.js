@@ -9,10 +9,12 @@ export const Form = styled.form`
 
 export const Label = styled.label`
   font-family: ${({theme}) => theme.fonts.regular};
+  font-size: 16px;
 `
 
 export const Input = styled.input`
   box-sizing: border-box;
+  font-size: 16px;
   min-width: 150px;
   padding: .65em;
   border-radius: 2px;
@@ -36,6 +38,7 @@ export const TextArea = styled.textarea`
   color: inherit;
   outline: none;
   width: 100%;
+  font-size: 16px;
 `
 
 export const Select = styled.select`
@@ -61,4 +64,6 @@ export const Checkbox = (props) => {
 
 
 export const Option = styled.option`
+  font-size: 16px;
+
 `

@@ -195,7 +195,7 @@ export default class ItemSettingsEditor extends Component {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 20px;
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
@@ -205,7 +205,7 @@ const Container = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 20px;
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;

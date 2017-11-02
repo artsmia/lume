@@ -12,7 +12,10 @@ query PageQuery (
     mainImage {
       id
     }
-    comparisonImages {
+    comparisonImage0 {
+      id
+    }
+    comparisonImage1 {
       id
     }
     video

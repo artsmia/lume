@@ -12,12 +12,12 @@ let prefix = "https://"
 
 switch (process.env.API_CONFIG) {
   case "dev": {
-    apiUrl = "https://api.knight.u100.io"
+    apiUrl = "https://api.test.storytellin.gg"
 
     break
   }
   case "beta": {
-    apiUrl = "https://api.beta.u100.io"
+    apiUrl = "https://api.beta.storytellin.gg"
 
     break
   }
@@ -32,7 +32,7 @@ switch (process.env.NODE_ENV) {
   case "production": {
     auth0ID = "j8pjiCmNfc74AYnuP8MR0PZAbk68syv6"
     auth0Domain = "artsmia.auth0.com"
-    url = "https://beta.u100.io"
+    url = "https://beta.storytellin.gg"
     s3Url = "https://s3.amazonaws.com"
     googleApiKey = "AIzaSyB74ffA_5MUNzEcNFDZs0SNOhoSGzlbD6M"
     googleClientId = "386077841817-kpp5vbepavknjo55s7nvh8bp2uv7lp80.apps.googleusercontent.com	"

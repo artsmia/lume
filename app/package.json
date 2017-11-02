@@ -35,8 +35,8 @@
     "test": "jest",
     "build": "API_CONFIG=beta next build",
     "start": "NODE_ENV=production API_CONFIG=beta node server",
-    "deploy-test": "now && now alias knight.u100.io",
-    "deploy-beta": "now && now alias beta.u100.io"
+    "deploy-test": "now && now alias test.storytellin.gg",
+    "deploy-beta": "now && now alias beta.storytellin.gg"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
@@ -55,8 +55,5 @@
     "prop-types": "^15.5.10",
     "react-addons-test-utils": "^15.5.1",
     "react-test-renderer": "^15.5.4"
-  },
-  "now": {
-    "alias": "knight.u100.io"
   }
 }

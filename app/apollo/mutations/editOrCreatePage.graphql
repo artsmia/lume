@@ -2,7 +2,8 @@ mutation editOrCreatePage (
   $pageId: ID
   $title: String
   $text: String
-  $comparisonImages: [ComparisonImageInput]
+  $comparisonImage0: ID
+  $comparisonImage1: ID
   $mainImageId: ID
   $type: String
   $video: String
@@ -12,7 +13,8 @@ mutation editOrCreatePage (
     id: $pageId
     title: $title
     text: $text
-    comparisonImages: $comparisonImages
+    comparisonImage0: $comparisonImage0
+    comparisonImage1: $comparisonImage1
     mainImageId: $mainImageId
     type: $type
     video: $video
@@ -25,10 +27,6 @@ mutation editOrCreatePage (
     index
     mainImage {
       id
-    }
-    comparisonImages {
-      id
-      index
     }
     video
   }

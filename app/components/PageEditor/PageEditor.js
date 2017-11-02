@@ -135,11 +135,11 @@ export default class extends Component {
               >
                 video
               </Option>
-              {/* <Option
+              <Option
                 value={"comparison"}
               >
                 comparison
-              </Option> */}
+              </Option>
             </Select>
 
             {(type === "image") ? (
@@ -180,8 +180,7 @@ export default class extends Component {
                   <Column>
                     <Image
                       imageId={(comparisonImage0) ? comparisonImage0.id : false}
-                      height={"50px"}
-                      quality={"s"}
+                      thumb
                     />
                     <Button
                       onClick={()=>this.setState({comparisonModal0: true})}
@@ -193,8 +192,7 @@ export default class extends Component {
                   <Column>
                     <Image
                       imageId={(comparisonImage1) ? comparisonImage1.id : ""}
-                      height={"50px"}
-                      quality={"s"}
+                      thumb
                     />
                     <Button
                       onClick={()=>this.setState({comparisonModal1: true})}
@@ -282,17 +280,17 @@ export default class extends Component {
       })
 
 
-      let comparisonImage0 = page.comparisonImages.find(image => image.index === 0)
-
-      if (comparisonImage0){
-        this.setState({comparisonImage0})
-      }
-
-      let comparisonImage1 = page.comparisonImages.find(image => image.index === 1)
-
-      if (comparisonImage1){
-        this.setState({comparisonImage1})
-      }
+      // let comparisonImage0 = page.comparisonImages.find(image => image.index === 0)
+      //
+      // if (comparisonImage0){
+      //   this.setState({comparisonImage0})
+      // }
+      //
+      // let comparisonImage1 = page.comparisonImages.find(image => image.index === 1)
+      //
+      // if (comparisonImage1){
+      //   this.setState({comparisonImage1})
+      // }
 
 
     }

@@ -19,6 +19,7 @@ async function populate() {
     const json = await response.json()
 
     let organization
+    let mcn
 
 
     const createOrganization = async () => {
@@ -31,6 +32,11 @@ async function populate() {
           customItemApiEndpoint: "http://localhost:5000/mia/item",
           customImageApiEnabled: true,
           customImageEndpoint: "http://localhost:5000/mia/image"
+        })
+
+        mcn = await organizationModel.create({
+          subdomain: "mcn",
+          name: "Museum Computer Network",
         })
 
 
@@ -98,8 +104,10 @@ async function populate() {
 
         let details = []
 
+        let index = 0
+
         item.views.forEach( (view) => {
-          let index = 0
+
           view.annotations.forEach( detail => {
 
             let {
@@ -166,8 +174,34 @@ async function populate() {
             await organization.addImage(image)
           }
 
-          await newPage.setMainPageImage(image)
+          await newPage.setMainImage(image)
 
+        }
+
+        if (page.type === "comparison") {
+          const [comparisonImage0, image0IsNew] =  await imageModel.findCreateFind({
+            where: {
+              localId: page.image
+            }
+          })
+
+          if (image0IsNew) {
+            await organization.addImage(comparisonImage0)
+          }
+
+          await newPage.setComparisonImage0(comparisonImage0)
+
+          const [comparisonImage1, image1IsNew] =  await imageModel.findCreateFind({
+            where: {
+              localId: page.imageB
+            }
+          })
+
+          if (image1IsNew) {
+            await organization.addImage(comparisonImage1)
+          }
+
+          await newPage.setComparisonImage1(comparisonImage1)
         }
 
         return newPage
@@ -190,10 +224,16 @@ async function populate() {
 
         let pages = []
 
+        let index = 0
+
         for (let page of book.pages) {
           pages.push(
-            await createPage(page)
+            await createPage({
+              ...page,
+              index
+            })
           )
+          index++
         }
 
         await newBook.setPages(pages)

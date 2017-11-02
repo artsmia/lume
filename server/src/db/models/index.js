@@ -6,7 +6,6 @@ import item from './item'
 import page from './page'
 import organization from './organization'
 import userOrganization from './userOrganization'
-import pageComparisonImage from './pageComparisonImage'
 
 
 export {
@@ -18,5 +17,4 @@ export {
   page,
   organization,
   userOrganization,
-  pageComparisonImage
 }

@@ -427,7 +427,7 @@ const DetailHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px;
+  padding: 20px;
   box-sizing: border-box;
 `
 
@@ -448,6 +448,6 @@ const EditContainer = styled.div`
 
 const SectionContainer = styled(Column)`
   margin: 20px;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid ${({theme}) => theme.colors.black};
 `

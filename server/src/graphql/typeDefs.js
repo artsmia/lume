@@ -95,8 +95,9 @@ const typeDefs = `
     index: Int
     book: Book
     mainImage: Image
-    comparisonImages: [Image]
     video: String
+    comparisonImage0: Image
+    comparisonImage1: Image
   }
 
   type User {
@@ -186,6 +187,7 @@ const typeDefs = `
       organizationId: ID
       groupId: ID
       search: String
+      filter: Filter
     ): [Item]
 
     organizations: [Organization]
@@ -234,7 +236,8 @@ const typeDefs = `
       type: String
       title: String
       text: String
-      comparisonImages: [ComparisonImageInput]
+      comparisonImage0: ID
+      comparisonImage1: ID
       mainImageId: ID
       video: String
       index: Int
@@ -307,6 +310,21 @@ const typeDefs = `
     coordinates: [[[Float]]]
   }
 
+  input Filter {
+    limit: Int
+    offset: Int
+    order: [OrderInput]
+  }
+
+  input OrderInput {
+    column: String
+    direction: DirectionEnum
+  }
+
+  enum DirectionEnum {
+    ASC
+    DESC
+  }
 
 `
 

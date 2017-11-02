@@ -13,6 +13,82 @@ import {
 export async function createAssociations() {
   try {
 
+    detail.belongsTo(item, {
+      as: "item",
+    })
+
+    item.hasMany(detail, {
+      as: "details"
+    })
+
+    detail.belongsTo(image, {
+      as: "image",
+    })
+
+    image.hasMany(detail, {
+      as: "details"
+    })
+
+    page.belongsTo(book, {
+      as: "book"
+    })
+
+    book.hasMany(page, {
+      as: "pages"
+    })
+
+    image.belongsTo(organization, {
+      as: "organization"
+    })
+
+    organization.hasMany(image, {
+      as: "images"
+    })
+
+    image.hasMany(page, {
+      foreignKey: "mainImageId"
+    })
+
+    page.belongsTo(image, {
+      as: "mainImage",
+      foreignKey: "mainImageId"
+    })
+
+    image.hasMany(item, {
+      foreignKey: "mainImageId",
+    })
+
+    item.belongsTo(image, {
+      as: "mainImage",
+      foreignKey: "mainImageId",
+    })
+
+    image.hasMany(book, {
+      foreignKey: "previewImageId"
+    })
+
+    book.belongsTo(image, {
+      as: "previewImage",
+      foreignKey: "previewImageId"
+    })
+
+    image.hasMany(page, {
+      foreignKey: "comparisonImage0Id"
+    })
+
+    page.belongsTo(image, {
+      as: "comparisonImage0",
+      foreginKey: "comparisonImage0Id"
+    })
+
+    image.hasMany(page, {
+      foreignKey: "comparisonImage1Id"
+    })
+
+    page.belongsTo(image, {
+      as: "comparisonImage1",
+      foreignKey: "comparisonImage1Id"
+    })
 
     item.belongsToMany(group, {
       as: 'groups',
@@ -47,57 +123,6 @@ export async function createAssociations() {
       foreignKey: 'bookId'
     })
 
-    detail.belongsTo(item, {
-      as: "item",
-    })
-
-    item.hasMany(detail, {
-      as: "details"
-    })
-
-    detail.belongsTo(image, {
-      as: "image",
-    })
-
-
-    book.hasMany(page, {
-      as: "pages"
-    })
-    page.belongsTo(book, {
-      as: "book"
-    })
-
-    image.belongsTo(organization, {
-      as: "organization"
-    })
-
-    organization.hasMany(image, {
-      as: "images"
-    })
-
-    page.belongsToMany(image, {
-      as: "comparisonImages",
-      through: "page_comparisonImage",
-      foreignKey: "pageId"
-    })
-
-    image.belongsToMany(page, {
-      as: "pageComparison",
-      through: "page_comparisonImage",
-      foreignKey: "imageId"
-    })
-
-    page.hasOne(image, {
-      as: "mainPageImage"
-    })
-
-    item.hasOne(image, {
-      as: "mainImage"
-    })
-
-    book.hasOne(image, {
-      as: "previewImage"
-    })
 
     detail.belongsToMany(image, {
       as: "additionalImages",
@@ -158,6 +183,6 @@ export async function createAssociations() {
   } catch (ex) {
 
     console.log("createAssociations ex", ex)
-
+    process.exit(1)
   }
 }

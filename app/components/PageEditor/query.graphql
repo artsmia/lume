@@ -12,9 +12,11 @@ query PageQuery (
     mainImage {
       id
     }
-    comparisonImages {
+    comparisonImage0 {
       id
-      index
+    }
+    comparisonImage1 {
+      id
     }
   }
 }
