@@ -408,6 +408,6 @@ const EditContainer = styled.div`
 
 const SectionContainer = styled(Column)`
   margin: 20px;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid ${({theme}) => theme.colors.black};
 `

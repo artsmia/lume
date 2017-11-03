@@ -7,6 +7,10 @@ import Zoomer from '../Zoomer'
 import {Search} from '../../ui/search'
 import {Row} from '../../ui/layout'
 
+const ImageSearch = styled(Search)`
+  width: 100px;
+`
+
 export default class ImagePicker extends Component {
 
   static defaultProps = {
@@ -46,7 +50,7 @@ export default class ImagePicker extends Component {
       <Container>
         <ThumbColumn>
           <SearchRow>
-            <Search
+            <ImageSearch
               value={search}
               name={"search"}
               onChange={handleChange}

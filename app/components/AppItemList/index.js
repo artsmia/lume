@@ -7,7 +7,10 @@ const config = {
   options: ({orgSub, search}) => ({
     variables: {
       orgSub,
-      search
+      search,
+      filter: {
+        limit: 20
+      }
     }
   })
 }

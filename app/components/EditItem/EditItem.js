@@ -156,9 +156,6 @@ export default class EditItem extends Component {
                   </H3>
                   <Row>
                     <Column>
-                      <Label>
-                        All Books
-                      </Label>
                       <Row>
                         <Search
                           name={"bookSearch"}
@@ -460,6 +457,7 @@ const CheckContainer = styled.div`
   border: 1px solid black;
   overflow-y: scroll;
   padding: 20px;
+  margin: 10px 0;
 `
 
 const CheckRow = styled.div`

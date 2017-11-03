@@ -178,7 +178,7 @@ export default class ItemSettingsEditor extends Component {
 }
 
 const AboutText = styled(TextArea)`
-  min-height: 400px;
+  min-height: 250px;
 `
 
 const Container = styled.div`

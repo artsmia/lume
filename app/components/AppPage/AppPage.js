@@ -74,7 +74,6 @@ export default class AppPage extends Component {
 
 
 const TextContainer = styled.div`
-  
 `
 
 const PageContainer = styled.div`
@@ -89,6 +88,7 @@ const SideContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  padding: 20px;
 `
 
 const FeatureContainer = styled.div`

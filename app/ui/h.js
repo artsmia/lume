@@ -22,10 +22,10 @@ export const H2 = styled.h2`
 
 export const H3 = styled.h3`
   ${(props) => hStyles(props)}
-  font-size: 1.031rem;
+  font-size: 1.25rem;
 `
 
 export const H4 = styled.h4`
   ${(props) => hStyles(props)}
-  font-size: .8rem;
+  font-size: 1rem;
 `

@@ -514,7 +514,6 @@ export default class extends Component {
   createZoomer = async () => {
     try {
 
-      console.log("createZoomer")
 
       await this.promiseState({
         zoomLoading: true
@@ -656,7 +655,6 @@ export default class extends Component {
         zoomCreated: true
       })
 
-      console.log("zoomCreated")
 
     } catch (ex) {
       console.error(ex)
@@ -665,7 +663,6 @@ export default class extends Component {
 
   promiseState = (newState) => {
 
-    console.log("promiseState")
 
     return new Promise( (resolve, reject) => {
       this.setState(

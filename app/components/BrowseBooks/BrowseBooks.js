@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import Image from '../Image'
 import KeyboardArrowDown from '../../ui/icons/KeyboardArrowDown'
 import KeyboardArrowUp from '../../ui/icons/KeyboardArrowUp'
-
+import {Search} from '../../ui/search'
 
 export default class BrowseBooks extends Component {
 
@@ -22,7 +22,8 @@ export default class BrowseBooks extends Component {
     order: {
       column: "updatedAt",
       direction: "ASC"
-    }
+    },
+    search: ""
   }
 
   render() {
@@ -32,6 +33,9 @@ export default class BrowseBooks extends Component {
     const {
       handleNewBook,
       handleLoadMore,
+      handleChange,
+      handleSearch,
+      handleArrowClick,
       props: {
         orgSub,
         data: {
@@ -40,6 +44,7 @@ export default class BrowseBooks extends Component {
       },
       state: {
         order,
+        search
       }
     } = this
     return (
@@ -49,6 +54,19 @@ export default class BrowseBooks extends Component {
         >
           Create Thematic Story
         </Button>
+        <Row>
+          <Search
+            onChange={handleChange}
+            name={"search"}
+            value={search}
+          />
+          <Button
+            onClick={handleSearch}
+          >
+            Search
+          </Button>
+        </Row>
+
         <Table>
           <Header>
             <Row>
@@ -144,6 +162,23 @@ export default class BrowseBooks extends Component {
     )
   }
 
+  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+
+  handleSearch = () => {
+    const {
+      search,
+      order
+    } = this.state
+
+    this.props.data.refetch({
+      search,
+      filter: {
+        limit: 10,
+        order: (order.column) ? order : undefined
+      }
+    })
+  }
+
   handleLoadMore = async () => {
     try {
 
@@ -219,7 +254,7 @@ export default class BrowseBooks extends Component {
         search: this.state.search,
         filter: {
           order: this.state.order,
-          limit: 10
+          limit: 20
         }
       })
     }

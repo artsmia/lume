@@ -212,7 +212,7 @@ const RelatedContainer = styled.div`
   cursor: pointer;
 `
 
-const AboutText = styled.p`
+const AboutText = styled.div`
   margin: 15px;
 `
 

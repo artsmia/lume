@@ -70,7 +70,6 @@ export default async function items(src, {organizationId, orgSub, groupId, searc
 
     }
 
-    console.log(options, options.include)
 
 
     return await itemModel.findAll(options)

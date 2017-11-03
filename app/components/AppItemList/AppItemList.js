@@ -4,6 +4,8 @@ import {s3Url} from '../../config'
 import Link from 'next/link'
 import Image from '../Image'
 import PropTypes from 'prop-types'
+import {Button} from '../../ui/buttons'
+import {Row} from '../../ui/layout'
 
 export default class AppItemList extends Component {
 
@@ -22,7 +24,8 @@ export default class AppItemList extends Component {
     const {
       props: {
         data: {
-          items
+          items,
+          fetchMore
         },
         orgSub
       }
@@ -56,6 +59,23 @@ export default class AppItemList extends Component {
             </ImageLink>
           </Link>
         ))}
+        {(items.length >= 20) ? (
+          <Row>
+              <Button
+                color={"white"}
+                onClick={()=>{
+                  fetchMore({
+                    filter: {
+                      limit: 20,
+                      offset: items.length
+                    }
+                  })
+                }}
+              >
+                Load More
+              </Button>
+          </Row>
+        ) : null}
       </ItemsContainer>
     )
   }

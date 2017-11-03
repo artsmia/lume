@@ -39,7 +39,7 @@ export const TextArea = styled.textarea`
   outline: none;
   width: 100%;
   font-size: 16px;
-  min-height: 150px;
+  min-height: 120px;
 `
 
 export const Select = styled.select`
