@@ -23,8 +23,5 @@ query BookQuery (
     subdomain: $orgSub
   ) {
     id
-    images {
-      id
-    }
   }
 }

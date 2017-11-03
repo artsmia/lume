@@ -12,8 +12,6 @@ export default async function(id){
 
     const json = await response.json()
 
-    console.log(json)
-
     const data = {
       item: {
         accessionNumber: json["accession_number"],

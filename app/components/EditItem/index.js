@@ -10,7 +10,11 @@ const queryOptions = {
     variables: {
       itemId,
       userId,
-      orgSub
+      orgSub,
+      bookFilter: {
+        limit: 10,
+        orgSub
+      }
     }
   })
 }

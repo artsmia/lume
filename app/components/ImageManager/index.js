@@ -3,11 +3,18 @@ import ImageManager from './ImageManager'
 import query from './query.graphql'
 
 const queryOptions = {
-  options: ({orgId}) => ({
-    variables: {
-      orgId
+  options: ({orgId, imageId}) => {
+
+    return {
+      variables: {
+        filter: {
+          limit: 10,
+          organizationId: orgId
+        },
+        imageId: imageId || ""
+      }
     }
-  })
+  }
 }
 
 export default compose(

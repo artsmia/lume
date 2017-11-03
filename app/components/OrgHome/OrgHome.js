@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H1} from '../../ui/h'
-import SearchSortFilter from '../SearchSortFilter/SearchSortFilter'
 
 export default class Home extends Component {
 
@@ -26,9 +25,7 @@ export default class Home extends Component {
         <H1>
           {name}
         </H1>
-        <SearchSortFilter
-          orgSub={orgSub}
-        />
+
       </Container>
     )
   }

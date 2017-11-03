@@ -80,4 +80,5 @@ const Centered = styled.div`
   margin-top: 50px;
   flex-direction: column;
   align-items: flex-start;
+  padding: 20px;
 `

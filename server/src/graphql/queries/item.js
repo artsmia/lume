@@ -1,11 +1,20 @@
 import itemModel from '../../db/models/item'
 import orgModel from '../../db/models/organization'
 import fetch from 'node-fetch'
+import chalk from 'chalk'
 
-
-export default async function item(src, {id}, ctx){
+export default async function item(src, args, ctx){
   try {
+
+
+    let {
+      id
+    } = args
+
     let item = await itemModel.findById(id)
+
+    if (!item) return item
+
 
     if (
       item.pullFromCustomApi &&

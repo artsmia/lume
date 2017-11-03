@@ -1,16 +1,18 @@
 query booksQuery (
-  $orgSub: String
   $search: String
+  $filter: Filter
+  $orgSub: String
 ) {
   books (
     search: $search
-    orgSub: $orgSub
+    filter: $filter
   ) {
     id
     title
     previewImage {
       id
     }
+    updatedAt
   }
   organization (
     subdomain: $orgSub

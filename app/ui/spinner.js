@@ -11,8 +11,8 @@ const spin = keyframes`
 `
 
 export const SpinnerBox = styled.div`
-  width: 40px;
-  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
   background-color: ${({theme}) => theme.colors.black};
   animation: ${spin} 1.2s infinite ease-in-out;
 `

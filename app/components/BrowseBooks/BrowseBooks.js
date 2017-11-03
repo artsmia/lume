@@ -6,6 +6,9 @@ import {Button} from '../../ui/buttons'
 import router from 'next/router'
 import PropTypes from 'prop-types'
 import Image from '../Image'
+import KeyboardArrowDown from '../../ui/icons/KeyboardArrowDown'
+import KeyboardArrowUp from '../../ui/icons/KeyboardArrowUp'
+
 
 export default class BrowseBooks extends Component {
 
@@ -15,6 +18,12 @@ export default class BrowseBooks extends Component {
     data: PropTypes.object
   }
 
+  state = {
+    order: {
+      column: "updatedAt",
+      direction: "ASC"
+    }
+  }
 
   render() {
 
@@ -22,11 +31,15 @@ export default class BrowseBooks extends Component {
 
     const {
       handleNewBook,
+      handleLoadMore,
       props: {
         orgSub,
         data: {
           books
         }
+      },
+      state: {
+        order,
       }
     } = this
     return (
@@ -34,7 +47,7 @@ export default class BrowseBooks extends Component {
         <Button
           onClick={handleNewBook}
         >
-          New Book
+          Create Thematic Story
         </Button>
         <Table>
           <Header>
@@ -46,11 +59,44 @@ export default class BrowseBooks extends Component {
               </Cell>
               <Cell>
                 Title
+                <KeyboardArrowUp
+                  onClick={()=>handleArrowClick({
+                    column: "title",
+                    direction: "DESC"
+                  })}
+                  fill={(order.column === "title" && order.direction === "DESC") ? "black" : "grey"}
+                />
+                <KeyboardArrowDown
+                  onClick={()=>handleArrowClick({
+                    column: "title",
+                    direction: "ASC"
+                  })}
+                  fill={(order.column === "title" && order.direction === "ASC") ? "black" : "grey"}
+                />
+              </Cell>
+              <Cell
+                width={"130px"}
+              >
+                Last Update
+                <KeyboardArrowUp
+                  onClick={()=>handleArrowClick({
+                    column: "updatedAt",
+                    direction: "ASC"
+                  })}
+                  fill={(order.column === "updatedAt" && order.direction === "ASC") ? "black" : "grey"}
+                />
+                <KeyboardArrowDown
+                  onClick={()=>handleArrowClick({
+                    column: "updatedAt",
+                    direction: "DESC"
+                  })}
+                  fill={(order.column === "updatedAt" && order.direction === "DESC") ? "black" : "grey"}
+                />
               </Cell>
             </Row>
           </Header>
           <Body>
-            {books.map( ({id: bookId, title, previewImage}) => (
+            {books.map( ({id: bookId, title, previewImage, updatedAt}) => (
               <Row
                 key={bookId}
               >
@@ -79,13 +125,104 @@ export default class BrowseBooks extends Component {
                     {title}
                   </Link>
                 </Cell>
+                <Cell
+                  width={"130px"}
+                >
+                  {new Date(updatedAt).toLocaleDateString()}
+                </Cell>
               </Row>
             ))}
+            <Button
+              onClick={handleLoadMore}
+            >
+              Load More
+            </Button>
           </Body>
         </Table>
 
       </Centered>
     )
+  }
+
+  handleLoadMore = async () => {
+    try {
+
+      const {
+        props: {
+          data: {
+            fetchMore,
+             books
+          }
+        },
+        state: {
+          order,
+          search
+        }
+      } = this
+
+      fetchMore({
+        variables: {
+          filter: {
+            limit: 10,
+            offset: books.length,
+            order: (order.column) ? order : undefined
+          },
+          search
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult) { return previousResult }
+
+          return Object.assign({}, previousResult, {
+            books: [...previousResult.books, ...fetchMoreResult.books]
+          })
+        },
+      })
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  handleArrowClick = ({column, direction}) => {
+    this.setState(({order}) => {
+
+      if (
+        order.column === column &&
+        order.direction === direction
+      ) {
+        return {
+          order: {
+            column: "",
+            direction: ""
+          }
+        }
+      } else {
+        return {
+          order: {
+            column,
+            direction
+          }
+        }
+      }
+    })
+  }
+
+
+  componentDidUpdate(prevProps, prevState){
+
+
+
+    if (
+      prevState.order.column !== this.state.order.column ||
+      prevState.order.direction !== this.state.order.direction
+    ) {
+      this.props.data.refetch({
+        search: this.state.search,
+        filter: {
+          order: this.state.order,
+          limit: 10
+        }
+      })
+    }
   }
 
   handleNewBook = async () => {

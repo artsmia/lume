@@ -2,6 +2,8 @@ query editItemQuery (
   $itemId: ID!
   $userId: ID
   $orgSub: String
+  $bookFilter: Filter
+  $bookSearch: String
 ) {
   item (id: $itemId) {
     id
@@ -44,15 +46,13 @@ query editItemQuery (
     subdomain: $orgSub
   ) {
     id
-    images {
-      id
-    }
     subdomain
     customItemApiEnabled
     customItemApiEndpoint
   }
   books (
-    orgSub: $orgSub
+    filter: $bookFilter
+    search: $bookSearch
   ) {
     id
     title

@@ -42,7 +42,7 @@ export default class DrawerComponent extends Component {
             }}
             as={`/${orgSub}`}
           >
-            App
+            Live View
           </MenuItem>
           <MenuItem
             href={{
@@ -53,7 +53,7 @@ export default class DrawerComponent extends Component {
             }}
             as={`/${orgSub}/cms`}
           >
-            CMS Home
+            Home
           </MenuItem>
           <MenuItem
             href={{
@@ -64,7 +64,7 @@ export default class DrawerComponent extends Component {
             }}
             as={`/${orgSub}/cms/items`}
           >
-            Items
+            Object Stories
           </MenuItem>
           <MenuItem
             href={{
@@ -75,7 +75,7 @@ export default class DrawerComponent extends Component {
             }}
             as={`/${orgSub}/cms/books`}
           >
-            Books
+            Thematic Stories
           </MenuItem>
           <MenuItem
             href={{

@@ -7,6 +7,7 @@ const typeDefs = `
     pages: [Page]
     relatedItems: [Item]
     visibility: VisibilityEnum
+    updatedAt: String
   }
 
 
@@ -147,6 +148,10 @@ const typeDefs = `
         id: ID!
     ): Book
 
+    books (
+      filter: Filter
+      search: String
+    ): [Book]
 
     detail (
         id: ID!
@@ -160,9 +165,15 @@ const typeDefs = `
         id: ID!
     ): Image
 
+    images (
+      filter: Filter
+      search: String
+    ): [Image]
+
     item (
-        id: ID!
+      id: ID!
     ): Item
+
 
     organization (
         id: ID
@@ -176,12 +187,6 @@ const typeDefs = `
     user (
         id: ID
     ): User
-
-    books (
-      orgSub: String
-      organizationId: ID
-      search: String
-    ): [Book]
 
     items (
       orgSub: String
@@ -315,6 +320,8 @@ const typeDefs = `
     limit: Int
     offset: Int
     order: [OrderInput]
+    organizationId: ID
+    orgSub: String
   }
 
   input OrderInput {

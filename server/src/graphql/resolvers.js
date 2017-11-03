@@ -3,6 +3,8 @@ import book from './queries/book'
 import detail from './queries/detail'
 import group from './queries/group'
 import image from './queries/image'
+import images from './queries/images'
+
 import item from './queries/item'
 import organization from './queries/organization'
 import page from './queries/page'
@@ -44,6 +46,7 @@ const resolvers = {
     detail,
     group,
     image,
+    images,
     item,
     organization,
     page,

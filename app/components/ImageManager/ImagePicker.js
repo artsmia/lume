@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Image from '../Image'
 import Zoomer from '../Zoomer'
+import {Search} from '../../ui/search'
+import {Row} from '../../ui/layout'
 
 export default class ImagePicker extends Component {
 
@@ -19,23 +21,41 @@ export default class ImagePicker extends Component {
 
   state = {
     selectedImageId: "",
+    search: ""
   }
 
   render() {
-    const {
+    let {
       props: {
         images,
         imageId,
-        onImageSave
+        onImageSave,
+        onLoadMore
       },
       state: {
-        selectedImageId
+        selectedImageId,
+        search
       },
-      selectImage
+      selectImage,
+      handleChange
     } = this
+
+    images = images || []
+
     return (
       <Container>
         <ThumbColumn>
+          <SearchRow>
+            <Search
+              value={search}
+              name={"search"}
+              onChange={handleChange}
+            />
+            <Button>
+              Search
+            </Button>
+          </SearchRow>
+
           {images.map( (image) => (
             <Image
               key={image.id}
@@ -49,6 +69,11 @@ export default class ImagePicker extends Component {
           {(images.length < 1) ? (
             <p>You don't have any images yet</p>
           ):null}
+          <Button
+            onClick={onLoadMore}
+          >
+            Load More
+          </Button>
         </ThumbColumn>
         <Right>
           {(selectedImageId) ? (
@@ -62,6 +87,8 @@ export default class ImagePicker extends Component {
     )
   }
 
+
+  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
   selectImage = (selectedImageId) => {
     this.setState({selectedImageId})
@@ -92,6 +119,10 @@ export default class ImagePicker extends Component {
 
 }
 
+const SearchRow = styled(Row)`
+  box-sizing: border-box;
+  justify-content: center;
+`
 
 export const Container = styled.div`
   display: flex;
@@ -106,7 +137,7 @@ export const Container = styled.div`
 export const ThumbColumn = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: space-around;
   align-content: flex-start;
   flex-wrap: wrap;
@@ -114,6 +145,8 @@ export const ThumbColumn = styled.div`
   width: 40%;
   border: 1px solid black;
   overflow-y: scroll;
+  box-sizing: border-box;
+
 `
 
 export const Right = styled.div`

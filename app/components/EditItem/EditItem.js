@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H2, H3} from '../../ui/h'
-import {Label, Select, Option} from '../../ui/forms'
+import {Label, Select, Option, Checkbox} from '../../ui/forms'
 import {Column, Row} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
@@ -15,7 +15,8 @@ import Sorter from '../../ui/drag/Sorter'
 import {Loading} from '../../ui/spinner'
 import ItemSettingsEditor from '../ItemSettingsEditor'
 import ItemBasicEditor from '../ItemBasicEditor'
-
+import {Search} from '../../ui/search'
+import {Link} from '../../ui/links'
 
 export default class EditItem extends Component {
 
@@ -37,7 +38,8 @@ export default class EditItem extends Component {
     availableBooks: [],
     reordering: false,
     selectedTab: "edit",
-    details: []
+    details: [],
+    bookSearch: ""
   }
 
 
@@ -61,9 +63,12 @@ export default class EditItem extends Component {
             relatedBooks,
             details
           },
+          books,
+          refetch
         },
         orgSub,
-        itemId
+        itemId,
+        editItem
       },
       state: {
         snack,
@@ -73,13 +78,27 @@ export default class EditItem extends Component {
         availableBooks,
         reordering,
         selectedTab,
+        bookSearch
       },
       onImageSave,
       addRelatedBooks,
       removeRelatedBooks,
       reorderDetails,
+      handleChange,
+      handleCheck
     } = this
     let sortedDetails = details.slice().sort( (a,b) => a.index - b.index)
+
+
+    let filteredBooks = books.filter( ({id}) => {
+      let found = relatedBooks.find( book => book.id === id)
+      if (!found) {
+        return true
+      } else {
+        return false
+      }
+    })
+
     return (
       <Container>
         <Snackbar
@@ -140,51 +159,92 @@ export default class EditItem extends Component {
                       <Label>
                         All Books
                       </Label>
-                      <Select
-                        name={"newRelatedBookIds"}
-                        onChange={multiChange}
-                        multiple
-                        value={newRelatedBookIds}
-                      >
-                        {availableBooks.map( ({id, title}) => (
-                          <Option
-                            key={id}
-                            value={id}
-                          >
-                            {title}
-                          </Option>
-                        ))}
-                      </Select>
-                      <Button
-                        onClick={addRelatedBooks}
-                      >
-                        Add Related Books
-                      </Button>
-                    </Column>
-                    <Column>
-                      <Label>
-                        Related Books
-                      </Label>
-                      <Select
-                        name={"removeRelatedBookIds"}
-                        onChange={multiChange}
-                        multiple
-                        value={removeRelatedBookIds}
-                      >
+                      <Row>
+                        <Search
+                          name={"bookSearch"}
+                          value={bookSearch}
+                          onChange={handleChange}
+                        />
+                        <Button
+                          onClick={()=>{
+                            refetch({
+                              bookFilter: {
+                                limit: 20,
+                                order: {
+                                  column: "updatedAt",
+                                  direction: "DESC"
+                                }
+                              },
+                              bookSearch
+                            })
+                          }}
+                        >
+                          Search
+                        </Button>
+                      </Row>
+
+                      <CheckContainer>
                         {relatedBooks.map( ({id, title}) => (
-                          <Option
+                          <CheckRow
                             key={id}
-                            value={id}
                           >
-                            {title}
-                          </Option>
+                            <Link
+                              href={{
+                                pathname: "/cms/edit/book",
+                                query: {
+                                  orgSub,
+                                  bookId: id
+                                }
+                              }}
+                              as={`/${orgSub}/cms/book/${id}`}
+                            >
+                              {title}
+                            </Link>
+                            <Checkbox
+                              checked
+                              name={id}
+                              onChange={()=>{
+                                editItem({
+                                  variables: {
+                                    itemId,
+                                    removeRelatedBookIds: [id]
+                                  }
+                                })
+                              }}
+                            />
+                          </CheckRow>
                         ))}
-                      </Select>
-                      <Button
-                        onClick={removeRelatedBooks}
-                      >
-                        Remove Related Books
-                      </Button>
+                        {filteredBooks.map( ({id, title}) => (
+                          <CheckRow
+                            key={id}
+                          >
+                            <Link
+                              href={{
+                                pathname: "/cms/edit/book",
+                                query: {
+                                  orgSub,
+                                  bookId: id
+                                }
+                              }}
+                              as={`/${orgSub}/cms/book/${id}`}
+                            >
+                              {title}
+                            </Link>
+                            <Checkbox
+                              name={id}
+                              onChange={()=>{
+                                editItem({
+                                  variables: {
+                                    itemId,
+                                    newRelatedBookIds: [id]
+                                  }
+                                })
+                              }}
+                            />
+                          </CheckRow>
+                        ))}
+                      </CheckContainer>
+
                     </Column>
                   </Row>
 
@@ -266,24 +326,14 @@ export default class EditItem extends Component {
         }
       })
 
-
-      let relatedBookIds = data.item.relatedBooks.map(({id}) => id)
-      let availableBooks = data.books.filter( ({id}) => !relatedBookIds.includes(id))
-      this.setState({availableBooks})
     }
   }
 
 
   change = ({target: {name, value}}) => this.setState({[name]: value})
 
-  multiChange = (e) => {
-    const {
-      name,
-      options
-    } = e.target
-    let values = [...options].filter(({selected}) => selected).map(({value}) => value)
-    this.setState({[name]: values})
-  }
+
+  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
 
   onImageSave = async (selectedImageId) => {
@@ -368,58 +418,6 @@ export default class EditItem extends Component {
 
 
 
-  addRelatedBooks = async () => {
-    try {
-      const {
-        props: {
-          itemId,
-          editItem
-        },
-        state: {
-          newRelatedBookIds
-        }
-      } = this
-
-
-      await editItem({
-        variables: {
-          itemId,
-          newRelatedBookIds
-        }
-      })
-
-
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  removeRelatedBooks = async () => {
-    try {
-      const {
-        props: {
-          itemId,
-          editItem
-        },
-        state: {
-          removeRelatedBookIds
-        }
-      } = this
-
-
-      await editItem({
-        variables: {
-          itemId,
-          removeRelatedBookIds
-        }
-      })
-
-
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
 }
 
 const DetailHeader = styled.div`
@@ -450,4 +448,20 @@ const SectionContainer = styled(Column)`
   margin: 20px;
   padding: 20px;
   border: 1px solid ${({theme}) => theme.colors.black};
+`
+
+const CheckContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 300px;
+  width: 600px;
+  border: 1px solid black;
+  overflow-y: scroll;
+  padding: 20px;
+`
+
+const CheckRow = styled.div`
+  height: 40px;
 `

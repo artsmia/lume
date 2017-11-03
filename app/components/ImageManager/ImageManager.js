@@ -33,9 +33,8 @@ export default class extends Component {
         imageId,
         onImageSave,
         data: {
-          organization: {
-            images
-          }
+          images: imageList,
+          image
         },
         orgId
       },
@@ -46,7 +45,19 @@ export default class extends Component {
         selectedTab
       },
       onImageUpload,
+      handleLoadMore
     } = this
+
+    let images = imageList.concat()
+
+
+    if (
+      imageId &&
+      !imageList.find( listImage => listImage.id === imageId)
+    ) {
+      images.push(image)
+    }
+
 
     return (
       <Container>
@@ -79,6 +90,7 @@ export default class extends Component {
               images={images}
               imageId={imageId}
               onImageSave={onImageSave}
+              onLoadMore={handleLoadMore}
             />
           </TabBody>
           <TabBody
@@ -96,7 +108,7 @@ export default class extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.data.organization.images.length === 0) {
+    if (nextProps.data.images.length === 0) {
       this.setState({selectedTab: "upload"})
     }
   }
@@ -137,6 +149,25 @@ export default class extends Component {
         newState,
         resolve
       )
+    })
+  }
+
+  handleLoadMore = () => {
+    this.props.data.fetchMore({
+      variables: {
+        filter: {
+          limit: 10,
+          organizationId: this.props.orgId,
+          offset: this.props.data.images.length
+        }
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) { return previousResult }
+
+        return Object.assign({}, previousResult, {
+          images: [...previousResult.images, ...fetchMoreResult.images]
+        })
+      },
     })
   }
 

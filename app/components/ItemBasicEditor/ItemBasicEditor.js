@@ -82,6 +82,12 @@ export default class ItemSettingsEditor extends Component {
               value={accessionNumber}
               onChange={handleChange}
             />
+            <Label>Current Location</Label>
+            <Input
+              name={"currentLocation"}
+              value={currentLocation}
+              onChange={handleChange}
+            />
           </Column>
           <Column>
             <Label>Attribution</Label>
@@ -102,18 +108,13 @@ export default class ItemSettingsEditor extends Component {
               value={creditLine}
               onChange={handleChange}
             />
-            <Label>Current Location</Label>
-            <TextArea
-              name={"currentLocation"}
-              value={currentLocation}
-              onChange={handleChange}
-            />
+
           </Column>
         </Row>
         <Label>
           About
         </Label>
-        <TextArea
+        <AboutText
           name={"text"}
           value={text}
           onChange={handleChange}
@@ -175,6 +176,10 @@ export default class ItemSettingsEditor extends Component {
 
 
 }
+
+const AboutText = styled(TextArea)`
+  min-height: 400px;
+`
 
 const Container = styled.div`
   display: flex;

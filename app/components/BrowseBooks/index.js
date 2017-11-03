@@ -5,11 +5,26 @@ import newBook from '../../apollo/mutations/editOrCreateBook.graphql'
 
 
 const queryConfig = {
-  options: ({orgSub}) => ({
-    variables: {
-      orgSub,
-    },
-  })
+  options: ({orgSub}) => {
+
+    const filter = {
+      limit: 20,
+      order: {
+        column: "updatedAt",
+        direction: "DESC"
+      }
+    }
+    return {
+      variables: {
+        orgSub,
+        filter: {
+          ...filter,
+          orgSub
+        }
+      },
+    }
+
+  }
 }
 
 

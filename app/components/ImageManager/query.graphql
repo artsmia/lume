@@ -1,11 +1,17 @@
 query orgImageQuery (
-  $orgId: ID
+  $filter: Filter
+  $imageId: ID!
+  $search: String
 ) {
-  organization (id: $orgId) {
+  images (
+    filter: $filter
+    search: $search
+  ) {
     id
-    images {
-      id
-      host
-    }
+  }
+  image (
+    id: $imageId
+  ) {
+    id
   }
 }

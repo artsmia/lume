@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Label, Input, Checkbox} from '../../ui/forms'
+import {Label, Input, Checkbox, TextArea} from '../../ui/forms'
 import {Row, Column} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import Cookie from 'js-cookie'
@@ -17,7 +17,6 @@ export default class extends Component {
     title: "",
     snackMessage: "",
     snackId: Math.random(),
-    status: "Your image will be uploaded to google drive."
   }
 
   render() {
@@ -35,7 +34,6 @@ export default class extends Component {
         snackId,
         snackMessage,
         preview,
-        status
       }
     } = this
     return (
@@ -56,7 +54,6 @@ export default class extends Component {
               accept={"image/*"}
               onChange={handleFile}
             />
-            <Row>
               <Label>
                 Title
               </Label>
@@ -65,17 +62,14 @@ export default class extends Component {
                 value={title}
                 onChange={handleChange}
               />
-            </Row>
-            <Row>
               <Label>
                 Description
               </Label>
-              <Input
+              <TextArea
                 name={"alt"}
                 value={alt}
                 onChange={handleChange}
               />
-            </Row>
             <Row>
               <Label>
                 I have the right to distribute this image.
@@ -96,11 +90,8 @@ export default class extends Component {
                 uploading
               )}
             >
-              Upload to S3
+              Upload
             </Button>
-            <Message>
-              {status}
-            </Message>
           </Column>
           <Column>
             {(preview) ? (
@@ -176,7 +167,6 @@ export default class extends Component {
         snackMessage: "Image Uploaded",
         snackId: Math.random(),
         preview: "",
-        status: "Your image will appear amongst your images once it's been processed. This may take a while. You may upload additional images."
       })
 
     } catch (ex) {
@@ -204,4 +194,5 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  padding: 20px;
 `

@@ -68,6 +68,7 @@ const Organization = {
   async images(org, args){
     try {
 
+      console.log("here")
       const images = await org.getImages()
 
 

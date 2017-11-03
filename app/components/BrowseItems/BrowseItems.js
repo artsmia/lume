@@ -8,7 +8,6 @@ import PropTypes from 'prop-types'
 import Image from '../Image'
 import {Loading} from '../../ui/spinner'
 import {Search} from '../../ui/search'
-import Svg from '../../ui/icons/Svg'
 import KeyboardArrowDown from '../../ui/icons/KeyboardArrowDown'
 import KeyboardArrowUp from '../../ui/icons/KeyboardArrowUp'
 
@@ -23,7 +22,10 @@ export default class BrowseItems extends Component {
 
   state = {
     search: "",
-    order: {}
+    order: {
+      column: "updatedAt",
+      direction: "DESC"
+    }
   }
 
 
@@ -38,6 +40,7 @@ export default class BrowseItems extends Component {
       handleChange,
       handleSearch,
       handleArrowClick,
+      handleLoadMore,
       props: {
         orgSub,
         data: {
@@ -57,19 +60,23 @@ export default class BrowseItems extends Component {
           <Button
             onClick={handleNewItem}
           >
-            New Item
+            Create Object Story
           </Button>
 
-          <Search
-            onChange={handleChange}
-            name={"search"}
-            value={search}
-          />
-          <Button
-            onClick={handleSearch}
-          >
-            Search
-          </Button>
+          <Row>
+            <Search
+              onChange={handleChange}
+              name={"search"}
+              value={search}
+            />
+            <Button
+              onClick={handleSearch}
+            >
+              Search
+            </Button>
+          </Row>
+
+
 
           <Table>
             <Header>
@@ -153,6 +160,11 @@ export default class BrowseItems extends Component {
                   </Cell>
                 </Row>
               ))}
+              <Button
+                onClick={handleLoadMore}
+              >
+                Load More
+              </Button>
             </Body>
           </Table>
 
@@ -202,6 +214,44 @@ export default class BrowseItems extends Component {
     })
   }
 
+  handleLoadMore = async () => {
+    try {
+
+      const {
+        props: {
+          data: {
+            fetchMore,
+             items
+          }
+        },
+        state: {
+          order,
+          search
+        }
+      } = this
+
+      fetchMore({
+        variables: {
+          filter: {
+            limit: 10,
+            offset: items.length,
+            order: (order.column) ? order : undefined
+          },
+          search
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult) { return previousResult }
+
+          return Object.assign({}, previousResult, {
+            items: [...previousResult.items, ...fetchMoreResult.items]
+          })
+        },
+      })
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
   handleNewItem = async () => {
     try {
       const {
@@ -244,7 +294,7 @@ export default class BrowseItems extends Component {
       search,
       filter: {
         limit: 10,
-        order
+        order: (order.column) ? order : undefined
       }
     })
   }

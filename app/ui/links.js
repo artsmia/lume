@@ -24,7 +24,9 @@ export const Link = ({href, as, children}) => (
     href={href}
     as={as}
   >
-    <LinkStyled>
+    <LinkStyled
+      href={as}
+    >
       {children}
     </LinkStyled>
   </NextLink>
@@ -35,7 +37,9 @@ export const BoldLink = ({href, as, children}) => (
     href={href}
     as={as}
   >
-    <BoldLinkStyled>
+    <BoldLinkStyled
+      href={as}
+    >
       {children}
     </BoldLinkStyled>
   </NextLink>
