@@ -152,7 +152,7 @@ export default class EditItem extends Component {
               <Row>
                 <SectionContainer>
                   <H3>
-                    Related Books
+                    Related Thematic Stories
                   </H3>
                   <Row>
                     <Column>

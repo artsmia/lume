@@ -19,7 +19,6 @@ const queryConfig = {
         orgSub,
         filter: {
           ...filter,
-          orgSub
         }
       },
     }

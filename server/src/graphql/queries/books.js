@@ -20,6 +20,19 @@ export default async function books(src, args, ctx){
     }
 
 
+    if (args.orgSub){
+      options.include.push({
+        model: organizationModel,
+        as: "organizations",
+        where: {
+          subdomain: args.orgSub
+        }
+      })
+    }
+
+    console.log(options, options.include)
+
+
     const books = await bookModel.findAll(options)
 
 

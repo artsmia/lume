@@ -1,5 +1,5 @@
 FROM debian:8
-LABEL name knight-server
+LABEL name api-storytellin.gg
 
 RUN apt-get update
 RUN apt-get install -y curl

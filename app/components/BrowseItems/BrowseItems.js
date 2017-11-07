@@ -53,6 +53,8 @@ export default class BrowseItems extends Component {
       }
     } = this
 
+    console.log(items)
+
     return (
 
         <Centered>

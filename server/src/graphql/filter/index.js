@@ -40,7 +40,7 @@ export default async function (filter) {
         }
       })
 
-      
+
 
       Object.assign(options.where, {
         organizationId: organization.id

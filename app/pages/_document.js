@@ -9,7 +9,7 @@ export default class ClientDocument extends Document {
     return (
       <html lang="en">
         <Head>
-          <title>Knight Client</title>
+          <title>Storytellin.gg</title>
           <link
             rel='shortcut icon'
             type='image/x-icon'

@@ -151,6 +151,7 @@ const typeDefs = `
     books (
       filter: Filter
       search: String
+      orgSub: String
     ): [Book]
 
     detail (

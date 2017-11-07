@@ -32,11 +32,13 @@ export default async function editOrCreateItem(src, args, ctx){
       item = await itemModel.findById(argItem.id)
     }
 
-
-
     if (newOrganizationIds) {
-      await item.addOrganizations(newOrganizationIds)
+
+      console.log(await item.addOrganizations(newOrganizationIds))
+
+
     }
+
 
     if (mainImageId) {
       await item.setMainImage(mainImageId)

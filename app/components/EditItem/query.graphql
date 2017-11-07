@@ -53,6 +53,7 @@ query editItemQuery (
   books (
     filter: $bookFilter
     search: $bookSearch
+    orgSub: $orgSub
   ) {
     id
     title

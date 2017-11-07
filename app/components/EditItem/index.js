@@ -13,7 +13,6 @@ const queryOptions = {
       orgSub,
       bookFilter: {
         limit: 10,
-        orgSub
       }
     }
   })
