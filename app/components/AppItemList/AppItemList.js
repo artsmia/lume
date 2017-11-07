@@ -59,16 +59,25 @@ export default class AppItemList extends Component {
             </ImageLink>
           </Link>
         ))}
-        {(items.length >= 20) ? (
+        {(items.length <= 20) ? (
           <Row>
               <Button
                 color={"white"}
                 onClick={()=>{
                   fetchMore({
-                    filter: {
-                      limit: 20,
-                      offset: items.length
-                    }
+                    variables: {
+                      filter: {
+                        limit: 20,
+                        offset: items.length,
+                      },
+                    },
+                    updateQuery: (previousResult, { fetchMoreResult }) => {
+                      if (!fetchMoreResult) { return previousResult }
+
+                      return Object.assign({}, previousResult, {
+                        items: [...previousResult.items, ...fetchMoreResult.items]
+                      })
+                    },
                   })
                 }}
               >

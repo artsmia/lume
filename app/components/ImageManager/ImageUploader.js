@@ -154,6 +154,16 @@ export default class extends Component {
         body: form
       }
 
+      this.setState({
+        files: [],
+        uploading: false,
+        hasRights: false,
+        alt: "",
+        title: "",
+        snackMessage: "Upload Started",
+        snackId: Math.random(),
+      })
+
       const response = await fetch(url, options)
 
       await response.json()
@@ -164,7 +174,7 @@ export default class extends Component {
         hasRights: false,
         alt: "",
         title: "",
-        snackMessage: "Image Uploaded",
+        snackMessage: "Upload Finished",
         snackId: Math.random(),
         preview: "",
       })
