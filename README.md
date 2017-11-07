@@ -4,4 +4,4 @@ You can check out v.1 here: [https://artstories.artsmia.org/](https://artstories
 
 And you can follow along with the progress of this project by checking out our [blog](https://github.com/artsmia/mia-storytelling/tree/master/blog).
 
-Thank you to the Knight Foudation for support. 
+Thank you to the Knight Foundation for support. 
