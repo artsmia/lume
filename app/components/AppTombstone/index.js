@@ -34,7 +34,7 @@ const config = {
 }
 
 export default compose(
-  graphql(ItemQuery, config),
+  graphql(query, config),
 )(
   AppTombstone
 )

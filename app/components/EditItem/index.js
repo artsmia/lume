@@ -51,7 +51,7 @@ query editItemQuery (
     email
   }
   organization (
-    subdomain: $orgSub
+    orgSub: $orgSub
   ) {
     id
     subdomain

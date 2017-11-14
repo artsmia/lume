@@ -7,10 +7,12 @@ const query = gql`
     $filter: Filter
     $imageId: ID!
     $search: String
+    $orgSub: String
   ) {
     images (
       filter: $filter
       search: $search
+      orgSub: $orgSub
     ) {
       id
     }
@@ -25,13 +27,13 @@ const query = gql`
 `
 
 const queryOptions = {
-  options: ({orgId, imageId}) => {
+  options: ({orgSub, imageId}) => {
 
     return {
       variables: {
+        orgSub,
         filter: {
           limit: 10,
-          organizationId: orgId
         },
         imageId: imageId || ""
       }

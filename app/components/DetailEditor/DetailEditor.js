@@ -47,7 +47,8 @@ export default class DetailEditor extends Component {
             additionalImages
           }
         },
-        orgId
+        orgId,
+        orgSub
       },
       state: {
         title,
@@ -181,7 +182,7 @@ export default class DetailEditor extends Component {
               width={"60%"}
             >
               <ImageManager
-                orgId={orgId}
+                orgSub={orgSub}
                 onImageSave={(imageId)=>this.setState({additionalImageSelection:imageId })}
                 imageId={additionalImageSelection}
               />
@@ -224,10 +225,26 @@ export default class DetailEditor extends Component {
 
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.title !== this.state.title ||
-      prevState.description !== this.state.description
-    ) {
+    // if (
+    //   prevState.title !== this.state.title ||
+    //   prevState.description !== this.state.description
+    // ) {
+    //   this.debounce(this.save)
+    // }
+
+    let keys = Object.keys(prevState)
+
+    let change = keys.find( key => {
+      if (
+        prevState[key] !== this.state.key &&
+        prevState[key]
+      ) {
+        return true
+      }
+      return false
+    })
+
+    if (change) {
       this.debounce(this.save)
     }
   }

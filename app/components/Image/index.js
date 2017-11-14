@@ -3,27 +3,26 @@ import Image from './Image'
 import gql from 'graphql-tag'
 
 const query = gql`
-  query itemListData (
-    $search: String
-    $orgSub: String
-    $filter: Filter
+query ImageQuery (
+  $imageId: ID!
+) {
+  image (
+    id: $imageId
   ) {
-
-    items (
-      search: $search
-      orgSub: $orgSub
-      filter: $filter
-    ) {
+    id
+    organization {
       id
-      title
-      mainImage {
-        id
-      }
-      organizations {
-        id
-      }
+      customImageApiEnabled
+      customImageEndpoint
     }
+    host
+    gdriveId
+    s3Bucket
+    title
+    alt
+    localId
   }
+}
 
 `
 

@@ -6,7 +6,7 @@ import {Spinner} from '../../ui/spinner'
 export default class extends Component {
 
   static defaultProps = {
-    height: "200px",
+    height: "",
     quality: "m",
     width: "",
     thumb: false,

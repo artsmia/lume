@@ -169,6 +169,7 @@ const typeDefs = `
     images (
       filter: Filter
       search: String
+      orgSub: String
     ): [Image]
 
     item (

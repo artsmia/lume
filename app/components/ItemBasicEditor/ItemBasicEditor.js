@@ -138,7 +138,15 @@ export default class ItemSettingsEditor extends Component {
   componentWillUpdate(prevProps, prevState){
     let keys = Object.keys(prevState)
 
-    let change = keys.find( key => prevState[key] !== this.state.key)
+    let change = keys.find( key => {
+      if (
+        prevState[key] !== this.state.key &&
+        prevState[key]
+      ) {
+        return true
+      }
+      return false    
+    })
 
     if (change) {
       this.debounce(this.saveItem)

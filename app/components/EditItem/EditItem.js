@@ -143,7 +143,7 @@ export default class EditItem extends Component {
                     Main Image
                   </H2>
                   <ImageManager
-                    orgId={organization.id}
+                    orgSub={orgSub}
                     imageId={(mainImage) ? mainImage.id : undefined}
                     onImageSave={onImageSave}
                   />
@@ -268,6 +268,7 @@ export default class EditItem extends Component {
                           key={detail.id}
                           detailId={detail.id}
                           orgId={organization.id}
+                          orgSub={orgSub}
                         />
                       )): null
                     }

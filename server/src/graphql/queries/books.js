@@ -25,8 +25,6 @@ export default async function books(src, args, ctx){
         subdomain: args.orgSub
       }})
 
-      console.log(options)
-
       books = await org.getBooks(options)
     }
 
@@ -34,8 +32,6 @@ export default async function books(src, args, ctx){
       books = await bookModel.findAll(options)
     }
 
-
-    console.log(books)
 
     return books
   } catch (ex) {

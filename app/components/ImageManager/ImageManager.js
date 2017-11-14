@@ -11,7 +11,7 @@ import Snackbar from '../../ui/Snackbar'
 export default class extends Component {
 
   static propTypes = {
-    orgId: PropTypes.string.isRequired,
+    orgSub: PropTypes.string.isRequired,
     imageId: PropTypes.string,
     onImageSave: PropTypes.func,
   }
@@ -25,6 +25,7 @@ export default class extends Component {
   }
 
   render() {
+
 
     if (this.props.data.loading) return null
 
@@ -48,15 +49,19 @@ export default class extends Component {
       handleLoadMore
     } = this
 
-    let images = imageList.concat()
+    let images = []
 
-
-    if (
-      imageId &&
-      !imageList.find( listImage => listImage.id === imageId)
-    ) {
-      images.push(image)
+    if (Array.isArray(imageList)) {
+      images = imageList.concat()
+      if (
+        imageId &&
+        !imageList.find( listImage => listImage.id === imageId)
+      ) {
+        images.push(image)
+      }
     }
+
+
 
 
     return (
@@ -108,7 +113,10 @@ export default class extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.data.images.length === 0) {
+    if (
+      Array.isArray(nextProps.data.images) &&
+      nextProps.data.images.length === 0
+    ) {
       this.setState({selectedTab: "upload"})
     }
   }
