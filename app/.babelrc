@@ -22,8 +22,6 @@
         "preprocess": false
       }
     ],[
-      "babel-plugin-inline-import-graphql-ast"
-    ], [
       "babel-plugin-root-import"
     ]
   ]

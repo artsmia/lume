@@ -1,3 +1,7 @@
+
+import gql from 'graphql-tag'
+
+const mutation = gql`
 mutation editOrCreateItem (
   $itemId: ID
   $title: String
@@ -79,3 +83,7 @@ mutation editOrCreateItem (
     }
   }
 }
+
+`
+
+export default mutation

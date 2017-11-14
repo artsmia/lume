@@ -15,11 +15,4 @@ module.exports = {
 
     return config
   },
-  webpackDevMiddleware: (config) => {
-    rimraf('./node_modules/.cache', (response) => {
-      console.log("Cache deleted", response)
-    })
-
-    return config
-  }
 }

@@ -1,7 +1,33 @@
 import { graphql, compose } from 'react-apollo'
 import Component from './ItemBasicEditor'
-import Query from './query.graphql'
-import editOrCreateItem from '../../apollo/mutations/editOrCreateItem.graphql'
+import editOrCreateItem from '../../apollo/mutations/editOrCreateItem'
+
+import gql from 'graphql-tag'
+
+const query = gql`
+  query ItemBasicQuery (
+    $itemId: ID!
+  ) {
+    item (
+      id: $itemId
+    ) {
+      id
+      title
+      attribution
+      culture
+      dimensions
+      medium
+      date
+      accessionNumber
+      currentLocation
+      creditLine
+      text
+      localId
+    }
+  }
+
+
+`
 
 
 const queryConfig = {
@@ -21,12 +47,8 @@ const editOrCreateItemConfig = {
 
 
 
-const query = graphql(Query, queryConfig)
-
-
-
 export default compose(
-  query,
+  graphql(query, queryConfig),
   graphql(editOrCreateItem, editOrCreateItemConfig),
 )(
   Component

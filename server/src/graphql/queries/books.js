@@ -7,7 +7,7 @@ import {Op} from 'sequelize'
 export default async function books(src, args, ctx){
   try {
 
-
+    let books
     let options = await createOptions(args.filter)
 
 
@@ -20,21 +20,22 @@ export default async function books(src, args, ctx){
     }
 
 
-    if (args.orgSub){
-      options.include.push({
-        model: organizationModel,
-        as: "organizations",
-        where: {
-          subdomain: args.orgSub
-        }
-      })
+    if (args.orgSub) {
+      let org = await organizationModel.findOne({where: {
+        subdomain: args.orgSub
+      }})
+
+      console.log(options)
+
+      books = await org.getBooks(options)
     }
 
-    console.log(options, options.include)
+    if (!args.orgSub) {
+      books = await bookModel.findAll(options)
+    }
 
 
-    const books = await bookModel.findAll(options)
-
+    console.log(books)
 
     return books
   } catch (ex) {

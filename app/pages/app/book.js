@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import AppBook from '../../components/AppBook'
-import withData from '../../apollo/withData'
+import withData from '../../apollo'
 import Template from '~/components/Template'
 
 

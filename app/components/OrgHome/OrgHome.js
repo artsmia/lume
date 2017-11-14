@@ -6,7 +6,6 @@ export default class Home extends Component {
 
 
   render() {
-
     if (this.props.data.loading) {
       return null
     }
@@ -17,7 +16,6 @@ export default class Home extends Component {
             name
           }
         },
-        orgSub
       }
     } = this
     return (

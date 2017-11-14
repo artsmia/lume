@@ -1,6 +1,6 @@
 import organizationModel from '../../db/models/organization'
 
-export default async function organization(src, {id, subdomain}, ctx){
+export default async function organization(src, {id, orgSub}, ctx){
   try {
 
     let organization
@@ -11,10 +11,10 @@ export default async function organization(src, {id, subdomain}, ctx){
           id,
         }
       })
-    } else if (subdomain) {
+    } else if (orgSub) {
       organization = await organizationModel.findOne({
         where: {
-          subdomain,
+          subdomain: orgSub,
         }
       })
     }

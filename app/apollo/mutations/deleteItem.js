@@ -1,3 +1,7 @@
+
+import gql from 'graphql-tag'
+
+const mutation = gql`
 mutation deleteItem (
   $itemId: ID!
 ) {
@@ -7,3 +11,7 @@ mutation deleteItem (
     message
   }
 }
+
+`
+
+export default mutation

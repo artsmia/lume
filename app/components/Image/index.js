@@ -1,6 +1,31 @@
 import { graphql, compose } from 'react-apollo'
 import Image from './Image'
-import ImageQuery from './query.graphql'
+import gql from 'graphql-tag'
+
+const query = gql`
+  query itemListData (
+    $search: String
+    $orgSub: String
+    $filter: Filter
+  ) {
+
+    items (
+      search: $search
+      orgSub: $orgSub
+      filter: $filter
+    ) {
+      id
+      title
+      mainImage {
+        id
+      }
+      organizations {
+        id
+      }
+    }
+  }
+
+`
 
 const queryConfig = {
   options: ({imageId}) => ({
@@ -12,13 +37,11 @@ const queryConfig = {
 
 
 
-const query = graphql(ImageQuery, queryConfig)
-
 
 
 
 export default compose(
-  query,
+  graphql(query, queryConfig),
 )(
   Image
 )

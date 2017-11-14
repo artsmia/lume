@@ -1,8 +1,0 @@
-query OrgHomeQuery ($subdomain: String) {
-  organization  (
-    subdomain: $subdomain
-  ) {
-    id
-    name
-  }
-}

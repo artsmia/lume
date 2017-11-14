@@ -1,3 +1,6 @@
+import gql from 'graphql-tag'
+
+const mutation = gql`
 mutation editOrCreateDetail (
   $detailId: ID
   $itemId: ID
@@ -40,3 +43,7 @@ mutation editOrCreateDetail (
     }
   }
 }
+
+`
+
+export default mutation

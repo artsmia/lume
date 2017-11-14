@@ -1,6 +1,17 @@
 import Drawer from './Drawer'
 import {graphql, compose } from 'react-apollo'
-import query from './query.graphql'
+import gql from 'graphql-tag'
+
+const query = gql`
+  query template ($userId: ID) {
+    user  (
+      id: $userId
+    ) {
+      id
+      email
+    }
+  }
+`
 
 const options = {
   options: ({userId}) => ({

@@ -1,8 +1,35 @@
 import { graphql, compose } from 'react-apollo'
 import PageEditor from './PageEditor'
-import PageQuery from './query.graphql'
-import editOrCreatePage from '../../apollo/mutations/editOrCreatePage.graphql'
-import deletePage from '../../apollo/mutations/deletePage.graphql'
+import editOrCreatePage from '../../apollo/mutations/editOrCreatePage'
+import deletePage from '../../apollo/mutations/deletePage'
+
+import gql from 'graphql-tag'
+
+const query = gql`
+  query PageQuery (
+    $pageId: ID!
+  ) {
+    page (
+      id: $pageId
+    ) {
+      id
+      title
+      type
+      text
+      video
+      mainImage {
+        id
+      }
+      comparisonImage0 {
+        id
+      }
+      comparisonImage1 {
+        id
+      }
+    }
+  }
+
+`
 
 
 const queryConfig = {
@@ -25,13 +52,10 @@ const deletePageConfig = {
 }
 
 
-const query = graphql(PageQuery, queryConfig)
-
-
 
 
 export default compose(
-  query,
+  graphql(query, queryConfig),
   graphql(editOrCreatePage, editOrCreatePageConfig),
   graphql(deletePage, deletePageConfig),
 )(

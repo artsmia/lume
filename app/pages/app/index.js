@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import AppHome from '../../components/AppHome'
-import withData from '../../apollo/withData'
+import withData from '../../apollo'
 import Template from '../../components/Template'
 
 class AppIndex extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
+
       const {orgSub} = ctx.query
       return {
         orgSub

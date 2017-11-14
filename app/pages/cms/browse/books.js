@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import BrowseBooks from '../../../components/BrowseBooks'
-import withData from '../../../apollo/withData'
+import withData from '../../../apollo'
 import Cookie from 'js-cookie'
 import Template from '../../../components/Template'
 

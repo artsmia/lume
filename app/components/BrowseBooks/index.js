@@ -1,7 +1,35 @@
 import {graphql, compose } from 'react-apollo'
 import BrowseBooks from './BrowseBooks'
-import BooksQuery from './query.graphql'
-import newBook from '../../apollo/mutations/editOrCreateBook.graphql'
+import newBook from '../../apollo/mutations/editOrCreateBook'
+import gql from 'graphql-tag'
+
+const query = gql`
+  query booksQuery (
+    $search: String
+    $filter: Filter
+    $orgSub: String
+  ) {
+    books (
+      search: $search
+      filter: $filter
+      orgSub: $orgSub
+    ) {
+      id
+      title
+      previewImage {
+        id
+      }
+      updatedAt
+    }
+    organization (
+      orgSub: $orgSub
+    ) {
+      id
+    }
+  }
+
+
+`
 
 
 const queryConfig = {
@@ -59,13 +87,10 @@ const mutationConfig = {
 }
 
 
-const query = graphql(BooksQuery, queryConfig)
-
-
 
 
 export default compose(
-  query,
+  graphql(query, queryConfig),
   graphql(newBook, mutationConfig)
 )(
   BrowseBooks

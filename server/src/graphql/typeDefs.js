@@ -177,8 +177,8 @@ const typeDefs = `
 
 
     organization (
-        id: ID
-        subdomain: String
+      id: ID
+      orgSub: String
     ): Organization
 
     page (
@@ -191,8 +191,6 @@ const typeDefs = `
 
     items (
       orgSub: String
-      organizationId: ID
-      groupId: ID
       search: String
       filter: Filter
     ): [Item]
@@ -321,8 +319,6 @@ const typeDefs = `
     limit: Int
     offset: Int
     order: [OrderInput]
-    organizationId: ID
-    orgSub: String
   }
 
   input OrderInput {

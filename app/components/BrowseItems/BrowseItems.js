@@ -294,7 +294,6 @@ export default class BrowseItems extends Component {
       search,
       filter: {
         limit: 10,
-        order: (order.column) ? order : undefined
       }
     })
   }

@@ -7,7 +7,6 @@ export default async function (filter) {
       include: [],
       order: [],
       where: {
-
       }
     }
 
@@ -26,26 +25,6 @@ export default async function (filter) {
       options.offset = filter.offset
     }
 
-    if (filter.organizationId) {
-      Object.assign(options.where, {
-        organizationId: filter.organizationId
-      })
-    }
-
-    if (filter.orgSub) {
-
-      const organization = await organizationModel.findOne({
-        where: {
-          subdomain: filter.orgSub
-        }
-      })
-
-
-
-      Object.assign(options.where, {
-        organizationId: organization.id
-      })
-    }
 
     return options
   } catch (ex) {

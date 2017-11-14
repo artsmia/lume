@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import EditBook from '../../../components/EditBook'
-import withData from '../../../apollo/withData'
+import withData from '../../../apollo'
 import Cookie from 'js-cookie'
 
 class EditBookPage extends Component {

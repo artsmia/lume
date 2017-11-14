@@ -1,6 +1,29 @@
 import AppTombstone from './AppTombstone'
-import ItemQuery from './query.graphql'
-import { gql, graphql, compose } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
+import gql from 'graphql-tag'
+
+const query = gql`
+  query TombstoneQuery (
+    $itemId: ID!
+  ) {
+    item (
+      id: $itemId
+    ) {
+      id
+      accessionNumber
+      attribution
+      creditLine
+      culture
+      currentLocation
+      date
+      dimensions
+      medium
+      title
+    }
+  }
+
+
+`
 
 const config = {
   options: ({itemId}) => ({

@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import Root from '../components/Root'
-import withData from '../apollo/withData'
+import withData from '../apollo'
 
 class Index extends Component {
 
   static getInitialProps = async (context) => {
     try {
-      return {
 
+      return {
       }
     } catch (ex) {
 

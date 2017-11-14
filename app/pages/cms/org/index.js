@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import OrgHome from '../../../components/OrgHome'
-import withData from '../../../apollo/withData'
+import withData from '../../../apollo'
 import Cookie from 'js-cookie'
 import Template from '../../../components/Template'
 

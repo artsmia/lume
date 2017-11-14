@@ -1,8 +1,25 @@
 import { graphql, compose } from 'react-apollo'
 import Component from './ItemSettingsEditor'
-import Query from './query.graphql'
-import editOrCreateItem from '../../apollo/mutations/editOrCreateItem.graphql'
-import deleteItem from '../../apollo/mutations/deleteItem.graphql'
+import editOrCreateItem from '../../apollo/mutations/editOrCreateItem'
+import deleteItem from '../../apollo/mutations/deleteItem'
+
+
+import gql from 'graphql-tag'
+
+const query = gql`
+  query ItemSettingsQuery (
+    $itemId: ID!
+  ) {
+    item (
+      id: $itemId
+    ) {
+      id
+      pullFromCustomApi
+      localId
+    }
+  }
+
+`
 
 
 const queryConfig = {
@@ -25,12 +42,10 @@ const deleteItemConfig = {
 }
 
 
-const query = graphql(Query, queryConfig)
-
 
 
 export default compose(
-  query,
+  graphql(query, queryConfig),
   graphql(editOrCreateItem, editOrCreateItemConfig),
   graphql(deleteItem, deleteItemConfig),
 )(

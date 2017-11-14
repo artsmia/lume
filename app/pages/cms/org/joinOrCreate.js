@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import JoinOrCreate from '../../../components/JoinOrCreate'
 import Cookie from 'js-cookie'
-import withData from '../../../apollo/withData'
+import withData from '../../../apollo'
 import Template from '../../../components/Template'
 
 class New extends Component {

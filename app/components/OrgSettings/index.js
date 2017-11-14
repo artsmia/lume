@@ -1,7 +1,27 @@
 import OrgHome from './OrgSettings'
 import {graphql, compose } from 'react-apollo'
-import query from './query.graphql'
-import editOrCreateOrganization from '../../apollo/mutations/editOrCreateOrganization.graphql'
+import editOrCreateOrganization from '../../apollo/mutations/editOrCreateOrganization'
+
+import gql from 'graphql-tag'
+
+const query = gql`
+  query OrgSettingQuery ($subdomain: String) {
+    organization  (
+      subdomain: $subdomain
+    ) {
+      id
+      name
+      newUsersRequireApproval
+      users {
+        id
+        email
+        role
+      }
+      customItemApiEnabled
+      customItemApiEndpoint
+    }
+  }
+`
 
 const options = {
   options: (props) => {

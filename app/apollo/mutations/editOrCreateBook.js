@@ -1,3 +1,7 @@
+
+import gql from 'graphql-tag'
+
+const mutation = gql`
 mutation editOrCreateBook (
   $bookId: ID
   $title: String
@@ -26,3 +30,6 @@ mutation editOrCreateBook (
     }
   }
 }
+`
+
+export default mutation

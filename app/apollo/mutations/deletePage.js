@@ -1,3 +1,7 @@
+
+import gql from 'graphql-tag'
+
+const mutation = gql`
 mutation deletePage (
   $pageId: ID!
 ) {
@@ -12,3 +16,6 @@ mutation deletePage (
     }
   }
 }
+`
+
+export default mutation

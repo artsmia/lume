@@ -100,7 +100,7 @@ export default class extends Component {
             <TabBody
               name={"details"}
             >
-              {(selectedTab === "details") ? sortedDetails.map(detail => (
+              {(selectedTab === "details" && details) ? sortedDetails.map(detail => (
                 <AppDetail
                   key={detail.id}
                   detailId={detail.id}
