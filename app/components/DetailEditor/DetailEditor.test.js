@@ -11,7 +11,9 @@ describe("DetailEditor", ()=> {
   let stubProps = {
     orgSub: "",
     data: {
-      detail: {}
+      detail: {
+        additionalImages: []
+      }
     },
     editOrCreateDetail: ()=>{},
     detailId: "",
