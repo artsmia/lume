@@ -1,4 +1,4 @@
-import { gql, graphql, compose } from 'react-apollo'
+import {graphql, compose } from 'react-apollo'
 import AppItemList from './AppItemList'
 import gql from 'graphql-tag'
 
