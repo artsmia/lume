@@ -6,6 +6,7 @@ import {Button} from '../../ui/buttons'
 import Cookie from 'js-cookie'
 import {apiUrl} from '../../config'
 import Snackbar from '../../ui/Snackbar'
+import {Spinner} from '../../ui/spinner'
 
 export default class extends Component {
 
@@ -36,8 +37,13 @@ export default class extends Component {
         preview,
       }
     } = this
+
+
     return (
       <Container>
+        {(uploading) ? (
+          <Spinner/>
+        ): null}
         <Snackbar
           message={snackMessage}
           snackId={snackId}
@@ -155,18 +161,16 @@ export default class extends Component {
       }
 
       this.setState({
-        files: [],
-        uploading: false,
-        hasRights: false,
-        alt: "",
-        title: "",
-        snackMessage: "Upload Started",
+        uploading: true,
+        snackMessage: "Upload Started...",
         snackId: Math.random(),
       })
 
       const response = await fetch(url, options)
 
       await response.json()
+
+      this.props.refetch()
 
       this.setState({
         uploading: false,
@@ -178,6 +182,7 @@ export default class extends Component {
         snackId: Math.random(),
         preview: "",
       })
+
 
     } catch (ex) {
       console.error(ex)
@@ -205,4 +210,6 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   padding: 20px;
+  position: relative;
+  box-sizing: border-box;
 `

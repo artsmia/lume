@@ -3,7 +3,7 @@ import uuid from 'uuid/v4'
 import sharp from 'sharp'
 import fs from 'fs'
 import rimraf from 'rimraf'
-
+import chalk from 'chalk'
 
 const s3 = new AWS.S3()
 
@@ -19,6 +19,7 @@ export default async function (req,res, next) {
         orgId: bucket
       }
     } = req
+
 
     const fileId = uuid()
 
@@ -78,6 +79,7 @@ export default async function (req,res, next) {
       files.map( file => bulkUpload(file, fileId, bucket))
     )
 
+
     await deleteDirectory(`/${fileId}`)
 
 
@@ -120,9 +122,12 @@ function listBuckets () {
 }
 
 function createBucket(params){
+  //console.log(chalk.cyan("params"), params)
   return new Promise( (resolve, reject) => {
     s3.createBucket(params, (err, data) => {
       if (err) reject(err)
+
+      console.log(data)
 
       s3.putBucketTagging({
         Bucket: data.Location.substring(1),

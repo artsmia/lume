@@ -21,6 +21,11 @@ const query = gql`
     ) {
       id
     }
+    organization (
+      orgSub: $orgSub
+    ) {
+      id
+    }
   }
 
 

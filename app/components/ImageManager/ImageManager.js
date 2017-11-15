@@ -20,7 +20,6 @@ export default class extends Component {
   state = {
     snackMessage: "",
     snackId: "",
-    uploading: false,
     selectedTab: "select"
   }
 
@@ -35,17 +34,18 @@ export default class extends Component {
         onImageSave,
         data: {
           images: imageList,
-          image
+          image,
+          organization: {
+            id: orgId
+          },
+          refetch
         },
-        orgId
       },
       state: {
         snackMessage,
         snackId,
-        uploading,
         selectedTab
       },
-      onImageUpload,
       handleLoadMore
     } = this
 
@@ -102,9 +102,8 @@ export default class extends Component {
             name={"upload"}
           >
             <ImageUploader
-              onImageUpload={onImageUpload}
-              uploading={uploading}
               orgId={orgId}
+              refetch={refetch}
             />
           </TabBody>
         </TabContainer>
@@ -122,34 +121,6 @@ export default class extends Component {
   }
 
 
-  onImageUpload = async (file) => {
-    try {
-      const {
-        data: {
-          refetch
-        },
-        orgId,
-        onImageSave
-      } = this.props
-
-      await this.promiseState({uploading: true})
-
-      const {id: imageId} = await apiFile(file,orgId)
-      onImageSave(imageId)
-
-      this.setState({
-        uploading: false,
-        selectedTab: "select",
-        snackMessage: "Image Uploaded",
-        snackId: Math.random()
-      })
-
-      await refetch()
-
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
 
   promiseState = (newState) => {
     return new Promise( (resolve, reject) => {

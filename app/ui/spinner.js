@@ -11,18 +11,26 @@ const spin = keyframes`
 `
 
 export const SpinnerBox = styled.div`
+  height: 100%;
+  width: 100%;
   max-width: 40px;
   max-height: 40px;
   background-color: ${({theme}) => theme.colors.black};
   animation: ${spin} 1.2s infinite ease-in-out;
+  z-index: 3;
 `
 
 export const Box = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: ${({theme}) => theme.colors.lightMediumGray};
+  z-index: 2;
 `
 
 const Overlay = styled.div`
