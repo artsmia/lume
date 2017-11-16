@@ -33,8 +33,7 @@ export default async function editOrCreateItem(src, args, ctx){
     }
 
     if (newOrganizationIds) {
-
-      console.log(await item.addOrganizations(newOrganizationIds))
+      await item.addOrganizations(newOrganizationIds)
 
 
     }
@@ -75,6 +74,7 @@ export default async function editOrCreateItem(src, args, ctx){
       item = await itemModel.findById(argItem.id)
 
     }
+
 
 
     return item

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {Row, Column} from '../../ui/layout'
 import {Label, Input, TextArea} from '../../ui/forms'
 import {H2} from '../../ui/h'
+import {Button} from '../../ui/buttons'
 
 export default class ItemSettingsEditor extends Component {
 
@@ -25,8 +26,23 @@ export default class ItemSettingsEditor extends Component {
     accessionNumber: "",
     text: "",
     creditLine: "",
-    currentLocation: ""
+    currentLocation: "",
+    saveStatus: "Saved",
+    initialized: false
   }
+
+  fields = [
+    "title",
+    "attribution",
+    "date",
+    "medium",
+    "dimensions",
+    "culture",
+    "accessionNumber",
+    "text",
+    "creditLine",
+    "currentLocation"
+  ]
 
   render () {
     if (this.props.data.loading) return null
@@ -44,12 +60,22 @@ export default class ItemSettingsEditor extends Component {
         creditLine,
         currentLocation
       },
-      handleChange
+      handleChange,
+      saveItem
     } = this
 
     return (
       <Container>
         <Content>
+          <Row>
+            <Button
+              onClick={saveItem}
+            >
+              Save
+            </Button>
+
+          </Row>
+
         <Row>
           <Column>
             <Label>Title</Label>
@@ -124,34 +150,29 @@ export default class ItemSettingsEditor extends Component {
     )
   }
 
-  componentWillReceiveProps({data}){
-    if (!data.loading) {
-      let keys = Object.keys(data.item)
-      keys.forEach( key => {
-        if (!this.state[key]) {
-          this.setState({[key]: data.item[key] || ""})
-        }
+  componentDidMount(){
+    this.ensureInitialFields(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.ensureInitialFields(nextProps)
+  }
+
+
+
+  ensureInitialFields = (nextProps) => {
+    if (!this.state.initialized) {
+      this.fields.forEach( field => {
+        this.setState({
+          [field]: nextProps.data.item[field]
+        })
+      })
+      this.setState({
+        initialized: true
       })
     }
   }
 
-  componentWillUpdate(prevProps, prevState){
-    let keys = Object.keys(prevState)
-
-    let change = keys.find( key => {
-      if (
-        prevState[key] !== this.state.key &&
-        prevState[key]
-      ) {
-        return true
-      }
-      return false    
-    })
-
-    if (change) {
-      this.debounce(this.saveItem)
-    }
-  }
 
   saveItem = async() => {
     try {
@@ -163,12 +184,17 @@ export default class ItemSettingsEditor extends Component {
         state
       } = this
 
+      console.log("sent")
+
       await editOrCreateItem({
         variables: {
           itemId,
           ...state
         }
       })
+
+      console.log("received")
+
 
     } catch (ex) {
       console.error(ex)
@@ -180,7 +206,10 @@ export default class ItemSettingsEditor extends Component {
     this.timer = setTimeout(func, 2000)
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+  handleChange = ({target: {value, name}}) => {
+    this.setState({[name]: value})
+    this.debounce(this.saveItem)
+  }
 
 
 }

@@ -26,7 +26,10 @@ export default class extends Component {
   render() {
 
 
-    if (this.props.data.loading) return null
+    if (
+      this.props.data.loading
+    ) return null
+
 
     const {
       props: {
@@ -51,13 +54,20 @@ export default class extends Component {
 
     let images = []
 
-    if (Array.isArray(imageList)) {
+    if (
+      Array.isArray(imageList)
+    ) {
       images = imageList.concat()
+
       if (
         imageId &&
-        !imageList.find( listImage => listImage.id === imageId)
+        image
       ) {
-        images.push(image)
+        if (
+          !imageList.find( listImage => listImage.id === imageId)
+        ) {
+          images.push(image)
+        }
       }
     }
 
@@ -120,16 +130,6 @@ export default class extends Component {
     }
   }
 
-
-
-  promiseState = (newState) => {
-    return new Promise( (resolve, reject) => {
-      this.setState(
-        newState,
-        resolve
-      )
-    })
-  }
 
   handleLoadMore = () => {
     this.props.data.fetchMore({

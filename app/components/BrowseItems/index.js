@@ -51,38 +51,38 @@ const queryConfig = {
 
 const mutationConfig = {
   name: "newItem",
-  options: ({orgSub, search}) => ({
-    optimisticResponse: {
-      editOrCreateItem: {
-        id: -1,
-        title: "New Item",
-        attribution: "",
-        medium: "",
-        culture: "",
-        dimensions: "",
-        date: "",
-        __typename: "Item"
-      }
-    },
-    update: (store, {data: {editOrCreateItem}}) => {
-      let data = store.readQuery({
-        query,
-        variables: {
-          orgSub,
-          search
-        }
-      })
-      data.items.push(editOrCreateItem)
-      store.writeQuery({
-        query,
-        variables: {
-          orgSub,
-          search
-        },
-        data
-      })
-    }
-  })
+  // options: ({orgSub, search}) => ({
+  //   optimisticResponse: {
+  //     editOrCreateItem: {
+  //       id: -1,
+  //       title: "New Item",
+  //       attribution: "",
+  //       medium: "",
+  //       culture: "",
+  //       dimensions: "",
+  //       date: "",
+  //       __typename: "Item"
+  //     }
+  //   },
+  //   update: (store, {data: {editOrCreateItem}}) => {
+  //     let data = store.readQuery({
+  //       query,
+  //       variables: {
+  //         orgSub,
+  //         search
+  //       }
+  //     })
+  //     data.items.push(editOrCreateItem)
+  //     store.writeQuery({
+  //       query,
+  //       variables: {
+  //         orgSub,
+  //         search
+  //       },
+  //       data
+  //     })
+  //   }
+  // })
 }
 
 

@@ -114,7 +114,7 @@ export default class extends Component {
             >
               <MoreContainer>
                 <H3>
-                  Related Books
+                  Related
                 </H3>
                 {relatedBooks.map(({id: bookId, title, previewImage}) => (
                   <Link

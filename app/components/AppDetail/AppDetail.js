@@ -84,7 +84,6 @@ export default class extends Component {
   }
 
   componentDidMount = () => {
-    console.log(this.props)
   }
 
 }
