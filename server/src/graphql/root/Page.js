@@ -17,6 +17,7 @@ const Page = {
       const page = await pageModel.findById(id)
 
       const comparisonImage0 =  await page.getComparisonImage0()
+
       return comparisonImage0
     } catch (ex) {
       console.error(ex)

@@ -104,8 +104,8 @@ export default class DetailEditor extends Component {
               >
                 <ImageManager
                   imageId={(image) ? image.id : false}
-                  orgId={orgId}
                   onImageSave={handleImageSave}
+                  orgSub={orgSub}
                 />
               </Modal>
               <Snackbar

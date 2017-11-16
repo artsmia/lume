@@ -28,7 +28,7 @@ const query = gql`
       email
     }
     organization (
-      subdomain: $orgSub
+      orgSub: $orgSub
     ) {
       id
     }

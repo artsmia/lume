@@ -27,6 +27,14 @@ export default class extends Component {
     if (this.props.data.loading) return null
 
     const {
+      props: {
+        data: {
+          page: {
+            comparisonImage0,
+            comparisonImage1
+          }
+        }
+      },
       state,
       state: {
         title,
@@ -40,8 +48,6 @@ export default class extends Component {
         mainImage,
         expanded,
         mainImageSelection,
-        comparisonImage0,
-        comparisonImage1,
         comparisonModal0,
         comparisonModal1,
         comparisonImage0Selection,
@@ -54,8 +60,12 @@ export default class extends Component {
       deletePage,
       props: {
         orgId,
+        orgSub
       },
     } = this
+
+    console.log(this.props.data.page)
+
     return (
       <Expander
         expanded={expanded}
@@ -165,6 +175,7 @@ export default class extends Component {
                     imageId={(mainImageSelection) ? mainImageSelection :""}
                     orgId={orgId}
                     onImageSave={(mainImageSelection)=>this.setState({mainImageSelection})}
+                    orgSub={orgSub}
                   />
                   <Button
                     onClick={()=>handleImageSave(mainImageSelection)}
@@ -211,6 +222,7 @@ export default class extends Component {
                         imageId={comparisonImage0Selection}
                       orgId={orgId}
                       onImageSave={(comparisonImage0Selection)=>this.setState({comparisonImage0Selection})}
+                      orgSub={orgSub}
                     />
                     <Button
                       onClick={handleComparisonImageSave}
@@ -228,6 +240,8 @@ export default class extends Component {
                         imageId={comparisonImage1Selection}
                       orgId={orgId}
                       onImageSave={(comparisonImage1Selection)=>this.setState({comparisonImage1Selection})}
+                      orgSub={orgSub}
+
                     />
                     <Button
                       onClick={handleComparisonImageSave}
@@ -345,8 +359,6 @@ export default class extends Component {
 
       const {
         state: {
-          comparisonImage0,
-          comparisonImage1,
           comparisonImage0Selection,
           comparisonImage1Selection
 
@@ -360,16 +372,8 @@ export default class extends Component {
       await editOrCreatePage({
         variables: {
           pageId,
-          comparisonImages: [
-            {
-              id: (comparisonImage0Selection) ? comparisonImage0Selection : comparisonImage0.id,
-              index: 0,
-            },
-            {
-              id: (comparisonImage1Selection) ? comparisonImage1Selection : comparisonImage1.id,
-              index: 1
-            }
-          ]
+          comparisonImage0: comparisonImage0Selection,
+          comparisonImage1: comparisonImage1Selection
         }
       })
 

@@ -67,7 +67,7 @@ const mutationConfig = {
     },
     update: (store, {data: {editOrCreateBook}}) => {
       let data = store.readQuery({
-        query: BooksQuery,
+        query,
         variables: {
           orgSub,
           search
@@ -75,7 +75,7 @@ const mutationConfig = {
       })
       data.books.push(editOrCreateBook)
       store.writeQuery({
-        query: BooksQuery,
+        query,
         variables: {
           orgSub,
           search

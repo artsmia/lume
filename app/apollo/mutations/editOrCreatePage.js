@@ -34,6 +34,12 @@ const mutation = gql`
         id
       }
       video
+      comparisonImage0 {
+        id
+      }
+      comparisonImage1 {
+        id
+      }
     }
   }
 `

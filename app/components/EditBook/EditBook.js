@@ -66,7 +66,8 @@ export default class EditBook extends Component {
             id: bookId,
             previewImage,
           }
-        }
+        },
+        orgSub
       },
       state: {
         snack,
@@ -165,7 +166,7 @@ export default class EditBook extends Component {
                     Preview Image
                   </H2>
                   <ImageManager
-                    orgId={orgId}
+                    orgSub={orgSub}
                     imageId={(previewImage) ? previewImage.id : undefined}
                     onImageSave={onImageSave}
                   />
@@ -189,6 +190,7 @@ export default class EditBook extends Component {
                           key={page.id}
                           pageId={page.id}
                           orgId={orgId}
+                          orgSub={orgSub}
                         />
                       ))
                       : null
