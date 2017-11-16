@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "https://github.com/artsmia/knight.git",
   "author": "Carl Peaslee <cpeaslee@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "cd app && yarn test"
+  }
 }
