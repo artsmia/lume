@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - "node"
+install:
+  - cd app && yarn install
 notifications:
     slack: artsmia:XuPlydSpfoILZdCPIbOYQq59
     email: false
