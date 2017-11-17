@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "8"
 install:
-  - cd app && yarn install
+  - cd app && yarn install && cd ..
   - cd server && yarn install && yarn run start-local
 notifications:
     slack: artsmia:XuPlydSpfoILZdCPIbOYQq59
