@@ -17,6 +17,7 @@
   "scripts": {
     "build": "yarn run clean && babel src --out-dir dist --copy-files",
     "start-local": "NODE_ENV=dev DATABASE=dev nodemon src --exec babel-node src",
+    "start-test": "NODE_ENV=dev DATABASE=dev babel-node src",
     "start": "NODE_ENV=production DATABASE=beta node dist",
     "clean": "rm -rf dist",
     "test": "jest",
