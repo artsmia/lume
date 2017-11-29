@@ -7,6 +7,7 @@ let username
 let password
 let database
 let dialect
+let storage
 
 switch (process.env.DATABASE) {
   case "dev": {
@@ -44,5 +45,6 @@ const db = new Sequelize({
   dialect,
   logging: false
 })
+
 
 export default db

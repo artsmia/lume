@@ -17,15 +17,17 @@
   "scripts": {
     "build": "yarn run clean && babel src --out-dir dist --copy-files",
     "start-local": "NODE_ENV=dev DATABASE=dev nodemon src --exec babel-node src",
-    "start-test": "NODE_ENV=dev DATABASE=dev babel-node src",
+    "start-beta": "NODE_ENV=dev DATABASE=beta babel-node src",
     "start": "NODE_ENV=production DATABASE=beta node dist",
     "clean": "rm -rf dist",
     "test": "jest",
     "deploy": "now --docker",
     "db-reset-dev": "NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/reinitialize",
     "db-reset-beta": "NODE_ENV=production DATABASE=beta babel-node src/db/scripts/reinitialize",
+    "db-reset-test": "NODE_ENV=dev DATABASE=test babel-node src/db/scripts/reinitialize",
     "db-populate-beta": "yarn run db-reset-beta && NODE_ENV=dev DATABASE=beta babel-node src/db/scripts/populate",
-    "db-populate-dev": "yarn run db-reset-dev && NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/populate"
+    "db-populate-dev": "yarn run db-reset-dev && NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/populate",
+    "db-populate-test": "yarn run db-reset-test && NODE_ENV=dev DATABASE=test babel-node src/db/scripts/populate"
   },
   "dependencies": {
     "apollo-server-express": "^1.1.0",
@@ -52,6 +54,7 @@
     "pg": "^7.0.2",
     "rimraf": "^2.6.1",
     "sequelize": "4.22.0",
-    "sharp": "^0.18.2"
+    "sharp": "^0.18.2",
+    "sqlite3": "^3.1.13"
   }
 }

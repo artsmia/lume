@@ -8,5 +8,8 @@
   "license": "MIT",
   "scripts": {
     "test": "cd app && yarn test"
+  },
+  "dependencies": {
+    "sqlite3": "^3.1.13"
   }
 }
