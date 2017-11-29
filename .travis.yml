@@ -3,7 +3,7 @@ node_js:
 - '8'
 install:
 - cd app && yarn install && cd ..
-- cd server && yarn install
+- cd server && yarn install && cd ..
 notifications:
   slack: artsmia:XuPlydSpfoILZdCPIbOYQq59
   email: false
