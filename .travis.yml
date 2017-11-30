@@ -1,9 +1,13 @@
 language: node_js
 node_js:
 - '8'
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
 install:
 - cd app && yarn install && cd ..
 - cd server && yarn install && cd ..
 notifications:
   slack: artsmia:XuPlydSpfoILZdCPIbOYQq59
   email: false
+services:
+  - mysql
