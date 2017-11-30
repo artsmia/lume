@@ -38,7 +38,9 @@
     "deploy": "now"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
+    "babel-jest": "^21.2.0",
     "babel-plugin-root-import": "^5.1.0",
     "babel-plugin-styled-components": "^1.3.0",
     "enzyme": "^3.2.0",
@@ -54,6 +56,7 @@
     "prettier": "^1.8.2",
     "prop-types": "^15.6.0",
     "react-addons-test-utils": "^15.6.2",
-    "react-test-renderer": "^16.1.1"
+    "react-test-renderer": "^16.1.1",
+    "regenerator-runtime": "^0.11.0"
   }
 }

@@ -8,7 +8,12 @@
     },
     "test": {
       "presets": [
-        ["env", { "modules": "commonjs" }],
+        [
+          "env",
+          {
+            "modules": "commonjs"
+            }
+        ],
         "next/babel"
       ]
     }
