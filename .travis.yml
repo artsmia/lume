@@ -6,7 +6,7 @@ before_install:
 install:
 - cd app && yarn install && cd ..
 - cd server && yarn install
-- yarn run db-reset-test && yarn run start-test
+- yarn run db-reset-test & yarn run start-test
 - cd ..
 notifications:
   slack: artsmia:XuPlydSpfoILZdCPIbOYQq59
