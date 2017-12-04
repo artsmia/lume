@@ -6,6 +6,7 @@ before_install:
 install:
 - cd app
 - yarn install
+- yarn run start-local &
 - cd ..
 - cd server
 - yarn install
