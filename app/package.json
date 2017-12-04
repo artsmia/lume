@@ -32,7 +32,7 @@
   "scripts": {
     "start-local": "API_CONFIG=local node server",
     "lint": "eslint pages ui server utils",
-    "test": "jest",
+    "test": "API_CONFIG=test jest",
     "build": "API_CONFIG=beta next build",
     "start": "NODE_ENV=production API_CONFIG=beta node server",
     "deploy": "now"

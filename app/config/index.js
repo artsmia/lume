@@ -21,6 +21,10 @@ switch (process.env.API_CONFIG) {
 
     break
   }
+  case "test": {
+    apiUrl= "http://localhost:5000"
+    break
+  }
   default:
   case "local": {
     apiUrl= "http://localhost:5000"
@@ -34,9 +38,13 @@ switch (process.env.NODE_ENV) {
     auth0Domain = "artsmia.auth0.com"
     url = "https://beta.storytellin.gg"
     s3Url = "https://s3.amazonaws.com"
-    googleApiKey = "AIzaSyB74ffA_5MUNzEcNFDZs0SNOhoSGzlbD6M"
-    googleClientId = "386077841817-kpp5vbepavknjo55s7nvh8bp2uv7lp80.apps.googleusercontent.com	"
-    gdriveSearchUrl = `https://www.googleapis.com/drive/v3/files/?key=${googleApiKey}`
+    break
+  }
+  case "test": {
+    auth0ID = "j8pjiCmNfc74AYnuP8MR0PZAbk68syv6"
+    auth0Domain = "artsmia.auth0.com"
+    url = "http://localhost:3000"
+    s3Url = "https://s3.amazonaws.com"
     break
   }
   default:
@@ -45,9 +53,6 @@ switch (process.env.NODE_ENV) {
     auth0Domain = "artsmia.auth0.com"
     url = "http://localhost:3000"
     s3Url = "https://s3.amazonaws.com"
-    googleApiKey = "AIzaSyB74ffA_5MUNzEcNFDZs0SNOhoSGzlbD6M"
-    googleClientId = "386077841817-kpp5vbepavknjo55s7nvh8bp2uv7lp80.apps.googleusercontent.com	"
-    gdriveSearchUrl = `https://www.googleapis.com/drive/v3/files/?key=${googleApiKey}`
     break
   }
 }
