@@ -34,6 +34,16 @@ switch (process.env.DATABASE) {
   }
 }
 
+if (process.env.TRAVIS) {
+  host = '127.0.0.1'
+  port = 3306
+  username = 'travis'
+  password = ''
+  database = 'test'
+  dialect = 'mysql'
+}
+
+
 console.log(host, port, username, password, database, dialect)
 
 const db = new Sequelize({
