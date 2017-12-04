@@ -6,15 +6,10 @@ describe("AppRoot page", ()=> {
 
   let appRoot
 
-  let props = {
-    serverState: {}
-  }
 
   const mountAppRoot = () => {
     appRoot = mount(
-      <AppRoot
-        {...props}
-      />
+      <AppRoot/>
     )
   }
 
