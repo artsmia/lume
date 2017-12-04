@@ -1,9 +1,7 @@
 import React from 'react'
 import { mount} from 'enzyme'
-import Root from './index.js'
-import withData from '../../apollo'
+import AppRoot from './index.js'
 
-const AppRoot = withData(Root)
 
 describe("AppRoot page", ()=> {
 
