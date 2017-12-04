@@ -1,8 +1,0 @@
-query template ($userId: ID) {
-  user  (
-    id: $userId
-  ) {
-    id
-    email
-  }
-}

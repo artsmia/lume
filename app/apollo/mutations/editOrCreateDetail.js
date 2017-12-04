@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 const mutation = gql`
 mutation editOrCreateDetail (
   $detailId: ID
-  $itemId: ID
+  $objId: ID
   $title: String
   $imageId: ID
   $index: Int
@@ -15,7 +15,7 @@ mutation editOrCreateDetail (
 ) {
   editOrCreateDetail (
     id: $detailId
-    itemId: $itemId
+    objId: $objId
     title: $title
     imageId: $imageId
     index: $index

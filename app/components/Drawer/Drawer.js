@@ -16,7 +16,10 @@ export default class DrawerComponent extends Component {
   }
 
   render() {
-    if (this.props.data.loading) {
+    if (
+      this.props.data.loading ||
+      !this.props.data.user
+    ) {
       return null
     }
     const {
@@ -57,23 +60,23 @@ export default class DrawerComponent extends Component {
           </MenuItem>
           <MenuItem
             href={{
-              pathname: '/cms/browse/items',
+              pathname: '/cms/browse/objs',
               query: {
                 orgSub
               }
             }}
-            as={`/${orgSub}/cms/items`}
+            as={`/${orgSub}/cms/objs`}
           >
             Object Stories
           </MenuItem>
           <MenuItem
             href={{
-              pathname: '/cms/browse/books',
+              pathname: '/cms/browse/thematics',
               query: {
                 orgSub
               }
             }}
-            as={`/${orgSub}/cms/books`}
+            as={`/${orgSub}/cms/thematics`}
           >
             Thematic Stories
           </MenuItem>

@@ -1,13 +1,13 @@
 import detailModel from '../../db/models/detail'
-import itemModel from '../../db/models/item'
+import objModel from '../../db/models/obj'
 
 
 export default async function deleteDetail(src, {id}, ctx) {
   try {
     let detail = await detailModel.findById(id)
-    let item = await itemModel.findById(detail.itemId)
+    let obj = await objModel.findById(detail.objId)
     await detail.destroy()
-    return item
+    return obj
     return
   } catch (ex) {
     console.error(ex)

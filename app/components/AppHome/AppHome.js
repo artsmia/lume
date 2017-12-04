@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H2} from '../../ui/h'
 import {Search} from '../../ui/search'
-import AppItemList from '../AppItemList'
+import AppObjList from '../AppObjList'
 import PropTypes from 'prop-types'
 
 export default class AppHome extends Component {
@@ -39,7 +39,7 @@ export default class AppHome extends Component {
             onChange={handleChange}
           />
         </SideContainer>
-        <AppItemList
+        <AppObjList
           orgSub={orgSub}
           search={search}
         />

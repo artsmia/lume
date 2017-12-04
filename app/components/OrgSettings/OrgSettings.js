@@ -7,8 +7,8 @@ export default class OrgSettings extends Component {
 
 
   state = {
-    customItemApiEnabled: false,
-    customItemApiEndpoint: ""
+    customObjApiEnabled: false,
+    customObjApiEndpoint: ""
   }
 
   render() {
@@ -17,8 +17,8 @@ export default class OrgSettings extends Component {
 
     const {
       state: {
-        customItemApiEnabled,
-        customItemApiEndpoint
+        customObjApiEnabled,
+        customObjApiEndpoint
       },
       handleCheckboxChange,
       handleChange,
@@ -27,19 +27,19 @@ export default class OrgSettings extends Component {
     return (
       <Container>
         <Label>
-          Enable Custom Item API
+          Enable Custom Obj API
         </Label>
         <Checkbox
-          name={"customItemApiEnabled"}
-          checked={customItemApiEnabled}
+          name={"customObjApiEnabled"}
+          checked={customObjApiEnabled}
           onChange={handleCheckboxChange}
         />
         <Label>
-          Custom Item API Endpoint
+          Custom Obj API Endpoint
         </Label>
         <Input
-          name={"customItemApiEndpoint"}
-          value={customItemApiEndpoint}
+          name={"customObjApiEndpoint"}
+          value={customObjApiEndpoint}
           onChange={handleChange}
         />
         <Button
@@ -73,8 +73,8 @@ export default class OrgSettings extends Component {
           }
         },
         state: {
-          customItemApiEnabled,
-          customItemApiEndpoint
+          customObjApiEnabled,
+          customObjApiEndpoint
         }
       } = this
 
@@ -82,8 +82,8 @@ export default class OrgSettings extends Component {
       await editOrganization({
         variables: {
           orgId,
-          customItemApiEnabled,
-          customItemApiEndpoint
+          customObjApiEnabled,
+          customObjApiEndpoint
         }
       })
 

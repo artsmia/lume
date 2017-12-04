@@ -39,4 +39,4 @@ export default compose(
   AppDetail
 )
 
-export const PreviewAppItem = AppDetail
+export const PreviewAppObj = AppDetail

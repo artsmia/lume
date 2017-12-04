@@ -17,8 +17,8 @@ const query = gql`
         email
         role
       }
-      customItemApiEnabled
-      customItemApiEndpoint
+      customObjApiEnabled
+      customObjApiEndpoint
     }
   }
 `

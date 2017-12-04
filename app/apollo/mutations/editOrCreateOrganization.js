@@ -6,22 +6,22 @@ const mutation = gql`
     $newUserIds: [ID]
     $name: String
     $subdomain: String
-    $customItemApiEnabled: Boolean
-    $customItemApiEndpoint: String
+    $customObjApiEnabled: Boolean
+    $customObjApiEndpoint: String
   ) {
     editOrCreateOrganization (
       id: $orgId
       newUserIds: $newUserIds
       name: $name
       subdomain: $subdomain
-      customItemApiEndpoint: $customItemApiEndpoint
-      customItemApiEnabled: $customItemApiEnabled
+      customObjApiEndpoint: $customObjApiEndpoint
+      customObjApiEnabled: $customObjApiEnabled
     ) {
       id
       name
       subdomain
-      customItemApiEnabled
-      customItemApiEndpoint
+      customObjApiEnabled
+      customObjApiEndpoint
     }
   }
 `

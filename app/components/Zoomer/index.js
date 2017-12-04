@@ -7,7 +7,7 @@ const query = gql`
   query ZoomerQuery (
     $imageId: ID!
     $detailId: ID!
-    $itemId: ID!
+    $objId: ID!
   ) {
     image (
       id: $imageId
@@ -40,8 +40,8 @@ const query = gql`
         coordinates
       }
     }
-    item (
-      id: $itemId
+    obj (
+      id: $objId
     ) {
       id
       mainImage {
@@ -69,11 +69,11 @@ const query = gql`
 
 
 const queryConfig = {
-  options: ({imageId = "", detailId = "", itemId = ""}) => ({
+  options: ({imageId = "", detailId = "", objId = ""}) => ({
     variables: {
       imageId,
       detailId,
-      itemId
+      objId
     },
   })
 }

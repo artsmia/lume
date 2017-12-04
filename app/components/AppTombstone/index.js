@@ -4,10 +4,10 @@ import gql from 'graphql-tag'
 
 const query = gql`
   query TombstoneQuery (
-    $itemId: ID!
+    $objId: ID!
   ) {
-    item (
-      id: $itemId
+    obj (
+      id: $objId
     ) {
       id
       accessionNumber
@@ -26,9 +26,9 @@ const query = gql`
 `
 
 const config = {
-  options: ({itemId}) => ({
+  options: ({objId}) => ({
     variables: {
-      itemId
+      objId
     }
   })
 }
@@ -39,4 +39,4 @@ export default compose(
   AppTombstone
 )
 
-export const PreviewAppItem = AppTombstone
+export const PreviewAppObj = AppTombstone

@@ -3,10 +3,10 @@ import fetch from 'isomorphic-unfetch'
 import db from '../connect'
 import {createAssociations} from '../associations'
 import organizationModel from '../models/organization'
-import itemModel from '../models/item'
+import objModel from '../models/obj'
 import detailModel from '../models/detail'
 import imageModel from '../models/image'
-import bookModel from '../models/book'
+import thematicModel from '../models/thematic'
 import pageModel from '../models/page'
 
 
@@ -28,8 +28,8 @@ async function populate() {
         organization = await organizationModel.create({
           subdomain: "mia",
           name: "Minneapolis Institute of Art",
-          customItemApiEnabled: true,
-          customItemApiEndpoint: "http://localhost:5000/mia/item",
+          customObjApiEnabled: true,
+          customObjApiEndpoint: "http://localhost:5000/mia/obj",
           customImageApiEnabled: true,
           customImageEndpoint: "http://localhost:5000/mia/image"
         })
@@ -47,12 +47,12 @@ async function populate() {
     }
 
 
-    const createItems = async () => {
+    const createObjs = async () => {
       try {
 
         const localIds = Object.keys(json.objects)
 
-        const items = localIds.map( (localId) => ({
+        const objs = localIds.map( (localId) => ({
           localId,
           pullFromCustomApi: true,
           organizationId: organization.id,
@@ -62,8 +62,8 @@ async function populate() {
         }))
 
 
-        for (let item of items) {
-          await createItem(item)
+        for (let obj of objs) {
+          await createObj(obj)
         }
 
 
@@ -96,17 +96,17 @@ async function populate() {
     }
 
 
-    const createItem = async(item) => {
+    const createObj = async(obj) => {
       try {
-        const newItem = await itemModel.create(item)
+        const newObj = await objModel.create(obj)
 
-        await organization.addItem(newItem)
+        await organization.addObj(newObj)
 
         let details = []
 
         let index = 0
 
-        item.views.forEach( (view) => {
+        obj.views.forEach( (view) => {
 
           view.annotations.forEach( detail => {
 
@@ -135,11 +135,11 @@ async function populate() {
         }
 
 
-        await newItem.addDetails(newDetails)
+        await newObj.addDetails(newDetails)
 
         const [newMainImage, isNew] = await imageModel.findCreateFind({
           where: {
-            localId: item.views[0].image
+            localId: obj.views[0].image
           }
         })
 
@@ -149,7 +149,7 @@ async function populate() {
 
         }
 
-        await newItem.setMainImage(newMainImage)
+        await newObj.setMainImage(newMainImage)
 
 
       } catch (ex) {
@@ -213,20 +213,20 @@ async function populate() {
       }
     }
 
-    const createBook = async(book) => {
+    const createThematic = async(thematic) => {
       try {
 
-        const newBook = await bookModel.create({
-          ...book,
+        const newThematic = await thematicModel.create({
+          ...thematic,
           id: undefined,
-          localId: book.id
+          localId: thematic.id
         })
 
         let pages = []
 
         let index = 0
 
-        for (let page of book.pages) {
+        for (let page of thematic.pages) {
           pages.push(
             await createPage({
               ...page,
@@ -236,31 +236,31 @@ async function populate() {
           index++
         }
 
-        await newBook.setPages(pages)
+        await newThematic.setPages(pages)
 
-        const itemIds = Object.keys(json.objects)
+        const objIds = Object.keys(json.objects)
 
-        let itemsToAssociate = []
+        let objsToAssociate = []
 
-        itemIds.forEach( id => {
+        objIds.forEach( id => {
           let relatedStories = json.objects[id].relatedStories || []
 
           if (
-            relatedStories.includes(book.localId)
+            relatedStories.includes(thematic.localId)
           ) {
-            itemsToAssociate.push(id)
+            objsToAssociate.push(id)
           }
         })
 
-        const items = await itemModel.findAll({
+        const objs = await objModel.findAll({
           where: {
-            localId: itemsToAssociate
+            localId: objsToAssociate
           }
         })
 
-        await newBook.addRelatedItems(items)
+        await newThematic.addRelatedObjs(objs)
 
-        await organization.addBook(newBook)
+        await organization.addThematic(newThematic)
 
 
       } catch (ex) {
@@ -270,7 +270,7 @@ async function populate() {
     }
 
 
-    const createBooks = async() => {
+    const createThematics = async() => {
       try {
         const {
           stories
@@ -278,18 +278,18 @@ async function populate() {
 
         const storyIds = Object.keys(stories)
 
-        const books = storyIds.map( (localId) => {
+        const thematics = storyIds.map( (localId) => {
 
-          let book = stories[localId]
+          let thematic = stories[localId]
 
           return {
             localId: parseInt(localId,10),
-            ...book
+            ...thematic
           }
         })
 
-        for (let book of books) {
-          await createBook(book)
+        for (let thematic of thematics) {
+          await createThematic(thematic)
         }
 
 
@@ -301,9 +301,9 @@ async function populate() {
 
     await createOrganization()
 
-    await createItems()
+    await createObjs()
 
-    await createBooks()
+    await createThematics()
 
     process.exit()
 

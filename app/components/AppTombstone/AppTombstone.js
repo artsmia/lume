@@ -8,9 +8,9 @@ export default class AppTombstone extends Component {
   static displayName = "AppTombstone"
 
   static propTypes = {
-    itemId: PropTypes.string.isRequired,
+    objId: PropTypes.string.isRequired,
     data: PropTypes.shape({
-      item: PropTypes.object,
+      obj: PropTypes.object,
       loading: PropTypes.bool
     })
   }
@@ -26,7 +26,7 @@ export default class AppTombstone extends Component {
     const {
       props: {
         data: {
-          item: {
+          obj: {
             accessionNumber,
             attribution,
             creditLine,

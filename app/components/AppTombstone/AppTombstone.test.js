@@ -27,7 +27,7 @@ describe("AppTombstone", () => {
   beforeEach(() => {
     appTombstone = undefined
     props = {
-      itemId: undefined,
+      objId: undefined,
       data: undefined
     }
   })
@@ -37,7 +37,7 @@ describe("AppTombstone", () => {
 
     props = {
       data: {
-        item: {
+        obj: {
           accessionNumber: "",
           attribution: "",
           creditLine: "",
@@ -49,7 +49,7 @@ describe("AppTombstone", () => {
           title: "",
         }
       },
-      itemId: "123"
+      objId: "123"
     }
 
     mountAppTombstone()
@@ -61,7 +61,7 @@ describe("AppTombstone", () => {
   //     data: {
   //       loading: true,
   //     },
-  //     itemId: "123"
+  //     objId: "123"
   //   }
   //
   //   mountAppTombstone()

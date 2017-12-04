@@ -1,19 +1,19 @@
-import book from './book'
+import thematic from './thematic'
 import detail from './detail'
 import group from './group'
 import image from './image'
-import item from './item'
+import obj from './obj'
 import page from './page'
 import organization from './organization'
 import userOrganization from './userOrganization'
 
 
 export {
-  book,
+  thematic,
   detail,
   group,
   image,
-  item,
+  obj,
   page,
   organization,
   userOrganization,

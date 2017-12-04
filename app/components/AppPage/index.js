@@ -43,4 +43,4 @@ export default compose(
   AppPage
 )
 
-export const PreviewAppItem = AppPage
+export const PreviewAppObj = AppPage

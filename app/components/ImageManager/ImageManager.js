@@ -26,8 +26,11 @@ export default class extends Component {
   render() {
 
 
+    console.log(this.props)
+
     if (
-      this.props.data.loading
+      this.props.data.loading ||
+      !this.props.data.images
     ) return null
 
 
@@ -63,6 +66,8 @@ export default class extends Component {
         imageId &&
         image
       ) {
+        console.log("here")
+
         if (
           !imageList.find( listImage => listImage.id === imageId)
         ) {

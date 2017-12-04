@@ -1,7 +1,7 @@
 import detailModel from '../../db/models/detail'
-import itemModel from '../../db/models/item'
+import objModel from '../../db/models/obj'
 
-export default async function editOrCreateDetail(src, {id, itemId, title, index, imageId, description, geometry, newAdditionalImageIds, removeAdditionalImageIds}, ctx){
+export default async function editOrCreateDetail(src, {id, objId, title, index, imageId, description, geometry, newAdditionalImageIds, removeAdditionalImageIds}, ctx){
   try {
 
 
@@ -14,9 +14,9 @@ export default async function editOrCreateDetail(src, {id, itemId, title, index,
       detail = await detailModel.findById(id)
     }
 
-    if (itemId) {
-      let item = await itemModel.findById(itemId)
-      await item.addDetail(detail)
+    if (objId) {
+      let obj = await objModel.findById(objId)
+      await obj.addDetail(detail)
     }
 
     if (imageId) {

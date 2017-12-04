@@ -6,8 +6,6 @@ before_install:
 install:
 - cd app && yarn install && cd ..
 - cd server && yarn install && cd ..
-script:
-  - yarn test
 notifications:
   slack: artsmia:XuPlydSpfoILZdCPIbOYQq59
   email: false

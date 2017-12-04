@@ -1,78 +1,78 @@
 //queries
-import book from './queries/book'
+import thematic from './queries/thematic'
 import detail from './queries/detail'
 import group from './queries/group'
 import image from './queries/image'
 import images from './queries/images'
 
-import item from './queries/item'
+import obj from './queries/obj'
 import organization from './queries/organization'
 import page from './queries/page'
 import user from './queries/user'
 
 
 import organizations from './queries/organizations'
-import items from './queries/items'
-import books from './queries/books'
+import objs from './queries/objs'
+import thematics from './queries/thematics'
 
 
 import Organization from './root/Organization'
-import Item from './root/Item'
+import Obj from './root/Obj'
 import User from './root/User'
 import Image from './root/Image'
 import Detail from './root/Detail'
-import Book from './root/Book'
+import Thematic from './root/Thematic'
 import Page from './root/Page'
 
 
 //mutations
-import editOrCreateItem from './mutations/editOrCreateItem'
+import editOrCreateObj from './mutations/editOrCreateObj'
 import editOrCreateOrganization from './mutations/editOrCreateOrganization'
 import editOrCreateImage from './mutations/editOrCreateImage'
 import editOrCreateDetail from './mutations/editOrCreateDetail'
-import editOrCreateBook from './mutations/editOrCreateBook'
+import editOrCreateThematic from './mutations/editOrCreateThematic'
 import editOrCreatePage from './mutations/editOrCreatePage'
 
 
 
-import deleteItem from './mutations/deleteItem'
+import deleteObj from './mutations/deleteObj'
 import deleteDetail from './mutations/deleteDetail'
-import deleteBook from './mutations/deleteBook'
+import deleteThematic from './mutations/deleteThematic'
 import deletePage from './mutations/deletePage'
 
 const resolvers = {
   Query: {
-    book,
+    thematic,
     detail,
     group,
     image,
     images,
-    item,
+    obj,
     organization,
     page,
-    items,
-    books,
+    objs,
+    thematics,
     user,
     organizations
   },
   Mutation: {
-    editOrCreateItem,
+    editOrCreateObj,
     editOrCreateOrganization,
     editOrCreateImage,
     editOrCreateDetail,
-    editOrCreateBook,
+    editOrCreateThematic,
     editOrCreatePage,
-    deleteItem,
+    deleteObj,
     deleteDetail,
-    deleteBook,
+    deleteThematic,
     deletePage
   },
-  Item,
+  Obj,
   User,
   Organization,
   Image,
   Detail,
-  Book,
+  Thematic,
   Page
 }
 

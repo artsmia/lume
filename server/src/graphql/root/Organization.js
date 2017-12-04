@@ -39,13 +39,13 @@ const Organization = {
       console.error(ex)
     }
   },
-  async items(org, args){
+  async objs(org, args){
     try {
 
 
-      const items = await org.getItems()
+      const objs = await org.getObjs()
 
-      return items
+      return objs
     } catch (ex) {
       console.error(ex)
     }
@@ -58,9 +58,9 @@ const Organization = {
       console.error(ex)
     }
   },
-  async books(obj, args){
+  async thematics(obj, args){
     try {
-      return await obj.getBooks()
+      return await obj.getThematics()
     } catch (ex) {
       console.error(ex)
     }

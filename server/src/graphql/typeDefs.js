@@ -1,11 +1,11 @@
 const typeDefs = `
 
-  type Book {
+  type Thematic {
     id: ID!
     previewImage: Image
     title: String
     pages: [Page]
-    relatedItems: [Item]
+    relatedObjs: [Obj]
     visibility: VisibilityEnum
     updatedAt: String
   }
@@ -14,7 +14,7 @@ const typeDefs = `
   type Detail {
     id: ID!
     title: String
-    item: Item
+    obj: Obj
     image: Image
     index: Int
     additionalImages: [Image]
@@ -26,7 +26,7 @@ const typeDefs = `
     id: ID!
     title: String
     text: String
-    items: [Item]
+    objs: [Obj]
     image: Image
     organizations: [Organization]
   }
@@ -45,7 +45,7 @@ const typeDefs = `
   }
 
 
-  type Item {
+  type Obj {
     id: ID!
     title: String
     localId: String
@@ -61,9 +61,9 @@ const typeDefs = `
     type: String
     visibility: VisibilityEnum
     mainImage: Image
-    relatedItems: [Item]
+    relatedObjs: [Obj]
     details: [Detail]
-    relatedBooks: [Book]
+    relatedThematics: [Thematic]
     groups: [Group]
     organizations: [Organization]
     details: [Detail]
@@ -76,15 +76,15 @@ const typeDefs = `
     name: String
     subdomain: String
     emailDomain: String
-    items: [Item]
+    objs: [Obj]
     users: [User]
     groups: [Group]
-    books: [Book]
+    thematics: [Thematic]
     images: [Image]
     role: RoleEnum
     newUsersRequireApproval: Boolean
-    customItemApiEnabled: Boolean
-    customItemApiEndpoint: String
+    customObjApiEnabled: Boolean
+    customObjApiEndpoint: String
     customImageApiEnabled: Boolean
     customImageEndpoint: String
   }
@@ -95,7 +95,7 @@ const typeDefs = `
     text: String
     type: String
     index: Int
-    book: Book
+    thematic: Thematic
     mainImage: Image
     video: String
     comparisonImage0: Image
@@ -144,15 +144,15 @@ const typeDefs = `
 
   type Query {
 
-    book (
+    thematic (
         id: ID!
-    ): Book
+    ): Thematic
 
-    books (
+    thematics (
       filter: Filter
       search: String
       orgSub: String
-    ): [Book]
+    ): [Thematic]
 
     detail (
         id: ID!
@@ -172,9 +172,9 @@ const typeDefs = `
       orgSub: String
     ): [Image]
 
-    item (
+    obj (
       id: ID!
-    ): Item
+    ): Obj
 
 
     organization (
@@ -190,11 +190,11 @@ const typeDefs = `
         id: ID
     ): User
 
-    items (
+    objs (
       orgSub: String
       search: String
       filter: Filter
-    ): [Item]
+    ): [Obj]
 
     organizations: [Organization]
 
@@ -202,24 +202,24 @@ const typeDefs = `
 
   type Mutation {
 
-    editOrCreateItem(
-      item: ItemInput
+    editOrCreateObj(
+      obj: ObjInput
       newOrganizationIds: [ID]
       mainImageId: ID
-      newRelatedItemIds: [ID]
+      newRelatedObjIds: [ID]
       createAndAddDetail: CreateAndAddDetailInput
-      newRelatedBookIds: [ID]
-      removeRelatedBookIds: [ID]
+      newRelatedThematicIds: [ID]
+      removeRelatedThematicIds: [ID]
       newGroupIds: [ID]
-    ): Item
+    ): Obj
 
-    editOrCreateBook(
+    editOrCreateThematic(
       id: ID
       title: String
       newOrganizationIds: [ID]
       previewImageId: ID
       createAndAddPage: CreateAndAddPageInput
-    ): Book
+    ): Thematic
 
 
     editOrCreateOrganization(
@@ -228,8 +228,8 @@ const typeDefs = `
       subdomain: String
       emailDomain: String
       newUserIds: [ID]
-      customItemApiEnabled: Boolean
-      customItemApiEndpoint: String
+      customObjApiEnabled: Boolean
+      customObjApiEndpoint: String
     ): Organization
 
     editOrCreateImage(
@@ -253,7 +253,7 @@ const typeDefs = `
       id: ID
       title: String
       description: String
-      itemId: ID
+      objId: ID
       imageId: ID
       index: Int
       newAdditionalImageIds: [ID]
@@ -262,31 +262,31 @@ const typeDefs = `
     ): Detail
 
 
-    deleteItem(
+    deleteObj(
       id: ID!
     ): DeleteMessage
 
-    deleteBook(
+    deleteThematic(
       id: ID!
     ): DeleteMessage
 
     deletePage(
       id: ID!
-    ): Book
+    ): Thematic
 
     deleteDetail(
       id: ID!
-    ): Item
+    ): Obj
 
   }
 
   input CreateAndAddDetailInput {
-    itemId: ID
+    objId: ID
     imageId: ID
   }
 
   input CreateAndAddPageInput {
-    bookId: ID
+    thematicId: ID
   }
 
   input ComparisonImageInput {
@@ -294,7 +294,7 @@ const typeDefs = `
     index: Int
   }
 
-  input ItemInput {
+  input ObjInput {
     id: ID
     title: String
     localId: String

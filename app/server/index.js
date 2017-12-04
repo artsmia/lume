@@ -36,22 +36,22 @@ app.prepare().then(() => {
   })
 
 
-  server.get('/:orgSub/item/:itemId', (req, res) => {
-    const actualPage = '/app/item'
-    const {orgSub, itemId} = req.params
+  server.get('/:orgSub/obj/:objId', (req, res) => {
+    const actualPage = '/app/obj'
+    const {orgSub, objId} = req.params
     const queryParams = {
         orgSub,
-        itemId
+        objId
     }
     app.render(req, res, actualPage, queryParams)
   })
 
-  server.get('/:orgSub/book/:bookId', (req, res) => {
-    const actualPage = '/app/book'
-    const {orgSub, bookId} = req.params
+  server.get('/:orgSub/thematic/:thematicId', (req, res) => {
+    const actualPage = '/app/thematic'
+    const {orgSub, thematicId} = req.params
     const queryParams = {
         orgSub,
-        bookId
+        thematicId
     }
     app.render(req, res, actualPage, queryParams)
   })
@@ -65,8 +65,8 @@ app.prepare().then(() => {
     app.render(req, res, actualPage, queryParams)
   })
 
-  server.get('/:orgSub/cms/items', (req, res) => {
-    const actualPage = '/cms/browse/items'
+  server.get('/:orgSub/cms/objs', (req, res) => {
+    const actualPage = '/cms/browse/objs'
     const {orgSub} = req.params
     const queryParams = {
         orgSub,
@@ -74,8 +74,8 @@ app.prepare().then(() => {
     app.render(req, res, actualPage, queryParams)
   })
 
-  server.get('/:orgSub/cms/books', (req, res) => {
-    const actualPage = '/cms/browse/books'
+  server.get('/:orgSub/cms/thematics', (req, res) => {
+    const actualPage = '/cms/browse/thematics'
     const {orgSub} = req.params
     const queryParams = {
         orgSub,
@@ -84,23 +84,23 @@ app.prepare().then(() => {
   })
 
 
-  server.get('/:orgSub/cms/item/:itemId', (req, res) => {
-    const actualPage = '/cms/edit/item'
-    const {orgSub, itemId} = req.params
+  server.get('/:orgSub/cms/obj/:objId', (req, res) => {
+    const actualPage = '/cms/edit/obj'
+    const {orgSub, objId} = req.params
     const queryParams = {
         orgSub,
-        itemId
+        objId
     }
     app.render(req, res, actualPage, queryParams)
   })
 
 
-  server.get('/:orgSub/cms/book/:bookId', (req, res) => {
-    const actualPage = '/cms/edit/book'
-    const {orgSub, bookId} = req.params
+  server.get('/:orgSub/cms/thematic/:thematicId', (req, res) => {
+    const actualPage = '/cms/edit/thematic'
+    const {orgSub, thematicId} = req.params
     const queryParams = {
         orgSub,
-        bookId
+        thematicId
     }
     app.render(req, res, actualPage, queryParams)
   })

@@ -1,9 +1,9 @@
 import {
-  book,
+  thematic,
   detail,
   group,
   image,
-  item,
+  obj,
   page,
   organization,
 } from './models'
@@ -13,11 +13,11 @@ import {
 export async function createAssociations() {
   try {
 
-    detail.belongsTo(item, {
-      as: "item",
+    detail.belongsTo(obj, {
+      as: "obj",
     })
 
-    item.hasMany(detail, {
+    obj.hasMany(detail, {
       as: "details"
     })
 
@@ -29,11 +29,11 @@ export async function createAssociations() {
       as: "details"
     })
 
-    page.belongsTo(book, {
-      as: "book"
+    page.belongsTo(thematic, {
+      as: "thematic"
     })
 
-    book.hasMany(page, {
+    thematic.hasMany(page, {
       as: "pages"
     })
 
@@ -55,20 +55,20 @@ export async function createAssociations() {
       foreignKey: "mainImageId"
     })
 
-    image.hasMany(item, {
+    image.hasMany(obj, {
       foreignKey: "mainImageId",
     })
 
-    item.belongsTo(image, {
+    obj.belongsTo(image, {
       as: "mainImage",
       foreignKey: "mainImageId",
     })
 
-    image.hasMany(book, {
+    image.hasMany(thematic, {
       foreignKey: "previewImageId"
     })
 
-    book.belongsTo(image, {
+    thematic.belongsTo(image, {
       as: "previewImage",
       foreignKey: "previewImageId"
     })
@@ -91,37 +91,37 @@ export async function createAssociations() {
       foreignKey: "comparisonImage1Id"
     })
 
-    item.belongsToMany(group, {
+    obj.belongsToMany(group, {
       as: 'groups',
-      through: 'item_group',
-      foreignKey: 'itemId'
+      through: 'obj_group',
+      foreignKey: 'objId'
     })
-    group.belongsToMany(item, {
-      as: 'items',
-      through: 'item_group',
+    group.belongsToMany(obj, {
+      as: 'objs',
+      through: 'obj_group',
       foreignKey: 'groupId'
     })
 
-    book.belongsToMany(group, {
+    thematic.belongsToMany(group, {
       as: 'groups',
-      through: 'book_group',
-      foreignKey: 'bookId'
+      through: 'thematic_group',
+      foreignKey: 'thematicId'
     })
-    group.belongsToMany(book, {
-      as: 'books',
-      through: 'book_group',
+    group.belongsToMany(thematic, {
+      as: 'thematics',
+      through: 'thematic_group',
       foreignKey: 'groupId'
     })
 
-    item.belongsToMany(book, {
-      as: 'relatedBooks',
-      through: 'item_book',
-      foreignKey: 'itemId'
+    obj.belongsToMany(thematic, {
+      as: 'relatedThematics',
+      through: 'obj_thematic',
+      foreignKey: 'objId'
     })
-    book.belongsToMany(item, {
-      as: 'relatedItems',
-      through: 'item_book',
-      foreignKey: 'bookId'
+    thematic.belongsToMany(obj, {
+      as: 'relatedObjs',
+      through: 'obj_thematic',
+      foreignKey: 'thematicId'
     })
 
 
@@ -137,20 +137,20 @@ export async function createAssociations() {
       foreignKey: "imageId"
     })
 
-    item.belongsToMany(item, {
-      as: "relatedItems",
-      through: "item_item"
+    obj.belongsToMany(obj, {
+      as: "relatedObjs",
+      through: "obj_obj"
     })
 
-    item.belongsToMany(organization, {
+    obj.belongsToMany(organization, {
       as: "organizations",
-      through: "item_organization",
-      foreignKey: "itemId"
+      through: "obj_organization",
+      foreignKey: "objId"
     })
 
-    organization.belongsToMany(item, {
-      as:"items",
-      through: "item_organization",
+    organization.belongsToMany(obj, {
+      as:"objs",
+      through: "obj_organization",
       foreignKey: "organizationId"
     })
 
@@ -166,15 +166,15 @@ export async function createAssociations() {
       foreignKey: "organizationId"
     })
 
-    book.belongsToMany(organization, {
+    thematic.belongsToMany(organization, {
       as: "organizations",
-      through: "book_organization",
-      foreignKey: "bookId"
+      through: "thematic_organization",
+      foreignKey: "thematicId"
     })
 
-    organization.belongsToMany(book, {
-      as:"books",
-      through: "book_organization",
+    organization.belongsToMany(thematic, {
+      as:"thematics",
+      through: "thematic_organization",
       foreignKey: "organizationId"
     })
 

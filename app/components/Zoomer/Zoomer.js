@@ -79,7 +79,7 @@ export default class extends Component {
       const {
         detail,
         image,
-        item
+        obj
       } = nextProps.data
 
       let displayImage
@@ -88,8 +88,8 @@ export default class extends Component {
         displayImage = detail.image
       } else if (image) {
         displayImage = image
-      } else if (item) {
-        displayImage =  item.mainImage
+      } else if (obj) {
+        displayImage =  obj.mainImage
       }
 
       this.setState({
@@ -183,7 +183,7 @@ export default class extends Component {
       if (
         this.state.zoomCreated &&
         !this.props.data.loading &&
-        this.props.itemId
+        this.props.objId
       ) {
         await this.createIndexMarkers()
       }
@@ -295,7 +295,7 @@ export default class extends Component {
     const {
       props: {
         data: {
-          item: {
+          obj: {
             details: allDetails,
             mainImage: {
               id: mainImageId
