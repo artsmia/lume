@@ -37,7 +37,7 @@ app.prepare().then(() => {
 
 
   server.get('/:orgSub/obj/:objId', (req, res) => {
-    const actualPage = '/app/obj'
+    const actualPage = '/lume/obj'
     const {orgSub, objId} = req.params
     const queryParams = {
         orgSub,
@@ -47,7 +47,7 @@ app.prepare().then(() => {
   })
 
   server.get('/:orgSub/thematic/:thematicId', (req, res) => {
-    const actualPage = '/app/thematic'
+    const actualPage = '/lume/thematic'
     const {orgSub, thematicId} = req.params
     const queryParams = {
         orgSub,
@@ -117,7 +117,7 @@ app.prepare().then(() => {
 
 
   server.get('/:orgSub', (req, res) => {
-    const actualPage = '/app'
+    const actualPage = '/lume'
     const {orgSub} = req.params
     const queryParams = {
         orgSub,

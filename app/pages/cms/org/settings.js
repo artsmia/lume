@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import OrgSettings from '~/components/OrgSettings'
-import Template from '~/components/Template'
-import withData from '~/apollo'
+import OrgSettings from '../../../cms/OrgSettings'
+import Template from '../../../shared/Template'
+import withData from '../../../apollo'
 import Cookie from 'js-cookie'
 
 

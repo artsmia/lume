@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import BrowseThematics from '../../../components/BrowseThematics'
+import BrowseThematics from '../../../cms/BrowseThematics'
 import withData from '../../../apollo'
 import Cookie from 'js-cookie'
-import Template from '../../../components/Template'
+import Template from '../../../shared/Template'
 
 class Thematics extends Component {
 

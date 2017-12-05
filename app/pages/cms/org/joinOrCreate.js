@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import JoinOrCreate from '../../../components/JoinOrCreate'
+import JoinOrCreate from '../../../cms/JoinOrCreate'
 import Cookie from 'js-cookie'
 import withData from '../../../apollo'
-import Template from '../../../components/Template'
+import Template from '../../../shared/Template'
 
 class New extends Component {
 

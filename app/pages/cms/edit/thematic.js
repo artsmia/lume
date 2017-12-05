@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import EditThematic from '../../../components/EditThematic'
+import EditThematic from '../../../cms/EditThematic'
 import withData from '../../../apollo'
 import Cookie from 'js-cookie'
 

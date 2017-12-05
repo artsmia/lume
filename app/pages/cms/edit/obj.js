@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import EditObj from '../../../components/EditObj'
+import EditObj from '../../../cms/EditObj'
 import withData from '../../../apollo'
 import Cookie from 'js-cookie'
-import Template from '../../../components/Template'
+import Template from '../../../shared/Template'
 
 class Obj extends Component {
 

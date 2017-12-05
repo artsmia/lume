@@ -1,17 +1,15 @@
 import React, {Component} from 'react'
-import OrgHome from '../../../cms/OrgHome'
-import withData from '../../../apollo'
-import Cookie from 'js-cookie'
-import Template from '../../../shared/Template'
+import Home from '../../lume/Home'
+import withData from '../../apollo'
+import Template from '../../shared/Template'
 
-class OrgIndex extends Component {
+class LumeIndex extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
-      const userId = (ctx.req) ? ctx.req.userId : Cookie.get("userId")
+
       const {orgSub} = ctx.query
       return {
-        userId,
         orgSub
       }
     } catch (ex) {
@@ -20,15 +18,12 @@ class OrgIndex extends Component {
   }
 
   render() {
-
-
-
     return (
       <Template
-        drawer
+        drawer={false}
         {...this.props}
       >
-        <OrgHome
+        <Home
           {...this.props}
         />
       </Template>
@@ -36,4 +31,4 @@ class OrgIndex extends Component {
   }
 }
 
-export default withData(OrgIndex)
+export default withData(LumeIndex)

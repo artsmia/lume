@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Root from '../components/Root'
+import Root from '../lume/Root'
 import withData from '../apollo'
 
 class Index extends Component {

@@ -14,7 +14,7 @@ export default class ClientDocument extends Document {
 
   static getInitialProps ({ renderPage }) {
     const sheet = new ServerStyleSheet()
-    const page = renderPage(App => props => sheet.collectStyles(<App {...props} />))
+    const page = renderPage(Lume => props => sheet.collectStyles(<Lume {...props} />))
     const styleTags = sheet.getStyleElement()
     return { ...page, styleTags }
   }
