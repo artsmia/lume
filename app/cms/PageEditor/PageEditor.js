@@ -64,8 +64,6 @@ export default class extends Component {
       },
     } = this
 
-    console.log(this.props.data.page)
-
     return (
       <Expander
         expanded={expanded}

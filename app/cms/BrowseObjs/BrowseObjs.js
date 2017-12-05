@@ -7,9 +7,6 @@ import router from 'next/router'
 import PropTypes from 'prop-types'
 import Image from '../../shared/Image'
 import {Loading} from '../../ui/spinner'
-import {Search} from '../../ui/search'
-import KeyboardArrowDown from '../../ui/icons/KeyboardArrowDown'
-import KeyboardArrowUp from '../../ui/icons/KeyboardArrowUp'
 
 
 export default class BrowseObjs extends Component {
@@ -17,39 +14,29 @@ export default class BrowseObjs extends Component {
   static propTypes = {
     newObj: PropTypes.func.isRequired,
     orgSub: PropTypes.string.isRequired,
-    data: PropTypes.object
+    objs: PropTypes.array
   }
 
   state = {
-    search: "",
-    order: {
-      column: "updatedAt",
-      direction: "DESC"
-    }
+    variables: this.props.variables
   }
 
 
   render() {
 
     if (
-      !this.props.data.objs
+      !this.props.objs
     ) return <Loading/>
 
     const {
       handleNewObj,
-      handleChange,
-      handleSearch,
-      handleArrowClick,
       handleLoadMore,
       props: {
         orgSub,
-        data: {
-          objs
-        }
+        objs,
       },
       state: {
-        search,
-        order
+        variables
       }
     } = this
 
@@ -63,67 +50,34 @@ export default class BrowseObjs extends Component {
             Create Object Story
           </Button>
 
-          <Row>
-            <Search
-              onChange={handleChange}
-              name={"search"}
-              value={search}
-            />
-            <Button
-              onClick={handleSearch}
-            >
-              Search
-            </Button>
-          </Row>
-
-
-
           <Table>
-            <Header>
-              <Row>
-                <Cell
-                  width={"100px"}
-                >
-                  Thumb
-                </Cell>
-                <Cell>
-                  Title
-                  <KeyboardArrowUp
-                    onClick={()=>handleArrowClick({
-                      column: "title",
-                      direction: "DESC"
-                    })}
-                    fill={(order.column === "title" && order.direction === "DESC") ? "black" : "grey"}
-                  />
-                  <KeyboardArrowDown
-                    onClick={()=>handleArrowClick({
-                      column: "title",
-                      direction: "ASC"
-                    })}
-                    fill={(order.column === "title" && order.direction === "ASC") ? "black" : "grey"}
-                  />
-                </Cell>
-                <Cell
-                  width={"130px"}
-                >
-                  Last Update
-                  <KeyboardArrowUp
-                    onClick={()=>handleArrowClick({
-                      column: "updatedAt",
-                      direction: "ASC"
-                    })}
-                    fill={(order.column === "updatedAt" && order.direction === "ASC") ? "black" : "grey"}
-                  />
-                  <KeyboardArrowDown
-                    onClick={()=>handleArrowClick({
-                      column: "updatedAt",
-                      direction: "DESC"
-                    })}
-                    fill={(order.column === "updatedAt" && order.direction === "DESC") ? "black" : "grey"}
-                  />
-                </Cell>
-              </Row>
-            </Header>
+            <Header
+              hasSearch
+              columns={[
+                {
+                  title: "",
+                  width: "100px"
+                },
+                {
+                  title: "Title",
+                  column: "title",
+                  upDirection: "DESC",
+                  downDirection: "ASC"
+                },
+                {
+                  title: "Last Update",
+                  column: "updatedAt",
+                  upDirection: "ASC",
+                  downDirection: "DESC",
+                  width: "130px"
+                }
+              ]}
+              variables={variables}
+              onVariablesChange={(variables)=>{
+                this.setState({variables})
+                this.props.refetch(variables)
+              }}
+            />
             <Body>
               {objs.map( ({mainImage, id: objId, title, updatedAt}) => (
                 <Row
@@ -172,73 +126,27 @@ export default class BrowseObjs extends Component {
     )
   }
 
-  componentDidUpdate(prevProps, prevState){
-
-
-
-    if (
-      prevState.order.column !== this.state.order.column ||
-      prevState.order.direction !== this.state.order.direction
-    ) {
-      this.props.data.refetch({
-        search: this.state.search,
-        filter: {
-          order: this.state.order,
-          limit: 10
-        }
-      })
-    }
-  }
-
-  handleArrowClick = ({column, direction}) => {
-    this.setState(({order}) => {
-
-      if (
-        order.column === column &&
-        order.direction === direction
-      ) {
-        return {
-          order: {
-            column: "",
-            direction: ""
-          }
-        }
-      } else {
-        return {
-          order: {
-            column,
-            direction
-          }
-        }
-      }
-    })
-  }
 
   handleLoadMore = async () => {
     try {
 
       const {
         props: {
-          data: {
-            fetchMore,
-             objs
-          }
+          fetchMore,
+          objs
         },
         state: {
-          order,
-          search
+          variables
         }
       } = this
 
+      let newVariables = variables
+
+      newVariables.filter.offset = objs.length
+      newVariables.filter.limit = objs.length + 10
+
       fetchMore({
-        variables: {
-          filter: {
-            limit: 10,
-            offset: objs.length,
-            order: (order.column) ? order : undefined
-          },
-          search
-        },
+        variables: newVariables,
         updateQuery: (previousResult, { fetchMoreResult }) => {
           if (!fetchMoreResult) { return previousResult }
 
@@ -257,10 +165,8 @@ export default class BrowseObjs extends Component {
       const {
         newObj,
         orgSub,
-        data: {
-          organization: {
-            id
-          }
+        organization: {
+          id
         }
       } = this.props
 
@@ -282,21 +188,6 @@ export default class BrowseObjs extends Component {
     }
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
-
-  handleSearch = () => {
-    const {
-      search,
-      order
-    } = this.state
-
-    this.props.data.refetch({
-      search,
-      filter: {
-        limit: 10,
-      }
-    })
-  }
 
 }
 

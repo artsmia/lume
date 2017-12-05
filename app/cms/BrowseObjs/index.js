@@ -38,51 +38,24 @@ const queryConfig = {
       orgSub,
       filter: {
         limit: 10,
+        offset: 0,
         order: {
-          column: "title",
-          direction: "ASC"
+          column: "updatedAt",
+          direction: "DESC"
         }
       }
     },
-  })
+  }),
+  props: ({ ownProps, data }) => ({
+    ...ownProps,
+    ...data
+  }),
 }
 
 
 
 const mutationConfig = {
   name: "newObj",
-  // options: ({orgSub, search}) => ({
-  //   optimisticResponse: {
-  //     editOrCreateObj: {
-  //       id: -1,
-  //       title: "New Obj",
-  //       attribution: "",
-  //       medium: "",
-  //       culture: "",
-  //       dimensions: "",
-  //       date: "",
-  //       __typename: "Obj"
-  //     }
-  //   },
-  //   update: (store, {data: {editOrCreateObj}}) => {
-  //     let data = store.readQuery({
-  //       query,
-  //       variables: {
-  //         orgSub,
-  //         search
-  //       }
-  //     })
-  //     data.objs.push(editOrCreateObj)
-  //     store.writeQuery({
-  //       query,
-  //       variables: {
-  //         orgSub,
-  //         search
-  //       },
-  //       data
-  //     })
-  //   }
-  // })
 }
 
 
