@@ -8,7 +8,7 @@ const group = db.define('group', {
     primaryKey: true
   },
   title: Sequelize.STRING,
-  text: Sequelize.STRING,
+  description: Sequelize.STRING,
 }, {
   freezeTableName: true
 })

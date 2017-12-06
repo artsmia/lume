@@ -9,7 +9,7 @@ import {
   obj,
   organization,
   movie,
-  cropping,
+  crop,
   storyComparison,
   storyDetail,
   storyMovie,
@@ -36,12 +36,12 @@ export async function createAssociations() {
       as: "comparisonImage1",
     })
 
-    cropping.belongsTo(detail, {
+    crop.belongsTo(detail, {
       as: "detail",
     })
 
-    cropping.hasMany(cropping, {
-      as: "croppings",
+    crop.hasMany(crop, {
+      as: "crops",
     })
 
     detail.belongsToMany(story, {
@@ -152,6 +152,11 @@ export async function createAssociations() {
     story.belongsToMany(group, {
       as: "groups",
       through: "story_group",
+    })
+
+    story.belongsToMany(story, {
+      as: "relatedStories",
+      through: "story_story"
     })
 
     story.belongsTo(organization, {

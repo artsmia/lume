@@ -10,7 +10,8 @@ const organization = db.define('organization', {
   name: Sequelize.STRING,
   subdomain: {
     type: Sequelize.STRING,
-    unique: true
+    unique: true,
+    primaryKey: true
   },
   emailDomain: {
     type: Sequelize.STRING

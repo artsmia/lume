@@ -12,7 +12,6 @@ const obj = db.define('obj', {
   },
   title: {
     type: Sequelize.STRING,
-    defaultValue: "New Object Story"
   },
   primaryMediaType: {
     type: Sequelize.ENUM("image", "video")
@@ -26,10 +25,6 @@ const obj = db.define('obj', {
   currentLocation: Sequelize.STRING,
   creditLine: Sequelize.TEXT,
   text: Sequelize.TEXT,
-  visibility: {
-    type: Sequelize.ENUM,
-    values: ['published', 'draft']
-  },
   pullFromCustomApi: {
     type: Sequelize.BOOLEAN,
     defaultValue: false

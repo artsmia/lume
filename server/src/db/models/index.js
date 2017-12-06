@@ -9,7 +9,7 @@ import video from './video'
 import organization from './organization'
 import userOrganization from './userOrganization'
 import movie from './movie'
-import cropping from './cropping'
+import crop from './crop'
 import storyComparison from './storyComparison'
 import storyDetail from './storyDetail'
 import storyMovie from './storyMovie'
@@ -29,7 +29,7 @@ export {
   organization,
   userOrganization,
   movie,
-  cropping,
+  crop,
   storyComparison,
   storyDetail,
   storyMovie,
