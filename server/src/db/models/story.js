@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const page = db.define('page', {
+const story = db.define('story', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -10,17 +10,19 @@ const page = db.define('page', {
   title: {
     type: Sequelize.STRING,
   },
-  text: Sequelize.TEXT,
-  index: {
-    type: Sequelize.INTEGER,
+  description: {
+    type: Sequelize.STRING,
   },
-  type: {
-    type: Sequelize.ENUM('image', 'video', 'comparison'),
+  template: {
+    type: Sequelize.ENUM('obj', 'thematic'),
   },
-  video: Sequelize.STRING,
+  visibility: {
+    type: Sequelize.ENUM,
+    values: ['published', 'draft']
+  },
 }, {
   freezeTableName: true
 })
 
 
-export default page
+export default story

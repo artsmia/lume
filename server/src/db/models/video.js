@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const detail = db.define('detail', {
+const video = db.define('video', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -10,10 +10,12 @@ const detail = db.define('detail', {
   title: {
     type: Sequelize.STRING,
   },
-
+  url: {
+    type: Sequelize.STRING,
+  },
 }, {
   freezeTableName: true
 })
 
 
-export default detail
+export default video

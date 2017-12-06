@@ -1,20 +1,38 @@
-import thematic from './thematic'
+import comparison from './comparison'
 import detail from './detail'
 import group from './group'
 import image from './image'
 import obj from './obj'
-import page from './page'
+import picture from './picture'
+import story from './story'
+import video from './video'
 import organization from './organization'
 import userOrganization from './userOrganization'
+import movie from './movie'
+import cropping from './cropping'
+import storyComparison from './storyComparison'
+import storyDetail from './storyDetail'
+import storyMovie from './storyMovie'
+import storyObj from './storyObj'
+import storyPicture from './storyPicture'
 
 
 export {
-  thematic,
+  comparison,
   detail,
   group,
   image,
   obj,
-  page,
+  video,
+  picture,
+  story,
   organization,
   userOrganization,
+  movie,
+  cropping,
+  storyComparison,
+  storyDetail,
+  storyMovie,
+  storyObj,
+  storyPicture,
 }

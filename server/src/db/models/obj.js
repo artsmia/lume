@@ -14,6 +14,9 @@ const obj = db.define('obj', {
     type: Sequelize.STRING,
     defaultValue: "New Object Story"
   },
+  primaryMediaType: {
+    type: Sequelize.ENUM("image", "video")
+  },
   attribution: Sequelize.STRING,
   date: Sequelize.STRING,
   culture: Sequelize.STRING,

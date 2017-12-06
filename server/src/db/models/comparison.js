@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const thematic = db.define('thematic', {
+const comparison = db.define('comparison', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -9,18 +9,13 @@ const thematic = db.define('thematic', {
   },
   title: {
     type: Sequelize.STRING,
-    defaultValue: "New Thematic Story"
   },
-  visibility: {
-    type: Sequelize.ENUM,
-    values: ['published', 'draft']
-  },
-  localId: {
+  description: {
     type: Sequelize.STRING,
-  }
+  },
 }, {
   freezeTableName: true
 })
 
 
-export default thematic
+export default comparison

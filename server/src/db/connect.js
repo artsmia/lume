@@ -53,7 +53,7 @@ const db = new Sequelize({
   password,
   database,
   dialect,
-  logging: false
+  logging: true
 })
 
 
