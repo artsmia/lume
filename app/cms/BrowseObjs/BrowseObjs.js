@@ -11,6 +11,8 @@ import {Spinner} from '../../ui/spinner'
 
 export default class BrowseObjs extends Component {
 
+  static displayName = "BrowseObjs"
+
   static propTypes = {
     newObj: PropTypes.func.isRequired,
     orgSub: PropTypes.string.isRequired,
@@ -26,9 +28,6 @@ export default class BrowseObjs extends Component {
 
 
   render() {
-
-    console.log(this.props)
-
     const {
       handleNewObj,
       handleLoadMore,
