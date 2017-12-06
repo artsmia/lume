@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const movie = db.define('movie', {
+const Movie = db.define('movie', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -18,4 +18,4 @@ const movie = db.define('movie', {
 })
 
 
-export default movie
+export default Movie

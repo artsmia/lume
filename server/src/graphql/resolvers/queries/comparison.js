@@ -1,4 +1,4 @@
-import Model from '../../../db/models/Detail'
+import Model from '../../../db/models/Comparison'
 
 export default async function(
   src,

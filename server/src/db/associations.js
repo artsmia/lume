@@ -1,20 +1,20 @@
 import {
-  story,
-  picture,
-  comparison,
-  video,
-  detail,
-  group,
-  image,
-  obj,
-  organization,
-  movie,
-  crop,
-  storyComparison,
-  storyDetail,
-  storyMovie,
-  storyObj,
-  storyPicture,
+  Story,
+  Picture,
+  Comparison,
+  Video,
+  Detail,
+  Group,
+  Image,
+  Obj,
+  Organization,
+  Movie,
+  Crop,
+  Story_Comparison,
+  Story_Detail,
+  Story_Movie,
+  Story_Obj,
+  Story_Picture,
 } from './models'
 
 
@@ -23,303 +23,303 @@ export async function createAssociations() {
   try {
 
 
-    comparison.belongsToMany(story, {
+    Comparison.belongsToMany(Story, {
       as: "stories",
-      through: storyComparison,
+      through: Story_Comparison,
     })
 
-    comparison.belongsTo(image, {
+    Comparison.belongsTo(Image, {
       as: "comparisonImage0",
     })
 
-    comparison.belongsTo(image, {
+    Comparison.belongsTo(Image, {
       as: "comparisonImage1",
     })
 
-    crop.belongsTo(detail, {
+    Crop.belongsTo(Detail, {
       as: "detail",
     })
 
-    crop.hasMany(crop, {
+    Crop.hasMany(Crop, {
       as: "crops",
     })
 
-    detail.belongsToMany(story, {
+    Detail.belongsToMany(Story, {
       as: "details",
-      through: storyDetail,
+      through: Story_Detail,
     })
 
-    detail.belongsTo(image, {
+    Detail.belongsTo(Image, {
       as: "image"
     })
 
-    group.belongsToMany(story, {
+    Group.belongsToMany(Story, {
       as: "stories",
       through: "story_group",
     })
 
-    group.belongsTo(organization, {
+    Group.belongsTo(Organization, {
       as: "organization"
     })
 
 
-    image.belongsTo(organization, {
+    Image.belongsTo(Organization, {
       as: "organization"
     })
 
-    movie.belongsToMany(story, {
+    Movie.belongsToMany(Story, {
       as: "stories",
-      through: storyMovie,
+      through: Story_Movie,
     })
 
-    movie.belongsTo(video, {
+    Movie.belongsTo(Video, {
       as: "video"
     })
 
-    obj.belongsToMany(story, {
+    Obj.belongsToMany(Story, {
       as: "objs",
-      through: storyObj,
+      through: Story_Obj,
     })
 
-    obj.belongsToMany(image, {
+    Obj.belongsToMany(Image, {
       as: "additionalImages",
       through: "obj_additionalImage"
     })
 
-    obj.belongsToMany(video, {
+    Obj.belongsToMany(Video, {
       as: "additionalVideos",
       through: "obj_additionalVideo"
     })
 
-    obj.belongsTo(image, {
+    Obj.belongsTo(Image, {
       as: "primaryImage"
     })
 
-    obj.belongsTo(video, {
+    Obj.belongsTo(Video, {
       as: "primaryVideo"
     })
 
-    organization.hasMany(story, {
+    Organization.hasMany(Story, {
       as: "stories"
     })
 
-    organization.hasMany(image, {
+    Organization.hasMany(Image, {
       as: "images"
     })
 
-    organization.hasMany(video, {
+    Organization.hasMany(Video, {
       as: "videos"
     })
 
-    organization.hasMany(group, {
+    Organization.hasMany(Group, {
       as: "group"
     })
 
-    picture.belongsToMany(story, {
+    Picture.belongsToMany(Story, {
       as: "stories",
-      through: storyPicture,
+      through: Story_Picture,
     })
 
-    picture.belongsTo(image, {
+    Picture.belongsTo(Image, {
       as: "image"
     })
 
-    story.belongsToMany(picture, {
+    Story.belongsToMany(Picture, {
       as: "pictures",
-      through: storyPicture
+      through: Story_Picture
     })
 
-    story.belongsToMany(movie, {
+    Story.belongsToMany(Movie, {
       as: "movies",
-      through: storyMovie
+      through: Story_Movie
     })
 
-    story.belongsToMany(comparison, {
+    Story.belongsToMany(Comparison, {
       as: "comparisons",
-      through: storyComparison
+      through: Story_Comparison
     })
 
-    story.belongsToMany(detail, {
+    Story.belongsToMany(Detail, {
       as: "details",
-      through: storyDetail
+      through: Story_Detail
     })
 
-    story.belongsToMany(obj, {
+    Story.belongsToMany(Obj, {
       as: "objs",
-      through: storyObj
+      through: Story_Obj
     })
 
-    story.belongsToMany(group, {
+    Story.belongsToMany(Group, {
       as: "groups",
       through: "story_group",
     })
 
-    story.belongsToMany(story, {
+    Story.belongsToMany(Story, {
       as: "relatedStories",
       through: "story_story"
     })
 
-    story.belongsTo(organization, {
+    Story.belongsTo(Organization, {
       as: "organization"
     })
 
-    story.belongsTo(image, {
+    Story.belongsTo(Image, {
       as: "previewImage",
     })
 
-    video.belongsTo(organization, {
+    Video.belongsTo(Organization, {
       as: "organization"
     })
 
 
 
-    // detail.belongsTo(image, {
-    //   as: "image",
+    // Detail.belongsTo(Image, {
+    //   as: "Image",
     // })
     //
-    // image.hasMany(detail, {
-    //   as: "details"
+    // Image.hasMany(Detail, {
+    //   as: "Details"
     // })
     //
     //
-    // image.belongsTo(organization, {
-    //   as: "organization"
+    // Image.belongsTo(Organization, {
+    //   as: "Organization"
     // })
     //
-    // organization.hasMany(image, {
-    //   as: "images"
+    // Organization.hasMany(Image, {
+    //   as: "Images"
     // })
     //
-    // image.hasMany(page, {
+    // Image.hasMany(page, {
     //   foreignKey: "mainImageId"
     // })
     //
-    // page.belongsTo(image, {
+    // page.belongsTo(Image, {
     //   as: "mainImage",
     //   foreignKey: "mainImageId"
     // })
     //
-    // image.hasMany(obj, {
+    // Image.hasMany(Obj, {
     //   foreignKey: "mainImageId",
     // })
     //
-    // obj.belongsTo(image, {
+    // Obj.belongsTo(Image, {
     //   as: "mainImage",
     //   foreignKey: "mainImageId",
     // })
     //
-    // image.hasMany(thematic, {
+    // Image.hasMany(thematic, {
     //   foreignKey: "previewImageId"
     // })
     //
-    // thematic.belongsTo(image, {
+    // thematic.belongsTo(Image, {
     //   as: "previewImage",
     //   foreignKey: "previewImageId"
     // })
     //
-    // image.hasMany(page, {
-    //   foreignKey: "comparisonImage0Id"
+    // Image.hasMany(page, {
+    //   foreignKey: "ComparisonImage0Id"
     // })
     //
-    // page.belongsTo(image, {
-    //   as: "comparisonImage0",
-    //   foreginKey: "comparisonImage0Id"
+    // page.belongsTo(Image, {
+    //   as: "ComparisonImage0",
+    //   foreginKey: "ComparisonImage0Id"
     // })
     //
-    // image.hasMany(page, {
-    //   foreignKey: "comparisonImage1Id"
+    // Image.hasMany(page, {
+    //   foreignKey: "ComparisonImage1Id"
     // })
     //
-    // page.belongsTo(image, {
-    //   as: "comparisonImage1",
-    //   foreignKey: "comparisonImage1Id"
+    // page.belongsTo(Image, {
+    //   as: "ComparisonImage1",
+    //   foreignKey: "ComparisonImage1Id"
     // })
     //
-    // obj.belongsToMany(group, {
-    //   as: 'groups',
-    //   through: 'obj_group',
-    //   foreignKey: 'objId'
+    // Obj.belongsToMany(Group, {
+    //   as: 'Groups',
+    //   through: 'Obj_Group',
+    //   foreignKey: 'ObjId'
     // })
-    // group.belongsToMany(obj, {
-    //   as: 'objs',
-    //   through: 'obj_group',
-    //   foreignKey: 'groupId'
+    // Group.belongsToMany(Obj, {
+    //   as: 'Objs',
+    //   through: 'Obj_Group',
+    //   foreignKey: 'GroupId'
     // })
     //
-    // thematic.belongsToMany(group, {
-    //   as: 'groups',
-    //   through: 'thematic_group',
+    // thematic.belongsToMany(Group, {
+    //   as: 'Groups',
+    //   through: 'thematic_Group',
     //   foreignKey: 'thematicId'
     // })
-    // group.belongsToMany(thematic, {
+    // Group.belongsToMany(thematic, {
     //   as: 'thematics',
-    //   through: 'thematic_group',
-    //   foreignKey: 'groupId'
+    //   through: 'thematic_Group',
+    //   foreignKey: 'GroupId'
     // })
     //
-    // obj.belongsToMany(thematic, {
+    // Obj.belongsToMany(thematic, {
     //   as: 'relatedThematics',
-    //   through: 'obj_thematic',
-    //   foreignKey: 'objId'
+    //   through: 'Obj_thematic',
+    //   foreignKey: 'ObjId'
     // })
-    // thematic.belongsToMany(obj, {
+    // thematic.belongsToMany(Obj, {
     //   as: 'relatedObjs',
-    //   through: 'obj_thematic',
+    //   through: 'Obj_thematic',
     //   foreignKey: 'thematicId'
     // })
     //
     //
-    // detail.belongsToMany(image, {
+    // Detail.belongsToMany(Image, {
     //   as: "additionalImages",
-    //   through: "detail_image",
-    //   foreignKey: "detailId"
+    //   through: "Detail_Image",
+    //   foreignKey: "DetailId"
     // })
     //
-    // image.belongsToMany(detail, {
-    //   as:"detailAdditionalImages",
-    //   through: "detail_image",
-    //   foreignKey: "imageId"
+    // Image.belongsToMany(Detail, {
+    //   as:"DetailAdditionalImages",
+    //   through: "Detail_Image",
+    //   foreignKey: "ImageId"
     // })
     //
-    // obj.belongsToMany(obj, {
+    // Obj.belongsToMany(Obj, {
     //   as: "relatedObjs",
-    //   through: "obj_obj"
+    //   through: "Obj_Obj"
     // })
     //
-    // obj.belongsToMany(organization, {
-    //   as: "organizations",
-    //   through: "obj_organization",
-    //   foreignKey: "objId"
+    // Obj.belongsToMany(Organization, {
+    //   as: "Organizations",
+    //   through: "Obj_Organization",
+    //   foreignKey: "ObjId"
     // })
     //
-    // organization.belongsToMany(obj, {
-    //   as:"objs",
-    //   through: "obj_organization",
-    //   foreignKey: "organizationId"
+    // Organization.belongsToMany(Obj, {
+    //   as:"Objs",
+    //   through: "Obj_Organization",
+    //   foreignKey: "OrganizationId"
     // })
     //
-    // group.belongsToMany(organization, {
-    //   as: "organizations",
-    //   through: "group_organization",
-    //   foreignKey: "groupId"
+    // Group.belongsToMany(Organization, {
+    //   as: "Organizations",
+    //   through: "Group_Organization",
+    //   foreignKey: "GroupId"
     // })
     //
-    // organization.belongsToMany(group, {
-    //   as:"groups",
-    //   through: "group_organization",
-    //   foreignKey: "organizationId"
+    // Organization.belongsToMany(Group, {
+    //   as:"Groups",
+    //   through: "Group_Organization",
+    //   foreignKey: "OrganizationId"
     // })
     //
-    // thematic.belongsToMany(organization, {
-    //   as: "organizations",
-    //   through: "thematic_organization",
+    // thematic.belongsToMany(Organization, {
+    //   as: "Organizations",
+    //   through: "thematic_Organization",
     //   foreignKey: "thematicId"
     // })
     //
-    // organization.belongsToMany(thematic, {
+    // Organization.belongsToMany(thematic, {
     //   as:"thematics",
-    //   through: "thematic_organization",
-    //   foreignKey: "organizationId"
+    //   through: "thematic_Organization",
+    //   foreignKey: "OrganizationId"
     // })
     //
 

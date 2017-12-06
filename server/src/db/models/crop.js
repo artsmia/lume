@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const crop = db.define('crop', {
+const Crop = db.define('crop', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -22,4 +22,4 @@ const crop = db.define('crop', {
 })
 
 
-export default crop
+export default Crop

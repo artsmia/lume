@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const comparison = db.define('comparison', {
+const Comparison = db.define('comparison', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -18,4 +18,4 @@ const comparison = db.define('comparison', {
 })
 
 
-export default comparison
+export default Comparison

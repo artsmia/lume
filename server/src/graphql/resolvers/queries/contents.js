@@ -1,12 +1,16 @@
-import Model from '../../../db/models/Detail'
+
+
 
 export default async function(
-  src,
+  {
+    storyId
+  },
   id,
   ctx
 ){
   try {
-    return await model.findById(id)
+    return await story.findAll({})
+
   } catch (ex) {
     console.error(ex)
   }

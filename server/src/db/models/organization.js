@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const organization = db.define('organization', {
+const Organization = db.define('organization', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -39,4 +39,4 @@ const organization = db.define('organization', {
 })
 
 
-export default organization
+export default Organization

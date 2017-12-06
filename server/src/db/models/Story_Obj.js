@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const storyDetail = db.define("story_detail", {
+const Story_Obj = db.define("story_obj", {
   index: {
     type: Sequelize.INTEGER
   }
@@ -9,4 +9,4 @@ const storyDetail = db.define("story_detail", {
   freezeTableName: true
 })
 
-export default storyDetail
+export default Story_Obj

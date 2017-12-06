@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const group = db.define('group', {
+const Group = db.define('group', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -14,4 +14,4 @@ const group = db.define('group', {
 })
 
 
-export default group
+export default Group

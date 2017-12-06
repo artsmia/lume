@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const story = db.define('story', {
+const Story = db.define('story', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -14,7 +14,7 @@ const story = db.define('story', {
     type: Sequelize.STRING,
   },
   template: {
-    type: Sequelize.ENUM('obj', 'thematic'),
+    type: Sequelize.ENUM('scroller', 'slideshow'),
   },
   visibility: {
     type: Sequelize.ENUM,
@@ -25,4 +25,4 @@ const story = db.define('story', {
 })
 
 
-export default story
+export default Story

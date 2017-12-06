@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const detail = db.define('detail', {
+const Detail = db.define('detail', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -16,4 +16,4 @@ const detail = db.define('detail', {
 })
 
 
-export default detail
+export default Detail

@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const userOrganization = db.define("user_organization", {
+const User_Organization = db.define("user_organization", {
   userId: {
     type: Sequelize.STRING,
   },
@@ -20,4 +20,4 @@ const userOrganization = db.define("user_organization", {
   freezeTableName: true
 })
 
-export default userOrganization
+export default User_Organization
