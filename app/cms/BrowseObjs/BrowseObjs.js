@@ -6,7 +6,7 @@ import {Button} from '../../ui/buttons'
 import router from 'next/router'
 import PropTypes from 'prop-types'
 import Image from '../../shared/Image'
-import {Loading} from '../../ui/spinner'
+import {Spinner} from '../../ui/spinner'
 
 
 export default class BrowseObjs extends Component {
@@ -14,7 +14,10 @@ export default class BrowseObjs extends Component {
   static propTypes = {
     newObj: PropTypes.func.isRequired,
     orgSub: PropTypes.string.isRequired,
-    objs: PropTypes.array
+    objs: PropTypes.array.isRequired,
+    organization: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
   }
 
   state = {
@@ -24,9 +27,7 @@ export default class BrowseObjs extends Component {
 
   render() {
 
-    if (
-      !this.props.objs
-    ) return <Loading/>
+    console.log(this.props)
 
     const {
       handleNewObj,
@@ -78,48 +79,52 @@ export default class BrowseObjs extends Component {
                 this.props.refetch(variables)
               }}
             />
-            <Body>
-              {objs.map( ({mainImage, id: objId, title, updatedAt}) => (
-                <Row
-                  key={objId}
-                >
-                  <Cell
-                    width={"100px"}
-                  >
-                    <Image
-                      imageId={(mainImage) ? mainImage.id : false}
-                      size={"50px"}
-                      thumb
-                    />
-                  </Cell>
-                  <Cell>
-                    <Link
-                      href={{
-                        pathname: "/cms/edit/obj",
-                        query: {
-                          orgSub,
-                          objId: objId
-                        }
-                      }}
-                      as={`/${orgSub}/cms/obj/${objId}`}
+            {
+              (objs) ? (
+                <Body>
+                  {objs.map( ({mainImage, id: objId, title, updatedAt}) => (
+                    <Row
+                      key={objId}
                     >
-                      {title}
-                    </Link>
+                      <Cell
+                        width={"100px"}
+                      >
+                        <Image
+                          imageId={(mainImage) ? mainImage.id : false}
+                          size={"50px"}
+                          thumb
+                        />
+                      </Cell>
+                      <Cell>
+                        <Link
+                          href={{
+                            pathname: "/cms/edit/obj",
+                            query: {
+                              orgSub,
+                              objId: objId
+                            }
+                          }}
+                          as={`/${orgSub}/cms/obj/${objId}`}
+                        >
+                          {title}
+                        </Link>
 
-                  </Cell>
-                  <Cell
-                    width={"130px"}
+                      </Cell>
+                      <Cell
+                        width={"130px"}
+                      >
+                        {new Date(updatedAt).toLocaleDateString()}
+                      </Cell>
+                    </Row>
+                  ))}
+                  <Button
+                    onClick={handleLoadMore}
                   >
-                    {new Date(updatedAt).toLocaleDateString()}
-                  </Cell>
-                </Row>
-              ))}
-              <Button
-                onClick={handleLoadMore}
-              >
-                Load More
-              </Button>
-            </Body>
+                    Load More
+                  </Button>
+                </Body>
+              ): <Spinner/>
+            }
           </Table>
 
         </Centered>

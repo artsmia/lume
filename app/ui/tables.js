@@ -13,6 +13,7 @@ export const Table = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
 `
 
 export const Row = styled.div`

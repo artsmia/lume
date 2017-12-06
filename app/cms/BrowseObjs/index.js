@@ -62,8 +62,6 @@ const mutationConfig = {
 const newQuery = graphql(query, queryConfig)
 
 
-
-
 export default compose(
   newQuery,
   graphql(newObj, mutationConfig)

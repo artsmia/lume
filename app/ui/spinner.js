@@ -29,7 +29,7 @@ export const Box = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: ${({theme}) => theme.colors.lightMediumGray};
+  background-color: rgba(0,0,0,.05);
   z-index: 2;
 `
 
