@@ -28,9 +28,12 @@ const Obj = db.define('obj', {
   pullFromCustomApi: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  index: {
+    type: Sequelize.INTEGER,
   }
 }, {
-  freezeTableName: true
+  freezeTableName: true,
 })
 
 

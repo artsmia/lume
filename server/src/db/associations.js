@@ -40,7 +40,7 @@ export async function createAssociations() {
       as: "detail",
     })
 
-    Crop.hasMany(Crop, {
+    Detail.hasMany(Crop, {
       as: "crops",
     })
 
@@ -77,7 +77,7 @@ export async function createAssociations() {
     })
 
     Obj.belongsToMany(Story, {
-      as: "objs",
+      as: "stories",
       through: Story_Obj,
     })
 

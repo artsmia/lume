@@ -21,7 +21,7 @@ const Story = db.define('story', {
     values: ['published', 'draft']
   },
 }, {
-  freezeTableName: true
+  freezeTableName: true,
 })
 
 
