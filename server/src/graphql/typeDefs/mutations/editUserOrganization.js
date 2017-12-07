@@ -2,7 +2,7 @@ const editUserOrganization = `
   editUserOrganization(
     organizationId: ID!
     userId: ID!
-    role: RoleEnum!
+    role: RoleEnum
   ): User
 `
 

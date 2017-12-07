@@ -26,24 +26,47 @@ const joinOrganization = gql`
   mutation joinOrganization (
     $userId: ID!
     $organizationId: ID!
-    $role: RoleEnum
   ) {
     editUserOrganization(
       userId: $userId
       organizationId: $organizationId
-      role: $role
     ) {
       id
+      organizations {
+        id
+        subdomain
+        role
+      }
+    }
+  }
+`
+
+let Component = graphql(joinOrganization, {
+  name: "joinOrganization"
+})(JoinOrCreate)
+
+const createOrganization = gql`
+  mutation createOrganization (
+    $subdomain: String
+    $name: String
+  ) {
+    createOrganization(
+      subdomain: $subdomain
+      name: $name
+    ) {
+      id
+      name
       subdomain
     }
   }
 `
 
+
 export default compose(
   graphql(query, queryConfig),
-  graphql(joinOrganization, {
-    name: "joinOrganization",
+  graphql(createOrganization, {
+    name: "createOrganization",
   })
 )(
-  JoinOrCreate
+  Component
 )

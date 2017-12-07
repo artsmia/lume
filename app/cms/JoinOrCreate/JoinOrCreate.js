@@ -8,6 +8,10 @@ import router from 'next/router'
 
 export default class JoinOrCreate extends Component {
 
+  static defaultProps = {
+    organizations: []
+  }
+
   state = {
     organizations: [],
     name: "",
@@ -16,7 +20,6 @@ export default class JoinOrCreate extends Component {
 
   render() {
 
-    if (this.props.data.loading) return null
 
     const {
       createAndJoinOrg,
@@ -120,19 +123,30 @@ export default class JoinOrCreate extends Component {
         }
       } = this
 
-      const {data: {editOrCreateOrganization: {subdomain: orgSub}}} = await joinOrganization({
+      const {data: {editUserOrganization: {organizations}}} = await joinOrganization({
         variables: {
-          orgId: organizationId,
-          newUserIds: [userId],
+          organizationId,
+          userId,
         }
       })
 
-      router.push({
-        pathname: '/cms/org',
-        query: {
-          orgSub
-        }
-      }, `/${orgSub}/cms`)
+      let organization = organizations.find( org => org.id === organizationId)
+
+      if (
+        organization.role &&
+        organization.role !== "pending"
+      ) {
+        router.push({
+          pathname: '/cms',
+          query: {
+            orgSub: organization.subdomain
+          }
+        }, `/${organization.subdomain}/cms`)
+      } else {
+        window.alert("your request was sent")
+      }
+
+
 
 
     } catch (ex) {
@@ -150,9 +164,7 @@ export default class JoinOrCreate extends Component {
       const {
         props: {
           userId,
-          data: {
-            organizations
-          }
+          createOrganization,
         },
         state: {
           name,
@@ -160,22 +172,17 @@ export default class JoinOrCreate extends Component {
         }
       } = this
 
-      const {data: {editOrCreateOrganization: {subdomain: orgSub}}} = await this.props.addUserToOrganization({
+      const {data: {createOrganization: organization}} = await createOrganization({
         variables: {
-          newUserIds: [userId],
           name,
           subdomain
         }
       })
 
+      this.setState(()=>({
+        organizationId: organization.id
+      }), this.joinOrg)
 
-
-      router.push({
-        pathname: '/cms/org',
-        query: {
-          orgSub
-        }
-      }, `/${orgSub}/cms`)
 
 
     } catch (ex) {

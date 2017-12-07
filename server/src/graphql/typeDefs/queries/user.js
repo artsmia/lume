@@ -1,6 +1,6 @@
 const user = `
   user (
-    id: ID!
+    id: ID
   ): User
 `
 
