@@ -2,7 +2,7 @@ const createContent = `
   createContent(
     storyId: ID!
     type: ContentEnum!
-  ): Content
+  ): Image
 `
 
 export default createContent

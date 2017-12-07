@@ -1,8 +1,8 @@
 const createImage = `
   createImage(
-    orgSub: String!
+    organizationId: ID!
     title: String!
-    alt: String!
+    description: String!
     metadata: String
   ): Image
 `

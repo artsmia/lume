@@ -11,7 +11,7 @@ const Image = db.define('image', {
   description: Sequelize.TEXT,
   localId: Sequelize.STRING,
   metadata: {
-    type: Sequelize.STRING,
+    type: Sequelize.JSON,
   },
   host: {
     type: Sequelize.ENUM,

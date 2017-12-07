@@ -15,6 +15,7 @@ import {
   Story_Movie,
   Story_Obj,
   Story_Picture,
+  User_Organization
 } from './models'
 
 
@@ -113,6 +114,10 @@ export async function createAssociations() {
 
     Organization.hasMany(Group, {
       as: "group"
+    })
+
+    Organization.hasMany(User_Organization, {
+      as: "users"
     })
 
     Picture.belongsToMany(Story, {

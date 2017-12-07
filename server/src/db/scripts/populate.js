@@ -63,6 +63,8 @@ async function populate() {
         }
       })
 
+      await image.setOrganization(Mia)
+
       await story.setPreviewImage(image)
 
       let index = 0
@@ -207,6 +209,7 @@ async function populate() {
               },
             })
 
+            await image0.setOrganization(Mia)
 
             await comparison.setComparisonImage0(image0)
 
@@ -215,6 +218,8 @@ async function populate() {
                 localId: content.imageB,
               },
             })
+
+            await image1.setOrganization(Mia)
 
             await comparison.setComparisonImage1(image1)
 

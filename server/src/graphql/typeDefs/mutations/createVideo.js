@@ -1,7 +1,9 @@
 const createVideo = `
   createVideo(
-    orgSub: String!
+    organizationId: ID!
     title: String!
+    description: String!
+    url: String!
   ): Video
 `
 

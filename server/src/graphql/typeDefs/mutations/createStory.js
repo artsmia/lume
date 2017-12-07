@@ -1,6 +1,6 @@
 const createStory = `
   createStory(
-    orgSub: String!
+    organizationId: ID!
     creatorId: ID!
   ): Story
 `

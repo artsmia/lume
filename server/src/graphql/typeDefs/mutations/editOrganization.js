@@ -1,11 +1,10 @@
-const editDetail = `
-  editDetail(
+const editOrganization = `
+  editOrganization(
     id: ID!
     emailDomain: String
-    newUserIds: [ID]
     customObjApiEnabled: Boolean
     customObjApiEndpoint: String
-  ): Detail
+  ): Organization
 `
 
-export default editDetail
+export default editOrganization

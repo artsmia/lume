@@ -15,8 +15,8 @@ const editObj = `
     type: String
     pullFromCustomApi: Boolean
     primaryMediaType: MediaEnum
-    primaryImage: ID
-    primaryVideo: ID
+    primaryImageId: ID
+    primaryVideoId: ID
   ): Obj
 `
 

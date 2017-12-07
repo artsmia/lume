@@ -20,6 +20,9 @@ const Story = db.define('story', {
     type: Sequelize.ENUM,
     values: ['published', 'draft']
   },
+  creatorId: {
+    type: Sequelize.UUID
+  }
 }, {
   freezeTableName: true,
 })
