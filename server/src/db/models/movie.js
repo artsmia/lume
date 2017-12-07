@@ -11,7 +11,7 @@ const Movie = db.define('movie', {
     type: Sequelize.STRING,
   },
   description: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
 }, {
   freezeTableName: true

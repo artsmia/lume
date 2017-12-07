@@ -1,6 +1,6 @@
 const Organization = `
   type Organization {
-    id: ID!
+    id: ID
     name: String
     subdomain: String
     emailDomain: String

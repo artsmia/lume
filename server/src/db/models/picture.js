@@ -11,7 +11,7 @@ const Picture = db.define('picture', {
     type: Sequelize.STRING,
   },
   description: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
 }, {
   freezeTableName: true

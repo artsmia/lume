@@ -8,7 +8,7 @@ const Image = db.define('image', {
     primaryKey: true
   },
   title: Sequelize.STRING,
-  alt: Sequelize.STRING,
+  description: Sequelize.TEXT,
   localId: Sequelize.STRING,
   metadata: {
     type: Sequelize.STRING,

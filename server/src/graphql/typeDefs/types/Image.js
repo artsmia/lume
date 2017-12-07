@@ -1,9 +1,9 @@
 const Image = `
   type Image {
-    id: ID!
+    id: ID
     organization: Organization
     title: String
-    alt: String
+    description: String
     localId: String
     metadata: String
   }

@@ -1,5 +1,5 @@
 const organizations = `
-  organizations (
+  organizations(
     filter: Filter
   ): [Organization]
 `

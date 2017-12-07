@@ -11,7 +11,7 @@ const Comparison = db.define('comparison', {
     type: Sequelize.STRING,
   },
   description: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
 }, {
   freezeTableName: true

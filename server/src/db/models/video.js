@@ -10,6 +10,9 @@ const Video = db.define('video', {
   title: {
     type: Sequelize.STRING,
   },
+  description: {
+    type: Sequelize.TEXT
+  },
   url: {
     type: Sequelize.STRING,
   },

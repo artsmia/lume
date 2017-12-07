@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "yarn run clean && babel src --out-dir dist --copy-files",
-    "start-local": "NODE_ENV=dev DATABASE=dev nodemon src --exec babel-node src",
+    "start-local": "NODE_ENV=dev DATABASE=local nodemon src --exec babel-node src",
     "start-test": "NODE_ENV=test DATABASE=test babel-node src",
     "start-beta": "NODE_ENV=dev DATABASE=beta babel-node src",
     "start": "NODE_ENV=production DATABASE=beta node dist",
@@ -26,9 +26,11 @@
     "db-reset-dev": "NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/reinitialize",
     "db-reset-beta": "NODE_ENV=production DATABASE=beta babel-node src/db/scripts/reinitialize",
     "db-reset-test": "NODE_ENV=test DATABASE=test babel-node src/db/scripts/reinitialize",
+    "db-reset-local": "NODE_ENV=dev DATABASE=local babel-node src/db/scripts/reinitialize",
     "db-populate-beta": "yarn run db-reset-beta && NODE_ENV=dev DATABASE=beta babel-node src/db/scripts/populate",
     "db-populate-dev": "yarn run db-reset-dev && NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/populate",
-    "db-populate-test": "yarn run db-reset-test && NODE_ENV=dev DATABASE=test babel-node src/db/scripts/populate"
+    "db-populate-test": "yarn run db-reset-test && NODE_ENV=dev DATABASE=test babel-node src/db/scripts/populate",
+    "db-populate-local": "yarn run db-reset-local && NODE_ENV=dev DATABASE=local babel-node src/db/scripts/populate"
   },
   "dependencies": {
     "apollo-server-express": "^1.1.0",

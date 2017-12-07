@@ -52,9 +52,14 @@ async function populate() {
 
     for (let scroll of scrollStories) {
       let story = await Mia.createStory(scroll)
+
+
       let [image] = await Image.findOrCreate({
         where: {
           localId: scroll.localId,
+        },
+        defaults: {
+          title: story.title
         }
       })
 
@@ -87,8 +92,13 @@ async function populate() {
         let [image] = await Image.findOrCreate({
           where: {
             localId: view.image
+          },
+          defaults: {
+            title: detail.title
           }
         })
+
+        await image.setOrganization(Mia)
 
         await detail.setImage(image)
 
@@ -167,8 +177,13 @@ async function populate() {
             let [image] = await Image.findOrCreate({
               where: {
                 localId: content.image,
+              },
+              defaults: {
+                title: picture.title
               }
             })
+
+            await image.setOrganization(Mia)
 
             await picture.setImage(image)
 
@@ -185,18 +200,20 @@ async function populate() {
               }
             })
 
+
             let [image0] = await Image.findOrCreate({
               where: {
                 localId: content.image,
-              }
+              },
             })
+
 
             await comparison.setComparisonImage0(image0)
 
             let [image1] = await Image.findOrCreate({
               where: {
                 localId: content.imageB,
-              }
+              },
             })
 
             await comparison.setComparisonImage1(image1)

@@ -1,9 +1,9 @@
-import Detail from '../../../db/models/Detail'
+import Story from '../../../db/models/Story'
 
 export default async function(src, args, ctx){
   try {
 
-    return await Detail.findById(args.id)
+    return await Story.findById(args.id)
 
   } catch (ex) {
     console.error(ex)

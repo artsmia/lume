@@ -1,9 +1,9 @@
-import Detail from '../../../db/models/Detail'
+import Crop from '../../../db/models/Crop'
 
 export default async function(src, args, ctx){
   try {
 
-    return await Detail.findById(args.id)
+    return await Crop.findById(args.id)
 
   } catch (ex) {
     console.error(ex)

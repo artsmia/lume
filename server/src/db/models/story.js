@@ -11,7 +11,7 @@ const Story = db.define('story', {
     type: Sequelize.STRING,
   },
   description: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
   template: {
     type: Sequelize.ENUM('scroller', 'slideshow'),

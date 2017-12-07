@@ -3,6 +3,8 @@ const Filter = `
     limit: Int
     offset: Int
     order: [OrderInput]
+    orgSub: String
+    search: String
   }
 
   input OrderInput {

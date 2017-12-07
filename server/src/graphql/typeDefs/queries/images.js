@@ -1,6 +1,6 @@
 const images = `
   images (
-    orgSub: String
+    filter: Filter
   ): [Image]
 `
 

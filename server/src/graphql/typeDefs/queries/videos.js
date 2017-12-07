@@ -1,6 +1,6 @@
 const videos = `
   videos (
-    orgSub: String
+    filter: Filter
   ): [Video]
 `
 

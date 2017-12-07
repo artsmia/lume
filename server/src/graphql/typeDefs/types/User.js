@@ -1,6 +1,6 @@
 const User = `
   type User {
-    id: ID!
+    id: ID
     email: String
     organizations: [Organization]
   }

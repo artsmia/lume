@@ -24,7 +24,7 @@ const Obj = db.define('obj', {
   dimensions: Sequelize.STRING,
   currentLocation: Sequelize.STRING,
   creditLine: Sequelize.TEXT,
-  text: Sequelize.TEXT,
+  description: Sequelize.TEXT,
   pullFromCustomApi: {
     type: Sequelize.BOOLEAN,
     defaultValue: false

@@ -1,6 +1,6 @@
 const Obj = `
   type Obj {
-    id: ID!
+    id: ID
     title: String
     localId: String
     medium: String

@@ -28,6 +28,15 @@ switch (process.env.DATABASE) {
     dialect = process.env.betaDb_dialect
     break
   }
+  case "local": {
+    host = process.env.localDb_host
+    port = process.env.localDb_port
+    username = process.env.localDb_username
+    password = process.env.localDb_password
+    database = process.env.localDb_database
+    dialect = process.env.localDb_dialect
+    break
+  }
   default: {
 
     break
@@ -53,7 +62,8 @@ const db = new Sequelize({
   password,
   database,
   dialect,
-  logging: true
+  logging: false,
+  charset: 'utf8'
 })
 
 

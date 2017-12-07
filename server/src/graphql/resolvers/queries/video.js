@@ -1,9 +1,9 @@
-import Detail from '../../../db/models/Detail'
+import Video from '../../../db/models/Video'
 
 export default async function(src, args, ctx){
   try {
 
-    return await Detail.findById(args.id)
+    return await Video.findById(args.id)
 
   } catch (ex) {
     console.error(ex)

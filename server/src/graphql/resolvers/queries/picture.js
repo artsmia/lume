@@ -1,9 +1,9 @@
-import Detail from '../../../db/models/Detail'
+import Picture from '../../../db/models/Picture'
 
 export default async function(src, args, ctx){
   try {
 
-    return await Detail.findById(args.id)
+    return await Picture.findById(args.id)
 
   } catch (ex) {
     console.error(ex)
