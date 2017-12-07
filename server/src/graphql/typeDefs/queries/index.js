@@ -12,8 +12,10 @@ import organizations from './organizations'
 import picture from './picture'
 import stories from './stories'
 import story from './story'
+import user from './user'
 import video from './video'
 import videos from './videos'
+
 
 const queries = [
   comparison,
@@ -30,6 +32,7 @@ const queries = [
   picture,
   stories,
   story,
+  user,
   video,
   videos
 ]

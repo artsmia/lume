@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Template from '.../../shared/Template'
 import {H2} from '../../ui/h'
 import {Form, Label, Input, Select, Option} from '../../ui/forms'
 import {Row, Column} from '../../ui/layout'
@@ -24,9 +23,7 @@ export default class JoinOrCreate extends Component {
       joinOrg,
       change,
       props: {
-        data: {
-          organizations
-        }
+        organizations
       },
       state: {
         organizationId,
@@ -118,11 +115,12 @@ export default class JoinOrCreate extends Component {
           organizationId,
         },
         props: {
-          userId
+          userId,
+          joinOrganization
         }
       } = this
 
-      const {data: {editOrCreateOrganization: {subdomain: orgSub}}} = await this.props.addUserToOrganization({
+      const {data: {editOrCreateOrganization: {subdomain: orgSub}}} = await joinOrganization({
         variables: {
           orgId: organizationId,
           newUserIds: [userId],

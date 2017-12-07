@@ -17,7 +17,6 @@ import iiif, {info} from './iiif'
 
 import miaEndpoints from './miaEndpoints'
 
-import gdrive from './gdrive'
 
 console.log(`
   Starting Server:
@@ -40,8 +39,6 @@ server.use(
   authMiddleware,
 )
 
-
-server.use('/gdrive', upload.single("file"), gdrive)
 
 server.use('/mia/:type', miaEndpoints)
 

@@ -12,6 +12,8 @@ import organizations from './organizations'
 import picture from './picture'
 import story from './story'
 import stories from './stories'
+import user from './user'
+
 import video from './video'
 import videos from './videos'
 
@@ -31,6 +33,7 @@ const Query = {
   picture,
   story,
   stories,
+  user,
   video,
   videos
 }

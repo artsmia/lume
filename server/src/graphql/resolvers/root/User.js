@@ -1,11 +1,13 @@
-import userOrganizationModel from '../../db/models/userOrganization'
-import organizationModel from '../../db/models/organization'
+import User_Organization from '../../../db/models/User_Organization'
+import Organization from '../../../db/models/Organization'
 
 
 const User = {
   async organizations(user){
     try {
-      const userOrgs = await userOrganizationModel.findAll({
+
+
+      const userOrgs = await User_Organization.findAll({
         where: {
           userId: user.id
         }
@@ -13,7 +15,7 @@ const User = {
 
       const orgIds = userOrgs.map( ({organizationId}) => organizationId)
 
-      const organizations = await organizationModel.findAll({
+      const organizations = await Organization.findAll({
         where: {
           $or: [
             {

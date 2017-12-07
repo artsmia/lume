@@ -2,7 +2,7 @@ import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 import JoinOrCreate from './JoinOrCreate'
 
-const organizations = gql`
+const query = gql`
   query organizations {
     organizations {
       id
@@ -12,30 +12,37 @@ const organizations = gql`
   }
 `
 
-const addUserToOrganization = gql`
-  mutation editOrCreateOrganization (
-    $orgId: ID
-    $newUserIds: [ID]
-    $name: String
-    $subdomain: String
+const queryConfig = {
+  props: ({ ownProps, data }) => ({
+    ...ownProps,
+    ...data
+  }),
+}
+
+
+
+
+const joinOrganization = gql`
+  mutation joinOrganization (
+    $userId: ID!
+    $organizationId: ID!
+    $role: RoleEnum
   ) {
-    editOrCreateOrganization (
-      id: $orgId
-      newUserIds: $newUserIds
-      name: $name
-      subdomain: $subdomain
+    editUserOrganization(
+      userId: $userId
+      organizationId: $organizationId
+      role: $role
     ) {
       id
-      name
       subdomain
     }
   }
 `
 
 export default compose(
-  graphql(organizations),
-  graphql(addUserToOrganization, {
-    name: "addUserToOrganization",
+  graphql(query, queryConfig),
+  graphql(joinOrganization, {
+    name: "joinOrganization",
   })
 )(
   JoinOrCreate

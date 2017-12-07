@@ -1,4 +1,4 @@
-import {getUser} from '../../auth/management'
+import {getUser} from '../../../auth/management'
 
 export default async function user(src, {id}, ctx){
   try {

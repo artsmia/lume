@@ -14,6 +14,7 @@ const Organization = `
     customObjApiEndpoint: String
     customImageApiEnabled: Boolean
     customImageEndpoint: String
+    role: RoleEnum
   }
 `
 

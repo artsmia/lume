@@ -1,66 +1,78 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {H2} from '../../ui/h'
-import {Search} from '../../ui/search'
-import ObjList from '../ObjList'
-import PropTypes from 'prop-types'
+import Template from '../../shared/Template/Template'
+import {H2, H3} from '~/ui/h'
+import {createLock} from '../../auth'
+import {Button} from '../../ui/buttons'
+import {Link} from '../../ui/links'
+import {Column} from '../../ui/layout'
 
-export default class Home extends Component {
-
-  static displayName = "Home"
-
-  static propTypes = {
-    orgSub: PropTypes.string.isRequired
-  }
-
-  state = {
-    search: ""
-  }
+export default class Root extends Component {
 
   render() {
 
     const {
+      showLock,
+      props,
       props: {
-        orgSub,
-      },
-      state: {
-        search
-      },
-      handleChange
+        organizations,
+      }
     } = this
 
     return (
-      <Container>
-        <SideContainer>
-          <H2>Search Art Stories</H2>
-          <Search
-            name={"search"}
-            value={search}
-            onChange={handleChange}
-          />
-        </SideContainer>
-        <ObjList
-          orgSub={orgSub}
-          search={search}
-        />
-      </Container>
+      <Template
+        {...props}
+        drawer={false}
+      >
+        <Centered>
+          <H2>
+            Welcome to Art Stories
+          </H2>
+          <Button
+            onClick={showLock}
+          >
+            Login to CMS
+          </Button>
+          <H3>
+            Organization Pages
+          </H3>
+          {(organizations) ? (
+            <Column>
+              {organizations.map( ({id, name, subdomain}) => (
+                <Link
+                  key={id}
+                  href={{
+                    pathname: "/lume",
+                    query: {
+                      orgSub: subdomain
+                    }
+                  }}
+                  as={`/${subdomain}`}
+                >
+                  {name}
+                </Link>
+              ))}
+            </Column>
+          ): null}
+
+        </Centered>
+      </Template>
     )
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+  showLock = () => {
+    const lock = createLock()
+    lock.show()
+  }
 
 }
 
-const Container = styled.div`
+const Centered = styled.div`
+  width: 50%;
+  margin: auto;
   display: flex;
-  width: 100%;
-  height: 100vh;
-`
-
-const SideContainer = styled.div`
-  width: 30%;
-  display: flex;
+  margin-top: 50px;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: flex-start;
+  padding: 20px;
 `

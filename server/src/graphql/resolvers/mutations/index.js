@@ -19,6 +19,7 @@ import editObj from './editObj'
 import editOrganization from './editOrganization'
 import editPicture from './editPicture'
 import editStory from './editStory'
+import editUserOrganization from './editUserOrganization'
 import editVideo from './editVideo'
 
 
@@ -44,6 +45,7 @@ const Mutation = {
   editOrganization,
   editPicture,
   editStory,
+  editUserOrganization,
   editVideo
 }
 

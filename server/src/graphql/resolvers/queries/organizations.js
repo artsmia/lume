@@ -8,7 +8,7 @@ export default async function(src, args, ctx){
       filter
     } = args
 
-    let options = filterOptions(filter)
+    let options = (filter) ? filterOptions(filter) : {}
 
     return await Organization.findAll(options)
 

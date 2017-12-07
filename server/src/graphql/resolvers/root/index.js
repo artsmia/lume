@@ -10,6 +10,8 @@ import Organization from './Organization'
 import Picture from './Picture'
 import Story from './Story'
 import Video from './Video'
+import User from './User'
+
 
 const Root = {
   Comparison,
@@ -23,6 +25,7 @@ const Root = {
   Organization,
   Picture,
   Story,
+  User,
   Video
 }
 

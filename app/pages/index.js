@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Root from '../lume/Root'
+import Home from '../lume/Home'
 import withData from '../apollo'
 
 class Index extends Component {
@@ -16,7 +16,7 @@ class Index extends Component {
 
   render() {
     return (
-      <Root
+      <Home
         {...this.props}
       />
     )

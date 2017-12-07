@@ -31,7 +31,7 @@ app.prepare().then(() => {
   })
 
   server.get('/new', (req, res) => {
-    const actualPage = '/cms/org/joinOrCreate'
+    const actualPage = '/cms/joinOrCreate'
     app.render(req, res, actualPage)
   })
 
