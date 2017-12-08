@@ -3,33 +3,37 @@ import Detail from '../../../db/models/Detail'
 import Obj from '../../../db/models/Obj'
 import Movie from '../../../db/models/Movie'
 import Picture from '../../../db/models/Picture'
+import Story from '../../../db/models/Story'
 
 
 
 export default async function(src, args, ctx){
   try {
 
+    let story = await Story.findById(args.storyId)
+
+    let content
 
     switch (args.type) {
       case "comparison": {
 
-        return await Comparison.create(...args)
+        content = await Comparison.create()
       }
       case "detail": {
 
-        return await Detail.create(...args)
+        content = await Detail.create()
       }
       case "obj": {
 
-        return await Obj.create(...args)
+        content = await Obj.create()
       }
       case "movie": {
 
-        return await Movie.create(...args)
+        content = await Movie.create()
       }
       case "picture": {
 
-        return await Picture.create(...args)
+        content = await Picture.create()
       }
       default: {
 
@@ -37,6 +41,9 @@ export default async function(src, args, ctx){
       }
     }
 
+    await content.addStory(story)
+
+    return content
 
   } catch (ex) {
     console.error(ex)

@@ -57,6 +57,14 @@ const Story = {
       console.error(ex)
     }
   },
+  async organization(story){
+    try {
+
+      return await story.getOrganization()
+    } catch (ex) {
+      console.error(ex)
+    }
+  },
 }
 
 export default Story

@@ -55,7 +55,7 @@ export default class extends Component {
         Router.push({
           pathname: '/cms',
           query: {
-            orgSub: subdomain
+            subdomain: subdomain
           }
         }, `/${subdomain}/cms`)
       } else {

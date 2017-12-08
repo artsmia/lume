@@ -2,19 +2,19 @@ import Organization from '../../../db/models/Organization'
 import {Op} from 'sequelize'
 
 export default function({
-  orgSub,
+  organizationId,
   search,
   order,
   limit,
   offset
 }){
   let options = {}
-  if (orgSub) {
+  if (organizationId) {
     options.include = [{
       model: Organization,
       as: "organization",
       where: {
-        subdomain: orgSub
+        id: organizationId
       }
     }]
   }

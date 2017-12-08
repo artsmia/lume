@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import Home from '../lume/Home'
+import LumeHome from '../lume/LumeHome'
 import withData from '../apollo'
+import Template from '../shared/Template'
 
 class Index extends Component {
 
@@ -16,9 +17,12 @@ class Index extends Component {
 
   render() {
     return (
-      <Home
-        {...this.props}
-      />
+      <Template>
+        <LumeHome
+          {...this.props}
+        />
+      </Template>
+
     )
   }
 

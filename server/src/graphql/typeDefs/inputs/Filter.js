@@ -3,7 +3,7 @@ const Filter = `
     limit: Int
     offset: Int
     order: [OrderInput]
-    orgSub: String
+    organizationId: ID
     search: String
   }
 

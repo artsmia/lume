@@ -8,6 +8,7 @@ const Story = `
     contents: [Content]
     previewImage: Image
     updatedAt: String
+    organization: Organization
   }
 `
 

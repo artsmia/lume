@@ -31,67 +31,67 @@ app.prepare().then(() => {
   })
 
   server.get('/new', (req, res) => {
-    const actualPage = '/cms/joinOrCreate'
+    const actualPage = '/cms/orgManager'
     app.render(req, res, actualPage)
   })
 
 
-  server.get('/:orgSub/obj/:objId', (req, res) => {
+  server.get('/:subdomain/obj/:objId', (req, res) => {
     const actualPage = '/lume/obj'
-    const {orgSub, objId} = req.params
+    const {subdomain, objId} = req.params
     const queryParams = {
-        orgSub,
+        subdomain,
         objId
     }
     app.render(req, res, actualPage, queryParams)
   })
 
-  server.get('/:orgSub/thematic/:thematicId', (req, res) => {
+  server.get('/:subdomain/thematic/:thematicId', (req, res) => {
     const actualPage = '/lume/thematic'
-    const {orgSub, thematicId} = req.params
+    const {subdomain, thematicId} = req.params
     const queryParams = {
-        orgSub,
+        subdomain,
         thematicId
     }
     app.render(req, res, actualPage, queryParams)
   })
 
-  server.get('/:orgSub/cms', (req, res) => {
+  server.get('/:subdomain/cms', (req, res) => {
     const actualPage = '/cms'
-    const {orgSub} = req.params
+    const {subdomain} = req.params
     const queryParams = {
-        orgSub,
+        subdomain,
     }
     app.render(req, res, actualPage, queryParams)
   })
 
 
-  server.get('/:orgSub/cms/:storyId', (req, res) => {
+  server.get('/:subdomain/cms/:storyId', (req, res) => {
     const actualPage = '/cms/edit'
-    const {orgSub, storyId} = req.params
+    const {subdomain, storyId} = req.params
     const queryParams = {
-        orgSub,
+        subdomain,
         storyId
     }
     app.render(req, res, actualPage, queryParams)
   })
 
-  server.get('/:orgSub/cms/settings', (req, res) => {
+  server.get('/:subdomain/cms/settings', (req, res) => {
     const actualPage = '/cms/org/settings'
-    const {orgSub} = req.params
+    const {subdomain} = req.params
     const queryParams = {
-        orgSub,
+        subdomain,
     }
     app.render(req, res, actualPage, queryParams)
   })
 
 
 
-  server.get('/:orgSub', (req, res) => {
+  server.get('/:subdomain', (req, res) => {
     const actualPage = '/lume'
-    const {orgSub} = req.params
+    const {subdomain} = req.params
     const queryParams = {
-        orgSub,
+        subdomain,
     }
     app.render(req, res, actualPage, queryParams)
   })
