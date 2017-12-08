@@ -7,9 +7,6 @@
   "author": "Carl Peaslee <cpeaslee@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "cd app && yarn test"
-  },
-  "dependencies": {
-    "sqlite3": "^3.1.13"
+    "test": "cd app && yarn test && cd .. && cd server && yarn test"
   }
 }

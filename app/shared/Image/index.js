@@ -15,11 +15,8 @@ query ImageQuery (
       customImageApiEnabled
       customImageEndpoint
     }
-    host
-    gdriveId
-    s3Bucket
     title
-    alt
+    description
     localId
   }
 }

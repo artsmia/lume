@@ -67,13 +67,13 @@ export class Header extends Component {
   static defaultProps = {
     hasSearch: false,
     variables: {
-      search: "",
       filter: {
         limit: 10,
         order: {
           column: "",
           direction: ""
-        }
+        },
+        search: "",
       }
     }
   }
@@ -86,7 +86,7 @@ export class Header extends Component {
   }
 
   state = {
-    search: this.props.variables.search
+    search: this.props.variables.filter.search || ""
   }
 
   render(){
@@ -175,10 +175,9 @@ export class Header extends Component {
       clearTimeout(this.debounce)
       this.debounce = setTimeout(
         () => {
-          this.props.onVariablesChange({
-            ...this.props.variables,
-            search: value
-          })
+          let variables = this.props.variables
+          variables.filter.search = value
+          this.props.onVariablesChange(variables)
         },
         2000
       )
@@ -190,13 +189,11 @@ export class Header extends Component {
 
   handleArrowChange = (newOrder) => {
 
-    let newVariables = this.props.variables
+    let variables = this.props.variables
 
-    newVariables.filter.order = newOrder
+    variables.filter.order = newOrder
 
-    this.props.onVariablesChange({
-      ...newVariables
-    })
+    this.props.onVariablesChange(variables)
   }
 
 

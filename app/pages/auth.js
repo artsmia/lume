@@ -53,7 +53,7 @@ export default class extends Component {
       ) {
         const {subdomain} = user.organizations[0]
         Router.push({
-          pathname: '/cms/org',
+          pathname: '/cms',
           query: {
             orgSub: subdomain
           }

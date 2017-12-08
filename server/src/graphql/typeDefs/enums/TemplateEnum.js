@@ -1,7 +1,7 @@
 const TemplateEnum = `
   enum TemplateEnum {
-    slides
-    scroll
+    slideshow
+    scroller
   }
 `
 

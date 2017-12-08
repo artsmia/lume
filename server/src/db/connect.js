@@ -37,6 +37,15 @@ switch (process.env.DATABASE) {
     dialect = process.env.localDb_dialect
     break
   }
+  case "test": {
+    host = '127.0.0.1'
+    port = 3306
+    username = 'root'
+    password = ''
+    database = 'test'
+    dialect = 'mysql'
+    break
+  }
   default: {
 
     break
@@ -46,7 +55,7 @@ switch (process.env.DATABASE) {
 if (process.env.TRAVIS) {
   host = '127.0.0.1'
   port = 3306
-  username = 'travis'
+  username = 'root'
   password = ''
   database = 'test'
   dialect = 'mysql'

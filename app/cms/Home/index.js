@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 const query = gql`
   query OrgHomeQuery ($orgSub: String) {
     organization  (
-      orgSub: $orgSub
+      subdomain: $orgSub
     ) {
       id
       name
@@ -29,8 +29,26 @@ const options = {
 }
 
 
+const createStory = gql`
+  mutation createStory (
+    $organizationId: ID!
+  ) {
+    createStory(
+      organizationId: $organizationId
+    ) {
+      id
+    }
+  }
+`
+
+const mutationConfig = {
+  name: "createStory",
+}
+
+
 export default compose(
-  graphql(query, options)
+  graphql(query, options),
+  graphql(createStory, mutationConfig)
 )(
   Home
 )

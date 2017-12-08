@@ -189,6 +189,10 @@ async function populate() {
 
             await picture.setImage(image)
 
+            if (!story.previewImage) {
+              await story.setPreviewImage(image)
+            }
+
 
             break
           }
@@ -212,6 +216,11 @@ async function populate() {
             await image0.setOrganization(Mia)
 
             await comparison.setComparisonImage0(image0)
+
+            if (!story.previewImage) {
+              await story.setPreviewImage(image0)
+            }
+
 
             let [image1] = await Image.findOrCreate({
               where: {

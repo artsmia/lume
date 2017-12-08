@@ -21,16 +21,17 @@
     "start-beta": "NODE_ENV=dev DATABASE=beta babel-node src",
     "start": "NODE_ENV=production DATABASE=beta node dist",
     "clean": "rm -rf dist",
-    "test": "jest",
+    "test": "NODE_ENV=test DATABASE=test yarn run db-populate-test && jest",
     "deploy": "now --docker",
     "db-reset-dev": "NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/reinitialize",
     "db-reset-beta": "NODE_ENV=production DATABASE=beta babel-node src/db/scripts/reinitialize",
     "db-reset-test": "NODE_ENV=test DATABASE=test babel-node src/db/scripts/reinitialize",
     "db-reset-local": "NODE_ENV=dev DATABASE=local babel-node src/db/scripts/reinitialize",
-    "db-populate-beta": "yarn run db-reset-beta && NODE_ENV=dev DATABASE=beta babel-node src/db/scripts/populate",
-    "db-populate-dev": "yarn run db-reset-dev && NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/populate",
-    "db-populate-test": "yarn run db-reset-test && NODE_ENV=dev DATABASE=test babel-node src/db/scripts/populate",
-    "db-populate-local": "yarn run db-reset-local && NODE_ENV=dev DATABASE=local babel-node src/db/scripts/populate"
+    "db-mia-beta": "yarn run db-reset-beta && NODE_ENV=dev DATABASE=beta babel-node src/db/scripts/mia",
+    "db-mia-dev": "yarn run db-reset-dev && NODE_ENV=dev DATABASE=dev babel-node src/db/scripts/mia",
+    "db-mia-test": "yarn run db-reset-test && NODE_ENV=dev DATABASE=test babel-node src/db/scripts/mia",
+    "db-mia-local": "yarn run db-reset-local && NODE_ENV=dev DATABASE=local babel-node src/db/scripts/mia",
+    "db-populate-test": "yarn run db-reset-test && NODE_ENV=test DATABASE=test babel-node src/db/scripts/populateTest"
   },
   "dependencies": {
     "apollo-server-express": "^1.1.0",

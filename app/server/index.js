@@ -57,25 +57,7 @@ app.prepare().then(() => {
   })
 
   server.get('/:orgSub/cms', (req, res) => {
-    const actualPage = '/cms/org'
-    const {orgSub} = req.params
-    const queryParams = {
-        orgSub,
-    }
-    app.render(req, res, actualPage, queryParams)
-  })
-
-  server.get('/:orgSub/cms/objs', (req, res) => {
-    const actualPage = '/cms/browse/objs'
-    const {orgSub} = req.params
-    const queryParams = {
-        orgSub,
-    }
-    app.render(req, res, actualPage, queryParams)
-  })
-
-  server.get('/:orgSub/cms/thematics', (req, res) => {
-    const actualPage = '/cms/browse/thematics'
+    const actualPage = '/cms'
     const {orgSub} = req.params
     const queryParams = {
         orgSub,
@@ -84,23 +66,12 @@ app.prepare().then(() => {
   })
 
 
-  server.get('/:orgSub/cms/obj/:objId', (req, res) => {
-    const actualPage = '/cms/edit/obj'
-    const {orgSub, objId} = req.params
+  server.get('/:orgSub/cms/:storyId', (req, res) => {
+    const actualPage = '/cms/edit'
+    const {orgSub, storyId} = req.params
     const queryParams = {
         orgSub,
-        objId
-    }
-    app.render(req, res, actualPage, queryParams)
-  })
-
-
-  server.get('/:orgSub/cms/thematic/:thematicId', (req, res) => {
-    const actualPage = '/cms/edit/thematic'
-    const {orgSub, thematicId} = req.params
-    const queryParams = {
-        orgSub,
-        thematicId
+        storyId
     }
     app.render(req, res, actualPage, queryParams)
   })

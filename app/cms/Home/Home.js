@@ -1,29 +1,72 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H2} from '../../ui/h'
+import {Spinner} from '../../ui/spinner'
+import StoryList from '../StoryList'
+import {Button} from '../../ui/buttons'
 
 export default class Home extends Component {
 
 
   render() {
 
+    if (this.props.loading) return <Spinner/>
+
     const {
       props: {
-        organization
+        organization: {
+          name
+        },
+        createStory,
+        orgSub
       }
     } = this
     return (
       <Container>
         <H2>
-          {organization.name}
+          {name}
         </H2>
 
-        <div>
-          Welcome to ArtStories!
-        </div>
+        <Button
+          onClick={createStory}
+        >
+          Create Object Story
+        </Button>
+
+        <StoryList
+          orgSub={orgSub}
+        />
 
       </Container>
     )
+  }
+
+  createStory = async () => {
+    try {
+      const {
+        createStory,
+        orgSub,
+        organization: {
+          id: organizationId
+        }
+      } = this.props
+
+      const {data: {createStory: story}} = await createStory({
+        variables: {
+          organizationId
+        }
+      })
+
+      router.push({
+        pathname: '/cms/edit',
+        query: {
+          orgSub,
+          storyId: story.id
+        }
+      }, `/${orgSub}/cms/${story.id}`)
+    } catch (ex) {
+      console.error(ex)
+    }
   }
 
 }

@@ -60,28 +60,6 @@ export default class DrawerComponent extends Component {
           </MenuItem>
           <MenuItem
             href={{
-              pathname: '/cms/browse/objs',
-              query: {
-                orgSub
-              }
-            }}
-            as={`/${orgSub}/cms/objs`}
-          >
-            Object Stories
-          </MenuItem>
-          <MenuItem
-            href={{
-              pathname: '/cms/browse/thematics',
-              query: {
-                orgSub
-              }
-            }}
-            as={`/${orgSub}/cms/thematics`}
-          >
-            Thematic Stories
-          </MenuItem>
-          <MenuItem
-            href={{
               pathname: '/cms/org/settings',
               query: {
                 orgSub

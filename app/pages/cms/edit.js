@@ -1,34 +1,33 @@
 import React, {Component} from 'react'
-import Home from '../../cms/Home'
+import CmsEdit from '../../cms/Edit'
 import withData from '../../apollo'
 import Cookie from 'js-cookie'
 import Template from '../../shared/Template'
 
-class OrgIndex extends Component {
+class Edit extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
       const userId = (ctx.req) ? ctx.req.userId : Cookie.get("userId")
-      const {orgSub} = ctx.query
+      const {orgSub, storyId} = ctx.query
       return {
         userId,
-        orgSub
+        orgSub,
+        storyId
       }
     } catch (ex) {
       console.error(ex)
     }
   }
 
+
   render() {
-
-
-
     return (
       <Template
         drawer
         {...this.props}
       >
-        <Home
+        <CmsEdit
           {...this.props}
         />
       </Template>
@@ -36,4 +35,4 @@ class OrgIndex extends Component {
   }
 }
 
-export default withData(OrgIndex)
+export default withData(Edit)

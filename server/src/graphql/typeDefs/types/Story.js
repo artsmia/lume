@@ -6,6 +6,8 @@ const Story = `
     template: TemplateEnum
     visibility: VisibilityEnum
     contents: [Content]
+    previewImage: Image
+    updatedAt: String
   }
 `
 

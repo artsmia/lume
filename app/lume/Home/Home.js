@@ -6,8 +6,13 @@ import {createLock} from '../../auth'
 import {Button} from '../../ui/buttons'
 import {Link} from '../../ui/links'
 import {Column} from '../../ui/layout'
+import PropTypes from 'prop-types'
 
 export default class Root extends Component {
+
+  static propTypes = {
+    organizations: PropTypes.array.isRequired
+  }
 
   render() {
 
