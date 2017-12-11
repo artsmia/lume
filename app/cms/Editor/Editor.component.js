@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import {Button} from '../../ui/buttons'
 import CreateContentButton from '../CreateContentButton'
 import EditStoryThumb from '../EditStoryThumb'
+import EditContentThumb from '../EditContentThumb'
+import ComparisonEditor from '../ComparisonEditor'
+
 
 export default class Editor extends Component {
 
@@ -21,12 +24,13 @@ export default class Editor extends Component {
         story
       },
       state: {
-        editing
+        editing,
+        selectedContentId
       },
       handleStorySelection,
-      handleContentSelection
+      handleContentSelection,
+      renderContentEditor
     } = this
-
     return (
       <Container>
         <TopBar>
@@ -47,10 +51,15 @@ export default class Editor extends Component {
             <Break/>
 
             {
-              (story) ? story.contents.map( ({id}) => (
-                <ContentThumb
+              (story) ? story.contents.map( ({
+                id,
+                __typename
+              }) => (
+                <EditContentThumb
                   key={id}
-                  onSelect={handleContentSelection}
+                  contentId={id}
+                  type={__typename}
+                  onSelect={()=>handleContentSelection(id)}
                 />
               )): null
             }
@@ -59,15 +68,16 @@ export default class Editor extends Component {
 
             <CreateContentButton
               storyId={storyId}
-              type={"comparison"}
+              type={"Comparison"}
             />
 
           </LeftBar>
 
-
-
-
           <EditorContainer>
+
+            <PreviewSpace/>
+
+            {renderContentEditor(selectedContentId)}
 
           </EditorContainer>
 
@@ -90,6 +100,35 @@ export default class Editor extends Component {
       editing: "content",
       selectedContentId
     })
+  }
+
+  renderContentEditor = (selectedContentId) => {
+    if (!selectedContentId) return (
+      <div>
+        story basics editor
+      </div>
+    )
+    const {
+      contents
+    } = this.props.story
+
+    let type = contents.find(content => content.id === selectedContentId).__typename
+
+    switch (type) {
+      case "Comparison": {
+
+        return (
+          <ComparisonEditor
+            comparisonId={selectedContentId}
+          />
+        )
+      }
+      default: {
+
+        break
+      }
+    }
+
   }
 
 }
@@ -143,8 +182,9 @@ const EditorContainer = styled.div`
   align-items: flex-start;
 `
 
-const ContentThumb = styled.div`
-  height: 100px;
-  width: 100px;
-  background-color: salmon;
+const PreviewSpace = styled.div`
+  display: flex;
+  height: 50%;
+  width: 100%;
+  background-color: lightblue;
 `

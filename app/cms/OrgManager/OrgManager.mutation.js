@@ -29,12 +29,14 @@ export const joinOrganization =  graphql(joinOrganizationMutation, {
 
 const createOrganizationMutation = gql`
   mutation createOrganization (
-    $subdomain: String
-    $name: String
+    $subdomain: String!
+    $name: String!
+    $creatorId: ID!
   ) {
     createOrganization(
       subdomain: $subdomain
       name: $name
+      creatorId: $creatorId
     ) {
       id
       name

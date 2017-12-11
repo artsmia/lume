@@ -3,6 +3,7 @@ import {Op} from 'sequelize'
 
 export default function({
   organizationId,
+  subdomain,
   search,
   order,
   limit,
@@ -15,6 +16,16 @@ export default function({
       as: "organization",
       where: {
         id: organizationId
+      }
+    }]
+  }
+
+  if (subdomain) {
+    options.include = [{
+      model: Organization,
+      as: "organization",
+      where: {
+        subdomain: subdomain
       }
     }]
   }

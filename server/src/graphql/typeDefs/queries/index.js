@@ -1,4 +1,5 @@
 import comparison from './comparison'
+import content from './content'
 import contents from './contents'
 import crop from './crop'
 import detail from './detail'
@@ -19,6 +20,7 @@ import videos from './videos'
 
 const queries = [
   comparison,
+  content,
   contents,
   crop,
   detail,

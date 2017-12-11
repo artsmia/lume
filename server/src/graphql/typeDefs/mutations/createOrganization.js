@@ -2,7 +2,7 @@ const createOrganization = `
   createOrganization(
     subdomain: String!
     name: String!
-    creatorId: String!
+    creatorId: ID!
   ): Organization
 `
 

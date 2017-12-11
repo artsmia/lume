@@ -4,6 +4,7 @@ import sharp from 'sharp'
 import fs from 'fs'
 import rimraf from 'rimraf'
 import chalk from 'chalk'
+import Organization from '../db/models/Organization'
 
 const s3 = new AWS.S3()
 
@@ -16,9 +17,17 @@ export default async function (req,res, next) {
         buffer
       },
       body: {
-        orgId: bucket
+        subdomain,
+        title,
+        description
       }
     } = req
+
+    let {id: bucket} = await Organization.findOne({
+      where: {
+        subdomain
+      }
+    })
 
 
     const fileId = uuid()
@@ -85,9 +94,11 @@ export default async function (req,res, next) {
 
     req.body = {
       query: `mutation {
-        editOrCreateImage(
+        createImage(
           id: "${fileId}"
           organizationId: "${bucket}"
+          title: "${title}"
+          description: "${description}"
         ) {
           id
         }

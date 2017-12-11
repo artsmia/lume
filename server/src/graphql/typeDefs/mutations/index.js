@@ -14,6 +14,8 @@ import deleteVideo from './deleteVideo'
 import editComparison from './editComparison'
 import editCrop from './editCrop'
 import editDetail from './editDetail'
+import editImage from './editImage'
+
 import editMovie from './editMovie'
 import editObj from './editObj'
 import editOrganization from './editOrganization'
@@ -39,6 +41,7 @@ const mutations = [
   editComparison,
   editCrop,
   editDetail,
+  editImage,
   editMovie,
   editObj,
   editOrganization,

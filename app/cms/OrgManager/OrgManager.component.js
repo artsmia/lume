@@ -176,14 +176,19 @@ export default class OrgManager extends Component {
       const {data: {createOrganization: organization}} = await createOrganization({
         variables: {
           name,
-          subdomain
+          subdomain,
+          creatorId: userId
         }
       })
 
-      this.setState(()=>({
-        organizationId: organization.id
-      }), this.joinOrg)
-
+      if(organization) {
+        router.push({
+          pathname: '/cms',
+          query: {
+            subdomain: organization.subdomain
+          }
+        }, `/${organization.subdomain}/cms`)
+      }
 
 
     } catch (ex) {

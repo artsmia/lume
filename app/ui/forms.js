@@ -29,7 +29,7 @@ export const Input = styled.input`
 `
 
 
-export const TextArea = styled.textarea`
+export const Textarea = styled.textarea`
   box-sizing: border-box;
   padding: .65em;
   border-radius: 2px;

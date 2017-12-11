@@ -10,30 +10,40 @@ import Story from '../../../db/models/Story'
 export default async function(src, args, ctx){
   try {
 
-    let story = await Story.findById(args.storyId)
+    const {
+      type,
+      storyId
+    } = args
+
+    let story = await Story.findById(storyId)
 
     let content
 
-    switch (args.type) {
-      case "comparison": {
-
-        content = await Comparison.create()
+    switch (type) {
+      case "Comparison": {
+        console.log("in comparison")
+        content = await story.createComparison()
+        break
       }
-      case "detail": {
+      case "Detail": {
 
-        content = await Detail.create()
+        content = await story.createDetail()
+        break
       }
-      case "obj": {
+      case "Obj": {
 
-        content = await Obj.create()
+        content = await story.createObj()
+        break
       }
-      case "movie": {
+      case "Movie": {
 
-        content = await Movie.create()
+        content = await story.createMovie()
+        break
       }
-      case "picture": {
+      case "Picture": {
 
-        content = await Picture.create()
+        content = await story.createPicture()
+        break
       }
       default: {
 
@@ -41,7 +51,7 @@ export default async function(src, args, ctx){
       }
     }
 
-    await content.addStory(story)
+    content.type = type
 
     return content
 

@@ -114,25 +114,6 @@ export default class extends Component {
     }
   }
 
-  getGoogleUrl = async(parentId, imgQuality) => {
-    try {
-
-      let url = `https://www.googleapis.com/drive/v3/files/?key=${googleApiKey}&q='${parentId}' in parents and name contains '${imgQuality}' and mimeType contains 'image'&fields=files(id,name,webContentLink)`
-      let options = {
-        method: 'GET'
-      }
-
-      const response = await fetch(url, options)
-
-      const {files} = await response.json()
-
-      return files[0].webContentLink
-
-
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
 
 
 

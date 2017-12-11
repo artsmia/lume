@@ -12,7 +12,25 @@ const createContent = gql`
       storyId: $storyId
       type: $type
     ) {
-      id
+      ... on Comparison {
+        id
+      }
+
+      ... on Detail {
+        id
+      }
+
+      ... on Movie {
+        id
+      }
+
+      ... on Obj {
+        id
+      }
+
+      ... on Picture {
+        id
+      }
     }
   }
 `
@@ -24,16 +42,7 @@ const mutationConfig = {
         storyId,
         type
       },
-      optimisticResponse: {
-        __typename: "Mutation",
-        createContent: {
-          __typename: "type",
-          id: "optimistic"
-        }
-      },
       update: (proxy, {data: {createContent}}) => {
-
-        console.log("createContent", createContent)
 
         let data = proxy.readQuery({
           query:StoryQuery,
@@ -41,8 +50,6 @@ const mutationConfig = {
             storyId
           }
         })
-
-        console.log("data", data)
 
         data.story.contents.push(createContent)
 

@@ -25,7 +25,6 @@ export async function createAssociations() {
 
 
     Comparison.belongsToMany(Story, {
-      as: "stories",
       through: Story_Comparison,
     })
 
@@ -46,7 +45,6 @@ export async function createAssociations() {
     })
 
     Detail.belongsToMany(Story, {
-      as: "details",
       through: Story_Detail,
     })
 
@@ -55,7 +53,7 @@ export async function createAssociations() {
     })
 
     Group.belongsToMany(Story, {
-      as: "stories",
+      as: "groups",
       through: "story_group",
     })
 
@@ -69,7 +67,6 @@ export async function createAssociations() {
     })
 
     Movie.belongsToMany(Story, {
-      as: "stories",
       through: Story_Movie,
     })
 
@@ -78,7 +75,6 @@ export async function createAssociations() {
     })
 
     Obj.belongsToMany(Story, {
-      as: "stories",
       through: Story_Obj,
     })
 
@@ -121,7 +117,6 @@ export async function createAssociations() {
     })
 
     Picture.belongsToMany(Story, {
-      as: "stories",
       through: Story_Picture,
     })
 
@@ -130,27 +125,22 @@ export async function createAssociations() {
     })
 
     Story.belongsToMany(Picture, {
-      as: "pictures",
       through: Story_Picture
     })
 
     Story.belongsToMany(Movie, {
-      as: "movies",
       through: Story_Movie
     })
 
     Story.belongsToMany(Comparison, {
-      as: "comparisons",
       through: Story_Comparison
     })
 
     Story.belongsToMany(Detail, {
-      as: "details",
       through: Story_Detail
     })
 
     Story.belongsToMany(Obj, {
-      as: "objs",
       through: Story_Obj
     })
 

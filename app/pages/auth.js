@@ -4,7 +4,7 @@ import apiFetch from '../utils/apiFetch'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 import {Loading} from '../ui/spinner'
-import Template from '../shared/Template/Template'
+import Template from '../shared/Template'
 
 
 export default class extends Component {

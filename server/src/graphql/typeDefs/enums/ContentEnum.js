@@ -1,10 +1,10 @@
 const ContentEnum = `
   enum ContentEnum {
-    comparison
-    detail
-    obj
-    picture
-    video
+    Comparison
+    Detail
+    Obj
+    Picture
+    Video
   }
 `
 

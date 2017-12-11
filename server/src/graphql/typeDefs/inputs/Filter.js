@@ -4,6 +4,7 @@ const Filter = `
     offset: Int
     order: [OrderInput]
     organizationId: ID
+    subdomain: String
     search: String
   }
 
