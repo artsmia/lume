@@ -123,15 +123,26 @@ export default class ComparisonEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps){
+
+
     if (
-      !this.props.comparison &&
-      nextProps.comparison
+      (
+        !this.state.comparisonId &&
+        nextProps.comparison
+      ) || (
+        this.state.comparisonId !== nextProps.comparisonId &&
+        nextProps.comparison.id === nextProps.comparisonId
+      )
     ){
       this.setState({
+        comparisonId: nextProps.comparisonId,
         title: nextProps.comparison.title || "",
         description: nextProps.comparison.description || "",
       })
     }
+
+
+
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})

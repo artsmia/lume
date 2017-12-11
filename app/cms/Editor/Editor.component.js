@@ -5,6 +5,7 @@ import CreateContentButton from '../CreateContentButton'
 import EditStoryThumb from '../EditStoryThumb'
 import EditContentThumb from '../EditContentThumb'
 import ComparisonEditor from '../ComparisonEditor'
+import PictureEditor from '../PictureEditor'
 import StoryEditor from '../StoryEditor'
 
 import {Select, Option} from '../../ui/forms'
@@ -66,7 +67,7 @@ export default class Editor extends Component {
                   key={id}
                   contentId={id}
                   type={__typename}
-                  onSelect={()=>handleContentSelection(id)}
+                  onSelect={handleContentSelection}
                 />
               )): null
             }
@@ -144,6 +145,14 @@ export default class Editor extends Component {
         return (
           <ComparisonEditor
             comparisonId={selectedContentId}
+          />
+        )
+      }
+      case "Picture": {
+
+        return (
+          <PictureEditor
+            pictureId={selectedContentId}
           />
         )
       }

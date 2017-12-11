@@ -10,10 +10,10 @@ import {Input, Textarea, Label} from '../../ui/forms'
 import ImageManager from '../ImageManager'
 import router from 'next/router'
 
-export default class StoryEditor extends Component {
+export default class PictureEditor extends Component {
 
   static defaultProps = {
-    storyId: PropTypes.string.isRequired,
+    pictureId: PropTypes.string.isRequired,
   }
 
   state = {
@@ -24,11 +24,11 @@ export default class StoryEditor extends Component {
 
   render() {
 
-    if (!this.props.story) return null
+    if (!this.props.picture) return null
 
     const {
       props: {
-        story: {
+        picture: {
           previewImage
         }
       },
@@ -46,7 +46,7 @@ export default class StoryEditor extends Component {
     return (
       <Container>
         <H3>
-          Story Editor
+          Picture Editor
         </H3>
         <Label>Title</Label>
         <Input
@@ -62,7 +62,7 @@ export default class StoryEditor extends Component {
         />
         <Button
           onClick={()=>{
-            this.props.editStory({
+            this.props.editPicture({
               title,
               description
             })
@@ -107,13 +107,13 @@ export default class StoryEditor extends Component {
 
   componentWillReceiveProps(nextProps){
     if (
-      !this.state.storyId &&
-      nextProps.story
+      !this.state.pictureId &&
+      nextProps.picture
     ){
       this.setState({
-        storyId: nextProps.story.id,
-        title: nextProps.story.title || "",
-        description: nextProps.story.description || "",
+        pictureId: nextProps.picture.id,
+        title: nextProps.picture.title || "",
+        description: nextProps.picture.description || "",
       })
     }
   }
@@ -133,7 +133,7 @@ export default class StoryEditor extends Component {
   }
 
   handlePreviewImageSave = (previewImageId) => {
-    this.props.editStory({
+    this.props.editPicture({
       previewImageId
     })
     this.setState({modalOpen: false})

@@ -18,12 +18,13 @@ export default class EditContentThumb extends Component {
 
     const {
       type,
-      onSelect
+      onSelect,
+      contentId
     } = this.props
 
     return (
       <Container
-        onClick={onSelect}
+        onClick={() => onSelect(contentId)}
       >
         <H3>
           {type}
