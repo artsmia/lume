@@ -5,14 +5,19 @@ import CreateContentButton from '../CreateContentButton'
 import EditStoryThumb from '../EditStoryThumb'
 import EditContentThumb from '../EditContentThumb'
 import ComparisonEditor from '../ComparisonEditor'
+import StoryEditor from '../StoryEditor'
 
+import {Select, Option} from '../../ui/forms'
 
 export default class Editor extends Component {
 
   state = {
     editing: "story",
-    selectedContentId: ""
+    selectedContentId: "",
+    contentType: "Comparison"
   }
+
+  contentTypes = ["Comparison", "Detail", "Movie", "Obj", "Picture"]
 
   render(){
 
@@ -25,10 +30,12 @@ export default class Editor extends Component {
       },
       state: {
         editing,
-        selectedContentId
+        selectedContentId,
+        contentType
       },
       handleStorySelection,
       handleContentSelection,
+      handleChange,
       renderContentEditor
     } = this
     return (
@@ -66,9 +73,23 @@ export default class Editor extends Component {
 
             <Break/>
 
+            <Select
+              name={"contentType"}
+              onChange={handleChange}
+              value={contentType}
+            >
+              {this.contentTypes.map(contentType => (
+                <Option
+                  key={contentType}
+                  value={contentType}
+                >
+                  {contentType}
+                </Option>
+              ))}
+            </Select>
             <CreateContentButton
               storyId={storyId}
-              type={"Comparison"}
+              type={contentType}
             />
 
           </LeftBar>
@@ -88,6 +109,8 @@ export default class Editor extends Component {
     )
   }
 
+  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+
   handleStorySelection = () => {
     this.setState({
       editing: "story",
@@ -104,9 +127,10 @@ export default class Editor extends Component {
 
   renderContentEditor = (selectedContentId) => {
     if (!selectedContentId) return (
-      <div>
-        story basics editor
-      </div>
+      <StoryEditor
+        storyId={this.props.storyId}
+        subdomain={this.props.subdomain}
+      />
     )
     const {
       contents
@@ -124,8 +148,8 @@ export default class Editor extends Component {
         )
       }
       default: {
-
         break
+
       }
     }
 

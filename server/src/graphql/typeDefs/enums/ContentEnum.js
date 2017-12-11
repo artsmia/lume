@@ -4,7 +4,7 @@ const ContentEnum = `
     Detail
     Obj
     Picture
-    Video
+    Movie
   }
 `
 

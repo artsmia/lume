@@ -28,10 +28,8 @@ export default class ImageManager extends Component {
       },
       props: {
         images,
-        onImageSave,
         subdomain
       },
-      selectImage,
       handleLoadMore,
       handleImageSave,
       handleChange,

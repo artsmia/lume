@@ -1,20 +1,16 @@
-import Image from '../../../db/models/Image'
-
 
 const Comparison = {
   async comparisonImage0(src, args){
     try {
 
-      console.log(src.comparisonImage0Id)
-
-      return await Image.findById(src.comparisonImage0Id)
+      return await src.getComparisonImage0()
     } catch (ex) {
       console.error(ex)
     }
   },
   async comparisonImage1(src, args){
     try {
-      return await Image.findById(src.comparisonImage1Id)
+      return await src.getComparisonImage1()
     } catch (ex) {
       console.error(ex)
     }
