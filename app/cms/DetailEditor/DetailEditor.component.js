@@ -10,10 +10,10 @@ import {Input, Textarea, Label} from '../../ui/forms'
 import ImageManager from '../ImageManager'
 import router from 'next/router'
 
-export default class PictureEditor extends Component {
+export default class DetailEditor extends Component {
 
   static defaultProps = {
-    pictureId: PropTypes.string.isRequired,
+    detailId: PropTypes.string.isRequired,
   }
 
   state = {
@@ -24,29 +24,29 @@ export default class PictureEditor extends Component {
 
   render() {
 
-    if (!this.props.picture) return null
+    if (!this.props.detail) return null
 
     const {
       props: {
-        picture: {
+        detail: {
           image
         }
       },
       state: {
         title,
-        description,
         modalOpen,
       },
       handleChange,
       handleModalClose,
       openModal,
-      handleImageSave
+      handleImageSave,
+      handleSave
     } = this
 
     return (
       <Container>
         <H3>
-          Picture Editor
+          Detail Editor
         </H3>
         <Label>Title</Label>
         <Input
@@ -55,18 +55,9 @@ export default class PictureEditor extends Component {
           onChange={handleChange}
         />
         <Label>Description</Label>
-        <Textarea
-          name={"description"}
-          value={description}
-          onChange={handleChange}
-        />
+
         <Button
-          onClick={()=>{
-            this.props.editPicture({
-              title,
-              description
-            })
-          }}
+          onClick={handleSave}
         >
           Save
         </Button>
@@ -107,13 +98,13 @@ export default class PictureEditor extends Component {
 
   componentWillReceiveProps(nextProps){
     if (
-      !this.state.pictureId &&
-      nextProps.picture
+      !this.state.detailId &&
+      nextProps.detail
     ){
       this.setState({
-        pictureId: nextProps.picture.id,
-        title: nextProps.picture.title || "",
-        description: nextProps.picture.description || "",
+        detailId: nextProps.detail.id,
+        title: nextProps.detail.title || "",
+        description: nextProps.detail.description || "",
       })
     }
   }
@@ -133,18 +124,23 @@ export default class PictureEditor extends Component {
   }
 
   handleImageSave = (imageId) => {
-    this.props.editPicture({
+    this.props.editDetail({
       imageId
     })
     this.setState({modalOpen: false})
   }
 
+  handleSave = () => {
+
+  }
 
 }
 
 const Container = styled.div`
   width: 100%;
-  height: 100px;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 `

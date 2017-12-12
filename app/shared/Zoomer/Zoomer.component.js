@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components'
 import LeafletCss from './LeafletCss'
 import {s3Url, apiUrl, url} from '../../config'
@@ -8,12 +8,12 @@ const L = (typeof window === 'object') ? require('leaflet') : null
 
 export default class extends Component {
 
-  static propTypes = {
-    imageId: PropTypes.string,
-    detailId: PropTypes.string,
-    onCrop: PropTypes.func,
-    crop: PropTypes.bool
-  }
+  // static propTypes = {
+  //   imageId: PropTypes.string,
+  //   detailId: PropTypes.string,
+  //   onCrop: PropTypes.func,
+  //   crop: PropTypes.bool
+  // }
 
   static defaultProps = {
     crop: false,
@@ -36,7 +36,7 @@ export default class extends Component {
     const {
       image,
       detail,
-    } = props.data
+    } = props
     this.state = {
       ...this.state,
       image: (detail) ? detail.image : image,
@@ -45,7 +45,8 @@ export default class extends Component {
   }
 
   render() {
-    if (this.props.data.loading || !this.state.image) return null
+
+    if (this.props.loading || !this.state.image) return null
 
     return (
       <LeafletCss>
@@ -59,14 +60,14 @@ export default class extends Component {
   componentWillReceiveProps(nextProps){
 
     if (
-      nextProps.data.detail &&
-      this.props.data.detail
+      nextProps.detail &&
+      this.props.detail
     ) {
       if (
-        nextProps.data.detail.id !== this.props.data.detail.id
+        nextProps.detail.id !== this.props.detail.id
       ) {
         this.setState({
-          geometry: nextProps.data.detail.geometry,
+          geometry: nextProps.detail.geometry,
           geometryLoading: false,
           geometryCreated: false
         })
@@ -74,13 +75,13 @@ export default class extends Component {
     }
     if (
       !this.state.image &&
-      !nextProps.data.loading
+      !nextProps.loading
     ) {
       const {
         detail,
         image,
         obj
-      } = nextProps.data
+      } = nextProps
 
       let displayImage
 
@@ -93,28 +94,27 @@ export default class extends Component {
       }
 
       this.setState({
-        // image: (detail) ? detail.image : image,
         image: displayImage,
       })
     }
 
     if (
-      !nextProps.data.loading &&
-      nextProps.data.detail
+      !nextProps.loading &&
+      nextProps.detail
     ) {
-      this.setState({geometry: nextProps.data.detail.geometry})
+      this.setState({geometry: nextProps.detail.geometry})
     }
 
     if (
       this.state.image &&
-      this.props.data.detail &&
-      nextProps.data.detail
+      this.props.detail &&
+      nextProps.detail
     ) {
       if (
-        this.props.data.detail.image.id !== nextProps.data.detail.image.id
+        this.props.detail.image.id !== nextProps.detail.image.id
       ) {
         this.setState({
-          image: nextProps.data.detail.image,
+          image: nextProps.detail.image,
           zoomCreated: false,
           zoomLoading: false,
           cropperLoading: false,
@@ -125,15 +125,15 @@ export default class extends Component {
       }
     }
     if (
-      nextProps.data.image &&
-      this.props.data.image
+      nextProps.image &&
+      this.props.image
     ) {
       if (
-        nextProps.data.image.id !==
-        this.props.data.image.id
+        nextProps.image.id !==
+        this.props.image.id
       ) {
         this.setState({
-          image: nextProps.data.image,
+          image: nextProps.image,
           zoomCreated: false,
           zoomLoading: false,
           cropperLoading: false,
@@ -153,36 +153,35 @@ export default class extends Component {
 
   setup = async() => {
     try {
-
       if (
-        !this.state.zoomLoading &&
-        !this.state.zoomCreated &&
-        !this.props.data.loading
+        !this.zoomLoading &&
+        !this.zoomCreated &&
+        !this.props.loading
       ) {
         await this.createZoomer()
       }
 
       if (
-        this.state.zoomCreated &&
+        this.zoomCreated &&
         this.props.crop &&
-        !this.state.cropperLoading &&
-        !this.state.cropperCreated
+        !this.cropperLoading &&
+        !this.cropperCreated
       ) {
         await this.createCropper()
       }
 
       if (
-        this.state.zoomCreated &&
+        this.zoomCreated &&
         this.state.geometry &&
-        !this.state.geometryLoading &&
-        !this.state.geometryCreated
+        !this.geometryLoading &&
+        !this.geometryCreated
       ) {
         await this.showCrop()
       }
 
       if (
-        this.state.zoomCreated &&
-        !this.props.data.loading &&
+        this.zoomCreated &&
+        !this.props.loading &&
         this.props.objId
       ) {
         await this.createIndexMarkers()
@@ -361,17 +360,13 @@ export default class extends Component {
   showCrop = async () => {
     try {
 
-      await this.promiseState({
-        geometryLoading: true
-      })
+      this.geometryLoading = true
 
       this.highlight()
 
 
-      await this.promiseState({
-        geometryLoading: false,
-        geometryCreated: true
-      })
+      this.geometryLoading = false,
+      this.geometryCreated = true
 
     } catch (ex) {
       console.error(ex)
@@ -475,9 +470,7 @@ export default class extends Component {
   createCropper = async () => {
     try {
 
-      await this.promiseState({
-        cropperLoading: true
-      })
+      this.cropperLoading = true
 
       L.control.cropper({
         position: "bottomleft"
@@ -499,10 +492,8 @@ export default class extends Component {
         this.handleMouseUp
       )
 
-      await this.promiseState({
-        cropperLoading: false,
-        cropperCreated: true
-      })
+      this.cropperLoading = false,
+      this.cropperCreated = true
 
 
     } catch (ex) {
@@ -515,9 +506,7 @@ export default class extends Component {
     try {
 
 
-      await this.promiseState({
-        zoomLoading: true
-      })
+      this.zoomLoading = true
 
       if (
         this.map
@@ -538,6 +527,7 @@ export default class extends Component {
           }
         },
       } = this
+
 
       let tileSize
       let tileUrl
@@ -651,9 +641,7 @@ export default class extends Component {
       this.map.invalidateSize()
       this.map.fitBounds(bounds)
 
-      await this.promiseState({
-        zoomCreated: true
-      })
+      this.zoomCreated = true
 
 
     } catch (ex) {
@@ -661,16 +649,7 @@ export default class extends Component {
     }
   }
 
-  promiseState = (newState) => {
 
-
-    return new Promise( (resolve, reject) => {
-      this.setState(
-        newState,
-        resolve
-      )
-    })
-  }
 
 }
 

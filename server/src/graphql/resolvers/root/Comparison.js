@@ -1,3 +1,4 @@
+import Story_Comparison from '../../../db/models/Story_Comparison'
 
 const Comparison = {
   async comparisonImage0(src, args){
@@ -14,6 +15,13 @@ const Comparison = {
     } catch (ex) {
       console.error(ex)
     }
+  },
+  async index(src, args, context, info){
+
+    if (src.index) return src.index
+
+    if (src.story_comparison) return src.story_comparison.index
+
   },
 }
 

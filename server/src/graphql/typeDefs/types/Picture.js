@@ -4,6 +4,8 @@ const Picture = `
     title: String
     description: String
     image: Image
+    index: Int
+
   }
 `
 

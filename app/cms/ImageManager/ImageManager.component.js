@@ -7,6 +7,8 @@ import styled from 'styled-components'
 import {PropTypes} from 'prop-types'
 import apiFile from '../../utils/apiFile'
 import Image from '../../shared/Image'
+import Zoomer from '../../shared/Zoomer'
+
 
 export default class ImageManager extends Component {
 
@@ -61,46 +63,49 @@ export default class ImageManager extends Component {
           <TabBody
             name={"select"}
           >
-            <ThumbColumn>
-              <SearchRow>
-                <ImageSearch
-                  value={search}
-                  name={"search"}
-                  onChange={handleChange}
-                />
-                <Button
-                  onClick={handleSearch}
-                >
-                  Search
-                </Button>
-              </SearchRow>
+            <PreviewContainer>
+              <ThumbColumn>
+                <SearchRow>
+                  <ImageSearch
+                    value={search}
+                    name={"search"}
+                    onChange={handleChange}
+                  />
+                  <Button
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </Button>
+                </SearchRow>
 
-              {images.map( (image) => (
-                <Image
-                  key={image.id}
-                  imageId={image.id}
-                  onClick={()=>this.setState({selectedImageId: image.id})}
-                  selected={(selectedImageId === image.id)}
-                  size={"80px"}
-                  thumb
-                />
-              ))}
-              {(images.length < 1) ? (
-                <p>You don't have any images yet</p>
-              ):null}
-              <Button
-                onClick={handleLoadMore}
-              >
-                Load More
-              </Button>
-            </ThumbColumn>
-            <Right>
-              {/* {(selectedImageId) ? (
-                <Zoomer
-                  imageId={selectedImageId}
-                />
-              ): <p>Choose an image from the left</p>} */}
-            </Right>
+                {images.map( (image) => (
+                  <Image
+                    key={image.id}
+                    imageId={image.id}
+                    onClick={()=>this.setState({selectedImageId: image.id})}
+                    selected={(selectedImageId === image.id)}
+                    size={"80px"}
+                    thumb
+                  />
+                ))}
+                {(images.length < 1) ? (
+                  <p>You don't have any images yet</p>
+                ):null}
+                <Button
+                  onClick={handleLoadMore}
+                >
+                  Load More
+                </Button>
+              </ThumbColumn>
+              <Right>
+                {(selectedImageId) ? (
+                  <Zoomer
+                    imageId={selectedImageId}
+                  />
+                ): <p>Choose an image from the left</p>}
+              </Right>
+            </PreviewContainer>
+
 
 
 
@@ -190,6 +195,11 @@ export const Container = styled.div`
   height: 600px;
 `
 
+const PreviewContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 600px;
+`
 
 export const ThumbColumn = styled.div`
   display: flex;

@@ -9,6 +9,7 @@ import PictureEditor from '../PictureEditor'
 import ObjEditor from '../ObjEditor'
 import MovieEditor from '../MovieEditor'
 import StoryEditor from '../StoryEditor'
+import DetailEditor from '../DetailEditor'
 
 import {Select, Option} from '../../ui/forms'
 
@@ -17,14 +18,16 @@ export default class Editor extends Component {
   state = {
     editing: "story",
     selectedContentId: "",
-    contentType: "Comparison"
+    contentType: "Comparison",
+    orderedContents: []
+
   }
 
   contentTypes = ["Comparison", "Detail", "Movie", "Obj", "Picture"]
 
   render(){
 
-
+    if (!this.props.story) return null
 
     const {
       props: {
@@ -34,14 +37,17 @@ export default class Editor extends Component {
       state: {
         editing,
         selectedContentId,
-        contentType
+        contentType,
+        orderedContents
       },
       handleStorySelection,
       handleContentSelection,
       handleChange,
-      renderContentEditor
+      renderContentEditor,
+      handleReorder
     } = this
 
+    console.log(story)
     return (
       <Container>
         <TopBar>
@@ -60,20 +66,23 @@ export default class Editor extends Component {
             />
 
             <Break/>
+              {
+                (orderedContents) ? orderedContents.map( ({
+                  id,
+                  __typename
+                }) => (
+                  <EditContentThumb
+                    key={id}
+                    contentId={id}
+                    storyId={storyId}
+                    type={__typename}
+                    onSelect={handleContentSelection}
+                    onReorder={handleReorder}
+                  />
+                )): null
+              }
 
-            {
-              (story) ? story.contents.map( ({
-                id,
-                __typename
-              }) => (
-                <EditContentThumb
-                  key={id}
-                  contentId={id}
-                  type={__typename}
-                  onSelect={handleContentSelection}
-                />
-              )): null
-            }
+
 
             <Break/>
 
@@ -100,7 +109,9 @@ export default class Editor extends Component {
 
           <EditorContainer>
 
-            <PreviewSpace/>
+            <PreviewSpace>
+
+            </PreviewSpace>
 
             {renderContentEditor(selectedContentId)}
 
@@ -111,6 +122,21 @@ export default class Editor extends Component {
 
       </Container>
     )
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.story) {
+      let orderedContents = nextProps.story.contents.slice()
+      orderedContents.sort((a,b) => a.index - b.index)
+      this.setState({orderedContents})
+    }
+
+
+
+  }
+
+  handleReorder = (dragContent, hoverContent) => {
+    console.log(dragContent, hoverContent)
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
@@ -184,6 +210,15 @@ export default class Editor extends Component {
           />
         )
       }
+      case "Detail": {
+
+        return (
+          <DetailEditor
+            detailId={selectedContentId}
+            subdomain={subdomain}
+          />
+        )
+      }
       default: {
         break
 
@@ -193,6 +228,8 @@ export default class Editor extends Component {
   }
 
 }
+
+
 
 const Container = styled.div`
   width: 100%;

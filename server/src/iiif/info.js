@@ -1,6 +1,6 @@
 import sharp from 'sharp'
 import fetch from 'node-fetch'
-import imageModel from '../db/models/image'
+import Image from '../db/models/Image'
 
 export default async function(req, res, next){
   try {
@@ -11,7 +11,7 @@ export default async function(req, res, next){
 
     const {
       organizationId
-    } = await imageModel.findById(imageId)
+    } = await Image.findById(imageId)
 
     const response = await fetch(
       `https://s3.amazonaws.com/${organizationId}/${imageId}/original`, {

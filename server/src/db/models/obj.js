@@ -29,9 +29,6 @@ const Obj = db.define('obj', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  index: {
-    type: Sequelize.INTEGER,
-  }
 }, {
   freezeTableName: true,
 })

@@ -18,6 +18,8 @@ const Obj = `
     primaryVideo: Video
     pullFromCustomApi: Boolean
     updatedAt: String
+    index: Int
+
   }
 `
 

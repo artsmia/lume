@@ -4,8 +4,10 @@ import PropTypes from 'prop-types'
 import {H3, H4} from '../../ui/h'
 import {Spinner} from '../../ui/spinner'
 import Image from '../../shared/Image'
+import { DragSource, DropTarget } from 'react-dnd'
 
-export default class EditContentThumb extends Component {
+
+class EditContentThumb extends Component {
 
   static defaultProps = {
     onSelect: PropTypes.func.isRequired,
@@ -27,29 +29,111 @@ export default class EditContentThumb extends Component {
       contentId,
       content: {
         title
-      }
+      },
+      connectDropTarget,
+      connectDragSource
     } = this.props
 
-    return (
-      <Container
-        onClick={() => onSelect(contentId)}
+    return connectDragSource(connectDropTarget(
+      <div
+        ref={ref => this.dragRef = ref}
+        style={{
+          width: "100%",
+          height: "100px",
+          margin: "10px 0"
+        }}
       >
-        <H3>
-          {title}
-        </H3>
-        <H4>
-          {type}
-        </H4>
-      </Container>
-    )
+        <Container
+          onClick={() => onSelect(contentId)}
+        >
+          <H3>
+            {title}
+          </H3>
+          <H4>
+            {type}
+          </H4>
+        </Container>
+      </div>
+    ))
   }
-
 
 }
 
+
+
 const Container = styled.div`
   width: 100%;
-  height: 100px;
+  height: 100%;
   border: 1px solid blue;
-  margin: 10px 0;
+  background-color: yellow;
+  box-sizing: border-box;
 `
+
+const dragSpec = {
+  beginDrag(props, monitor, component) {
+    return {
+      content: props.content,
+    }
+  }
+}
+
+
+function dragCollect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  }
+}
+
+
+const dropSpec = {
+  hover(props, monitor, component) {
+    let dragContent = monitor.getItem().content
+    let hoverContent = props.content
+
+    if (dragContent.id === hoverContent.id) {
+      return
+    }
+
+    // Determine rectangle on screen
+
+    const hoverBoundingRect = component.dragRef.getBoundingClientRect()
+
+    // Get vertical middle
+    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+
+    // Determine mouse position
+    const clientOffset = monitor.getClientOffset()
+
+    // Get pixels to the top
+    const hoverClientY = clientOffset.y - hoverBoundingRect.top
+
+    // Dragging downwards
+    if (dragContent.index < hoverContent.index && hoverClientY < hoverMiddleY) {
+      return
+    }
+
+    // Dragging upwards
+    if (dragContent.index > hoverContent.index && hoverClientY > hoverMiddleY) {
+      return
+    }
+
+    props.onReorder(dragContent, hoverContent)
+
+    return {}
+  }
+}
+
+function dropCollect(connect, monitor){
+  return {
+    connectDropTarget: connect.dropTarget(),
+  }
+}
+
+let Wrapped = EditContentThumb
+
+Wrapped = DropTarget("content", dropSpec, dropCollect)(Wrapped)
+
+Wrapped = DragSource("content", dragSpec, dragCollect)(Wrapped)
+
+export default Wrapped
