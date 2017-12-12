@@ -6,6 +6,8 @@ import EditStoryThumb from '../EditStoryThumb'
 import EditContentThumb from '../EditContentThumb'
 import ComparisonEditor from '../ComparisonEditor'
 import PictureEditor from '../PictureEditor'
+import ObjEditor from '../ObjEditor'
+import MovieEditor from '../MovieEditor'
 import StoryEditor from '../StoryEditor'
 
 import {Select, Option} from '../../ui/forms'
@@ -39,6 +41,7 @@ export default class Editor extends Component {
       handleChange,
       renderContentEditor
     } = this
+
     return (
       <Container>
         <TopBar>
@@ -127,17 +130,22 @@ export default class Editor extends Component {
   }
 
   renderContentEditor = (selectedContentId) => {
+
+    const {
+      story,
+      subdomain,
+      storyId
+    } = this.props
+
     if (!selectedContentId) return (
       <StoryEditor
-        storyId={this.props.storyId}
-        subdomain={this.props.subdomain}
+        storyId={storyId}
+        subdomain={subdomain}
       />
     )
-    const {
-      contents
-    } = this.props.story
 
-    let type = contents.find(content => content.id === selectedContentId).__typename
+
+    let type = story.contents.find(content => content.id === selectedContentId).__typename
 
     switch (type) {
       case "Comparison": {
@@ -145,6 +153,7 @@ export default class Editor extends Component {
         return (
           <ComparisonEditor
             comparisonId={selectedContentId}
+            subdomain={subdomain}
           />
         )
       }
@@ -153,6 +162,25 @@ export default class Editor extends Component {
         return (
           <PictureEditor
             pictureId={selectedContentId}
+            subdomain={subdomain}
+          />
+        )
+      }
+      case "Obj": {
+
+        return (
+          <ObjEditor
+            objId={selectedContentId}
+            subdomain={subdomain}
+          />
+        )
+      }
+      case "Movie": {
+
+        return (
+          <MovieEditor
+            movieId={selectedContentId}
+            subdomain={subdomain}
           />
         )
       }

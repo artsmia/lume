@@ -38,6 +38,7 @@ export default async function(src, args, ctx){
       case "Movie": {
 
         content = await story.createMovie()
+        await content.createVideo()
         break
       }
       case "Picture": {

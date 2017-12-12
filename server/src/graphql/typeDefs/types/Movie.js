@@ -3,6 +3,7 @@ const Movie = `
     id: ID
     title: String
     description: String
+    video: Video
   }
 `
 

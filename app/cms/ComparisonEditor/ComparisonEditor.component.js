@@ -15,7 +15,7 @@ export default class ComparisonEditor extends Component {
   static defaultProps = {
     onSelect: PropTypes.func.isRequired,
     contentId: PropTypes.string.isRequired,
-
+    subdomain: PropTypes.string.isRequired,
   }
 
   state = {
@@ -35,7 +35,8 @@ export default class ComparisonEditor extends Component {
         comparison: {
           comparisonImage0,
           comparisonImage1
-        }
+        },
+        subdomain
       },
       state: {
         title,
@@ -110,7 +111,7 @@ export default class ComparisonEditor extends Component {
 
         >
           <ImageManager
-            subdomain={router.query.subdomain}
+            subdomain={subdomain}
             onImageSave={handleComparisonImageSave}
           />
 

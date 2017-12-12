@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import {graphql } from 'react-apollo'
-
+import fragment from './StoryEditor.fragment'
 
 export const StoryQuery = gql`
   query StoryInfoQuery (
@@ -9,16 +9,11 @@ export const StoryQuery = gql`
     story (
       id: $storyId
     ) {
-      id
-      title
-      description
-      previewImage {
-        id
-      }
-
+      ...StoryEditorFragment
     }
   }
 
+  ${fragment}
 `
 
 

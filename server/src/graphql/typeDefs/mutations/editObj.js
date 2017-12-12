@@ -11,7 +11,7 @@ const editObj = `
     accessionNumber: String
     currentLocation: String
     creditLine: String
-    text: String
+    description: String
     type: String
     pullFromCustomApi: Boolean
     primaryMediaType: MediaEnum

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import {graphql } from 'react-apollo'
-
+import fragment from './PictureEditor.fragment'
 
 export const PictureQuery = gql`
   query PictureEditorQuery (
@@ -9,12 +9,11 @@ export const PictureQuery = gql`
     picture (
       id: $pictureId
     ) {
-      id
-      title
-      description
-
+      ...PictureEditorFragment
     }
   }
+
+  ${fragment}
 
 `
 

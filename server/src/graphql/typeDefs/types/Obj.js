@@ -11,7 +11,7 @@ const Obj = `
     accessionNumber: String
     currentLocation: String
     creditLine: String
-    text: String
+    description: String
     type: String
     primaryMediaType: MediaEnum
     primaryImage: Image

@@ -8,32 +8,42 @@ export default async function(src, args, ctx){
   try {
 
     const {
-      contentId,
+      id,
       type
     } = args
 
+    let content = {}
 
     switch (type) {
       case "Comparison": {
-        return await Comparison.findById(contentId)
+        content = await Comparison.findById(id)
+        break
       }
       case "Detail": {
-        return await Detail.findById(contentId)
+        content = await Detail.findById(id)
+        break
       }
       case "Movie": {
-        return await Movie.findById(contentId)
+        content = await Movie.findById(id)
+        break
       }
       case "Obj": {
-        return await Obj.findById(contentId)
+        content = await Obj.findById(id)
+        break
       }
       case "Picture": {
-        return await Picture.findById(contentId)
+        content = await Picture.findById(id)
+        break
       }
       default: {
 
-        return null
+        break
       }
     }
+
+    content.type = type
+
+    return content
 
   } catch (ex) {
     console.error(ex)

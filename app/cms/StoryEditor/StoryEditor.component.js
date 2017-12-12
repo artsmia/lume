@@ -6,7 +6,7 @@ import {Spinner} from '../../ui/spinner'
 import {Button} from '../../ui/buttons'
 import Modal from '../../ui/modal'
 import Image from '../../shared/Image'
-import {Input, Textarea, Label} from '../../ui/forms'
+import {Input, Textarea, Label, Select, Option} from '../../ui/forms'
 import ImageManager from '../ImageManager'
 import router from 'next/router'
 
@@ -30,17 +30,20 @@ export default class StoryEditor extends Component {
       props: {
         story: {
           previewImage
-        }
+        },
+        subdomain
       },
       state: {
         title,
         description,
         modalOpen,
+        template
       },
       handleChange,
       handleModalClose,
       openModal,
-      handlePreviewImageSave
+      handlePreviewImageSave,
+      handleSave
     } = this
 
     return (
@@ -48,6 +51,22 @@ export default class StoryEditor extends Component {
         <H3>
           Story Editor
         </H3>
+        <Select
+          name={"template"}
+          onChange={handleChange}
+          value={template}
+        >
+          <Option
+            value={"scroller"}
+          >
+            {"scroller"}
+          </Option>
+          <Option
+            value={"slideshow"}
+          >
+            {"slideshow"}
+          </Option>
+        </Select>
         <Label>Title</Label>
         <Input
           name={"title"}
@@ -61,12 +80,7 @@ export default class StoryEditor extends Component {
           onChange={handleChange}
         />
         <Button
-          onClick={()=>{
-            this.props.editStory({
-              title,
-              description
-            })
-          }}
+          onClick={handleSave}
         >
           Save
         </Button>
@@ -93,7 +107,7 @@ export default class StoryEditor extends Component {
 
         >
           <ImageManager
-            subdomain={this.props.subdomain}
+            subdomain={subdomain}
             onImageSave={handlePreviewImageSave}
           />
 
@@ -113,6 +127,7 @@ export default class StoryEditor extends Component {
       this.setState({
         storyId: nextProps.story.id,
         title: nextProps.story.title || "",
+        template: nextProps.story.template || "",
         description: nextProps.story.description || "",
       })
     }
@@ -139,6 +154,24 @@ export default class StoryEditor extends Component {
     this.setState({modalOpen: false})
   }
 
+  handleSave = () => {
+    const {
+      props: {
+        editStory,
+      },
+      state: {
+        title,
+        description,
+        template
+      }
+    } = this
+
+    editStory({
+      title,
+      description,
+      template
+    })
+  }
 
 }
 

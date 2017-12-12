@@ -29,7 +29,7 @@ export default class PictureEditor extends Component {
     const {
       props: {
         picture: {
-          previewImage
+          image
         }
       },
       state: {
@@ -40,8 +40,10 @@ export default class PictureEditor extends Component {
       handleChange,
       handleModalClose,
       openModal,
-      handlePreviewImageSave
+      handleImageSave
     } = this
+
+    console.log(this.props)
 
     return (
       <Container>
@@ -75,7 +77,7 @@ export default class PictureEditor extends Component {
           Image 1
         </Label>
         <Image
-          imageId={(previewImage) ? previewImage.id : false}
+          imageId={(image) ? image.id : false}
         />
         <Button
           onClick={openModal}
@@ -94,7 +96,7 @@ export default class PictureEditor extends Component {
         >
           <ImageManager
             subdomain={this.props.subdomain}
-            onImageSave={handlePreviewImageSave}
+            onImageSave={handleImageSave}
           />
 
         </Modal>
@@ -132,9 +134,9 @@ export default class PictureEditor extends Component {
     })
   }
 
-  handlePreviewImageSave = (previewImageId) => {
+  handleImageSave = (imageId) => {
     this.props.editPicture({
-      previewImageId
+      imageId
     })
     this.setState({modalOpen: false})
   }

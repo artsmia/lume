@@ -39,6 +39,7 @@ export default class EditStoryThumb extends Component {
         {(previewImage) ? (
           <Image
             imageId={previewImage.id}
+            height={"50px"}
           />
         ): null}
       </Container>

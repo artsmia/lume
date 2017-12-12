@@ -66,6 +66,10 @@ export async function createAssociations() {
       as: "organization"
     })
 
+    Image.hasMany(Picture, {
+      as: "pictures"
+    })
+
     Movie.belongsToMany(Story, {
       through: Story_Movie,
     })

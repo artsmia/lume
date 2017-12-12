@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {H3} from '../../ui/h'
+import {H3, H4} from '../../ui/h'
 import {Spinner} from '../../ui/spinner'
 import Image from '../../shared/Image'
 
@@ -15,11 +15,19 @@ export default class EditContentThumb extends Component {
 
   render() {
 
+    if (!this.props.content) return (
+      <Container>
+        <Spinner/>
+      </Container>
+    )
 
     const {
       type,
       onSelect,
-      contentId
+      contentId,
+      content: {
+        title
+      }
     } = this.props
 
     return (
@@ -27,8 +35,11 @@ export default class EditContentThumb extends Component {
         onClick={() => onSelect(contentId)}
       >
         <H3>
-          {type}
+          {title}
         </H3>
+        <H4>
+          {type}
+        </H4>
       </Container>
     )
   }
