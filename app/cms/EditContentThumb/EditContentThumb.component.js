@@ -72,7 +72,8 @@ const Container = styled.div`
 const dragSpec = {
   beginDrag(props, monitor, component) {
     return {
-      content: props.content,
+      id: props.content.id,
+      index: props.index
     }
   }
 }
@@ -88,10 +89,10 @@ function dragCollect(connect, monitor) {
 
 const dropSpec = {
   hover(props, monitor, component) {
-    let dragContent = monitor.getItem().content
-    let hoverContent = props.content
+    let dragItem = monitor.getItem()
+    let hoverItem = props
 
-    if (dragContent.id === hoverContent.id) {
+    if (dragItem.index === hoverItem.index) {
       return
     }
 
@@ -109,18 +110,19 @@ const dropSpec = {
     const hoverClientY = clientOffset.y - hoverBoundingRect.top
 
     // Dragging downwards
-    if (dragContent.index < hoverContent.index && hoverClientY < hoverMiddleY) {
+    if (dragItem.index < hoverItem.index && hoverClientY < hoverMiddleY) {
       return
     }
 
     // Dragging upwards
-    if (dragContent.index > hoverContent.index && hoverClientY > hoverMiddleY) {
+    if (dragItem.index > hoverItem.index && hoverClientY > hoverMiddleY) {
       return
     }
 
-    props.onReorder(dragContent, hoverContent)
+    props.onReorder(dragItem.index, hoverItem.index)
 
-    return {}
+    monitor.getItem().index = hoverItem.index
+
   }
 }
 

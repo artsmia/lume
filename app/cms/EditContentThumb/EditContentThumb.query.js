@@ -16,31 +16,26 @@ const ContentThumbQuery = gql`
       ... on Comparison {
         id
         title
-        index
       }
 
       ... on Detail {
         id
         title
-        index
       }
 
       ... on Movie {
         id
         title
-        index
       }
 
       ... on Obj {
         id
         title
-        index
       }
 
       ... on Picture {
         id
         title
-        index
       }
     }
   }

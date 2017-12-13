@@ -19,8 +19,8 @@ export default class Editor extends Component {
     editing: "story",
     selectedContentId: "",
     contentType: "Comparison",
-    orderedContents: []
-
+    contents: [],
+    initialized: false
   }
 
   contentTypes = ["Comparison", "Detail", "Movie", "Obj", "Picture"]
@@ -38,7 +38,7 @@ export default class Editor extends Component {
         editing,
         selectedContentId,
         contentType,
-        orderedContents
+        contents
       },
       handleStorySelection,
       handleContentSelection,
@@ -47,7 +47,6 @@ export default class Editor extends Component {
       handleReorder
     } = this
 
-    console.log(story)
     return (
       <Container>
         <TopBar>
@@ -67,12 +66,13 @@ export default class Editor extends Component {
 
             <Break/>
               {
-                (orderedContents) ? orderedContents.map( ({
+                (contents) ? contents.map( ({
                   id,
-                  __typename
-                }) => (
+                  __typename,
+                }, index) => (
                   <EditContentThumb
                     key={id}
+                    index={index}
                     contentId={id}
                     storyId={storyId}
                     type={__typename}
@@ -125,18 +125,32 @@ export default class Editor extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.story) {
-      let orderedContents = nextProps.story.contents.slice()
-      orderedContents.sort((a,b) => a.index - b.index)
-      this.setState({orderedContents})
+    if (nextProps.story && !this.state.initialized) {
+      let contents = nextProps.story.contents.slice().sort( (a,b) => a.index - b.index)
+
+      this.setState({
+        initialized: true,
+        contents
+      })
     }
 
 
 
   }
 
-  handleReorder = (dragContent, hoverContent) => {
-    console.log(dragContent, hoverContent)
+  handleReorder = (dragIndex, hoverIndex) => {
+
+    this.setState(({contents: oldContents}) => {
+
+      let contents = oldContents.slice()
+      let temporary = contents[hoverIndex]
+      contents[hoverIndex] = contents[dragIndex]
+      contents[dragIndex] = temporary
+
+      return {
+        contents
+      }
+    })
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
