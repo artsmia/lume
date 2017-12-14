@@ -1,1 +1,1 @@
-{"__schema":{"types":[{"kind":"UNION","name":"Content","possibleTypes":[{"name":"Comparison"},{"name":"Detail"},{"name":"Movie"},{"name":"Obj"},{"name":"Picture"}]}]}}
+{"__schema":{"types":[]}}

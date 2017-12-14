@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const Crop = db.define('crop', {
+const Content = db.define('content', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -10,16 +10,25 @@ const Crop = db.define('crop', {
   title: {
     type: Sequelize.STRING,
   },
-  index: {
-    type: Sequelize.INTEGER
+  description: {
+    type: Sequelize.TEXT,
   },
   geometry: {
     type: Sequelize.GEOMETRY("POLYGON")
   },
-  description: Sequelize.TEXT,
+  type: {
+    type: Sequelize.ENUM,
+    values: ['comparison', 'picture', 'movie', 'detail','obj']
+  },
+  videoUrl: {
+    type: Sequelize.STRING,
+  },
+  index: {
+    type: Sequelize.INTEGER,
+  },
 }, {
   freezeTableName: true
 })
 
 
-export default Crop
+export default Content

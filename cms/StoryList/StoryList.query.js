@@ -4,7 +4,7 @@ import {graphql } from 'react-apollo'
 
 export const StoryListQuery = gql`
   query StoryList (
-    $filter: Filter
+    $filter: FilterInput
   ) {
     stories (
       filter: $filter

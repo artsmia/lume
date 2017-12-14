@@ -14,30 +14,8 @@ export const StoryQuery = gql`
         id
       }
       contents {
-        ... on Comparison {
-          id
-          index
-        }
-
-        ... on Detail {
-          id
-          index
-        }
-
-        ... on Movie {
-          id
-          index
-        }
-
-        ... on Obj {
-          id
-          index
-        }
-
-        ... on Picture {
-          id
-          index
-        }
+        id
+        index
 
       }
     }

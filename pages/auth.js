@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {hashToCookies} from '../auth'
+import {hashToCookies} from '../auth-client'
 import apiFetch from '../utils/apiFetch'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
