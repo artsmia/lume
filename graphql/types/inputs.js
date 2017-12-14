@@ -18,6 +18,18 @@ const OrderInput = new GraphQLInputObjectType({
     },
   }
 })
+export const OrganizationInput = new GraphQLInputObjectType({
+  name: 'OrganizationInput',
+  fields: {
+    id: {
+      type: GraphQLID
+    },
+    subdomain: {
+      type: GraphQLString
+    },
+  }
+})
+
 
 export const FilterInput = new GraphQLInputObjectType({
   name: 'FilterInput',
@@ -31,8 +43,8 @@ export const FilterInput = new GraphQLInputObjectType({
     offset: {
       type: GraphQLInt
     },
-    organizationId: {
-      type: GraphQLID
+    organization: {
+      type: OrganizationInput
     },
     subdomain: {
       type: GraphQLString
@@ -41,17 +53,5 @@ export const FilterInput = new GraphQLInputObjectType({
       type: GraphQLString
     },
 
-  }
-})
-
-export const OrganizationInput = new GraphQLInputObjectType({
-  name: 'OrganizationInput',
-  fields: {
-    id: {
-      type: GraphQLID
-    },
-    subdomain: {
-      type: GraphQLString
-    },
   }
 })

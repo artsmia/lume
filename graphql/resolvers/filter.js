@@ -2,8 +2,10 @@ import Organization from '../../db/models/Organization'
 import {Op} from 'sequelize'
 
 export default function({
-  organizationId,
-  subdomain,
+  organization: {
+    subdomain,
+    id: organizationId
+  },
   search,
   order,
   limit,

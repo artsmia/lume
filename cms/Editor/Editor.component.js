@@ -4,12 +4,7 @@ import {Button} from '../../ui/buttons'
 import CreateContentButton from '../CreateContentButton'
 import EditStoryThumb from '../EditStoryThumb'
 import EditContentThumb from '../EditContentThumb'
-import ComparisonEditor from '../ComparisonEditor'
-import PictureEditor from '../PictureEditor'
-import ObjEditor from '../ObjEditor'
-import MovieEditor from '../MovieEditor'
 import StoryEditor from '../StoryEditor'
-import DetailEditor from '../DetailEditor'
 import contentTypes from '../../contents/types'
 import {Select, Option} from '../../ui/forms'
 
@@ -109,7 +104,13 @@ export default class Editor extends Component {
 
             </PreviewSpace>
 
-            {renderContentEditor(selectedContentId)}
+            {(selectedContentId) ? (
+              <StoryEditor
+                storyId={storyId}
+              />
+            ): null}
+
+            
 
           </EditorContainer>
 
@@ -164,77 +165,7 @@ export default class Editor extends Component {
     })
   }
 
-  renderContentEditor = (selectedContentId) => {
 
-    const {
-      story,
-      subdomain,
-      storyId
-    } = this.props
-
-    if (!selectedContentId) return (
-      <StoryEditor
-        storyId={storyId}
-        subdomain={subdomain}
-      />
-    )
-
-
-    let type = story.contents.find(content => content.id === selectedContentId).__typename
-
-    switch (type) {
-      case "Comparison": {
-
-        return (
-          <ComparisonEditor
-            comparisonId={selectedContentId}
-            subdomain={subdomain}
-          />
-        )
-      }
-      case "Picture": {
-
-        return (
-          <PictureEditor
-            pictureId={selectedContentId}
-            subdomain={subdomain}
-          />
-        )
-      }
-      case "Obj": {
-
-        return (
-          <ObjEditor
-            objId={selectedContentId}
-            subdomain={subdomain}
-          />
-        )
-      }
-      case "Movie": {
-
-        return (
-          <MovieEditor
-            movieId={selectedContentId}
-            subdomain={subdomain}
-          />
-        )
-      }
-      case "Detail": {
-
-        return (
-          <DetailEditor
-            detailId={selectedContentId}
-            subdomain={subdomain}
-          />
-        )
-      }
-      default: {
-        break
-
-      }
-    }
-
-  }
 
 }
 

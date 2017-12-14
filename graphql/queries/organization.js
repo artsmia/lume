@@ -2,19 +2,18 @@ import {
   GraphQLObjectType,
   GraphQLID,
   GraphQLString,
+  GraphQLNonNull
 } from 'graphql'
 import organizationType from '../types/organization'
 import resolve from '../resolvers/organization'
+import {OrganizationInput} from '../types/inputs'
 
 const organization = {
   name: "organization",
   type: organizationType,
   args: {
-    id: {
-      type: GraphQLID
-    },
-    subdomain: {
-      type: GraphQLString
+    organization: {
+      type: new GraphQLNonNull(OrganizationInput)
     }
   },
   resolve

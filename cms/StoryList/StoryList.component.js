@@ -15,7 +15,7 @@ export default class StoryList extends Component {
   }
 
   static propTypes = {
-    organizationId: PropTypes.string.isRequired,
+    subdomain: PropTypes.string.isRequired,
     stories: PropTypes.array.isRequired,
   }
 
@@ -30,6 +30,7 @@ export default class StoryList extends Component {
       handleVariableChange,
       props: {
         stories,
+        subdomain
       },
       state: {
         variables
@@ -73,9 +74,6 @@ export default class StoryList extends Component {
                       id: storyId,
                       title,
                       updatedAt,
-                      organization: {
-                        subdomain
-                      }
                     }) => (
                     <Row
                       key={storyId}

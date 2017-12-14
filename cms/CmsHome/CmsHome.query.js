@@ -5,7 +5,9 @@ import gql from 'graphql-tag'
 const query = gql`
   query OrgHomeQuery ($subdomain: String) {
     organization  (
-      subdomain: $subdomain
+      organization: {
+        subdomain: $subdomain
+      }
     ) {
       id
       name

@@ -4,13 +4,15 @@ import {
 } from 'graphql'
 import storyType from '../types/story'
 import resolve from '../resolvers/createStory'
+import {OrganizationInput} from '../types/inputs'
+
 
 const createStory = {
   name: "story",
   type: storyType,
   args: {
-    organizationId: {
-      type: new GraphQLNonNull(GraphQLID)
+    organization: {
+      type: new GraphQLNonNull(OrganizationInput)
     },
     creatorId: {
       type: new GraphQLNonNull(GraphQLID)

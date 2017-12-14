@@ -16,7 +16,7 @@ const editUserOrganizationRole = {
       type: new GraphQLNonNull(GraphQLID)
     },
     organization: {
-      type: OrganizationInput
+      type: new GraphQLNonNull(OrganizationInput)
     },
     role: {
       type: RoleEnum

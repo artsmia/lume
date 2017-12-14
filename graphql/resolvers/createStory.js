@@ -5,7 +5,12 @@ export default async function(src, args, ctx){
   try {
 
 
-    return await Story.create(args, {
+    return await Story.create({
+      where: {
+        organizationId: args.organization.id,
+        creatorId: args.creatorId
+      }
+    }, {
       include: [
         {
           model: Organization,

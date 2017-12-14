@@ -3,11 +3,11 @@ import gql from 'graphql-tag'
 
 export const CreateStoryMutation = gql`
   mutation createStory (
-    $organizationId: ID!
+    $organization: OrganizationInput!
     $creatorId: ID!
   ) {
     createStory(
-      organizationId: $organizationId
+      organization: $organization
       creatorId: $creatorId
     ) {
       id
@@ -19,10 +19,12 @@ export const CreateStoryMutation = gql`
 `
 
 export const mutationConfig = {
-  props: ({mutate, ownProps: {organizationId, userId} }) => ({
+  props: ({mutate, ownProps: {subdomain, userId} }) => ({
     createStory: () => mutate({
       variables: {
-        organizationId,
+        organization: {
+          subdomain
+        },
         creatorId: userId
       },
 

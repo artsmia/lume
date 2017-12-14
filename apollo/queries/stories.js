@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
 import {graphql } from 'react-apollo'
+import storyFragment from '../fragments/story'
 
 
 export const StoryListQuery = gql`
@@ -9,26 +10,22 @@ export const StoryListQuery = gql`
     stories (
       filter: $filter
     ) {
-      id
-      title
-      previewImage{
-        id
-      }
-      updatedAt
-      organization {
-        subdomain
-      }
+      ...StoryFragment
     }
+
   }
+  ${storyFragment}
 
 `
 
 
 export const queryConfig = {
-  options: ({organizationId}) => ({
+  options: ({subdomain}) => ({
     variables: {
       filter: {
-        organizationId,
+        organization: {
+          subdomain
+        },
         limit: 10,
         offset: 0,
         order: {

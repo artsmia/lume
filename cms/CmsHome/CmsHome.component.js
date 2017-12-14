@@ -16,15 +16,15 @@ export default class CmsHome extends Component {
 
   render() {
 
-    if (this.props.loading) return <Spinner/>
+    if (!this.props.organization) return <Spinner/>
 
     const {
       props: {
+        subdomain,
+        userId,
         organization: {
-          name,
-          id: organizationId
-        },
-        userId
+          name
+        }
       }
     } = this
 
@@ -35,12 +35,12 @@ export default class CmsHome extends Component {
         </H2>
 
         <CreateStoryButton
-          organizationId={organizationId}
+          subdomain={subdomain}
           userId={userId}
         />
 
         <StoryList
-          organizationId={organizationId}
+          subdomain={subdomain}
         />
 
       </Container>
