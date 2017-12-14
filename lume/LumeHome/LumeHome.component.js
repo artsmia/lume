@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H2, H3} from '../../ui/h'
-import {createLock} from '../../auth'
+import {createLock} from '../../auth-client'
 import {Button} from '../../ui/buttons'
 import {Link} from '../../ui/links'
 import {Column} from '../../ui/layout'

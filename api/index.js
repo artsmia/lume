@@ -3,19 +3,19 @@ import 'dotenv/config'
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import db from './db'
-import schema from './graphql'
+import db from '../db'
+import schema from '../graphql'
 import chalk from 'chalk'
-import imageRoute from './images'
+import imageRoute from '../images'
 import multer from 'multer'
-import {authMiddleware} from './auth'
+import {authMiddleware} from '../auth-api'
 import {
   graphqlExpress,
   graphiqlExpress,
 } from 'apollo-server-express'
-import iiif, {info} from './iiif'
+import iiif, {info} from '../iiif'
 
-import miaEndpoints from './miaEndpoints'
+import miaEndpoints from '../miaEndpoints'
 
 
 console.log(`
