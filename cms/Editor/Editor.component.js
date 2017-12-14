@@ -10,7 +10,7 @@ import ObjEditor from '../ObjEditor'
 import MovieEditor from '../MovieEditor'
 import StoryEditor from '../StoryEditor'
 import DetailEditor from '../DetailEditor'
-
+import contentTypes from '../../contents/types'
 import {Select, Option} from '../../ui/forms'
 
 export default class Editor extends Component {
@@ -18,12 +18,10 @@ export default class Editor extends Component {
   state = {
     editing: "story",
     selectedContentId: "",
-    contentType: "Comparison",
+    contentType: "comparison",
     contents: [],
     initialized: false
   }
-
-  contentTypes = ["Comparison", "Detail", "Movie", "Obj", "Picture"]
 
   render(){
 
@@ -74,8 +72,6 @@ export default class Editor extends Component {
                     key={id}
                     index={index}
                     contentId={id}
-                    storyId={storyId}
-                    type={__typename}
                     onSelect={handleContentSelection}
                     onReorder={handleReorder}
                   />
@@ -91,12 +87,12 @@ export default class Editor extends Component {
               onChange={handleChange}
               value={contentType}
             >
-              {this.contentTypes.map(contentType => (
+              {contentTypes.map(type => (
                 <Option
-                  key={contentType}
-                  value={contentType}
+                  key={type}
+                  value={type}
                 >
-                  {contentType}
+                  {type}
                 </Option>
               ))}
             </Select>
@@ -125,11 +121,10 @@ export default class Editor extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.story && !this.state.initialized) {
+    if (nextProps.story) {
       let contents = nextProps.story.contents.slice().sort( (a,b) => a.index - b.index)
 
       this.setState({
-        initialized: true,
         contents
       })
     }

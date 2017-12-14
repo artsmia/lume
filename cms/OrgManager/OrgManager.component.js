@@ -128,6 +128,7 @@ export default class OrgManager extends Component {
         variables: {
           organizationId,
           userId,
+          role: "contributor"
         }
       })
 

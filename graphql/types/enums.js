@@ -1,24 +1,16 @@
 import {GraphQLEnumType} from 'graphql'
+import contentTypes from '../../contents/types'
+
+let values = {}
+contentTypes.forEach( type => Object.assign(values, {
+  [type]: {
+    value: type
+  }
+}))
 
 export const ContentTypeEnum = new GraphQLEnumType({
   name: 'ContentTypeEnum',
-  values: {
-    comparison: {
-      value: "comparison"
-    },
-    detail: {
-      value: "detail"
-    },
-    picture: {
-      value: "picture"
-    },
-    movie: {
-      value: "movie"
-    },
-    obj: {
-      value: "obj"
-    },
-  }
+  values
 })
 
 export const DirectionEnum = new GraphQLEnumType({

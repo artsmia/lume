@@ -5,36 +5,16 @@ import {StoryQuery} from '../Editor/Editor.query'
 const createContent = gql`
   mutation createContent (
     $storyId: ID!
-    $type: ContentEnum!
+    $type: ContentTypeEnum!
   ) {
     createContent(
       storyId: $storyId
       type: $type
     ) {
-      ... on Comparison {
-        id
-        index
-      }
-
-      ... on Detail {
-        id
-        index
-      }
-
-      ... on Movie {
-        id
-        index
-      }
-
-      ... on Obj {
-        id
-        index
-      }
-
-      ... on Picture {
-        id
-        index
-      }
+      id
+      index
+      type
+      title
     }
   }
 `
@@ -56,6 +36,8 @@ const mutationConfig = {
         })
 
         data.story.contents.push(createContent)
+
+        console.log(data)
 
         proxy.writeQuery({ query: StoryQuery, data })
       }

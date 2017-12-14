@@ -24,16 +24,15 @@ class EditContentThumb extends Component {
     )
 
     const {
-      type,
       onSelect,
       contentId,
       content: {
-        title
+        title,
+        type
       },
       connectDropTarget,
       connectDragSource
     } = this.props
-
     return connectDragSource(connectDropTarget(
       <div
         ref={ref => this.dragRef = ref}

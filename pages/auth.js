@@ -60,7 +60,7 @@ export default class extends Component {
         }, `/${subdomain}/cms`)
       } else {
         Router.push({
-          pathname: '/cms/joinOrCreate',
+          pathname: '/cms/orgManager',
         }, `/new`)
       }
     } catch (ex) {

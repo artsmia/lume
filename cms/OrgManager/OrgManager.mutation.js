@@ -5,11 +5,15 @@ import gql from 'graphql-tag'
 const joinOrganizationMutation = gql`
   mutation joinOrganization (
     $userId: ID!
-    $organizationId: ID!
+    $organizationId: ID
+    $role: RoleEnum
   ) {
-    editUserOrganization(
+    editUserOrganizationRole(
       userId: $userId
-      organizationId: $organizationId
+      organization: {
+        id: $organizationId
+      }
+      role: $role
     ) {
       id
       organizations {

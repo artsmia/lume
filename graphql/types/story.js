@@ -36,8 +36,6 @@ const story = new GraphQLObjectType({
       type: new GraphQLList(contentType),
       async resolve(src){
         try {
-
-          console.log(src)
           return await src.getContents()
         } catch (ex) {
           console.error(ex)

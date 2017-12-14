@@ -1,6 +1,8 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
+import contentTypes from '../../contents/types'
+
 const Content = db.define('content', {
   id: {
     type: Sequelize.UUID,
@@ -18,7 +20,7 @@ const Content = db.define('content', {
   },
   type: {
     type: Sequelize.ENUM,
-    values: ['comparison', 'picture', 'movie', 'detail','obj']
+    values: contentTypes
   },
   videoUrl: {
     type: Sequelize.STRING,

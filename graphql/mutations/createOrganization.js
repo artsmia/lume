@@ -3,12 +3,12 @@ import {
   GraphQLString,
   GraphQLNonNull
 } from 'graphql'
-import storyType from '../types/story'
+import organizationType from '../types/organization'
 import resolve from '../resolvers/createOrganization'
 
 const createOrganization = {
   name: "createOrganization",
-  type: storyType,
+  type: organizationType,
   args: {
     name: {
       type: new GraphQLNonNull(GraphQLString)

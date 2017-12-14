@@ -76,6 +76,9 @@ export async function createAssociations() {
       as: "previewImage",
     })
 
+    Story.hasMany(Content, {
+      as: 'contents'
+    })
 
 
   } catch (ex) {

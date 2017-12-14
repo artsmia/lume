@@ -16,7 +16,7 @@ export const StoryQuery = gql`
       contents {
         id
         index
-
+        type
       }
     }
   }
