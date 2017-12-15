@@ -1,5 +1,6 @@
 import {graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import storyFragment from '../fragments/story'
 
 export const CreateStoryMutation = gql`
   mutation createStory (
@@ -10,12 +11,10 @@ export const CreateStoryMutation = gql`
       organization: $organization
       creatorId: $creatorId
     ) {
-      id
-      organization {
-        subdomain
-      }
+      ...StoryFragment
     }
   }
+  ${storyFragment}
 `
 
 export const mutationConfig = {

@@ -1,8 +1,6 @@
 import CreateContentButton from './CreateContentButton.component'
-import mutation from './CreateContentButton.mutation'
+import mutation from '../../apollo/mutations/createContent'
 import { compose } from 'react-apollo'
-import gql from 'graphql-tag'
-import {StoryQuery} from '../Editor/Editor.query'
 
 
 export default compose(mutation)(CreateContentButton)

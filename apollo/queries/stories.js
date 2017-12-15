@@ -1,20 +1,20 @@
 import gql from 'graphql-tag'
 import {graphql } from 'react-apollo'
-import storyFragment from '../fragments/story'
+import storiesFragment from '../fragments/stories'
 
 
-export const StoryListQuery = gql`
-  query StoryList (
+export const StoriesQuery = gql`
+  query StoriesQuery (
     $filter: FilterInput
   ) {
     stories (
       filter: $filter
     ) {
-      ...StoryFragment
+      ...StoriesFragment
     }
 
   }
-  ${storyFragment}
+  ${storiesFragment}
 
 `
 
@@ -42,4 +42,4 @@ export const queryConfig = {
 }
 
 
-export default graphql(StoryListQuery, queryConfig)
+export default graphql(StoriesQuery, queryConfig)

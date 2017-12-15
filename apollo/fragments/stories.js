@@ -1,13 +1,11 @@
 import gql from 'graphql-tag'
 
 const fragment = gql`
-  fragment ContentFragment on content {
+  fragment StoriesFragment on story {
     id
-    type
-    index
     title
     description
-    image0{
+    previewImage{
       id
     }
   }

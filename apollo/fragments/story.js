@@ -8,6 +8,11 @@ const fragment = gql`
     previewImage{
       id
     }
+    contents {
+      id
+      type
+      index
+    }
   }
 `
 

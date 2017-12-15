@@ -1,18 +1,18 @@
-import CmsHome from './CmsHome.component'
 import {graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import organizationFragment from '../fragments/organization'
 
 const query = gql`
-  query OrgHomeQuery ($subdomain: String) {
+  query OrganizationQuery ($subdomain: String) {
     organization  (
       organization: {
         subdomain: $subdomain
       }
     ) {
-      id
-      name
+      ...OrganizationFragment
     }
   }
+  ${organizationFragment}
 `
 
 const options = {

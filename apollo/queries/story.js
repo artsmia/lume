@@ -1,22 +1,18 @@
-import gql from 'graphql-tag'
 import {graphql } from 'react-apollo'
+import gql from 'graphql-tag'
+import storyFragment from '../fragments/story'
 
-
-const StoryThumbQuery = gql`
-  query StoryThumbQuery (
+export const StoryQuery = gql`
+  query StoryQuery (
     $storyId: ID!
   ) {
     story (
       id: $storyId
     ) {
-      id
-      title
-      previewImage{
-        id
-      }
+      ...StoryFragment
     }
   }
-
+  ${storyFragment}
 `
 
 
@@ -33,4 +29,4 @@ const queryConfig = {
 }
 
 
-export default graphql(StoryThumbQuery, queryConfig)
+export default graphql(StoryQuery, queryConfig)

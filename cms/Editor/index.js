@@ -1,6 +1,6 @@
 import { compose } from 'react-apollo'
 import Component from './Editor.component'
-import query from './Editor.query'
+import query from '../../apollo/queries/story'
 
 
 

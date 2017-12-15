@@ -37,6 +37,8 @@ export default class StoryList extends Component {
       }
     } = this
 
+
+    console.log(stories)
     return (
 
 

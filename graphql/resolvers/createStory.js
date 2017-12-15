@@ -4,19 +4,16 @@ import Story from '../../db/models/Story'
 export default async function(src, args, ctx){
   try {
 
+    let organization = await Organization.findOne({
+      where: {
+        ...args.organization
+      }
+    })
+
 
     return await Story.create({
-      where: {
-        organizationId: args.organization.id,
-        creatorId: args.creatorId
-      }
-    }, {
-      include: [
-        {
-          model: Organization,
-          as: "organization"
-        }
-      ]
+      organizationId: organization.id,
+      creatorId: args.creatorId
     })
 
   } catch (ex) {

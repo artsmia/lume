@@ -1,5 +1,5 @@
 import CmsHome from './CmsHome.component'
-import query from './CmsHome.query'
+import query from '../../apollo/queries/organization'
 import {compose } from 'react-apollo'
 
 
