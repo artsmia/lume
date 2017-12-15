@@ -1,9 +1,9 @@
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
-const query = gql`
-  query ImageListQuery (
-    $filter: Filter
+const ImagesQuery = gql`
+  query ImagesQuery (
+    $filter: FilterInput
   ) {
     images (
       filter: $filter
@@ -21,7 +21,9 @@ const queryOptions = {
       variables: {
         filter: {
           limit: 10,
-          subdomain
+          organization: {
+            subdomain
+          }
         },
       }
     }
@@ -32,4 +34,4 @@ const queryOptions = {
   }),
 }
 
-export default graphql(query, queryOptions)
+export default graphql(ImagesQuery, queryOptions)

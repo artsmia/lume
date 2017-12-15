@@ -15,15 +15,9 @@ const Content = db.define('content', {
   description: {
     type: Sequelize.TEXT,
   },
-  geometry: {
-    type: Sequelize.GEOMETRY("POLYGON")
-  },
   type: {
     type: Sequelize.ENUM,
     values: contentTypes
-  },
-  videoUrl: {
-    type: Sequelize.STRING,
   },
   index: {
     type: Sequelize.INTEGER,

@@ -4,7 +4,7 @@ const config = {
       name: "title",
       database: {
         column: "title",
-        type: "STRING"
+        type: "String"
       },
       graphql: {
         field: "title",
@@ -21,7 +21,7 @@ const config = {
       name: "description",
       database: {
         column: "description",
-        type: "TEXT"
+        type: "String"
       },
       graphql: {
         field: "description",
@@ -34,25 +34,7 @@ const config = {
         element: "p",
         position: "side"
       }
-    },{
-      name: "image0",
-      database: {
-        column: "image0Id",
-        type: "UUID"
-      },
-      graphql: {
-        field: "image0",
-        arg: "image0Id",
-        type: "image"
-      },
-      cms: {
-        type: "image"
-      },
-      lume: {
-        element: "zoomer",
-        position: "main"
-      }
-    },
+    }
   ]
 }
 

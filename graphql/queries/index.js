@@ -9,6 +9,7 @@ import organizations from './organizations'
 import story from './story'
 import stories from './stories'
 import image from './image'
+import images from './images'
 
 
 const query = new GraphQLObjectType({
@@ -20,7 +21,8 @@ const query = new GraphQLObjectType({
     organizations,
     story,
     stories,
-    image
+    image,
+    images
   }
 })
 

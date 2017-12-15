@@ -1,4 +1,4 @@
-import Model from '../../db/models/Story'
+import Model from '../../db/models/Image'
 import createOptions from './filter'
 
 export default async function (src, args, ctx){
