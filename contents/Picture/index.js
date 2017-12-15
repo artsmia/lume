@@ -1,8 +1,9 @@
 
 
 const config = {
-  fields: {
-    title: {
+  fields: [
+    {
+      name: "title",
       database: {
         column: "title",
         type: "String"
@@ -18,8 +19,8 @@ const config = {
         element: "h2",
         position: "side"
       }
-    },
-    description: {
+    }, {
+      name: "description",
       database: {
         column: "description",
         type: "String"
@@ -36,7 +37,7 @@ const config = {
         position: "side"
       }
     }
-  }
+  ]
 }
 
 

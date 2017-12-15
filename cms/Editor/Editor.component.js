@@ -5,6 +5,7 @@ import CreateContentButton from '../CreateContentButton'
 import EditStoryThumb from '../EditStoryThumb'
 import EditContentThumb from '../EditContentThumb'
 import StoryEditor from '../StoryEditor'
+import ContentEditor from '../ContentEditor'
 import contentTypes from '../../contents/types'
 import {Select, Option} from '../../ui/forms'
 
@@ -104,13 +105,19 @@ export default class Editor extends Component {
 
             </PreviewSpace>
 
-            {(selectedContentId) ? (
+            {(editing === "story") ? (
               <StoryEditor
                 storyId={storyId}
               />
             ): null}
 
-            
+            {(editing === "content") ? (
+              <ContentEditor
+                contentId={selectedContentId}
+              />
+            ): null}
+
+
 
           </EditorContainer>
 
