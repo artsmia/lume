@@ -50,10 +50,6 @@ export default class ContentEditor extends Component {
 
     if (!config) return null
 
-    if (config.editor === "custom") {
-      return null
-    }
-
     return config.fields.map( ({
       label,
       graphqlType,

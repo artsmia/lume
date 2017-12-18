@@ -1,7 +1,7 @@
-import {Input, Textarea, ChangeImage} from '../../cms/DefaultEditors'
+import {Input, Textarea, VideoUrl} from '../../cms/DefaultEditors'
 
 const editorConfig = {
-  editor: "default",
+  Editor: "default",
   fields: [
     {
       label: "Title",
@@ -18,11 +18,10 @@ const editorConfig = {
       position: "default"
     },
     {
-      label: "Image",
-      graphqlType: "image",
-      parent: "image0",
-      arg: "image0Id",
-      Component: ChangeImage,
+      label: "Video",
+      graphqlType: "String",
+      arg: "videoUrl",
+      Component: VideoUrl,
       position: "default"
     }
   ]

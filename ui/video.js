@@ -2,6 +2,25 @@ import react, {Component} from 'react'
 import styled from 'styled-components'
 const VimeoPlayer = (typeof window === "object") ? require('@vimeo/player') : null
 
+export default class Video extends Component {
+  render(){
+
+    const {
+      url
+    } = this.props
+
+    if(
+      url.includes("vimeo.com/")
+    ) {
+      return <Vimeo
+        {...this.props}
+      />
+    }else {
+      return null
+    }
+  }
+}
+
 export class Vimeo extends Component {
 
   static defaultProps = {

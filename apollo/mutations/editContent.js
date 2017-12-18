@@ -8,12 +8,14 @@ const editContent = gql`
     $image0Id: ID
     $title: String
     $description: String
+    $videoUrl: String
   ) {
     editContent(
       id: $contentId
       title: $title
       description: $description
       image0Id: $image0Id
+      videoUrl: $videoUrl
     ) {
       ...ContentFragment
     }

@@ -1,27 +1,8 @@
-import React from 'react'
-import {Label, Input, Textarea} from '../../ui/forms'
-
-export const DefaultInput = (props) => (
-  <div>
-    <Label>
-      {props.label}
-    </Label>
-    <Input
-      {...props}
-    />
-  </div>
-)
+import ChangeImage from './ChangeImage'
+import VideoUrl from './VideoUrl'
+import Input from './Input'
+import Textarea from './Textarea'
 
 
-export const DefaultTextarea = (props) => (
-  <div
-    key={name}
-  >
-    <Label>
-      {name}
-    </Label>
-    <Textarea
-      {...props}
-    />
-  </div>
-)
+
+export {ChangeImage, VideoUrl, Input, Textarea}

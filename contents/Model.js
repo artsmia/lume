@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../db/connect'
 import contentTypes from './types'
-import picture from './picture/model'
+import movie from './movie/model'
 
 
 const Content = db.define('content', {
@@ -19,12 +19,11 @@ const Content = db.define('content', {
   },
   title: {
     type: Sequelize.STRING,
-    defaultValue: ""
   },
   description: {
     type: Sequelize.TEXT,
-    defaultValue: ""
   },
+  ...movie
 }, {
   freezeTableName: true
 })

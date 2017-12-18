@@ -10,6 +10,8 @@ const fragment = gql`
     image0{
       id
     }
+    videoUrl
+
   }
 `
 

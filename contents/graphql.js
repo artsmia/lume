@@ -13,9 +13,14 @@ import {
   args as pictureArgs
 } from './picture/graphql'
 
+import {
+  fields as movieFields,
+  args as movieArgs
+} from './movie/graphql'
 
 
-export const type = new GraphQLObjectType({
+
+export const contentType = new GraphQLObjectType({
   name: "content",
   fields: () => ({
     id: {
@@ -43,7 +48,8 @@ export const type = new GraphQLObjectType({
         }
       }
     },
-    ...pictureFields
+    ...pictureFields,
+    ...movieFields
   })
 })
 
@@ -65,4 +71,5 @@ export const args = {
     type: GraphQLID
   },
   ...pictureArgs,
+  ...movieArgs
 }
