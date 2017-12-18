@@ -5,7 +5,7 @@ import contentFragment from '../fragments/content'
 const editContent = gql`
   mutation editContent (
     $contentId: ID!
-    $image0Id: ID!
+    $image0Id: ID
     $title: String
     $description: String
   ) {

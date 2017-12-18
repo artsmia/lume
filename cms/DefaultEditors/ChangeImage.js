@@ -5,7 +5,7 @@ import {Label} from '../../ui/forms'
 import Modal from '../../ui/modal'
 import ImageManager from '../ImageManager'
 import Image from '../../shared/Image'
-
+import router from 'next/router'
 
 export default class ChangeImage extends Component {
 
@@ -19,10 +19,9 @@ export default class ChangeImage extends Component {
       handleModalOpen,
       handleModalClose,
       props: {
-        subdomain,
-        imageId,
+        value,
       },
-      handleImageSave,
+      handleChange,
       state: {
         modal
       }
@@ -34,9 +33,12 @@ export default class ChangeImage extends Component {
         <Label>
           Image 1
         </Label>
-        <Image
-          imageId={imageId}
-        />
+        {(value) ? (
+          <Image
+            imageId={value}
+          />
+        ): null}
+
         <Button
           onClick={handleModalOpen}
         >
@@ -53,8 +55,8 @@ export default class ChangeImage extends Component {
 
         >
           <ImageManager
-            subdomain={subdomain}
-            onImageSave={handleImageSave}
+            subdomain={router.query.subdomain}
+            onImageSave={handleChange}
           />
 
         </Modal>
@@ -75,8 +77,18 @@ export default class ChangeImage extends Component {
     })
   }
 
-  handleImageSave = (imageId) => {
-    this.props.onImageSave(imageId)
+  handleChange = (imageId) => {
+
+    const {
+      onChange,
+      name
+    } = this.props
+    onChange({
+      target: {
+        value: imageId,
+        name
+      }
+    })
     this.setState({modal: false})
   }
 

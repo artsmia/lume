@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import contentConfig from '../../contents'
+import editorConfig from '../../contents/editorConfig'
 import {Input, Textarea, Label} from '../../ui/forms'
 import {Button} from '../../ui/buttons'
-import ChangeImage from '../ChangeImage'
+
+
 export default class ContentEditor extends Component {
 
   state = {
@@ -12,8 +13,6 @@ export default class ContentEditor extends Component {
   }
 
   render(){
-
-    console.log(this.props)
 
     if (!this.state.config) return null
 
@@ -51,92 +50,46 @@ export default class ContentEditor extends Component {
 
     if (!config) return null
 
-    return config.fields.map( (field) => {
+    if (config.editor === "custom") {
+      return null
+    }
 
-      const {
-        name,
-        cms
-      } = field
+    return config.fields.map( ({
+      label,
+      graphqlType,
+      arg,
+      Component,
+      position
+    }) => {
+
 
       let props = {
-        name,
-        value: state[name],
+        label,
+        name: arg,
+        value: state[arg],
         onChange: handleChange
       }
 
-      switch (cms.type) {
-        case "input": {
-
-          return (
-            <div
-              key={name}
-            >
-              <Label>
-                {name}
-              </Label>
-              <Input
-                {...props}
-              />
-            </div>
-          )
-        }
-        case "textarea": {
-
-          return (
-            <div
-              key={name}
-            >
-              <Label>
-                {name}
-              </Label>
-              <Textarea
-                {...props}
-              />
-            </div>
-          )
-        }
-        case "image": {
-
-          return (
-            <ChangeImage
-              key={name}
-              imageId={state[`${name}Id`]}
-              onImageSave={(imageId) => {
-                editContent({
-                  [`${name}Id`]: imageId
-                })
-              }}
-            />
-          )
-        }
-        default: {
-
-          null
-        }
-      }
+      return (
+        <Component
+          key={arg}
+          {...props}
+        />
+      )
     })
   }
 
-  saveEdits = () => {
-    this.props.editContent(this.state)
-  }
-
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
-
-  componentWillReceiveProps(nextProps){
+  updateProps = (nextProps) => {
     if (
       nextProps.content &&
       nextProps.contentId !== this.state.id
     ){
 
-      const {
-        content,
-        content: {
-          type
-        }
-      } = nextProps
 
-      let config = contentConfig[type]
+      let config = editorConfig[nextProps.content.type]
+      let {
+        content
+      } = nextProps
 
       let newState = {
         config
@@ -144,19 +97,15 @@ export default class ContentEditor extends Component {
 
       if (config) {
         config.fields.forEach( field => {
-
-          let key
           let value
 
-          switch (field.graphql.type) {
+          switch (field.graphqlType) {
             case "String": {
-              key = field.name
-              value = content[key] || ""
+              value = content[field.arg] || ""
               break
             }
             case "image": {
-              key = `${field.name}Id`
-              value = (content[field.name]) ? content[field.name]["id"] : ""
+              value = (content[field.parent]) ? content[field.parent].id : undefined
               break
             }
             default: {
@@ -165,8 +114,9 @@ export default class ContentEditor extends Component {
             }
           }
 
+
           Object.assign(newState, {
-            [key]: value
+            [field.arg]: value
           })
         })
       }
@@ -174,6 +124,17 @@ export default class ContentEditor extends Component {
 
       this.setState(newState)
     }
+  }
+
+
+  saveEdits = () => {
+    this.props.editContent(this.state)
+  }
+
+  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+
+  componentWillReceiveProps(nextProps){
+    this.updateProps(nextProps)
   }
 }
 

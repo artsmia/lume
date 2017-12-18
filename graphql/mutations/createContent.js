@@ -5,7 +5,6 @@ import {
 } from 'graphql'
 import contentType from '../types/content'
 import {ContentTypeEnum} from '../types/enums'
-
 import resolve from '../resolvers/createContent'
 
 const createContent = {

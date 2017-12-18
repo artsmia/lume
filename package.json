@@ -4,6 +4,7 @@
   "description": "a digital storytelling application by mia",
   "author": "Carl Peaslee <cpeaslee@gmail.com>",
   "license": "MIT",
+  "respository": "https://github.com/artsmia/lume",
   "dependencies": {
     "apollo-link": "^1.0.6",
     "apollo-server-express": "^1.3.0",

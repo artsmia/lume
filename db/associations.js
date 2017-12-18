@@ -10,18 +10,17 @@ import {
 } from './models'
 
 
-
 export async function createAssociations() {
   try {
 
-    Content.belongsTo(Image, {
-      as: "image0",
-    })
 
     Content.belongsTo(Story, {
       as: "story",
     })
 
+    Content.belongsTo(Image, {
+      as: "image0",
+    })
 
     Group.belongsToMany(Story, {
       as: "groups",
