@@ -1,8 +1,10 @@
 import Sequelize from 'sequelize'
 import db from '../db/connect'
 import contentTypes from './types'
-import movie from './movie/model'
 
+import picture from './picture/Model'
+import movie from './movie/Model'
+import comparison from './comparison/Model'
 
 const Content = db.define('content', {
   id: {
@@ -23,11 +25,12 @@ const Content = db.define('content', {
   description: {
     type: Sequelize.TEXT,
   },
-  ...movie
+  ...picture,
+  ...movie,
+  ...comparison,
 }, {
   freezeTableName: true
 })
-
 
 
 export default Content

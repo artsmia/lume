@@ -22,6 +22,10 @@ export async function createAssociations() {
       as: "image0",
     })
 
+    Content.belongsTo(Image, {
+      as: "image1",
+    })
+
     Group.belongsToMany(Story, {
       as: "groups",
       through: "story_group",

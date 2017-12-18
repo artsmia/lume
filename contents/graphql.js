@@ -18,6 +18,11 @@ import {
   args as movieArgs
 } from './movie/graphql'
 
+import {
+  fields as comparisonFields,
+  args as comparisonArgs
+} from './comparison/graphql'
+
 
 
 export const contentType = new GraphQLObjectType({
@@ -49,7 +54,8 @@ export const contentType = new GraphQLObjectType({
       }
     },
     ...pictureFields,
-    ...movieFields
+    ...movieFields,
+    ...comparisonFields
   })
 })
 
@@ -71,5 +77,6 @@ export const args = {
     type: GraphQLID
   },
   ...pictureArgs,
-  ...movieArgs
+  ...movieArgs,
+  ...comparisonArgs,
 }

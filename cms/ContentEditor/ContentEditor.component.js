@@ -16,6 +16,8 @@ export default class ContentEditor extends Component {
 
     if (!this.state.config) return null
 
+    console.log(this.state)
+
     const {
       state:{
         config
@@ -130,7 +132,10 @@ export default class ContentEditor extends Component {
     })
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+  handleChange = ({target: {value, name}}) => {
+    console.log(value, name)
+    this.setState({[name]: value})
+  }
 
   componentWillReceiveProps(nextProps){
     this.updateProps(nextProps)
@@ -143,4 +148,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  height: 100%;
+  overflow-y: scroll;
 `

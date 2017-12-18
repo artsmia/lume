@@ -20,6 +20,7 @@ export default class ChangeImage extends Component {
       handleModalClose,
       props: {
         value,
+        label
       },
       handleChange,
       state: {
@@ -31,11 +32,12 @@ export default class ChangeImage extends Component {
       <Container>
 
         <Label>
-          Image 1
+          {label}
         </Label>
         {(value) ? (
           <Image
             imageId={value}
+            height={"50px"}
           />
         ): null}
 
@@ -83,6 +85,7 @@ export default class ChangeImage extends Component {
       onChange,
       name
     } = this.props
+
     onChange({
       target: {
         value: imageId,
