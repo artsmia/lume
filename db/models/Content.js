@@ -9,15 +9,15 @@ const Content = db.define('content', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
+  type: {
+    type: Sequelize.ENUM,
+    values: contentTypes
+  },
   title: {
     type: Sequelize.STRING,
   },
   description: {
     type: Sequelize.TEXT,
-  },
-  type: {
-    type: Sequelize.ENUM,
-    values: contentTypes
   },
   index: {
     type: Sequelize.INTEGER,

@@ -5,6 +5,8 @@ const fragment = gql`
     id
     title
     description
+    template
+    visibility
     previewImage{
       id
     }

@@ -20,6 +20,7 @@ export default class StoryEditor extends Component {
     title: "",
     description: "",
     modalOpen: false,
+    template: "scroller"
   }
 
   render() {
@@ -62,9 +63,9 @@ export default class StoryEditor extends Component {
             {"scroller"}
           </Option>
           <Option
-            value={"slideshow"}
+            value={"slider"}
           >
-            {"slideshow"}
+            {"slider"}
           </Option>
         </Select>
         <Label>Title</Label>
@@ -165,6 +166,8 @@ export default class StoryEditor extends Component {
         template
       }
     } = this
+
+    console.log(template)
 
     editStory({
       title,

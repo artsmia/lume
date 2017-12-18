@@ -1,7 +1,7 @@
 import { compose } from 'react-apollo'
 import Component from './StoryEditor.component'
-import query from './StoryEditor.query'
-import mutation from './StoryEditor.mutation'
+import query from '../../apollo/queries/story'
+import mutation from '../../apollo/mutations/editStory'
 
 
 

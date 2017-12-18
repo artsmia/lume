@@ -36,3 +36,28 @@ export const RoleEnum = new GraphQLEnumType({
     },
   }
 })
+
+export const TemplateEnum = new GraphQLEnumType({
+  name: 'TemplateEnum',
+  values: {
+    scroller: {
+      value: "scroller"
+    },
+    slider: {
+      value: "slider"
+    },
+  }
+})
+
+
+export const VisibilityEnum = new GraphQLEnumType({
+  name: 'VisibilityEnum',
+  values: {
+    published: {
+      value: "published"
+    },
+    draft: {
+      value: "draft"
+    },
+  }
+})

@@ -8,7 +8,7 @@ import {OrganizationInput} from '../types/inputs'
 
 
 const createStory = {
-  name: "story",
+  name: "createStory",
   type: storyType,
   args: {
     organization: {

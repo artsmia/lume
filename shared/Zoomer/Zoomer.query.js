@@ -16,27 +16,27 @@ const query = gql`
       }
       localId
     }
-    detail (
-      id: $detailId
-    ) {
-      id
-      image {
-        id
-        organization {
-          id
-          customImageApiEnabled
-        }
-        localId
-      }
-      crops {
-        id
-        index
-        geometry {
-          type
-          coordinates
-        }
-      }
-    }
+    # detail (
+    #   id: $detailId
+    # ) {
+    #   id
+    #   image {
+    #     id
+    #     organization {
+    #       id
+    #       customImageApiEnabled
+    #     }
+    #     localId
+    #   }
+    #   crops {
+    #     id
+    #     index
+    #     geometry {
+    #       type
+    #       coordinates
+    #     }
+    #   }
+    # }
   }
 `
 

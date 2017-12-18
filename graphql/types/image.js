@@ -21,7 +21,14 @@ const image = new GraphQLObjectType({
       type: GraphQLString
     },
     organization: {
-      type: organizationType
+      type: organizationType,
+      async resolve(src){
+        try {
+          return await src.getOrganization()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
     },
     metadata: {
       type: GraphQLString

@@ -21,7 +21,14 @@ const content = new GraphQLObjectType({
       type: GraphQLString
     },
     image0: {
-      type: imageType
+      type: imageType,
+      async resolve(src){
+        try {
+          return await src.getImage0()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
     },
     type: {
       type: ContentTypeEnum

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import contentConfig from '../../contents'
 import {Input, Textarea, Label} from '../../ui/forms'
 import {Button} from '../../ui/buttons'
-
+import ChangeImage from '../ChangeImage'
 export default class ContentEditor extends Component {
 
   state = {
@@ -12,6 +12,8 @@ export default class ContentEditor extends Component {
   }
 
   render(){
+
+    console.log(this.props)
 
     if (!this.state.config) return null
 
@@ -37,6 +39,9 @@ export default class ContentEditor extends Component {
 
   renderEditors = () => {
     const {
+      props: {
+        editContent
+      },
       state,
       state:{
         config
@@ -46,7 +51,12 @@ export default class ContentEditor extends Component {
 
     if (!config) return null
 
-    return config.fields.map( ({name, cms}) => {
+    return config.fields.map( (field) => {
+
+      const {
+        name,
+        cms
+      } = field
 
       let props = {
         name,
@@ -85,6 +95,20 @@ export default class ContentEditor extends Component {
             </div>
           )
         }
+        case "image": {
+
+          return (
+            <ChangeImage
+              key={name}
+              imageId={state[`${name}Id`]}
+              onImageSave={(imageId) => {
+                editContent({
+                  [`${name}Id`]: imageId
+                })
+              }}
+            />
+          )
+        }
         default: {
 
           null
@@ -119,9 +143,32 @@ export default class ContentEditor extends Component {
       }
 
       if (config) {
-        config.fields.forEach( field => Object.assign(newState, {
-          [field.name]: content[field.name] || ""
-        }))
+        config.fields.forEach( field => {
+
+          let key
+          let value
+
+          switch (field.graphql.type) {
+            case "String": {
+              key = field.name
+              value = content[key] || ""
+              break
+            }
+            case "image": {
+              key = `${field.name}Id`
+              value = (content[field.name]) ? content[field.name]["id"] : ""
+              break
+            }
+            default: {
+
+              break
+            }
+          }
+
+          Object.assign(newState, {
+            [key]: value
+          })
+        })
       }
 
 

@@ -75,7 +75,7 @@ export default async function (req,res, next) {
     })
 
     let filePath = `${__dirname}`
-    filePath = filePath.split('server/')[1]
+    //filePath = filePath.split('server/')[1]
 
     await sharp(buffer).png().tile({size: 512, layout: 'zoomify'}).toFile(`${filePath}/${fileId}`)
 
@@ -96,7 +96,9 @@ export default async function (req,res, next) {
       query: `mutation {
         createImage(
           id: "${fileId}"
-          organizationId: "${bucket}"
+          organization: {
+            id: "${bucket}"
+          }
           title: "${title}"
           description: "${description}"
         ) {

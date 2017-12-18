@@ -26,7 +26,8 @@ export default class Editor extends Component {
     const {
       props: {
         storyId,
-        story
+        story,
+        subdomain
       },
       state: {
         editing,
@@ -108,6 +109,7 @@ export default class Editor extends Component {
             {(editing === "story") ? (
               <StoryEditor
                 storyId={storyId}
+                subdomain={subdomain}
               />
             ): null}
 

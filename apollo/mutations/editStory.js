@@ -1,6 +1,6 @@
 import {graphql } from 'react-apollo'
 import gql from 'graphql-tag'
-import fragment from './StoryEditor.fragment'
+import storyFragment from '../fragments/story'
 
 
 const editStory = gql`
@@ -18,10 +18,10 @@ const editStory = gql`
       previewImageId: $previewImageId
       template: $template
     ) {
-      ...StoryEditorFragment
+      ...StoryFragment
     }
   }
-  ${fragment}
+  ${storyFragment}
 
 `
 

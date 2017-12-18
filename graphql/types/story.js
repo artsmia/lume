@@ -7,6 +7,7 @@ import {
 import organizationType from './organization'
 import imageType from './image'
 import contentType from './content'
+import {VisibilityEnum, TemplateEnum} from './enums'
 
 import {organizationResolver} from '../resolvers/story'
 
@@ -21,6 +22,12 @@ const story = new GraphQLObjectType({
     },
     description: {
       type: GraphQLString
+    },
+    visibility: {
+      type: VisibilityEnum
+    },
+    template: {
+      type: TemplateEnum
     },
     organization: {
       type: organizationType,
