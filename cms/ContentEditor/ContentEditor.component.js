@@ -124,7 +124,10 @@ export default class ContentEditor extends Component {
 
 
   saveEdits = () => {
-    this.props.editContent(this.state)
+    this.props.editContent({
+      ...this.state,
+      config: undefined
+    })
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})

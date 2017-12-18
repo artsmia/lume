@@ -5,13 +5,17 @@ import {
 } from 'graphql'
 import contentType, {fields} from '../types/content'
 import {ContentTypeEnum} from '../types/enums'
-import { args} from '../../contents/graphql'
+import { ContentInput } from '../types/inputs'
 import resolve from '../resolvers/editContent'
 
 const editContent = {
   name: "editContent",
   type: contentType,
-  args,
+  args: {
+    content: {
+      type: new GraphQLNonNull(ContentInput)
+    }
+  },
   resolve
 }
 

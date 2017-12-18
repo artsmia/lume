@@ -4,18 +4,10 @@ import contentFragment from '../fragments/content'
 
 const editContent = gql`
   mutation editContent (
-    $contentId: ID!
-    $image0Id: ID
-    $title: String
-    $description: String
-    $videoUrl: String
+    $content: ContentInput!
   ) {
     editContent(
-      id: $contentId
-      title: $title
-      description: $description
-      image0Id: $image0Id
-      videoUrl: $videoUrl
+      content: $content
     ) {
       ...ContentFragment
     }
@@ -27,8 +19,10 @@ const mutationConfig = {
   props: ({mutate, ownProps: {contentId} }) => ({
     editContent: (variables) => mutate({
       variables: {
-        contentId,
-        ...variables
+        content: {
+          ...variables,
+          id: contentId,
+        }
       },
     }),
   }),

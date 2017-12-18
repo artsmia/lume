@@ -6,8 +6,16 @@ import {
   GraphQLList
 } from 'graphql'
 import {DirectionEnum} from './enums'
+import {args} from '../../contents/graphql'
 
-const OrderInput = new GraphQLInputObjectType({
+export const ContentInput = new GraphQLInputObjectType({
+  name: 'ContentInput',
+  fields: {
+    ...args
+  }
+})
+
+export const OrderInput = new GraphQLInputObjectType({
   name: 'OrderInput',
   fields: {
     direction: {

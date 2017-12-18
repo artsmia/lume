@@ -3,9 +3,9 @@ import Content from '../../db/models/Content'
 export default async function(src, args, ctx){
   try {
 
-    let content = await Content.update(args, {
+    let content = await Content.update(args.content, {
       where: {
-        id: args.id
+        id: args.content.id
       }
     })
 
