@@ -32,6 +32,18 @@
         "node_modules",
         ".next"
       ]
+    },
+    "test": {
+      "presets": ["env", "next/babel"],
+      "plugins": [
+        "transform-object-rest-spread",
+        "transform-regenerator",
+        "syntax-async-functions",
+      ],
+      "ignore": [
+        "node_modules",
+        ".next"
+      ]
     }
   }
 }
