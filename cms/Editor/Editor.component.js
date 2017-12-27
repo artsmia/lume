@@ -182,7 +182,7 @@ export default class Editor extends Component {
 
 const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -208,10 +208,11 @@ const LeftBar = styled.div`
   display: flex;
   flex-direction: column;
   width: 250px;
-  height: 100%;
+  max-height: 100%;
   padding: 50px;
   border-right: 1px solid black;
   align-items: center;
+  overflow-y: scroll;
 `
 
 const Break = styled.hr`

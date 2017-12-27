@@ -3,17 +3,13 @@ import {
   GraphQLInt,
   GraphQLID,
   GraphQLString,
-  GraphQLList
+  GraphQLList,
+  GraphQLFloat
 } from 'graphql'
 import {DirectionEnum} from './enums'
+import {GeometryEnum, GeometryInput} from './geometry'
 import {args} from '../../contents/graphql'
 
-export const ContentInput = new GraphQLInputObjectType({
-  name: 'ContentInput',
-  fields: {
-    ...args
-  }
-})
 
 export const OrderInput = new GraphQLInputObjectType({
   name: 'OrderInput',
@@ -26,6 +22,11 @@ export const OrderInput = new GraphQLInputObjectType({
     },
   }
 })
+
+
+const coordinatesInput = new GraphQLList( new GraphQLList( new GraphQLList(GraphQLFloat)))
+
+
 export const OrganizationInput = new GraphQLInputObjectType({
   name: 'OrganizationInput',
   fields: {
@@ -61,5 +62,12 @@ export const FilterInput = new GraphQLInputObjectType({
       type: GraphQLString
     },
 
+  }
+})
+
+export const ContentInput = new GraphQLInputObjectType({
+  name: 'ContentInput',
+  fields: {
+    ...args
   }
 })

@@ -20,24 +20,13 @@ export default class extends Component {
     onCrop(geometry){console.log(geometry)}
   }
 
-  state = {
-    image: false,
-    zoomCreated: false,
-    zoomLoading: false,
-    cropperLoading: false,
-    cropperCreated: false,
-    geometryLoading: false,
-    geometryCreated: false,
-    geometry: false
-  }
-
   constructor(props){
     super(props)
     const {
       image,
       detail,
     } = props
-    this.state = {
+      this.state = {
       ...this.state,
       image: (detail) ? detail.image : image,
       geometry: (detail) ? detail.geometry : false
@@ -45,7 +34,6 @@ export default class extends Component {
   }
 
   render() {
-
     if (this.props.loading || !this.state.image) return null
 
     return (
@@ -60,68 +48,54 @@ export default class extends Component {
   componentWillReceiveProps(nextProps){
 
     if (
-      nextProps.detail &&
-      this.props.detail
+      nextProps.geometry &&
+      this.props.geometry
     ) {
-      if (
-        nextProps.detail.id !== this.props.detail.id
-      ) {
-        this.setState({
-          geometry: nextProps.detail.geometry,
-          geometryLoading: false,
-          geometryCreated: false
-        })
-      }
+      this.setState({
+        geometry: nextProps.geometry,
+      })
+      this.geometryLoading = false
+      this.geometryCreated = false
     }
     if (
       !this.state.image &&
       !nextProps.loading
     ) {
       const {
-        detail,
         image,
-        obj
       } = nextProps
 
       let displayImage
 
-      if (detail) {
-        displayImage = detail.image
-      } else if (image) {
-        displayImage = image
-      } else if (obj) {
-        displayImage =  obj.mainImage
-      }
-
       this.setState({
-        image: displayImage,
+        image,
       })
     }
 
     if (
       !nextProps.loading &&
-      nextProps.detail
+      nextProps.geometry
     ) {
-      this.setState({geometry: nextProps.detail.geometry})
+      this.setState({geometry: nextProps.geometry})
     }
 
     if (
       this.state.image &&
-      this.props.detail &&
-      nextProps.detail
+      this.props.image &&
+      nextProps.image
     ) {
       if (
-        this.props.detail.image.id !== nextProps.detail.image.id
+        this.props.image.id !== nextProps.image.id
       ) {
         this.setState({
-          image: nextProps.detail.image,
-          zoomCreated: false,
-          zoomLoading: false,
-          cropperLoading: false,
-          cropperCreated: false,
-          geometryLoading: false,
-          geometryCreated: false,
+          image: nextProps.image,
         })
+        this.zoomCreated = false
+        this.zoomLoading = false
+        this.cropperLoading = false
+        this.cropperCreated = false
+        this.geometryLoading = false
+        this.geometryCreated = false
       }
     }
     if (
@@ -134,13 +108,13 @@ export default class extends Component {
       ) {
         this.setState({
           image: nextProps.image,
-          zoomCreated: false,
-          zoomLoading: false,
-          cropperLoading: false,
-          cropperCreated: false,
-          geometryLoading: false,
-          geometryCreated: false,
         })
+        this.zoomCreated = false
+        this.zoomLoading = false
+        this.cropperLoading = false
+        this.cropperCreated = false
+        this.geometryLoading = false
+        this.geometryCreated = false
       }
 
     }
@@ -156,7 +130,7 @@ export default class extends Component {
       if (
         !this.zoomLoading &&
         !this.zoomCreated &&
-        !this.props.loading
+        this.props.image
       ) {
         await this.createZoomer()
       }
@@ -636,9 +610,11 @@ export default class extends Component {
         }
       })
 
+
       this.tiles.addTo(this.map)
 
       this.map.invalidateSize()
+
       this.map.fitBounds(bounds)
 
       this.zoomCreated = true

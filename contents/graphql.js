@@ -7,23 +7,7 @@ import {
 } from 'graphql'
 import {ContentTypeEnum} from '../graphql/types/enums'
 import imageType from '../graphql/types/image'
-
-import {
-  fields as pictureFields,
-  args as pictureArgs
-} from './picture/graphql'
-
-import {
-  fields as movieFields,
-  args as movieArgs
-} from './movie/graphql'
-
-import {
-  fields as comparisonFields,
-  args as comparisonArgs
-} from './comparison/graphql'
-
-
+import geometryType, {GeometryInput} from '../graphql/types/geometry'
 
 export const contentType = new GraphQLObjectType({
   name: "content",
@@ -53,9 +37,22 @@ export const contentType = new GraphQLObjectType({
         }
       }
     },
-    ...pictureFields,
-    ...movieFields,
-    ...comparisonFields
+    image1: {
+      type: imageType,
+      async resolve(src){
+        try {
+          return await src.getImage1()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
+    },
+    videoUrl: {
+      type: GraphQLString
+    },
+    geometry: {
+      type: geometryType
+    }
   })
 })
 
@@ -76,7 +73,10 @@ export const args = {
   image0Id: {
     type: GraphQLID
   },
-  ...pictureArgs,
-  ...movieArgs,
-  ...comparisonArgs,
+  videoUrl: {
+    type: GraphQLString
+  },
+  geometry: {
+    type: GeometryInput
+  }
 }

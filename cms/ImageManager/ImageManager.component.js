@@ -112,7 +112,7 @@ export default class ImageManager extends Component {
             <Button
               onClick={handleImageSave}
             >
-              Save
+              Select
             </Button>
           </TabBody>
           <TabBody

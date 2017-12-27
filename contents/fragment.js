@@ -14,6 +14,10 @@ const fragment = gql`
       id
     }
     videoUrl
+    geometry {
+      type
+      coordinates
+    }
   }
 `
 

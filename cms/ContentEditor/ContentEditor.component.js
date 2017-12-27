@@ -16,8 +16,6 @@ export default class ContentEditor extends Component {
 
     if (!this.state.config) return null
 
-    console.log(this.state)
-
     const {
       state:{
         config
@@ -41,7 +39,8 @@ export default class ContentEditor extends Component {
   renderEditors = () => {
     const {
       props: {
-        editContent
+        editContent,
+        content
       },
       state,
       state:{
@@ -66,6 +65,13 @@ export default class ContentEditor extends Component {
         name: arg,
         value: state[arg],
         onChange: handleChange
+      }
+
+      if (
+        graphqlType === "geometry"
+      ) {
+        props.imageId = state.image0Id
+        props.geometry = state.geometry
       }
 
       return (

@@ -2,9 +2,6 @@ import Sequelize from 'sequelize'
 import db from '../db/connect'
 import contentTypes from './types'
 
-import picture from './picture/Model'
-import movie from './movie/Model'
-import comparison from './comparison/Model'
 
 const Content = db.define('content', {
   id: {
@@ -25,9 +22,13 @@ const Content = db.define('content', {
   description: {
     type: Sequelize.TEXT,
   },
-  ...picture,
-  ...movie,
-  ...comparison,
+  geometry: {
+    type: Sequelize.GEOMETRY,
+  },
+  videoUrl: {
+    type: Sequelize.STRING,
+    defaultValue: ""
+  }
 }, {
   freezeTableName: true
 })

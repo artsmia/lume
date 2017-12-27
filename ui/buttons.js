@@ -16,7 +16,7 @@ export const Button = styled.button`
   height: 40px;
   white-space: nowrap;
   z-index: inherit;
-
+  min-height: 40px;
   &:hover {
     opacity: 0.75;
   }

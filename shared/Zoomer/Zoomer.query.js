@@ -4,7 +4,6 @@ import gql from 'graphql-tag'
 const query = gql`
   query ZoomerQuery (
     $imageId: ID!
-    $detailId: ID!
   ) {
     image (
       id: $imageId
@@ -16,36 +15,14 @@ const query = gql`
       }
       localId
     }
-    # detail (
-    #   id: $detailId
-    # ) {
-    #   id
-    #   image {
-    #     id
-    #     organization {
-    #       id
-    #       customImageApiEnabled
-    #     }
-    #     localId
-    #   }
-    #   crops {
-    #     id
-    #     index
-    #     geometry {
-    #       type
-    #       coordinates
-    #     }
-    #   }
-    # }
   }
 `
 
 
 const queryConfig = {
-  options: ({imageId = "", detailId = ""}) => ({
+  options: ({imageId = ""}) => ({
     variables: {
       imageId,
-      detailId,
     },
   }),
   props: ({ ownProps, data }) => ({
