@@ -45,19 +45,27 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-jest": "^21.2.0",
+    "babel-loader": "^7.1.2",
     "babel-plugin-styled-components": "^1.3.0",
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-preset-react": "^6.24.1",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
     "jest-enzyme": "^4.0.1",
+    "ncp": "^2.0.0",
     "nodemon": "^1.12.7",
-    "prop-types": "^15.6.0"
+    "path": "^0.12.7",
+    "prop-types": "^15.6.0",
+    "webpack": "^3.10.0"
   },
   "scripts": {
-    "start-api": "NODE_ENV=dev DATABASE=local BABEL_ENV=api nodemon --exec babel-node api",
-    "start-next": "NODE_ENV=dev API_CONFIG=local BABEL_ENV=next node router",
-    "reinit": "NODE_ENV=dev DATABASE=local BABEL_ENV=api babel-node scripts/reinitialize"
+    "start-api:local": "NODE_ENV=dev DATABASE=local BABEL_ENV=api nodemon --exec babel-node api",
+    "start-next:local": "NODE_ENV=dev API_CONFIG=local BABEL_ENV=next node router",
+    "reinit": "NODE_ENV=dev DATABASE=local BABEL_ENV=api babel-node scripts/reinitialize",
+    "start-next": "NODE_ENV=production API_CONFIG=dev BABEL_ENV=next node router",
+    "start-api": "NODE_ENV=dev DATABASE=local node build/api",
+    "build": "rm -rf build && babel ../lume --out-dir build"
   }
 }

@@ -16,6 +16,21 @@ export default async function (src, {id}, ctx){
       user.id = userId
     }
 
+    const userOrgs = await User_Organization.findAll({
+      where: {
+        userId
+      },
+      include:[{
+        model: Organization,
+        as: "organization"
+      }]
+    })
+
+    user.organizations = userOrgs.map(userOrg => ({
+      ...userOrg.organization.dataValues,
+      role: userOrg.role
+    }))
+
 
     return user
   } catch (ex) {
@@ -26,23 +41,8 @@ export default async function (src, {id}, ctx){
 export async function organizationsResolve(src, args, ctx) {
   try {
 
-    const userOrgs = await User_Organization.findAll({
-      where: {
-        userId: src.id
-      }
-    })
+    console.log("user org", src)
 
-    const orgIds = userOrgs.map( ({organizationId}) => organizationId)
-
-    const organizations = await Organization.findAll({
-      where: {
-        $or: [
-          {
-            id: orgIds
-          }
-        ]
-      }
-    })
 
     return organizations
   } catch (ex) {

@@ -83,6 +83,9 @@ export async function createAssociations() {
       as: 'contents'
     })
 
+    User_Organization.belongsTo(Organization, {
+      as: "organization"
+    })
 
   } catch (ex) {
 

@@ -20,6 +20,18 @@
         "transform-regenerator",
         "syntax-async-functions"
       ]
+    },
+    "development": {
+      "presets": ["env", "next/babel"],
+      "plugins": [
+        "transform-object-rest-spread",
+        "transform-regenerator",
+        "syntax-async-functions",
+      ],
+      "ignore": [
+        "node_modules",
+        ".next"
+      ]
     }
   }
 }

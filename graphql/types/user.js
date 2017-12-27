@@ -5,7 +5,6 @@ import {
   GraphQLList
 } from 'graphql'
 import organizationType from './organization'
-import {organizationsResolve} from '../resolvers/user'
 
 const user = new GraphQLObjectType({
   name: "user",
@@ -24,7 +23,6 @@ const user = new GraphQLObjectType({
     },
     organizations: {
       type: new GraphQLList(organizationType),
-      resolve: organizationsResolve
     },
   })
 })

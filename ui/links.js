@@ -8,6 +8,8 @@ export const LinkStyled = styled.a`
   transition: all .4s ease-in-out;
   font-family: ${({theme}) => theme.fonts.light};
   cursor: pointer;
+  height: 100%;
+  width: 100%;
   &:hover {
     border-bottom: 1px solid ${({theme}) => theme.colors.darkGray};
   }

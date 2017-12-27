@@ -8,7 +8,6 @@ import {
 import imageType from './image'
 import {RoleEnum} from './enums'
 
-
 const organization = new GraphQLObjectType({
   name: "organization",
   fields: () => ({
@@ -28,7 +27,7 @@ const organization = new GraphQLObjectType({
       type: new GraphQLList(imageType)
     },
     role: {
-      type: RoleEnum
+      type: RoleEnum,
     },
     customImageApiEnabled: {
       type: GraphQLBoolean

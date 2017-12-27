@@ -124,7 +124,7 @@ export default class OrgManager extends Component {
         }
       } = this
 
-      const {data: {editUserOrganization: {organizations}}} = await joinOrganization({
+      const {data: {editUserOrganizationRole: {organizations}}} = await joinOrganization({
         variables: {
           organizationId,
           userId,

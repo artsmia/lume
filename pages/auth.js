@@ -42,6 +42,7 @@ export default class extends Component {
           organizations {
             id
             subdomain
+            role
           }
         }
       }`, IDToken)

@@ -37,8 +37,6 @@ export default class StoryList extends Component {
       }
     } = this
 
-
-    console.log(stories)
     return (
 
 
@@ -77,39 +75,39 @@ export default class StoryList extends Component {
                       title,
                       updatedAt,
                     }) => (
-                    <Row
-                      key={storyId}
-                    >
-                      <Cell
-                        width={"100px"}
+                      <Link
+                        href={{
+                          pathname: "/cms/edit",
+                          query: {
+                            subdomain,
+                            storyId
+                          }
+                        }}
+                        as={`/${subdomain}/cms/${storyId}`}
+                        key={storyId}
                       >
-                        <Image
-                          imageId={(mainImage) ? mainImage.id : false}
-                          size={"50px"}
-                          thumb
-                        />
-                      </Cell>
-                      <Cell>
-                        <Link
-                          href={{
-                            pathname: "/cms/edit",
-                            query: {
-                              subdomain,
-                              storyId
-                            }
-                          }}
-                          as={`/${subdomain}/cms/${storyId}`}
-                        >
-                          {title}
-                        </Link>
+                        <Row>
+                          <Cell
+                            width={"100px"}
+                          >
+                            <Image
+                              imageId={(mainImage) ? mainImage.id : false}
+                              size={"50px"}
+                              thumb
+                            />
+                          </Cell>
+                          <Cell>
 
-                      </Cell>
-                      <Cell
-                        width={"130px"}
-                      >
-                        {new Date(updatedAt).toLocaleDateString()}
-                      </Cell>
-                    </Row>
+                              {title}
+
+                          </Cell>
+                          <Cell
+                            width={"130px"}
+                          >
+                            {new Date(updatedAt).toLocaleDateString()}
+                          </Cell>
+                        </Row>
+                      </Link>
                   ))}
                   <Button
                     onClick={handleLoadMore}

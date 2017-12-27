@@ -1,7 +1,8 @@
 import {
   GraphQLID,
   GraphQLString,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLList
 } from 'graphql'
 import userType from '../types/user'
 import resolve from '../resolvers/editUserOrganizationRole'
