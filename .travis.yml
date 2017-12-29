@@ -16,5 +16,5 @@ node_js:
 notifications:
   slack: artsmia:XuPlydSpfoILZdCPIbOYQq59
   email: false
-services:
-  - mysql
+# services:
+#   - mysql

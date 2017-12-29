@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import {hashToCookies} from '../auth-client'
+import {hashToCookies} from '../utils/auth-client'
 import apiFetch from '../utils/apiFetch'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
-import {Loading} from '../ui/spinner'
-import Template from '../shared/Template'
+import {Loading} from '../components/ui/spinner'
+import Template from '../components/shared/Template'
 
 
 export default class extends Component {

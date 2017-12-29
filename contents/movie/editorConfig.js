@@ -1,4 +1,4 @@
-import {Input, Textarea, VideoUrl} from '../../cms/DefaultEditors'
+import {Input, Textarea, VideoUrl} from '../../components/cms/DefaultEditors'
 
 const editorConfig = {
   Editor: "default",

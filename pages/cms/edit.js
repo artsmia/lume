@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import Editor from '../../cms/Editor'
+import Editor from '../../components/cms/Editor'
 import withData from '../../apollo'
 import Cookie from 'js-cookie'
-import Template from '../../shared/Template'
+import Template from '../../components/shared/Template'
 
 class Edit extends Component {
 

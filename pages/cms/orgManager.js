@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import OrgManager from '../../cms/OrgManager'
+import OrgManager from '../../components/cms/OrgManager'
 import Cookie from 'js-cookie'
 import withData from '../../apollo'
-import Template from '../../shared/Template'
+import Template from '../../components/shared/Template'
 
 class New extends Component {
 

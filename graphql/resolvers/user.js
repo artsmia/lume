@@ -1,4 +1,4 @@
-import {getUser} from '../../auth-api/management'
+import {getUser} from '../../api/auth/management'
 import User_Organization from '../../db/models/User_Organization'
 import Organization from '../../db/models/Organization'
 

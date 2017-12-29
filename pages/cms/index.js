@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import CmsHome from '../../cms/CmsHome'
+import CmsHome from '../../components/cms/CmsHome'
 import withData from '../../apollo'
 import Cookie from 'js-cookie'
-import Template from '../../shared/Template'
+import Template from '../../components/shared/Template'
 
 class OrgIndex extends Component {
 

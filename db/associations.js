@@ -26,6 +26,10 @@ export async function createAssociations() {
       as: "image1",
     })
 
+    Content.belongsTo(Obj, {
+      as: "obj",
+    })
+
     Group.belongsToMany(Story, {
       as: "groups",
       through: "story_group",
@@ -44,6 +48,11 @@ export async function createAssociations() {
     Obj.belongsTo(Image, {
       as: "primaryImage"
     })
+
+    Obj.hasMany(Content, {
+      as: "contents"
+    })
+
 
     Organization.hasMany(Story, {
       as: "stories"
