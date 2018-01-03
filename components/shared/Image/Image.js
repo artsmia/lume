@@ -112,7 +112,7 @@ export default class extends Component {
 
       if (process.env.FILE_STORAGE === "offline") {
         this.setState({
-          src: `http://localhost:5000/static/${imgId}/${imgQuality}.jpg`
+          src: `http://localhost:5000/static/${imgId}/${imgQuality}.jpeg`
         })
       }
 

@@ -45,9 +45,11 @@ export default async function (req,res, next) {
 
       await sharp(buffer).png().tile({size: 512, layout: 'zoomify'}).toFile(directory)
 
-      await sharp(buffer).resize(100).toFile(`${directory}/s.jpg`)
+      await sharp(buffer).toFile(`${directory}/original.jpeg`)
 
-      await sharp(buffer).resize(400).toFile(`${directory}/m.jpg`)
+      await sharp(buffer).resize(100).toFile(`${directory}/s.jpeg`)
+
+      await sharp(buffer).resize(400).toFile(`${directory}/m.jpeg`)
 
       return res.json({done: "woo"})
 

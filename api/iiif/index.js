@@ -6,7 +6,6 @@ import imageModel from '../../db/models/image'
 export default async function(req, res, next){
   try {
 
-    console.log("why here")
 
     const {
       identifier: imageId,
@@ -21,10 +20,17 @@ export default async function(req, res, next){
       organizationId
     } = await imageModel.findById(imageId)
 
+    let originalUrl = `https://s3.amazonaws.com/${organizationId}/${imageId}/original`
+
+    if (process.env.FILE_STORAGE === "offline") {
+      originalUrl = `http://localhost:5000/static/${imageId}/original.jpeg`
+    }
+
     const response = await fetch(
-      `https://s3.amazonaws.com/${organizationId}/${imageId}/original`, {
+      originalUrl, {
       method: 'GET'
     })
+
 
     const buffer = await response.buffer()
 

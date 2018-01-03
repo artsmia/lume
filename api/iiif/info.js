@@ -13,8 +13,15 @@ export default async function(req, res, next){
       organizationId
     } = await Image.findById(imageId)
 
+
+    let url = `https://s3.amazonaws.com/${organizationId}/${imageId}/original`
+
+    if (process.env.FILE_STORAGE === "offline") {
+      url = `http://localhost:5000/static/${imageId}/original.jpeg`
+    }
+
     const response = await fetch(
-      `https://s3.amazonaws.com/${organizationId}/${imageId}/original`, {
+      url, {
       method: 'GET'
     })
 

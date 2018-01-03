@@ -537,7 +537,9 @@ export default class extends Component {
         tileSize = 512
         tileUrl = `${s3Url}/${bucketId}/${imageId}/tiles/{z}-{x}-{y}.png`
 
-
+        if (process.env.FILE_STORAGE === "offline") {
+          tileUrl = `http://localhost:5000/static/${imageId}/TileGroup0/{z}-{x}-{y}.png`
+        }
 
         height = json.height
         width = json.width
