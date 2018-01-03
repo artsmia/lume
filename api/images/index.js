@@ -3,7 +3,6 @@ import uuid from 'uuid/v4'
 import sharp from 'sharp'
 import fs from 'fs'
 import rimraf from 'rimraf'
-import chalk from 'chalk'
 import Organization from '../../db/models/Organization'
 
 const s3 = new AWS.S3()
@@ -23,14 +22,46 @@ export default async function (req,res, next) {
       }
     } = req
 
-    let {id: bucket} = await Organization.findOne({
+    const organization = await Organization.findOne({
       where: {
         subdomain
       }
     })
 
+    let image = await organization.createImage({
+      title,
+      description
+    })
 
-    const fileId = uuid()
+    let bucket = organization.id
+
+
+    const fileId = image.id
+
+
+    if (process.env.FILE_STORAGE === "offline") {
+
+      let directory = `localFileStorage/${fileId}`
+
+      await sharp(buffer).png().tile({size: 512, layout: 'zoomify'}).toFile(directory)
+
+      await sharp(buffer).resize(100).toFile(`${directory}/s.jpg`)
+
+      await sharp(buffer).resize(400).toFile(`${directory}/m.jpg`)
+
+      return res.json({done: "woo"})
+
+    }
+
+
+    const s = await sharp(buffer).resize(100).toBuffer()
+
+    const m = await sharp(buffer).resize(400).toBuffer()
+
+    let filePath = `${__dirname}`
+
+    await sharp(buffer).png().tile({size: 512, layout: 'zoomify'}).toFile(`${filePath}/${fileId}`)
+
 
     const {Buckets} = await listBuckets()
 
@@ -44,11 +75,6 @@ export default async function (req,res, next) {
         ACL: "public-read",
       })
     }
-
-    const s = await sharp(buffer).resize(100).toBuffer()
-
-    const m = await sharp(buffer).resize(400).toBuffer()
-
 
     await upload({
       Key: `${fileId}/original`,
@@ -74,13 +100,6 @@ export default async function (req,res, next) {
       ContentType: mimetype
     })
 
-    let filePath = `${__dirname}`
-    //filePath = filePath.split('server/')[1]
-
-    await sharp(buffer).png().tile({size: 512, layout: 'zoomify'}).toFile(`${filePath}/${fileId}`)
-
-
-
     const files = await readDir(`/${fileId}/TileGroup0`)
 
 
@@ -92,22 +111,9 @@ export default async function (req,res, next) {
     await deleteDirectory(`/${fileId}`)
 
 
-    req.body = {
-      query: `mutation {
-        createImage(
-          id: "${fileId}"
-          organization: {
-            id: "${bucket}"
-          }
-          title: "${title}"
-          description: "${description}"
-        ) {
-          id
-        }
-      }`
-    }
-
-    next()
+    res.json({
+      msg: "success"
+    })
 
 
   } catch (ex) {
@@ -135,7 +141,6 @@ function listBuckets () {
 }
 
 function createBucket(params){
-  //console.log(chalk.cyan("params"), params)
   return new Promise( (resolve, reject) => {
     s3.createBucket(params, (err, data) => {
       if (err) reject(err)

@@ -5,7 +5,6 @@ import {Search} from '../../ui/search'
 import ImageUploader from './ImageUploader'
 import styled from 'styled-components'
 import {PropTypes} from 'prop-types'
-import apiFile from '../../../utils/apiFile'
 import Image from '../../shared/Image'
 import Zoomer from '../../shared/Zoomer'
 

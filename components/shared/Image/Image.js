@@ -109,6 +109,13 @@ export default class extends Component {
       } else {
         this.setState({src: `https://s3.amazonaws.com/${orgId}/${imgId}/${imgQuality}`})
       }
+
+      if (process.env.FILE_STORAGE === "offline") {
+        this.setState({
+          src: `http://localhost:5000/static/${imgId}/${imgQuality}.jpg`
+        })
+      }
+
     } catch (ex) {
       console.error(ex)
     }

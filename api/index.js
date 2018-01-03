@@ -43,7 +43,13 @@ server.use(
 server.use('/mia/:type', miaEndpoints)
 
 
-server.use("/image", upload.single("file") , imageRoute)
+server.use(
+  "/image",
+  upload.single("file"),
+  imageRoute
+)
+
+server.use('/static', express.static('localFileStorage'))
 
 
 server.use('/graphiql', graphiqlExpress({
