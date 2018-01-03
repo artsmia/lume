@@ -5,3 +5,4 @@ yarn-error.log
 .next
 .DS_Store
 localFileStorage/*
+!localFileStorage/README.md
