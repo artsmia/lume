@@ -39,7 +39,7 @@ export default async function (req,res, next) {
     const fileId = image.id
 
 
-    if (process.env.FILE_STORAGE === "offline") {
+    if (process.env.FILE_STORAGE === "local") {
 
       let directory = `localFileStorage/${fileId}`
 
