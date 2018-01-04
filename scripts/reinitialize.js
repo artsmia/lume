@@ -27,6 +27,6 @@ reinitialize()
 
 rimraf('localFileStorage', (err) => {
   mkdirp('localFileStorage', (err) => {
-    process.exit(1)
+    process.exit(0)
   })
 })
