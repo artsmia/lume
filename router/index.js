@@ -1,8 +1,8 @@
 require('dotenv').config()
 const express = require('express')
-const session = require('express-session')
 const next = require('next')
 const fetch = require('isomorphic-unfetch')
+const session = require('express-session')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -39,7 +39,7 @@ app.prepare().then(() => {
       clientID: process.env.AUTH0_CLIENT_ID,
       domain: process.env.AUTH0_DOMAIN,
       redirectUri: `${process.env.NEXT_URL}/callback`,
-      audience: 'https://' + process.env.AUTH0_DOMAIN + '/userinfo',
+      audience: `https://${process.env.AUTH0_DOMAIN}/userinfo`,
       responseType: 'code',
       scope: 'openid'
     }),
@@ -60,10 +60,10 @@ app.prepare().then(() => {
     }),
     async (req, res) => {
       try {
-        let user = await getUser(req.session.passport.user.id)
+        let organizations = await getUserOrganizations(req.session.passport.user.id)
 
-        if (user.organizations.length > 0) {
-          res.redirect(`/${user.organizations[0].subdomain}/cms`)
+        if (organizations.length > 0) {
+          res.redirect(`/${organizations[0].subdomain}/cms`)
         } else {
           res.redirect('/new')
         }
@@ -82,9 +82,11 @@ app.prepare().then(() => {
   server.get('/:subdomain/cms', (req, res) => {
     const page = '/cms'
     const {subdomain} = req.params
+
+
     const queryParams = {
         subdomain,
-        user: req.session.passport.user
+        user: getUser(req)
     }
     app.render(req, res, page, queryParams)
   })
@@ -95,7 +97,7 @@ app.prepare().then(() => {
     const queryParams = {
         subdomain,
         storyId,
-        user: req.session.passport.user
+        user: getUser(req)
     }
     app.render(req, res, page, queryParams)
   })
@@ -116,7 +118,17 @@ app.prepare().then(() => {
   process.exit(1)
 })
 
-async function getUser(id){
+function getUser(req){
+  if (process.env.AUTH_STRATEGY === 'local') {
+    return {
+      id: 'local'
+    }
+  } else {
+    return req.session.passport.user
+  }
+}
+
+async function getUserOrganizations(id){
   try {
     const response = await fetch(process.env.API_URL, {
       method: "POST",
@@ -140,7 +152,7 @@ async function getUser(id){
 
     let json = await response.json()
 
-    return json.data.user
+    return json.data.user.organizations
   } catch (ex) {
     console.error(ex)
   }

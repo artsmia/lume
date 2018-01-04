@@ -69,7 +69,7 @@
   },
   "scripts": {
     "start-api:local": "NODE_ENV=dev DATABASE=local BABEL_ENV=api FILE_STORAGE=offline nodemon --exec babel-node api",
-    "start-next:local": "NODE_ENV=dev BABEL_ENV=next FILE_STORAGE=offline node router",
+    "start-next:local": "NODE_ENV=dev BABEL_ENV=next FILE_STORAGE=offline AUTH_STRATEGY=local node router",
     "reinit": "NODE_ENV=dev DATABASE=local BABEL_ENV=api babel-node scripts/reinitialize",
     "start-next": "NODE_ENV=production API_CONFIG=dev BABEL_ENV=next node router",
     "start-api": "NODE_ENV=dev DATABASE=local node build/api",

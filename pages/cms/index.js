@@ -3,7 +3,7 @@ import CmsHome from '../../components/cms/CmsHome'
 import withData from '../../apollo'
 import Template from '../../components/shared/Template'
 
-class OrgIndex extends Component {
+class CmsIndex extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
@@ -34,4 +34,4 @@ class OrgIndex extends Component {
   }
 }
 
-export default withData(OrgIndex)
+export default withData(CmsIndex)

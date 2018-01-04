@@ -96,6 +96,28 @@ export async function createAssociations() {
       as: "organization"
     })
 
+
+    let [organization] = await Organization.findOrCreate({
+      where: {
+        subdomain: 'local'
+      },
+      defaults: {
+        name: "Local",
+      }
+    })
+
+
+    await User_Organization.findOrCreate({
+      where: {
+        organizationId: organization.id,
+        userId: "localuser"
+      },
+      defaults: {
+        role: "admin"
+      }
+    })
+
+
   } catch (ex) {
 
     console.log("createAssociations ex", ex)
