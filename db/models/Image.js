@@ -18,6 +18,9 @@ const Image = db.define('image', {
     values: ['s3','gdrive', 'local']
   },
   s3Bucket: Sequelize.STRING,
+  captionCredit: {
+    type: Sequelize.TEXT
+  }
 }, {
   freezeTableName: true
 })

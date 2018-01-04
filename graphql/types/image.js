@@ -33,6 +33,9 @@ const image = new GraphQLObjectType({
     metadata: {
       type: GraphQLString
     },
+    captionCredit: {
+      type: GraphQLString
+    },
   })
 })
 
