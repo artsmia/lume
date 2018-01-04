@@ -82,10 +82,10 @@ app.prepare().then(() => {
     const page = '/cms'
     const {subdomain} = req.params
 
-
+    let user = getUser(req)
     const queryParams = {
         subdomain,
-        user: getUser(req)
+        user
     }
     app.render(req, res, page, queryParams)
   })
@@ -119,9 +119,8 @@ app.prepare().then(() => {
 
 function getUser(req){
   if (process.env.AUTH_STRATEGY === 'local') {
-    return {
-      id: 'local'
-    }
+    let user = {id: 'local'}
+    return user
   } else {
     return req.session.passport.user
   }
