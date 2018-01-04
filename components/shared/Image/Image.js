@@ -110,7 +110,7 @@ export default class extends Component {
         this.setState({src: `${s3Url}/${orgId}/${imgId}/${imgQuality}`})
       }
 
-      if (process.env.FILE_STORAGE === "offline") {
+      if (process.env.FILE_STORAGE === "local") {
         this.setState({
           src: `${apiUrl}/static/${imgId}/${imgQuality}.jpeg`
         })
