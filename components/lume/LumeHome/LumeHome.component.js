@@ -61,7 +61,7 @@ export default class LumeHome extends Component {
     if (process.env.AUTH_STRATEGY === 'local') {
       router.push('/local/cms')
     } else {
-      router.push('/login')
+      window.location.href = '/login'
     }
   }
 

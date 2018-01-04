@@ -9,14 +9,13 @@ import path from 'path'
 async function reinitialize(){
   try {
 
-    await createAssociations()
-
-
     await db.query("SET foreign_key_checks = 0;")
 
     await db.sync({force: true})
 
     await db.query("SET foreign_key_checks = 1;")
+
+    await createAssociations()
 
     console.log("done?")
   } catch (ex) {

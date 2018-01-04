@@ -44,8 +44,7 @@ app.prepare().then(() => {
       scope: 'openid'
     }),
     (req, res) => {
-
-    }
+    },
   )
 
   server.get('/logout', (req, res) => {
