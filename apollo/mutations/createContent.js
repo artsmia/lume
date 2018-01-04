@@ -36,8 +36,6 @@ const mutationConfig = {
 
         data.story.contents.push(createContent)
 
-        console.log(data)
-
         proxy.writeQuery({ query: StoryQuery, data })
       }
     }),

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {s3Url, googleApiKey} from '../../../config'
 import {Spinner} from '../../ui/spinner'
+import {s3Url, apiUrl} from '../../../config'
 
 export default class extends Component {
 
@@ -107,12 +107,12 @@ export default class extends Component {
         let src = `https://cdn.dx.artsmia.org/thumbs/tn_${localId}.jpg`
         this.setState({src})
       } else {
-        this.setState({src: `https://s3.amazonaws.com/${orgId}/${imgId}/${imgQuality}`})
+        this.setState({src: `${s3Url}/${orgId}/${imgId}/${imgQuality}`})
       }
 
       if (process.env.FILE_STORAGE === "offline") {
         this.setState({
-          src: `http://localhost:5000/static/${imgId}/${imgQuality}.jpeg`
+          src: `${apiUrl}/static/${imgId}/${imgQuality}.jpeg`
         })
       }
 

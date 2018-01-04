@@ -8,7 +8,6 @@ import schema from '../graphql'
 import chalk from 'chalk'
 import imageRoute from './images'
 import multer from 'multer'
-import {authMiddleware} from './auth'
 import {
   graphqlExpress,
   graphiqlExpress,
@@ -36,7 +35,6 @@ server.set('port', port)
 server.use(
   cors(),
   bodyParser.json(),
-  authMiddleware,
 )
 
 
@@ -73,12 +71,3 @@ server.use('/', graphqlExpress((req, res) => {
 server.listen(server.get('port'), ()=>{
   console.log(`Server is running at port ${server.get('port')}`)
 })
-
-
-// const {
-//   initDb
-// } = process.env
-//
-// if (initDb === "true") {
-//   initalizeDb()
-// }

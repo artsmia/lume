@@ -140,7 +140,6 @@ export default class ContentEditor extends Component {
   }
 
   handleChange = ({target: {value, name}}) => {
-    console.log(value, name)
     this.setState({[name]: value})
   }
 

@@ -9,7 +9,6 @@ import PropTypes from 'prop-types'
 export default class CmsHome extends Component {
 
   static propTypes = {
-    userId: PropTypes.string.isRequired,
     subdomain: PropTypes.string.isRequired
   }
 
@@ -21,7 +20,9 @@ export default class CmsHome extends Component {
     const {
       props: {
         subdomain,
-        userId,
+        user: {
+          id: userId
+        },
         organization: {
           name
         }

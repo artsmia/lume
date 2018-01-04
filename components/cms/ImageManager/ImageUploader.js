@@ -4,7 +4,6 @@ import {Label, Input, Checkbox, Textarea} from '../../ui/forms'
 import {Row, Column} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import Cookie from 'js-cookie'
-import {apiUrl} from '../../../config'
 import Snackbar from '../../ui/Snackbar'
 import {Spinner} from '../../ui/spinner'
 
@@ -153,7 +152,7 @@ export default class extends Component {
       form.append("alt", alt)
       form.append("subdomain", subdomain)
 
-      const url  = `${apiUrl}/image`
+      const url  = `${process.env.API_URL}/image`
 
       let options = {
         method: 'POST',

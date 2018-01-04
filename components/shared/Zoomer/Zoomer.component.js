@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import LeafletCss from './LeafletCss'
-import {s3Url, apiUrl, url} from '../../../config'
+import {s3Url, apiUrl, nextUrl} from '../../../config'
 import PropTypes from 'prop-types'
 const L = (typeof window === 'object') ? require('leaflet') : null
 
@@ -428,7 +428,7 @@ export default class extends Component {
 
   get cropIcon() {
     return L.icon({
-      iconUrl: `${url}/static/x.png`,
+      iconUrl: `${nextUrl}/static/x.png`,
       iconSize: 30,
       iconAnchor: [15,15]
     })
@@ -538,7 +538,7 @@ export default class extends Component {
         tileUrl = `${s3Url}/${bucketId}/${imageId}/tiles/{z}-{x}-{y}.png`
 
         if (process.env.FILE_STORAGE === "offline") {
-          tileUrl = `http://localhost:5000/static/${imageId}/TileGroup0/{z}-{x}-{y}.png`
+          tileUrl = `${apiUrl}/static/${imageId}/TileGroup0/{z}-{x}-{y}.png`
         }
 
         height = json.height
@@ -637,7 +637,7 @@ const ZoomerMap = styled.div`
   .crop-button {
     height: 30px;
     width: 30px;
-    background: url("${url}/static/crop.png") center;
+    background: url("${nextUrl}/static/crop.png") center;
     background-size: cover;
     background-color: white;
     border: 1px solid ${({theme}) => theme.colors.lightMediumGray};

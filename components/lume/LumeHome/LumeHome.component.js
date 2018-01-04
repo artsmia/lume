@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H2, H3} from '../../ui/h'
-import {createLock} from '../../../utils/auth-client'
 import {Button} from '../../ui/buttons'
 import {Link} from '../../ui/links'
 import {Column} from '../../ui/layout'
 import PropTypes from 'prop-types'
+import router from 'next/router'
 
 export default class LumeHome extends Component {
 
@@ -14,6 +14,7 @@ export default class LumeHome extends Component {
     const {
       showLock,
       props,
+      linkToLogin,
       props: {
         organizations,
       }
@@ -26,7 +27,7 @@ export default class LumeHome extends Component {
             Welcome to Art Stories
           </H2>
           <Button
-            onClick={showLock}
+            onClick={linkToLogin}
           >
             Login to CMS
           </Button>
@@ -56,10 +57,10 @@ export default class LumeHome extends Component {
     )
   }
 
-  showLock = () => {
-    const lock = createLock()
-    lock.show()
+  linkToLogin = () => {
+    router.push('/login')
   }
+
 
 }
 

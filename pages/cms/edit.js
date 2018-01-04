@@ -1,19 +1,14 @@
 import React, {Component} from 'react'
 import Editor from '../../components/cms/Editor'
 import withData from '../../apollo'
-import Cookie from 'js-cookie'
 import Template from '../../components/shared/Template'
 
 class Edit extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
-      const userId = (ctx.req) ? ctx.req.userId : Cookie.get("userId")
-      const {subdomain, storyId} = ctx.query
       return {
-        userId,
-        subdomain,
-        storyId
+        ...ctx.query
       }
     } catch (ex) {
       console.error(ex)

@@ -1,7 +1,8 @@
 import {
   GraphQLObjectType,
   GraphQLID,
-  GraphQLString
+  GraphQLString,
+  GraphQLNonNull
 } from 'graphql'
 import userType from '../types/user'
 import resolve from '../resolvers/user'
@@ -11,7 +12,7 @@ const user = {
   type: userType,
   args: {
     id: {
-      type: GraphQLID
+      type: new GraphQLNonNull(GraphQLID)
     },
   },
   resolve

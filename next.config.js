@@ -7,8 +7,8 @@ module.exports = {
 
     config.plugins.push(
       new webpack.DefinePlugin({
-        'process.env.API_CONFIG': JSON.stringify(process.env.API_CONFIG),
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'process.env.API_URL': JSON.stringify(process.env.API_URL),
+        'process.env.NEXT_URL': JSON.stringify(process.env.NEXT_URL),
         'process.env.FILE_STORAGE': JSON.stringify(process.env.FILE_STORAGE),
       })
     )

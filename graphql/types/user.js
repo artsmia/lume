@@ -15,12 +15,6 @@ const user = new GraphQLObjectType({
     email: {
       type: GraphQLString
     },
-    subdomain: {
-      type: GraphQLString
-    },
-    emailDomain: {
-      type: GraphQLString
-    },
     organizations: {
       type: new GraphQLList(organizationType),
     },

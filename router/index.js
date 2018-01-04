@@ -1,13 +1,15 @@
 require('dotenv').config()
 const express = require('express')
+const session = require('express-session')
 const next = require('next')
+const fetch = require('isomorphic-unfetch')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 const cookieParser = require('cookie-parser')
-const authMiddleware = require('./auth')
 
+const passport = require('../auth/passport')
 
 console.log(`
   Starting Server:
@@ -22,82 +24,81 @@ app.prepare().then(() => {
 
   server.use(
     cookieParser(),
-    authMiddleware
+    passport.initialize(),
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false
+    }),
+    passport.session()
   )
 
-  server.get('/auth', (req, res) => {
-    const actualPage = '/auth'
-    app.render(req, res, actualPage)
+  server.get(
+    '/login',
+    passport.authenticate('auth0', {
+      clientID: process.env.AUTH0_CLIENT_ID,
+      domain: process.env.AUTH0_DOMAIN,
+      redirectUri: `${process.env.NEXT_URL}/callback`,
+      audience: 'https://' + process.env.AUTH0_DOMAIN + '/userinfo',
+      responseType: 'code',
+      scope: 'openid'
+    }),
+    (req, res) => {
+
+    }
+  )
+
+  server.get('/logout', (req, res) => {
+    req.logout()
+    res.redirect('/')
   })
+
+  server.get(
+    '/callback',
+    passport.authenticate('auth0', {
+      failureRedirect: '/'
+    }),
+    async (req, res) => {
+      try {
+        let user = await getUser(req.session.passport.user.id)
+
+        if (user.organizations.length > 0) {
+          res.redirect(`/${user.organizations[0].subdomain}/cms`)
+        } else {
+          res.redirect('/new')
+        }
+
+      } catch (ex) {
+        console.error(ex)
+      }
+    }
+  )
 
   server.get('/new', (req, res) => {
-    const actualPage = '/cms/orgManager'
-    app.render(req, res, actualPage)
-  })
-
-
-  server.get('/:subdomain/obj/:objId', (req, res) => {
-    const actualPage = '/lume/obj'
-    const {subdomain, objId} = req.params
-    const queryParams = {
-        subdomain,
-        objId
-    }
-    app.render(req, res, actualPage, queryParams)
-  })
-
-  server.get('/:subdomain/thematic/:thematicId', (req, res) => {
-    const actualPage = '/lume/thematic'
-    const {subdomain, thematicId} = req.params
-    const queryParams = {
-        subdomain,
-        thematicId
-    }
-    app.render(req, res, actualPage, queryParams)
+    const page = '/cms/orgManager'
+    app.render(req, res, page)
   })
 
   server.get('/:subdomain/cms', (req, res) => {
-    const actualPage = '/cms'
+    const page = '/cms'
     const {subdomain} = req.params
     const queryParams = {
         subdomain,
+        user: req.session.passport.user
     }
-    app.render(req, res, actualPage, queryParams)
+    app.render(req, res, page, queryParams)
   })
 
-
   server.get('/:subdomain/cms/:storyId', (req, res) => {
-    const actualPage = '/cms/edit'
+    const page = '/cms/edit'
     const {subdomain, storyId} = req.params
     const queryParams = {
         subdomain,
-        storyId
+        storyId,
+        user: req.session.passport.user
     }
-    app.render(req, res, actualPage, queryParams)
+    app.render(req, res, page, queryParams)
   })
-
-  server.get('/:subdomain/cms/settings', (req, res) => {
-    const actualPage = '/cms/org/settings'
-    const {subdomain} = req.params
-    const queryParams = {
-        subdomain,
-    }
-    app.render(req, res, actualPage, queryParams)
-  })
-
-
-
-  server.get('/:subdomain', (req, res) => {
-    const actualPage = '/lume'
-    const {subdomain} = req.params
-    const queryParams = {
-        subdomain,
-    }
-    app.render(req, res, actualPage, queryParams)
-  })
-
-
-
 
   server.get('*', (req, res) => {
     return handle(req, res)
@@ -105,7 +106,7 @@ app.prepare().then(() => {
 
   server.listen(3000, (err) => {
     if (err) throw err
-    console.log('> Ready on http://localhost:3000')
+    console.log(`Ready on ${process.env.NEXT_URL}`)
   })
 
 
@@ -114,3 +115,33 @@ app.prepare().then(() => {
   console.error(ex.stack)
   process.exit(1)
 })
+
+async function getUser(id){
+  try {
+    const response = await fetch(process.env.API_URL, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `{
+          user (id:"${id}") {
+            id
+            email
+            organizations {
+              id
+              subdomain
+              role
+            }
+          }
+        }`
+      })
+    })
+
+    let json = await response.json()
+
+    return json.data.user
+  } catch (ex) {
+    console.error(ex)
+  }
+}

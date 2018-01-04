@@ -1,4 +1,3 @@
-import {getUser} from '../../api/auth/management'
 import Model from '../../db/models/Organization'
 import createOptions from './filter'
 
