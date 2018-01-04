@@ -17,6 +17,12 @@ async function reinitialize(){
 
     await createAssociations()
 
+    rimraf('localFileStorage', (err) => {
+      mkdirp('localFileStorage', (err) => {
+        process.exit(0)
+      })
+    })
+
     console.log("done?")
   } catch (ex) {
     console.error(ex)
@@ -24,9 +30,3 @@ async function reinitialize(){
 }
 
 reinitialize()
-
-rimraf('localFileStorage', (err) => {
-  mkdirp('localFileStorage', (err) => {
-    process.exit(0)
-  })
-})

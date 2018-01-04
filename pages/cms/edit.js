@@ -7,7 +7,15 @@ class Edit extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
+      let user
+      if (ctx.query.subdomain === 'local'){
+        user = {
+          id: 'local'
+        }
+      }
+
       return {
+        user,
         ...ctx.query
       }
     } catch (ex) {

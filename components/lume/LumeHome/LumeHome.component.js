@@ -59,7 +59,12 @@ export default class LumeHome extends Component {
 
   linkToLogin = () => {
     if (process.env.AUTH_STRATEGY === 'local') {
-      router.push('/local/cms')
+      router.push({
+        pathname: '/cms',
+        query: {
+          subdomain: 'local',
+        }
+      }, '/local/cms')
     } else {
       window.location.href = '/login'
     }
