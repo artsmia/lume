@@ -60,6 +60,7 @@
     "enzyme-adapter-react-16": "^1.1.0",
     "jest": "^22.0.4",
     "jest-enzyme": "^4.0.1",
+    "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "nodemon": "^1.12.7",
     "path": "^0.12.7",
