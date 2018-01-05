@@ -11,11 +11,11 @@ const cookieParser = require('cookie-parser')
 
 const passport = require('../auth/passport')
 
-console.log(`
-  Starting Server:
-    env: ${process.env.NODE_ENV},
-    api: ${process.env.API_CONFIG}
-`)
+// console.log(`
+//   Starting Server:
+//     env: ${process.env.NODE_ENV},
+//     api: ${process.env.API_CONFIG}
+// `)
 
 app.prepare().then(() => {
 

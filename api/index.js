@@ -17,11 +17,11 @@ import iiif, {info} from './iiif'
 import miaEndpoints from './miaEndpoints'
 
 
-console.log(`
-  Starting Server:
-    env: ${process.env.NODE_ENV},
-    database: ${process.env.DATABASE}
-`)
+// console.log(`
+//   Starting Server:
+//     env: ${process.env.NODE_ENV},
+//     database: ${process.env.DATABASE}
+// `)
 
 
 const upload = multer()
