@@ -11,9 +11,9 @@ import User_Organization from '../db/models/User_Organization'
 async function reinitialize(){
   try {
 
-    await db.query("SET foreign_key_checks = 0;")
-
     await createAssociations()
+
+    await db.query("SET foreign_key_checks = 0;")
 
     await db.sync({force: true})
 

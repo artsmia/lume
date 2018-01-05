@@ -7,6 +7,7 @@ import {
   GraphQLBoolean
 } from 'graphql'
 
+import imageType from './image'
 
 const obj = new GraphQLObjectType({
   name: "obj",
@@ -50,6 +51,9 @@ const obj = new GraphQLObjectType({
     pullFromCustomApi: {
       type: GraphQLBoolean
     },
+    primaryImage: {
+      type: imageType
+    }
   })
 })
 

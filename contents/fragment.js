@@ -18,6 +18,9 @@ const fragment = gql`
       type
       coordinates
     }
+    obj {
+      id
+    }
   }
 `
 

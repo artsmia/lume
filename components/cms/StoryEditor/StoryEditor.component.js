@@ -167,8 +167,6 @@ export default class StoryEditor extends Component {
       }
     } = this
 
-    console.log(template)
-
     editStory({
       title,
       description,

@@ -4,7 +4,8 @@ import {
   GraphQLID,
   GraphQLString,
   GraphQLList,
-  GraphQLFloat
+  GraphQLFloat,
+  GraphQLBoolean
 } from 'graphql'
 import {DirectionEnum} from './enums'
 import {GeometryEnum, GeometryInput} from './geometry'
@@ -39,6 +40,54 @@ export const OrganizationInput = new GraphQLInputObjectType({
   }
 })
 
+
+export const ObjInput = new GraphQLInputObjectType({
+  name: 'ObjInput',
+  fields: {
+    id: {
+      type: GraphQLID
+    },
+    localId: {
+      type: GraphQLString
+    },
+    title: {
+      type: GraphQLString
+    },
+    attribution: {
+      type: GraphQLString
+    },
+    date: {
+      type: GraphQLString
+    },
+    culture: {
+      type: GraphQLString
+    },
+    accessionNumber: {
+      type: GraphQLString
+    },
+    medium: {
+      type: GraphQLString
+    },
+    dimensions: {
+      type: GraphQLString
+    },
+    currentLocation: {
+      type: GraphQLString
+    },
+    creditLine: {
+      type: GraphQLString
+    },
+    description: {
+      type: GraphQLString
+    },
+    pullFromCustomApi: {
+      type: GraphQLBoolean
+    },
+    primaryImageId: {
+      type: GraphQLID
+    }
+  }
+})
 
 export const FilterInput = new GraphQLInputObjectType({
   name: 'FilterInput',

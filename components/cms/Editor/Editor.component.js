@@ -5,15 +5,16 @@ import CreateContentButton from '../CreateContentButton'
 import EditStoryThumb from '../EditStoryThumb'
 import EditContentThumb from '../EditContentThumb'
 import StoryEditor from '../StoryEditor'
-import ContentEditor from '../ContentEditor'
 import contentTypes from '../../../contents/types'
 import {Select, Option} from '../../ui/forms'
+import ContentSwitcher from '../ContentSwitcher'
+
 
 export default class Editor extends Component {
 
   state = {
     editing: "story",
-    selectedContentId: "",
+    selectedContent: null,
     contentType: "comparison",
     contents: [],
     initialized: false
@@ -31,7 +32,7 @@ export default class Editor extends Component {
       },
       state: {
         editing,
-        selectedContentId,
+        selectedContent,
         contentType,
         contents
       },
@@ -115,12 +116,10 @@ export default class Editor extends Component {
             ): null}
 
             {(editing === "content") ? (
-              <ContentEditor
-                contentId={selectedContentId}
+              <ContentSwitcher
+                content={selectedContent}
               />
             ): null}
-
-
 
           </EditorContainer>
 
@@ -164,14 +163,15 @@ export default class Editor extends Component {
   handleStorySelection = () => {
     this.setState({
       editing: "story",
-      selectedContentId: ""
+      selectedContent: null
     })
   }
 
   handleContentSelection = (selectedContentId) => {
+    let selectedContent = this.props.story.contents.find(content => content.id === selectedContentId)
     this.setState({
       editing: "content",
-      selectedContentId
+      selectedContent
     })
   }
 
