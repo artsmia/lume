@@ -6,9 +6,9 @@ import {Spinner} from '../../ui/spinner'
 import {Button} from '../../ui/buttons'
 import Modal from '../../ui/modal'
 import Image from '../../shared/Image'
-import {Input, Textarea, Label, Select, Option} from '../../ui/forms'
+import {Select, Option} from '../../ui/forms'
+import {Input, Textarea, ChangeImage} from '../DefaultEditors'
 import ImageManager from '../ImageManager'
-import router from 'next/router'
 
 export default class StoryEditor extends Component {
 
@@ -16,11 +16,15 @@ export default class StoryEditor extends Component {
     storyId: PropTypes.string.isRequired,
   }
 
-  state = {
+  initialState = {
     title: "",
     description: "",
-    modalOpen: false,
+    previewImageId: undefined,
     template: "scroller"
+  }
+
+  state = {
+    ...this.initialState
   }
 
   render() {
@@ -28,22 +32,13 @@ export default class StoryEditor extends Component {
     if (!this.props.story) return null
 
     const {
-      props: {
-        story: {
-          previewImage
-        },
-        subdomain
-      },
       state: {
         title,
         description,
-        modalOpen,
+        previewImageId,
         template
       },
       handleChange,
-      handleModalClose,
-      openModal,
-      handlePreviewImageSave,
       handleSave
     } = this
 
@@ -52,6 +47,11 @@ export default class StoryEditor extends Component {
         <H3>
           Story Editor
         </H3>
+        <Button
+          onClick={handleSave}
+        >
+          Save
+        </Button>
         <Select
           name={"template"}
           onChange={handleChange}
@@ -68,53 +68,24 @@ export default class StoryEditor extends Component {
             {"slider"}
           </Option>
         </Select>
-        <Label>Title</Label>
         <Input
+          label={"Title"}
           name={"title"}
           value={title}
           onChange={handleChange}
         />
-        <Label>Description</Label>
         <Textarea
+          label={"Description"}
           name={"description"}
           value={description}
           onChange={handleChange}
         />
-        <Button
-          onClick={handleSave}
-        >
-          Save
-        </Button>
-
-        <Label>
-          Image 1
-        </Label>
-        <Image
-          imageId={(previewImage) ? previewImage.id : false}
+        <ChangeImage
+          label={"Image"}
+          name={"previewImageId"}
+          value={previewImageId}
+          onChange={handleChange}
         />
-        <Button
-          onClick={openModal}
-        >
-          Change
-        </Button>
-
-
-
-        <Modal
-          open={modalOpen}
-          onClose={handleModalClose}
-          header={`Edit Preview Image`}
-          width={"60%"}
-
-        >
-          <ImageManager
-            subdomain={subdomain}
-            onImageSave={handlePreviewImageSave}
-          />
-
-        </Modal>
-
-
 
       </Container>
     )
@@ -122,55 +93,30 @@ export default class StoryEditor extends Component {
 
   componentWillReceiveProps(nextProps){
     if (
-      !this.state.storyId &&
       nextProps.story
     ){
-      this.setState({
-        storyId: nextProps.story.id,
-        title: nextProps.story.title || "",
-        template: nextProps.story.template || "",
-        description: nextProps.story.description || "",
-      })
+      if (
+        nextProps.story.id !== this.state.id
+      ) {
+        let {
+          story
+        } = nextProps
+        let state = {}
+        Object.keys(story).forEach(key => {
+          Object.assign(state, {
+            [key]: story[key] || this.initialState[key]
+          })
+        })
+        this.setState(state)
+      }
     }
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
-  openModal = () => {
-    this.setState({
-      modalOpen: true
-    })
-  }
-
-  handleModalClose = () => {
-    this.setState({
-      modalOpen: false
-    })
-  }
-
-  handlePreviewImageSave = (previewImageId) => {
-    this.props.editStory({
-      previewImageId
-    })
-    this.setState({modalOpen: false})
-  }
-
   handleSave = () => {
-    const {
-      props: {
-        editStory,
-      },
-      state: {
-        title,
-        description,
-        template
-      }
-    } = this
-
-    editStory({
-      title,
-      description,
-      template
+    this.props.editStory({
+      ...this.state,
     })
   }
 

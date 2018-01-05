@@ -5,7 +5,6 @@ import {Label} from '../../ui/forms'
 import Modal from '../../ui/modal'
 import ImageManager from '../ImageManager'
 import Image from '../../shared/Image'
-import router from 'next/router'
 
 export default class ChangeImage extends Component {
 
@@ -57,7 +56,7 @@ export default class ChangeImage extends Component {
 
         >
           <ImageManager
-            subdomain={router.query.subdomain}
+            subdomain={"carl"}
             onImageSave={handleChange}
           />
 

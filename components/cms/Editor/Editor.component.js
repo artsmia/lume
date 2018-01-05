@@ -7,7 +7,7 @@ import EditContentThumb from '../EditContentThumb'
 import StoryEditor from '../StoryEditor'
 import contentTypes from '../../../contents/types'
 import {Select, Option} from '../../ui/forms'
-import ContentSwitcher from '../ContentSwitcher'
+import ContentSwitcher from './ContentSwitcher.component'
 
 
 export default class Editor extends Component {
@@ -47,9 +47,7 @@ export default class Editor extends Component {
     return (
       <Container>
         <TopBar>
-          <Button>
-            Save
-          </Button>
+
         </TopBar>
         <Workspace>
 

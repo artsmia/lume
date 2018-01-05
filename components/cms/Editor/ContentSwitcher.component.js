@@ -1,8 +1,8 @@
-import ComparisonContentEditor from '../../contents/comparison/Editor'
-import DetailContentEditor from '../../contents/detail/Editor'
-import MovieContentEditor from '../../contents/movie/Editor'
-import ObjContentEditor from '../../contents/obj/Editor'
-import PictureContentEditor from '../../contents/picture/Editor'
+import ComparisonContentEditor from '../../../contents/comparison/Editor'
+import DetailContentEditor from '../../../contents/detail/Editor'
+import MovieContentEditor from '../../../contents/movie/Editor'
+import ObjContentEditor from '../../../contents/obj/Editor'
+import PictureContentEditor from '../../../contents/picture/Editor'
 
 
 export default ({content}) => {
