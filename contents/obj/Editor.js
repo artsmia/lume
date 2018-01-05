@@ -12,7 +12,8 @@ import {Button} from '../../components/ui/buttons'
 class ObjContentEditor extends Component {
 
   state = {
-    modal: false
+    modal: false,
+    objId: ""
   }
 
   render(){
@@ -26,10 +27,13 @@ class ObjContentEditor extends Component {
         }
       },
       state: {
-        modal
+        modal,
+        objId
       },
       handleModalOpen,
-      handleModalClose
+      handleModalClose,
+      handleSelect,
+      saveEdits
     } = this
 
     return (
@@ -47,17 +51,29 @@ class ObjContentEditor extends Component {
         >
           <ObjSelector
             subdomain={router.query.subdomain}
+            onSelect={handleSelect}
           />
         </Modal>
 
 
-        {(obj) ? (
+        {(objId) ? (
           <ObjEditor
-            objId={obj.id}
+            objId={objId}
           />
         ): null}
+
       </Container>
     )
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (
+      nextProps.content
+    ) {
+      if (nextProps.content.obj) {
+        this.setState({objId: nextProps.content.obj.id || ""})
+      }
+    }
   }
 
   handleModalOpen = () => {
@@ -66,6 +82,20 @@ class ObjContentEditor extends Component {
 
   handleModalClose = () => {
     this.setState({modal: false})
+  }
+
+  handleSelect = (objId) => {
+    this.setState({
+      objId,
+      modal: false
+    })
+    this.props.editContent({
+      objId,
+    })
+  }
+
+  saveEdits = () => {
+
   }
 }
 

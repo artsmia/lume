@@ -1,42 +1,75 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Input, Textarea, Label} from '../../ui/forms'
+import {Input, Textarea, ChangeImage} from '../DefaultEditors'
 import {Button} from '../../ui/buttons'
 
 
 export default class ObjEditor extends Component {
 
-  state = {
-    id: false,
-    config: false
+  initialState = {
+    id: "",
+    title: "",
+    description: "",
+    attribution: "",
+    date: "",
+    accessionNumber: "",
+    medium: "",
+    dimensions: "",
+    currentLocation: "",
+    creditLine: "",
+    pullFromCustomApi: false,
+    primaryImageId: undefined
   }
+
+  state = {
+    ...this.initialState
+  }
+
 
   render(){
 
-    if (!this.state.config) return null
-
     const {
-      state:{
-        config
-      },
-      saveEdits,
-      handleChange
+      state,
+      handleChange,
+      handleSave
     } = this
-
 
     return (
       <Container>
         <Button
-          onClick={saveEdits}
+          onClick={handleSave}
         >
-          Save
+          Save Obj
         </Button>
-        <Label>
-          Title
-        </Label>
         <Input
-          name={"title"}
-          value={this.state.title}
+          label={"Title"}
+          name={'title'}
+          value={state.title}
+          onChange={handleChange}
+        />
+        <Input
+          label={"Attribution"}
+          name={'attribution'}
+          value={state.attribution}
+          onChange={handleChange}
+        />
+        <Input
+          label={"Date"}
+          name={'date'}
+          value={state.date}
+          onChange={handleChange}
+        />
+        <Textarea
+          label={"Description"}
+          name={'description'}
+          value={state.description}
+          onChange={handleChange}
+        />
+
+        <ChangeImage
+          label={"Image"}
+          name={'primaryImageId'}
+          value={state.primaryImageId}
           onChange={handleChange}
         />
       </Container>
@@ -44,39 +77,32 @@ export default class ObjEditor extends Component {
   }
 
 
-  updateProps = (nextProps) => {
-    if (
-      nextProps.obj &&
-      nextProps.objId !== this.state.id
-    ){
-
-
-      let {
-        obj
-      } = nextProps
-
-      let newState
-
-      Object.keys(obj).forEach( key => Object.assign(newState,{[key]: obj[key]}))
-
-      this.setState(newState)
-    }
-  }
-
-
-  saveEdits = () => {
-    this.props.editObj({
-      ...this.state,
-    })
-  }
-
   handleChange = ({target: {value, name}}) => {
     this.setState({[name]: value})
   }
 
-  componentWillReceiveProps(nextProps){
-    this.updateProps(nextProps)
+  handleSave = () => {
+    this.props.editObj({
+      ...this.state,
+      __typename: undefined
+    })
   }
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.obj){
+      if (nextProps.obj.id !== this.state.id) {
+        let {obj} = nextProps
+        let state = {}
+        Object.keys(obj).forEach( key => {
+          Object.assign(state,{
+            [key]: obj[key] || this.initialState[key]
+          })
+        })
+        this.setState(state)
+      }
+    }
+  }
+
 }
 
 const Container = styled.div`

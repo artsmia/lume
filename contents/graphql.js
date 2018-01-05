@@ -92,5 +92,8 @@ export const args = {
   },
   geometry: {
     type: GeometryInput
-  }
+  },
+  objId: {
+    type: GraphQLID
+  },
 }

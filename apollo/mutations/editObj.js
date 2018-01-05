@@ -5,7 +5,7 @@ import objFragment from '../fragments/obj'
 
 const editObj = gql`
   mutation editObj (
-    $obj: ObjInput
+    $obj: ObjInput!
   ) {
     editObj(
       obj: $obj
@@ -21,8 +21,10 @@ const mutationConfig = {
   props: ({mutate, ownProps: {objId} }) => ({
     editObj: (obj) => mutate({
       variables: {
-        id: objId,
-        ...obj
+        obj: {
+          ...obj,
+          id: objId,
+        }
       },
     }),
   }),
