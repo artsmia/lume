@@ -1,23 +1,20 @@
 import React, {Component} from 'react'
 import CmsHome from '../../components/cms/CmsHome'
 import withData from '../../apollo'
+import Cookie from 'js-cookie'
 import Template from '../../components/shared/Template'
+import getUser from '../../auth/getUser'
 
 class CmsIndex extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
 
-      let user
-      if (ctx.query.subdomain === 'local'){
-        user = {
-          id: 'local'
-        }
-      }
+      let user = await getUser(ctx)
 
       return {
-        user,
-        ...ctx.query
+        subdomain: ctx.query.subdomain,
+        user
       }
     } catch (ex) {
       console.error(ex)
