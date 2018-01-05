@@ -52,6 +52,16 @@ export default class ContentEditor extends Component {
 
     if (!config) return null
 
+    if (config.Editor !== 'default') {
+      let Editor = config.Editor
+      return (
+        <Editor
+          key={content.id}
+          contentId={content.id}
+        />
+      )
+    }
+
     return config.fields.map( ({
       label,
       graphqlType,
