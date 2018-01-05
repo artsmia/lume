@@ -1,22 +1,39 @@
-import React, {Component} from 'react'
-import styled from 'styled-components'
-import query from '../../apollo/queries/content'
-import mutation from '../../apollo/mutations/editContent'
-import {compose} from 'react-apollo'
+import BaseEditor from '../../components/cms/DefaultEditors/BaseEditor'
+import {Input, Textarea, ChangeImage, DetailSelector} from '../../components/cms/DefaultEditors'
 
-class DetailContentEditor extends Component {
-
-  render() {
-    return (
-      <Container>
-        detail
-      </Container>
-    )
-  }
-}
-
-const Container = styled.div`
-
-`
-
-export default compose(query, mutation)(DetailContentEditor)
+export default (props) => (
+  <BaseEditor
+    fields={[
+      {
+        label: "Title",
+        type: "string",
+        name: "title",
+        Component: Input,
+        defaultValue: ""
+      },
+      {
+        label: "Description",
+        type: "string",
+        name: "description",
+        Component: Textarea,
+        defaultValue: ""
+      },
+      {
+        label: "Image",
+        name: "image0Id",
+        parent: "image0",
+        type: "image",
+        Component: ChangeImage,
+        defaultValue: undefined
+      },
+      {
+        label: "Selection",
+        name: "geometry",
+        type: "geometry",
+        Component: DetailSelector,
+        defaultValue: undefined
+      }
+    ]}
+    {...props}
+  />
+)

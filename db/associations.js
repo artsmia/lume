@@ -53,6 +53,10 @@ export async function createAssociations() {
       as: "contents"
     })
 
+    Obj.belongsTo(Organization, {
+      as: "organization"
+    })
+
 
     Organization.hasMany(Story, {
       as: "stories"

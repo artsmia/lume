@@ -8,6 +8,7 @@ const fragment = gql`
     previewImage{
       id
     }
+    updatedAt
   }
 `
 

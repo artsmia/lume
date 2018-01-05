@@ -2,6 +2,8 @@ import {
   GraphQLObjectType,
 } from 'graphql'
 
+import obj from './obj'
+import objs from './objs'
 import organization from './organization'
 import content from './content'
 import user from './user'
@@ -22,7 +24,9 @@ const query = new GraphQLObjectType({
     story,
     stories,
     image,
-    images
+    images,
+    obj,
+    objs
   }
 })
 
