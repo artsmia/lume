@@ -9,7 +9,7 @@ export const ObjQuery = gql`
     obj (
       id: $objId
     ) {
-      ...StoryFragment
+      ...ObjFragment
     }
   }
   ${objFragment}

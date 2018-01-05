@@ -1,6 +1,7 @@
 import {graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import objFragment from '../fragments/obj'
+import {ObjsQuery} from '../queries/objs'
 
 export const CreateObjMutation = gql`
   mutation createObj (
@@ -16,7 +17,7 @@ export const CreateObjMutation = gql`
 `
 
 export const mutationConfig = {
-  props: ({mutate, ownProps: {subdomain} }) => ({
+  props: ({mutate, ownProps: {subdomain, variables} }) => ({
     createObj: () => mutate({
       variables: {
         organization: {

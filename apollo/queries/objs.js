@@ -25,10 +25,10 @@ export const queryConfig = {
         organization: {
           subdomain
         },
-        limit: 10,
+        limit: 20,
         offset: 0,
         order: {
-          column: "updatedAt",
+          column: "title",
           direction: "DESC"
         }
       }
