@@ -37,7 +37,14 @@ const story = new GraphQLObjectType({
       type: GraphQLString
     },
     previewImage: {
-      type: imageType
+      type: imageType,
+      async resolve(src){
+        try {
+          return await src.getPreviewImage()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
     },
     contents: {
       type: new GraphQLList(contentType),
