@@ -1,17 +1,18 @@
 import React, {Component} from 'react'
 import OrgManager from '../../components/cms/OrgManager'
-import Cookie from 'js-cookie'
 import withData from '../../apollo'
 import Template from '../../components/shared/Template'
+import getUser from '../../auth/getUser'
 
 class New extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
-      const userId = (ctx.req) ? ctx.req.userId : Cookie.get("userId")
+
+      let user = await getUser(ctx)
 
       return {
-        userId
+        user
       }
     } catch (ex) {
       console.error(ex)
@@ -19,6 +20,8 @@ class New extends Component {
   }
 
   render() {
+    console.log(this.props)
+
     return (
       <Template
         {...this.props}

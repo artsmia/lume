@@ -119,7 +119,9 @@ export default class OrgManager extends Component {
           organizationId,
         },
         props: {
-          userId,
+          user: {
+            id: userId
+          },
           joinOrganization
         }
       } = this
@@ -165,7 +167,9 @@ export default class OrgManager extends Component {
 
       const {
         props: {
-          userId,
+          user: {
+            id: userId
+          },
           createOrganization,
         },
         state: {

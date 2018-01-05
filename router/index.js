@@ -57,21 +57,17 @@ app.prepare().then(() => {
     passport.authenticate('auth0', {
       failureRedirect: '/'
     }),
-    async (req, res) => {
-      try {
-        let organizations = await getUserOrganizations(req.session.passport.user.id)
+    (req, res) => {
 
-        if (organizations.length > 0) {
-          res.redirect(`/${organizations[0].subdomain}/cms`)
-        } else {
-          res.redirect('/new')
-        }
+      res.redirect('/auth')
 
-      } catch (ex) {
-        console.error(ex)
-      }
     }
   )
+
+  server.get('/auth', (req, res) => {
+    const page = '/auth'
+    app.render(req, res, page)
+  })
 
   server.get('/new', (req, res) => {
     const page = '/cms/orgManager'
@@ -81,24 +77,20 @@ app.prepare().then(() => {
   server.get('/:subdomain/cms', (req, res) => {
     const page = '/cms'
     const {subdomain} = req.params
-
-    let user = getUser(req)
-    const queryParams = {
+    const params = {
         subdomain,
-        user
     }
-    app.render(req, res, page, queryParams)
+    app.render(req, res, page, params)
   })
 
   server.get('/:subdomain/cms/:storyId', (req, res) => {
     const page = '/cms/edit'
     const {subdomain, storyId} = req.params
-    const queryParams = {
+    const params = {
         subdomain,
         storyId,
-        user: getUser(req)
     }
-    app.render(req, res, page, queryParams)
+    app.render(req, res, page, params)
   })
 
   server.get('*', (req, res) => {
@@ -116,42 +108,3 @@ app.prepare().then(() => {
   console.error(ex.stack)
   process.exit(1)
 })
-
-function getUser(req){
-  if (process.env.AUTH_STRATEGY === 'local') {
-    let user = {id: 'local'}
-    return user
-  } else {
-    return req.session.passport.user
-  }
-}
-
-async function getUserOrganizations(id){
-  try {
-    const response = await fetch(process.env.API_URL, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `{
-          user (id:"${id}") {
-            id
-            email
-            organizations {
-              id
-              subdomain
-              role
-            }
-          }
-        }`
-      })
-    })
-
-    let json = await response.json()
-
-    return json.data.user.organizations
-  } catch (ex) {
-    console.error(ex)
-  }
-}

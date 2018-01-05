@@ -47,6 +47,7 @@
     "styled-components": "^2.2.4"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^21.2.0",
     "babel-loader": "^7.1.2",
@@ -70,6 +71,8 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
+    "start-api:local": "BABEL_ENV=api nodemon --exec babel-node api",
+    "start-next:local": "BABEL_ENV=next node router",
     "reinit": "NODE_ENV=dev DATABASE=local BABEL_ENV=api babel-node scripts/reinitialize",
     "build": "rm -rf build && babel ../lume --out-dir build",
     "test": "jest"
