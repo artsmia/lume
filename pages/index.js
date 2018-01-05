@@ -28,4 +28,4 @@ class Index extends Component {
 
 }
 
-export default withData(props => <Index {...props} />)
+export default withData(Index)

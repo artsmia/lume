@@ -1,22 +1,30 @@
-import React, {Component} from 'react'
-import styled from 'styled-components'
-import query from '../../apollo/queries/content'
-import mutation from '../../apollo/mutations/editContent'
-import {compose} from 'react-apollo'
+import BaseEditor from '../../components/cms/DefaultEditors/BaseEditor'
+import {Input, Textarea, VideoUrl} from '../../components/cms/DefaultEditors'
 
-class MovieContentEditor extends Component {
-
-  render() {
-    return (
-      <Container>
-        movie
-      </Container>
-    )
-  }
-}
-
-const Container = styled.div`
-
-`
-
-export default compose(query, mutation)(MovieContentEditor)
+export default (props) => (
+  <BaseEditor
+    fields={[
+      {
+        label: "Title",
+        name: "title",
+        type: "string",
+        Component: Input,
+        defaultValue: ""
+      },
+      {
+        label: "Description",
+        name: "description",
+        type: "string",
+        Component: Textarea,
+        defaultValue: ""
+      },{
+        label: "Video",
+        name: "videoUrl",
+        type: "string",
+        Component: VideoUrl,
+        defaultValue: ""
+      }
+    ]}
+    {...props}
+  />
+)

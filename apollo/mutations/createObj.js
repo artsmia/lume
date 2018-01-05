@@ -16,14 +16,13 @@ export const CreateObjMutation = gql`
 `
 
 export const mutationConfig = {
-  props: ({mutate, ownProps: {subdomain, userId} }) => ({
+  props: ({mutate, ownProps: {subdomain} }) => ({
     createObj: () => mutate({
       variables: {
         organization: {
           subdomain
         },
       },
-
     }),
   }),
 }

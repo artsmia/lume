@@ -16,15 +16,13 @@ export default class DetailSelector extends Component {
       props: {
         value,
         label,
-        imageId,
-        geometry
+        detailImageId,
       },
       handleCrop,
       state: {
         modal
       }
     } = this
-
 
     return (
       <Container>
@@ -34,8 +32,8 @@ export default class DetailSelector extends Component {
         </Label>
         <ZoomerContainer>
           <Zoomer
-            geometry={geometry}
-            imageId={imageId}
+            geometry={value}
+            imageId={detailImageId}
             onCrop={handleCrop}
             crop={true}
           />

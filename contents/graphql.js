@@ -84,6 +84,9 @@ export const args = {
   image0Id: {
     type: GraphQLID
   },
+  image1Id: {
+    type: GraphQLID
+  },
   videoUrl: {
     type: GraphQLString
   },
