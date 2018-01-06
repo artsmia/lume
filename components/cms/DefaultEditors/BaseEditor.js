@@ -9,7 +9,9 @@ class BaseEditor extends Component {
 
   constructor(props){
     super(props)
-    this.state = {}
+    this.state = {
+      sync: true,
+    }
     this.props.fields.forEach(({name, defaultValue}) => Object.assign(this.state, {
       [name]: defaultValue
     }))
@@ -21,6 +23,9 @@ class BaseEditor extends Component {
       handleChange,
       saveEdits,
       state,
+      state: {
+        sync
+      },
       props: {
         fields
       }
@@ -30,8 +35,9 @@ class BaseEditor extends Component {
       <Container>
         <Button
           onClick={saveEdits}
+          disabled={sync}
         >
-          Save
+          {(sync) ? "Saved!" : "Save"}
         </Button>
         {fields.map( ({
           label,
@@ -56,7 +62,12 @@ class BaseEditor extends Component {
     this.updateProps(nextProps)
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+  handleChange = ({target: {value, name}}) => {
+    this.setState({
+      [name]: value,
+      sync: false
+    })
+  }
 
   updateProps = (nextProps) => {
     if (nextProps.content) {
@@ -64,7 +75,9 @@ class BaseEditor extends Component {
         nextProps.content.id !== this.state.id
       ) {
         let {content} = nextProps
-        let state = {}
+        let state = {
+          sync: true
+        }
 
         this.props.fields.forEach(field => {
 
@@ -107,9 +120,16 @@ class BaseEditor extends Component {
   saveEdits = () => {
     this.props.editContent({
       ...this.state,
+      sync: undefined
     })
+    this.setState({sync: true})
   }
 
+  componentWillUnmount(){
+    if (!this.state.sync) {
+      this.saveEdits()
+    }
+  }
 
 
 }

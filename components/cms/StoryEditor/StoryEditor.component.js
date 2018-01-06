@@ -16,15 +16,16 @@ export default class StoryEditor extends Component {
     storyId: PropTypes.string.isRequired,
   }
 
-  initialState = {
+  initialValues = {
     title: "",
     description: "",
     previewImageId: undefined,
-    template: "scroller"
+    template: "scroller",
   }
 
   state = {
-    ...this.initialState
+    ...this.initialValues,
+    sync: true
   }
 
   render() {
@@ -36,7 +37,8 @@ export default class StoryEditor extends Component {
         title,
         description,
         previewImageId,
-        template
+        template,
+        sync
       },
       handleChange,
       handleSave
@@ -44,14 +46,17 @@ export default class StoryEditor extends Component {
 
     return (
       <Container>
-        <H3>
-          Story Editor
-        </H3>
-        <Button
-          onClick={handleSave}
-        >
-          Save
-        </Button>
+        <Top>
+          <H3>
+            Story Editor
+          </H3>
+          <Button
+            onClick={handleSave}
+            disabled={sync}
+          >
+            {(sync) ? "Saved" : "Save"}
+          </Button>
+        </Top>
         <Select
           name={"template"}
           onChange={handleChange}
@@ -101,30 +106,60 @@ export default class StoryEditor extends Component {
         let {
           story
         } = nextProps
-        let state = {}
+        let state = {
+          previewImageId: (story.previewImage) ? story.previewImage.id : undefined
+        }
         Object.keys(story).forEach(key => {
           Object.assign(state, {
-            [key]: story[key] || this.initialState[key]
+            [key]: story[key] || this.initialValues[key]
           })
         })
+
         this.setState(state)
       }
     }
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
-
-  handleSave = () => {
-    this.props.editStory({
-      ...this.state,
+  handleChange = ({target: {value, name}}) => {
+    this.setState({
+      [name]: value,
+      sync: false
     })
+  }
+
+  handleSave = async () => {
+    try {
+      await this.props.editStory({
+        ...this.state,
+      })
+      this.setState({
+        sync: true
+      })
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  componentWillUnmount(){
+    if (!this.state.sync){
+      this.handleSave()
+    }
   }
 
 }
 
+const Top = styled.div`
+  display: flex;
+  justify-content:space-between;
+  height: 70px;
+  width: 100%;
+`
+
 const Container = styled.div`
   width: 100%;
-  height: 100px;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 `
