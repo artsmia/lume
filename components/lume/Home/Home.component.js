@@ -7,7 +7,7 @@ import {Column} from '../../ui/layout'
 import PropTypes from 'prop-types'
 import router from 'next/router'
 
-export default class LumeHome extends Component {
+export default class Home extends Component {
 
   render() {
 
