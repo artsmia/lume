@@ -17,7 +17,7 @@ export default class Editor extends Component {
     selectedContent: null,
     contentType: "comparison",
     contents: [],
-    initialized: false
+    initialized: false,
   }
 
   render(){
@@ -34,15 +34,14 @@ export default class Editor extends Component {
         editing,
         selectedContent,
         contentType,
-        contents
+        contents,
       },
       handleStorySelection,
       handleContentSelection,
       handleChange,
       renderContentEditor,
-      handleReorder
+      handleReorder,
     } = this
-
 
     return (
       <Container>
@@ -110,6 +109,7 @@ export default class Editor extends Component {
               <StoryEditor
                 storyId={storyId}
                 subdomain={subdomain}
+                ref={(ref) => {this.storyEditor = ref}}
               />
             ): null}
 
@@ -136,9 +136,12 @@ export default class Editor extends Component {
         contents
       })
     }
+  }
 
-
-
+  saveReorder = () => {
+    this.props.reorderContents({
+      contentIds: this.state.contents.map(content => content.id)
+    })
   }
 
   handleReorder = (dragIndex, hoverIndex) => {
@@ -153,7 +156,7 @@ export default class Editor extends Component {
       return {
         contents
       }
-    })
+    }, this.saveReorder)
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
@@ -172,7 +175,6 @@ export default class Editor extends Component {
       selectedContent
     })
   }
-
 
 
 }
