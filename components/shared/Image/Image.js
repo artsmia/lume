@@ -20,6 +20,8 @@ export default class extends Component {
 
   render () {
 
+    console.log(this.props.data)
+
     if (
       this.props.data.loading
     ) return null

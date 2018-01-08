@@ -5,12 +5,15 @@ import {Label} from '../../ui/forms'
 import Modal from '../../ui/modal'
 import ImageManager from '../ImageManager'
 import Image from '../../shared/Image'
+import router from 'next/router'
 
 export default class ChangeImage extends Component {
 
   state = {
-    modal: false
+    modal: false,
+    subdomain: 'local'
   }
+
 
   render(){
 
@@ -19,13 +22,15 @@ export default class ChangeImage extends Component {
       handleModalClose,
       props: {
         value,
-        label
+        label,
       },
       handleChange,
       state: {
-        modal
+        modal,
+        subdomain
       }
     } = this
+
 
     return (
       <Container>
@@ -56,7 +61,7 @@ export default class ChangeImage extends Component {
 
         >
           <ImageManager
-            subdomain={"carl"}
+            subdomain={subdomain}
             onImageSave={handleChange}
           />
 
@@ -65,6 +70,10 @@ export default class ChangeImage extends Component {
     )
   }
 
+
+  componentDidMount(){
+    this.setState({subdomain: router.router.query.subdomain})
+  }
 
   handleModalOpen = () => {
     this.setState({
