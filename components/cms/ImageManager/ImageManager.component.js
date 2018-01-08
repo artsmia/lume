@@ -8,7 +8,6 @@ import {PropTypes} from 'prop-types'
 import Image from '../../shared/Image'
 import Zoomer from '../../shared/Zoomer'
 
-
 export default class ImageManager extends Component {
 
 

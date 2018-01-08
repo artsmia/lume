@@ -77,6 +77,9 @@ async function populate(){
         let [detailImage] = await Image.findOrCreate({
           where: {
             localId: view.image
+          },
+          defaults: {
+            organizationId: Mia.id
           }
         })
 
@@ -138,6 +141,9 @@ async function populate(){
           let result = await Image.findOrCreate({
             where: {
               localId: content.image
+            },
+            defaults: {
+              organizationId: Mia.id
             }
           })
           image0 = result[0]
@@ -156,12 +162,18 @@ async function populate(){
           let result = await Image.findOrCreate({
             where: {
               localId: content.image
+            },
+            defaults: {
+              organizationId: Mia.id
             }
           })
           image0 = result[0]
           result = await Image.findOrCreate({
             where: {
               localId: content.imageB
+            },
+            defaults: {
+              organizationId: Mia.id
             }
           })
 
