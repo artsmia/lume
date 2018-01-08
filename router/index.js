@@ -74,6 +74,18 @@ app.prepare().then(() => {
     app.render(req, res, page)
   })
 
+
+  server.get('/:subdomain/story/:storyId', (req, res) => {
+    const page = '/lume/story'
+    const {subdomain, storyId} = req.params
+    const params = {
+        subdomain,
+        storyId
+    }
+    app.render(req, res, page, params)
+  })
+
+
   server.get('/:subdomain/cms', (req, res) => {
     const page = '/cms'
     const {subdomain} = req.params
