@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
-import OrganizationHome from '../../components/lume/OrganizationHome'
+import Story from '../../components/lume/Story'
 import withData from '../../apollo'
 import Template from '../../components/shared/Template'
 
-class LumeOrganization extends Component {
+class StoryPage extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
-
       return {
         ...ctx.query
       }
@@ -25,7 +24,7 @@ class LumeOrganization extends Component {
         drawer
         {...this.props}
       >
-        <OrganizationHome
+        <Story
           {...this.props}
         />
       </Template>
@@ -33,4 +32,4 @@ class LumeOrganization extends Component {
   }
 }
 
-export default withData(LumeOrganization)
+export default withData(StoryPage)

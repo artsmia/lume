@@ -18,6 +18,7 @@ export default class Home extends Component {
     const {
       props: {
         stories,
+        subdomain
       },
       state: {
         search
@@ -48,6 +49,7 @@ export default class Home extends Component {
               key={id}
               id={id}
               imageId={(previewImage) ? previewImage.id : undefined}
+              subdomain={subdomain}
             />
           ))}
         </Results>
@@ -69,20 +71,23 @@ export default class Home extends Component {
 
 }
 
-const Story = ({id, imageId}) => (
+const Story = ({id, imageId, subdomain}) => (
   <Link
     href={{
       pathname: '/lume/story',
       query: {
-        storyId: id
+        storyId: id,
+        subdomain
       }
     }}
-    as={`/sumbdomain/story/${id}`}
+    as={`/${subdomain}/story/${id}`}
   >
-    <Image
-      imageId={imageId}
-      height={"200px"}
-    />
+    {(imageId) ? (
+      <Image
+        imageId={imageId}
+        height={"200px"}
+      />
+    ): <div></div>}
   </Link>
 )
 
@@ -93,9 +98,10 @@ const Container = styled.div`
 `
 
 const Results = styled.div`
-  width: 70%;
+  max-width: 70%;
   height: 100%;
   display: flex;
+  flex-wrap: wrap;
 `
 
 const SearchBar = styled.div`

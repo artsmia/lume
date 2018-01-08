@@ -14,6 +14,10 @@ const fragment = gql`
       id
       type
       index
+      obj {
+        id
+        title
+      }
     }
   }
 `
