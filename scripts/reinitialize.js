@@ -7,6 +7,9 @@ import mkdirp from 'mkdirp'
 import path from 'path'
 import Organization from '../db/models/Organization'
 import User_Organization from '../db/models/User_Organization'
+import chalk from 'chalk'
+
+const log = (msg) => console.log(chalk.cyan(msg))
 
 async function reinitialize(){
   try {
@@ -42,13 +45,15 @@ async function reinitialize(){
 
     rimraf('localFileStorage', (err) => {
       mkdirp('localFileStorage', (err) => {
+        log("data reset!")
         process.exit(0)
       })
     })
 
-    console.log("done?")
   } catch (ex) {
     console.error(ex)
+  } finally {
+
   }
 }
 

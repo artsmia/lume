@@ -46,6 +46,9 @@ export const TemplateEnum = new GraphQLEnumType({
     slider: {
       value: "slider"
     },
+    original: {
+      value: "original"
+    },
   }
 })
 

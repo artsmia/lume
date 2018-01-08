@@ -66,6 +66,10 @@ export async function createAssociations() {
       as: "images"
     })
 
+    Organization.hasMany(Obj, {
+      as: "objs"
+    })
+
     Organization.hasMany(Group, {
       as: "group"
     })
