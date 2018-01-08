@@ -20,7 +20,7 @@ export default class StoryEditor extends Component {
     title: "",
     description: "",
     previewImageId: undefined,
-    template: "scroller",
+    template: "original",
   }
 
   state = {
@@ -63,9 +63,9 @@ export default class StoryEditor extends Component {
           value={template}
         >
           <Option
-            value={"scroller"}
+            value={"original"}
           >
-            {"scroller"}
+            {"original"}
           </Option>
           <Option
             value={"slider"}

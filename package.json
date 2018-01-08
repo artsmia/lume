@@ -75,6 +75,7 @@
     "start-next:local": "BABEL_ENV=next node router",
     "reinit": "NODE_ENV=dev DATABASE=local BABEL_ENV=api babel-node scripts/reinitialize",
     "build": "rm -rf build && babel ../lume --out-dir build",
-    "test": "jest"
+    "test": "jest",
+    "mia": "yarn run reinit && babel-node scripts/mia-migrate"
   }
 }
