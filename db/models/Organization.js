@@ -20,11 +20,11 @@ const Organization = db.define('organization', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  customItemApiEnabled: {
+  customObjApiEnabled: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  customItemApiEndpoint: {
+  customObjApiEndpoint: {
     type: Sequelize.STRING
   },
   customImageApiEnabled: {

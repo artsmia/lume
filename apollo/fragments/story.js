@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import objFragment from './obj'
 
 const fragment = gql`
   fragment StoryFragment on story {
@@ -15,11 +16,12 @@ const fragment = gql`
       type
       index
       obj {
-        id
-        title
+        ...ObjFragment
       }
     }
   }
+
+  ${objFragment}
 `
 
 export default fragment
