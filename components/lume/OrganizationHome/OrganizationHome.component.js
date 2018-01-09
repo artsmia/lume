@@ -24,7 +24,7 @@ export default class Home extends Component {
         search
       },
       handleChange,
-      handleSearch
+      handleSearch,
     } = this
 
     return (
@@ -69,6 +69,8 @@ export default class Home extends Component {
     })
   }
 
+
+
 }
 
 const Story = ({id, imageId, subdomain}) => (
@@ -85,7 +87,9 @@ const Story = ({id, imageId, subdomain}) => (
     {(imageId) ? (
       <Image
         imageId={imageId}
+        width={"30%"}
         height={"200px"}
+        objectFit={"cover"}
       />
     ): <div></div>}
   </Link>
@@ -105,10 +109,10 @@ const Results = styled.div`
 `
 
 const SearchBar = styled.div`
-  width: 30%;
+  width: 25%;
   height: 100%;
   display: flex;
-  flex-direction:column;
+  flex-direction:row;
   align-items:flex-start;
   padding: 20px;
 `

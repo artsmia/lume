@@ -4,6 +4,8 @@ import Zoomer from '../../shared/Zoomer'
 import ContentDisplaySwitcher from '../../../contents/DisplaySwitcher'
 import {H3} from '../../ui/h'
 import {Button} from '../../ui/buttons'
+import Icon from '../../ui/icons'
+import router from 'next/router'
 
 export default class OriginalTemplate extends Component {
 
@@ -59,6 +61,14 @@ export default class OriginalTemplate extends Component {
               />
             </FeatureContainer>
             <SideContainer>
+              <HomeButton
+                onClick={()=>router.back()}
+              >
+                <Icon
+                  icon={"home"}
+                  fill={"white"}
+                />
+              </HomeButton>
               <H3>
                 {selectedContent.title}
               </H3>
@@ -155,4 +165,15 @@ const PageButtonContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   z-index: 1001;
+`
+
+const HomeButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  background-color: black;
+  cursor: pointer;
 `
