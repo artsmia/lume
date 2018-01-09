@@ -13,6 +13,9 @@ const ContentThumbQuery = gql`
       title
       index
       type
+      image0 {
+        id
+      }
     }
   }
 

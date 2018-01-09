@@ -28,7 +28,8 @@ class EditContentThumb extends Component {
       contentId,
       content: {
         title,
-        type
+        type,
+        image0
       },
       connectDropTarget,
       connectDragSource
@@ -48,6 +49,13 @@ class EditContentThumb extends Component {
           <H3>
             {title}
           </H3>
+
+          {(image0) ? (
+            <Image
+              imageId={image0.id}
+              height={"50px"}
+            />
+          ): null}
           <H4>
             {type}
           </H4>
@@ -63,8 +71,7 @@ class EditContentThumb extends Component {
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid blue;
-  background-color: yellow;
+  border: 1px solid black;
   box-sizing: border-box;
 `
 

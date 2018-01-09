@@ -72,11 +72,13 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "start-api:local": "BABEL_ENV=api nodemon --exec babel-node api",
+    "start-api:local": "BABEL_ENV=api DATABASE=local nodemon --exec babel-node api",
     "start-next:local": "BABEL_ENV=next node router",
     "reinit": "NODE_ENV=dev DATABASE=local BABEL_ENV=api babel-node scripts/reinitialize",
-    "build": "rm -rf build && babel ../lume --out-dir build",
+    "build-api": "rm -rf build && babel ../lume --out-dir build",
+    "build": "BABEL_ENV=next next build",
     "test": "jest",
-    "mia": "yarn run reinit && babel-node scripts/mia-migrate"
+    "mia": "yarn run reinit && babel-node scripts/mia-migrate",
+    "start": "NODE_ENV=production node router"
   }
 }
