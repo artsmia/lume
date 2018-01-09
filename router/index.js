@@ -33,6 +33,8 @@ app.prepare().then(() => {
     passport.session()
   )
 
+  console.log(process.env.NEXT_URL)
+
   server.get(
     '/login',
     passport.authenticate('auth0', {

@@ -8,6 +8,7 @@ import StoryEditor from '../StoryEditor'
 import contentTypes from '../../../contents/types'
 import {Select, Option} from '../../ui/forms'
 import EditorSwitcher from '../../../contents/EditorSwitcher'
+import DisplaySwitcher from '../../../contents/DisplaySwitcher'
 
 
 export default class Editor extends Component {
@@ -102,7 +103,11 @@ export default class Editor extends Component {
           <EditorContainer>
 
             <PreviewSpace>
-
+              {(editing === "content") ? (
+                <DisplaySwitcher
+                  content={selectedContent}
+                />
+              ): null}
             </PreviewSpace>
 
             {(editing === "story") ? (
