@@ -268,8 +268,8 @@ export default class extends Component {
     const {
       props: {
         moreGeometry,
+        onContentSelection
       },
-      onContentSelection
     } = this
 
     moreGeometry.forEach( (content) => {

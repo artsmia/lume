@@ -18,6 +18,8 @@ const fragment = gql`
     primaryImage {
       id
     }
+    primaryMediaType
+
   }
 `
 

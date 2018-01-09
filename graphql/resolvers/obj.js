@@ -33,10 +33,11 @@ export default async function(src, args, ctx){
       })
 
       let json = await resp.json()
-      obj = {
-        ...obj,
-        ...json.obj,
-      }
+      // obj = {
+      //   ...obj.dataValues,
+      //   ...json.obj,
+      // }
+      Object.assign(obj.dataValues, json.obj)
     }
 
     return obj

@@ -5,9 +5,12 @@ const VimeoPlayer = (typeof window === "object") ? require('@vimeo/player') : nu
 export default class Video extends Component {
   render(){
 
+    if (!this.props.url) return null
+
     const {
       url
     } = this.props
+
 
     if(
       url.includes("vimeo.com/")
