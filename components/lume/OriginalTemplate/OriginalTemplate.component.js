@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import Tombstone from './Tombstone'
 import Zoomer from '../../shared/Zoomer'
+import ContentDisplaySwitcher from '../../../contents/DisplaySwitcher'
 
 export default class OriginalTemplate extends Component {
 
@@ -10,6 +11,15 @@ export default class OriginalTemplate extends Component {
     selectedTab: "about",
     selectedContent: {}
   }
+
+  constructor(props){
+    super(props)
+    this.state = {
+      ...this.state,
+      selectedContent: props.story.contents.find(content => content.type === "obj"),
+    }
+  }
+
 
   render() {
 
@@ -26,6 +36,9 @@ export default class OriginalTemplate extends Component {
     } = this
 
     let objContent = story.contents.find(content => content.type === 'obj')
+
+    let firstDetailContent = story.contents.find(content => content.type === 'detail')
+
 
     let otherContents = story.contents.slice().filter(content => content.id !== objContent.id)
 
@@ -55,7 +68,9 @@ export default class OriginalTemplate extends Component {
                 name={"details"}
                 onClick={()=>this.setState({
                   selectedTab: "details",
-                  selectedContent: {}
+                  selectedContent: {
+                    type: "all",
+                  }
                 })}
               >
                 Details
@@ -105,6 +120,13 @@ export default class OriginalTemplate extends Component {
           </TabContainer>
         </SideContainer>
         <FeatureContainer>
+          {(selectedContent.type === "all") ? (
+            <Zoomer
+              imageId={firstDetailContent.image0.id}
+              moreGeometry={createMoreGeometry()}
+              onContentSelection={handleContentSelection}
+            />
+          ): null}
           {(selectedContent.type === "detail") ? (
             <Zoomer
               imageId={selectedContent.image0.id}
@@ -113,20 +135,47 @@ export default class OriginalTemplate extends Component {
               onContentSelection={handleContentSelection}
             />
           ): null}
-          {}
+          {(selectedContent.type !== "detail") ? (
+            <ContentDisplaySwitcher
+              content={selectedContent}
+            />
+          ): null}
         </FeatureContainer>
       </Container>
     )
   }
 
   createMoreGeometry = () => {
+
+    const {
+      state: {
+        selectedContent
+      },
+      props: {
+        story
+      }
+    } = this
+
     if (
-      this.state.selectedContent.type === "detail" &&
-      this.props.story
+      selectedContent.type === "detail"
     ) {
-      let more = this.props.story.contents.slice().filter(content => {
+      let more = story.contents.slice().filter(content => {
         if (content.type === "detail") {
-          if (content.image0.id === this.state.selectedContent.image0.id) {
+          if (content.image0.id === selectedContent.image0.id) {
+            return true
+          }
+        }
+        return false
+      })
+      return more
+    }
+    if (
+      selectedContent.type === "all"
+    ) {
+      let firstDetailContent = story.contents.find(content => content.type === 'detail')
+      let more = story.contents.slice().filter(content => {
+        if (content.type === "detail") {
+          if (content.image0.id === firstDetailContent.image0.id) {
             return true
           }
         }
@@ -142,11 +191,7 @@ export default class OriginalTemplate extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps.story){
-      this.setState({selectedContent: nextProps.story.contents.find(content => content.type === "obj")})
-    }
-  }
+
 }
 
 const ContentBody = styled.div`
@@ -207,6 +252,7 @@ const SideContainer = styled.div`
 const FeatureContainer = styled.div`
   width: 70%;
   display: flex;
+  background-color: lightgrey;
 `
 
 const AboutText = styled.div`

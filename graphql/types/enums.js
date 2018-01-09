@@ -64,3 +64,15 @@ export const VisibilityEnum = new GraphQLEnumType({
     },
   }
 })
+
+export const MediaEnum = new GraphQLEnumType({
+  name: 'MediaEnum',
+  values: {
+    image: {
+      value: "image"
+    },
+    video: {
+      value: "video"
+    },
+  }
+})

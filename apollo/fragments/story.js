@@ -30,6 +30,7 @@ const fragment = gql`
       obj {
         ...ObjFragment
       }
+      videoUrl
     }
   }
 

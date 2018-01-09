@@ -8,6 +8,8 @@ import {
 } from 'graphql'
 
 import imageType from './image'
+import {MediaEnum} from './enums'
+
 
 const obj = new GraphQLObjectType({
   name: "obj",
@@ -52,7 +54,17 @@ const obj = new GraphQLObjectType({
       type: GraphQLBoolean
     },
     primaryImage: {
-      type: imageType
+      type: imageType,
+      async resolve(src){
+        try {
+          return await src.getPrimaryImage()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
+    },
+    primaryMediaType: {
+      type: MediaEnum
     }
   })
 })
