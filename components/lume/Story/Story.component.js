@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import OriginalTemplate from '../OriginalTemplate'
+import SliderTemplate from '../SliderTemplate'
 
 export default class Story extends Component {
 
@@ -8,15 +9,30 @@ export default class Story extends Component {
 
     if (!this.props.story) return null
 
-    if(this.props.story.template === 'original') {
-      return (
-        <OriginalTemplate
-          story={this.props.story}
-        />
-      )
-    } else {
-      return null
+    switch (this.props.story.template) {
+      case "original": {
+        return (
+          <OriginalTemplate
+            story={this.props.story}
+          />
+        )
+        break
+      }
+      case "slider": {
+        return (
+          <SliderTemplate
+            story={this.props.story}
+          />
+        )
+        break
+      }
+      default: {
+        return null
+        break
+      }
     }
+
+
   }
 }
 
