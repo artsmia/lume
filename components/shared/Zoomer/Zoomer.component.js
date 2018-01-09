@@ -156,7 +156,7 @@ export default class extends Component {
       if (
         this.zoomCreated &&
         !this.props.loading &&
-        this.props.objId
+        this.props.moreGeometry
       ) {
         await this.createIndexMarkers()
       }
@@ -267,34 +267,21 @@ export default class extends Component {
   createIndexMarkers = () => {
     const {
       props: {
-        data: {
-          obj: {
-            details: allDetails,
-            mainImage: {
-              id: mainImageId
-            }
-          },
-        },
-        onDetailSelection,
-        detailId
-      }
+        moreGeometry,
+      },
+      onContentSelection
     } = this
 
-
-    let matchImageId = detailId || mainImageId
-
-
-    let details = allDetails.filter( detail => detail.image.id === matchImageId)
-
-    details.forEach( (detail) => {
+    moreGeometry.forEach( (content) => {
 
       const {
-        index, geometry: {coordinates}
-      } = detail
+        index,
+        geometry: {coordinates}
+      } = content
 
       let southWest = L.polygon(coordinates).getBounds().getSouthWest()
 
-      let html = `<div class="index-icon"> ${index + 1} </div>`
+      let html = `<div class="index-icon"> ${index} </div>`
 
       let icon = L.divIcon({
         html
@@ -310,7 +297,7 @@ export default class extends Component {
       indexMarker.on(
         "click",
         () => {
-          onDetailSelection(detail)
+          onContentSelection(content)
         }
       )
 

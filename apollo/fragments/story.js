@@ -15,6 +15,18 @@ const fragment = gql`
       id
       type
       index
+      title
+      description
+      image0 {
+        id
+      }
+      image1 {
+        id
+      }
+      geometry {
+        type
+        coordinates
+      }
       obj {
         ...ObjFragment
       }
