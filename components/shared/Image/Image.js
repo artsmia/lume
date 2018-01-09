@@ -11,7 +11,8 @@ export default class extends Component {
     width: "",
     thumb: false,
     size: "50px",
-    selected: false
+    selected: false,
+    objectFit: "contain"
   }
 
   state = {
@@ -36,6 +37,7 @@ export default class extends Component {
         onClick,
         height,
         width,
+        objectFit
       },
       state: {
         src
@@ -72,6 +74,7 @@ export default class extends Component {
         onClick={onClick}
         height={height}
         width={width}
+        objectFit={objectFit}
       />
     )
   }
@@ -129,7 +132,7 @@ export default class extends Component {
 const Img = styled.img`
   height: ${({height}) => height};
   width: ${({width}) => width};
-  object-fit: contain;
+  object-fit: ${({objectFit}) => objectFit};
   margin: 10px;
 `
 
