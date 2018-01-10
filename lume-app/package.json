@@ -52,8 +52,8 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "start:local": "DEPLOYMENT_ENV=LOCAL node router",
-    "build": "DEPLOYMENT_ENV=DEV next build",
-    "start": "DEPLOYMENT_ENV=DEV NODE_ENV=production node router"
+    "start:local": "API_URL=http://localhost:5000 NEXT_URL=http://localhost:3000 node router",
+    "build": "next build",
+    "start": "API_URL=https://api.lume.u100.io NEXT_URL=https://lume.u100.io NODE_ENV=production node router"
   }
 }

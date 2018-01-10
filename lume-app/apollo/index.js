@@ -22,6 +22,7 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
+console.log("Here in apollo", apiUrl)
 
 const config = {
   cache,
