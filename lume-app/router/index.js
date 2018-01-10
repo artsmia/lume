@@ -1,8 +1,4 @@
-let path = `.env.${process.env.DEPLOYMENT_ENV}`
-
-require('dotenv').config({
-  path
-})
+require('dotenv/config')
 const express = require('express')
 const next = require('next')
 const fetch = require('isomorphic-unfetch')
@@ -13,12 +9,6 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 const passport = require('../auth/passport')
-
-// console.log(`
-//   Starting Server:
-//     env: ${process.env.NODE_ENV},
-//     api: ${process.env.API_CONFIG}
-// `)
 
 app.prepare().then(() => {
 
@@ -122,7 +112,7 @@ app.prepare().then(() => {
 
   server.listen(3000, (err) => {
     if (err) throw err
-    console.log(`Ready on ${process.env.NEXT_URL}`)
+    console.log(`Ready at ${process.env.NEXT_URL}`)
   })
 
 
