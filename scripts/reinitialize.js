@@ -1,12 +1,12 @@
 import "babel-polyfill"
 import 'dotenv/config'
-import db from '../db/connect'
-import {createAssociations} from '../db/associations'
+import db from '../lume-api/db/connect'
+import {createAssociations} from '../lume-api/db/associations'
 import rimraf from 'rimraf'
 import mkdirp from 'mkdirp'
 import path from 'path'
-import Organization from '../db/models/Organization'
-import User_Organization from '../db/models/User_Organization'
+import Organization from '../lume-api/db/models/Organization'
+import User_Organization from '../lume-api/db/models/User_Organization'
 import chalk from 'chalk'
 
 const log = (msg) => console.log(chalk.cyan(msg))
@@ -53,7 +53,6 @@ async function reinitialize(){
   } catch (ex) {
     console.error(ex)
   } finally {
-
   }
 }
 
