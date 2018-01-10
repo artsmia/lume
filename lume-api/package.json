@@ -1,22 +1,14 @@
 {
-  "name": "lume",
-  "private": true,
-  "workspaces": [
-    "lume-api",
-    "lume-app",
-    "contents"
-  ],
+  "name": "lume-api",
+  "now": {
+    "alias": "api.lume.u100.io",
+    "env": {
+      "DEPLOYMENT_ENV": "DEV"
+    }
+  },
   "version": "1.0.0",
-  "description": "lume: a digital storytelling application by mia",
-  "author": "Carl Peaslee <cpeaslee@gmail.com>",
-  "license": "MIT",
-  "respository": "https://github.com/artsmia/lume",
   "dependencies": {
-    "@vimeo/player": "^2.2.1",
-    "apollo-link": "^1.0.6",
-    "apollo-link-context": "^1.0.3",
     "apollo-server-express": "^1.3.0",
-    "auth0-lock": "^10.24.1",
     "aws-sdk": "^2.169.0",
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
@@ -31,27 +23,14 @@
     "graphql-server-express": "^1.3.0",
     "graphql-tools": "^2.13.0",
     "isomorphic-unfetch": "^2.0.0",
-    "js-cookie": "^2.2.0",
-    "jsonwebtoken": "^8.1.0",
-    "leaflet": "^1.2.0",
-    "material-design-icons-svg": "^1.1.2",
     "multer": "^1.3.0",
     "mysql2": "^1.5.1",
-    "next": "^4.2.1",
-    "next-apollo": "^1.0.4",
-    "node-fetch": "^1.7.3",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.1",
     "pg": "^7.4.0",
-    "react": "^16.2.0",
-    "react-apollo": "^2.0.4",
-    "react-dnd": "^2.5.4",
-    "react-dnd-html5-backend": "^2.5.4",
-    "react-dom": "^16.2.0",
     "rimraf": "^2.6.2",
     "sequelize": "^4.28.1",
-    "sharp": "^0.18.4",
-    "styled-components": "^2.2.4"
+    "sharp": "^0.18.4"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -78,13 +57,8 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "start-api:local": "BABEL_ENV=api DATABASE=local nodemon --exec babel-node api",
-    "start-next:local": "BABEL_ENV=next node router",
-    "reinit": "NODE_ENV=dev DATABASE=local BABEL_ENV=api babel-node scripts/reinitialize",
-    "build-api": "rm -rf build && babel ../lume --out-dir build",
-    "build": "BABEL_ENV=next next build",
-    "test": "jest",
-    "mia": "yarn run reinit && babel-node scripts/mia-migrate",
-    "start": "NODE_ENV=production node router"
+    "start:local": "DEPLOYMENT_ENV=LOCAL nodemon --exec babel-node index.js",
+    "deploy": "rm -rf build && babel ../lume-api -d build && now",
+    "now-start": "node build"
   }
 }

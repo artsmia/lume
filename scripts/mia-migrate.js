@@ -1,11 +1,11 @@
 import 'dotenv/config'
 import fetch from 'isomorphic-unfetch'
 import chalk from 'chalk'
-import db from '../db/connect'
-import {createAssociations} from '../db/associations'
-import Organization from '../db/models/Organization'
-import Story from '../db/models/Story'
-import Image from '../db/models/Image'
+import db from '../lume-api/db/connect'
+import {createAssociations} from '../lume-api/db/associations'
+import Organization from '../lume-api/db/models/Organization'
+import Story from '../lume-api/db/models/Story'
+import Image from '../lume-api/db/models/Image'
 import data from './mia-data'
 
 const log = (msg) => console.log(chalk.cyan(msg))
