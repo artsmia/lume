@@ -6,6 +6,6 @@ build/
 yarn-error.log
 .next
 .DS_Store
-localFileStorage/*
+localFileStorage
 !localFileStorage/README.md
 *.zip

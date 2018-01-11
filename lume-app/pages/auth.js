@@ -3,6 +3,7 @@ import Template from '../components/shared/Template'
 import getUser from '../auth/getUser'
 import router from 'next/router'
 import {Loading} from '../components/ui/spinner'
+import {apiUrl} from '../config'
 
 export default class Auth extends Component {
 
@@ -77,7 +78,7 @@ export default class Auth extends Component {
 
   getUserOrganizations= async() => {
     try {
-      const response = await fetch(process.env.API_URL, {
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "content-type": "application/json",

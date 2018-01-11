@@ -26,7 +26,7 @@ async function populate(){
       subdomain: "mia",
       name: "Minneapolis Institute of Art",
       customObjApiEnabled: true,
-      customObjApiEndpoint: "http://localhost:5000/mia/obj",
+      customObjApiEndpoint: " https://iexj7ikn39.execute-api.us-west-2.amazonaws.com/prod/lume-mia-micro",
       customImageApiEnabled: true,
       customImageEndpoint: "http://localhost:5000/mia/image"
     })
