@@ -10,6 +10,7 @@ import {
   graphiqlExpress,
 } from 'apollo-server-express'
 import multer from 'multer'
+import imageRoute from './image'
 
 const upload = multer()
 
@@ -25,11 +26,11 @@ server.use(
   bodyParser.json(),
 )
 
-// server.use(
-//   "/image",
-//   upload.single("file"),
-//   imageRoute
-// )
+server.use(
+  "/image",
+  upload.single("file"),
+  imageRoute
+)
 
 server.use('/static', express.static('localFileStorage'))
 

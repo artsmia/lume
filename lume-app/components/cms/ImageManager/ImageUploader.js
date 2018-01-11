@@ -5,6 +5,7 @@ import {Row, Column} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
 import Snackbar from '../../ui/Snackbar'
 import {Spinner} from '../../ui/spinner'
+import {apiUrl} from '../../../config'
 
 export default class extends Component {
 
@@ -146,12 +147,12 @@ export default class extends Component {
       let form = new FormData()
 
       form.append("file", file)
-      form.append("userId", Cookie.get("userId"))
+      form.append("userId", localStorage.getItem('userId'))
       form.append("title", title)
       form.append("alt", alt)
       form.append("subdomain", subdomain)
 
-      const url  = `${process.env.API_URL}/image`
+      const url  = `${apiUrl}/image`
 
       let options = {
         method: 'POST',

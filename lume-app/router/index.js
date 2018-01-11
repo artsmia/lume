@@ -8,7 +8,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-const passport = require('../auth/passport')
+const passport = require('./passport')
 
 app.prepare().then(() => {
 

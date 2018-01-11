@@ -1,3 +1,4 @@
+
 export default async function getUser(ctx){
   try {
     if (process.env.AUTH_STRATEGY === 'local'){
