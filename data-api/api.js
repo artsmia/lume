@@ -10,7 +10,8 @@ import {
   graphiqlExpress,
 } from 'apollo-server-express'
 import multer from 'multer'
-import imageRoute from './image'
+import s3Image from './image'
+import localImage from './image/offline'
 
 const upload = multer()
 
@@ -26,13 +27,15 @@ server.use(
   bodyParser.json(),
 )
 
+let imageRoute = (process.env.FILE_STORAGE === 'local') ? localImage : s3Image
+
 server.use(
   "/image",
   upload.single("file"),
   imageRoute
 )
 
-server.use('/static', express.static('localFileStorage'))
+server.use('/static', express.static('local-store'))
 
 server.use('/graphiql', graphiqlExpress({
   endpointURL: '/'
