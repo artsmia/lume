@@ -109,7 +109,7 @@ export default class extends Component {
         let src = `https://cdn.dx.artsmia.org/thumbs/tn_${localId}.jpg`
         this.setState({src})
       } else {
-        this.setState({src: `${process.env.S3_URL}/mia-lume/${orgId}/${imgId}/${imgQuality}`})
+        this.setState({src: `${process.env.S3_URL}/mia-lume/${orgId}/${imgId}/${imgQuality}.png`})
       }
 
       if (process.env.FILE_STORAGE === "local") {

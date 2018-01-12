@@ -69,6 +69,7 @@
     "enzyme-adapter-react-16": "^1.1.0",
     "jest": "^22.0.4",
     "jest-enzyme": "^4.0.1",
+    "jszip": "^3.1.5",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "nodemon": "^1.12.7",
@@ -79,6 +80,7 @@
   },
   "scripts": {
     "reinit": "DEPLOYMENT_ENV=local babel-node scripts/reinit",
-    "mia": "DEPLOYMENT_ENV=local yarn run reinit && DEPLOYMENT_ENV=local babel-node scripts/mia-migrate"
+    "mia": "DEPLOYMENT_ENV=local yarn run reinit && DEPLOYMENT_ENV=local babel-node scripts/mia-migrate",
+    "tiler": "cd image-tiler && rm -rf ImageTiler.zip && cp TilerDeps.zip ImageTiler.zip && zip ImageTiler.zip lambda_function.py && cd .. && DEPLOYMENT_ENV=dev babel-node scripts/deploy-tiler"
   }
 }

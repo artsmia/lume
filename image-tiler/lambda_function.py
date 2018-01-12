@@ -4,8 +4,10 @@ import sys
 import uuid
 from PIL import Image
 import PIL.Image
+import json
 
 s3_client = boto3.client('s3')
+
 
 
 def lambda_handler(event, context):
@@ -29,21 +31,57 @@ def lambda_handler(event, context):
         w = o.size[0]
         h = o.size[1]
 
+        info = {
+            'width': w,
+            'height': h,
+        }
+
+        infoPath = '/tmp/info.json'
+
+        with open(infoPath, "w+") as outfile:
+            json.dump(info,outfile)
+
+        s3_client.upload_file(infoPath, bucket, f"{s3Dir}/info.json", ExtraArgs={'ACL':'public-read'})
+
         ratio = w / 200
 
         sw = int(w / ratio)
         sh = int(h / ratio)
 
-        sPath = '/tmp/s.jpeg'
+        sPath = '/tmp/s.png'
 
-        o.resize((sw, sh)).save(sPath, 'JPEG')
+        o.resize((sw, sh)).save(sPath, 'PNG')
 
-        sKey = f"{s3Dir}/s.jpeg"
+        sKey = f"{s3Dir}/s.png"
 
-        s3_client.upload_file(sPath, bucket, sKey)
+        s3_client.upload_file(sPath, bucket, sKey, ExtraArgs={'ACL':'public-read'})
+
+        ratio = w / 400
+
+        mw = int(w / ratio)
+        mh = int(h / ratio)
+
+        mPath = '/tmp/m.png'
+
+        o.resize((mw, mh)).save(mPath, 'PNG')
+
+        mKey = f"{s3Dir}/m.png"
+
+        s3_client.upload_file(mPath, bucket, mKey, ExtraArgs={'ACL':'public-read'})
 
         tileSize = 512
-        loops = 0
+
+        tempW = w
+        tempH = h
+
+        z = 0
+
+        while tempW > tileSize < tempH:
+            tempW = int(tempW / 2)
+            tempH = int(tempH / 2)
+            z = z + 1
+
+
         x = 0
         y = 0
 
@@ -55,7 +93,7 @@ def lambda_handler(event, context):
             return (w, n, e, s)
 
         def makeName(x, y):
-            return f"{loops}_{x}_{y}.jpeg"
+            return f"{z}_{x}_{y}.png"
 
         while w > tileSize < h:
 
@@ -68,8 +106,8 @@ def lambda_handler(event, context):
                 name = makeName(x,y)
                 path = f"/tmp/{name}"
                 key = f"{s3Dir}/{name}"
-                o.crop(box).save(path, "JPEG")
-                s3_client.upload_file(path, bucket, key)
+                o.crop(box).save(path, "PNG")
+                s3_client.upload_file(path, bucket, key, ExtraArgs={'ACL':'public-read'})
 
                 for y in range(0, yMax):
 
@@ -77,16 +115,16 @@ def lambda_handler(event, context):
                     name = makeName(x,y)
                     path = f"/tmp/{name}"
                     key = f"{s3Dir}/{name}"
-                    o.crop(box).save(path, "JPEG")
-                    s3_client.upload_file(path, bucket, key)
+                    o.crop(box).save(path, "PNG")
+                    s3_client.upload_file(path, bucket, key, ExtraArgs={'ACL':'public-read'})
 
             w = int(w / 2)
             h = int(h / 2)
             o = o.resize((w,h))
-            loops = loops + 1
+            z = z - 1
 
         name = makeName(x,y)
         path = f"/tmp/{name}"
         key = f"{s3Dir}/{name}"
-        o.save(path, "JPEG")
-        s3_client.upload_file(path, bucket, key)
+        o.save(path, "PNG")
+        s3_client.upload_file(path, bucket, key, ExtraArgs={'ACL':'public-read'})
