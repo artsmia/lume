@@ -138,9 +138,13 @@ export default class StoryList extends Component {
         }
       } = this
 
-      let newVariables = variables
-
-      newVariables.filter.offset = stories.length
+      let newVariables = {
+        filter: {
+          ...variables.filter,
+          limit: variables.filter.limit,
+          offset: this.props.stories.length,
+        }
+      }
 
       fetchMore({
         variables: newVariables,

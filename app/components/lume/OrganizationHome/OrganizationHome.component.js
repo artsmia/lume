@@ -8,7 +8,8 @@ import Image from '../../shared/Image'
 export default class Home extends Component {
 
   state = {
-    search: ""
+    search: "",
+    variables: this.props.variables
   }
 
   render() {
@@ -25,7 +26,10 @@ export default class Home extends Component {
       },
       handleChange,
       handleSearch,
+      handleLoadMore
     } = this
+
+    console.log(this.props.variables)
 
     return (
 
@@ -52,6 +56,11 @@ export default class Home extends Component {
               subdomain={subdomain}
             />
           ))}
+          <Button
+            onClick={handleLoadMore}
+          >
+            More
+          </Button>
         </Results>
 
       </Container>
@@ -70,6 +79,41 @@ export default class Home extends Component {
   }
 
 
+  handleLoadMore = async () => {
+    try {
+
+      const {
+        props: {
+          fetchMore,
+          stories
+        },
+        state: {
+          variables
+        }
+      } = this
+
+      let newVariables = {
+        filter: {
+          ...variables.filter,
+          limit: variables.filter.limit,
+          offset: this.props.stories.length,
+        }
+      }
+
+      fetchMore({
+        variables: newVariables,
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult) { return previousResult }
+
+          return Object.assign({}, previousResult, {
+            stories: [...previousResult.stories, ...fetchMoreResult.stories]
+          })
+        },
+      })
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
 
 }
 
