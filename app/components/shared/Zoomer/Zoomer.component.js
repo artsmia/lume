@@ -514,14 +514,16 @@ export default class extends Component {
 
       } else {
 
-        const response = await fetch(`${process.env.API_URL}/iiif/${imageId}/info.json`, {
+
+        const response = await fetch(`${process.env.S3_URL}/mia-lume/${bucketId}/${imageId}/info.json`, {
           method: "GET"
         })
 
         let json = await response.json()
 
+
         tileSize = 512
-        tileUrl = `${process.env.S3_URL}/mia-lume/${bucketId}/${imageId}/tiles/{z}-{x}-{y}.png`
+        tileUrl = `${process.env.S3_URL}/mia-lume/${bucketId}/${imageId}/{z}_{x}_{y}.png`
 
         if (process.env.FILE_STORAGE === "local") {
           tileUrl = `${process.env.API_URL}/static/${imageId}/TileGroup0/{z}-{x}-{y}.png`
@@ -537,6 +539,7 @@ export default class extends Component {
       let maxTiles = Math.ceil(larger / tileSize)
 
       let maxZoom = Math.log2(maxTiles)
+
 
       while (
         height > tileSize ||
@@ -596,6 +599,7 @@ export default class extends Component {
         } else {
           e.target._zoom = Math.round(zoomReq)
         }
+
       })
 
 
@@ -705,7 +709,7 @@ if (typeof window === 'object') {
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({z,x,y}) {
 
-
+      console.log(z)
       let tile = document.createElement("div")
       let image = document.createElement("img")
       image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y).replace("{s}", 0)
