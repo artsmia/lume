@@ -26,17 +26,13 @@ def lambda_handler(event, context):
 
         o = Image.open(download_path)
 
-        ow = o.size[0]
-        oh = o.size[1]
+        w = o.size[0]
+        h = o.size[1]
 
-        print(o.size)
+        ratio = w / 200
 
-        ratio = ow / 200
-
-        sw = int(ow / ratio)
-        sh = int(oh / ratio)
-
-        print(sw,sh)
+        sw = int(w / ratio)
+        sh = int(h / ratio)
 
         sPath = '/tmp/s.jpeg'
 
@@ -44,8 +40,53 @@ def lambda_handler(event, context):
 
         sKey = f"{s3Dir}/s.jpeg"
 
-        print(sKey)
-
-        print(os.listdir('/tmp'))
-
         s3_client.upload_file(sPath, bucket, sKey)
+
+        tileSize = 512
+        loops = 0
+        x = 0
+        y = 0
+
+        def makeBox(x, y):
+            w = tileSize * x
+            n = tileSize * y
+            e = tileSize * (x + 1)
+            s = tileSize * (y + 1)
+            return (w, n, e, s)
+
+        def makeName(x, y):
+            return f"{loops}_{x}_{y}.jpeg"
+
+        while w > tileSize < h:
+
+            xMax = int(w / 512)
+            yMax = int(h / 512)
+
+            for x in range(0, xMax):
+
+                box = makeBox(x,y)
+                name = makeName(x,y)
+                path = f"/tmp/{name}"
+                key = f"{s3Dir}/{name}"
+                o.crop(box).save(path, "JPEG")
+                s3_client.upload_file(path, bucket, key)
+
+                for y in range(0, yMax):
+
+                    box = makeBox(x,y)
+                    name = makeName(x,y)
+                    path = f"/tmp/{name}"
+                    key = f"{s3Dir}/{name}"
+                    o.crop(box).save(path, "JPEG")
+                    s3_client.upload_file(path, bucket, key)
+
+            w = int(w / 2)
+            h = int(h / 2)
+            o = o.resize((w,h))
+            loops = loops + 1
+
+        name = makeName(x,y)
+        path = f"/tmp/{name}"
+        key = f"{s3Dir}/{name}"
+        o.save(path, "JPEG")
+        s3_client.upload_file(path, bucket, key)
