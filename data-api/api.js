@@ -32,7 +32,7 @@ server.use(
 server.use(
   "/image",
   upload.single("file"),
-  s3Route
+  s3Image
 )
 
 server.use('/static', express.static('local-store'))
