@@ -9,8 +9,14 @@ class Edit extends Component {
   static getInitialProps = async (ctx) => {
     try {
 
+      let {
+        storyId,
+        subdomain
+      } = ctx.query
+
       return {
-        ...ctx.query,
+        storyId,
+        subdomain,
         user: getUser(ctx)
       }
     } catch (ex) {

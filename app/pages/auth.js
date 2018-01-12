@@ -3,6 +3,7 @@ import Template from '../components/shared/Template'
 import getUser from '../auth/getUser'
 import router from 'next/router'
 import {Loading} from '../components/ui/spinner'
+import Cookie from 'js-cookie'
 
 export default class Auth extends Component {
 
@@ -33,7 +34,7 @@ export default class Auth extends Component {
 
   handleUser = async () => {
     try {
-      await this.setupLocalStorage()
+      await this.setCookies()
 
       let organizations = await this.getUserOrganizations()
 
@@ -56,17 +57,16 @@ export default class Auth extends Component {
     }
   }
 
-  setupLocalStorage = async () => {
+  setCookies = async () => {
     try {
 
-      const {
-        id,
-        idToken
-      } = this.props.user
+        let {
+          idToken,
+          id
+        } = this.props.user
 
-
-      localStorage.setItem('idToken', idToken)
-      localStorage.setItem('userId', id)
+        Cookie.set("userId", id)
+        Cookie.set("idToken", idToken)
 
 
     } catch (ex) {

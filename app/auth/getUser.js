@@ -1,37 +1,51 @@
+import router from 'next/router'
+import Cookie from 'js-cookie'
 
 export default async function getUser(ctx){
   try {
+
+
     if (process.env.AUTH_STRATEGY === 'local'){
       return {
         id: 'local'
       }
     }
 
+
     if (
-      !process.browser &&
-      ctx.req.session.passport
+      ctx.req
     ){
-      return {
-        ...ctx.req.session.passport.user
-      }
+
+      let {user} = ctx.req.session.passport
+
+      return user
     }
 
-    if (process.browser) {
-      if (
-        localStorage.getItem('userId') &&
-        localStorage.getItem('idToken')
-      ) {
-        return {
-          id: localStorage.getItem('userId'),
-          idToken: localStorage.getItem('idToken')
-        }
+    if (
+      process.browser
+    ) {
+      let user = {
+        id: Cookie.get('userId'),
+        idToken: Cookie.get('idToken')
+
       }
+
+      return user
     }
 
-    return {
-      user: "error"
-    }
+
   } catch (ex) {
     console.error(ex)
+    redirect(ctx)
+  }
+}
+
+
+export const redirect = (ctx) => {
+  if (ctx.res){
+    ctx.res.writeHead(303, { Location: '/' })
+    ctx.res.end()
+  } else {
+    router.replace('/')
   }
 }
