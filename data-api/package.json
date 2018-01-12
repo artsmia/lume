@@ -26,8 +26,7 @@
     "passport-auth0": "^0.6.1",
     "pg": "^7.4.0",
     "rimraf": "^2.6.2",
-    "sequelize": "^4.28.1",
-    "sharp": "^0.19.0"
+    "sequelize": "^4.28.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -55,7 +54,7 @@
   },
   "scripts": {
     "start:local": "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js",
-    "deploy": "rm -rf build && babel ../data-api -d build && now",
+    "deploy": "rm -rf build && babel ../data-api -d build --ignore node_modules && now",
     "now-start": "DEPLOYMENT_ENV=dev node build"
   }
 }
