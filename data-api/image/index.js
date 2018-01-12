@@ -38,7 +38,7 @@ export default async function (req,res, next) {
 
 
     await upload({
-      Key: `${organization.id}/${fileId}/original`,
+      Key: `${organization.id}/${fileId}/original.jpeg`,
       Bucket: "mia-lume",
       Body: buffer,
       ACL: "public-read",
