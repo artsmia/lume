@@ -1,8 +1,0 @@
-{
-  "name": "lume-image-tiler",
-  "version": "1.0.0",
-  "scripts": {
-    "start": "node index.js",
-    "build": "rm -rf app.zip && yarn install --production && zip -r app.zip node_modules index.js"
-  }
-}

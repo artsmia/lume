@@ -514,23 +514,37 @@ export default class extends Component {
 
       } else {
 
-
-        const response = await fetch(`${process.env.S3_URL}/mia-lume/${bucketId}/${imageId}/info.json`, {
-          method: "GET"
-        })
-
-        let json = await response.json()
-
-
         tileSize = 512
-        tileUrl = `${process.env.S3_URL}/mia-lume/${bucketId}/${imageId}/{z}_{x}_{y}.png`
+
 
         if (process.env.FILE_STORAGE === "local") {
-          tileUrl = `${process.env.API_URL}/static/${imageId}/TileGroup0/{z}-{x}-{y}.png`
-        }
 
-        height = json.height
-        width = json.width
+          const response = await fetch(`${process.env.API_URL}/static/${imageId}/ImageProperties.xml`, {
+            method: "GET"
+          })
+
+          let text = await response.text()
+
+          height = new RegExp(/HEIGHT="(\d*)"/g).exec(text)[1]
+          width = new RegExp(/WIDTH="(\d*)"/g).exec(text)[1]
+
+
+          tileUrl = `${process.env.API_URL}/static/${imageId}/TileGroup0/{z}-{x}-{y}.png`
+        } else {
+
+          const response = await fetch(`${process.env.S3_URL}/mia-lume/${bucketId}/${imageId}/info.json`, {
+            method: "GET"
+          })
+
+          let json = await response.json()
+
+          height = json.height
+          width = json.width
+
+          tileUrl = `${process.env.S3_URL}/mia-lume/${bucketId}/${imageId}/{z}_{x}_{y}.png`
+
+
+        }
 
       }
 
