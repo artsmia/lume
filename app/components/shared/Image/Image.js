@@ -36,7 +36,8 @@ export default class extends Component {
         onClick,
         height,
         width,
-        objectFit
+        objectFit,
+        title
       },
       state: {
         src
@@ -62,6 +63,7 @@ export default class extends Component {
           selected={selected}
           onClick={onClick}
           size={size}
+          title={title}
         />
       )
     }
@@ -74,6 +76,7 @@ export default class extends Component {
         height={height}
         width={width}
         objectFit={objectFit}
+        title={title}
       />
     )
   }

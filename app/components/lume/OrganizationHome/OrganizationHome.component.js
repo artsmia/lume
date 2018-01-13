@@ -29,8 +29,6 @@ export default class Home extends Component {
       handleLoadMore
     } = this
 
-    console.log(this.props.variables)
-
     return (
 
       <Container>
@@ -48,12 +46,13 @@ export default class Home extends Component {
         </SearchBar>
 
         <Results>
-          {stories.map( ({id, previewImage}) => (
+          {stories.map( ({id, previewImage, title}) => (
             <Story
               key={id}
               id={id}
               imageId={(previewImage) ? previewImage.id : undefined}
               subdomain={subdomain}
+              title={title}
             />
           ))}
           <Button
@@ -117,7 +116,7 @@ export default class Home extends Component {
 
 }
 
-const Story = ({id, imageId, subdomain}) => (
+const Story = ({id, imageId, subdomain, title}) => (
   <Link
     href={{
       pathname: '/lume/story',
@@ -128,16 +127,26 @@ const Story = ({id, imageId, subdomain}) => (
     }}
     as={`/${subdomain}/story/${id}`}
   >
+    <AWrap>
+
     {(imageId) ? (
       <Image
         imageId={imageId}
-        width={"30%"}
         height={"200px"}
+          width={"300px"}
         objectFit={"cover"}
+        title={title}
       />
     ): <div></div>}
+  </AWrap>
+
   </Link>
 )
+
+const AWrap = styled.a`
+  cursor: pointer;
+  display: flex;
+`
 
 const Container = styled.div`
   height: 100vh;
