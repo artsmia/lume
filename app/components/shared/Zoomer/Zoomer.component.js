@@ -538,6 +538,8 @@ export default class extends Component {
 
           let json = await response.json()
 
+          console.log(json)
+
           height = json.height
           width = json.width
 
@@ -584,7 +586,6 @@ export default class extends Component {
 
       const initialZoom = Math.log2(longDimension / tileSize)
 
-
       this.tiles = L.tileLayer.knight(
         tileUrl, {
           tileSize,
@@ -597,8 +598,10 @@ export default class extends Component {
         }
       )
 
+      let initialLatLng = [height / 2, -1 * width / 2]
+
       this.map.setView(
-        [height / 2, -1 * width / 2],
+        initialLatLng,
         initialZoom
       )
 
@@ -723,7 +726,7 @@ if (typeof window === 'object') {
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({z,x,y}) {
 
-      console.log(z)
+      console.log(z, x, y)
       let tile = document.createElement("div")
       let image = document.createElement("img")
       image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y).replace("{s}", 0)

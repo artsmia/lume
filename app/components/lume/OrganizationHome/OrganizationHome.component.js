@@ -4,12 +4,15 @@ import {Search} from '../../ui/search'
 import {Button} from '../../ui/buttons'
 import Link from 'next/link'
 import Image from '../../shared/Image'
+import {Label, Checkbox} from '../../ui/forms'
 
 export default class Home extends Component {
 
   state = {
     search: "",
-    variables: this.props.variables
+    variables: this.props.variables,
+    original: true,
+    slider: true
   }
 
   render() {
@@ -22,29 +25,50 @@ export default class Home extends Component {
         subdomain
       },
       state: {
-        search
+        search,
+        original,
+        slider
       },
       handleChange,
       handleSearch,
-      handleLoadMore
+      handleLoadMore,
+      handleCheck
     } = this
 
     return (
 
       <Container>
-        <SearchBar>
-          <Search
-            name={"search"}
-            value={search}
-            onChange={handleChange}
-          />
-          <Button
-            onClick={handleSearch}
-          >
-            Search
-          </Button>
-        </SearchBar>
+        <SideBar>
+          <SearchRow>
+            <Search
+              name={"search"}
+              value={search}
+              onChange={handleChange}
+            />
+            <Button
+              onClick={handleSearch}
+            >
+              Search
+            </Button>
+          </SearchRow>
 
+          <Options>
+
+            <Checkbox
+              name={"original"}
+              checked={original}
+              label={"Original"}
+              onChange={handleCheck}
+            />
+
+            <Checkbox
+              name={"slider"}
+              checked={slider}
+              label={"Slider"}
+              onChange={handleCheck}
+            />
+          </Options>
+        </SideBar>
         <Results>
           {stories.map( ({id, previewImage, title}) => (
             <Story
@@ -71,12 +95,15 @@ export default class Home extends Component {
   handleSearch = () => {
     this.props.refetch({
       filter: {
-        ...this.props.variables.filter,
+        ...this.state.variables.filter,
         search: this.state.search
       }
     })
   }
 
+  handleCheck = ({target: {checked, name}}) => {
+    this.setState({[name]: checked})
+  }
 
   handleLoadMore = async () => {
     try {
@@ -161,11 +188,24 @@ const Results = styled.div`
   flex-wrap: wrap;
 `
 
-const SearchBar = styled.div`
+const SideBar = styled.div`
   width: 25%;
   height: 100%;
   display: flex;
-  flex-direction:row;
+  flex-direction:column;
   align-items:flex-start;
   padding: 20px;
+`
+
+const SearchRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
+const Options = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 `

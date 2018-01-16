@@ -4,6 +4,9 @@ import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
 import Tombstone from './Tombstone'
 import Zoomer from '../../shared/Zoomer'
 import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
+import {Button} from '../../ui/buttons'
+import Icon from '../../ui/icons'
+import router from 'next/router'
 
 export default class OriginalTemplate extends Component {
 
@@ -55,6 +58,14 @@ export default class OriginalTemplate extends Component {
     return (
       <Container>
         <SideContainer>
+          <HomeButton
+            onClick={()=>router.back()}
+          >
+            <Icon
+              icon={"arrow-left-bold"}
+              fill={"white"}
+            />
+          </HomeButton>
           {(obj) ? (
             <Tombstone
               obj={obj}
@@ -267,4 +278,15 @@ const FeatureContainer = styled.div`
 
 const AboutText = styled.div`
   margin: 15px;
+`
+
+const HomeButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  background-color: black;
+  cursor: pointer;
 `

@@ -76,7 +76,7 @@ def lambda_handler(event, context):
 
         z = 0
 
-        while tempW > tileSize < tempH:
+        while tempW > tileSize or tempH > tileSize:
             tempW = int(tempW / 2)
             tempH = int(tempH / 2)
             z = z + 1
@@ -90,28 +90,33 @@ def lambda_handler(event, context):
             n = tileSize * y
             e = tileSize * (x + 1)
             s = tileSize * (y + 1)
-            return (w, n, e, s)
+
+            if e > o.size[0]:
+                e = o.size[0]
+
+            if s > o.size[1]:
+                s = o.size[1]
+
+            box = (w, n, e, s)
+
+            return box
 
         def makeName(x, y):
-            return f"{z}_{x}_{y}.png"
+            name = f"{z}_{x}_{y}.png"
+            return name
 
-        while w > tileSize < h:
 
-            xMax = int(w / 512)
-            yMax = int(h / 512)
+
+        while z > 0:
+
+            xMax = int(w / 512) + 1
+            yMax = int(h / 512) + 1
 
             for x in range(0, xMax):
 
-                box = makeBox(x,y)
-                name = makeName(x,y)
-                path = f"/tmp/{name}"
-                key = f"{s3Dir}/{name}"
-                o.crop(box).save(path, "PNG")
-                s3_client.upload_file(path, bucket, key, ExtraArgs={'ACL':'public-read'})
-
                 for y in range(0, yMax):
 
-                    box = makeBox(x,y)
+                    box = makeBox(x, y)
                     name = makeName(x,y)
                     path = f"/tmp/{name}"
                     key = f"{s3Dir}/{name}"
@@ -123,7 +128,7 @@ def lambda_handler(event, context):
             o = o.resize((w,h))
             z = z - 1
 
-        name = makeName(x,y)
+        name = makeName(0,0)
         path = f"/tmp/{name}"
         key = f"{s3Dir}/{name}"
         o.save(path, "PNG")
