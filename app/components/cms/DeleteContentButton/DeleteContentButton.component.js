@@ -37,6 +37,7 @@ export default class DeleteContentButton extends Component {
       return (
         <Button
           onClick={()=>this.setState({confirm: true})}
+          color={"red"}
         >
           Delete
         </Button>

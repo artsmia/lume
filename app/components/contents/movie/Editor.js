@@ -18,7 +18,7 @@ export default (props) => (
         Component: Textarea,
         defaultValue: ""
       },{
-        label: "Video",
+        label: "Video URL",
         name: "videoUrl",
         type: "string",
         Component: VideoUrl,

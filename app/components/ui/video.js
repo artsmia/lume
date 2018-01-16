@@ -72,7 +72,7 @@ export class Vimeo extends Component {
     if (vimeoId) {
       const player = new VimeoPlayer(container, {
         id: vimeoId,
-        width: container.clientWidth - 50
+        width: container.clientWidth - 100
       })
     }
   }

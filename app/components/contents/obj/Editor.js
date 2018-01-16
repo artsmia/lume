@@ -110,4 +110,6 @@ const Container = styled.div`
   justify-content: flex-start;
   height: 100%;
   overflow-y: scroll;
+  padding: 15px;
+  box-sizing: border-box;
 `

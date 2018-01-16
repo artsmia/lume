@@ -6,7 +6,7 @@ import {Spinner} from '../../ui/spinner'
 import {Button} from '../../ui/buttons'
 import Modal from '../../ui/modal'
 import Image from '../../shared/Image'
-import {Select, Option} from '../../ui/forms'
+import {Select, Option, Label} from '../../ui/forms'
 import {Input, Textarea, ChangeImage} from '../DefaultEditors'
 import ImageManager from '../ImageManager'
 import DeleteStoryButton from '../DeleteStoryButton'
@@ -54,9 +54,6 @@ export default class StoryEditor extends Component {
           <H3>
             Story Editor
           </H3>
-          <DeleteStoryButton
-            storyId={storyId}
-          />
           <Button
             onClick={handleSave}
             disabled={sync}
@@ -64,40 +61,52 @@ export default class StoryEditor extends Component {
             {(sync) ? "Saved" : "Save"}
           </Button>
         </Top>
-        <Select
-          name={"template"}
-          onChange={handleChange}
-          value={template}
-        >
-          <Option
-            value={"original"}
-          >
-            {"original"}
-          </Option>
-          <Option
-            value={"slider"}
-          >
-            {"slider"}
-          </Option>
-        </Select>
-        <Input
-          label={"Title"}
-          name={"title"}
-          value={title}
-          onChange={handleChange}
-        />
-        <Textarea
-          label={"Description"}
-          name={"description"}
-          value={description}
-          onChange={handleChange}
-        />
-        <ChangeImage
-          label={"Image"}
-          name={"previewImageId"}
-          value={previewImageId}
-          onChange={handleChange}
-        />
+        <Row>
+          <Column>
+            <Label>
+              Template
+            </Label>
+            <Select
+              name={"template"}
+              onChange={handleChange}
+              value={template}
+            >
+              <Option
+                value={"original"}
+              >
+                {"original"}
+              </Option>
+              <Option
+                value={"slider"}
+              >
+                {"slider"}
+              </Option>
+            </Select>
+            <Input
+              label={"Title"}
+              name={"title"}
+              value={title}
+              onChange={handleChange}
+            />
+            <Textarea
+              label={"Description"}
+              name={"description"}
+              value={description}
+              onChange={handleChange}
+            />
+          </Column>
+          <Column>
+            <ChangeImage
+              label={"Image"}
+              name={"previewImageId"}
+              value={previewImageId}
+              onChange={handleChange}
+            />
+            <DeleteStoryButton
+              storyId={storyId}
+            />
+          </Column>
+        </Row>
 
       </Container>
     )
@@ -169,4 +178,23 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  padding: 20px;
+  box-sizing:border-box;
+  overflow-y:scroll;
+`
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
+  width: 50%;
+`
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
 `

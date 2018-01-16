@@ -5,6 +5,7 @@ import mutation from '../../../apollo/mutations/editContent'
 import {compose} from 'react-apollo'
 import {Button} from '../../ui/buttons'
 import DeleteContentButton from '../DeleteContentButton'
+import {H2} from '../../ui/h'
 
 class BaseEditor extends Component {
 
@@ -35,30 +36,40 @@ class BaseEditor extends Component {
 
     return (
       <Container>
-        <Button
-          onClick={saveEdits}
-          disabled={sync}
-        >
-          {(sync) ? "Saved!" : "Save"}
-        </Button>
-        <DeleteContentButton
-          contentId={content.id}
-        />
-        {fields.map( ({
-          label,
-          name,
-          Component,
-          type
-        })=> (
-          <Component
-            key={name}
-            label={label}
-            name={name}
-            value={state[name]}
-            onChange={handleChange}
-            detailImageId={(type === "geometry") ? state.image0Id : undefined}
+        <TopBar>
+
+          <H2>
+            Edit {content.type}
+          </H2>
+
+          <Button
+            onClick={saveEdits}
+            disabled={sync}
+          >
+            {(sync) ? "Saved!" : "Save"}
+          </Button>
+        </TopBar>
+
+        <Column>
+          {fields.map( ({
+            label,
+            name,
+            Component,
+            type
+          })=> (
+            <Component
+              key={name}
+              label={label}
+              name={name}
+              value={state[name]}
+              onChange={handleChange}
+              detailImageId={(type === "geometry") ? state.image0Id : undefined}
+            />
+          ))}
+          <DeleteContentButton
+            contentId={content.id}
           />
-        ))}
+        </Column>
       </Container>
     )
   }
@@ -145,8 +156,27 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content:flex-start;
-  align-items: flex
+  align-items: flex-start;
+  overflow-y:scroll;
+  padding: 15px;
+  box-sizing:border-box;
+`
 
+const TopBar = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100px;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
 `
 
 export default compose(query, mutation)(BaseEditor)

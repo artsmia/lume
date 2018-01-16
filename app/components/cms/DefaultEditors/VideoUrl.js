@@ -14,14 +14,16 @@ export default class VideoUrl extends Component {
     } = this.props
     return (
       <Container>
-        <Label>
-          {label}
-        </Label>
-        <Input
-          name={name}
-          value={value}
-          onChange={onChange}
-        />
+        <Column>
+          <Label>
+            {label}
+          </Label>
+          <Input
+            name={name}
+            value={value}
+            onChange={onChange}
+          />
+        </Column>
         <Video
           url={value}
         />
@@ -31,9 +33,19 @@ export default class VideoUrl extends Component {
 }
 
 
+const Column = styled.div`
+  display: flex;
+  flex-direction:column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+`
+
 const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+  width: 100%;
+  min-height: 300px;
 `
