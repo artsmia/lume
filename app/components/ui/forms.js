@@ -54,15 +54,27 @@ const CheckboxInput = styled.input`
 
 `
 
+
+
 export const Checkbox = (props) => {
   return (
-    <CheckboxInput
-      type={"checkbox"}
-      {...props}
-    />
+    <Row>
+      <Label>
+        {props.label}
+      </Label>
+      <CheckboxInput
+        type={"checkbox"}
+        {...props}
+      />
+    </Row>
   )
 }
 
+
+const Row =styled.div`
+  display: flex;
+  align-items: center;
+`
 
 export const Option = styled.option`
   font-size: 16px;
