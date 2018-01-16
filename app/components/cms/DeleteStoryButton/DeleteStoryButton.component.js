@@ -38,6 +38,7 @@ export default class DeleteStoryButton extends Component {
       return (
         <Button
           onClick={()=>this.setState({confirm: true})}
+          color={"red"}
         >
           Delete
         </Button>

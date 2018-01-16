@@ -46,9 +46,9 @@ class EditContentThumb extends Component {
         <Container
           onClick={() => onSelect(contentId)}
         >
-          <H3>
-            {title}
-          </H3>
+          <H4>
+            {title} –– {type}
+          </H4>
 
           {(image0) ? (
             <Image
@@ -56,9 +56,7 @@ class EditContentThumb extends Component {
               height={"50px"}
             />
           ): null}
-          <H4>
-            {type}
-          </H4>
+
         </Container>
       </div>
     ))
@@ -73,6 +71,9 @@ const Container = styled.div`
   height: 100%;
   border: 1px solid black;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 `
 
 const dragSpec = {

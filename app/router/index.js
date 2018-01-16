@@ -11,8 +11,7 @@ const fetch = require('isomorphic-unfetch')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const redisOptions = {
-  host: process.env.REDIS_HOST,
-  port: PROCESS.ENV.REDIS_PORT,
+  url: process.env.REDIS_URL
 }
 
 const dev = process.env.NODE_ENV !== 'production'

@@ -16,7 +16,7 @@ export default class OriginalTemplate extends Component {
     super(props)
     this.state = {
       ...this.state,
-      selectedContent: props.story.contents.find(content => content.type === "obj"),
+      selectedContent: props.story.contents.find(content => content.type === "obj") || props.story.contents[0],
     }
   }
 
@@ -40,14 +40,24 @@ export default class OriginalTemplate extends Component {
     let firstDetailContent = story.contents.find(content => content.type === 'detail')
 
 
-    let otherContents = story.contents.slice().filter(content => content.id !== objContent.id)
+    let firstContent = objContent || story.contents[0]
+
+    let otherContents = story.contents.slice().filter(content => content.id !== firstContent.id)
+
+    let obj = false
+
+    if (objContent) {
+      if (objContent.obj){
+        obj = objContent.obj
+      }
+    }
 
     return (
       <Container>
         <SideContainer>
-          {(objContent) ? (
+          {(obj) ? (
             <Tombstone
-              obj={objContent.obj}
+              obj={obj}
             />
           ): null}
 

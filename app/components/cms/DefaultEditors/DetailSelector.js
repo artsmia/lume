@@ -76,4 +76,5 @@ const Container = styled.div`
   justify-content: flex-start;
   height: 100%;
   min-height: 500px;
+  margin: 50px 0px;
 `

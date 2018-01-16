@@ -8,7 +8,8 @@ import StoryEditor from '../StoryEditor'
 import {Select, Option} from '../../ui/forms'
 import EditorSwitcher from '../../contents/EditorSwitcher'
 import DisplaySwitcher from '../../contents/DisplaySwitcher'
-
+import {Link} from '../../ui/links'
+import StoryPreview from '../../lume/Story/Story.component'
 
 export default class Editor extends Component {
 
@@ -18,6 +19,7 @@ export default class Editor extends Component {
     contentType: "comparison",
     contents: [],
     initialized: false,
+    preview: false
   }
 
   contentTypes = [
@@ -43,98 +45,143 @@ export default class Editor extends Component {
         selectedContent,
         contentType,
         contents,
+        preview
       },
       handleStorySelection,
       handleContentSelection,
       handleChange,
       renderContentEditor,
       handleReorder,
-      contentTypes
+      contentTypes,
+      togglePreview
+
     } = this
 
     return (
       <Container>
         <TopBar>
+          <TopTextDiv>
+            <Link
+              href={{
+                pathname: '/cms',
+                query: {
+                  subdomain
+                }
+              }}
+              as={`/${subdomain}/cms`}
+            >
+              Back to All Stories
+            </Link>
+          </TopTextDiv>
+          {/* <TopTextDiv>
+            <Link
+              href={{
+                pathname: '/lume/story',
+                query: {
+                  subdomain,
+                  storyId
+                }
+              }}
+              as={`/${subdomain}/story/${storyId}`}
+            >
+              Live View
+            </Link>
+          </TopTextDiv> */}
+          <PreviewButton
+            onClick={togglePreview}
+          >
+            Preview
+          </PreviewButton>
+
 
         </TopBar>
-        <Workspace>
-
-          <LeftBar>
-
-            <EditStoryThumb
-              storyId={storyId}
-              selected={(editing === "story")}
-              onSelect={handleStorySelection}
+        {(preview) ? (
+          <Workspace>
+            <StoryPreview
+              story={story}
             />
+          </Workspace>
+        ): (
+          <Workspace>
 
-            <Break/>
-              {
-                (contents) ? contents.map( ({
-                  id,
-                  __typename,
-                }, index) => (
-                  <EditContentThumb
-                    key={id}
-                    index={index}
-                    contentId={id}
-                    onSelect={handleContentSelection}
-                    onReorder={handleReorder}
+            <LeftBar>
+
+              <EditStoryThumb
+                storyId={storyId}
+                selected={(editing === "story")}
+                onSelect={handleStorySelection}
+              />
+
+              <Break/>
+                {
+                  (contents) ? contents.map( ({
+                    id,
+                    __typename,
+                  }, index) => (
+                    <EditContentThumb
+                      key={id}
+                      index={index}
+                      contentId={id}
+                      onSelect={handleContentSelection}
+                      onReorder={handleReorder}
+                    />
+                  )): null
+                }
+
+
+
+              <Break/>
+
+              <Select
+                name={"contentType"}
+                onChange={handleChange}
+                value={contentType}
+              >
+                {contentTypes.map(type => (
+                  <Option
+                    key={type}
+                    value={type}
+                  >
+                    {type}
+                  </Option>
+                ))}
+              </Select>
+              <CreateContentButton
+                storyId={storyId}
+                type={contentType}
+              />
+
+            </LeftBar>
+
+            <EditorContainer>
+
+              <PreviewSpace>
+                {(editing === "content") ? (
+                  <DisplaySwitcher
+                    content={selectedContent}
                   />
-                )): null
-              }
+                ): null}
+              </PreviewSpace>
 
+              {(editing === "story") ? (
+                <StoryEditor
+                  storyId={storyId}
+                  subdomain={subdomain}
+                  ref={(ref) => {this.storyEditor = ref}}
+                />
+              ): null}
 
-
-            <Break/>
-
-            <Select
-              name={"contentType"}
-              onChange={handleChange}
-              value={contentType}
-            >
-              {contentTypes.map(type => (
-                <Option
-                  key={type}
-                  value={type}
-                >
-                  {type}
-                </Option>
-              ))}
-            </Select>
-            <CreateContentButton
-              storyId={storyId}
-              type={contentType}
-            />
-
-          </LeftBar>
-
-          <EditorContainer>
-
-            <PreviewSpace>
               {(editing === "content") ? (
-                <DisplaySwitcher
+                <EditorSwitcher
                   content={selectedContent}
                 />
               ): null}
-            </PreviewSpace>
 
-            {(editing === "story") ? (
-              <StoryEditor
-                storyId={storyId}
-                subdomain={subdomain}
-                ref={(ref) => {this.storyEditor = ref}}
-              />
-            ): null}
+            </EditorContainer>
 
-            {(editing === "content") ? (
-              <EditorSwitcher
-                content={selectedContent}
-              />
-            ): null}
+          </Workspace>
+        )}
 
-          </EditorContainer>
-
-        </Workspace>
 
 
       </Container>
@@ -165,6 +212,10 @@ export default class Editor extends Component {
     this.props.reorderContents({
       contentIds: this.state.contents.map(content => content.id)
     })
+  }
+
+  togglePreview = () => {
+    this.setState( ({preview}) => ({preview: !preview}))
   }
 
   handleReorder = (dragIndex, hoverIndex) => {
@@ -203,6 +254,14 @@ export default class Editor extends Component {
 }
 
 
+const PreviewButton = styled(Button)`
+
+`
+
+const TopTextDiv = styled.div`
+  display: flex;
+  margin-right: 30px;
+`
 
 const Container = styled.div`
   width: 100%;
@@ -219,6 +278,10 @@ const TopBar = styled.div`
   height: 60px;
   width: 100%;
   border-bottom: 1px solid black;
+  align-items: center;
+  padding: 20px;
+  box-sizing:border-box;
+  justify-content: space-between;
 `
 
 const Workspace = styled.div`
@@ -256,7 +319,10 @@ const EditorContainer = styled.div`
 
 const PreviewSpace = styled.div`
   display: flex;
-  height: 50%;
+  min-height: 60vh;
   width: 100%;
-  background-color: lightblue;
+  height: 100%;
+  border-bottom: 1px solid black;
+  box-sizing:border-box;
+  overflow: clipped;
 `
