@@ -60,6 +60,16 @@ const story = new GraphQLObjectType({
         }
       }
     },
+    relatedStories: {
+      type: new GraphQLList(story),
+      async resolve(src){
+        try {
+          return await src.getRelatedStories()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
+    },
   })
 })
 

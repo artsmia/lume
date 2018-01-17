@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import styled from 'styled-components'
 import {Button} from '../../ui/buttons'
 import PropTypes from 'prop-types'
 import router from 'next/router'
@@ -17,7 +18,7 @@ export default class DeleteStoryButton extends Component {
 
     if (this.state.confirm) {
       return (
-        <div>
+        <Container>
           Are you sure
           <Button
             color={"green"}
@@ -32,16 +33,18 @@ export default class DeleteStoryButton extends Component {
             Delete
           </Button>
 
-        </div>
+        </Container>
       )
     } else {
       return (
-        <Button
-          onClick={()=>this.setState({confirm: true})}
-          color={"red"}
-        >
-          Delete
-        </Button>
+        <Container>
+          <Button
+            onClick={()=>this.setState({confirm: true})}
+            color={"red"}
+          >
+            Delete
+          </Button>
+        </Container>
       )
     }
   }
@@ -68,3 +71,8 @@ export default class DeleteStoryButton extends Component {
   }
 
 }
+
+const Container = styled.div`
+  display: flex;
+  height: 100%;
+`
