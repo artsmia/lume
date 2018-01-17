@@ -166,7 +166,7 @@ export default class extends Component {
   }
 
 
-  get selectionBounds() {
+  getSelectionBounds() {
 
     let lats = []
     let lngs = []
@@ -217,7 +217,7 @@ export default class extends Component {
     return selectionBounds
   }
 
-  get outerBounds(){
+  getOuterBounds(){
 
     const {
       _northEast: {
@@ -229,12 +229,17 @@ export default class extends Component {
         lng: west
       }
     } = this.map.getBounds()
+
+    console.log(this.map.getSize())
+
     const outerBounds = [
       [north, west],
       [north, east],
       [south, east],
-      [south, west]
+      [south, west],
+      [north, west],
     ]
+
     return outerBounds
   }
 
@@ -242,22 +247,21 @@ export default class extends Component {
   highlight = () => {
 
     const highlightBounds = [
-      this.outerBounds,
-      this.selectionBounds
+      this.getOuterBounds(),
+      this.getSelectionBounds()
     ]
 
-    if (
-      this.map.highlight
-    ) {
-      this.map.highlight.setLatLngs(highlightBounds)
-    } else {
-      this.map.highlight = L.polygon(highlightBounds, {
-        stroke: false,
-        fillColor: "black",
-        fillOpacity: .8,
-      })
-      this.map.highlight.addTo(this.map)
+
+    if (this.currentHighlight) {
+      console.log("remove", this.currentHighlight)
+      this.currentHighlight.remove()
     }
+    this.currentHighlight = L.polygon(highlightBounds, {
+      stroke: false,
+      fillColor: "black",
+      fillOpacity: .8,
+    })
+    this.currentHighlight.addTo(this.map)
 
   }
 
@@ -309,7 +313,7 @@ export default class extends Component {
   saveGeometry = () => {
     const geometry = {
       type: "Polygon",
-      coordinates: [this.selectionBounds]
+      coordinates: [this.getSelectionBounds()]
 
     }
     this.setState({geometry})
@@ -322,16 +326,27 @@ export default class extends Component {
 
       this.geometryLoading = true
 
+      if (this.props.zoom){
+        this.zoomIn()
+      }
+
       this.highlight()
 
 
-      this.geometryLoading = false,
+      this.geometryLoading = false
       this.geometryCreated = true
+
+
 
     } catch (ex) {
       console.error(ex)
     }
   }
+
+  zoomIn = () => {
+    this.map.flyToBounds(this.getSelectionBounds())
+  }
+
 
   handleMouseDown = ({latlng}) => {
     if (
@@ -552,7 +567,8 @@ export default class extends Component {
 
       let maxTiles = Math.ceil(larger / tileSize)
 
-      let maxZoom = Math.log2(maxTiles)
+      let maxZoom = Math.ceil(Math.log2(maxTiles))
+
 
 
       while (
@@ -572,7 +588,8 @@ export default class extends Component {
         crs: L.CRS.Simple,
         maxBounds: bounds,
         zoomSnap: 0,
-        attributionControl: false
+        attributionControl: false,
+        maxZoom
       })
 
       const container = this.map.getContainer()

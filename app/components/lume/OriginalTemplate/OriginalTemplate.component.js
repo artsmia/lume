@@ -154,6 +154,7 @@ export default class OriginalTemplate extends Component {
               geometry={selectedContent.geometry}
               moreGeometry={createMoreGeometry()}
               onContentSelection={handleContentSelection}
+              zoom
             />
           ): null}
           {(selectedContent.type !== "detail") ? (
