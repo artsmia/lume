@@ -9,10 +9,10 @@ const express = require('express')
 const next = require('next')
 const fetch = require('isomorphic-unfetch')
 const session = require('express-session')
-const RedisStore = require('connect-redis')(session)
-const redisOptions = {
-  url: process.env.REDIS_URL
-}
+// const RedisStore = require('connect-redis')(session)
+// const redisOptions = {
+//   url: process.env.REDIS_URL
+// }
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -28,7 +28,7 @@ app.prepare().then(() => {
   server.use(
     passport.initialize(),
     session({
-      store: new RedisStore(redisOptions),
+      // store: new RedisStore(redisOptions),
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false
@@ -102,9 +102,9 @@ app.prepare().then(() => {
 
   server.get('/:subdomain', (req, res) => {
     const page = '/lume'
-    const {subdomain} = req.params
-    const params = {
-        subdomain,
+    let params = {
+      ...req.params,
+      ...req.query
     }
     app.render(req, res, page, params)
   })

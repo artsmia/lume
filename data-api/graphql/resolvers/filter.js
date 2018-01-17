@@ -9,9 +9,15 @@ export default function({
   search,
   order,
   limit,
-  offset
+  offset,
+  template,
+  visibility
 }){
-  let options = {}
+  let options = {
+    where: {
+
+    }
+  }
   if (organizationId) {
     options.include = [{
       model: Organization,
@@ -33,7 +39,7 @@ export default function({
   }
 
   if (search) {
-    options.where = {
+    Object.assign(options.where, {
       [Op.or]: [
         {
           title: {
@@ -46,8 +52,25 @@ export default function({
           }
         },
       ]
-    }
+    })
   }
+
+  if (template) {
+    Object.assign(options.where, {
+      template: {
+        [Op.or]: template
+      }
+    })
+  }
+
+  if (visibility) {
+    Object.assign(options.where, {
+      visibility: {
+        [Op.or]: visibility
+      }
+    })
+  }
+
   if (order) {
     options.order = order.map( ({column,direction}) => ([column, direction]))
   }

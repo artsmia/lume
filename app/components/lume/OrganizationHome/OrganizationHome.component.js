@@ -5,14 +5,13 @@ import {Button} from '../../ui/buttons'
 import Link from 'next/link'
 import Image from '../../shared/Image'
 import {Label, Checkbox} from '../../ui/forms'
+import Router from 'next/router'
+import {H3} from '../../ui/h'
 
 export default class Home extends Component {
 
   state = {
-    search: "",
-    variables: this.props.variables,
-    original: true,
-    slider: true
+    filter: this.props.variables.filter,
   }
 
   render() {
@@ -25,14 +24,13 @@ export default class Home extends Component {
         subdomain
       },
       state: {
-        search,
-        original,
-        slider
+        filter
       },
-      handleChange,
+      searchChange,
       handleSearch,
       handleLoadMore,
-      handleCheck
+      handleCheck,
+      handleScroll
     } = this
 
     return (
@@ -42,34 +40,32 @@ export default class Home extends Component {
           <SearchRow>
             <Search
               name={"search"}
-              value={search}
-              onChange={handleChange}
+              value={filter.search}
+              onChange={searchChange}
             />
-            <Button
-              onClick={handleSearch}
-            >
-              Search
-            </Button>
           </SearchRow>
 
           <Options>
 
             <Checkbox
               name={"original"}
-              checked={original}
+              checked={filter.template.includes("original")}
               label={"Original"}
               onChange={handleCheck}
             />
 
             <Checkbox
               name={"slider"}
-              checked={slider}
+              checked={filter.template.includes("slider")}
               label={"Slider"}
               onChange={handleCheck}
             />
           </Options>
         </SideBar>
-        <Results>
+        <Results
+          id={'results'}
+          onScroll={handleScroll}
+        >
           {stories.map( ({id, previewImage, title}) => (
             <Story
               key={id}
@@ -79,30 +75,172 @@ export default class Home extends Component {
               title={title}
             />
           ))}
-          <Button
-            onClick={handleLoadMore}
-          >
-            More
-          </Button>
+          <MoreRow>
+            {(
+              stories.length % 20 === 0 && stories.length > 0) ? (
+              <Button
+                onClick={handleLoadMore}
+              >
+                More
+              </Button>
+            ): null}
+            {(stories.length === 0) ? (
+              <H3>
+                No stories match that search
+              </H3>
+            ): null}
+          </MoreRow>
+
+
         </Results>
 
       </Container>
     )
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+  componentWillReceiveProps(nextProps){
+    this.refetchWithNextProps(nextProps)
 
-  handleSearch = () => {
-    this.props.refetch({
-      filter: {
-        ...this.state.variables.filter,
-        search: this.state.search
+
+  }
+
+
+  refetchWithNextProps = (nextProps) => {
+    const {
+      refetch,
+      search,
+      template
+    } = nextProps.url.query
+
+    if (refetch){
+      this.props.refetch({
+        filter: {
+          ...this.state.filter,
+          search,
+          template: template.split(',')
+        }
+      })
+    }
+
+  }
+
+  bounce = true
+
+  debounce = (func, wait) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(
+        func,
+        wait
+      )
+    }
+  }
+
+
+  handleScroll = () => {
+    this.debounce(
+      () => {
+        let results = document.getElementById('results')
+
+        if (
+          results.scrollTop + results.clientHeight >= results.scrollHeight - 300
+        ) {
+          this.handleLoadMore()
+        }
+      },
+      1000
+    )
+  }
+
+  searchChange = ({target: {value, name}}) => {
+    this.setState(
+      ({filter: oldFilter}) => {
+        let filter = {
+          ...oldFilter
+        }
+
+        filter.search = value
+
+        return {
+          filter
+        }
+      },
+      ()=>{
+        this.debounce(this.changeUrl, 2000)
       }
-    })
+    )
+  }
+
+  changeUrl = () => {
+
+    const {
+      filter
+    } = this.state
+
+    Router.replace(
+      {
+        pathname: '/lume',
+        query: {
+          refetch: true,
+          subdomain: this.props.subdomain,
+          search: filter.search,
+          template: filter.template.join(',')
+        }
+      },
+      this.queryString(),
+      {shallow: true}
+    )
+
+  }
+
+  queryString = () => {
+
+    const {
+      filter
+    } = this.state
+
+    let base = `/${this.props.subdomain}?`
+
+    let queries = []
+
+    let keepInUrl = ['search', 'template']
+
+    for (let key in filter) {
+      if (
+        keepInUrl.includes(key)
+      ) {
+        queries.push(`${key}=${filter[key]}`)
+      }
+    }
+
+    return base.concat(queries.join('&'))
   }
 
   handleCheck = ({target: {checked, name}}) => {
-    this.setState({[name]: checked})
+    this.setState(
+      ({filter: oldFilter}) => {
+        let filter = {
+          ...oldFilter
+        }
+
+        if (
+          checked &&
+          !filter.template.includes(name)
+        ) {
+          filter.template.push(name)
+        } else if(
+          !checked &&
+          filter.template.includes(name)
+        ) {
+          filter.template = filter.template.filter( val => val !== name )
+        }
+
+        return {
+          filter
+        }
+      },
+      this.changeUrl
+    )
   }
 
   handleLoadMore = async () => {
@@ -114,14 +252,14 @@ export default class Home extends Component {
           stories
         },
         state: {
-          variables
+          filter
         }
       } = this
 
       let newVariables = {
         filter: {
-          ...variables.filter,
-          limit: variables.filter.limit,
+          ...filter,
+          limit: filter.limit,
           offset: this.props.stories.length,
         }
       }
@@ -179,22 +317,34 @@ const Container = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
+  overflow: hidden;
 `
 
 const Results = styled.div`
-  max-width: 70%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: fles-start;
+  align-items: flex-start;
+  overflow-y: scroll;
+`
+
+const MoreRow = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 30px;
 `
 
 const SideBar = styled.div`
-  width: 25%;
+  width: 20%;
   height: 100%;
   display: flex;
   flex-direction:column;
   align-items:flex-start;
   padding: 20px;
+  border-right: 1px solid lightgrey;
 `
 
 const SearchRow = styled.div`
