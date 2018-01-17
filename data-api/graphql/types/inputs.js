@@ -5,9 +5,9 @@ import {
   GraphQLString,
   GraphQLList,
   GraphQLFloat,
-  GraphQLBoolean
+  GraphQLBoolean,
 } from 'graphql'
-import {DirectionEnum, ContentTypeEnum, TemplateEnum} from './enums'
+import {DirectionEnum, ContentTypeEnum, TemplateEnum, VisibilityEnum} from './enums'
 import {GeometryEnum, GeometryInput} from './geometry'
 
 
@@ -110,9 +110,11 @@ export const FilterInput = new GraphQLInputObjectType({
       type: GraphQLString
     },
     template: {
-      type: TemplateEnum
+      type: new GraphQLList(TemplateEnum)
     },
-
+    visibility: {
+      type: new GraphQLList(VisibilityEnum)
+    },
   }
 })
 

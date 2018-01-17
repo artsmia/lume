@@ -538,8 +538,6 @@ export default class extends Component {
 
           let json = await response.json()
 
-          console.log(json)
-
           height = json.height
           width = json.width
 
@@ -726,7 +724,6 @@ if (typeof window === 'object') {
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({z,x,y}) {
 
-      console.log(z, x, y)
       let tile = document.createElement("div")
       let image = document.createElement("img")
       image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y).replace("{s}", 0)

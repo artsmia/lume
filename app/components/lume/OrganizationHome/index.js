@@ -3,7 +3,7 @@ import component from './OrganizationHome.component'
 import {StoriesQuery} from '../../../apollo/queries/stories'
 
 const query = graphql(StoriesQuery, {
-  options: ({subdomain}) => ({
+  options: ({subdomain, search, template}) => ({
     variables: {
       filter: {
         organization: {
@@ -14,7 +14,12 @@ const query = graphql(StoriesQuery, {
         order: {
           column: "updatedAt",
           direction: "DESC"
-        }
+        },
+        template: template.split(','),
+        visibility: [
+          "published",
+        ],
+        search: search
       }
     },
   }),
