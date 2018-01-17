@@ -32,6 +32,10 @@ const fragment = gql`
       }
       videoUrl
     }
+    relatedStories {
+      id
+      title
+    }
   }
 
   ${objFragment}

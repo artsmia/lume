@@ -10,6 +10,7 @@ import {Select, Option, Label} from '../../ui/forms'
 import {Input, Textarea, ChangeImage} from '../DefaultEditors'
 import ImageManager from '../ImageManager'
 import DeleteStoryButton from '../DeleteStoryButton'
+import StoryAssociator from '../StoryAssociator'
 
 export default class StoryEditor extends Component {
 
@@ -124,6 +125,9 @@ export default class StoryEditor extends Component {
               value={previewImageId}
               onChange={handleChange}
             />
+            <StoryAssociator
+              storyId={storyId}
+            />
             <DeleteStoryButton
               storyId={storyId}
             />
@@ -189,7 +193,7 @@ export default class StoryEditor extends Component {
 const Top = styled.div`
   display: flex;
   justify-content:space-between;
-  height: 70px;
+  min-height: 70px;
   width: 100%;
 `
 
@@ -205,6 +209,8 @@ const Container = styled.div`
   overflow-y:scroll;
 `
 
+
+
 const Column = styled.div`
   display: flex;
   flex-direction: column;
@@ -219,4 +225,5 @@ const Row = styled.div`
   flex-direction: row;
   width: 100%;
   height: 100%;
+  min-height: 400px;
 `
