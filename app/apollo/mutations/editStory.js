@@ -10,6 +10,7 @@ const editStory = gql`
     $description: String
     $template: TemplateEnum
     $previewImageId: ID
+    $visibility: VisibilityEnum
   ) {
     editStory(
       id: $id
@@ -17,6 +18,7 @@ const editStory = gql`
       description: $description
       previewImageId: $previewImageId
       template: $template
+      visibility: $visibility
     ) {
       ...StoryFragment
     }
@@ -31,14 +33,16 @@ const mutationConfig = {
       title,
       description,
       previewImageId,
-      template
+      template,
+      visibility
     }) => mutate({
       variables: {
         id: storyId,
         title,
         description,
         previewImageId,
-        template
+        template,
+        visibility
       },
     }),
   }),

@@ -54,9 +54,10 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "start:local": "DEPLOYMENT_ENV=local node router",
-    "build": "DEPLOYMENT_ENV=dev next build",
+    "start:local": "DEPLOYMENT_ENV=local BABEL_ENV=next node router",
+    "build": "DEPLOYMENT_ENV=dev BABEL_ENV=next next build",
     "start": "DEPLOYMENT_ENV=dev NODE_ENV=production node router",
-    "deploy": "now"
+    "deploy": "now",
+    "test": "jest"
   }
 }
