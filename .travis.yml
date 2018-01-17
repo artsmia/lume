@@ -3,16 +3,19 @@ node_js:
 - '8'
 # before_install:
 #   - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
-# install:
-# - cd app
-# - yarn install
-# - yarn run start-local &
-# - cd ..
-# - cd server
-# - yarn install
-# - yarn run db-reset-test
-# - yarn run start-test &
-# - cd ..
+install:
+  - cd app
+  - yarn install
+  - cd ..
+  - cd data-api
+  - yarn install
+  - cd ..
+script:
+  - cd app
+  - yarn test
+  - cd ..
+  - cd data-api
+  - yarn test
 notifications:
   slack: artsmia:XuPlydSpfoILZdCPIbOYQq59
   email: false

@@ -22,6 +22,7 @@ export default class StoryEditor extends Component {
     description: "",
     previewImageId: undefined,
     template: "original",
+    visibility: "draft"
   }
 
   state = {
@@ -39,7 +40,8 @@ export default class StoryEditor extends Component {
         description,
         previewImageId,
         template,
-        sync
+        sync,
+        visibility
       },
       handleChange,
       handleSave,
@@ -74,12 +76,32 @@ export default class StoryEditor extends Component {
               <Option
                 value={"original"}
               >
-                {"original"}
+                Original
               </Option>
               <Option
                 value={"slider"}
               >
-                {"slider"}
+                Slider
+              </Option>
+            </Select>
+            <Label>
+              Visibility
+            </Label>
+            <Select
+              name={"visibility"}
+              onChange={handleChange}
+              value={visibility}
+            >
+
+              <Option
+                value={"draft"}
+              >
+                Draft
+              </Option>
+              <Option
+                value={"published"}
+              >
+                Published
               </Option>
             </Select>
             <Input
