@@ -14,6 +14,15 @@ const session = require('express-session')
 //   url: process.env.REDIS_URL
 // }
 
+const MySQLStore = require('express-mysql-session')(session)
+const storeOptions = {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE
+}
+
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
@@ -29,6 +38,7 @@ app.prepare().then(() => {
     passport.initialize(),
     session({
       // store: new RedisStore(redisOptions),
+      store: new MySQLStore(storeOptions),
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false

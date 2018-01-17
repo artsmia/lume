@@ -1,11 +1,6 @@
 {
   "name": "lume",
   "private": true,
-  "workspaces": [
-    "app",
-    "data-api",
-    "contents"
-  ],
   "version": "1.0.0",
   "description": "lume: a digital storytelling application by mia",
   "author": "Carl Peaslee <cpeaslee@gmail.com>",
@@ -38,7 +33,7 @@
   },
   "scripts": {
     "reinit": "DEPLOYMENT_ENV=local babel-node scripts/reinit",
-    "mia": "DEPLOYMENT_ENV=local yarn run reinit && DEPLOYMENT_ENV=local babel-node scripts/mia-migrate",
+    "mia": "yarn run reinit && DEPLOYMENT_ENV=local babel-node scripts/mia-migrate",
     "tiler": "cd image-tiler && rm -rf ImageTiler.zip && cp TilerDeps.zip ImageTiler.zip && zip ImageTiler.zip lambda_function.py && cd .. && DEPLOYMENT_ENV=dev babel-node scripts/deploy-tiler"
   }
 }

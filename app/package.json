@@ -12,6 +12,7 @@
     "connect-redis": "^3.3.3",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
+    "express-mysql-session": "^1.2.3",
     "express-session": "^1.15.6",
     "graphql-tools": "^2.13.0",
     "isomorphic-unfetch": "^2.0.0",

@@ -15,11 +15,11 @@ const query = graphql(StoriesQuery, {
           column: "updatedAt",
           direction: "DESC"
         },
-        template: template.split(','),
+        template: (template) ? template.split(',') : ["original", "slider"],
         visibility: [
           "published",
         ],
-        search: search
+        search: search || ""
       }
     },
   }),
