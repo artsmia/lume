@@ -47,7 +47,8 @@ export default class StoryEditor extends Component {
       handleChange,
       handleSave,
       props: {
-        storyId
+        storyId,
+        router
       }
     } = this
 

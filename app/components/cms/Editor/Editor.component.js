@@ -38,7 +38,11 @@ export default class Editor extends Component {
       props: {
         storyId,
         story,
-        subdomain
+        router: {
+          query: {
+            subdomain
+          }
+        }
       },
       state: {
         editing,
@@ -166,7 +170,6 @@ export default class Editor extends Component {
               {(editing === "story") ? (
                 <StoryEditor
                   storyId={storyId}
-                  subdomain={subdomain}
                   ref={(ref) => {this.storyEditor = ref}}
                 />
               ): null}

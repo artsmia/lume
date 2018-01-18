@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 export default class CreateStoryButton extends Component {
 
   static propTypes = {
-    subdomain: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired
   }
 
@@ -24,7 +23,11 @@ export default class CreateStoryButton extends Component {
     try {
       const {
         createStory,
-        subdomain
+        router: {
+          query: {
+            subdomain
+          }
+        }
       } = this.props
 
       const {data: {createStory: story}} = await createStory()

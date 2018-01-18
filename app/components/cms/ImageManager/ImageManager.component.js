@@ -28,7 +28,11 @@ export default class ImageManager extends Component {
       },
       props: {
         images,
-        subdomain
+        router: {
+          query: {
+            subdomain
+          }
+        }
       },
       handleLoadMore,
       handleImageSave,

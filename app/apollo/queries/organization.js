@@ -17,7 +17,7 @@ const query = gql`
 
 const options = {
   options: (props) => {
-    const {url: {query: {subdomain}}} = props
+    const {router: {query: {subdomain}}} = props
     return {
       variables: {
         subdomain

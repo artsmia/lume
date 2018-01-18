@@ -15,8 +15,10 @@ const ImagesQuery = gql`
 
 
 const queryOptions = {
-  options: ({subdomain, imageId}) => {
-
+  options: (props) => {
+    const {
+      subdomain
+    } = props.router.query
     return {
       variables: {
         filter: {

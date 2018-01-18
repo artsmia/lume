@@ -15,7 +15,6 @@ export default class StoryList extends Component {
   }
 
   static propTypes = {
-    subdomain: PropTypes.string.isRequired,
     stories: PropTypes.array.isRequired,
   }
 
@@ -30,7 +29,11 @@ export default class StoryList extends Component {
       handleVariableChange,
       props: {
         stories,
-        subdomain
+        router: {
+          query: {
+            subdomain
+          }
+        }
       },
       state: {
         variables
