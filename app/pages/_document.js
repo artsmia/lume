@@ -29,8 +29,16 @@ export default class ClientDocument extends Document {
             type='image/x-icon'
             href='/static/favicon.png'/>
 
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-                  rel="stylesheet"/>
+            <link
+              href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet"
+            />
+            <link
+              rel="stylesheet"
+              href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+              integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+              crossOrigin=""
+            />
           {this.props.styleTags}
         </Head>
         <body>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import LeafletCss from './LeafletCss'
+// import LeafletCss from './LeafletCss'
 import PropTypes from 'prop-types'
 const L = (typeof window === 'object') ? require('leaflet') : null
 
@@ -36,11 +36,9 @@ export default class extends Component {
     if (this.props.loading || !this.state.image) return null
 
     return (
-      <LeafletCss>
-        <ZoomerMap
-          innerRef={mapRef => this.mapRef = mapRef}
-        />
-      </LeafletCss>
+      <ZoomerMap
+        innerRef={mapRef => this.mapRef = mapRef}
+      />
     )
   }
 
@@ -220,17 +218,15 @@ export default class extends Component {
   getOuterBounds(){
 
     const {
-      _northEast: {
-        lat: north,
-        lng: east
-      },
-      _southWest: {
-        lat: south,
-        lng: west
-      }
-    } = this.map.getBounds()
+      lat, lng
+    } = this.map.layerPointToLatLng(this.map._size)
 
-    console.log(this.map.getSize())
+    const north = 0
+    const south = lat
+    const east = lng
+    const west = 0
+
+    console.log(this.map)
 
     const outerBounds = [
       [north, west],
@@ -239,6 +235,7 @@ export default class extends Component {
       [south, west],
       [north, west],
     ]
+
 
     return outerBounds
   }
@@ -252,16 +249,17 @@ export default class extends Component {
     ]
 
 
+
     if (this.currentHighlight) {
-      console.log("remove", this.currentHighlight)
-      this.currentHighlight.remove()
+      this.currentHighlight.removeFrom(this.map)
     }
-    this.currentHighlight = L.polygon(highlightBounds, {
+    this.highlightPolygon = L.polygon(highlightBounds, {
       stroke: false,
       fillColor: "black",
       fillOpacity: .8,
     })
-    this.currentHighlight.addTo(this.map)
+    this.currentHighlight = this.highlightPolygon.addTo(this.map)
+
 
   }
 
@@ -323,14 +321,20 @@ export default class extends Component {
 
   showCrop = async () => {
     try {
-
       this.geometryLoading = true
 
+
       if (this.props.zoom){
+        this.map.once('zoomend', ()=>{
+          console.log("zoom end")
+          this.highlight()
+        })
         this.zoomIn()
+
+      } else {
+        this.highlight()
       }
 
-      this.highlight()
 
 
       this.geometryLoading = false
@@ -739,15 +743,15 @@ if (typeof window === 'object') {
   }
 
   L.TileLayer.Knight = L.TileLayer.extend({
-    createTile({z,x,y}) {
-
-      let tile = document.createElement("div")
-      let image = document.createElement("img")
-      image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y).replace("{s}", 0)
-      image.style["object-fit"] = "contain"
-      tile.appendChild(image)
-      return tile
-    }
+      // createTile({z,x,y}) {
+      //
+      //   let tile = document.createElement("div")
+      //   let image = document.createElement("img")
+      //   image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y).replace("{s}", 0)
+      //   image.style["object-fit"] = "contain"
+      //   tile.appendChild(image)
+      //   return tile
+      // }
   })
 
   L.tileLayer.knight = function(...args){
