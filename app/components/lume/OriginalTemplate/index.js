@@ -1,3 +1,5 @@
 import Component from './OriginalTemplate.component'
+import {withRouter} from 'next/router'
 
-export default Component
+let ExportComponent = withRouter(Component)
+export default ExportComponent

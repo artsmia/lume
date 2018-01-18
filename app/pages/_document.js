@@ -29,7 +29,8 @@ export default class ClientDocument extends Document {
             type='image/x-icon'
             href='/static/favicon.png'/>
 
-
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+                  rel="stylesheet"/>
           {this.props.styleTags}
         </Head>
         <body>
