@@ -10,8 +10,19 @@ import {H3} from '../../ui/h'
 
 export default class Home extends Component {
 
-  state = {
-    filter: this.props.variables.filter,
+
+  constructor(props){
+    super(props)
+
+    const {
+      search,
+      template
+    } = this.props.router.query
+
+    this.state = {
+      search: search || "",
+      template: template ? template.split(',') : ["original","slider"],
+    }
   }
 
   render() {
@@ -21,15 +32,19 @@ export default class Home extends Component {
     const {
       props: {
         stories,
-        subdomain
+        router: {
+          query: {
+            subdomain
+          }
+        }
       },
       state: {
-        filter
+        search,
+        template
       },
       searchChange,
-      handleSearch,
-      handleLoadMore,
       handleCheck,
+      handleLoadMore,
       handleScroll
     } = this
 
@@ -40,7 +55,7 @@ export default class Home extends Component {
           <SearchRow>
             <Search
               name={"search"}
-              value={filter.search}
+              value={search}
               onChange={searchChange}
             />
           </SearchRow>
@@ -49,14 +64,14 @@ export default class Home extends Component {
 
             <Checkbox
               name={"original"}
-              checked={filter.template.includes("original")}
+              checked={template.includes("original")}
               label={"Original"}
               onChange={handleCheck}
             />
 
             <Checkbox
               name={"slider"}
-              checked={filter.template.includes("slider")}
+              checked={template.includes("slider")}
               label={"Slider"}
               onChange={handleCheck}
             />
@@ -98,32 +113,6 @@ export default class Home extends Component {
     )
   }
 
-  componentWillReceiveProps(nextProps){
-    this.refetchWithNextProps(nextProps)
-
-
-  }
-
-
-  refetchWithNextProps = (nextProps) => {
-    const {
-      refetch,
-      search,
-      template
-    } = nextProps.url.query
-
-    if (refetch){
-      this.props.refetch({
-        filter: {
-          ...this.state.filter,
-          search,
-          template: template.split(',')
-        }
-      })
-    }
-
-  }
-
   bounce = true
 
   debounce = (func, wait) => {
@@ -136,110 +125,75 @@ export default class Home extends Component {
     }
   }
 
-
-  handleScroll = () => {
-    this.debounce(
-      () => {
-        let results = document.getElementById('results')
-
-        if (
-          results.scrollTop + results.clientHeight >= results.scrollHeight - 300
-        ) {
-          this.handleLoadMore()
-        }
-      },
-      1000
-    )
-  }
-
-  searchChange = ({target: {value, name}}) => {
+  searchChange = ({target: {name, value}}) => {
     this.setState(
-      ({filter: oldFilter}) => {
-        let filter = {
-          ...oldFilter
-        }
-
-        filter.search = value
-
-        return {
-          filter
-        }
-      },
+      ()=>({[name]: value}),
       ()=>{
-        this.debounce(this.changeUrl, 2000)
+        this.debounce(this.updateUrl,2000)
       }
     )
-  }
-
-  changeUrl = () => {
-
-    const {
-      filter
-    } = this.state
-
-    Router.replace(
-      {
-        pathname: '/lume',
-        query: {
-          refetch: true,
-          subdomain: this.props.subdomain,
-          search: filter.search,
-          template: filter.template.join(',')
-        }
-      },
-      this.queryString(),
-      {shallow: true}
-    )
-
-  }
-
-  queryString = () => {
-
-    const {
-      filter
-    } = this.state
-
-    let base = `/${this.props.subdomain}?`
-
-    let queries = []
-
-    let keepInUrl = ['search', 'template']
-
-    for (let key in filter) {
-      if (
-        keepInUrl.includes(key)
-      ) {
-        queries.push(`${key}=${filter[key]}`)
-      }
-    }
-
-    return base.concat(queries.join('&'))
   }
 
   handleCheck = ({target: {checked, name}}) => {
     this.setState(
-      ({filter: oldFilter}) => {
-        let filter = {
-          ...oldFilter
-        }
-
+      (prevState) => {
+        let template = prevState.template.slice()
         if (
           checked &&
-          !filter.template.includes(name)
+          !template.includes(name)
         ) {
-          filter.template.push(name)
+          template.push(name)
         } else if(
           !checked &&
-          filter.template.includes(name)
+          template.includes(name)
         ) {
-          filter.template = filter.template.filter( val => val !== name )
+          template = template.filter( val => val !== name )
         }
 
         return {
-          filter
+          template
         }
       },
-      this.changeUrl
+      this.updateUrl
+    )
+  }
+
+
+  updateUrl = () => {
+
+    const {
+      subdomain
+    } = this.props.router.query
+
+    const {
+      search,
+      template
+    } = this.state
+
+    let queries = {
+      search,
+      template
+    }
+
+    let queryString = `/${subdomain}?`
+
+    for (let key in queries) {
+      queryString = queryString.concat(`${key}=${queries[key]}&`)
+    }
+
+
+
+    this.props.router.replace(
+      {
+        pathname: "/lume",
+        query: {
+          search,
+          subdomain,
+          template: template.join(',')
+        }
+      },
+      queryString,
+      {shallow: true}
     )
   }
 
@@ -249,17 +203,14 @@ export default class Home extends Component {
       const {
         props: {
           fetchMore,
-          stories
+          stories,
+          variables
         },
-        state: {
-          filter
-        }
       } = this
 
       let newVariables = {
         filter: {
-          ...filter,
-          limit: filter.limit,
+          ...variables.filter,
           offset: this.props.stories.length,
         }
       }
@@ -277,6 +228,21 @@ export default class Home extends Component {
     } catch (ex) {
       console.error(ex)
     }
+  }
+
+  handleScroll = () => {
+    this.debounce(
+      () => {
+        let results = document.getElementById('results')
+
+        if (
+          results.scrollTop + results.clientHeight >= results.scrollHeight - 300
+        ) {
+          this.handleLoadMore()
+        }
+      },
+      1000
+    )
   }
 
 }

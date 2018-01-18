@@ -7,6 +7,8 @@ import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
 import {Button} from '../../ui/buttons'
 import Icon from '../../ui/icons'
 import router from 'next/router'
+import Link from 'next/link'
+import {Column} from '../../ui/layout'
 
 export default class OriginalTemplate extends Component {
 
@@ -32,7 +34,12 @@ export default class OriginalTemplate extends Component {
         selectedContent
       },
       props: {
-        story
+        story,
+        router: {
+          query: {
+            subdomain
+          }
+        }
       },
       handleContentSelection,
       createMoreGeometry
@@ -62,8 +69,8 @@ export default class OriginalTemplate extends Component {
             onClick={()=>router.back()}
           >
             <Icon
-              icon={"arrow-left-bold"}
-              fill={"white"}
+              color={"white"}
+              icon={"arrow_back"}
             />
           </HomeButton>
           {(obj) ? (
@@ -136,19 +143,37 @@ export default class OriginalTemplate extends Component {
             <TabBody
               name={"more"}
             >
-              more
+              <Column>
+                {story.relatedStories.map(story => (
+                  <Link
+                    href={{
+                      pathname: '/lume/story',
+                      query: {
+                        subdomain,
+                        storyId: story.id
+                      }
+                    }}
+                    as={`/${subdomain}/${story.id}`}
+                    key={story.id}
+                  >
+                    <RelatedStory>
+                      {story.title}
+                    </RelatedStory>
+                  </Link>
+                ))}
+              </Column>
             </TabBody>
           </TabContainer>
         </SideContainer>
         <FeatureContainer>
-          {(selectedContent.type === "all") ? (
+          {(selectedContent.type === "all" && firstDetailContent.image0) ? (
             <Zoomer
               imageId={firstDetailContent.image0.id}
               moreGeometry={createMoreGeometry()}
               onContentSelection={handleContentSelection}
             />
           ): null}
-          {(selectedContent.type === "detail") ? (
+          {(selectedContent.type === "detail" && selectedContent.image0) ? (
             <Zoomer
               imageId={selectedContent.image0.id}
               geometry={selectedContent.geometry}
@@ -215,6 +240,19 @@ export default class OriginalTemplate extends Component {
 
 
 }
+
+const RelatedStory = styled.a`
+  display: flex;
+  width: 100%;
+  height: 50px;
+  font-size: 22px;
+  align-items: center;
+  border: 1px solid lightgrey;
+  padding: 5px;
+  cursor: pointer;
+  box-sizing:border-box;
+  margin-top: 5px;
+`
 
 const ContentBody = styled.div`
   height: ${({selected}) => selected ? "auto" : 0};

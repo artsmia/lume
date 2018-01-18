@@ -65,8 +65,8 @@ export default class OriginalTemplate extends Component {
                 onClick={()=>router.back()}
               >
                 <Icon
-                  icon={"arrow-left-bold"}
-                  fill={"white"}
+                  color={"white"}
+                  icon={"arrow_back"}
                 />
               </HomeButton>
               <H3>
