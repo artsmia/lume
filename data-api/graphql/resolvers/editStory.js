@@ -4,13 +4,23 @@ export default async function(src, args, ctx){
   try {
 
 
-    let content = await Story.update(args, {
+    await Story.update(args, {
       where: {
         id: args.id
       }
     })
 
-    return await Story.findById(args.id)
+    const story = await Story.findById(args.id)
+
+    if (args.addRelatedStoryId){
+      await story.addRelatedStories(args.addRelatedStoryId)
+    }
+
+    if (args.removeRelatedStoryId){
+      await story.removeRelatedStories(args.removeRelatedStoryId)
+    }
+
+    return story
 
   } catch (ex) {
     console.error(ex)

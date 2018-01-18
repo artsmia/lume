@@ -20,21 +20,28 @@ export const StoriesQuery = gql`
 
 
 export const queryConfig = {
-  options: ({subdomain}) => ({
-    variables: {
-      filter: {
-        organization: {
-          subdomain
-        },
-        limit: 20,
-        offset: 0,
-        order: {
-          column: "updatedAt",
-          direction: "DESC"
+  options: (props) => {
+
+    const {
+      subdomain
+    } = props.router.query
+
+    return {
+      variables: {
+        filter: {
+          organization: {
+            subdomain
+          },
+          limit: 20,
+          offset: 0,
+          order: {
+            column: "updatedAt",
+            direction: "DESC"
+          }
         }
-      }
-    },
-  }),
+      },
+    }
+  },
   props: ({ ownProps, data }) => ({
     ...ownProps,
     ...data

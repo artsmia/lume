@@ -1,6 +1,11 @@
-import CmsHome from './CmsHome.component'
+import Component from './CmsHome.component'
 import query from '../../../apollo/queries/organization'
 import {compose } from 'react-apollo'
+import {withRouter} from 'next/router'
 
+let ExportComponent = Component
 
-export default compose(query)(CmsHome)
+ExportComponent = compose(query)(ExportComponent)
+ExportComponent = withRouter(ExportComponent)
+
+export default ExportComponent

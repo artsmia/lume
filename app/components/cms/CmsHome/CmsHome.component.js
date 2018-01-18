@@ -36,13 +36,10 @@ export default class CmsHome extends Component {
         </H2>
 
         <CreateStoryButton
-          subdomain={subdomain}
           userId={userId}
         />
 
-        <StoryList
-          subdomain={subdomain}
-        />
+        <StoryList/>
 
       </Container>
     )

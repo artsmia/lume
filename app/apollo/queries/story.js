@@ -17,11 +17,13 @@ export const StoryQuery = gql`
 
 
 const queryConfig = {
-  options: ({storyId}) => ({
-    variables: {
-      storyId
-    },
-  }),
+  options: (props) => {
+    return {
+      variables: {
+        storyId: props.storyId
+      },
+    }
+  },
   props: ({ ownProps, data }) => ({
     ...ownProps,
     ...data

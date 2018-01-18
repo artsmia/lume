@@ -1,5 +1,10 @@
 import { compose } from 'react-apollo'
-import StoryList from './StoryList.component'
+import Component from './StoryList.component'
 import query from '../../../apollo/queries/stories'
+import {withRouter} from 'next/router'
 
-export default compose(query)(StoryList)
+let ExportComponent = Component
+ExportComponent = compose(query)(ExportComponent)
+ExportComponent = withRouter(ExportComponent)
+
+export default ExportComponent

@@ -1,7 +1,8 @@
 import {
   GraphQLID,
   GraphQLString,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLList
 } from 'graphql'
 import {TemplateEnum, VisibilityEnum} from '../types/enums'
 import storyType from '../types/story'
@@ -28,6 +29,12 @@ const editStory = {
     },
     visibility: {
       type: VisibilityEnum
+    },
+    addRelatedStoryId: {
+      type: GraphQLID
+    },
+    removeRelatedStoryId: {
+      type: GraphQLID
     }
   },
   resolve

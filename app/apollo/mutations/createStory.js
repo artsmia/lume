@@ -18,17 +18,27 @@ export const CreateStoryMutation = gql`
 `
 
 export const mutationConfig = {
-  props: ({mutate, ownProps: {subdomain, userId} }) => ({
-    createStory: () => mutate({
-      variables: {
-        organization: {
+  props: ({mutate, ownProps }) => {
+    const {
+      userId,
+      router: {
+        query: {
           subdomain
+        }
+      }
+    } = ownProps
+    return {
+      ...ownProps,
+      createStory: () => mutate({
+        variables: {
+          organization: {
+            subdomain
+          },
+          creatorId: userId
         },
-        creatorId: userId
-      },
-
-    }),
-  }),
+      }),
+    }
+  },
 }
 
 export default graphql(CreateStoryMutation, mutationConfig)
