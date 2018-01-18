@@ -218,15 +218,15 @@ export default class extends Component {
   getOuterBounds(){
 
     const {
-      lat, lng
-    } = this.map.layerPointToLatLng(this.map._size)
-
-    const north = 0
-    const south = lat
-    const east = lng
-    const west = 0
-
-    console.log(this.map)
+      _northEast: {
+        lat: north,
+        lng: east
+      },
+      _southWest: {
+        lat: south,
+        lng: west
+      }
+    } = this.map.getBounds()
 
     const outerBounds = [
       [north, west],
@@ -325,8 +325,8 @@ export default class extends Component {
 
 
       if (this.props.zoom){
-        this.map.once('zoomend', ()=>{
-          console.log("zoom end")
+        this.map.off('zoomend')
+        this.map.on('zoomend', ()=>{
           this.highlight()
         })
         this.zoomIn()
