@@ -148,5 +148,11 @@ export const ContentInput = new GraphQLInputObjectType({
     objId: {
       type: GraphQLID
     },
+    addAdditionalImageId: {
+      type: GraphQLID
+    },
+    removeAdditionalImageId: {
+      type: GraphQLID
+    }
   }
 })

@@ -9,7 +9,17 @@ export default async function(src, args, ctx){
       }
     })
 
-    return await Content.findById(args.content.id)
+    let content = await Content.findById(args.content.id)
+
+    if (args.content.addAdditionalImageId){
+      await content.addAdditionalImages(args.content.addAdditionalImageId)
+    }
+
+    if (args.content.removeAdditionalImageId){
+      await content.removeAdditionalImages(args.content.removeAdditionalImageId)
+    }
+
+    return content
 
   } catch (ex) {
     console.error(ex)
