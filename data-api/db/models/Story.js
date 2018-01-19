@@ -24,6 +24,9 @@ const Story = db.define('story', {
   },
   creatorId: {
     type: Sequelize.UUID
+  },
+  localId: {
+    type: Sequelize.STRING
   }
 }, {
   freezeTableName: true,
