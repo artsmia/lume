@@ -225,7 +225,7 @@ export default class extends Component {
         lat: south,
         lng: west
       }
-    } = this.map.getBounds()
+    } = this.bounds
 
     const outerBounds = [
       [north, west],
@@ -323,15 +323,13 @@ export default class extends Component {
       this.geometryLoading = true
 
 
-      if (this.props.zoom){
-        this.map.off('zoomend')
-        this.map.on('zoomend', ()=>{
-          this.highlight()
-        })
-        this.zoomIn()
 
-      } else {
-        this.highlight()
+      this.highlight()
+
+      if (this.props.zoom){
+        this.map.flyToBounds(this.getSelectionBounds(),{
+          padding: [80,80]
+        })
       }
 
 
@@ -587,6 +585,8 @@ export default class extends Component {
 
       const bounds = L.latLngBounds(sw, ne)
 
+      this.bounds = bounds
+
       this.map = L.map(mapRef, {
         crs: L.CRS.Simple,
         maxBounds: bounds,
@@ -683,6 +683,11 @@ const ZoomerMap = styled.div`
     font-size: 20px;
     text-align: center;
     line-height: 35px;
+  }
+
+  .leaflet-div-icon {
+    background-color: none;
+    border: none;
   }
 
 `
