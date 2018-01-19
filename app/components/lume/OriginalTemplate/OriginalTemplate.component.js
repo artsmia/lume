@@ -9,6 +9,7 @@ import Icon from '../../ui/icons'
 import router from 'next/router'
 import Link from 'next/link'
 import {Column} from '../../ui/layout'
+import Markdown from 'react-markdown'
 
 export default class OriginalTemplate extends Component {
 
@@ -115,11 +116,11 @@ export default class OriginalTemplate extends Component {
             <TabBody
               name={"about"}
             >
-              <AboutText
-                dangerouslySetInnerHTML={{
-                  __html: objContent ? objContent.description : "",
-                }}
-              />
+              <AboutText>
+                <Markdown
+                  source={objContent ? objContent.description : ""}
+                />
+              </AboutText>
             </TabBody>
             <TabBody
               name={"details"}

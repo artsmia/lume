@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-// import LeafletCss from './LeafletCss'
 import PropTypes from 'prop-types'
 const L = (typeof window === 'object') ? require('leaflet') : null
 
@@ -660,6 +659,7 @@ export default class extends Component {
 const ZoomerMap = styled.div`
   height: 100%;
   width: 100%;
+  display: block;
   .crop-button {
     height: 30px;
     width: 30px;
@@ -743,15 +743,15 @@ if (typeof window === 'object') {
   }
 
   L.TileLayer.Knight = L.TileLayer.extend({
-      // createTile({z,x,y}) {
-      //
-      //   let tile = document.createElement("div")
-      //   let image = document.createElement("img")
-      //   image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y).replace("{s}", 0)
-      //   image.style["object-fit"] = "contain"
-      //   tile.appendChild(image)
-      //   return tile
-      // }
+      createTile({z,x,y}) {
+
+        let tile = document.createElement("div")
+        let image = document.createElement("img")
+        image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y).replace("{s}", 0)
+        image.style["object-fit"] = "contain"
+        tile.appendChild(image)
+        return tile
+      }
   })
 
   L.tileLayer.knight = function(...args){
