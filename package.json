@@ -4,7 +4,8 @@
   "workspaces": [
     "data-api",
     "app",
-    "scripts"
+    "scripts",
+    "contents"
   ],
   "version": "1.0.0",
   "description": "scripts for lume",
