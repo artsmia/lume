@@ -10,12 +10,23 @@ Right now, you'll need a Mac to run the application but I'd welcome a pull reque
 
 1. Clone the repository and install dependencies
 
-Open up your terminal, clone the repository, and the navigate into the directory.
+Open up your terminal, clone the repository, and the navigate into the lume directory.
 
 ```bash
 git clone https://github.com/artsmia/lume.git
 cd lume
 yarn install
+
+# then we will install dependencies for our data-api...
+cd data-api
+yarn install
+cd ..
+
+#and the app itself
+
+cd app
+yarn install
+
 ```
 
 2. Download and Install MySQL Community Server
@@ -48,9 +59,9 @@ You can quit out of the mysql terminal with `\q`.
 
 If you want to use a graphic interface with MySQL, [MySQL workbench](https://dev.mysql.com/doc/workbench/en/) is free and available on the MySQL website.
 
-4. Edit the `.env.TEMPLATE` file
+4. Edit the two `.env.TEMPLATE` files.  One is in `/data-api` and the other is in `/app`
 
-Rename the file `.env.TEMPLATE` to `.env`.
+Rename both files `.env.TEMPLATE` to `.env.local`.
 
 The `.env` file will initially be configured for local use. Advanced users may connect Lume to their own database, Aws S3 for file storage, and Auth0 for authentication by changing these environment variables.
 
@@ -59,18 +70,14 @@ The `.env` file will initially be configured for local use. Advanced users may c
 Now that your MySQL server is running and has a database named `lume`, you will need to provide the database with a schema. To do this, enter the following command in the terminal from lume's root directory.
 
 ```bash
+# from the root lume directory
 yarn run reinit
 ```
 
 6. Start up the application
 
-Because Lume actually consists of two separate node servers (one for the api, the other to serve and provide routing for the next.js application), you'll need to open up two different terminal windows and navigate both of them into the root director of the lume repository. Once there you will enter these two commands into separate windows:
+Because Lume actually consists of two separate node servers (one for the api, the other to serve and provide routing for the next.js application), you'll need to open up two different terminal windows and navigate one into `lume/data-api` and the other into `lume/app`. Once there you will enter the following command separately into each terminal window:
 
 ```bash
 yarn run start-api:local
-```
-...and...
-
-```bash
-yarn run start-next:local
 ```
