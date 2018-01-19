@@ -1,8 +1,5 @@
 {
-  "name": "lume-app",
-  "now": {
-    "alias": "lume.u100.io"
-  },
+  "name": "app",
   "version": "1.0.0",
   "dependencies": {
     "@vimeo/player": "^2.2.1",

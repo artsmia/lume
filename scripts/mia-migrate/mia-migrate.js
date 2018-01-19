@@ -5,7 +5,13 @@ import {createAssociations} from '../../data-api/db/associations'
 import Organization from '../../data-api/db/models/Organization'
 import Story from '../../data-api/db/models/Story'
 import Image from '../../data-api/db/models/Image'
+import Obj from '../../data-api/db/models/Obj'
+import Content from '../../data-api/db/models/Content'
 import data from './mia-data'
+import {Op} from 'sequelize'
+import TurndownService from 'turndown'
+
+const tdService = new TurndownService()
 
 const log = (msg) => console.log(chalk.cyan(msg))
 
@@ -37,8 +43,9 @@ async function populate(){
         primaryImageLocalId: story.views[0].image,
         objLocalId: story.id,
         objContentTitle: story.title,
-        objContentDescription: story.description,
-        views: story.views
+        objContentDescription: tdService.turndown(story.description),
+        views: story.views,
+        relatedStoriesLocalIds: story.relatedStories
       }
     })
 
@@ -53,6 +60,7 @@ async function populate(){
         previewImageId: image.id,
         visibility: "published",
         title: oldStory.objContentTitle,
+        localId: oldStory.objLocalId
       })
 
       let obj = await Mia.createObj({
@@ -95,7 +103,7 @@ async function populate(){
           await story.createContent({
             type: "detail",
             title: detail.title,
-            description: detail.description,
+            description: tdService.turndown(detail.description),
             geometry,
             index: contentIndex,
             image0Id: detailImage.id
@@ -110,7 +118,8 @@ async function populate(){
 
       return {
         title: story.title,
-        contents: story.pages
+        contents: story.pages,
+        localId: story.id
       }
     })
 
@@ -121,6 +130,7 @@ async function populate(){
         template: "slider",
         visibility: "published",
         title: oldStory.title,
+        localId: oldStory.localId
       })
 
       let contentIndex = 0
@@ -185,9 +195,11 @@ async function populate(){
           type = "movie"
         }
 
+        let description = content.text ? tdService.turndown(content.text) : ""
+
         await story.createContent({
           type,
-          description: content.text,
+          description,
           image0Id: image0 ? image0.id : undefined,
           image1Id: image1 ? image1.id : undefined,
           index: contentIndex,
@@ -198,6 +210,31 @@ async function populate(){
       }
     }
 
+
+    for (let oldStory of objStories) {
+
+
+      if (!oldStory.relatedStoriesLocalIds) break
+
+      let story = await Story.findOne({
+        where: {
+          localId: oldStory.objLocalId
+        }
+      })
+
+      let relatedStories = await Story.findAll({
+        where: {
+          localId: {
+            [Op.or]: oldStory.relatedStoriesLocalIds.map(lid => lid)
+          }
+        },
+      })
+
+      await story.addRelatedStories(relatedStories)
+
+
+
+    }
 
 
     log("Success")
