@@ -6,6 +6,9 @@ import {H3} from '../../ui/h'
 import {Button} from '../../ui/buttons'
 import Icon from '../../ui/icons'
 import router from 'next/router'
+import Markdown from 'react-markdown'
+import AdditionalImages from '../OriginalTemplate/AdditionalImages'
+
 
 export default class OriginalTemplate extends Component {
 
@@ -72,9 +75,14 @@ export default class OriginalTemplate extends Component {
               <H3>
                 {selectedContent.title}
               </H3>
-              <ContentText
-                dangerouslySetInnerHTML={{__html: selectedContent.description}}
-              />
+              <ContentText>
+                <Markdown
+                  source={selectedContent.description}
+                />
+                <AdditionalImages
+                  additionalImages={selectedContent.additionalImages}
+                />
+              </ContentText>
             </SideContainer>
           </PageContainer>
 

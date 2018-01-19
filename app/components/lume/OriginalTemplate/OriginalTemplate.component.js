@@ -10,6 +10,7 @@ import router from 'next/router'
 import Link from 'next/link'
 import {Column} from '../../ui/layout'
 import Markdown from 'react-markdown'
+import AdditionalImages from './AdditionalImages'
 
 export default class OriginalTemplate extends Component {
 
@@ -136,8 +137,14 @@ export default class OriginalTemplate extends Component {
                   </ContentHeader>
                   <ContentBody
                     selected={(selectedContent.id === content.id)}
-                    dangerouslySetInnerHTML={{__html:content.description}}
-                  />
+                  >
+                    <Markdown
+                      source={content.description}
+                    />
+                    <AdditionalImages
+                      additionalImages={content.additionalImages}
+                    />
+                  </ContentBody>
                 </Content>
               ))}
             </TabBody>
