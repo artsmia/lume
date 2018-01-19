@@ -686,8 +686,9 @@ const ZoomerMap = styled.div`
   }
 
   .leaflet-div-icon {
-    background-color: none;
+    background-color: rgba(0,0,0,0);
     border: none;
+
   }
 
 `
