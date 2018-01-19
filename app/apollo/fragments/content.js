@@ -21,6 +21,9 @@ const fragment = gql`
     obj {
       id
     }
+    additionalImages {
+      id
+    }
   }
 `
 

@@ -2,7 +2,8 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLID,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLList
 } from 'graphql'
 import {ContentTypeEnum} from './enums'
 import geometryType, {GeometryInput} from './geometry'
@@ -57,6 +58,16 @@ const contentType = new GraphQLObjectType({
     obj: {
       type: objType,
       resolve: objResolve,
+    },
+    additionalImages: {
+      type: new GraphQLList(imageType),
+      async resolve(src){
+        try {
+          return await src.getAdditionalImages()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
     }
   })
 })
