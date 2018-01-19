@@ -2,7 +2,6 @@
   "presets": "env",
   "plugins": [
     "transform-object-rest-spread",
-    "transform-regenerator",
     "syntax-async-functions"
   ]
 }
