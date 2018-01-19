@@ -17,15 +17,6 @@ git clone https://github.com/artsmia/lume.git
 cd lume
 yarn install
 
-# then we will install dependencies for our data-api...
-cd data-api
-yarn install
-cd ..
-
-#and the app itself
-
-cd app
-yarn install
 
 ```
 
