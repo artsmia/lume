@@ -590,7 +590,7 @@ export default class extends Component {
       this.map = L.map(mapRef, {
         crs: L.CRS.Simple,
         maxBounds: bounds,
-        zoomSnap: 0,
+        //zoomSnap: 0,
         attributionControl: false,
         maxZoom
       })

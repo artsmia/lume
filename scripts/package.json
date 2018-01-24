@@ -1,11 +1,5 @@
 {
   "name": "scripts",
-  "private": false,
-  "workspaces": [
-    "data-api",
-    "app",
-    "scripts"
-  ],
   "version": "1.0.0",
   "description": "scripts for lume",
   "author": "Carl Peaslee <cpeaslee@gmail.com>",
@@ -40,11 +34,12 @@
     "prop-types": "^15.6.0",
     "regenerator-runtime": "^0.11.1",
     "sequelize": "^4.31.2",
+    "turndown": "^4.0.1",
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "reinit": "DEPLOYMENT_ENV=local babel-node scripts/reinit",
-    "mia": "yarn run reinit && DEPLOYMENT_ENV=local babel-node mia-migrate",
+    "reinit": "DEPLOYMENT_ENV=dev babel-node reinit",
+    "mia": "yarn run reinit && DEPLOYMENT_ENV=dev babel-node mia-migrate",
     "tiler": "cd ../image-tiler && rm -rf ImageTiler.zip && cp TilerDeps.zip ImageTiler.zip && zip ImageTiler.zip lambda_function.py && cd ../scripts && DEPLOYMENT_ENV=dev babel-node deploy-tiler"
   }
 }
