@@ -214,23 +214,25 @@ async function populate(){
     for (let oldStory of objStories) {
 
 
-      if (!oldStory.relatedStoriesLocalIds) break
-
-      let story = await Story.findOne({
-        where: {
-          localId: oldStory.objLocalId
-        }
-      })
-
-      let relatedStories = await Story.findAll({
-        where: {
-          localId: {
-            [Op.or]: oldStory.relatedStoriesLocalIds.map(lid => lid)
+      if (oldStory.relatedStoriesLocalIds) {
+        let story = await Story.findOne({
+          where: {
+            localId: oldStory.objLocalId
           }
-        },
-      })
+        })
 
-      await story.addRelatedStories(relatedStories)
+        let relatedStories = await Story.findAll({
+          where: {
+            localId: {
+              [Op.or]: oldStory.relatedStoriesLocalIds.map(lid => lid)
+            }
+          },
+        })
+
+        await story.addRelatedStories(relatedStories)
+
+        
+      }
 
 
 
