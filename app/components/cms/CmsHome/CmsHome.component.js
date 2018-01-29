@@ -5,11 +5,18 @@ import {Spinner} from '../../ui/spinner'
 import StoryList from '../StoryList'
 import CreateStoryButton from '../CreateStoryButton'
 import PropTypes from 'prop-types'
+import {Row} from '../../ui/layout'
+import {Link} from '../../ui/links'
 
 export default class CmsHome extends Component {
 
   static propTypes = {
-    subdomain: PropTypes.string.isRequired
+    organization: PropTypes.shape({
+      name: PropTypes.string.isRequired
+    }),
+    user: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
   }
 
 
@@ -19,21 +26,39 @@ export default class CmsHome extends Component {
 
     const {
       props: {
-        subdomain,
         user: {
           id: userId
         },
         organization: {
           name
+        },
+        router: {
+          query: {
+            subdomain
+          }
         }
       }
     } = this
 
     return (
       <Container>
-        <H2>
-          {name}
-        </H2>
+        <Row>
+          <H2>
+            {name}
+          </H2>
+          <Link
+            href={{
+              pathname: '/cms/orgSettings',
+              queries: {
+                subdomain: subdomain,
+              }
+            }}
+            as={`/${subdomain}/settings`}
+          >
+            Settings
+          </Link>
+        </Row>
+
 
         <CreateStoryButton
           userId={userId}
