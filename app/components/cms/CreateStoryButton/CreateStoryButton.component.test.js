@@ -1,26 +1,21 @@
 import React from 'react'
 import { shallow} from 'enzyme'
-import CmsHome from './CmsHome.component'
+import CreateStoryButton from './CreateStoryButton.component'
 
-describe("CmsHome component", ()=> {
+describe("CreateStoryButton component", ()=> {
 
   let props
 
   let component
 
   let stubProps = {
-    organization: {
-      name: "mia"
-    },
-    user: {
-      id: "123abc"
-    }
+    userId: "123abc",
   }
 
 
   const shallowComponent = () => {
     component = shallow(
-      <CmsHome
+      <CreateStoryButton
         {...props}
       />
     )
@@ -39,7 +34,6 @@ describe("CmsHome component", ()=> {
     shallowComponent()
 
     expect(component).toHaveLength(1)
-
 
   })
 

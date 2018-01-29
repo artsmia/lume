@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import CmsHome from '../../components/cms/CmsHome'
+import OrgSettings from '../../components/cms/OrgSettings'
 import withData from '../../apollo'
 import Template from '../../components/shared/Template'
 import getUser from '../../auth/getUser'
 
-class CmsIndex extends Component {
+class Settings extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
@@ -12,7 +12,7 @@ class CmsIndex extends Component {
       let user = await getUser(ctx)
 
       return {
-        user
+        user,
       }
     } catch (ex) {
       console.error(ex)
@@ -22,13 +22,11 @@ class CmsIndex extends Component {
   render() {
 
     console.log(this.props)
-
     return (
       <Template
-        drawer
         {...this.props}
       >
-        <CmsHome
+        <OrgSettings
           {...this.props}
         />
       </Template>
@@ -36,4 +34,4 @@ class CmsIndex extends Component {
   }
 }
 
-export default withData(CmsIndex)
+export default withData(Settings)

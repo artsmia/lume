@@ -6,7 +6,7 @@ export default class CreateContentButton extends Component {
 
   static propTypes = {
     storyId: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired
+    type: PropTypes.oneOf(["comparison", "picture", "movie", "obj", "detail"]).isRequired
   }
 
   render() {
