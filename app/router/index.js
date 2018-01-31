@@ -111,7 +111,7 @@ app.prepare().then(() => {
       const page = '/cms'
       const {subdomain} = req.params
       const params = {
-          subdomain,
+        subdomain,
       }
       app.render(req, res, page, params)
     }

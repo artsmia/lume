@@ -9,9 +9,13 @@ const Story = db.define('story', {
   },
   title: {
     type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
   },
   description: {
     type: Sequelize.TEXT,
+    allowNull: false,
+    defaultValue: ""
   },
   template: {
     type: Sequelize.ENUM,
@@ -26,8 +30,10 @@ const Story = db.define('story', {
     type: Sequelize.UUID
   },
   localId: {
-    type: Sequelize.STRING
-  }
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
 }, {
   freezeTableName: true,
 })

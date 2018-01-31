@@ -11,6 +11,7 @@ class Settings extends Component {
 
       let user = await getUser(ctx)
 
+
       return {
         user,
       }
@@ -20,8 +21,6 @@ class Settings extends Component {
   }
 
   render() {
-
-    console.log(this.props)
     return (
       <Template
         {...this.props}

@@ -8,6 +8,8 @@ const fragment = gql`
     emailDomain
     customImageApiEnabled
     customImageEndpoint
+    customObjApiEndpoint
+    customObjApiEnabled
   }
 `
 

@@ -14,7 +14,9 @@ const Organization = db.define('organization', {
     primaryKey: true
   },
   emailDomain: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
   },
   newUsersRequireApproval: {
     type: Sequelize.BOOLEAN,
@@ -25,14 +27,18 @@ const Organization = db.define('organization', {
     defaultValue: false
   },
   customObjApiEndpoint: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
   },
   customImageApiEnabled: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
   customImageEndpoint: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
   },
 }, {
   freezeTableName: true

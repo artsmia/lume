@@ -2,7 +2,6 @@
   "name": "app",
   "version": "1.0.0",
   "dependencies": {
-    "contents": "1.0.0",
     "@vimeo/player": "^2.2.1",
     "apollo-link": "^1.0.6",
     "apollo-link-context": "^1.0.3",

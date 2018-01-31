@@ -14,8 +14,17 @@ export default class OrgSettings extends Component {
     customObjApiEndpoint: ""
   }
 
+  constructor(props){
+    super(props)
+    this.state = {
+      ...props.organization
+    }
+  }
+
 
   render() {
+
+    if (!this.props.organization) return null
 
     const {
       state: {
@@ -26,21 +35,20 @@ export default class OrgSettings extends Component {
       },
       handleChange,
       handleCheck,
+      handleSave,
       props: {
         organization
       }
     } = this
-
-    console.log(this.props)
 
     return (
         <Centered>
 
           <Column>
 
-            {/* <H2>
+            <H2>
               {organization.name}
-            </H2> */}
+            </H2>
 
             <Label>
               Name
@@ -59,7 +67,7 @@ export default class OrgSettings extends Component {
 
             <Checkbox
               name={"newUsersRequireApproval"}
-              value={newUsersRequireApproval}
+              checked={newUsersRequireApproval}
               onChange={handleCheck}
             />
 
@@ -69,7 +77,7 @@ export default class OrgSettings extends Component {
 
             <Checkbox
               name={"customObjApiEnabled"}
-              value={customObjApiEnabled}
+              checked={customObjApiEnabled}
               onChange={handleCheck}
             />
 
@@ -83,6 +91,11 @@ export default class OrgSettings extends Component {
               onChange={handleChange}
             />
 
+            <Button
+              onClick={handleSave}
+            >
+              Save
+            </Button>
 
           </Column>
 
@@ -94,6 +107,26 @@ export default class OrgSettings extends Component {
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
 
   handleCheck = ({target: {checked, name}}) => this.setState({[name]: checked})
+
+  componentWillReceiveProps(nextProps){
+    if (
+      nextProps.organization
+    ) {
+      if (
+        nextProps.organization.id !== this.state.organizationId
+      ) {
+        this.setState({...nextProps.organization})
+      }
+    }
+  }
+
+  handleSave = () => {
+
+    this.props.editOrganization({
+      ...this.state
+    })
+  }
+
 
 }
 

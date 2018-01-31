@@ -12,6 +12,8 @@ import deleteStory from './deleteStory'
 
 import editContent from './editContent'
 import editObj from './editObj'
+import editOrganization from './editOrganization'
+
 import editStory from './editStory'
 import editUserOrganizationRole from './editUserOrganizationRole'
 import reorderContents from './reorderContents'
@@ -33,6 +35,7 @@ const mutation = new GraphQLObjectType({
     editStory,
     editObj,
     editUserOrganizationRole,
+    editOrganization,
     reorderContents
   }
 })
