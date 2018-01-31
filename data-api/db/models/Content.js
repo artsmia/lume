@@ -15,24 +15,33 @@ const Content = db.define('content', {
       "movie",
       "obj",
       "picture"
-    ]
+    ],
+    allowNull: false,
+    defaultValue: "picture"
   },
   index: {
     type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
   },
   title: {
     type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
   },
   description: {
     type: Sequelize.TEXT,
+    allowNull: false,
+    defaultValue: ""
   },
   geometry: {
     type: Sequelize.GEOMETRY,
   },
   videoUrl: {
     type: Sequelize.STRING,
+    allowNull: false,
     defaultValue: ""
-  }
+  },
 }, {
   freezeTableName: true
 })

@@ -7,19 +7,38 @@ const Image = db.define('image', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
-  title: Sequelize.STRING,
-  description: Sequelize.TEXT,
-  localId: Sequelize.STRING,
+  title: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
+  description: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    defaultValue: ""
+  },
+  localId: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
   // metadata: {
   //   type: Sequelize.JSON,
   // },
   host: {
     type: Sequelize.ENUM,
-    values: ["s3","gdrive", "local"]
+    values: ["s3","gdrive", "local"],
+    defaultValue: "s3"
   },
-  s3Bucket: Sequelize.STRING,
+  s3Bucket: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
   captionCredit: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    allowNull: false,
+    defaultValue: ""
   }
 }, {
   freezeTableName: true

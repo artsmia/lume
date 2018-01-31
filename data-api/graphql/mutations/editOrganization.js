@@ -1,16 +1,17 @@
 import {
-  GraphQLObjectType,
-  GraphQLString,
   GraphQLID,
+  GraphQLString,
+  GraphQLNonNull,
   GraphQLList,
   GraphQLBoolean
 } from 'graphql'
-import imageType from './image'
-import {RoleEnum} from './enums'
+import organizationType from '../types/organization'
+import resolve from '../resolvers/editOrganization'
 
-const organization = new GraphQLObjectType({
-  name: "organization",
-  fields: () => ({
+const editOrganization = {
+  name: "editOrganization",
+  type: organizationType,
+  args: {
     id: {
       type: GraphQLID
     },
@@ -22,12 +23,6 @@ const organization = new GraphQLObjectType({
     },
     emailDomain: {
       type: GraphQLString
-    },
-    images: {
-      type: new GraphQLList(imageType)
-    },
-    role: {
-      type: RoleEnum,
     },
     customImageApiEnabled: {
       type: GraphQLBoolean
@@ -44,7 +39,8 @@ const organization = new GraphQLObjectType({
     newUsersRequireApproval: {
       type: GraphQLBoolean
     }
-  })
-})
+  },
+  resolve
+}
 
-export default organization
+export default editOrganization

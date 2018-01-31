@@ -7,8 +7,16 @@ const Group = db.define('group', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true
   },
-  title: Sequelize.STRING,
-  description: Sequelize.STRING,
+  title: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
+  description: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    defaultValue: ""
+  },
 }, {
   freezeTableName: true
 })

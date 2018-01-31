@@ -8,23 +8,64 @@ const Obj = db.define('obj', {
     primaryKey: true
   },
   localId: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
   },
   title: {
     type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
   },
   primaryMediaType: {
-    type: Sequelize.ENUM("image", "video")
+    type: Sequelize.ENUM("image", "video"),
+    defaultValue: "image"
   },
-  attribution: Sequelize.STRING,
-  date: Sequelize.STRING,
-  culture: Sequelize.STRING,
-  accessionNumber: Sequelize.STRING,
-  medium: Sequelize.STRING,
-  dimensions: Sequelize.STRING,
-  currentLocation: Sequelize.STRING,
-  creditLine: Sequelize.TEXT,
-  description: Sequelize.TEXT,
+  attribution: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
+  date: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
+  culture: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
+  accessionNumber: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
+  medium: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    defaultValue: ""
+  },
+  dimensions: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
+  currentLocation: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
+  creditLine: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    defaultValue: ""
+  },
+  description: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    defaultValue: ""
+  },
   pullFromCustomApi: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
