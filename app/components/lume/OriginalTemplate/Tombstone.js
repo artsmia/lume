@@ -106,23 +106,25 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 `
 
 const Title = styled.h1`
   font-family: ${({theme}) => theme.fonts.regular};
-  font-size: 1.7em;
+  font-size: 1.2em;
   margin: 0;
 `
 
 const Attribution = styled.h2`
   font-family: ${({theme}) => theme.fonts.light};
-  font-size: 1.4em;
+  font-size: 1em;
   margin: 0;
 `
 
 const CultureDate = styled.h3`
   font-family: ${({theme}) => theme.fonts.light};
-  font-size: 1.2em;
+  font-size: 1em;
   margin: 0;
 `
 

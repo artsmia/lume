@@ -309,16 +309,18 @@ const Container = styled.div`
 `
 
 const SideContainer = styled.div`
-  width: 30%;
+  max-width: 370px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 10px;
+  box-sizing: border-box;
 `
 
 const FeatureContainer = styled.div`
-  width: 70%;
+  width: 100%;
   display: flex;
   background-color: lightgrey;
 `

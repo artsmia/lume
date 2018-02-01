@@ -128,7 +128,8 @@ const Container = styled.div`
 `
 
 const SideContainer = styled.div`
-  width: 30%;
+  max-width: 370px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -137,7 +138,7 @@ const SideContainer = styled.div`
 `
 
 const FeatureContainer = styled.div`
-  width: 70%;
+  width: 100%;
   display: flex;
   background-color: lightgrey;
   height: 100%;
@@ -145,6 +146,7 @@ const FeatureContainer = styled.div`
 
 const ContentText = styled.div`
   margin: 15px;
+  overflow-y: scroll;
 `
 
 const BookContainer = styled.div`

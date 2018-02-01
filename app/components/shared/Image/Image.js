@@ -135,7 +135,6 @@ const Img = styled.img`
   height: ${({height}) => height};
   width: ${({width}) => width};
   object-fit: ${({objectFit}) => objectFit};
-  margin: 10px;
 `
 
 const Thumb = styled.img`
@@ -143,7 +142,6 @@ const Thumb = styled.img`
   width: ${({size}) => size};
   box-shadow:  ${({theme, selected}) => (selected) ? `0 0 10px 5px ${theme.colors.purple}` : ""};
   object-fit: cover;
-  margin: 10px;
 `
 
 const SpinnerBox = styled.div`

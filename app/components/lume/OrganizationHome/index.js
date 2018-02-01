@@ -14,7 +14,7 @@ const query = graphql(StoriesQuery, {
           organization: {
             subdomain: router.query.subdomain
           },
-          limit: 20,
+          limit: 30,
           offset: 0,
           order: {
             column: "updatedAt",
