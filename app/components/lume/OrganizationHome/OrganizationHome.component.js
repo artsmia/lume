@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Image from '../../shared/Image'
 import {Label, Checkbox} from '../../ui/forms'
 import Router from 'next/router'
-import {H3} from '../../ui/h'
+import {H3, H2, H4} from '../../ui/h'
 
 export default class Home extends Component {
 
@@ -45,34 +45,43 @@ export default class Home extends Component {
       searchChange,
       handleCheck,
       handleLoadMore,
-      handleScroll
+      handleScroll,
+      handleEnter
     } = this
 
     return (
 
       <Container>
         <SideBar>
+
+          <H2>Art Stories</H2>
+
           <SearchRow>
             <Search
               name={"search"}
               value={search}
               onChange={searchChange}
+              onKeyPress={handleEnter}
             />
           </SearchRow>
 
           <Options>
 
+            <H3>
+              Story Type
+            </H3>
+
             <Checkbox
               name={"original"}
               checked={template.includes("original")}
-              label={"Original"}
+              label={"Object Stories"}
               onChange={handleCheck}
             />
 
             <Checkbox
               name={"slider"}
               checked={template.includes("slider")}
-              label={"Slider"}
+              label={"Thematic Stories"}
               onChange={handleCheck}
             />
           </Options>
@@ -92,7 +101,7 @@ export default class Home extends Component {
           ))}
           <MoreRow>
             {(
-              stories.length % 20 === 0 && stories.length > 0) ? (
+              stories.length % 30 === 0 && stories.length > 0) ? (
               <Button
                 onClick={handleLoadMore}
               >
@@ -122,6 +131,12 @@ export default class Home extends Component {
         func,
         wait
       )
+    }
+  }
+
+  handleEnter = ({keyCode}) => {
+    if (keyCode === 0){
+      this.updateUrl()
     }
   }
 
@@ -204,27 +219,34 @@ export default class Home extends Component {
         props: {
           fetchMore,
           stories,
-          variables
+          variables,
         },
       } = this
 
-      let newVariables = {
-        filter: {
-          ...variables.filter,
-          offset: this.props.stories.length,
+      if (
+        stories.length % 30 === 0
+        && stories.length > 0
+      ) {
+        let newVariables = {
+          filter: {
+            ...variables.filter,
+            offset: this.props.stories.length,
+          }
         }
+
+        fetchMore({
+          variables: newVariables,
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            if (!fetchMoreResult) { return previousResult }
+
+            return Object.assign({}, previousResult, {
+              stories: [...previousResult.stories, ...fetchMoreResult.stories]
+            })
+          },
+        })
       }
 
-      fetchMore({
-        variables: newVariables,
-        updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult) { return previousResult }
 
-          return Object.assign({}, previousResult, {
-            stories: [...previousResult.stories, ...fetchMoreResult.stories]
-          })
-        },
-      })
     } catch (ex) {
       console.error(ex)
     }
@@ -263,12 +285,20 @@ const Story = ({id, imageId, subdomain, title}) => (
     {(imageId) ? (
       <Image
         imageId={imageId}
-        height={"200px"}
-          width={"300px"}
+        width={"100%"}
         objectFit={"cover"}
         title={title}
       />
-    ): <div></div>}
+    ): (
+      <div
+        style={{
+          width: '100%',
+          border: '1px solid grey'
+        }}
+      >
+        <H4>{title}</H4>
+      </div>
+    )}
   </AWrap>
 
   </Link>
@@ -277,6 +307,9 @@ const Story = ({id, imageId, subdomain, title}) => (
 const AWrap = styled.a`
   cursor: pointer;
   display: flex;
+  height: 200px;
+  width: 300px;
+  margin: 10px 10px;
 `
 
 const Container = styled.div`
@@ -291,7 +324,7 @@ const Results = styled.div`
   height: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: fles-start;
+  justify-content: space-around;
   align-items: flex-start;
   overflow-y: scroll;
 `
@@ -304,19 +337,19 @@ const MoreRow = styled.div`
 `
 
 const SideBar = styled.div`
-  width: 20%;
+  width: 22%;
   height: 100%;
   display: flex;
   flex-direction:column;
   align-items:flex-start;
-  padding: 20px;
-  border-right: 1px solid lightgrey;
+  padding: 30px;
 `
 
 const SearchRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin: 30px 0;
 `
 
 const Options = styled.div`
@@ -324,4 +357,6 @@ const Options = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
 `
