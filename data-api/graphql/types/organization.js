@@ -8,6 +8,8 @@ import {
 import imageType from './image'
 import {RoleEnum} from './enums'
 
+import categoryType from './category'
+
 const organization = new GraphQLObjectType({
   name: "organization",
   fields: () => ({
@@ -43,6 +45,9 @@ const organization = new GraphQLObjectType({
     },
     newUsersRequireApproval: {
       type: GraphQLBoolean
+    },
+    categories: {
+      type: new GraphQLList(categoryType)
     }
   })
 })

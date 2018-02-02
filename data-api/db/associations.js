@@ -1,4 +1,5 @@
 import {
+  Category,
   Story,
   Picture,
   Content,
@@ -35,14 +36,28 @@ export async function createAssociations() {
       through: "content_image"
     })
 
+    Category.hasMany(Group, {
+      as: "groups"
+    })
+
+    Category.belongsTo(Image, {
+      as: "image"
+    })
+
+    Category.belongsTo(Organization, {
+      as: "organization"
+    })
+
+
+    Group.belongsTo(Category, {
+      as: "category"
+    })
+
     Group.belongsToMany(Story, {
       as: "groups",
       through: "story_group",
     })
 
-    Group.belongsTo(Organization, {
-      as: "organization"
-    })
 
 
     Image.belongsTo(Organization, {
@@ -80,8 +95,8 @@ export async function createAssociations() {
       as: "objs"
     })
 
-    Organization.hasMany(Group, {
-      as: "group"
+    Organization.hasMany(Category, {
+      as: "categories"
     })
 
     Organization.hasMany(User_Organization, {
