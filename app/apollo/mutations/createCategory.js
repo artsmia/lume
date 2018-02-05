@@ -9,6 +9,8 @@ export const CreateCategoryMutation = gql`
     createCategory(
       organization: $organization
     ) {
+      id
+      title
       ...CategoryFragment
     }
   }
@@ -16,13 +18,16 @@ export const CreateCategoryMutation = gql`
 `
 
 export const mutationConfig = {
-  props: ({mutate, ownProps: {subdomain} }) => ({
-    createObj: () => mutate({
+  props: ({mutate, ownProps: {router: {query: {subdomain}}} }) => ({
+    createCategory: () => mutate({
       variables: {
         organization: {
           subdomain
         },
       },
+      refetchQueries: [
+        "OrganizationQuery"
+      ]
     }),
   }),
 }

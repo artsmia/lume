@@ -36,6 +36,9 @@ export const mutationConfig = {
           },
           creatorId: userId
         },
+        refetchQueries: [
+          "StoriesQuery"
+        ]
       }),
     }
   },

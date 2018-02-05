@@ -21,8 +21,6 @@ class CmsIndex extends Component {
 
   render() {
 
-    console.log(this.props)
-
     return (
       <Template
         drawer

@@ -47,7 +47,14 @@ const organization = new GraphQLObjectType({
       type: GraphQLBoolean
     },
     categories: {
-      type: new GraphQLList(categoryType)
+      type: new GraphQLList(categoryType),
+      async resolve(src){
+        try {
+          return await src.getCategories()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
     }
   })
 })

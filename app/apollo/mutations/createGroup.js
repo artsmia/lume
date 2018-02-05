@@ -16,13 +16,18 @@ export const CreateGroupMutation = gql`
 `
 
 export const mutationConfig = {
-  props: ({mutate}) => ({
-    createObj: ({categoryId}) => mutate({
-      variables: {
-        id: categoryId
-      },
-    }),
-  }),
+  props: ({mutate, ownProps: {categoryId}}) => {
+    return {
+      createGroup: () => mutate({
+        variables: {
+          categoryId
+        },
+        refetchQueries: [
+          "CategoryQuery"
+        ]
+      }),
+    }
+  },
 }
 
 export default graphql(CreateGroupMutation, mutationConfig)

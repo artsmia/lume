@@ -5,11 +5,13 @@ import categoryFragment from '../fragments/category'
 
 const editCategory = gql`
   mutation editCategory (
+    $id: ID!
     $title: String
     $description: String
     $imageId: ID
   ) {
     editCategory(
+      id: $id
       title: $title
       description: $description
       imageId: $imageId
@@ -23,8 +25,9 @@ const editCategory = gql`
 
 const mutationConfig = {
   props: ({mutate, ownProps: {categoryId} }) => ({
-    editCategory: (obj) => mutate({
+    editCategory: (category) => mutate({
       variables: {
+        ...category,
         id: categoryId
       },
     }),

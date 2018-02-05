@@ -23,6 +23,9 @@ const editGroup = {
     categoryId: {
       type: GraphQLID
     },
+    imageId: {
+      type: GraphQLID
+    }
   },
   resolve
 }
