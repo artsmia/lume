@@ -4,6 +4,7 @@ import {
 import createCategory from './createCategory'
 
 import createContent from './createContent'
+import createGroup from './createGroup'
 import createImage from './createImage'
 import createObj from './createObj'
 import createStory from './createStory'
@@ -32,6 +33,7 @@ const mutation = new GraphQLObjectType({
   fields: {
     createCategory,
     createContent,
+    createGroup,
     createObj,
     createImage,
     createStory,

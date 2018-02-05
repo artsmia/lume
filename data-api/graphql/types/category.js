@@ -23,10 +23,24 @@ const category = new GraphQLObjectType({
       type: GraphQLString
     },
     image: {
-      type: imageType
+      type: imageType,
+      async resolve(src){
+        try {
+          return await src.getImage()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
     },
     groups: {
-      type: new GraphQLList(groupType)
+      type: new GraphQLList(groupType),
+      async resolve(src){
+        try {
+          return await src.getGroups()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
     },
     organization: {
       type: organizationType

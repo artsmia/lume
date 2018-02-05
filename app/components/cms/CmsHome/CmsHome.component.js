@@ -49,7 +49,7 @@ export default class CmsHome extends Component {
           <Link
             href={{
               pathname: '/cms/orgSettings',
-              queries: {
+              query: {
                 subdomain: subdomain,
               }
             }}

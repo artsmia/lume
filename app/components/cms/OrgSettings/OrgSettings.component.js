@@ -4,6 +4,7 @@ import {H2} from '../../ui/h'
 import {Form, Label, Input, Select, Option, Checkbox} from '../../ui/forms'
 import {Row, Column} from '../../ui/layout'
 import {Button} from '../../ui/buttons'
+import CategoryGroupEditor from '../CategoryGroupEditor'
 
 export default class OrgSettings extends Component {
 
@@ -97,7 +98,10 @@ export default class OrgSettings extends Component {
               Save
             </Button>
 
+            <CategoryGroupEditor/>
+
           </Column>
+
 
 
         </Centered>

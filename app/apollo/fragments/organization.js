@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import categoryFragment from './category'
 
 const fragment = gql`
   fragment OrganizationFragment on organization {
@@ -10,7 +11,11 @@ const fragment = gql`
     customImageEndpoint
     customObjApiEndpoint
     customObjApiEnabled
+    categories {
+      ...CategoryFragment
+    }
   }
+  ${categoryFragment}
 `
 
 export default fragment

@@ -10,8 +10,6 @@ class Settings extends Component {
     try {
 
       let user = await getUser(ctx)
-
-
       return {
         user,
       }

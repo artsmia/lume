@@ -1,10 +1,10 @@
-import Group from '../../db/models/Group'
+import Category from '../../db/models/Category'
 
 export default async function(src, args, ctx){
   try {
 
-    return await Group.create({
-      categoryId: args.categoryId,
+    return await Category.findOne({
+      where: args
     })
 
   } catch (ex) {
