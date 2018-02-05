@@ -1,4 +1,5 @@
 import Organization from '../../db/models/Organization'
+import Group from '../../db/models/Group'
 import {Op} from 'sequelize'
 
 export default function({
@@ -11,31 +12,33 @@ export default function({
   limit,
   offset,
   template,
-  visibility
+  visibility,
+  groups
 }){
   let options = {
     where: {
 
-    }
+    },
+    include: []
   }
   if (organizationId) {
-    options.include = [{
+    options.include.push({
       model: Organization,
       as: "organization",
       where: {
         id: organizationId
       }
-    }]
+    })
   }
 
   if (subdomain) {
-    options.include = [{
+    options.include.push({
       model: Organization,
       as: "organization",
       where: {
         subdomain: subdomain
       }
-    }]
+    })
   }
 
   if (search) {
@@ -69,6 +72,19 @@ export default function({
         [Op.or]: visibility
       }
     })
+  }
+
+  if (groups) {
+    options.include.push({
+      model: Group,
+      as: "groups",
+      where: {
+        id: {
+          [Op.or]: groups
+        }
+      }
+    })
+
   }
 
   if (order) {
