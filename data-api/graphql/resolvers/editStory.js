@@ -20,6 +20,10 @@ export default async function(src, args, ctx){
       await story.removeRelatedStories(args.removeRelatedStoryId)
     }
 
+    if (args.setGroupsIds){
+      await story.setGroups(args.setGroupsIds)
+    }
+
     return story
 
   } catch (ex) {

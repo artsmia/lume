@@ -27,3 +27,12 @@ export const Button = styled.button`
   }
 
 `
+
+export const RoundButton = styled(Button)`
+  height: ${({size}) => size};
+  width: ${({size}) => size};
+  border-radius: ${({size}) => size};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

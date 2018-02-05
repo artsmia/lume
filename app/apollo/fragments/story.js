@@ -1,5 +1,7 @@
 import gql from 'graphql-tag'
 import objFragment from './obj'
+import groupFragment from './group'
+
 
 const fragment = gql`
   fragment StoryFragment on story {
@@ -10,6 +12,9 @@ const fragment = gql`
     visibility
     previewImage{
       id
+    }
+    groups {
+      ...GroupFragment
     }
     contents {
       id
@@ -42,6 +47,7 @@ const fragment = gql`
   }
 
   ${objFragment}
+  ${groupFragment}
 `
 
 export default fragment

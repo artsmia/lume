@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button} from '../../ui/buttons'
+import {Button, RoundButton} from '../../ui/buttons'
 import CategoryEditor from '../CategoryEditor'
+import Icon from '../../ui/icons'
 
 export default class CategoryGroupEditor extends Component {
 
@@ -20,17 +21,23 @@ export default class CategoryGroupEditor extends Component {
 
     return (
       <Container>
-        <Button
-          onClick={createCategory}
-        >
-          New Category
-        </Button>
         {categories.map( category => (
           <CategoryEditor
             key={category.id}
             categoryId={category.id}
           />
         ))}
+        <RoundButton
+          onClick={createCategory}
+          title={"Create Category"}
+          size={"50px"}
+          color={"green"}
+        >
+          <Icon
+            color={"white"}
+            icon={"add"}
+          />
+        </RoundButton>
 
       </Container>
     )
@@ -42,6 +49,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  border: 2px solid salmon;
   width: 100%;
+  box-sizing: border-box;
 `

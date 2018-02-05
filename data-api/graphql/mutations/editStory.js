@@ -35,6 +35,9 @@ const editStory = {
     },
     removeRelatedStoryId: {
       type: GraphQLID
+    },
+    setGroupsIds: {
+      type: new GraphQLList(GraphQLID)
     }
   },
   resolve
