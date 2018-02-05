@@ -7,6 +7,7 @@ import Image from '../../shared/Image'
 import {Label, Checkbox} from '../../ui/forms'
 import Router from 'next/router'
 import {H3, H2, H4} from '../../ui/h'
+import {Column, Row} from '../../ui/layout'
 
 export default class Home extends Component {
 
@@ -22,12 +23,13 @@ export default class Home extends Component {
     this.state = {
       search: search || "",
       template: template ? template.split(',') : ["original","slider"],
+      selectedGroupIds: []
     }
   }
 
   render() {
 
-    if (!this.props.stories) return null
+    if (!this.props.stories || !this.props.organization) return null
 
     const {
       props: {
@@ -36,14 +38,17 @@ export default class Home extends Component {
           query: {
             subdomain
           }
-        }
+        },
+        organization
       },
       state: {
         search,
-        template
+        template,
+        selectedGroupIds
       },
       searchChange,
       handleCheck,
+      handleGroupCheck,
       handleLoadMore,
       handleScroll,
       handleEnter
@@ -84,6 +89,30 @@ export default class Home extends Component {
               label={"Thematic Stories"}
               onChange={handleCheck}
             />
+
+            {organization.categories.map( category => (
+              <Column
+                key={category.id}
+              >
+                <H3>
+                  {category.title}
+                </H3>
+                {category.groups.map( group => (
+                  <Row
+                    key={group.id}
+                  >
+                    <Checkbox
+                      name={"selectedGroups"}
+                      value={group.id}
+                      checked={selectedGroupIds.includes(group.id)}
+                      onChange={handleGroupCheck}
+                    />
+                    {group.title}
+                  </Row>
+                ))}
+              </Column>
+            ))}
+
           </Options>
         </SideBar>
         <Results
@@ -149,6 +178,28 @@ export default class Home extends Component {
     )
   }
 
+  handleGroupCheck = ({target: {checked, name, value}}) => {
+    this.setState(
+      ({selectedGroupIds}) => {
+        let groups = selectedGroupIds.slice()
+        if (
+          groups.includes(value)
+        ) {
+          groups = groups.filter(id => id !== value)
+          return {
+            selectedGroupIds:groups
+          }
+        } else {
+          groups.push(value)
+          return {
+            selectedGroupIds: groups
+          }
+        }
+      },
+      this.updateUrl
+    )
+  }
+
   handleCheck = ({target: {checked, name}}) => {
     this.setState(
       (prevState) => {
@@ -182,12 +233,14 @@ export default class Home extends Component {
 
     const {
       search,
-      template
+      template,
+      selectedGroupIds: groups
     } = this.state
 
     let queries = {
       search,
-      template
+      template,
+      groups
     }
 
     let queryString = `/${subdomain}?`
@@ -204,7 +257,8 @@ export default class Home extends Component {
         query: {
           search,
           subdomain,
-          template: template.join(',')
+          template: template.join(','),
+          groups: groups.join(',')
         }
       },
       queryString,

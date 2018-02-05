@@ -115,6 +115,9 @@ export const FilterInput = new GraphQLInputObjectType({
     visibility: {
       type: new GraphQLList(VisibilityEnum)
     },
+    groups: {
+      type: new GraphQLList(GraphQLID)
+    }
   }
 })
 
