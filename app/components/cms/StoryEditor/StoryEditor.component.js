@@ -11,6 +11,7 @@ import {Input, Textarea, ChangeImage} from '../DefaultEditors'
 import ImageManager from '../ImageManager'
 import DeleteStoryButton from '../DeleteStoryButton'
 import StoryAssociator from '../StoryAssociator'
+import StoryGroupSelector from '../StoryGroupSelector'
 
 export default class StoryEditor extends Component {
 
@@ -46,9 +47,13 @@ export default class StoryEditor extends Component {
       },
       handleChange,
       handleSave,
+      handleGroupSelectionSave,
       props: {
         storyId,
-        router
+        router,
+        story: {
+          groups
+        }
       }
     } = this
 
@@ -118,6 +123,10 @@ export default class StoryEditor extends Component {
               value={description}
               onChange={handleChange}
             />
+            <StoryGroupSelector
+              onGroupSelectionSave={handleGroupSelectionSave}
+              selectedGroupIds={groups.map(group => group.id)}
+            />
           </Column>
           <Column>
             <ChangeImage
@@ -161,6 +170,12 @@ export default class StoryEditor extends Component {
         this.setState(state)
       }
     }
+  }
+
+  handleGroupSelectionSave = (selectedGroupIds) => {
+    this.props.editStory({
+      setGroupsIds: selectedGroupIds
+    })
   }
 
   handleChange = ({target: {value, name}}) => {

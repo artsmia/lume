@@ -7,6 +7,7 @@ import {
 import organizationType from './organization'
 import imageType from './image'
 import contentType from './content'
+import groupType from './group'
 import {VisibilityEnum, TemplateEnum} from './enums'
 
 import {organizationResolver} from '../resolvers/story'
@@ -70,6 +71,16 @@ const story = new GraphQLObjectType({
         }
       }
     },
+    groups: {
+      type: new GraphQLList(groupType),
+      async resolve(src){
+        try {
+          return await src.getGroups()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
+    }
   })
 })
 

@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button} from '../../ui/buttons'
+import {Button, RoundButton} from '../../ui/buttons'
 import {Input, Textarea, Label} from '../../ui/forms'
+import Icon from '../../ui/icons'
 
 export default class GroupEditor extends Component {
 
@@ -28,34 +29,31 @@ export default class GroupEditor extends Component {
 
     return (
       <Container>
-        <Button
-          color={"red"}
+        <DeleteButton
           onClick={deleteGroup}
+          title={"Delete Group"}
+          color={"red"}
+          size={"40px"}
         >
-          Delete
-        </Button>
-        <Label>
-          Title
-        </Label>
+          <Icon
+            color={"white"}
+            icon={"close"}
+          />
+        </DeleteButton>
         <Input
           name={"title"}
           value={title}
           onChange={handleChange}
+          placeholder={"Title"}
         />
-        <Label>
-          Description
-        </Label>
         <Textarea
           name={"description"}
           value={description}
           onChange={handleChange}
+          placeholder={"Description"}
         />
 
-        <Button
-          onClick={handleSave}
-        >
-          Save
-        </Button>
+
 
 
       </Container>
@@ -69,6 +67,31 @@ export default class GroupEditor extends Component {
   }
 
   handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+
+  bounce = true
+
+  debounce = (func, time) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(
+        func,
+        time
+      )
+    }
+  }
+
+  handleChange = ({target: {value, name}}) => {
+    this.setState(
+      () => ({[name]: value}),
+      () => {
+        this.debounce(
+          this.handleSave,
+          1000
+        )
+      }
+    )
+  }
+
 
   componentWillReceiveProps(nextProps){
     if (nextProps.group.id !== this.state.id){
@@ -84,6 +107,12 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  border: 2px solid lightgreen;
-  width: 50%;
+  width: 100%;
+  border: 1px solid grey;
+  margin: 10px 0;
+`
+
+const DeleteButton = styled(RoundButton)`
+  align-self: flex-end;
+  position: absolute;
 `
