@@ -3,9 +3,14 @@ import styled from 'styled-components'
 import MiaUI from '../../ui'
 import {DragDropContextProvider} from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import Snack from '../../ui/Snackbar'
 
 export default class Template extends Component {
 
+
+  state = {
+    message: ""
+  }
 
   render() {
 
@@ -13,8 +18,14 @@ export default class Template extends Component {
       props,
       props: {
         children,
-      }
+        // snack: {
+        //   message,
+        //   id: snackId
+        // }
+      },
     } = this
+
+    console.log(this.props)
 
     return (
       <MiaUI>
@@ -25,12 +36,16 @@ export default class Template extends Component {
 
             {children}
 
-
+            {/* <Snack
+              message={message}
+              snackId={snackId}
+            /> */}
           </Container>
         </DragDropContextProvider>
       </MiaUI>
     )
   }
+
 
 }
 

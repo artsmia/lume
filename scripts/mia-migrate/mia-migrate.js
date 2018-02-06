@@ -116,7 +116,7 @@ async function populate(){
 
               contentIndex ++
 
-              await story.createContent({
+              let content = await story.createContent({
                 type: "detail",
                 title: detail.title,
                 description: tdService.turndown(detail.description),
@@ -124,6 +124,20 @@ async function populate(){
                 index: contentIndex,
                 image0Id: detailImage.id
               })
+
+              for (let attachment of detail.attachments) {
+                let [additionalImage] = await Image.findOrCreate({
+                  where: {
+                    localId: attachment['image_id']
+                  },
+                  defaults: {
+                    organizationId: Org.id
+                  }
+                })
+
+                await content.addAdditionalImages(additionalImage)
+              }
+
             }
           }
         }

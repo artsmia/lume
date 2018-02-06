@@ -4,8 +4,9 @@ import getUser from '../auth/getUser'
 import router from 'next/router'
 import {Loading} from '../components/ui/spinner'
 import Cookie from 'js-cookie'
+import withData from '../apollo'
 
-export default class Auth extends Component {
+class Auth extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
@@ -107,3 +108,6 @@ export default class Auth extends Component {
 
 
 }
+
+
+export default withData(Auth)
