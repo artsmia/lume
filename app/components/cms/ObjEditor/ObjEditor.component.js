@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import {Input, Textarea, ChangeImage} from '../DefaultEditors'
 import {Button} from '../../ui/buttons'
-
+import {Checkbox, Input as SimpleInput, Label} from '../../ui/forms'
+import {Row} from '../../ui/layout'
 
 export default class ObjEditor extends Component {
 
@@ -18,7 +19,8 @@ export default class ObjEditor extends Component {
     currentLocation: "",
     creditLine: "",
     pullFromCustomApi: false,
-    primaryImageId: undefined
+    primaryImageId: undefined,
+    localId: ""
   }
 
   state = {
@@ -31,7 +33,8 @@ export default class ObjEditor extends Component {
     const {
       state,
       handleChange,
-      handleSave
+      handleSave,
+      handleCheck
     } = this
 
     return (
@@ -41,6 +44,28 @@ export default class ObjEditor extends Component {
         >
           Save Obj
         </Button>
+
+        <div>
+          <Label>
+            Pull From Custom API
+          </Label>
+          <Checkbox
+            name={"pullFromCustomApi"}
+            checked={state.pullFromCustomApi}
+            onChange={handleCheck}
+          />
+        </div>
+        <div>
+          <Label>
+            Local ID
+          </Label>
+          <SimpleInput
+            placeholder={"Local ID"}
+            name={"localId"}
+            value={state.localId}
+            onChange={handleChange}
+          />
+        </div>
         <Input
           label={"Title"}
           name={'title'}
@@ -59,12 +84,7 @@ export default class ObjEditor extends Component {
           value={state.date}
           onChange={handleChange}
         />
-        <Textarea
-          label={"Description"}
-          name={'description'}
-          value={state.description}
-          onChange={handleChange}
-        />
+
 
         <ChangeImage
           label={"Image"}
@@ -77,8 +97,12 @@ export default class ObjEditor extends Component {
   }
 
 
-  handleChange = ({target: {value, name}}) => {
+  handleChange = ({target: {value, name, checked}}) => {
     this.setState({[name]: value})
+  }
+
+  handleCheck = ({target: {name, checked}}) => {
+    this.setState({[name]: checked})
   }
 
   handleSave = () => {
@@ -112,5 +136,6 @@ const Container = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   height: 100%;
-  overflow-y: scroll;
+  border: 1px solid grey;
+  min-height: 500px;
 `

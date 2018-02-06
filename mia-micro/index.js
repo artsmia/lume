@@ -23,7 +23,7 @@ exports.handler = (event, context, callback) => {
         culture: json.culture || json.country,
         creditLine: json.creditline,
         currentLocation: json.room,
-        dimensions: json.dimensions
+        description: json.description || json.text
       }
     }
 

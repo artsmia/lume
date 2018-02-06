@@ -8,12 +8,14 @@ import styled from 'styled-components'
 import router from 'next/router'
 import Modal from '../../ui/modal'
 import {Button} from '../../ui/buttons'
+import {Textarea, Label} from '../../ui/forms'
 
 class ObjContentEditor extends Component {
 
   state = {
+    ...this.props.content,
     modal: false,
-    objId: ""
+    objId: "",
   }
 
   render(){
@@ -28,16 +30,33 @@ class ObjContentEditor extends Component {
       },
       state: {
         modal,
-        objId
+        objId,
+        description
       },
       handleModalOpen,
       handleModalClose,
       handleSelect,
+      handleChange,
       saveEdits
     } = this
 
     return (
       <Container>
+
+        <Label>
+          Description
+        </Label>
+        <Textarea
+          name={"description"}
+          value={description}
+          onChange={handleChange}
+        />
+        <Button
+          onClick={saveEdits}
+        >
+          Save
+        </Button>
+
 
         <Button
           onClick={handleModalOpen}
@@ -66,7 +85,14 @@ class ObjContentEditor extends Component {
     )
   }
 
+  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+
   componentWillReceiveProps(nextProps){
+
+    if (nextProps.contentId !== this.state.id){
+      this.setState({...nextProps.content})
+    }
+
     if (
       nextProps.content
     ) {
@@ -95,7 +121,10 @@ class ObjContentEditor extends Component {
   }
 
   saveEdits = () => {
-
+    this.props.editContent({
+      id: this.state.id,
+      description: this.state.description,
+    })
   }
 }
 
