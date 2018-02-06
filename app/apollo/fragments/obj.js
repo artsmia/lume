@@ -5,6 +5,7 @@ const fragment = gql`
     id
     localId
     title
+    description
     attribution
     date
     culture

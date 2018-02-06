@@ -13,7 +13,7 @@ export default function({
   offset,
   template,
   visibility,
-  groups
+  groups = []
 }){
   let options = {
     where: {
@@ -74,7 +74,7 @@ export default function({
     })
   }
 
-  if (groups) {
+  if (groups.length > 0) {
     options.include.push({
       model: Group,
       as: "groups",
