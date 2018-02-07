@@ -154,26 +154,25 @@ export default class StoryEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (
-      nextProps.story
-    ){
-      if (
-        nextProps.story.id !== this.state.id
-      ) {
-        let {
-          story
-        } = nextProps
-        let state = {
-          previewImageId: (story.previewImage) ? story.previewImage.id : undefined
-        }
-        Object.keys(story).forEach(key => {
-          Object.assign(state, {
-            [key]: story[key] || this.initialValues[key]
-          })
-        })
+    this.mapPropsToState(nextProps)
+  }
 
-        this.setState(state)
-      }
+  mapPropsToState = (nextProps) => {
+    if (
+      nextProps.story ||
+      nextProps.storyId !== this.state.id
+    ) {
+      let {
+        story,
+        story: {
+          previewImage
+        }
+      } = nextProps
+
+      this.setState({
+        ...story,
+        previewImageId: previewImage ? previewImage.id : ""
+      })
     }
   }
 
@@ -218,6 +217,7 @@ export default class StoryEditor extends Component {
 
       await this.props.editStory({
         ...this.state,
+        previewImageId: this.state.previewImageId || undefined
       })
 
       this.props.setSaveStatus({
