@@ -42,6 +42,11 @@ export default class Editor extends Component {
           query: {
             subdomain
           }
+        },
+        saveStatus: {
+          synced,
+          saving,
+          lastSave
         }
       },
       state: {
@@ -77,20 +82,17 @@ export default class Editor extends Component {
               Back to All Stories
             </Link>
           </TopTextDiv>
-          {/* <TopTextDiv>
-            <Link
-              href={{
-                pathname: '/lume/story',
-                query: {
-                  subdomain,
-                  storyId
-                }
-              }}
-              as={`/${subdomain}/story/${storyId}`}
-            >
-              Live View
-            </Link>
-          </TopTextDiv> */}
+
+          <SaveStatusContainer>
+            <SaveStatus>
+              {(synced && !saving) ? `saved!` : `not saved`}
+              {saving ? `saving...` : ''}
+            </SaveStatus>
+            <LastSave>
+              {lastSave ? `last save at ${ new Date(lastSave).toLocaleTimeString()}` : ''}
+            </LastSave>
+          </SaveStatusContainer>
+
           <PreviewButton
             onClick={togglePreview}
           >
@@ -257,6 +259,25 @@ export default class Editor extends Component {
 }
 
 
+const SaveStatusContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  height: 100%;
+`
+
+const SaveStatus = styled.div`
+  height: 100%;
+  font-size: 18px;
+`
+
+const LastSave = styled.div`
+  color: grey;
+  font-size: 12px;
+  min-height: 100%;
+`
+
 const PreviewButton = styled(Button)`
 
 `
@@ -322,7 +343,7 @@ const EditorContainer = styled.div`
 
 const PreviewSpace = styled.div`
   display: flex;
-  min-height: 60vh;
+  min-height: 40vh;
   width: 100%;
   height: 100%;
   border-bottom: 1px solid black;

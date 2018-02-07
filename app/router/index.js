@@ -9,6 +9,7 @@ const express = require('express')
 const next = require('next')
 const fetch = require('isomorphic-unfetch')
 const session = require('express-session')
+
 // const RedisStore = require('connect-redis')(session)
 // const redisOptions = {
 //   url: process.env.REDIS_URL
@@ -76,6 +77,15 @@ app.prepare().then(() => {
 
     }
   )
+
+  server.get('/live', (req, res) => {
+    const page = '/lume'
+    let params = {
+      ...req.query,
+      subdomain: req.subdomains[0]
+    }
+    app.render(req, res, page, params)
+  })
 
   server.get('/auth', (req, res) => {
     const page = '/auth'

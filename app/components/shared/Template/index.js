@@ -9,6 +9,7 @@ const snackQuery = gql`
   query {
     snack @client {
       message
+      snackId
     }
   }
 `
@@ -26,32 +27,5 @@ const localQuery = graphql(snackQuery, localConfig)
 
 ExportComponent = compose(localQuery)(ExportComponent)
 
-//
-// const editSnack = gql`
-//   mutation EditSnack (
-//     $show: Boolean
-//     $message: String
-//   ) {
-//     editSnack(
-//       show: $show
-//       message: $message
-//     ) @client
-//   }
-// `
-//
-// const editSnackConfig = {
-//   props({mutate}){
-//     return {
-//       editSnack(variables){
-//         mutate({
-//           variables
-//         })
-//       }
-//     }
-//   }
-// }
-//
-// const localMutation = graphql(editSnack, editSnackConfig)
-//
 
 export default ExportComponent

@@ -8,7 +8,7 @@ export default class SnackBar extends Component {
   state = {
     show: false,
     message: "",
-    snackIds: []
+    snackIds: ["init"]
   }
 
   render() {

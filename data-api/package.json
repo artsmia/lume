@@ -48,7 +48,7 @@
   "scripts": {
     "start:local": "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js",
     "deploy": "rm -rf build && babel ../data-api -d build --ignore node_modules && now",
-    "now-start": "DEPLOYMENT_ENV=dev node build",
+    "now-start": "DEPLOYMENT_ENV=prod node build",
     "test": "jest"
   }
 }

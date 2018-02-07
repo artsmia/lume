@@ -48,7 +48,7 @@ export default class CategoryEditor extends Component {
           name={"title"}
           value={title}
           onChange={handleChange}
-          placeholder={"Title"}
+          placeholder={"Category Title"}
         />
 
         <GroupColumn>
@@ -125,9 +125,9 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
-  margin-bottom: 20px;
+  margin: 20px 0;
   border: 1px solid black;
-  padding: 5px;
+  padding: 10px;
   box-sizing: border-box;
 `
 
@@ -140,4 +140,5 @@ const GroupColumn = styled.div`
   padding: 10px;
   width: 100%;
   box-sizing: border-box;
+  margin: 10px 0;
 `

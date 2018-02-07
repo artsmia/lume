@@ -48,7 +48,7 @@ export default class OrgSettings extends Component {
           <Column>
 
             <H2>
-              {organization.name}
+              {organization.name} settings
             </H2>
 
             <Label>

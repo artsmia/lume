@@ -1,7 +1,13 @@
 export default {
   snack: {
-    id: Math.random(),
+    snackId: "init",
     message: "Hello World",
     __typename: "Snack"
+  },
+  saveStatus: {
+    synced: true,
+    saving: false,
+    lastSave: '',
+    __typename: "SaveStatus"
   }
 }

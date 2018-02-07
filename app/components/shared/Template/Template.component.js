@@ -18,14 +18,12 @@ export default class Template extends Component {
       props,
       props: {
         children,
-        // snack: {
-        //   message,
-        //   id: snackId
-        // }
+        snack: {
+          message,
+          snackId
+        }
       },
     } = this
-
-    console.log(this.props)
 
     return (
       <MiaUI>
