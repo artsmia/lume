@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import {PropTypes} from 'prop-types'
 import Image from '../../shared/Image'
 import Zoomer from '../../shared/Zoomer'
+import {Row, Column} from '../../ui/layout'
 
 export default class ImageManager extends Component {
 
@@ -93,11 +94,13 @@ export default class ImageManager extends Component {
                 {(images.length < 1) ? (
                   <p>You don't have any images yet</p>
                 ):null}
-                <Button
-                  onClick={handleLoadMore}
-                >
-                  Load More
-                </Button>
+                {(images.length % 10 === 0) ? (
+                  <Button
+                    onClick={handleLoadMore}
+                  >
+                    Load More
+                  </Button>
+                ): null}
               </ThumbColumn>
               <Right>
                 {(selectedImageId) ? (
@@ -177,11 +180,9 @@ handleRefetch = async () => {
 
 }
 
-const SearchRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  box-sizing: border-box;
-  justify-content: center;
+
+const SearchRow = styled(Row)`
+  height: auto;
 `
 
 const ImageSearch = styled(Search)`

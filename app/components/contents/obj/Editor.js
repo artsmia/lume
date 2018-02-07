@@ -9,6 +9,7 @@ import router from 'next/router'
 import Modal from '../../ui/modal'
 import {Button} from '../../ui/buttons'
 import {Textarea, Label} from '../../ui/forms'
+import setSaveStatus from '../../../apollo/local/setSaveStatus'
 
 class ObjContentEditor extends Component {
 
@@ -51,11 +52,6 @@ class ObjContentEditor extends Component {
           value={description}
           onChange={handleChange}
         />
-        <Button
-          onClick={saveEdits}
-        >
-          Save
-        </Button>
 
 
         <Button
@@ -85,7 +81,26 @@ class ObjContentEditor extends Component {
     )
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+  bounce = true
+
+  debounce = (func, wait) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(
+        func,
+        wait
+      )
+    }
+  }
+
+  handleChange = ({target: {value, name}}) => {
+    this.setState(
+      ()=>({[name]: value}),
+      ()=>{
+        this.debounce(this.saveEdits,2000)
+      }
+    )
+  }
 
   componentWillReceiveProps(nextProps){
 
@@ -120,15 +135,34 @@ class ObjContentEditor extends Component {
     })
   }
 
-  saveEdits = () => {
-    this.props.editContent({
-      id: this.state.id,
-      description: this.state.description,
-    })
+  saveEdits = async () => {
+    try {
+
+      this.props.setSaveStatus({
+        saving: true
+      })
+
+      await this.props.editContent({
+        id: this.state.id,
+        description: this.state.description,
+      })
+
+      this.props.setSaveStatus({
+        saving: false,
+        lastSave: Date.now(),
+        synced: true
+      })
+    } catch (ex) {
+      console.error(ex)
+    }
   }
 }
 
-export default compose(query, mutation)(ObjContentEditor)
+let ExportComponent = ObjContentEditor
+ExportComponent = compose(query, mutation)(ExportComponent)
+ExportComponent = compose(setSaveStatus)(ExportComponent)
+
+export default ExportComponent
 
 
 const Container = styled.div`

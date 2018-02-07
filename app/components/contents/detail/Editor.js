@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Input, Textarea, ChangeImage, DetailSelector, MultiImage} from '../../cms/DefaultEditors'
 import query from '../../../apollo/queries/content'
 import mutation from '../../../apollo/mutations/editContent'
+import setSaveStatus from '../../../apollo/local/setSaveStatus'
 import {compose} from 'react-apollo'
 import styled from 'styled-components'
 import {H2} from '../../ui/h'
@@ -26,7 +27,6 @@ class DetailEditor extends Component {
       state: {
         title,
         description,
-        sync,
         image0Id,
         geometry
       },
@@ -41,8 +41,6 @@ class DetailEditor extends Component {
       handleRemoveAdditionalImage
     } = this
 
-    console.log(this.props)
-
     return(
       <Container>
         <TopBar>
@@ -51,12 +49,6 @@ class DetailEditor extends Component {
             Edit Detail
           </H2>
 
-          <Button
-            onClick={saveEdits}
-            disabled={sync}
-          >
-            {(sync) ? "Saved!" : "Save"}
-          </Button>
         </TopBar>
         <Row>
           <Column>
@@ -100,23 +92,55 @@ class DetailEditor extends Component {
     )
   }
 
+  bounce = true
+
+  debounce = (func, wait) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(
+        func,
+        wait
+      )
+    }
+  }
+
+
   componentWillReceiveProps(nextProps){
     this.mapPropsToState(nextProps)
   }
 
   handleChange = ({target: {value, name}}) => {
-    this.setState({
-      [name]: value,
-      sync: false
+    this.props.setSaveStatus({
+      synced: false
     })
+    this.setState(
+      ()=>({
+        [name]: value,
+      }),
+      ()=>{
+        this.debounce(this.saveEdits, 2000)
+      }
+    )
   }
 
-  saveEdits = () => {
-    this.props.editContent({
-      ...this.state,
-      sync: undefined
-    })
-    this.setState({sync: true})
+  saveEdits = async () => {
+    try {
+      this.props.setSaveStatus({
+        saving: true
+      })
+      await this.props.editContent({
+        ...this.state,
+      })
+
+      this.props.setSaveStatus({
+        saving: false,
+        synced: true,
+        lastSave: Date.now()
+      })
+    } catch (ex) {
+      console.error(ex)
+    }
+
   }
 
   mapPropsToState = (nextProps) => {
@@ -173,4 +197,9 @@ const TopBar = styled.div`
   justify-content: space-between;
 `
 
-export default compose(query, mutation)(DetailEditor)
+let ExportComponent = DetailEditor
+
+ExportComponent = compose(query, mutation)(DetailEditor)
+ExportComponent = compose(setSaveStatus)(ExportComponent)
+
+export default ExportComponent
