@@ -1,13 +1,25 @@
 export default {
   Mutation: {
-    flashSnack(obj, {message}, {cache}, info){
+    showSnack(obj, {message}, {cache}, info){
 
 
       const data = {
         snack: {
           __typename: "Snack",
           message,
-          id: Math.random()
+          snackId: Math.random()
+        }
+      }
+
+      cache.writeData({data})
+    },
+    setSaveStatus(obj, {synced, saving, lastSave}, {cache}, info){
+      const data = {
+        saveStatus: {
+          __typename: "SaveStatus",
+          synced,
+          saving,
+          lastSave
         }
       }
 

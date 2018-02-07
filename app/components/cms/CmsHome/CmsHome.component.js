@@ -6,7 +6,8 @@ import StoryList from '../StoryList'
 import CreateStoryButton from '../CreateStoryButton'
 import PropTypes from 'prop-types'
 import {Row} from '../../ui/layout'
-import {Link} from '../../ui/links'
+import Link from 'next/link'
+import Icon from '../../ui/icons'
 
 export default class CmsHome extends Component {
 
@@ -42,7 +43,7 @@ export default class CmsHome extends Component {
 
     return (
       <Container>
-        <Row>
+        <TopRow>
           <H2>
             {name}
           </H2>
@@ -55,9 +56,14 @@ export default class CmsHome extends Component {
             }}
             as={`/${subdomain}/settings`}
           >
-            Settings
+            <A>
+              <Icon
+                icon={'settings'}
+                color={'black'}
+              />
+            </A>
           </Link>
-        </Row>
+        </TopRow>
 
 
         <CreateStoryButton
@@ -71,6 +77,15 @@ export default class CmsHome extends Component {
   }
 
 }
+
+const TopRow = styled(Row)`
+  justify-content: space-between;
+`
+
+const A = styled.a`
+  cursor: pointer;
+
+`
 
 const Container = styled.div`
   display: flex;

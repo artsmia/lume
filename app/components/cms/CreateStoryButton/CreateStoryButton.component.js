@@ -32,6 +32,9 @@ export default class CreateStoryButton extends Component {
 
       const {data: {createStory: story}} = await createStory()
 
+      this.props.showSnack({
+        message: "Story Created"
+      })
 
       router.push({
         pathname: '/cms/edit',

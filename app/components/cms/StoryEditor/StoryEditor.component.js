@@ -42,7 +42,6 @@ export default class StoryEditor extends Component {
         description,
         previewImageId,
         template,
-        sync,
         visibility
       },
       handleChange,
@@ -63,12 +62,6 @@ export default class StoryEditor extends Component {
           <H3>
             Story Editor
           </H3>
-          <Button
-            onClick={handleSave}
-            disabled={sync}
-          >
-            {(sync) ? "Saved" : "Save"}
-          </Button>
         </Top>
         <Row>
           <Column>
@@ -148,6 +141,18 @@ export default class StoryEditor extends Component {
     )
   }
 
+  bounce = true
+
+  debounce = (func) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(
+        func,
+        2000
+      )
+    }
+  }
+
   componentWillReceiveProps(nextProps){
     if (
       nextProps.story
@@ -173,35 +178,61 @@ export default class StoryEditor extends Component {
   }
 
   handleGroupSelectionSave = (selectedGroupIds) => {
+
+    this.props.setSaveStatus({
+      saving: true,
+    })
+
     this.props.editStory({
       setGroupsIds: selectedGroupIds
     })
+
+    this.props.setSaveStatus({
+      synced: true,
+      saving: false,
+      lastSave: Date.now()
+    })
+
   }
 
   handleChange = ({target: {value, name}}) => {
-    this.setState({
-      [name]: value,
-      sync: false
-    })
+    this.setState(
+      ()=>({
+        [name]: value,
+      }),
+      ()=>{
+        this.props.setSaveStatus({
+          synced: false
+        })
+        this.debounce(this.handleSave)
+      }
+    )
   }
 
   handleSave = async () => {
     try {
+
+      this.props.setSaveStatus({
+        saving: true,
+      })
+
       await this.props.editStory({
         ...this.state,
       })
-      this.setState({
-        sync: true
+
+      this.props.setSaveStatus({
+        synced: true,
+        saving: false,
+        lastSave: Date.now()
       })
+
     } catch (ex) {
       console.error(ex)
     }
   }
 
   componentWillUnmount(){
-    if (!this.state.sync){
-      this.handleSave()
-    }
+    this.handleSave()
   }
 
 }
