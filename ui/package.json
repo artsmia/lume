@@ -1,0 +1,31 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "a ui library for lume",
+  "main": "index.js",
+  "author": "carl peaslee cpeaslee@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "babel-plugin-styled-components": "^1.5.0",
+    "grid-styled": "^3.2.0",
+    "next": "^5.0.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "styled-components": "^3.1.6"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.3.12",
+    "@storybook/addon-info": "^3.3.12",
+    "@storybook/addon-knobs": "^3.3.12",
+    "@storybook/addon-links": "^3.3.12",
+    "@storybook/addon-notes": "^3.3.12",
+    "@storybook/addons": "^3.3.12",
+    "@storybook/react": "^3.3.12",
+    "babel-core": "^6.26.0"
+  },
+  "scripts": {
+    "start": "start-storybook -p 9001 -c .storybook",
+    "build": "build-storybook -c .storybook -o .out"
+  }
+}
