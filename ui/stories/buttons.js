@@ -9,6 +9,9 @@ import {
 import {
   Button
 } from '../components/buttons'
+import {
+  Icon
+} from '../components/icons'
 
 let colorSelect = {
   none: ''
@@ -41,5 +44,22 @@ storiesOf('Buttons', module)
       <Button
         {...props()}
       />
+    ))
+  )
+  .add(
+    'Button w/ Icon',
+    withInfo(`
+      something here
+    `)(() => (
+      <Button
+        a
+        round
+        color={select('button color', colorSelect, 'black')}
+
+      >
+        <Icon
+          color={text('icon color', 'white')}
+        />
+      </Button>
     ))
   )

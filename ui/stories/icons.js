@@ -5,7 +5,7 @@ import { withInfo } from '@storybook/addon-info'
 
 import {
   Icon
-} from '../components/icon'
+} from '../components/icons'
 
 
 
@@ -13,13 +13,18 @@ storiesOf('Icon', module)
   .add(
     'icon',
     withInfo(`
-      something here
+      Must have link to fonticon stylesheet
+
+
+      Icon list is here: https://material.io/icons/
+
+      Icons are material design font icons.
     `)(() => (
       <Icon
-        children={text('children','face')}
         size={text('size','4rem')}
         color={text('color','blue')}
-
+        icon={text('icon', 'face')}
       />
+
     ))
   )

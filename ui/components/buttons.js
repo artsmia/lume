@@ -59,6 +59,10 @@ const round = ({round}) => {
       height: 50px;
       width: 50px;
       border-radius: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
     `
   }
 }
@@ -102,7 +106,6 @@ const buttonBaseProps = {
 }
 
 const buttonBaseDefaultProps = {
-  altHover: false,
   marginTopSmall: false,
   display: 'inline-block',
   border: '',
