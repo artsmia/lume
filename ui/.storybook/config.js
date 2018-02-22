@@ -24,9 +24,10 @@ setDefaults({
 function loadStories() {
   require('../stories/text.js')
   require('../stories/layout.js')
-  require('../stories/form.js')
+  require('../stories/forms.js')
   require('../stories/buttons.js')
-  require('../stories/icon.js')
+  require('../stories/icons.js')
+  require('../stories/modals.js')
 
   // You can require as many stories as you need.
 }

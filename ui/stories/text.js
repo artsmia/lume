@@ -112,13 +112,3 @@ storiesOf('Text', module)
       />
     ))
   )
-  .add(
-    'Hr',
-    withInfo(`
-      textual element
-    `)(() => (
-      <Hr
-        {...props()}
-      />
-    ))
-  )

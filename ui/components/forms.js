@@ -156,7 +156,12 @@ export const TextInput = props => (
 )
 
 TextInput.displayName = "TextInput"
-
+TextInput.propTypes = {
+  label: PropTypes.string,
+}
+TextInput.defaultProps = {
+  label: '',
+}
 
 export const TextareaInput = props => (
   <Flex
@@ -176,11 +181,23 @@ export const TextareaInput = props => (
   </Flex>
 )
 TextareaInput.displayName = "TextareaInput"
+TextareaInput.propTypes = {
+  label: PropTypes.string,
+  minHeight: PropTypes.string,
+  width: PropTypes.string,
 
+}
+TextareaInput.defaultProps = {
+  label: '',
+  minHeight: '',
+  width: '',
+}
 
 export const Checkbox = styled.input`
   margin-right: 8px;
 `
+
+Checkbox.displayName = 'Checkbox'
 
 export const CheckboxInput = props => (
   <Flex
@@ -203,7 +220,13 @@ export const CheckboxInput = props => (
 )
 
 CheckboxInput.displayName = "CheckboxInput"
-
+CheckboxInput.displayName = "CheckboxInput"
+CheckboxInput.propTypes = {
+  label: PropTypes.string,
+}
+CheckboxInput.defaultProps = {
+  label: '',
+}
 
 export const Select = styled.select`
   outline: none;

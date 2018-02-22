@@ -190,12 +190,3 @@ export const Time = styled.time`
 Time.displayName = "Time"
 Time.propTypes = basePropTypes
 Time.defaultProps = baseDefaultProps
-
-export const Hr = styled.hr`
-  border: 1px solid ${gray60};
-  clear: both;
-  margin: 1.25em 0 1.875em;
-  height: 0;
-`
-
-Hr.displayName = "Hr"

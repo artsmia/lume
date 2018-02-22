@@ -13,11 +13,10 @@ import {
   CheckboxInput,
   Select,
   Option
-} from '../components/form'
+} from '../components/forms'
 
 
 const labelProps = () => ({
-  children: text('children', "Mia loves Lume!"),
   bold: boolean('bold', false),
   light: boolean('light', false),
   uppercase: boolean('uppercase', false),
@@ -27,18 +26,15 @@ const labelProps = () => ({
 
 storiesOf('Form', module)
   .add(
-    'Input',
+    'Label',
     withInfo(`
       something here
     `)(() => (
-      <Form>
-        <Label
-          {...labelProps()}
-        >
-          Label
-        </Label>
-        <Input/>
-      </Form>
+      <Label
+        {...labelProps()}
+      >
+        {text('label','Some Input')}
+      </Label>
     ))
   )
   .add(
@@ -46,11 +42,9 @@ storiesOf('Form', module)
     withInfo(`
       something here
     `)(() => (
-      <Form>
-        <Search
-          focus={boolean('focus', true)}
-        />
-      </Form>
+      <Search
+        focus={boolean('focus', true)}
+      />
     ))
   )
   .add(
@@ -58,16 +52,10 @@ storiesOf('Form', module)
     withInfo(`
       something here
     `)(() => (
-      <Form>
-        <TextInput
-          label={"Hello"}
-          placeholder={"places"}
-        />
-        <TextInput
-          label={"Hello"}
-          placeholder={"places"}
-        />
-      </Form>
+      <TextInput
+        label={text('label','Email')}
+        placeholder={text('placeholder','Email Address')}
+      />
     ))
   )
   .add(
@@ -75,16 +63,13 @@ storiesOf('Form', module)
     withInfo(`
       something here
     `)(() => (
-      <Form>
-        <TextareaInput
-          label={"Hello"}
-          placeholder={"places"}
-        />
-        <TextareaInput
-          label={"Hello"}
-          placeholder={"places"}
-        />
-      </Form>
+      <TextareaInput
+        label={text('label','About You')}
+        placeholder={text('placeholder','Tell us about yourself ')}
+        minHeight={text('minHeight','')}
+        width={text('width','')}
+
+      />
     ))
   )
   .add(
@@ -95,11 +80,11 @@ storiesOf('Form', module)
       <Form>
         <CheckboxInput
           label={"Hello"}
-          placeholder={"places"}
+          placeholder={text('label','Vegan')}
         />
         <CheckboxInput
           label={"Hello"}
-          placeholder={"places"}
+          placeholder={text('label','Gluten Free')}
         />
       </Form>
     ))
@@ -111,19 +96,19 @@ storiesOf('Form', module)
     `)(() => (
       <Form>
         <Label>
-          Select with Options:
+          {text('label','Select with Options')}
         </Label>
         <Select
         >
           <Option
             value={1}
           >
-            First
+            {text('Option 1','One')}
           </Option>
           <Option
             value={2}
           >
-            Two
+            {text('Option 1','Two')}
           </Option>
         </Select>
       </Form>
