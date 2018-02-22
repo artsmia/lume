@@ -8,3 +8,4 @@ yarn-error.log
 .next
 .DS_Store
 local-store
+.out
