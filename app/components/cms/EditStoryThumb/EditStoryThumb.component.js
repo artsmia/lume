@@ -1,9 +1,15 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {H3} from '../../ui/h'
-import {Spinner} from '../../ui/spinner'
-import Image from '../../shared/Image'
+import {H3} from '../../mia-ui/text'
+import {Loading} from '../../mia-ui/loading'
+// import Image from '../../shared/Image'
+import {Flex, Box} from 'grid-styled'
+import getImageSrc from '../../../utils/getImageSrc'
+import {gray60} from '../../mia-ui/colors'
+import {Icon} from '../../mia-ui/icons'
+import {ThumbImage, ThumbOverlay, ThumbContainer} from '../../mia-ui/lume'
+
 
 export default class EditStoryThumb extends Component {
 
@@ -15,45 +21,46 @@ export default class EditStoryThumb extends Component {
 
   render() {
 
-    if (!this.props.story) return (
-      <Container>
-        <Spinner/>
-      </Container>
-    )
+    if (!this.props.story) return <Loading/>
 
     const {
       story: {
         title,
         previewImage
       },
-      onSelect
+      onSelect,
+      organization,
+      selected
     } = this.props
 
+
     return (
-      <Container
+      <ThumbContainer
         onClick={onSelect}
+        width={1}
+        selected={selected}
       >
-        <H3>
-          {title}
-        </H3>
-        {(previewImage) ? (
-          <Image
-            imageId={previewImage.id}
-            height={"50px"}
+        <ThumbImage
+          src={getImageSrc({
+            organization,
+            image: previewImage,
+            quality: 's'
+          })}
+        />
+        <ThumbOverlay>
+          <H3
+            color={"white"}
+          >
+            Story Information
+          </H3>
+          <Icon
+            color={'white'}
+            icon={'book'}
           />
-        ): null}
-      </Container>
+        </ThumbOverlay>
+      </ThumbContainer>
     )
   }
 
 
 }
-
-const Container = styled.div`
-  width: 100%;
-  min-height: 100px;
-  border: 1px solid black;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`

@@ -1,17 +1,21 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
-import styled, {css} from 'styled-components'
+import styled, {css, keyframes} from 'styled-components'
 import PropTypes from 'prop-types'
 import {TextBase} from './text'
 import {
   gray30,
   gray60,
   transparent,
-  black as colorBlack
+  black as colorBlack,
+  blue,
+  green,
+  red
 } from './colors'
 import {
   regular,
-  light
+  light,
+  bold
 } from './fonts'
 
 
@@ -240,3 +244,113 @@ export const Option = styled.option`
 
 `
 Option.displayName = "Option"
+
+
+
+
+const tiedye = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+    50% {
+      background-position: 100% 50%;
+  }
+  100% {
+  background-position: 0% 50%;
+  }
+`
+
+const ColorLine = styled.div`
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(to right, ${blue}, ${green}, ${red});
+  background-size: 110% 110%;
+  animation: ${tiedye} 5s ease infinite;
+`
+const ColorBox = styled.div`
+  height: 120px;
+  width: 100%;
+  background: linear-gradient(to right, ${blue}, ${green}, ${red});
+  background-size: 110% 110%;
+  animation: ${tiedye} 5s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+
+
+const TitleInput = styled.input`
+  font-size: 2.5rem;
+  ${bold};
+  &:placeholder {
+    color: ${gray60};
+  }
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+  background-color: white;
+  border: 1px solid ${gray30};
+  border-radius: 4px;
+`
+
+const TitleLabel = styled.label`
+  display: none;
+`
+
+export const Title = ({name, value, onChange, label}) => (
+  <Flex
+    mb={3}
+    flexDirection={'column'}
+    pr={5}
+  >
+    <TitleLabel
+      name={name}
+    >
+      {label}
+    </TitleLabel>
+    <TitleInput
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={"Add a title here."}
+    />
+
+  </Flex>
+)
+
+const DescriptionTextarea = styled.textarea`
+  resize: none;
+  border: none;
+  width: 100%;
+  height: 200px;
+  padding: 5px;
+  font-size: 14px;
+  ${regular};
+  border: 1px solid ${gray30};
+  border-radius: 4px;
+`
+const DescriptionLabel = styled.label`
+  display: none;
+`
+
+export const Description = ({name, value, onChange, label}) => (
+  <Flex
+    mb={3}
+    pr={5}
+    flexDirection={'column'}
+  >
+    <DescriptionLabel
+      name={name}
+    >
+      {label}
+    </DescriptionLabel>
+    <DescriptionTextarea
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={"Enter a description here."}
+
+    />
+  </Flex>
+)

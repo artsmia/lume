@@ -12,6 +12,7 @@ const fragment = gql`
     visibility
     previewImage{
       id
+      localId
     }
     groups {
       ...GroupFragment

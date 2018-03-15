@@ -12,7 +12,7 @@ import styled from 'styled-components'
 
 const I = styled.i`
   font-size: ${({size}) => size};
-  color: ${({color}) => color};
+  color: ${({color, theme}) => theme.color[color]};
 `
 
 export const Icon = props => (
@@ -36,4 +36,40 @@ Icon.propTypes = {
   icon: PropTypes.string.isRequired,
   size: PropTypes.string,
   color: PropTypes.string,
+}
+
+
+export const ContentIcon = ({type}) => {
+  let icon = ''
+  let color = 'blue'
+  switch (type) {
+    case 'comparison': {
+      icon = 'compare'
+      break
+    }
+    case 'detail': {
+      icon = 'crop'
+      break
+    }
+    case 'movie': {
+      icon = 'movie'
+      break
+    }
+    case 'obj': {
+      icon = 'beach_access'
+      break
+    }
+    default:
+    case 'picture': {
+      icon = 'panorama'
+      break
+    }
+  }
+
+  return (
+    <Icon
+      color={color}
+      icon={icon}
+    />
+  )
 }

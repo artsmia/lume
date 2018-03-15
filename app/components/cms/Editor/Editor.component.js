@@ -1,15 +1,18 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button} from '../../ui/buttons'
+import {Button} from '../../mia-ui/buttons'
 import CreateContentButton from '../CreateContentButton'
 import EditStoryThumb from '../EditStoryThumb'
 import EditContentThumb from '../EditContentThumb'
 import StoryEditor from '../StoryEditor'
-import {Select, Option} from '../../ui/forms'
+import {Select, Option} from '../../mia-ui/forms'
 import EditorSwitcher from '../../contents/EditorSwitcher'
 import DisplaySwitcher from '../../contents/DisplaySwitcher'
-import {Link} from '../../ui/links'
+import {Link} from '../../mia-ui/links'
 import StoryPreview from '../../lume/Story/Story.component'
+import {Flex, Box} from 'grid-styled'
+import {H3} from '../../mia-ui/text'
+import {Break} from '../../mia-ui/layout'
 
 export default class Editor extends Component {
 
@@ -67,51 +70,59 @@ export default class Editor extends Component {
     } = this
 
     return (
-      <Container>
-        <TopBar>
-          <TopTextDiv>
-            <Link
-              href={{
-                pathname: '/cms',
-                query: {
-                  subdomain
-                }
-              }}
-              as={`/${subdomain}/cms`}
-            >
-              Back to All Stories
-            </Link>
-          </TopTextDiv>
-
-          <SaveStatusContainer>
-            <SaveStatus>
-              {(synced && !saving) ? `saved!` : `not saved`}
-              {saving ? `saving...` : ''}
-            </SaveStatus>
-            <LastSave>
-              {lastSave ? `last save at ${ new Date(lastSave).toLocaleTimeString()}` : ''}
-            </LastSave>
-          </SaveStatusContainer>
-
-          <PreviewButton
-            onClick={togglePreview}
+      <FullPage
+        flexDirection={"column"}
+        alignItems={'flex-start'}
+      >
+        <TopBar
+          width={1}
+        >
+          <Flex
+            p={2}
+            alignItems={"center"}
           >
-            Preview
-          </PreviewButton>
-
-
+            <Box
+              width={1/5}
+            >
+              <Link
+                href={{
+                  pathname: '/cms',
+                  query: {
+                    subdomain
+                  }
+                }}
+                as={`/${subdomain}/cms`}
+              >
+                Back to All Stories
+              </Link>
+            </Box>
+            <Box
+              mx={"auto"}
+            >
+              <H3>Hello</H3>
+            </Box>
+            <Box
+              width={1/5}
+            >
+              <Button>
+                Preview
+              </Button>
+            </Box>
+          </Flex>
         </TopBar>
-        {(preview) ? (
-          <Workspace>
-            <StoryPreview
-              story={story}
-            />
-          </Workspace>
-        ): (
-          <Workspace>
+        <Workspace
+          width={1}
+        >
 
-            <LeftBar>
-
+          <Sidebar
+            width={1/5}
+          >
+            <Flex
+              flexDirection={'column'}
+              p={3}
+              justifyContent={'flex-start'}
+              alignItems={'center'}
+            >
               <EditStoryThumb
                 storyId={storyId}
                 selected={(editing === "story")}
@@ -119,22 +130,20 @@ export default class Editor extends Component {
               />
 
               <Break/>
-                {
-                  (contents) ? contents.map( ({
-                    id,
-                    __typename,
-                  }, index) => (
-                    <EditContentThumb
-                      key={id}
-                      index={index}
-                      contentId={id}
-                      onSelect={handleContentSelection}
-                      onReorder={handleReorder}
-                    />
-                  )): null
-                }
 
-
+              {(contents) ? contents.map( ({
+                  id,
+                  __typename,
+                }, index) => (
+                  <EditContentThumb
+                    key={id}
+                    index={index}
+                    contentId={id}
+                    onSelect={handleContentSelection}
+                    onReorder={handleReorder}
+                    selected={selectedContent ? (selectedContent.id === id) : false}
+                  />
+              )): null}
 
               <Break/>
 
@@ -157,39 +166,25 @@ export default class Editor extends Component {
                 type={contentType}
               />
 
-            </LeftBar>
+            </Flex>
 
-            <EditorContainer>
+          </Sidebar>
 
-              <PreviewSpace>
-                {(editing === "content") ? (
-                  <DisplaySwitcher
-                    content={selectedContent}
-                  />
-                ): null}
-              </PreviewSpace>
+          <EditingPane
+            width={1}
+          >
+            {(editing === "story") ? (
+              <StoryEditor
+                storyId={storyId}
+                ref={(ref) => {this.storyEditor = ref}}
+              />
+            ): null}
 
-              {(editing === "story") ? (
-                <StoryEditor
-                  storyId={storyId}
-                  ref={(ref) => {this.storyEditor = ref}}
-                />
-              ): null}
+          </EditingPane>
 
-              {(editing === "content") ? (
-                <EditorSwitcher
-                  content={selectedContent}
-                />
-              ): null}
+        </Workspace>
 
-            </EditorContainer>
-
-          </Workspace>
-        )}
-
-
-
-      </Container>
+      </FullPage>
     )
   }
 
@@ -259,94 +254,234 @@ export default class Editor extends Component {
 }
 
 
-const SaveStatusContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  height: 100%;
-`
-
-const SaveStatus = styled.div`
-  height: 100%;
-  font-size: 18px;
-`
-
-const LastSave = styled.div`
-  color: grey;
-  font-size: 12px;
-  min-height: 100%;
-`
-
-const PreviewButton = styled(Button)`
-
-`
-
-const TopTextDiv = styled.div`
-  display: flex;
-  margin-right: 30px;
-`
-
-const Container = styled.div`
-  width: 100%;
+const FullPage = styled(Flex)`
+  height: 100vh;
   max-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
 `
 
-const TopBar = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 60px;
-  width: 100%;
+const TopBar = styled(Box)`
+  height: 55px;
   border-bottom: 1px solid black;
-  align-items: center;
-  padding: 20px;
-  box-sizing:border-box;
-  justify-content: space-between;
 `
 
-const Workspace = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+const Workspace = styled(Flex)`
   height: 100%;
-`
-
-const LeftBar = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 250px;
   max-height: 100%;
-  padding: 50px;
+`
+
+const Sidebar = styled(Box)`
+  height: 100%;
+  max-height: 100%;
   border-right: 1px solid black;
-  align-items: center;
-  overflow-y: scroll;
+  overflow: scroll;
 `
 
-const Break = styled.hr`
-  width: 100%;
-  margin: 20px 0;
-  border: 1px solid grey;
-`
-
-const EditorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+const EditingPane = styled(Box)`
   height: 100%;
-  justify-content: flex-start;
-  align-items: flex-start;
+
 `
 
-const PreviewSpace = styled.div`
-  display: flex;
-  min-height: 40vh;
-  width: 100%;
-  height: 100%;
-  border-bottom: 1px solid black;
-  box-sizing:border-box;
-  overflow: clipped;
-`
+
+
+//  <TopBar>
+//   <TopTextDiv>
+//     <Link
+//       href={{
+//         pathname: '/cms',
+//         query: {
+//           subdomain
+//         }
+//       }}
+//       as={`/${subdomain}/cms`}
+//     >
+//       Back to All Stories
+//     </Link>
+//   </TopTextDiv>
+//
+//   <SaveStatusContainer>
+//     <SaveStatus>
+//       {(synced && !saving) ? `saved!` : `not saved`}
+//       {saving ? `saving...` : ''}
+//     </SaveStatus>
+//     <LastSave>
+//       {lastSave ? `last save at ${ new Date(lastSave).toLocaleTimeString()}` : ''}
+//     </LastSave>
+//   </SaveStatusContainer>
+//
+//   <PreviewButton
+//     onClick={togglePreview}
+//   >
+//     Preview
+//   </PreviewButton>
+//
+//
+// </TopBar>
+// {(preview) ? (
+//   <Workspace>
+//     <StoryPreview
+//       story={story}
+//     />
+//   </Workspace>
+// ): (
+//   <Workspace>
+//
+//     <LeftBar>
+//
+//       <EditStoryThumb
+//         storyId={storyId}
+//         selected={(editing === "story")}
+//         onSelect={handleStorySelection}
+//       />
+//
+//       <Break/>
+        // {
+        //   (contents) ? contents.map( ({
+        //     id,
+        //     __typename,
+        //   }, index) => (
+        //     <EditContentThumb
+        //       key={id}
+        //       index={index}
+        //       contentId={id}
+        //       onSelect={handleContentSelection}
+        //       onReorder={handleReorder}
+        //     />
+        //   )): null
+        // }
+//
+//
+//
+//       <Break/>
+//
+      // <Select
+      //   name={"contentType"}
+      //   onChange={handleChange}
+      //   value={contentType}
+      // >
+      //   {contentTypes.map(type => (
+      //     <Option
+      //       key={type}
+      //       value={type}
+      //     >
+      //       {type}
+      //     </Option>
+      //   ))}
+      // </Select>
+      // <CreateContentButton
+      //   storyId={storyId}
+      //   type={contentType}
+      // />
+//
+//     </LeftBar>
+//
+//     <EditorContainer>
+//
+//
+      // {(editing === "story") ? (
+      //   <StoryEditor
+      //     storyId={storyId}
+      //     ref={(ref) => {this.storyEditor = ref}}
+      //   />
+      // ): null}
+//
+//       {(editing === "content") ? (
+//         <EditorSwitcher
+//           content={selectedContent}
+//         />
+//       ): null}
+//
+//     </EditorContainer>
+//
+//   </Workspace>
+// )}
+// const SaveStatusContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: flex-start;
+//   flex-direction: column;
+//   height: 100%;
+// `
+//
+// const SaveStatus = styled.div`
+//   height: 100%;
+//   font-size: 18px;
+// `
+//
+// const LastSave = styled.div`
+//   color: grey;
+//   font-size: 12px;
+//   min-height: 100%;
+// `
+//
+// const PreviewButton = styled(Button)`
+//
+// `
+//
+// const TopTextDiv = styled.div`
+//   display: flex;
+//   margin-right: 30px;
+// `
+//
+// const Container = styled.div`
+//   width: 100%;
+//   max-height: 100vh;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   align-items: flex-start;
+// `
+//
+// const TopBar = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   height: 60px;
+//   width: 100%;
+//   border-bottom: 1px solid black;
+//   align-items: center;
+//   padding: 20px;
+//   box-sizing:border-box;
+//   justify-content: space-between;
+// `
+//
+// const Workspace = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   width: 100%;
+//   height: 100%;
+// `
+//
+// const LeftBar = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   width: 250px;
+//   max-height: 100%;
+//   padding: 50px;
+//   border-right: 1px solid black;
+//   align-items: center;
+//   overflow-y: scroll;
+// `
+//
+// const Break = styled.hr`
+//   width: 100%;
+//   margin: 20px 0;
+//   border: 1px solid grey;
+// `
+//
+// const EditorContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100%;
+//   justify-content: flex-start;
+//   align-items: flex-start;
+// `
+//
+// const PreviewSpace = styled.div`
+//   display: flex;
+//   min-height: 40vh;
+//   width: 100%;
+//   height: 100%;
+//   border-bottom: 1px solid black;
+//   box-sizing:border-box;
+//   overflow: clipped;
+// `

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Box } from 'grid-styled'
 import styled from 'styled-components'
-import {black, white} from './colors'
+import {black, white, gray60} from './colors'
 
 
 const PageFlex = styled(Flex)`
@@ -33,3 +33,10 @@ export const Card = styled(Box)`
 Card.defaultProps = {
   p: 2
 }
+
+
+export const Break = styled.hr`
+  width: 100%;
+  margin: 20px 0;
+  border: 1px solid ${gray60};
+`
