@@ -269,7 +269,6 @@ const ContentBody = styled.div`
   opacity: ${({selected}) => selected ? "1" : "0"};
   width: 100%;
   transition: all .2s ease;
-  overflow-y: hidden;
 `
 
 
