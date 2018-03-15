@@ -6,7 +6,7 @@ export default ({
 
   let src = ''
 
-  if (!image){
+  if (!image || !organization){
     return src
   }
 

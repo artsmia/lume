@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button} from '../../ui/buttons'
-import {Label} from '../../ui/forms'
-import Modal from '../../ui/modal'
+import {Button} from '../../mia-ui/buttons'
+import {Label} from '../../mia-ui/forms'
+import {Modal} from '../../mia-ui/modals'
 import ImageManager from '../ImageManager'
-import Image from '../../shared/Image'
 import router from 'next/router'
 
 export default class ChangeImage extends Component {
@@ -21,7 +20,7 @@ export default class ChangeImage extends Component {
       handleModalOpen,
       handleModalClose,
       props: {
-        value,
+        src,
         label,
       },
       handleChange,
@@ -38,10 +37,9 @@ export default class ChangeImage extends Component {
         <Label>
           {label}
         </Label>
-        {(value) ? (
-          <Image
-            imageId={value}
-            height={"50px"}
+        {(src) ? (
+          <Img
+            src={src}
           />
         ): null}
 
@@ -56,9 +54,6 @@ export default class ChangeImage extends Component {
         <Modal
           open={modal}
           onClose={handleModalClose}
-          header={`Edit Image`}
-          width={"60%"}
-
         >
           <ImageManager
             subdomain={subdomain}
@@ -105,6 +100,11 @@ export default class ChangeImage extends Component {
 
 
 }
+
+const Img = styled.img`
+  height: 100px;
+  width: auto;
+`
 
 const Container = styled.div`
   width: 100%;

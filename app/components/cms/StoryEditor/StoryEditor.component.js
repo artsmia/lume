@@ -1,17 +1,20 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {H3} from '../../ui/h'
-import {Spinner} from '../../ui/spinner'
-import {Button} from '../../ui/buttons'
-import Modal from '../../ui/modal'
-import Image from '../../shared/Image'
-import {Select, Option, Label} from '../../ui/forms'
-import {Input, Textarea, ChangeImage} from '../DefaultEditors'
+import {H3} from '../../mia-ui/text'
+import {Waiting} from '../../mia-ui/loading'
+import {Button} from '../../mia-ui/buttons'
+// import Image from '../../shared/Image'
+import {Title, Description, Label, Select, Option} from '../../mia-ui/forms'
+import {ChangeImage} from '../DefaultEditors'
 import ImageManager from '../ImageManager'
 import DeleteStoryButton from '../DeleteStoryButton'
 import StoryAssociator from '../StoryAssociator'
 import StoryGroupSelector from '../StoryGroupSelector'
+import {ToolTip} from '../../mia-ui/tooltips'
+import {Flex, Box} from 'grid-styled'
+import {Modal} from '../../mia-ui/modals'
+import getImageSrc from '../../../utils/getImageSrc'
 
 export default class StoryEditor extends Component {
 
@@ -51,60 +54,96 @@ export default class StoryEditor extends Component {
         storyId,
         router,
         story: {
-          groups
-        }
+          groups,
+          previewImage
+        },
+        organization
       }
     } = this
 
     return (
-      <Container>
-        <Top>
-          <H3>
-            Story Editor
-          </H3>
-        </Top>
-        <Row>
-          <Column>
-            <Label>
-              Template
-            </Label>
-            <Select
-              name={"template"}
-              onChange={handleChange}
-              value={template}
-            >
-              <Option
-                value={"original"}
-              >
-                Original
-              </Option>
-              <Option
-                value={"slider"}
-              >
-                Slider
-              </Option>
-            </Select>
-            <Label>
-              Visibility
-            </Label>
-            <Select
-              name={"visibility"}
-              onChange={handleChange}
-              value={visibility}
-            >
+      <Flex
+        width={1}
+        p={3}
+      >
+        <Flex
+          width={1/2}
+          flexDirection={'column'}
+        >
 
-              <Option
-                value={"draft"}
-              >
-                Draft
-              </Option>
-              <Option
-                value={"published"}
-              >
-                Published
-              </Option>
-            </Select>
-            <Input
+          <Title
+            name={'title'}
+            value={title}
+            onChange={handleChange}
+            label={'Title'}
+          />
+          <Description
+            name={'description'}
+            value={description}
+            onChange={handleChange}
+            label={'Description'}
+          />
+
+
+          <ChangeImage
+            label={"Image"}
+            name={"previewImageId"}
+            src={getImageSrc({
+              organization,
+              image: previewImage,
+              quality: 'm'
+            })}
+            onChange={handleChange}
+          />
+        </Flex>
+        <Flex
+          width={1/2}
+          flexDirection={'column'}
+        >
+          <Label>
+            Template
+          </Label>
+          <Select
+            name={"template"}
+            onChange={handleChange}
+            value={template}
+          >
+            <Option
+              value={"original"}
+            >
+              Original
+            </Option>
+            <Option
+              value={"slider"}
+            >
+              Slider
+            </Option>
+          </Select>
+          <Label>
+            Visibility
+          </Label>
+          <Select
+            name={"visibility"}
+            onChange={handleChange}
+            value={visibility}
+          >
+
+            <Option
+              value={"draft"}
+            >
+              Draft
+            </Option>
+            <Option
+              value={"published"}
+            >
+              Published
+            </Option>
+          </Select>
+        </Flex>
+
+
+
+            {/* <Input
               label={"Title"}
               name={"title"}
               value={title}
@@ -115,29 +154,21 @@ export default class StoryEditor extends Component {
               name={"description"}
               value={description}
               onChange={handleChange}
-            />
-            <StoryGroupSelector
+            /> */}
+            {/* <StoryGroupSelector
               onGroupSelectionSave={handleGroupSelectionSave}
               selectedGroupIds={groups.map(group => group.id)}
-            />
-          </Column>
-          <Column>
-            <ChangeImage
-              label={"Image"}
-              name={"previewImageId"}
-              value={previewImageId}
-              onChange={handleChange}
-            />
+            /> */}
+          {/*
             <StoryAssociator
               storyId={storyId}
             />
             <DeleteStoryButton
               storyId={storyId}
             />
-          </Column>
-        </Row>
+          </Column> */}
 
-      </Container>
+      </Flex>
     )
   }
 
@@ -237,40 +268,40 @@ export default class StoryEditor extends Component {
 
 }
 
-const Top = styled.div`
-  display: flex;
-  justify-content:space-between;
-  min-height: 70px;
-  width: 100%;
-`
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 20px;
-  box-sizing:border-box;
-  overflow-y:scroll;
-`
-
-
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  height: 100%;
-  width: 50%;
-`
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-`
+// const Top = styled.div`
+//   display: flex;
+//   justify-content:space-between;
+//   min-height: 70px;
+//   width: 100%;
+// `
+//
+// const Container = styled.div`
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   align-items: flex-start;
+//   padding: 20px;
+//   box-sizing:border-box;
+//   overflow-y:scroll;
+// `
+//
+//
+//
+// const Column = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   align-items: flex-start;
+//   height: 100%;
+//   width: 50%;
+// `
+//
+// const Row = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   width: 100%;
+//   height: 100%;
+//   min-height: 400px;
+// `

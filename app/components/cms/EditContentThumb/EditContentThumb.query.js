@@ -15,6 +15,7 @@ const ContentThumbQuery = gql`
       type
       image0 {
         id
+        localId
       }
     }
   }

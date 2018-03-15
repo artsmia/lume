@@ -1,11 +1,15 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {H3, H4} from '../../ui/h'
-import {Spinner} from '../../ui/spinner'
-import Image from '../../shared/Image'
+import {H3, H4} from '../../mia-ui/text'
+import {Waiting} from '../../mia-ui/loading'
+// import Image from '../../shared/Image'
 import { DragSource, DropTarget } from 'react-dnd'
-
+import {Flex, Box} from 'grid-styled'
+import getImageSrc from '../../../utils/getImageSrc'
+import {gray60} from '../../mia-ui/colors'
+import {ContentIcon} from '../../mia-ui/icons'
+import {ThumbImage, ThumbOverlay, ThumbContainer} from '../../mia-ui/lume'
 
 class EditContentThumb extends Component {
 
@@ -17,11 +21,7 @@ class EditContentThumb extends Component {
 
   render() {
 
-    if (!this.props.content) return (
-      <Container>
-        <Spinner/>
-      </Container>
-    )
+    if (!this.props.content) return <Waiting/>
 
     const {
       onSelect,
@@ -31,33 +31,50 @@ class EditContentThumb extends Component {
         type,
         image0
       },
+      selected,
+      organization,
       connectDropTarget,
       connectDragSource
     } = this.props
+
     return connectDragSource(connectDropTarget(
       <div
         ref={ref => this.dragRef = ref}
         style={{
           width: "100%",
           height: "100px",
-          margin: "10px 0"
+          marginBottom: "40px"
         }}
       >
-        <Container
+        <ThumbContainer
           onClick={() => onSelect(contentId)}
+          selected={selected}
         >
-          <H4>
-            {title} –– {type}
-          </H4>
+
 
           {(image0) ? (
-            <Image
-              imageId={image0.id}
-              height={"50px"}
+            <ThumbImage
+              src={getImageSrc({
+                organization,
+                image: image0,
+                quality: 's'
+              })}
             />
           ): null}
 
-        </Container>
+          <ThumbOverlay>
+
+            <H4
+              color={'white'}
+            >
+              {title ? title : `Edit your ${type} content`}
+            </H4>
+            <ContentIcon
+              type={type}
+            />
+          </ThumbOverlay>
+
+        </ThumbContainer>
       </div>
     ))
   }
@@ -66,15 +83,6 @@ class EditContentThumb extends Component {
 
 
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  border: 1px solid black;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-`
 
 const dragSpec = {
   beginDrag(props, monitor, component) {
