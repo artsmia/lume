@@ -666,8 +666,8 @@ const ZoomerMap = styled.div`
     background: url("/static/crop.png") center;
     background-size: cover;
     background-color: white;
-    border: 1px solid ${({theme}) => theme.colors.lightMediumGray};
-    box-shadow: 0 0 2px ${({theme}) => theme.colors.mediumGray};
+    border: 1px solid ${({theme}) => theme.color.gray30};
+    box-shadow: 0 0 2px ${({theme}) => theme.color.gray60};
     border-radius: 2px;
     &:active {
       background-color: grey;

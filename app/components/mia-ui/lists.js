@@ -74,10 +74,28 @@ export const Tile = (props) => (
   <Box
     {...props}
   >
-    <Link
-      href={props.href}
-      as={props.as}
-    >
+    {props.link ? (
+      <Link
+        href={props.href}
+        as={props.as}
+      >
+        <TileContainer
+          height={props.height}
+        >
+          <TileImage
+            src={props.src}
+            alt={props.alt}
+          />
+          <TileText>
+            <H2
+              color={"white"}
+            >
+              {props.text}
+            </H2>
+          </TileText>
+        </TileContainer>
+      </Link>
+    ): (
       <TileContainer
         height={props.height}
       >
@@ -93,7 +111,8 @@ export const Tile = (props) => (
           </H2>
         </TileText>
       </TileContainer>
-    </Link>
+
+    )}
 
   </Box>
 
@@ -113,5 +132,6 @@ Tile.propTypes = {
   src: PropTypes.string,
   alt: PropTypes.string,
   text: PropTypes.string,
-  height: PropTypes.string
+  height: PropTypes.string,
+  link: PropTypes.bool
 }
