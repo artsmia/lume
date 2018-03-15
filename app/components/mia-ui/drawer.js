@@ -11,10 +11,10 @@ export const Drawer = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
   border-right: 1px groove rgba(0,0,0,.2);
-  transition: all .2s;
+  transition: all .4s;
   position: absolute;
   top:0;
-  left: ${drawerWidth};
+  transform: translateX(-100%);
   width: ${drawerWidth};
   display: flex;
   flex-direction: column;
@@ -27,14 +27,14 @@ export const DrawerButton = styled.div`
   position: fixed;
   top: 5px;
   left:5px;
-  transition: all .2s;
+  transition: all .4s;
   height: 30px;
   width: 35px;
   opacity: 1;
   z-index: 2;
   margin: 10px;
   border-radius: 50px;
-
+  cursor: pointer;
   span {
     display: block;
     position: absolute;
@@ -80,6 +80,7 @@ export const DrawerPage = styled(Box)`
   max-height: 100vh;
   margin-left: 0;
   overflow-y: scroll;
+  transition: all .4s;
 `
 
 
@@ -89,10 +90,11 @@ export const DrawerCheck = styled.input`
   position: fixed;
   top: 5px;
   left: 5px;
-  transition: all .2s;
+  transition: all .4s;
   height: 30px;
   width: 30px;
   opacity: 0;
+  cursor: pointer;
 
   &:checked {
     left: ${drawerWidth};
@@ -119,7 +121,7 @@ export const DrawerCheck = styled.input`
   }
 
   &:checked ~ ${Drawer} {
-    left: 0px;
+    transform: translateX(0);
   }
 
   &:checked ~ ${DrawerPage} {

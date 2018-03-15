@@ -5,6 +5,8 @@ import {Link, NextA} from '../../mia-ui/links'
 import {Button} from '../../mia-ui/buttons'
 import PropTypes from 'prop-types'
 import getImageSrc from '../../../utils/getImageSrc'
+import {Search} from '../../mia-ui/forms'
+import {Box} from 'grid-styled'
 
 export default class StoryList extends Component {
 
@@ -17,7 +19,7 @@ export default class StoryList extends Component {
   }
 
   state = {
-    variables: this.props.variables
+    variables: this.props.variables,
   }
 
 
@@ -25,6 +27,7 @@ export default class StoryList extends Component {
     const {
       handleLoadMore,
       handleSort,
+      handleSearch,
       props: {
         stories,
         router: {
@@ -41,7 +44,13 @@ export default class StoryList extends Component {
 
     return (
       <Table>
-
+        <Box>
+          <Search
+            value={variables.filter.search || ""}
+            name={"search"}
+            onChange={handleSearch}
+          />
+        </Box>
         <HeaderRow>
           <HeaderCell
             width={[1/3,1/6]}
@@ -145,6 +154,36 @@ export default class StoryList extends Component {
       </Table>
 
 
+    )
+  }
+
+  bounce = true
+
+  debounce = (func, wait) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(
+        func,
+        wait
+      )
+    }
+  }
+
+  handleSearch = ({target: {name, value}}) => {
+    this.setState(
+      ({variables: oldVariables}) => {
+        let variables = {...oldVariables}
+        variables.filter.search = value
+        return {
+          variables
+        }
+      },
+      ()=>{
+        this.debounce(
+          ()=>this.props.refetch(this.state.variables),
+          2000
+        )
+      }
     )
   }
 
