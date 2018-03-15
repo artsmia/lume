@@ -5,6 +5,8 @@ import {Button} from './buttons'
 import {grey30, black} from './colors'
 import styled from 'styled-components'
 
+const drawerWidth = '400px'
+
 export const Drawer = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
@@ -12,8 +14,8 @@ export const Drawer = styled(Flex)`
   transition: all .2s;
   position: absolute;
   top:0;
-  left: -300px;
-  width: 300px;
+  left: ${drawerWidth};
+  width: ${drawerWidth};
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -62,8 +64,14 @@ export const DrawerButton = styled.div`
   }
 `
 
+
+
 DrawerButton.defaultProps = {
-  children: new Array(3).fill(<span/>)
+  children: [
+    <span key={1}/>,
+    <span key={2}/>,
+    <span key={3}/>
+  ]
 }
 
 export const DrawerPage = styled(Box)`
@@ -87,11 +95,11 @@ export const DrawerCheck = styled.input`
   opacity: 0;
 
   &:checked {
-    left: 300px;
+    left: ${drawerWidth};
   }
 
   &:checked ~ ${DrawerButton} {
-    left: 300px;
+    left: ${drawerWidth};
 
     span:nth-child(1){
       transform: rotate(45deg);
@@ -115,7 +123,7 @@ export const DrawerCheck = styled.input`
   }
 
   &:checked ~ ${DrawerPage} {
-    margin-left: 300px;
+    margin-left: ${drawerWidth};
   }
 
 `

@@ -70,6 +70,12 @@ const align = (props) => {
   }
 }
 
+const color = ({theme, color}) => {
+  return css`
+    color: ${theme.color[color]};
+  `
+}
+
 
 
 export const TextBase = css`
@@ -78,6 +84,7 @@ export const TextBase = css`
   ${bold}
   ${light}
   ${align}
+  ${color}
 `
 
 const HBase = css`
@@ -98,7 +105,9 @@ const basePropTypes = {
   /** Boolean to make lowercase */
   lowercase: PropTypes.bool,
   /** Boolean to align the text */
-  align: PropTypes.oneOf(['left', 'right', 'center', 'justify'])
+  align: PropTypes.oneOf(['left', 'right', 'center', 'justify']),
+  /** String to change color of letters */
+  color: PropTypes.string,
 }
 
 const baseDefaultProps = {

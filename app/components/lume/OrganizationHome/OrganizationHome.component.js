@@ -3,14 +3,13 @@ import styled from 'styled-components'
 import {Search} from '../../mia-ui/forms'
 import {Button} from '../../mia-ui/buttons'
 import Link from 'next/link'
-// import Image from '../../shared/Image'
 import {Label, CheckboxInput} from '../../mia-ui/forms'
 import Router from 'next/router'
 import {H3, H2, H4} from '../../mia-ui/text'
-// import {Column, Row} from '../../ui/layout'
 import {Flex, Box} from 'grid-styled'
 import {Drawer, DrawerCheck, DrawerButton, DrawerPage} from '../../mia-ui/drawer'
 import {GridList, Tile} from '../../mia-ui/lists'
+import getImageSrc from '../../../utils/getImageSrc'
 
 export default class Home extends Component {
 
@@ -58,7 +57,6 @@ export default class Home extends Component {
     } = this
 
     return (
-
       <Flex
         width={1}
       >
@@ -106,8 +104,8 @@ export default class Home extends Component {
               onChange={handleCheck}
             />
 
-            {organization.categories.map( category => (
-              <Box
+            {organization ? organization.categories.map( category => (
+              <Flex
                 key={category.id}
                 width={1}
                 p={3}
@@ -115,7 +113,7 @@ export default class Home extends Component {
                 <H3>
                   {category.title}
                 </H3>
-                {category.groups.map( group => (
+                {category ? category.groups.map( group => (
                   <Box
                     key={group.id}
                   >
@@ -127,9 +125,9 @@ export default class Home extends Component {
                     />
                     {group.title}
                   </Box>
-                ))}
-              </Box>
-            ))}
+                )):null}
+              </Flex>
+            )):null}
           </Box>
 
 
@@ -139,34 +137,30 @@ export default class Home extends Component {
 
         <DrawerPage>
           <GridList>
-            {stories.map( ({id, previewImage, title}) => (
+            {stories ? stories.map( ({id, previewImage, title}) => (
               <Tile
-                width={[1,1/2, 1/3, 1/4]}
+                key={id}
+                width={[1,1, 1/2, 1/4]}
                 key={id}
                 text={title}
                 height={'200px'}
+                src={getImageSrc({
+                  image: previewImage,
+                  organization,
+                  quality: 'm'
+                })}
+                href={{
+                  pathname: '/lume/story',
+                  query: {
+                    storyId: id,
+                    subdomain: organization.subdomain
+                  }
+                }}
+                as={`/${organization.subdomain}/story/${id}`}
               />
-            ))}
+            )): null}
           </GridList>
-        </DrawerPage>
-
-
-
-
-        {/* <Results
-          id={'results'}
-          onScroll={handleScroll}
-        >
-          {stories.map( ({id, previewImage, title}) => (
-            <Story
-              key={id}
-              id={id}
-              imageId={(previewImage) ? previewImage.id : undefined}
-              subdomain={subdomain}
-              title={title}
-            />
-          ))}
-          <MoreRow>
+          <Box>
             {(
               stories.length % 30 === 0 && stories.length > 0) ? (
               <Button
@@ -180,11 +174,8 @@ export default class Home extends Component {
                 No stories match that search
               </H3>
             ): null}
-          </MoreRow>
-
-
-        </Results> */}
-
+          </Box>
+        </DrawerPage>
       </Flex>
     )
   }

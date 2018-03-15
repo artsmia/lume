@@ -7,6 +7,7 @@ const fragment = gql`
     description
     previewImage{
       id
+      localId
     }
     updatedAt
   }

@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {Flex, Box} from 'grid-styled'
-import {gray30} from './colors'
-import {H3} from './text'
+import {gray60} from './colors'
+import {H2} from './text'
 import Link from 'next/link'
 
 export const GridList = (props) => (
@@ -20,7 +20,7 @@ GridList.defaultProps = {
 
 const TileText = styled.div`
   position: absolute;
-  background-color: ${gray30};
+  background-color: ${gray60};
   width: 100%;
   height: 40%;
   bottom: 0;
@@ -81,9 +81,11 @@ export const Tile = (props) => (
           alt={props.alt}
         />
         <TileText>
-          <H3>
+          <H2
+            color={"white"}
+          >
             {props.text}
-          </H3>
+          </H2>
         </TileText>
       </TileContainer>
     </Link>
