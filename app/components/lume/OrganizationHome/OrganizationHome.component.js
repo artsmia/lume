@@ -10,6 +10,7 @@ import {Flex, Box} from 'grid-styled'
 import {Drawer, DrawerCheck, DrawerButton, DrawerPage} from '../../mia-ui/drawer'
 import {GridList, Tile} from '../../mia-ui/lists'
 import getImageSrc from '../../../utils/getImageSrc'
+import {Loading} from '../../mia-ui/loading'
 
 export default class Home extends Component {
 
@@ -31,7 +32,7 @@ export default class Home extends Component {
 
   render() {
 
-    if (!this.props.stories || !this.props.organization) return null
+    if (!this.props.stories || !this.props.organization) return <Loading/>
 
     const {
       props: {
@@ -351,98 +352,3 @@ export default class Home extends Component {
   }
 
 }
-
-const Story = ({id, imageId, subdomain, title}) => (
-  <Link
-    href={{
-      pathname: '/lume/story',
-      query: {
-        storyId: id,
-        subdomain
-      }
-    }}
-    as={`/${subdomain}/story/${id}`}
-  >
-    <AWrap>
-
-    {(imageId) ? (
-      // <Image
-      //   imageId={imageId}
-      //   width={"100%"}
-      //   objectFit={"cover"}
-      //   title={title}
-      // />
-      <div>
-        {title}
-      </div>
-    ): (
-      <div
-        style={{
-          width: '100%',
-          border: '1px solid grey'
-        }}
-      >
-        <H4>{title}</H4>
-      </div>
-    )}
-  </AWrap>
-
-  </Link>
-)
-
-const AWrap = styled.a`
-  cursor: pointer;
-  display: flex;
-  height: 200px;
-  width: 300px;
-  margin: 10px 10px;
-`
-
-const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  overflow: hidden;
-`
-
-const Results = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-start;
-  overflow-y: scroll;
-`
-
-const MoreRow = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin: 30px;
-`
-
-const SideBar = styled.div`
-  width: 22%;
-  height: 100%;
-  display: flex;
-  flex-direction:column;
-  align-items:flex-start;
-  padding: 30px;
-`
-
-const SearchRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 30px 0;
-`
-
-const Options = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  box-sizing: border-box;
-`

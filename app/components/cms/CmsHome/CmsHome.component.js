@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {H2} from '../../ui/h'
-import {Spinner} from '../../ui/spinner'
+import {H2} from '../../mia-ui/text'
+import {Loading} from '../../mia-ui/loading'
 import StoryList from '../StoryList'
 import CreateStoryButton from '../CreateStoryButton'
 import PropTypes from 'prop-types'
-import {Row} from '../../ui/layout'
-import Link from 'next/link'
-import Icon from '../../ui/icons'
+import {NextA} from '../../mia-ui/links'
+import {Icon} from '../../mia-ui/icons'
+import {Flex, Box} from 'grid-styled'
+import {Page, Card} from '../../mia-ui/layout'
 
 export default class CmsHome extends Component {
 
@@ -23,7 +24,7 @@ export default class CmsHome extends Component {
 
   render() {
 
-    if (!this.props.organization) return <Spinner/>
+    if (!this.props.organization) return <Loading/>
 
     const {
       props: {
@@ -42,58 +43,59 @@ export default class CmsHome extends Component {
     } = this
 
     return (
-      <Container>
-        <TopRow>
-          <H2>
-            {name}
-          </H2>
-          <Link
-            href={{
-              pathname: '/cms/orgSettings',
-              query: {
-                subdomain: subdomain,
-              }
-            }}
-            as={`/${subdomain}/settings`}
+      <Page>
+        <Card>
+          <Flex
+            flexWrap={'wrap'}
           >
-            <A>
-              <Icon
-                icon={'settings'}
-                color={'black'}
+            <Box
+              width={9/10}
+            >
+              <H2>
+                {name}
+              </H2>
+            </Box>
+            <Box
+              width={1/10}
+            >
+              <NextA
+                href={{
+                  pathname: '/cms/orgSettings',
+                  query: {
+                    subdomain: subdomain,
+                  }
+                }}
+                as={`/${subdomain}/settings`}
+              >
+                  <Icon
+                    icon={'settings'}
+                    color={'black'}
+                    title={"Settings"}
+                  />
+              </NextA>
+            </Box>
+            <Box
+              width={1}
+            >
+              <CreateStoryButton
+                userId={userId}
               />
-            </A>
-          </Link>
-        </TopRow>
+            </Box>
+            <Box
+              width={1}
+            >
+              <StoryList/>
+            </Box>
+          </Flex>
+        </Card>
 
 
-        <CreateStoryButton
-          userId={userId}
-        />
 
-        <StoryList/>
 
-      </Container>
+
+
+      </Page>
     )
   }
 
 }
-
-const TopRow = styled(Row)`
-  justify-content: space-between;
-`
-
-const A = styled.a`
-  cursor: pointer;
-
-`
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 100px auto;
-  width: 50%;
-  align-items: flex-start;
-  border: 1px solid black;
-  min-height: 100vh;
-  padding: 20px;
-`

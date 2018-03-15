@@ -34,10 +34,10 @@ export const queryConfig = {
           },
           limit: 20,
           offset: 0,
-          order: {
+          order: [{
             column: "updatedAt",
             direction: "DESC"
-          }
+          }]
         }
       },
     }

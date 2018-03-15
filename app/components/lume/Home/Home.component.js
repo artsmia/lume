@@ -1,16 +1,13 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H2, H3, P} from '../../mia-ui/text'
-//import {Button} from '../../ui/buttons'
-// import {Link} from '../../ui/links'
-// import {Column} from '../../ui/layout'
 import PropTypes from 'prop-types'
 import router from 'next/router'
 import {Button} from '../../mia-ui/buttons'
 import {Page, Card} from '../../mia-ui/layout'
 import {Flex, Box} from 'grid-styled'
 import {GridList, Tile} from '../../mia-ui/lists'
-
+import {Waiting} from '../../mia-ui/loading'
 
 export default class Home extends Component {
 
@@ -88,7 +85,7 @@ export default class Home extends Component {
                         }}
                         as={`/${subdomain}`}
                       />
-                    )) : null}
+                    )) : <Waiting/>}
                   </GridList>
 
                 </Card>
@@ -121,13 +118,3 @@ export default class Home extends Component {
 
 
 }
-
-// const Centered = styled.div`
-//   width: 50%;
-//   margin: auto;
-//   display: flex;
-//   margin-top: 50px;
-//   flex-direction: column;
-//   align-items: flex-start;
-//   padding: 20px;
-// `
