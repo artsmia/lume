@@ -1,3 +1,5 @@
+import React from 'react'
+
   /* This must be in the header
   <link
     href="https://fonts.googleapis.com/icon?family=Material+Icons"

@@ -6,12 +6,17 @@ import {gray60} from './colors'
 import {H2} from './text'
 import Link from 'next/link'
 
+const GridFlex = styled(Flex)`
+  position: relative;
+  min-height: 300px;
+`
+
 export const GridList = (props) => (
-  <Flex
+  <GridFlex
     {...props}
   >
     {props.children}
-  </Flex>
+  </GridFlex>
 )
 
 GridList.defaultProps = {

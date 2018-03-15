@@ -10,6 +10,7 @@ const fragment = gql`
       localId
     }
     updatedAt
+    template
   }
 `
 
