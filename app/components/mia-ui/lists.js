@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {Flex, Box} from 'grid-styled'
 import {gray30} from './colors'
@@ -44,6 +45,11 @@ const TileContainer = styled.a`
   }
 
 `
+
+TileContainer.propTypes = {
+  height: PropTypes.string,
+}
+
 TileContainer.defaultProps = {
   height: '180px'
 }
@@ -54,7 +60,10 @@ const TileImage = styled.img`
   object-fit: cover;
 `
 
-
+TileImage.propTypes = {
+  src: PropTypes.string,
+  alt: PropTypes.string
+}
 
 export const Tile = (props) => (
   <Box
@@ -69,6 +78,7 @@ export const Tile = (props) => (
       >
         <TileImage
           src={props.src}
+          alt={props.alt}
         />
         <TileText>
           <H3>
@@ -85,4 +95,16 @@ export const Tile = (props) => (
 Tile.defaultProps = {
   p: 1,
   width: [1, 1/2, 1/2]
+}
+
+Tile.propTypes = {
+  href: PropTypes.shape({
+    pathname: PropTypes.string,
+    query: PropTypes.object
+  }),
+  as: PropTypes.string,
+  src: PropTypes.string,
+  alt: PropTypes.string,
+  text: PropTypes.string,
+  height: PropTypes.string
 }

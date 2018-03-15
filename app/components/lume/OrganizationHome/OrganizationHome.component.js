@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Search} from '../../ui/search'
-import {Button} from '../../ui/buttons'
+import {Search} from '../../mia-ui/forms'
+import {Button} from '../../mia-ui/buttons'
 import Link from 'next/link'
-import Image from '../../shared/Image'
-import {Label, Checkbox} from '../../ui/forms'
+// import Image from '../../shared/Image'
+import {Label, CheckboxInput} from '../../mia-ui/forms'
 import Router from 'next/router'
-import {H3, H2, H4} from '../../ui/h'
-import {Column, Row} from '../../ui/layout'
+import {H3, H2, H4} from '../../mia-ui/text'
+// import {Column, Row} from '../../ui/layout'
+import {Flex, Box} from 'grid-styled'
+import {Drawer, DrawerCheck, DrawerButton, DrawerPage} from '../../mia-ui/drawer'
+import {GridList, Tile} from '../../mia-ui/lists'
 
 export default class Home extends Component {
 
@@ -56,34 +59,47 @@ export default class Home extends Component {
 
     return (
 
-      <Container>
-        <SideBar>
+      <Flex
+        width={1}
+      >
+        <DrawerCheck/>
+        <DrawerButton/>
+        <Drawer>
 
-          <H2>Art Stories</H2>
+          <Box
+            width={1}
+            p={3}
+          >
+            <H2>Art Stories</H2>
+          </Box>
 
-          <SearchRow>
+          <Box
+            width={1}
+            p={3}
+          >
             <Search
               name={"search"}
               value={search}
               onChange={searchChange}
               onKeyPress={handleEnter}
             />
-          </SearchRow>
-
-          <Options>
-
+          </Box>
+          <Box
+            width={1}
+            p={3}
+          >
             <H3>
               Story Type
             </H3>
 
-            <Checkbox
+            <CheckboxInput
               name={"original"}
               checked={template.includes("original")}
               label={"Object Stories"}
               onChange={handleCheck}
             />
 
-            <Checkbox
+            <CheckboxInput
               name={"slider"}
               checked={template.includes("slider")}
               label={"Thematic Stories"}
@@ -91,31 +107,53 @@ export default class Home extends Component {
             />
 
             {organization.categories.map( category => (
-              <Column
+              <Box
                 key={category.id}
+                width={1}
+                p={3}
               >
                 <H3>
                   {category.title}
                 </H3>
                 {category.groups.map( group => (
-                  <Row
+                  <Box
                     key={group.id}
                   >
-                    <Checkbox
+                    <CheckboxInput
                       name={"selectedGroups"}
                       value={group.id}
                       checked={selectedGroupIds.includes(group.id)}
                       onChange={handleGroupCheck}
                     />
                     {group.title}
-                  </Row>
+                  </Box>
                 ))}
-              </Column>
+              </Box>
             ))}
+          </Box>
 
-          </Options>
-        </SideBar>
-        <Results
+
+
+
+        </Drawer>
+
+        <DrawerPage>
+          <GridList>
+            {stories.map( ({id, previewImage, title}) => (
+              <Tile
+                width={[1,1/2, 1/3, 1/4]}
+                key={id}
+                text={title}
+                height={'200px'}
+              />
+            ))}
+          </GridList>
+        </DrawerPage>
+
+
+
+
+        {/* <Results
           id={'results'}
           onScroll={handleScroll}
         >
@@ -145,9 +183,9 @@ export default class Home extends Component {
           </MoreRow>
 
 
-        </Results>
+        </Results> */}
 
-      </Container>
+      </Flex>
     )
   }
 
@@ -337,12 +375,15 @@ const Story = ({id, imageId, subdomain, title}) => (
     <AWrap>
 
     {(imageId) ? (
-      <Image
-        imageId={imageId}
-        width={"100%"}
-        objectFit={"cover"}
-        title={title}
-      />
+      // <Image
+      //   imageId={imageId}
+      //   width={"100%"}
+      //   objectFit={"cover"}
+      //   title={title}
+      // />
+      <div>
+        {title}
+      </div>
     ): (
       <div
         style={{
