@@ -1,13 +1,17 @@
+import React from 'react'
 import {Component} from 'react'
-import {TabContainer, TabHeader, Tab, TabBody} from '../../ui/tabs'
-import {Button} from '../../ui/buttons'
-import {Search} from '../../ui/search'
+import {TabContainer, TabHeader, Tab, TabBody} from '../../mia-ui/tabs'
+import {Button} from '../../mia-ui/buttons'
+import {Search} from '../../mia-ui/forms'
 import ImageUploader from './ImageUploader'
 import styled from 'styled-components'
-import {PropTypes} from 'prop-types'
+import PropTypes from 'prop-types'
 import Image from '../../shared/Image'
 import Zoomer from '../../shared/Zoomer'
-import {Row, Column} from '../../ui/layout'
+import {GridList, Tile} from '../../mia-ui/lists'
+import getImageSrc from '../../../utils/getImageSrc'
+import {Flex, Box} from 'grid-styled'
+
 
 export default class ImageManager extends Component {
 
@@ -33,7 +37,8 @@ export default class ImageManager extends Component {
           query: {
             subdomain
           }
-        }
+        },
+        organization
       },
       handleLoadMore,
       handleImageSave,
@@ -42,8 +47,10 @@ export default class ImageManager extends Component {
       handleRefetch
     } = this
 
+    console.log(this.props)
+
     return (
-      <Container>
+      <Flex>
 
         <TabContainer
           selectedTab={selectedTab}
@@ -66,50 +73,76 @@ export default class ImageManager extends Component {
           <TabBody
             name={"select"}
           >
-            <PreviewContainer>
-              <ThumbColumn>
-                <SearchRow>
-                  <ImageSearch
-                    value={search}
-                    name={"search"}
-                    onChange={handleChange}
-                  />
-                  <Button
-                    onClick={handleSearch}
+            <Flex>
+                <Flex
+                  width={1/2}
+                  flexDirection={'column'}
+                  flexWrap={'wrap'}
+                >
+                  <Box
+                    width={1}
                   >
-                    Search
-                  </Button>
-                </SearchRow>
+                    <Search
+                      value={search}
+                      name={"search"}
+                      onChange={handleChange}
+                    />
+                    <Button
+                      onClick={handleSearch}
+                    >
+                      Search
+                    </Button>
 
-                {images.map( (image) => (
-                  <Image
-                    key={image.id}
-                    imageId={image.id}
-                    onClick={()=>this.setState({selectedImageId: image.id})}
-                    selected={(selectedImageId === image.id)}
-                    size={"80px"}
-                    thumb
-                  />
-                ))}
-                {(images.length < 1) ? (
-                  <p>You don't have any images yet</p>
-                ):null}
-                {(images.length % 10 === 0) ? (
-                  <Button
-                    onClick={handleLoadMore}
-                  >
-                    Load More
-                  </Button>
-                ): null}
-              </ThumbColumn>
-              <Right>
+                  </Box>
+
+
+                <GridList>
+
+                  {images.map( (image) => (
+                    <Tile
+                      key={image.id}
+                      onClick={()=>this.setState({selectedImageId: image.id})}
+                      selected={(selectedImageId === image.id)}
+                      height={"80px"}
+                      src={getImageSrc({
+                        image,
+                        organization,
+                        quality: 's'
+                      })}
+                      alt={image.title}
+                      text={image.title}
+                    />
+                  ))}
+
+                </GridList>
+
+
+              {(images.length < 1) ? (
+                <p>You don't have any images yet</p>
+              ):null}
+              {(images.length % 10 === 0) ? (
+                <Button
+                  onClick={handleLoadMore}
+                >
+                  Load More
+                </Button>
+              ): null}
+
+            </Flex>
+
+
+
+
+              <Flex
+                width={1/2}
+              >
                 {(selectedImageId) ? (
                   <Zoomer
                     imageId={selectedImageId}
                   />
                 ): <p>Choose an image from the left</p>}
-              </Right>
-            </PreviewContainer>
+              </Flex>
+            </Flex>
 
 
 
@@ -129,7 +162,7 @@ export default class ImageManager extends Component {
             />
           </TabBody>
         </TabContainer>
-      </Container>
+      </Flex>
     )
   }
 
@@ -181,50 +214,50 @@ handleRefetch = async () => {
 }
 
 
-const SearchRow = styled(Row)`
-  height: auto;
-`
-
-const ImageSearch = styled(Search)`
-  width: 100px;
-`
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: stretch;
-  width: 100%;
-  height: 600px;
-`
-
-const PreviewContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 600px;
-`
-
-export const ThumbColumn = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: space-around;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  margin: 10px;
-  width: 40%;
-  border: 1px solid black;
-  overflow-y: scroll;
-  box-sizing: border-box;
-
-`
-
-export const Right = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  margin: 10px;
-  width: 60%;
-  border: 1px solid black;
-`
+// const SearchRow = styled(Row)`
+//   height: auto;
+// `
+//
+// const ImageSearch = styled(Search)`
+//   width: 100px;
+// `
+//
+// export const Container = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: flex-start;
+//   align-items: stretch;
+//   width: 100%;
+//   height: 600px;
+// `
+//
+// const PreviewContainer = styled.div`
+//   display: flex;
+//   width: 100%;
+//   height: 600px;
+// `
+//
+// export const ThumbColumn = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-around;
+//   align-items: space-around;
+//   align-content: flex-start;
+//   flex-wrap: wrap;
+//   margin: 10px;
+//   width: 40%;
+//   border: 1px solid black;
+//   overflow-y: scroll;
+//   box-sizing: border-box;
+//
+// `
+//
+// export const Right = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: stretch;
+//   margin: 10px;
+//   width: 60%;
+//   border: 1px solid black;
+// `

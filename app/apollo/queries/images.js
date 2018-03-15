@@ -9,6 +9,8 @@ const ImagesQuery = gql`
       filter: $filter
     ) {
       id
+      localId
+      title
     }
   }
 `

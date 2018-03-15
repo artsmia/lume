@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Label, Input, Checkbox, Textarea} from '../../ui/forms'
-import {Row, Column} from '../../ui/layout'
-import {Button} from '../../ui/buttons'
-import Snackbar from '../../ui/Snackbar'
-import {Spinner} from '../../ui/spinner'
+import {Label, Input, Checkbox, Textarea} from '../../mia-ui/forms'
+// import {Row, Column} from '../../mia-ui/layout'
+import {Button} from '../../mia-ui/buttons'
+// import Snackbar from '../../mia-ui/Snackbar'
+import {Spinner} from '../../mia-ui/loading'
+import {Flex, Box} from 'grid-styled'
 
 export default class extends Component {
 
@@ -38,16 +39,8 @@ export default class extends Component {
 
 
     return (
-      <Container>
-        {(uploading) ? (
-          <Spinner/>
-        ): null}
-        <Snackbar
-          message={snackMessage}
-          snackId={snackId}
-        />
-        <Row>
-          <Column>
+        <Flex>
+          <Box>
 
             <Label>
               Image
@@ -74,7 +67,7 @@ export default class extends Component {
                 value={alt}
                 onChange={handleChange}
               />
-            <Row>
+            <Box>
               <Label>
                 I have the right to distribute this image.
               </Label>
@@ -83,7 +76,7 @@ export default class extends Component {
                 checked={hasRights}
                 onChange={handleCheckbox}
               />
-            </Row>
+            </Box>
             <Button
               onClick={handleUpload}
               disabled={(
@@ -96,17 +89,19 @@ export default class extends Component {
             >
               Upload
             </Button>
-          </Column>
-          <Column>
+          </Box>
+          <Box>
+            {(uploading) ? (
+              <Spinner/>
+            ): null}
             {(preview) ? (
               <Preview
                 src={preview}
                 alt={`Preview of ${alt}`}
               />
             ): null}
-          </Column>
-        </Row>
-      </Container>
+          </Box>
+        </Flex>
     )
   }
 
@@ -199,17 +194,5 @@ const Preview = styled.img`
 `
 
 const Message = styled.p`
-  font-family: ${({theme}) => theme.fonts.regular};
-`
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 20px;
-  position: relative;
-  box-sizing: border-box;
+  font-family: ${({theme}) => theme.font.regular};
 `
