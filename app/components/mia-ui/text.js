@@ -132,7 +132,7 @@ Span.defaultProps = baseDefaultProps
 export const H1 = styled.h1`
   ${HBase}
   font-size: 3.125rem;
-  margin-bottom: 1.875rem;
+  margin-bottom: 1rem;
 `
 H1.displayName = "H1"
 H1.propTypes = basePropTypes
@@ -141,7 +141,7 @@ H1.defaultProps = baseDefaultProps
 export const H2 = styled.h2`
   ${HBase}
   font-size: 1.563rem;
-  margin-bottom: 1.875rem;
+  margin-bottom: 1rem;
 `
 
 H2.displayName = "H2"
