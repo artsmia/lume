@@ -15,6 +15,7 @@ import {ToolTip} from '../../mia-ui/tooltips'
 import {Flex, Box} from 'grid-styled'
 import {Modal} from '../../mia-ui/modals'
 import getImageSrc from '../../../utils/getImageSrc'
+import {Expander} from '../../mia-ui/expanders'
 
 export default class StoryEditor extends Component {
 
@@ -70,6 +71,9 @@ export default class StoryEditor extends Component {
           width={1/2}
           flexDirection={'column'}
         >
+
+
+
 
           <Title
             name={'title'}
@@ -139,22 +143,22 @@ export default class StoryEditor extends Component {
               Published
             </Option>
           </Select>
+
+
+          <Expander
+            title={"Yowza"}
+          >
+
+            <div>
+              <h2>some cool things</h2>
+            </div>
+
+          </Expander>
+
         </Flex>
 
 
 
-            {/* <Input
-              label={"Title"}
-              name={"title"}
-              value={title}
-              onChange={handleChange}
-            />
-            <Textarea
-              label={"Description"}
-              name={"description"}
-              value={description}
-              onChange={handleChange}
-            /> */}
             {/* <StoryGroupSelector
               onGroupSelectionSave={handleGroupSelectionSave}
               selectedGroupIds={groups.map(group => group.id)}

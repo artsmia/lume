@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Template from '../components/shared/Template'
 import getUser from '../auth/getUser'
 import router from 'next/router'
-import {Loading} from '../components/ui/spinner'
+import {Loading} from '../components/mia-ui/loading'
 import Cookie from 'js-cookie'
 import withData from '../apollo'
 

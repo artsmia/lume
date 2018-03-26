@@ -286,7 +286,7 @@ const TitleInput = styled.input`
   &:placeholder {
     color: ${gray60};
   }
-  height: 100%;
+  height: 150px
   width: 100%;
   padding: 5px;
   background-color: white;

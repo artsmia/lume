@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {H2} from '../../ui/h'
-import {Form, Label, Input, Select, Option} from '../../ui/forms'
-import {Row, Column} from '../../ui/layout'
-import {Button} from '../../ui/buttons'
+import {H2} from '../../mia-ui/text'
+import {Form, Label, Input, Select, Option} from '../../mia-ui/forms'
+import {Button} from '../../mia-ui/buttons'
 import router from 'next/router'
+import {Page, Card} from '../../mia-ui/layout'
 
 export default class OrgManager extends Component {
 
@@ -36,10 +36,11 @@ export default class OrgManager extends Component {
     } = this
 
     return (
-        <Centered>
-          <Row>
+        <Page>
 
-            <Column>
+            <Card
+              m={2}
+            >
               <H2>Join an Organization</H2>
 
                 <Form>
@@ -74,8 +75,10 @@ export default class OrgManager extends Component {
                   Join
                 </Button>
 
-            </Column>
-            <Column>
+            </Card>
+            <Card
+              m={2}
+            >
               <H2>...Or Create a New One</H2>
                 <Form>
                   <Label>
@@ -101,13 +104,10 @@ export default class OrgManager extends Component {
                 >
                   Create and Join
                 </Button>
-            </Column>
+            </Card>
 
 
-          </Row>
-
-
-        </Centered>
+        </Page>
     )
   }
 
