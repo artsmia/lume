@@ -99,7 +99,7 @@ export default class Editor extends Component {
             <Box
               mx={"auto"}
             >
-              <H3>Hello</H3>
+              <H3>{story.title ? story.title : 'Untitled Story'}</H3>
             </Box>
             <Box
               width={1/5}
@@ -176,7 +176,12 @@ export default class Editor extends Component {
             {(editing === "story") ? (
               <StoryEditor
                 storyId={storyId}
-                ref={(ref) => {this.storyEditor = ref}}
+              />
+            ): null}
+
+            {(editing === "content") ? (
+              <EditorSwitcher
+                content={selectedContent}
               />
             ): null}
 

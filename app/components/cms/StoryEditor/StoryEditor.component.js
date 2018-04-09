@@ -62,7 +62,6 @@ export default class StoryEditor extends Component {
       }
     } = this
 
-
     return (
       <Flex
         width={1}

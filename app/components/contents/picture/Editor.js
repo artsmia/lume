@@ -1,12 +1,19 @@
 import React, {Component} from 'react'
-import {Input, Textarea, ChangeImage, DetailSelector, MultiImage} from '../../cms/DefaultEditors'
+import {ChangeImage} from '../../cms/DefaultEditors'
 import query from '../../../apollo/queries/content'
+import OrganizationQuery from '../../../apollo/queries/organization'
+import {withRouter} from 'next/router'
+
 import mutation from '../../../apollo/mutations/editContent'
 import {compose} from 'react-apollo'
 import styled from 'styled-components'
-import {H2} from '../../ui/h'
-import {Row, Column} from '../../ui/layout'
+import {H2} from '../../mia-ui/text'
+import {Row, Column} from '../../mia-ui/layout'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
+import {Flex, Box} from 'grid-styled'
+import {Title, Description} from '../../mia-ui/forms'
+import getImageSrc from '../../../utils/getImageSrc'
+
 
 class PictureEditor extends Component {
 
@@ -28,43 +35,54 @@ class PictureEditor extends Component {
       },
       saveEdits,
       handleChange,
+      props: {
+        organization,
+        content
+      }
     } = this
 
     return(
-      <Container>
-        <TopBar>
-
-          <H2>
-            Edit Picture
-          </H2>
-
-        </TopBar>
-        <Row>
-          <Column>
-            <Input
+      <Flex
+        w={[1, 1/2]}
+        flexWrap={'wrap'}
+        m={3}
+      >
+        <Box
+          w={1}
+        >
+            <Title
               label={"Title"}
               value={title}
               name={"title"}
               onChange={handleChange}
             />
-            <Textarea
-              label={"Description"}
-              value={description}
-              name={"description"}
-              onChange={handleChange}
-            />
-          </Column>
-          <Column>
+        </Box>
+        <Box
+          w={1}
+        >
+          <Description
+            label={"Description"}
+            value={description}
+            name={"description"}
+            onChange={handleChange}
+          />
+        </Box>
+          <Box
+            w={1}
+          >
             <ChangeImage
               label={"Image"}
-              value={image0Id}
               name={"image0Id"}
+              src={getImageSrc({
+                organization,
+                image: content.image0,
+                quality: 'm'
+              })}
               onChange={handleChange}
             />
-          </Column>
+          </Box>
 
-        </Row>
-      </Container>
+      </Flex>
     )
   }
 
@@ -150,30 +168,12 @@ class PictureEditor extends Component {
 
 }
 
-const Container = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content:flex-start;
-  align-items: flex-start;
-  overflow-y:scroll;
-  padding: 15px;
-  box-sizing:border-box;
-`
-
-const TopBar = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100px;
-  align-items: center;
-  justify-content: space-between;
-`
-
 let ExportComponent = PictureEditor
 
 ExportComponent = compose(query, mutation)(ExportComponent)
 ExportComponent = compose(setSaveStatus)(ExportComponent)
+ExportComponent = compose(OrganizationQuery)(ExportComponent)
+ExportComponent = withRouter(ExportComponent)
+
 
 export default ExportComponent
