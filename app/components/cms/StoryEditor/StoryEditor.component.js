@@ -62,35 +62,6 @@ export default class StoryEditor extends Component {
       }
     } = this
 
-    let selections = [
-      {
-        name: 'Delta',
-        value: 'd'
-      },
-      {
-        name: 'Echo',
-        value: 'e'
-      },
-    ]
-
-    let options = [
-      {
-        name: 'Alpha',
-        value: 'a'
-      },
-      {
-        name: 'Bravo',
-        value: 'b'
-      },
-      {
-        name: 'Charlie',
-        value: 'c'
-      },
-      {
-        name: 'Echo',
-        value: 'e'
-      },
-    ]
 
     return (
       <Flex
@@ -130,11 +101,14 @@ export default class StoryEditor extends Component {
             onChange={handleChange}
           />
 
-          <MultiSelect
-            selections={selections}
-            options={options}
-            onSearchChange={(search) => {console.log("search", search)}}
+          <StoryGroupSelector
+            onGroupSelectionSave={handleGroupSelectionSave}
+            selectedGroupIds={groups.map(group => group.id)}
+            storyId={storyId}
           />
+
+
+
         </Flex>
         <Flex
           width={1/2}
@@ -181,15 +155,11 @@ export default class StoryEditor extends Component {
             </Option>
           </Select>
 
-          <StoryGroupSelector
-            onGroupSelectionSave={handleGroupSelectionSave}
-            selectedGroupIds={groups.map(group => group.id)}
+
+
+          <StoryAssociator
+            storyId={storyId}
           />
-
-
-            <StoryAssociator
-              storyId={storyId}
-            />
             {/* <DeleteStoryButton
               storyId={storyId}
             /> */}

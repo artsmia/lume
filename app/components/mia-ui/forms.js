@@ -373,8 +373,8 @@ class MultiSelect extends Component {
       })
     ),
     onSearchChange: PropTypes.func,
-    onSelectionsChange: PropTypes.func,
-
+    onAdd: PropTypes.func,
+    onRemove: PropTypes.func,
     label: PropTypes.string
   }
 
@@ -423,58 +423,63 @@ class MultiSelect extends Component {
       <Flex
         flexWrap={'wrap'}
         w={1}
+        alignItems={'flex-start'}
       >
-        {selections.map( ({name, value}) => (
+        <Flex
+          w={1}
+        >
+          {selections.map( ({name, value}) => (
+            <Box
+              key={value}
+            >
+              <input
+                type={'checkbox'}
+                checked={true}
+                value={value}
+                onChange={handleUncheck}
+              />
+              {name}
+            </Box>
+          ))}
+        </Flex>
+
+
+
+
+
+
+
+        <Box
+          w={1}
+          my={3}
+        >
+          <label>
+            {label}
+          </label>
+          <input
+            name={'search'}
+            value={search}
+            onChange={handleSearchChange}
+            placeholder={'Search'}
+          />
+        </Box>
+        {filteredOptions.map( ({name, value}) => (
           <Box
+            w={1}
             key={value}
+            value={value}
           >
-            {name}
             <input
               type={'checkbox'}
-              checked={true}
+              checked={false}
               value={value}
-              onChange={handleUncheck}
+              onChange={handleCheck}
             />
+            {name}
+
           </Box>
         ))}
 
-
-
-
-
-
-        <Flex
-          flexWrap={'wrap'}
-        >
-          <Box
-            w={1}
-          >
-            <label>
-              {label}
-            </label>
-            <input
-              name={'search'}
-              value={search}
-              onChange={handleSearchChange}
-            />
-          </Box>
-          {filteredOptions.map( ({name, value}) => (
-            <Box
-              w={1}
-              key={value}
-              value={value}
-            >
-              {name}
-              <input
-                type={'checkbox'}
-                checked={false}
-                value={value}
-                onChange={handleCheck}
-              />
-            </Box>
-          ))}
-
-        </Flex>
 
 
 
@@ -495,11 +500,11 @@ class MultiSelect extends Component {
   }
 
   handleCheck = (e) => {
-    console.log('check', e)
+    this.props.handleAdd(e.target.value)
   }
 
   handleUncheck = (e) => {
-    console.log("uncheck", e)
+    this.props.handleRemove(e.target.value)
   }
 
 }
