@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button} from '../../ui/buttons'
-import Modal from '../../ui/modal'
-import {Row, Column} from '../../ui/layout'
-import {H4} from '../../ui/h'
-import {Search} from '../../ui/search'
-import {Checkbox} from '../../ui/forms'
-import {Link} from '../../ui/links'
+import {Button} from '../../mia-ui/buttons'
+import {Modal} from '../../mia-ui/modals'
+import {H4, H2} from '../../mia-ui/text'
+import {CheckboxInput, Search} from '../../mia-ui/forms'
+import {Link} from '../../mia-ui/links'
+import {Flex, Box} from 'grid-styled'
 
 export default class StoryAssociator extends Component {
 
@@ -52,28 +51,36 @@ export default class StoryAssociator extends Component {
     })
 
     return (
-      <Container>
-        <Button
-          onClick={()=>this.setState({modal: true})}
+      <Container
+        flexWrap={'wrap'}
+        my={2}
+        p={1}
+      >
+        <Box
+          w={1}
         >
-          Edit Related Stories
-        </Button>
+          <H2>
+            Associated Stories
+          </H2>
+        </Box>
 
-        <Modal
-          open={this.state.modal}
-          onClose={()=>this.setState({modal: false})}
-        >
-          <ModalContainer>
-            <Search
-              value={search}
-              name={"search"}
-              onChange={handleChange}
-            />
-            <Row>
-              <Column>
-                <H4>
-                  All Stories
-                </H4>
+
+            <Flex
+              w={1}
+            >
+
+              <Box
+                w={1}
+              >
+                <Box
+                  w={1}
+                >
+                  <Search
+                    value={search}
+                    name={"search"}
+                    onChange={handleChange}
+                  />
+                </Box>
                 {unrelatedStories.map( story => (
                   <StoryRow
                     key={story.id}
@@ -98,8 +105,10 @@ export default class StoryAssociator extends Component {
                     </Button>
                   </StoryRow>
                 ))}
-              </Column>
-              <Column>
+              </Box>
+              <Box
+                w={1}
+              >
                 <H4>
                   Current Associations
                 </H4>
@@ -127,11 +136,8 @@ export default class StoryAssociator extends Component {
                     </Button>
                   </StoryRow>
                 ))}
-              </Column>
-            </Row>
-          </ModalContainer>
-
-        </Modal>
+              </Box>
+            </Flex>
 
       </Container>
     )
@@ -155,21 +161,20 @@ export default class StoryAssociator extends Component {
 
 }
 
-const StoryRow = styled(Row)`
+const StoryRow = styled.div`
   border: 1px solid lightgrey;
   margin: 2px;
   min-height: 20px;
 `
 
-const ModalContainer = styled(Column)`
+const ModalContainer = styled.div`
   width: 500px;
   height: 500px;
 `
 
-const Container = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+const Container = styled(Flex)`
+  height: 500px;
+  overflow-y: scroll;
+  border: 1px solid ${({theme}) => theme.color.gray30};
+  border-radius: 4px;
 `

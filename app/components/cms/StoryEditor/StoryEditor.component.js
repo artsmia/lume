@@ -5,7 +5,7 @@ import {H3} from '../../mia-ui/text'
 import {Waiting} from '../../mia-ui/loading'
 import {Button} from '../../mia-ui/buttons'
 // import Image from '../../shared/Image'
-import {Title, Description, Label, Select, Option} from '../../mia-ui/forms'
+import {Title, Description, Label, Select, Option, MultiSelect} from '../../mia-ui/forms'
 import {ChangeImage} from '../DefaultEditors'
 import ImageManager from '../ImageManager'
 import DeleteStoryButton from '../DeleteStoryButton'
@@ -62,6 +62,36 @@ export default class StoryEditor extends Component {
       }
     } = this
 
+    let selections = [
+      {
+        name: 'Delta',
+        value: 'd'
+      },
+      {
+        name: 'Echo',
+        value: 'e'
+      },
+    ]
+
+    let options = [
+      {
+        name: 'Alpha',
+        value: 'a'
+      },
+      {
+        name: 'Bravo',
+        value: 'b'
+      },
+      {
+        name: 'Charlie',
+        value: 'c'
+      },
+      {
+        name: 'Echo',
+        value: 'e'
+      },
+    ]
+
     return (
       <Flex
         width={1}
@@ -99,6 +129,12 @@ export default class StoryEditor extends Component {
             })}
             onChange={handleChange}
           />
+
+          <MultiSelect
+            selections={selections}
+            options={options}
+            onSearchChange={(search) => {console.log("search", search)}}
+          />
         </Flex>
         <Flex
           width={1/2}
@@ -110,7 +146,7 @@ export default class StoryEditor extends Component {
           <Select
             name={"template"}
             onChange={handleChange}
-            value={template}
+            value={template || 'original'}
           >
             <Option
               value={"original"}
@@ -123,13 +159,14 @@ export default class StoryEditor extends Component {
               Slider
             </Option>
           </Select>
+
           <Label>
             Visibility
           </Label>
           <Select
             name={"visibility"}
             onChange={handleChange}
-            value={visibility}
+            value={visibility || 'draft'}
           >
 
             <Option
@@ -144,33 +181,25 @@ export default class StoryEditor extends Component {
             </Option>
           </Select>
 
+          <StoryGroupSelector
+            onGroupSelectionSave={handleGroupSelectionSave}
+            selectedGroupIds={groups.map(group => group.id)}
+          />
 
-          <Expander
-            title={"Yowza"}
-          >
 
-            <div>
-              <h2>some cool things</h2>
-            </div>
-
-          </Expander>
+            <StoryAssociator
+              storyId={storyId}
+            />
+            {/* <DeleteStoryButton
+              storyId={storyId}
+            /> */}
 
         </Flex>
 
 
 
-            {/* <StoryGroupSelector
-              onGroupSelectionSave={handleGroupSelectionSave}
-              selectedGroupIds={groups.map(group => group.id)}
-            /> */}
-          {/*
-            <StoryAssociator
-              storyId={storyId}
-            />
-            <DeleteStoryButton
-              storyId={storyId}
-            />
-          </Column> */}
+
+
 
       </Flex>
     )

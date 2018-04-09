@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button, RoundButton} from '../../ui/buttons'
-import {Input, Textarea, Label} from '../../ui/forms'
+import {Button} from '../../mia-ui/buttons'
+import {Input, Textarea, Label} from '../../mia-ui/forms'
 import GroupEditor from '../GroupEditor'
-import Icon from '../../ui/icons'
+import {Icon} from '../../mia-ui/icons'
+import {Expander} from '../../mia-ui/expanders'
+import {Flex, Box} from 'grid-styled'
 
 export default class CategoryEditor extends Component {
 
@@ -32,48 +34,75 @@ export default class CategoryEditor extends Component {
     } = this
 
     return (
-      <Container>
-        <DeleteButton
-          size={"40px"}
-          color={"red"}
-          onClick={deleteCategory}
-          title={"Delete Category"}
-        >
-          <Icon
-            color={"white"}
-            icon={"close"}
-          />
-        </DeleteButton>
-        <Input
-          name={"title"}
-          value={title}
-          onChange={handleChange}
-          placeholder={"Category Title"}
-        />
-
-        <GroupColumn>
-          {groups.map( group => (
-            <GroupEditor
-              groupId={group.id}
-              key={group.id}
-            />
-          ))}
-          <RoundButton
-            color={"green"}
-            onClick={createGroup}
-            title={"Create Group"}
-            size={"50px"}
+      <Expander
+        header={
+          <Flex
+            w={1}
+            justifyContent={'space-between'}
           >
-            <Icon
-              color={"white"}
-              icon={"add"}
+
+            <Input
+              name={"title"}
+              value={title}
+              onChange={handleChange}
+              placeholder={"Category Title"}
             />
-          </RoundButton>
-        </GroupColumn>
+
+            <Button
+              size={"40px"}
+              color={"red"}
+              onClick={deleteCategory}
+              title={"Delete Category"}
+            >
+              Delete Category
+            </Button>
+
+          </Flex>
+        }
+      >
+        <Flex
+          flexWrap={'wrap'}
+          w={1}
+        >
+
+
+          <Flex
+            w={1}
+            flexWrap={'wrap'}
+            pl={5}
+            py={3}
+          >
+            {groups.map( group => (
+              <Box
+                w={1}
+                key={group.id}
+                my={2}
+              >
+                <GroupEditor
+                  groupId={group.id}
+                />
+              </Box>
+
+            ))}
+            <Box
+              w={1}
+            >
+              <Button
+                color={"green"}
+                onClick={createGroup}
+                title={"Create Group"}
+              >
+                New Group
+              </Button>
+            </Box>
+
+          </Flex>
+
+        </Flex>
 
 
 
-      </Container>
+      </Expander>
     )
   }
 
@@ -113,32 +142,3 @@ export default class CategoryEditor extends Component {
     }
   }
 }
-
-const DeleteButton = styled(RoundButton)`
-  position: absolute;
-  align-self: flex-end;
-`
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  margin: 20px 0;
-  border: 1px solid black;
-  padding: 10px;
-  box-sizing: border-box;
-`
-
-const GroupColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  border: 1px solid grey;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 10px 0;
-`

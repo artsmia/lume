@@ -28,6 +28,8 @@ export const ThumbContainer = styled(Flex)`
   cursor: pointer;
   height: 130px;
   overflow: hidden;
+  border: 1px solid ${gray60};
+  border-radius: 4px;
   box-shadow: 0px 3px 15px rgba(0,0,0,0.3);
   ${({selected}) => selected ? 'box-shadow: 10px 14px 25px rgba(0,0,0,0.7);': null }
   &:hover {

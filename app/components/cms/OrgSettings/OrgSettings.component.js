@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {H2} from '../../ui/h'
-import {Form, Label, Input, Select, Option, Checkbox} from '../../ui/forms'
-import {Row, Column} from '../../ui/layout'
-import {Button} from '../../ui/buttons'
+import {H2} from '../../mia-ui/text'
+import {Form, Label, Input, Select, Option, CheckboxInput} from '../../mia-ui/forms'
+import {Button} from '../../mia-ui/buttons'
 import CategoryGroupEditor from '../CategoryGroupEditor'
+import {Page, Card} from '../../mia-ui/layout'
+import {Flex, Box} from 'grid-styled'
 
 export default class OrgSettings extends Component {
 
@@ -43,68 +44,96 @@ export default class OrgSettings extends Component {
     } = this
 
     return (
-        <Centered>
+        <Page>
 
-          <Column>
+          <Card>
 
             <H2>
               {organization.name} settings
             </H2>
 
-            <Label>
-              Name
-            </Label>
-
-            <Input
-              name={"name"}
-              value={name}
-              onChange={handleChange}
-            />
-
-
-            <Label>
-              New Users Require Approval
-            </Label>
-
-            <Checkbox
-              name={"newUsersRequireApproval"}
-              checked={newUsersRequireApproval}
-              onChange={handleCheck}
-            />
-
-            <Label>
-              Use Custom Object API
-            </Label>
-
-            <Checkbox
-              name={"customObjApiEnabled"}
-              checked={customObjApiEnabled}
-              onChange={handleCheck}
-            />
-
-            <Label>
-              Custom Object API Endpoint
-            </Label>
-
-            <Input
-              name={"customObjApiEndpoint"}
-              value={customObjApiEndpoint}
-              onChange={handleChange}
-            />
-
-            <Button
-              onClick={handleSave}
+            <Box
+              w={1}
             >
-              Save
-            </Button>
+              <Label>
+                Name
+              </Label>
 
+              <Input
+                name={"name"}
+                value={name}
+                onChange={handleChange}
+              />
+
+            </Box>
+
+            <Box
+              w={1}
+            >
+              <Label>
+                New Users Require Approval
+              </Label>
+
+              <CheckboxInput
+                name={"newUsersRequireApproval"}
+                checked={newUsersRequireApproval}
+                onChange={handleCheck}
+              />
+            </Box>
+
+            <Box
+              w={1}
+            >
+              <Label>
+                Use Custom Object API
+              </Label>
+
+              <CheckboxInput
+                name={"customObjApiEnabled"}
+                checked={customObjApiEnabled}
+                onChange={handleCheck}
+              />
+            </Box>
+
+            <Box
+              w={1}
+            >
+              <Label>
+                Custom Object API Endpoint
+              </Label>
+
+              <Input
+                name={"customObjApiEndpoint"}
+                value={customObjApiEndpoint}
+                onChange={handleChange}
+              />
+            </Box>
+
+
+            <Box
+              w={1}
+            >
+              <Button
+                onClick={handleSave}
+              >
+                Save
+              </Button>
+            </Box>
+
+
+          </Card>
+
+          <Card
+            my={2}
+          >
             <CategoryGroupEditor/>
 
-          </Column>
+          </Card>
 
 
 
-        </Centered>
+
+        </Page>
     )
   }
 
@@ -133,9 +162,3 @@ export default class OrgSettings extends Component {
 
 
 }
-
-const Centered = styled.div`
-  display: flex;
-  width: 50%;
-  margin: auto;
-`

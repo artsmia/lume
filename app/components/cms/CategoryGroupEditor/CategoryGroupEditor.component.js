@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button, RoundButton} from '../../ui/buttons'
+import {Button, RoundButton} from '../../mia-ui/buttons'
 import CategoryEditor from '../CategoryEditor'
-import Icon from '../../ui/icons'
-import {H2} from '../../ui/h'
+import {Icon} from '../../mia-ui/icons'
+import {H2} from '../../mia-ui/text'
+import {Page, Card} from '../../mia-ui/layout'
+import {Flex, Box} from 'grid-styled'
+
 
 export default class CategoryGroupEditor extends Component {
 
@@ -21,7 +24,7 @@ export default class CategoryGroupEditor extends Component {
     } = this
 
     return (
-      <Container>
+      <Box>
         <H2>
           Edit/Create Categories and Groups
         </H2>
@@ -31,19 +34,16 @@ export default class CategoryGroupEditor extends Component {
             categoryId={category.id}
           />
         ))}
-        <RoundButton
+        <Button
           onClick={handleCreate}
           title={"Create Category"}
           size={"50px"}
           color={"green"}
         >
-          <Icon
-            color={"white"}
-            icon={"add"}
-          />
-        </RoundButton>
+          New Category
+        </Button>
 
-      </Container>
+      </Box>
     )
   }
 
@@ -60,15 +60,3 @@ export default class CategoryGroupEditor extends Component {
   }
 
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 20px 0;
-  border: 1px solid grey;
-  padding: 10px;
-`
