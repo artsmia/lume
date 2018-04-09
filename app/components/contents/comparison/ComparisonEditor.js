@@ -1,12 +1,16 @@
 import React, {Component} from 'react'
-import {Input, Textarea, ChangeImage, DetailSelector, MultiImage} from '../../cms/DefaultEditors'
+import {ChangeImage} from '../../cms/DefaultEditors'
 import query from '../../../apollo/queries/content'
+import OrganizationQuery from '../../../apollo/queries/organization'
+import {withRouter} from 'next/router'
 import mutation from '../../../apollo/mutations/editContent'
 import {compose} from 'react-apollo'
 import styled from 'styled-components'
-import {H2} from '../../ui/h'
-import {Row, Column} from '../../ui/layout'
+import {H2} from '../../mia-ui/text'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
+import getImageSrc from '../../../utils/getImageSrc'
+import {Flex, Box} from 'grid-styled'
+import {Title, Description} from '../../mia-ui/forms'
 
 class ComparisonEditor extends Component {
 
@@ -30,49 +34,70 @@ class ComparisonEditor extends Component {
       },
       saveEdits,
       handleChange,
+      props: {
+        content,
+        organization
+      }
     } = this
 
     return(
-      <Container>
-        <TopBar>
-
-          <H2>
-            Edit Comparison
-          </H2>
-
-        </TopBar>
-        <Row>
-          <Column>
-            <Input
+      <Flex
+        w={[1, 1/2]}
+        flexWrap={'wrap'}
+        m={3}
+      >
+        <Box
+          w={1}
+        >
+            <Title
               label={"Title"}
               value={title}
               name={"title"}
               onChange={handleChange}
             />
-            <Textarea
-              label={"Description"}
-              value={description}
-              name={"description"}
-              onChange={handleChange}
-            />
-          </Column>
-          <Column>
-            <ChangeImage
-              label={"Image"}
-              value={image0Id}
-              name={"image0Id"}
-              onChange={handleChange}
-            />
-            <ChangeImage
-              label={"Image"}
-              value={image1Id}
-              name={"image1Id"}
-              onChange={handleChange}
-            />
-          </Column>
+        </Box>
+        <Box
+          w={1}
+        >
+          <Description
+            label={"Description"}
+            value={description}
+            name={"description"}
+            onChange={handleChange}
+          />
+        </Box>
+        <Box
+          w={1}
+        >
+          <ChangeImage
+            label={"Image"}
+            name={"image0Id"}
+            src={getImageSrc({
+              organization,
+              image: content.image0,
+              quality: 'm'
+            })}
+            onChange={handleChange}
+          />
+        </Box>
+        <Box
+          w={1}
+        >
+          <ChangeImage
+            label={"Image"}
+            name={"image1Id"}
+            src={getImageSrc({
+              organization,
+              image: content.image1,
+              quality: 'm'
+            })}
+            onChange={handleChange}
+          />
+        </Box>
 
-        </Row>
-      </Container>
+
+
+      </Flex>
     )
   }
 
@@ -187,5 +212,8 @@ let ExportComponent = ComparisonEditor
 
 ExportComponent = compose(query, mutation)(ExportComponent)
 ExportComponent = compose(setSaveStatus)(ExportComponent)
+ExportComponent = compose(OrganizationQuery)(ExportComponent)
+ExportComponent = withRouter(ExportComponent)
+
 
 export default ExportComponent
