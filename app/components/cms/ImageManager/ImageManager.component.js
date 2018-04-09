@@ -11,7 +11,7 @@ import Zoomer from '../../shared/Zoomer'
 import {GridList, Tile} from '../../mia-ui/lists'
 import getImageSrc from '../../../utils/getImageSrc'
 import {Flex, Box} from 'grid-styled'
-
+import {H3} from '../../mia-ui/text'
 
 export default class ImageManager extends Component {
 
@@ -47,8 +47,6 @@ export default class ImageManager extends Component {
       handleRefetch
     } = this
 
-    console.log(this.props)
-
     return (
       <Flex>
 
@@ -73,7 +71,9 @@ export default class ImageManager extends Component {
           <TabBody
             name={"select"}
           >
-            <Flex>
+            <Flex
+              p={1}
+            >
                 <Flex
                   width={1/2}
                   flexDirection={'column'}
@@ -123,6 +123,7 @@ export default class ImageManager extends Component {
               {(images.length % 10 === 0) ? (
                 <Button
                   onClick={handleLoadMore}
+                  color={'white'}
                 >
                   Load More
                 </Button>
@@ -135,12 +136,17 @@ export default class ImageManager extends Component {
 
               <Flex
                 width={1/2}
+                p={2}
               >
                 {(selectedImageId) ? (
                   <Zoomer
                     imageId={selectedImageId}
                   />
-                ): <p>Choose an image from the left</p>}
+                ): (
+                  <H3>
+                    Choose an image from the left
+                  </H3>
+                )}
               </Flex>
             </Flex>
 
@@ -176,7 +182,7 @@ export default class ImageManager extends Component {
       variables: {
         filter: {
           limit: 10,
-          organizationId: this.props.orgId,
+          organizationId: this.props.organization.id,
           offset: this.props.images.length
         }
       },

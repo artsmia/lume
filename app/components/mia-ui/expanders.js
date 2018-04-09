@@ -20,8 +20,8 @@ export class Expander extends Component {
 
     const {
       props: {
-        title,
-        children
+        children,
+        header
       },
       state: {
         expanded
@@ -40,7 +40,6 @@ export class Expander extends Component {
           width={1}
           expanded={expanded}
         >
-          <H2>{title}</H2>
           <A
             onClick={toggle}
           >
@@ -48,6 +47,7 @@ export class Expander extends Component {
               icon={expanded ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}
             />
           </A>
+          {header}
         </Header>
         <Body
           width={1}

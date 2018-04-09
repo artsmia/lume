@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button, RoundButton} from '../../ui/buttons'
-import {Input, Textarea, Label} from '../../ui/forms'
-import Icon from '../../ui/icons'
+import {Button, RoundButton} from '../../mia-ui/buttons'
+import {Input, Textarea, Label} from '../../mia-ui/forms'
+import {Icon} from '../../mia-ui/icons'
+import {Flex, Box} from 'grid-styled'
 
 export default class GroupEditor extends Component {
 
@@ -28,24 +29,30 @@ export default class GroupEditor extends Component {
     } = this
 
     return (
-      <Container>
-        <DeleteButton
-          onClick={deleteGroup}
-          title={"Delete Group"}
-          color={"red"}
-          size={"40px"}
+      <Flex
+        flexWrap={'wrap'}
+        w={1}
+      >
+        <Flex
+          w={1}
+          justifyContent={'space-between'}
         >
-          <Icon
-            color={"white"}
-            icon={"close"}
+          <Input
+            name={"title"}
+            value={title}
+            onChange={handleChange}
+            placeholder={"Title"}
           />
-        </DeleteButton>
-        <Input
-          name={"title"}
-          value={title}
-          onChange={handleChange}
-          placeholder={"Title"}
-        />
+          <Button
+            onClick={deleteGroup}
+            title={"Delete Group"}
+            color={"red"}
+          >
+            Delete Group
+          </Button>
+        </Flex>
+
+
         <Textarea
           name={"description"}
           value={description}
@@ -56,7 +63,7 @@ export default class GroupEditor extends Component {
 
 
 
-      </Container>
+      </Flex>
     )
   }
 
@@ -101,18 +108,3 @@ export default class GroupEditor extends Component {
     }
   }
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  border: 1px solid grey;
-  margin: 10px 0;
-`
-
-const DeleteButton = styled(RoundButton)`
-  align-self: flex-end;
-  position: absolute;
-`

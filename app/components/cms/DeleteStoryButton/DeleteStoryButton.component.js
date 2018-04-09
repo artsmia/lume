@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button} from '../../ui/buttons'
+import {Button} from '../../mia-ui/buttons'
 import PropTypes from 'prop-types'
 import router from 'next/router'
 

@@ -24,7 +24,8 @@ const Story = db.define('story', {
   },
   visibility: {
     type: Sequelize.ENUM,
-    values: ['published', 'draft']
+    values: ['published', 'draft'],
+    defaultValue: 'draft'
   },
   creatorId: {
     type: Sequelize.UUID

@@ -66,7 +66,7 @@ export default class Home extends Component {
               >
                 <Card>
                   <H3>
-                    Organization Pages
+                    Featured Organizations
                   </H3>
                   <P>
                     See more examples of what you can create with Lume.

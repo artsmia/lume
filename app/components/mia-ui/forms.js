@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { Flex, Box } from 'grid-styled'
 import styled, {css, keyframes} from 'styled-components'
 import PropTypes from 'prop-types'
@@ -354,3 +354,156 @@ export const Description = ({name, value, onChange, label}) => (
     />
   </Flex>
 )
+
+
+
+class MultiSelect extends Component {
+
+  static propTypes = {
+    selections: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        value: PropTypes.string
+      })
+    ),
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        value: PropTypes.string
+      })
+    ),
+    onSearchChange: PropTypes.func,
+    onSelectionsChange: PropTypes.func,
+
+    label: PropTypes.string
+  }
+
+  state = {
+    search: ''
+  }
+
+  render(){
+
+    const {
+      props: {
+        label,
+        options,
+        selections
+      },
+      state: {
+        search
+      },
+      handleSearchChange,
+      handleUncheck,
+      handleCheck
+    } = this
+
+
+
+
+    let filteredOptions = options.slice().filter(
+      option => !selections.find(
+        selection => selection.value === option.value
+      )
+    )
+
+    filteredOptions = filteredOptions.filter(
+      option => {
+        let regexp = new RegExp(search, 'gi')
+        if (
+          option.name.match(regexp)
+        ) {
+          return true
+        }
+        return false
+      }
+    )
+
+    return (
+      <Flex
+        flexWrap={'wrap'}
+        w={1}
+      >
+        {selections.map( ({name, value}) => (
+          <Box
+            key={value}
+          >
+            {name}
+            <input
+              type={'checkbox'}
+              checked={true}
+              value={value}
+              onChange={handleUncheck}
+            />
+          </Box>
+        ))}
+
+
+
+
+
+
+        <Flex
+          flexWrap={'wrap'}
+        >
+          <Box
+            w={1}
+          >
+            <label>
+              {label}
+            </label>
+            <input
+              name={'search'}
+              value={search}
+              onChange={handleSearchChange}
+            />
+          </Box>
+          {filteredOptions.map( ({name, value}) => (
+            <Box
+              w={1}
+              key={value}
+              value={value}
+            >
+              {name}
+              <input
+                type={'checkbox'}
+                checked={false}
+                value={value}
+                onChange={handleCheck}
+              />
+            </Box>
+          ))}
+
+        </Flex>
+
+
+
+
+
+      </Flex>
+    )
+  }
+
+  handleSearchChange = ({target: {value, name}}) => {
+    this.setState(
+      ()=>({[name]: value}),
+      ()=>{
+        this.props.onSearchChange(this.state.search)
+      }
+    )
+
+  }
+
+  handleCheck = (e) => {
+    console.log('check', e)
+  }
+
+  handleUncheck = (e) => {
+    console.log("uncheck", e)
+  }
+
+}
+
+export {
+  MultiSelect
+}

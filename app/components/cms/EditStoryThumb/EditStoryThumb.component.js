@@ -40,13 +40,16 @@ export default class EditStoryThumb extends Component {
         width={1}
         selected={selected}
       >
-        <ThumbImage
-          src={getImageSrc({
-            organization,
-            image: previewImage,
-            quality: 's'
-          })}
-        />
+        {previewImage ? (
+          <ThumbImage
+            src={getImageSrc({
+              organization,
+              image: previewImage,
+              quality: 's'
+            })}
+          />          
+        ): null}
+
         <ThumbOverlay>
           <H3
             color={"white"}

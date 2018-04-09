@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {Flex, Box} from 'grid-styled'
-import {gray60} from './colors'
+import {gray60, blue} from './colors'
 import {H2} from './text'
 import Link from 'next/link'
 
@@ -48,6 +48,9 @@ const TileContainer = styled.a`
       transform: translateY(0);
     }
   }
+  ${({selected, theme})=> selected ? `
+    box-shadow: 0 0 10px 3px ${theme.color.green};
+  ` : null}
 
 `
 
@@ -81,6 +84,7 @@ export const Tile = (props) => (
       >
         <TileContainer
           height={props.height}
+          selected={props.selected}
         >
           <TileImage
             src={props.src}
@@ -98,6 +102,7 @@ export const Tile = (props) => (
     ): (
       <TileContainer
         height={props.height}
+        selected={props.selected}
       >
         <TileImage
           src={props.src}

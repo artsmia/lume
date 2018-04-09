@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Modal from '../../ui/modal'
-import {Button} from '../../ui/buttons'
-import {Row, Column} from '../../ui/layout'
-import {Checkbox} from '../../ui/forms'
-import {H3} from '../../ui/h'
+import {Modal} from '../../mia-ui/modals'
+import {Button} from '../../mia-ui/buttons'
+import {CheckboxInput} from '../../mia-ui/forms'
+import {H3, H2} from '../../mia-ui/text'
+import {Flex, Box} from 'grid-styled'
 
 export default class StoryGroupSelector extends Component {
 
@@ -32,30 +32,27 @@ export default class StoryGroupSelector extends Component {
     } = this
 
     return (
-      <Container>
-        <Button
-          onClick={()=>this.setState({modal: true})}
-        >
-          Select Groups
-        </Button>
-        <Modal
-          open={modal}
-          onClose={handleClose}
-        >
-          <Column>
+      <Container
+        my={2}
+        p={1}
+      >
+        <H2>
+          Associated Groups
+        </H2>
+          <div>
             {categories.map( category => (
-              <Column
+              <div
                 key={category.id}
               >
                 <H3>
                   {category.title}
                 </H3>
-                <Column>
+                <div>
                   {category.groups.map( group => (
-                    <Row
+                    <div
                       key={group.id}
                     >
-                      <Checkbox
+                      <CheckboxInput
                         value={group.id}
                         checked={selectedGroupIds.includes(group.id)}
                         onChange={handleCheck}
@@ -63,13 +60,12 @@ export default class StoryGroupSelector extends Component {
                       <div>
                         {group.title}
                       </div>
-                    </Row>
+                    </div>
                   ))}
-                </Column>
-              </Column>
+                </div>
+              </div>
             ))}
-          </Column>
-        </Modal>
+          </div>
       </Container>
     )
   }
@@ -93,12 +89,10 @@ export default class StoryGroupSelector extends Component {
     )
   }
 
-  handleClose = () => {
-    this.setState({modal: false})
-    this.props.onGroupSelectionSave(this.state.selectedGroupIds)
-  }
 }
 
-const Container = styled.div`
-
+const Container = styled(Flex)`
+  border: 1px solid ${({theme}) => theme.color.gray30};
+  border-radius: 4px;
+  min-height: 100px;
 `
