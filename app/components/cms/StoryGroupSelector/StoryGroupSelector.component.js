@@ -34,38 +34,56 @@ export default class StoryGroupSelector extends Component {
     return (
       <Container
         my={2}
-        p={1}
+        p={2}
+        flexWrap={'wrap'}
+
       >
-        <H2>
-          Associated Groups
-        </H2>
-          <div>
-            {categories.map( category => (
-              <div
-                key={category.id}
+        <Box
+          w={1}
+        >
+          <H2>
+            Associated Groups
+          </H2>
+        </Box>
+
+          {categories.map( category => (
+            <Flex
+              key={category.id}
+              w={1}
+              flexWrap={'wrap'}
+              pl={2}
+            >
+              <Box
+                w={1}
               >
                 <H3>
                   {category.title}
                 </H3>
-                <div>
-                  {category.groups.map( group => (
-                    <div
-                      key={group.id}
-                    >
-                      <CheckboxInput
-                        value={group.id}
-                        checked={selectedGroupIds.includes(group.id)}
-                        onChange={handleCheck}
-                      />
-                      <div>
-                        {group.title}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+              </Box>
+
+              <Flex
+                w={1}
+                flexWrap={'wrap'}
+              >
+                {category.groups.map( group => (
+                  <Flex
+                    key={group.id}
+                    w={1}
+                    justifyContent={'flex-start'}
+                  >
+                    <CheckboxInput
+                      value={group.id}
+                      checked={selectedGroupIds.includes(group.id)}
+                      onChange={handleCheck}
+                    />
+                    <span>
+                      {group.title}
+                    </span>
+                  </Flex>
+                ))}
+              </Flex>
+            </Flex>
+          ))}
       </Container>
     )
   }
@@ -85,6 +103,12 @@ export default class StoryGroupSelector extends Component {
             selectedGroupIds: selected
           }
         }
+      },
+      ()=>{
+
+        this.props.editStory({
+          setGroupsIds: this.state.selectedGroupIds
+        })
       }
     )
   }
