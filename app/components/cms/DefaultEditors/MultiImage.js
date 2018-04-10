@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button} from '../../ui/buttons'
-import {Label} from '../../ui/forms'
-import Modal from '../../ui/modal'
+import {Button} from '../../mia-ui/buttons'
+import {Label} from '../../mia-ui/forms'
+import {Modal} from '../../mia-ui/modals'
 import ImageManager from '../ImageManager'
-import Image from '../../shared/Image'
 import router from 'next/router'
-import {Column} from '../../ui/layout'
+import {Flex, Box} from 'grid-styled'
+
 
 export default class ChangeImage extends Component {
 
@@ -23,7 +23,8 @@ export default class ChangeImage extends Component {
       props: {
         additionalImages,
         label,
-        onRemove
+        onRemove,
+        organization
       },
       handleAdd,
       state: {
@@ -33,34 +34,48 @@ export default class ChangeImage extends Component {
 
 
     return (
-      <Container>
-
-        <Label>
-          {label}
-        </Label>
-        {additionalImages.map( image => (
-          <Column
-            key={image.id}
-          >
-            <Image
-              imageId={image.id}
-              height={"50px"}
-            />
-            <Button
-              color={"red"}
-              onClick={()=>onRemove(image.id)}
-            >
-              Remove
-            </Button>
-          </Column>
-        ))}
-
-        <Button
-          onClick={handleModalOpen}
+      <Flex
+        flexWrap={'wrap'}
+      >
+        <Box
+          w={1}
         >
-          Add
-        </Button>
+          <Label>
+            {label}
+          </Label>
+        </Box>
 
+        <Flex
+          w={1}
+        >
+          {additionalImages.map( image => (
+            <Flex
+              key={image.id}
+              flexDirection={'column'}
+              mr={1}
+            >
+              <Img
+                src={image.src}
+              />
+              <Button
+                color={"red"}
+                onClick={()=>onRemove(image.id)}
+              >
+                Remove
+              </Button>
+            </Flex>
+          ))}
+        </Flex>
+
+        <Box
+          w={1}
+        >
+          <Button
+            onClick={handleModalOpen}
+          >
+            Add
+          </Button>
+        </Box>
 
 
         <Modal
@@ -75,7 +90,7 @@ export default class ChangeImage extends Component {
           />
 
         </Modal>
-      </Container>
+      </Flex>
     )
   }
 
@@ -104,12 +119,8 @@ export default class ChangeImage extends Component {
 
 }
 
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  height: 100%;
-  min-height: 200px;
+
+const Img = styled.img`
+  height: 100px;
+  width: auto;
 `

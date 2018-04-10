@@ -13,7 +13,6 @@ import StoryAssociator from '../StoryAssociator'
 import StoryGroupSelector from '../StoryGroupSelector'
 import {ToolTip} from '../../mia-ui/tooltips'
 import {Flex, Box} from 'grid-styled'
-import {Modal} from '../../mia-ui/modals'
 import getImageSrc from '../../../utils/getImageSrc'
 import {Expander} from '../../mia-ui/expanders'
 

@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button} from '../../ui/buttons'
-import {Label} from '../../ui/forms'
+import {Button} from '../../mia-ui/buttons'
+import {Label} from '../../mia-ui/forms'
 import Zoomer from '../../shared/Zoomer'
+import {Flex, Box} from 'grid-styled'
 
 export default class DetailSelector extends Component {
 
@@ -23,23 +24,30 @@ export default class DetailSelector extends Component {
         modal
       }
     } = this
-
     return (
-      <Container>
-
-        <Label>
-          {label}
-        </Label>
-        <ZoomerContainer>
+      <Flex
+        flexWrap={'wrap'}
+      >
+        <Box
+          w={1}
+        >
+          <Label>
+            {label}
+          </Label>
+        </Box>
+        <ZoomerBox
+          w={1}
+        >
           <Zoomer
             geometry={value}
             imageId={detailImageId}
             onCrop={handleCrop}
             crop={true}
           />
-        </ZoomerContainer>
+        </ZoomerBox>
 
-      </Container>
+
+      </Flex>
     )
   }
 
@@ -57,24 +65,8 @@ export default class DetailSelector extends Component {
     })
   }
 
-
-
-
 }
 
-const ZoomerContainer = styled.div`
-  width: 500px;
-  height: 500px;
-  display: flex;
-`
-
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  height: 100%;
+const ZoomerBox = styled(Box)`
   min-height: 500px;
-  margin: 50px 0px;
 `

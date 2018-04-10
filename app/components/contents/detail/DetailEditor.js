@@ -1,13 +1,18 @@
 import React, {Component} from 'react'
-import {Input, Textarea, ChangeImage, DetailSelector, MultiImage} from '../../cms/DefaultEditors'
+import {ChangeImage, MultiImage, DetailSelector} from '../../cms/DefaultEditors'
+import OrganizationQuery from '../../../apollo/queries/organization'
+import {withRouter} from 'next/router'
 import query from '../../../apollo/queries/content'
 import mutation from '../../../apollo/mutations/editContent'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
 import {compose} from 'react-apollo'
 import styled from 'styled-components'
-import {H2} from '../../ui/h'
-import {Button} from '../../ui/buttons'
-import {Row, Column} from '../../ui/layout'
+import {H2} from '../../mia-ui/text'
+import {Button} from '../../mia-ui/buttons'
+import getImageSrc from '../../../utils/getImageSrc'
+import {Flex, Box} from 'grid-styled'
+import {Title, Description} from '../../mia-ui/forms'
+
 
 class DetailEditor extends Component {
 
@@ -15,7 +20,7 @@ class DetailEditor extends Component {
   state = {
     title: "",
     description: "",
-    geometry: null,
+    geometry: {},
     image0Id: "",
   }
 
@@ -33,8 +38,10 @@ class DetailEditor extends Component {
       saveEdits,
       props: {
         content: {
-          additionalImages
-        }
+          additionalImages,
+          image0
+        },
+        organization
       },
       handleChange,
       handleAddAdditionalImage,
@@ -42,42 +49,74 @@ class DetailEditor extends Component {
     } = this
 
     return(
-      <Container>
-        <TopBar>
-
-          <H2>
-            Edit Detail
-          </H2>
-
-        </TopBar>
-        <Row>
-          <Column>
-            <Input
-              label={"Title"}
+      <Flex
+        width={1}
+        p={3}
+      >
+        <Flex
+          width={1/2}
+          flexWrap={'wrap'}
+        >
+          <Box
+            w={1}
+          >
+            <Title
+              name={'title'}
               value={title}
-              name={"title"}
               onChange={handleChange}
+              label={'Title'}
             />
-            <Textarea
-              label={"Description"}
+          </Box>
+          <Box
+            w={1}
+          >
+            <Description
+              name={'description'}
               value={description}
-              name={"description"}
               onChange={handleChange}
+              label={'Description'}
             />
+
+          </Box>
+          <Box
+            w={1}
+          >
             <MultiImage
               label={"Additional Images"}
-              additionalImages={additionalImages}
+              additionalImages={additionalImages.map(img => ({
+                ...img,
+                src: getImageSrc({
+                  organization,
+                  image: img,
+                  quality: 'm'
+                })
+              }))}
               onAdd={handleAddAdditionalImage}
               onRemove={handleRemoveAdditionalImage}
             />
-          </Column>
-          <Column>
+          </Box>
+        </Flex>
+        <Flex
+          width={1/2}
+          flexWrap={'wrap'}
+        >
+          <Box
+            w={1}
+          >
             <ChangeImage
               label={"Image"}
-              value={image0Id}
               name={"image0Id"}
+              src={getImageSrc({
+                organization,
+                image: image0,
+                quality: 'm'
+              })}
               onChange={handleChange}
             />
+          </Box>
+          <Box
+            w={1}
+          >
             <DetailSelector
               label={"Selection"}
               value={geometry}
@@ -85,10 +124,16 @@ class DetailEditor extends Component {
               onChange={handleChange}
               detailImageId={image0Id}
             />
-          </Column>
+          </Box>
+        </Flex>
 
-        </Row>
-      </Container>
+      </Flex>
+
+
+
+
+
+
     )
   }
 
@@ -128,9 +173,18 @@ class DetailEditor extends Component {
       this.props.setSaveStatus({
         saving: true
       })
-      await this.props.editContent({
+      let edits = {
         ...this.state,
-      })
+        image0Id: this.state.image0Id || undefined,
+      }
+
+      if (this.state.geometry.coordinates){
+        Object.assign(edits, {
+          geometry: this.state.geometry
+        })
+      }
+
+      await this.props.editContent({...edits})
 
       this.props.setSaveStatus({
         saving: false,
@@ -176,30 +230,11 @@ class DetailEditor extends Component {
 
 }
 
-const Container = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content:flex-start;
-  align-items: flex-start;
-  overflow-y:scroll;
-  padding: 15px;
-  box-sizing:border-box;
-`
-
-const TopBar = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100px;
-  align-items: center;
-  justify-content: space-between;
-`
-
 let ExportComponent = DetailEditor
 
 ExportComponent = compose(query, mutation)(DetailEditor)
 ExportComponent = compose(setSaveStatus)(ExportComponent)
+ExportComponent = compose(OrganizationQuery)(ExportComponent)
+ExportComponent = withRouter(ExportComponent)
 
 export default ExportComponent
