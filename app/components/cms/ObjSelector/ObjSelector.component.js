@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Button} from '../../ui/buttons'
-import {Search} from '../../ui/search'
-import {Row} from '../../ui/layout'
-import {LinkStyled} from '../../ui/links'
+import {Button} from '../../mia-ui/buttons'
+import {Input} from '../../mia-ui/forms'
+import {Link} from '../../mia-ui/links'
+import {Flex, Box} from 'grid-styled'
+import {Expander} from '../../mia-ui/expanders'
+import {H3} from '../../mia-ui/text'
+
 
 export default class ObjSelector extends Component {
 
@@ -29,39 +32,62 @@ export default class ObjSelector extends Component {
     } = this
 
     return (
-      <Container>
-        <Row>
-          <Search
-            name={"search"}
-            value={search}
-            onChange={handleChange}
-          />
-          <Button
-            onClick={handleSearch}
+      <Expander
+        header={
+          <H3>
+            Select Object
+          </H3>
+        }
+      >
+        <Flex
+          w={1}
+          flexWrap={'wrap'}
+        >
+          <Box
+            w={1}
           >
-            Search
-          </Button>
-          <Button
-            onClick={handleCreate}
-            color={"green"}
-          >
-            Create Object
-          </Button>
-        </Row>
-
-        <Results>
-          {objs.map(obj => (
-            <LinkStyled
-              key={obj.id}
-              onClick={()=>onSelect(obj.id)}
+            <Input
+              value={search}
+              onChange={handleChange}
+            />
+            <Button
+              onClick={handleSearch}
             >
-              {obj.title || "Untitled"}
-            </LinkStyled>
-          ))}
-        </Results>
+              Search
+            </Button>
+          </Box>
+          <Box
+            w={1}
+          >
+            <Button
+              onClick={handleCreate}
+              color={"green"}
+            >
+              Create Object
+            </Button>
+          </Box>
 
 
-      </Container>
+          <Flex
+            flexWrap={'wrap'}
+            w={1}
+          >
+            {objs.map(obj => (
+              <Box
+                key={obj.id}
+                onClick={()=>onSelect(obj.id)}
+                w={1}
+              >
+
+                {obj.title || "Untitled"}
+              </Box>
+            ))}
+          </Flex>
+
+
+        </Flex>
+      </Expander>
+
     )
   }
 
@@ -95,23 +121,3 @@ export default class ObjSelector extends Component {
 
 
 }
-
-const Container = styled.div`
-  height: 600px;
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content:flex-start;
-  align-items: flex-start;
-
-`
-
-const Results = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction:column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  overflow-y: scroll;
-  margin: 15px;
-`

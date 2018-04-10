@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Input, Textarea, ChangeImage} from '../DefaultEditors'
-import {Button} from '../../ui/buttons'
-import {Checkbox, Input as SimpleInput, Label} from '../../ui/forms'
-import {Row} from '../../ui/layout'
+import {ChangeImage} from '../DefaultEditors'
+import {Button} from '../../mia-ui/buttons'
+import {CheckboxInput, Label, Input} from '../../mia-ui/forms'
+import {Flex, Box} from 'grid-styled'
+import {Expander} from '../../mia-ui/expanders'
+import getImageSrc from '../../../utils/getImageSrc'
 
 export default class ObjEditor extends Component {
 
@@ -30,69 +32,128 @@ export default class ObjEditor extends Component {
 
   render(){
 
+    if (!this.props.obj) return null
+
     const {
       state,
       handleChange,
       handleSave,
-      handleCheck
+      handleCheck,
+      props: {
+        organization,
+        obj
+      }
     } = this
 
+    let disabled = (state.pullFromCustomApi)
+
     return (
-      <Container>
-        <Button
-          onClick={handleSave}
+      <Expander>
+        <Flex
+          flexWrap={'wrap'}
+          w={1}
         >
-          Save Obj
-        </Button>
+          <Flex
+            w={1}
+          >
+            <Label>
+              Pull From Custom API
+            </Label>
+            <CheckboxInput
+              name={"pullFromCustomApi"}
+              checked={state.pullFromCustomApi}
+              onChange={handleCheck}
+            />
+          </Flex>
+          <Box
+            w={1}
+          >
+            <Label>
+              Local ID
+            </Label>
+            <Input
+              placeholder={"Local ID"}
+              name={"localId"}
+              value={state.localId}
+              onChange={handleChange}
+              disabled={disabled}
+            />
+          </Box>
+          <Box
+            w={1}
+          >
+            <Label>
+              Title
+            </Label>
+            <Input
+              placeholder={"Title"}
+              name={"title"}
+              value={state.title}
+              onChange={handleChange}
+              disabled={disabled}
 
-        <div>
-          <Label>
-            Pull From Custom API
-          </Label>
-          <Checkbox
-            name={"pullFromCustomApi"}
-            checked={state.pullFromCustomApi}
-            onChange={handleCheck}
-          />
-        </div>
-        <div>
-          <Label>
-            Local ID
-          </Label>
-          <SimpleInput
-            placeholder={"Local ID"}
-            name={"localId"}
-            value={state.localId}
-            onChange={handleChange}
-          />
-        </div>
-        <Input
-          label={"Title"}
-          name={'title'}
-          value={state.title}
-          onChange={handleChange}
-        />
-        <Input
-          label={"Attribution"}
-          name={'attribution'}
-          value={state.attribution}
-          onChange={handleChange}
-        />
-        <Input
-          label={"Date"}
-          name={'date'}
-          value={state.date}
-          onChange={handleChange}
-        />
+            />
+          </Box>
+          <Box
+            w={1}
+          >
+            <Label>
+              Attribution
+            </Label>
+            <Input
+              placeholder={"Attribution"}
+              name={"attribution"}
+              value={state.attribution}
+              onChange={handleChange}
+              disabled={disabled}
+
+            />
+          </Box>
+          <Box
+            w={1}
+          >
+            <Label>
+              Date
+            </Label>
+            <Input
+              placeholder={"Date"}
+              name={"date"}
+              value={state.date}
+              onChange={handleChange}
+              disabled={disabled}
+
+            />
+          </Box>
+          <Box
+            w={1}
+          >
+            <ChangeImage
+              label={"Image"}
+              name={'primaryImageId'}
+              src={
+                getImageSrc({
+                  organization,
+                  image: obj.primaryImage,
+                  quality: 'm'
+                })
+              }
+              onChange={handleChange}
+            />
+          </Box>
+          <Box
+            w={1}
+          >
+            <Button
+              onClick={handleSave}
+            >
+              Save Obj
+            </Button>
+          </Box>
 
 
-        <ChangeImage
-          label={"Image"}
-          name={'primaryImageId'}
-          value={state.primaryImageId}
-          onChange={handleChange}
-        />
-      </Container>
+        </Flex>
+      </Expander>
+
     )
   }
 
