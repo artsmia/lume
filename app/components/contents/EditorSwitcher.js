@@ -1,5 +1,5 @@
 import ComparisonContentEditor from './comparison/ComparisonEditor'
-// import DetailContentEditor from './detail/Editor'
+import DetailContentEditor from './detail/DetailEditor'
 import MovieContentEditor from './movie/MovieEditor'
 // import ObjContentEditor from './obj/Editor'
 import PictureContentEditor from './picture/PictureEditor'
@@ -15,14 +15,14 @@ export default ({content}) => {
         />
       )
     }
-    // case "detail": {
-    //
-    //   return(
-    //     <DetailContentEditor
-    //       contentId={content.id}
-    //     />
-    //   )
-    // }
+    case "detail": {
+
+      return(
+        <DetailContentEditor
+          contentId={content.id}
+        />
+      )
+    }
     case "movie": {
 
       return(

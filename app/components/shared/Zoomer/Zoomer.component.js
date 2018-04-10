@@ -310,10 +310,13 @@ export default class extends Component {
   saveGeometry = () => {
     const geometry = {
       type: "Polygon",
-      coordinates: [this.getSelectionBounds()]
+      coordinates: [this.getSelectionBounds()],
+      __typename: undefined
 
     }
-    this.setState({geometry})
+    this.setState({
+      ...geometry,
+    })
     this.props.onCrop(geometry)
   }
 

@@ -187,26 +187,6 @@ class ComparisonEditor extends Component {
 
 }
 
-const Container = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content:flex-start;
-  align-items: flex-start;
-  overflow-y:scroll;
-  padding: 15px;
-  box-sizing:border-box;
-`
-
-const TopBar = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100px;
-  align-items: center;
-  justify-content: space-between;
-`
 
 let ExportComponent = ComparisonEditor
 

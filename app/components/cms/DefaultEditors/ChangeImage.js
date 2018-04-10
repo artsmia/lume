@@ -5,6 +5,7 @@ import {Label} from '../../mia-ui/forms'
 import {Modal} from '../../mia-ui/modals'
 import ImageManager from '../ImageManager'
 import router from 'next/router'
+import {Flex, Box} from 'grid-styled'
 
 export default class ChangeImage extends Component {
 
@@ -32,22 +33,37 @@ export default class ChangeImage extends Component {
 
 
     return (
-      <Container>
-
-        <Label>
-          {label}
-        </Label>
-        {(src) ? (
-          <Img
-            src={src}
-          />
-        ): null}
-
-        <Button
-          onClick={handleModalOpen}
+      <Flex
+        flexWrap={'wrap'}
+      >
+        <Box
+          w={1}
         >
-          Change
-        </Button>
+          <Label>
+            {label}
+          </Label>
+        </Box>
+        <Box
+          w={1}
+        >
+          {(src) ? (
+            <Img
+              src={src}
+            />
+          ): null}
+        </Box>
+        <Box
+          w={1}
+        >
+          <Button
+            onClick={handleModalOpen}
+          >
+            Change
+          </Button>
+        </Box>
+
+
+
 
 
 
@@ -61,7 +77,7 @@ export default class ChangeImage extends Component {
           />
 
         </Modal>
-      </Container>
+      </Flex>
     )
   }
 
