@@ -1,15 +1,19 @@
 import react, {Component} from 'react'
 import query from '../../../apollo/queries/content'
 import mutation from '../../../apollo/mutations/editContent'
+import OrganizationQuery from '../../../apollo/queries/organization'
+import {withRouter} from 'next/router'
+
 import {compose} from 'react-apollo'
 import ObjEditor from '../../cms/ObjEditor'
 import ObjSelector from '../../cms/ObjSelector'
 import styled from 'styled-components'
 import router from 'next/router'
-import Modal from '../../ui/modal'
-import {Button} from '../../ui/buttons'
-import {Textarea, Label} from '../../ui/forms'
+import {Modal} from '../../mia-ui/modals'
+import {Button} from '../../mia-ui/buttons'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
+import {Flex, Box} from 'grid-styled'
+import {Title, Description} from '../../mia-ui/forms'
 
 class ObjContentEditor extends Component {
 
@@ -27,57 +31,60 @@ class ObjContentEditor extends Component {
       props: {
         content: {
           obj
-        }
+        },
+        organization
       },
       state: {
         modal,
         objId,
         description
       },
-      handleModalOpen,
-      handleModalClose,
       handleSelect,
       handleChange,
       saveEdits
     } = this
 
     return (
-      <Container>
-
-        <Label>
-          Description
-        </Label>
-        <Textarea
-          name={"description"}
-          value={description}
-          onChange={handleChange}
-        />
-
-
-        <Button
-          onClick={handleModalOpen}
+      <Flex
+        flexWrap={'wrap'}
+        m={3}
+      >
+        <Box
+          w={1}
         >
-          Select Obj
-        </Button>
+          <Description
+            label={"Description"}
+            value={description}
+            name={"description"}
+            onChange={handleChange}
+          />
+        </Box>
 
-        <Modal
-          open={modal}
-          onClose={handleModalClose}
+        <Box
+          w={1/2}
+          pr={3}
         >
+
           <ObjSelector
             subdomain={router.query.subdomain}
             onSelect={handleSelect}
           />
-        </Modal>
+        </Box>
 
 
-        {(objId) ? (
-          <ObjEditor
-            objId={objId}
-          />
-        ): null}
+        <Box
+          w={1/2}
+        >
+          {(objId) ? (
+            <ObjEditor
+              objId={objId}
+              organization={organization}
+            />
+          ): null}
+        </Box>
 
-      </Container>
+
+      </Flex>
     )
   }
 
@@ -117,18 +124,9 @@ class ObjContentEditor extends Component {
     }
   }
 
-  handleModalOpen = () => {
-    this.setState({modal: true})
-  }
-
-  handleModalClose = () => {
-    this.setState({modal: false})
-  }
-
   handleSelect = (objId) => {
     this.setState({
       objId,
-      modal: false
     })
     this.props.editContent({
       objId,
@@ -161,6 +159,8 @@ class ObjContentEditor extends Component {
 let ExportComponent = ObjContentEditor
 ExportComponent = compose(query, mutation)(ExportComponent)
 ExportComponent = compose(setSaveStatus)(ExportComponent)
+ExportComponent = compose(OrganizationQuery)(ExportComponent)
+ExportComponent = withRouter(ExportComponent)
 
 export default ExportComponent
 

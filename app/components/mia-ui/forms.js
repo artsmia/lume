@@ -47,6 +47,10 @@ export const Input = styled.input`
   &:placeholder {
     color: ${gray30};
   }
+
+  &:disabled {
+    background-color: ${gray30};
+  }
 `
 Input.displayName = "Input"
 

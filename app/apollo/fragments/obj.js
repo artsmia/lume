@@ -18,6 +18,7 @@ const fragment = gql`
     pullFromCustomApi
     primaryImage {
       id
+      localId
     }
     primaryMediaType
 
