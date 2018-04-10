@@ -22,7 +22,8 @@ export default class ObjEditor extends Component {
     creditLine: "",
     pullFromCustomApi: false,
     primaryImageId: undefined,
-    localId: ""
+    localId: "",
+    exp: false
   }
 
   state = {
@@ -42,13 +43,19 @@ export default class ObjEditor extends Component {
       props: {
         organization,
         obj
+      },
+      state: {
+        exp
       }
     } = this
 
     let disabled = (state.pullFromCustomApi)
 
     return (
-      <Expander>
+      <Expander
+        exp={exp}
+        onChange={(newExp) => this.setState({exp: newExp})}
+      >
         <Flex
           flexWrap={'wrap'}
           w={1}

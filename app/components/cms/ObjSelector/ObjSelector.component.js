@@ -11,7 +11,8 @@ import {H3} from '../../mia-ui/text'
 export default class ObjSelector extends Component {
 
   state ={
-    search: ""
+    search: "",
+    exp: true,
   }
 
   render() {
@@ -25,7 +26,8 @@ export default class ObjSelector extends Component {
       },
       handleCreate,
       state: {
-        search
+        search,
+        exp
       },
       handleChange,
       handleSearch
@@ -38,6 +40,8 @@ export default class ObjSelector extends Component {
             Select Object
           </H3>
         }
+        exp={exp}
+        onChange={(newExp)=>{this.setState({exp: newExp})}}
       >
         <Flex
           w={1}

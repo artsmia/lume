@@ -6,14 +6,20 @@ import {A} from './links'
 import {Icon} from './icons'
 import {gray30} from './colors'
 import {Break} from './layout'
-
+import PropTypes from 'prop-types'
 
 export class Expander extends Component {
 
+  static propTypes = {
+    header: PropTypes.element,
+    exp: PropTypes.bool,
+    onChange: PropTypes.func,
+  }
+
 
   state = {
-    expanded: true,
-    height: 0
+    exp: true,
+    height: 0,
   }
 
   render(){
@@ -24,10 +30,12 @@ export class Expander extends Component {
         header
       },
       state: {
-        expanded
+        exp 
       },
       toggle
     } = this
+
+
 
 
     return (
@@ -38,20 +46,20 @@ export class Expander extends Component {
       >
         <Header
           width={1}
-          expanded={expanded}
+          exp={exp}
         >
           <A
             onClick={toggle}
           >
             <Icon
-              icon={expanded ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}
+              icon={exp ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}
             />
           </A>
           {header}
         </Header>
         <Body
           width={1}
-          expanded={expanded}
+          exp={exp}
           innerRef={ref => {this.body = ref}}
         >
           {children}
@@ -62,22 +70,29 @@ export class Expander extends Component {
     )
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.exp !== this.state.exp){
+      this.toggle()
+    }
+  }
+
 
   toggle = () => {
     this.setState(
-      ({expanded, height})=>{
+      ({exp, height})=>{
 
 
 
 
         return {
-          expanded: !expanded,
-          height: expanded ? this.body.clientHeight : height
+          exp: !exp,
+          height: exp ? this.body.clientHeight : height
         }
       },
       ()=>{
-        if (this.state.expanded){
-          console.log("expanded")
+        this.props.onChange(this.state.exp)
+        if (this.state.exp){
+          console.log("exp")
           console.log(this.state )
           this.body.style.opacity = 1
           this.body.style.height = `${this.state.height}px`
