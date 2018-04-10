@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Label, Input} from '../../ui/forms'
-import Video from '../../ui/video'
+import {Label, Input} from '../../mia-ui/forms'
+import Video from '../../mia-ui/video'
+import {Flex, Box} from 'grid-styled'
 
 export default class VideoUrl extends Component {
 
@@ -13,8 +14,14 @@ export default class VideoUrl extends Component {
       onChange
     } = this.props
     return (
-      <Container>
-        <Column>
+      <Flex
+        alignItems={'center'}
+        flexWrap={'wrap'}
+      >
+        <Box
+          my={2}
+          w={1}
+        >
           <Label>
             {label}
           </Label>
@@ -23,29 +30,15 @@ export default class VideoUrl extends Component {
             value={value}
             onChange={onChange}
           />
-        </Column>
-        <Video
-          url={value}
-        />
-      </Container>
+        </Box>
+        <Box
+          w={[1]}
+        >
+          <Video
+            url={value}
+          />
+        </Box>
+      </Flex>
     )
   }
 }
-
-
-const Column = styled.div`
-  display: flex;
-  flex-direction:column;
-  justify-content: flex-start;
-  align-items: flex-start;
-
-`
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  min-height: 300px;
-`
