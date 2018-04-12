@@ -71,6 +71,8 @@ async function populate(){
             localId: oldStory.primaryImageLocalId
           })
 
+
+
           let story = await Org.createStory({
             template: "original",
             previewImageId: image.id,
@@ -249,7 +251,8 @@ async function populate(){
           if (oldStory.relatedStoriesLocalIds) {
             let story = await Story.findOne({
               where: {
-                localId: oldStory.objLocalId
+                localId: oldStory.objLocalId,
+                organizationId: Org.id
               }
             })
 
@@ -257,7 +260,8 @@ async function populate(){
               where: {
                 localId: {
                   [Op.or]: oldStory.relatedStoriesLocalIds.map(lid => lid)
-                }
+                },
+                organizationId: Org.id
               },
             })
 

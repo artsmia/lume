@@ -23,7 +23,7 @@ export default class ObjEditor extends Component {
     pullFromCustomApi: false,
     primaryImageId: undefined,
     localId: "",
-    exp: false
+    exp: true
   }
 
   state = {
@@ -53,8 +53,10 @@ export default class ObjEditor extends Component {
 
     return (
       <Expander
-        exp={exp}
-        onChange={(newExp) => this.setState({exp: newExp})}
+        open={exp}
+        onRequestOpen={() => this.setState({exp: true})}
+        onRequestClose={() => this.setState({exp: false})}
+
       >
         <Flex
           flexWrap={'wrap'}
@@ -176,7 +178,8 @@ export default class ObjEditor extends Component {
   handleSave = () => {
     this.props.editObj({
       ...this.state,
-      __typename: undefined
+      __typename: undefined,
+      exp: undefined
     })
   }
 

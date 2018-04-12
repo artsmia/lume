@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import styled from 'styled-components'
-import {Loading} from '../../ui/spinner'
+import {Loading} from '../../mia-ui/loading'
 import PropTypes from 'prop-types'
 
 export default class AppTombstone extends Component {
@@ -111,31 +111,31 @@ const Container = styled.div`
 `
 
 const Title = styled.h1`
-  font-family: ${({theme}) => theme.fonts.regular};
+  font-family: ${({theme}) => theme.font.regular};
   font-size: 1.2em;
   margin: 0;
 `
 
 const Attribution = styled.h2`
-  font-family: ${({theme}) => theme.fonts.light};
+  font-family: ${({theme}) => theme.font.light};
   font-size: 1em;
   margin: 0;
 `
 
 const CultureDate = styled.h3`
-  font-family: ${({theme}) => theme.fonts.light};
+  font-family: ${({theme}) => theme.font.light};
   font-size: 1em;
   margin: 0;
 `
 
 const CurrentLocation = styled.h3`
-  font-family: ${({theme}) => theme.fonts.light};
+  font-family: ${({theme}) => theme.font.light};
   font-size: 1em;
   margin: 0;
 `
 
 const ShowMore = styled.button`
-  font-family: ${({theme}) => theme.fonts.light};
+  font-family: ${({theme}) => theme.font.light};
   font-size: .8em;
   width: 100%;
   border: 0;
@@ -149,7 +149,7 @@ const More = styled.div`
 `
 
 const MoreText = styled.h5`
-  font-family: ${({theme}) => theme.fonts.light};
+  font-family: ${({theme}) => theme.font.light};
   font-size: .9em;
   margin: 0;
 `

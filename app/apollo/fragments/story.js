@@ -25,9 +25,11 @@ const fragment = gql`
       description
       image0 {
         id
+        localId
       }
       image1 {
         id
+        localId
       }
       geometry {
         type
@@ -39,6 +41,7 @@ const fragment = gql`
       videoUrl
       additionalImages {
         id
+        localId
       }
     }
     relatedStories {
