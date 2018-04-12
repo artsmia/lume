@@ -157,6 +157,16 @@ export default class extends Component {
         await this.createIndexMarkers()
       }
 
+      if (
+        this.zoomCreated &&
+        !this.props.moreGeometry &&
+        this.indexMarkers.length > 0
+      ) {
+        this.indexMarkers.forEach(marker => {
+          this.map.removeLayer(marker)
+        })
+      }
+
     } catch (ex) {
       console.error(ex)
     }
@@ -262,7 +272,7 @@ export default class extends Component {
 
   }
 
-
+  indexMarkers = []
 
   createIndexMarkers = () => {
     const {
@@ -293,6 +303,8 @@ export default class extends Component {
       })
 
       indexMarker.addTo(this.map)
+
+      this.indexMarkers.push(indexMarker)
 
       indexMarker.on(
         "click",

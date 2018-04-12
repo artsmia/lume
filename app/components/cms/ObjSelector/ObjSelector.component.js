@@ -40,8 +40,9 @@ export default class ObjSelector extends Component {
             Select Object
           </H3>
         }
-        exp={exp}
-        onChange={(newExp)=>{this.setState({exp: newExp})}}
+        open={exp}
+        onRequestOpen={() => this.setState({exp: true})}
+        onRequestClose={() => this.setState({exp: false})}
       >
         <Flex
           w={1}

@@ -13,7 +13,7 @@ export default class Story extends Component {
       case "original": {
         return (
           <OriginalTemplate
-            story={this.props.story}
+            {...this.props}
           />
         )
         break
@@ -35,7 +35,3 @@ export default class Story extends Component {
 
   }
 }
-
-const Container = styled.div`
-
-`

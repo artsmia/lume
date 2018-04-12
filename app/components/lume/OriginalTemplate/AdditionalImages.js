@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Modal from '../../ui/modal'
-import Image from '../../shared/Image'
+import {Modal} from '../../mia-ui/modals'
+import Zoomer from '../../shared/Zoomer'
+import {Flex, Box} from 'grid-styled'
+import getImageSrc from '../../../utils/getImageSrc'
 
 export default class AdditionalImages extends Component {
 
@@ -15,6 +17,7 @@ export default class AdditionalImages extends Component {
     const {
       props: {
         additionalImages,
+        organization
       },
       state: {
         modal,
@@ -22,9 +25,9 @@ export default class AdditionalImages extends Component {
       }
     } = this
     return (
-      <Container>
+      <Flex>
         {additionalImages.map(image => (
-          <ImgContainer
+          <Box
             key={image.id}
             onClick={()=>this.setState({
               selectedImageId: image.id,
@@ -32,10 +35,14 @@ export default class AdditionalImages extends Component {
             })}
           >
             <Image
-              imageId={image.id}
-              height={"60px"}
+              src={getImageSrc({
+                organization,
+                image,
+                quality: 'm'
+              })}
+              title={'Click to Expand'}
             />
-          </ImgContainer>
+          </Box>
         ))}
 
         <Modal
@@ -45,30 +52,31 @@ export default class AdditionalImages extends Component {
             modal: false
           })}
         >
-          {(selectedImageId) ? (
-            <Image
-              imageId={selectedImageId}
-            />
-          ): null}
+          <ZoomerContainer
+            w={1}
+          >
+            {(selectedImageId) ? (
+              <Zoomer
+                imageId={selectedImageId}
+              />
+            ): null}
+          </ZoomerContainer>
+
 
         </Modal>
-      </Container>
+      </Flex>
     )
   }
 }
 
-const Container = styled.div`
-  display: flex;
-  width: 100%;
-  flex-wrap: wrap;
+const ZoomerContainer = styled(Flex)`
+  height: 80vh;
+  width: 80vh;
 `
-const ImgContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80px;
-  width: 80px;
+
+const Image = styled.img`
+  height: 75px;
+  width: 75px;
+  object-fit: cover;
   cursor: pointer;
-  border: 1px solid lightgrey;
-  margin: 5px;
 `

@@ -70,14 +70,14 @@ export default class StoryList extends Component {
             />
           </HeaderCell>
           <HeaderCell
-            width={[0,1/3]}
+            width={[0,1/5]}
           >
             Template
           </HeaderCell>
           <HeaderCell
             width={[1/6,1/6]}
           >
-            Last Updated
+            Updated
             <Sorter
               variables={variables}
               column={'updatedAt'}
@@ -135,11 +135,11 @@ export default class StoryList extends Component {
                 }}
                 as={`/${subdomain}/cms/${storyId}`}
               >
-                {title}
+                {title || 'Untitled Story'}
               </Link>
             </BodyCell>
             <BodyCell
-              width={[0,1/3]}
+              width={[0,1/5]}
             >
               {template}
             </BodyCell>

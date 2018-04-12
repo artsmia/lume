@@ -2,12 +2,13 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import Zoomer from '../../shared/Zoomer'
 import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
-import {H3} from '../../ui/h'
-import {Button} from '../../ui/buttons'
-import Icon from '../../ui/icons'
+import {H3} from '../../mia-ui/text'
+import {Button} from '../../mia-ui/buttons'
+import {Icon} from '../../mia-ui/icons'
 import router from 'next/router'
 import Markdown from 'react-markdown'
 import AdditionalImages from '../OriginalTemplate/AdditionalImages'
+import {Flex, Box} from 'grid-styled'
 
 
 export default class OriginalTemplate extends Component {
@@ -33,8 +34,13 @@ export default class OriginalTemplate extends Component {
     } = this
 
     return (
-      <Container>
-        <PageButtonContainer>
+      <Container
+        w={1}
+      >
+        <PageButtonContainer
+          w={1}
+          justifyContent={'space-between'}
+        >
           {(selectedContent.index !== 0) ? (
             <Button
               onClick={() => slide(-1)}
@@ -51,46 +57,78 @@ export default class OriginalTemplate extends Component {
           ): <div/>}
 
         </PageButtonContainer>
-        <BookContainer>
-          <BookHeaderFooter>
-            <H3>
+        <BookContainer
+          flexDirection={'column'}
+        >
+          <HeaderFooter
+            w={1}
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            <H3
+              color={'white'}
+            >
               {story.title}
             </H3>
-          </BookHeaderFooter>
-          <PageContainer>
-            <FeatureContainer>
+          </HeaderFooter>
+          <PageContainer
+            w={1}
+          >
+            <PageContainer
+              w={3/4}
+            >
               <ContentDisplaySwitcher
                 content={selectedContent}
               />
-            </FeatureContainer>
-            <SideContainer>
-              <HomeButton
-                onClick={()=>router.back()}
+            </PageContainer>
+            <PageContainer
+              w={1/4}
+              p={3}
+              flexDirection={'column'}
+            >
+              <Box
+                w={1}
               >
-                <Icon
-                  color={"white"}
-                  icon={"arrow_back"}
-                />
-              </HomeButton>
-              <H3>
-                {selectedContent.title}
-              </H3>
-              <ContentText>
+                <Button
+                  onClick={()=>router.back()}
+                  round
+                >
+                  <Icon
+                    color={"white"}
+                    icon={"arrow_back"}
+                  />
+                </Button>
+              </Box>
+
+
+              <Box
+                w={1}
+                my={3}
+              >
+                <H3>
+                  {selectedContent.title}
+                </H3>
                 <Markdown
                   source={selectedContent.description}
                 />
                 <AdditionalImages
                   additionalImages={selectedContent.additionalImages}
                 />
-              </ContentText>
-            </SideContainer>
+              </Box>
+            </PageContainer>
           </PageContainer>
 
-          <BookHeaderFooter>
-            <H3>
+          <HeaderFooter
+            w={1}
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            <H3
+              color={'white'}
+            >
               Page {selectedContent.index + 1} of {story.contents.length}
             </H3>
-          </BookHeaderFooter>
+          </HeaderFooter>
         </BookContainer>
 
       </Container>
@@ -110,80 +148,28 @@ export default class OriginalTemplate extends Component {
     this.setState({selectedContent: story.contents.find(content => content.index === selectedContent.index + direction)})
   }
 
-
-
 }
 
-const PageContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-`
-
-const Container = styled.div`
-  display: flex;
-  width: 100vw;
-  box-sizing: border-box;
+const Container = styled(Flex)`
   height: 100vh;
+  max-height: 100vh;
 `
 
-const SideContainer = styled.div`
-  max-width: 370px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 10px;
-`
-
-const FeatureContainer = styled.div`
-  width: 100%;
-  display: flex;
-  background-color: lightgrey;
-  height: 100%;
-`
-
-const ContentText = styled.div`
-  margin: 15px;
-  overflow-y: scroll;
-`
-
-const BookContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100vh;
-`
-
-const BookHeaderFooter = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 50px;
-  background-color: ${({theme}) => theme.colors.black};
-  color: ${({theme}) => theme.colors.white};
-`
-
-
-const PageButtonContainer = styled.div`
-  display: flex;
+const PageButtonContainer = styled(Flex)`
   position: fixed;
   top: 50%;
   transform: translateY(%50);
-  width: 100%;
-  justify-content: space-between;
   z-index: 1001;
 `
+const HeaderFooter = styled(Flex)`
+  height: 50px;
+  background-color: ${({theme}) => theme.color.black};
+`
+const BookContainer = styled(Flex)`
+  height: 100vh;
+  max-height: 100vh;
+`
 
-const HomeButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  width: 40px;
-  border-radius: 40px;
-  background-color: black;
-  cursor: pointer;
+const PageContainer = styled(Flex)`
+  height: 100%;
 `

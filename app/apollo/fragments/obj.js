@@ -20,8 +20,6 @@ const fragment = gql`
       id
       localId
     }
-    primaryMediaType
-
   }
 `
 

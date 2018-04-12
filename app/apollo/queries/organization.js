@@ -24,10 +24,12 @@ const options = {
       }
     }
   },
-  props: ({ ownProps, data }) => ({
-    ...ownProps,
-    ...data
-  }),
+  props: ({ ownProps, data }) => {
+    return {
+      ...ownProps,
+      ...data
+    }
+  },
 }
 
 

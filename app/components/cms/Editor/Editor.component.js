@@ -5,7 +5,7 @@ import CreateContentButton from '../CreateContentButton'
 import EditStoryThumb from '../EditStoryThumb'
 import EditContentThumb from '../EditContentThumb'
 import StoryEditor from '../StoryEditor'
-import {Select, Option} from '../../mia-ui/forms'
+import {Select, Option, Input} from '../../mia-ui/forms'
 import EditorSwitcher from '../../contents/EditorSwitcher'
 import DisplaySwitcher from '../../contents/DisplaySwitcher'
 import {Link} from '../../mia-ui/links'
@@ -69,53 +69,102 @@ export default class Editor extends Component {
 
     } = this
 
+    if (preview) return (
+      <PreviewContainer
+        w={1}
+      >
+        <PreviewButtonBox>
+          <Button
+            onClick={()=>this.setState({preview: false})}
+            color={'blue'}
+          >
+            Return to Editing
+          </Button>
+        </PreviewButtonBox>
+        <StoryPreview
+          story={story}
+        />
+      </PreviewContainer>
+
+    )
+
     return (
       <FullPage
         flexDirection={"column"}
         alignItems={'flex-start'}
       >
-        <TopBar
-          width={1}
+        <PreviewButtonBox
+          width={1/6}
         >
-          <Flex
-            p={2}
-            alignItems={"center"}
+          <Button
+            onClick={()=>this.setState({preview: true})}
+            color={'blue'}
           >
-            <Box
-              width={1/5}
+            Preview your Story
+          </Button>
+        </PreviewButtonBox>
+        <TopBar
+          w={1}
+          p={2}
+          alignItems={"center"}
+          justifyContent={"flex-start"}
+        >
+
+          <Box
+            w={1/6}
+          >
+            <Link
+              href={{
+                pathname: '/cms',
+                query: {
+                  subdomain
+                }
+              }}
+              as={`/${subdomain}/cms`}
             >
-              <Link
-                href={{
-                  pathname: '/cms',
-                  query: {
-                    subdomain
-                  }
-                }}
-                as={`/${subdomain}/cms`}
+              Back to All Stories
+            </Link>
+          </Box>
+          <Box
+            w={1/6}
+          >
+            <H3>{story.title ? story.title : 'Untitled Story'}</H3>
+          </Box>
+
+          <Box
+            w={1/6}
+          >
+            Save Status
+          </Box>
+          <Flex
+            w={1/6}
+          >
+            {(story.visibility === 'published') ? (
+              <Button
+                color={'green'}
               >
-                Back to All Stories
-              </Link>
-            </Box>
-            <Box
-              mx={"auto"}
-            >
-              <H3>{story.title ? story.title : 'Untitled Story'}</H3>
-            </Box>
-            <Box
-              width={1/5}
-            >
-              <Button>
-                Preview
+                View Live
               </Button>
-            </Box>
+            ): (
+              <Button
+                disabled
+                color={'green'}
+              >
+                Live View
+              </Button>
+            )}
+            <span>
+              The permanent link?
+            </span>
           </Flex>
+
         </TopBar>
         <Workspace
-          width={1}
+          w={1}
         >
 
           <Sidebar
-            width={1/5}
+            w={1/5}
           >
             <Flex
               flexDirection={'column'}
@@ -264,7 +313,7 @@ const FullPage = styled(Flex)`
   max-height: 100vh;
 `
 
-const TopBar = styled(Box)`
+const TopBar = styled(Flex)`
   height: 55px;
   border-bottom: 1px solid black;
 `
@@ -286,6 +335,17 @@ const EditingPane = styled(Box)`
 
 `
 
+const PreviewContainer = styled.div`
+  height: 100vh;
+  max-height: 100vh;
+`
+
+const PreviewButtonBox = styled.div`
+  position: absolute;
+  z-index: 1002;
+  top: 8px;
+  right: 8px;
+`
 
 
 //  <TopBar>

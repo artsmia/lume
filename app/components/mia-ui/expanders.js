@@ -12,14 +12,16 @@ export class Expander extends Component {
 
   static propTypes = {
     header: PropTypes.element,
-    exp: PropTypes.bool,
-    onChange: PropTypes.func,
+    open: PropTypes.bool,
+    icon: PropTypes.element,
+    onRequestClose: PropTypes.func,
+    onRequestOpen: PropTypes.func,
   }
 
 
   state = {
-    exp: true,
-    height: 0,
+    open: this.props.open || false,
+    openHeight: 0,
   }
 
   render(){
@@ -27,14 +29,15 @@ export class Expander extends Component {
     const {
       props: {
         children,
-        header
+        header,
+        icon
       },
       state: {
-        exp 
+        open
       },
-      toggle
+      handleOpenRequest,
+      handleCloseRequest
     } = this
-
 
 
 
@@ -43,23 +46,28 @@ export class Expander extends Component {
         flexWrap={'wrap'}
         p={2}
         my={2}
+        innerRef={ref => {this.container = ref}}
       >
         <Header
           width={1}
-          exp={exp}
         >
           <A
-            onClick={toggle}
+            onClick={open ? handleCloseRequest : handleOpenRequest}
           >
-            <Icon
-              icon={exp ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}
-            />
+            {icon ? icon : (
+              <Icon
+                icon={open ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}
+              />
+            )}
           </A>
-          {header}
+          <A
+            onClick={open ? handleCloseRequest : handleOpenRequest}
+          >
+            {header}
+          </A>
         </Header>
         <Body
           width={1}
-          exp={exp}
           innerRef={ref => {this.body = ref}}
         >
           {children}
@@ -70,44 +78,54 @@ export class Expander extends Component {
     )
   }
 
+  componentDidMount(){
+    this.setState({
+      openHeight: this.body.clientHeight
+    })
+
+    this.state.open ? this.styleOpen() : this.styleClose()
+
+  }
+
   componentWillReceiveProps(nextProps){
-    if(nextProps.exp !== this.state.exp){
-      this.toggle()
+    if(nextProps.open !== this.state.open){
+      this.setState({open: nextProps.open})
     }
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot){
+    this.state.open ? this.styleOpen() : this.styleClose()
 
-  toggle = () => {
-    this.setState(
-      ({exp, height})=>{
+  }
 
+  styleClose = () => {
+    this.body.style.opacity = 0
+    this.body.style.height = 0
+    this.body.style.overflow = 'hidden'
+    this.body.style.visibility = 'hidden'
+  }
 
+  styleOpen = () => {
+    this.body.style.opacity = 1
+    this.body.style.height = `${this.state.openHeight}px`
+    this.body.style.overflow = 'visible'
+    this.body.style.visibility = 'visible'
+  }
 
+  handleCloseRequest = () => {
+    if (this.props.onRequestClose){
+      this.props.onRequestClose()
+    } else {
+      this.setState({open: false})
+    }
+  }
 
-        return {
-          exp: !exp,
-          height: exp ? this.body.clientHeight : height
-        }
-      },
-      ()=>{
-        this.props.onChange(this.state.exp)
-        if (this.state.exp){
-          console.log("exp")
-          console.log(this.state )
-          this.body.style.opacity = 1
-          this.body.style.height = `${this.state.height}px`
-          this.body.style.overflow = 'visible'
-        } else {
-          console.log("collapsed")
-          this.body.style.opacity = 0
-          this.body.style.height = 0
-          this.body.style.overflow = 'hidden'
-        }
-      }
-    )
-
-
-
+  handleOpenRequest = () => {
+    if (this.props.onRequestOpen){
+      this.props.onRequestOpen()
+    } else {
+      this.setState({open: true})
+    }
   }
 
 }
@@ -127,5 +145,5 @@ const Header = styled(Flex)`
 const Body = styled(Flex)`
   transition: height .2s, opacity .2s .2s;
   height: auto;
-
+  visibility: hidden;
 `
