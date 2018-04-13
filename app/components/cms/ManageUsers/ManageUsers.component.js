@@ -33,13 +33,13 @@ export default class ManageUsers extends Component {
       handleChange
     } = this
 
-    let sortedUsers = users.sort((a,b)=>{
+    let sortedUsers = users.slice().sort((a,b)=>{
       if(
         a.role === 'pending'
       ) {
         return -1
       }
-      return 0
+      return +1
     })
 
     return (
@@ -74,7 +74,7 @@ export default class ManageUsers extends Component {
               Role
             </HeaderCell>
           </HeaderRow>
-          {users ? users.map( user => (
+          {sortedUsers ? sortedUsers.map( user => (
             <BodyRow
               key={user.id}
             >
