@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Video from '../../ui/video'
+import Video from '../../mia-ui/video'
 
 export default class MovieDisplay extends Component {
 

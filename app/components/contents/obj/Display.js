@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import Zoomer from '../../shared/Zoomer'
-import Video from '../../ui/video'
+import Video from '../../mia-ui/video'
 
 export default class ObjDisplay extends Component {
 

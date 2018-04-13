@@ -141,7 +141,6 @@ export default class Home extends Component {
             {stories ? stories.map( ({id, previewImage, title}) => (
               <Tile
                 key={id}
-                link
                 width={[1,1, 1/2, 1/4]}
                 key={id}
                 text={title}

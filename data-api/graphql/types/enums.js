@@ -43,6 +43,9 @@ export const RoleEnum = new GraphQLEnumType({
     contributor: {
       value: "contributor"
     },
+    pending: {
+      value: "pending"
+    },
   }
 })
 

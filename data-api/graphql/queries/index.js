@@ -1,7 +1,7 @@
 import {
   GraphQLObjectType,
 } from 'graphql'
-
+import authenticate from './authenticate'
 import obj from './obj'
 import objs from './objs'
 import organization from './organization'
@@ -19,6 +19,7 @@ import images from './images'
 const query = new GraphQLObjectType({
   name: 'Query',
   fields: {
+    authenticate,
     organization,
     content,
     group,
