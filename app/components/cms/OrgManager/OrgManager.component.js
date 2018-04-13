@@ -126,7 +126,12 @@ export default class OrgManager extends Component {
         }
       } = this
 
+      console.log(this.props.organizations)
+
       const {newUsersRequireApproval} = this.props.organizations.find(org => org.id === organizationId)
+
+      console.log(newUsersRequireApproval)
+
 
       const {data: {editUserOrganizationRole: {organizations}}} = await joinOrganization({
         variables: {

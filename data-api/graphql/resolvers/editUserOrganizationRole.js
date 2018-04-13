@@ -11,15 +11,29 @@ export default async function(src, {organization,userId, role}, ctx){
       }
     })
 
-    await User_Organization.upsert(
-      {
-        role,
-        organizationId: org.id,
+    let userOrg = await User_Organization.findOne({
+      where: {
         userId,
-      },
-    )
+        organizationId: org.id
+      }
+    })
 
-    const userOrg = await User_Organization.findOne({
+    if (userOrg){
+      await userOrg.update({
+          role,
+          organizationId: org.id,
+          userId,
+        },
+      )
+    } else {
+      await User_Organization.create({
+        userId,
+        organizationId: org.id,
+        role
+      })
+    }
+
+    userOrg = await User_Organization.findOne({
       where: {
         userId,
         organizationId: org.id
