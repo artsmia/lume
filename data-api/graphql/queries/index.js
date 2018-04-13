@@ -9,6 +9,8 @@ import category from './category'
 import content from './content'
 import group from './group'
 import user from './user'
+import users from './users'
+
 import organizations from './organizations'
 import story from './story'
 import stories from './stories'
@@ -25,6 +27,7 @@ const query = new GraphQLObjectType({
     group,
     category,
     user,
+    users,
     organizations,
     story,
     stories,

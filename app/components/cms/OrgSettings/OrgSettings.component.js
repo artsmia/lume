@@ -6,6 +6,7 @@ import {Button} from '../../mia-ui/buttons'
 import CategoryGroupEditor from '../CategoryGroupEditor'
 import {Page, Card} from '../../mia-ui/layout'
 import {Flex, Box} from 'grid-styled'
+import ManageUsers from '../ManageUsers'
 
 export default class OrgSettings extends Component {
 
@@ -130,7 +131,12 @@ export default class OrgSettings extends Component {
 
           </Card>
 
+          <Card
+            my={2}
+          >
+            <ManageUsers/>
 
+          </Card>
 
 
         </Page>
