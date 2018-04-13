@@ -11,11 +11,8 @@ import {
 } from 'apollo-server-express'
 import multer from 'multer'
 import s3Image from './image'
-import jwt from 'jsonwebtoken'
-import fs from 'fs'
 import verify from './auth/verify'
 
-const cert = fs.readFileSync('artsmia.pem')
 
 
 const upload = multer()
@@ -26,20 +23,11 @@ let port = process.env.PORT || 5000
 
 server.set('port', port)
 
-let allowedOrigins = [
-  'http://localhost:3000'
-]
-
 let corsOptions = {
-  origin(origin, callback){
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
+  origin: [
+    /http:\/\/localhost:3000.*/,
+  ]
 }
-
 server.use(
   cors(corsOptions),
   bodyParser.json(),
@@ -65,7 +53,6 @@ server.use(
 server.use(
   '/',
   verify,
-
   graphqlExpress((req, res) => {
     return {
       schema,

@@ -1,6 +1,8 @@
 module.exports = async(req, res, next) => {
   try {
 
+    if (!req.session.passport) return res.redirect('/')
+
     let allowed = ['admin', 'editor', 'contributor']
 
     const {
@@ -56,7 +58,7 @@ module.exports = async(req, res, next) => {
     switch (true) {
       case (!permission): {
 
-        return res.redirect('/error')
+        return res.redirect('/')
       }
       case (permission.role === 'pending'): {
 
@@ -68,7 +70,7 @@ module.exports = async(req, res, next) => {
       }
       default: {
 
-        return res.redirect('/error')
+        return res.redirect('/')
       }
     }
 

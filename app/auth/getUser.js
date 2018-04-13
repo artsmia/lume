@@ -1,5 +1,4 @@
 import router from 'next/router'
-import Cookie from 'js-cookie'
 
 export default async function getUser(ctx){
   try {
@@ -25,10 +24,11 @@ export default async function getUser(ctx){
       process.browser
     ) {
       let user = {
-        id: Cookie.get('userId'),
-        idToken: Cookie.get('idToken')
-
+        id: localStorage.getItem('userId'),
+        idToken: localStorage.getItem('idToken')
       }
+
+      if(!user.id || !user.idToken) throw 'nothing in local'
 
       return user
     }

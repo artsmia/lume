@@ -3,7 +3,6 @@ import Story from '../../db/models/Story'
 export default async function(src, args, ctx){
   try {
 
-
     await Story.update(args, {
       where: {
         id: args.id
