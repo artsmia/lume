@@ -10,6 +10,8 @@ const next = require('next')
 const fetch = require('isomorphic-unfetch')
 const session = require('express-session')
 
+const authenticate = require('./authenticate')
+
 // const RedisStore = require('connect-redis')(session)
 // const redisOptions = {
 //   url: process.env.REDIS_URL
@@ -78,6 +80,11 @@ app.prepare().then(() => {
     }
   )
 
+  server.get('/error', (req, res) => {
+    const page = '/error'
+    app.render(req, res, page)
+  })
+
   server.get('/live', (req, res) => {
     const page = '/lume'
     let params = {
@@ -99,6 +106,7 @@ app.prepare().then(() => {
 
 
   server.get('/:subdomain/settings',
+    authenticate,
     (req, res) => {
       const page = '/cms/orgSettings'
       app.render(req, res, page, req.params)
@@ -116,14 +124,34 @@ app.prepare().then(() => {
   })
 
 
-  server.get('/:subdomain/cms',
-    (req, res) => {
-      const page = '/cms'
-      const {subdomain} = req.params
-      const params = {
-        subdomain,
+  server.get('/:subdomain/cms/pending',
+    async (req, res) => {
+      try {
+        const page = '/cms/pendingApproval'
+        const {subdomain} = req.params
+        const params = {
+          subdomain,
+        }
+        app.render(req, res, page, params)
+      } catch (ex) {
+        console.error(ex)
       }
-      app.render(req, res, page, params)
+    }
+  )
+
+  server.get('/:subdomain/cms',
+    authenticate,
+    async (req, res) => {
+      try {
+        const page = '/cms'
+        const {subdomain} = req.params
+        const params = {
+          subdomain,
+        }
+        app.render(req, res, page, params)
+      } catch (ex) {
+        console.error(ex)
+      }
     }
   )
 
@@ -136,15 +164,18 @@ app.prepare().then(() => {
     app.render(req, res, page, params)
   })
 
-  server.get('/:subdomain/cms/:storyId', (req, res) => {
-    const page = '/cms/edit'
-    const {subdomain, storyId} = req.params
-    const params = {
-        subdomain,
-        storyId,
+  server.get('/:subdomain/cms/:storyId',
+    authenticate,
+    (req, res) => {
+      const page = '/cms/edit'
+      const {subdomain, storyId} = req.params
+      const params = {
+          subdomain,
+          storyId,
+      }
+      app.render(req, res, page, params)
     }
-    app.render(req, res, page, params)
-  })
+  )
 
   server.get('*', (req, res) => {
     return handle(req, res)
@@ -161,3 +192,21 @@ app.prepare().then(() => {
   console.error(ex.stack)
   process.exit(1)
 })
+
+
+// {
+//   authenticate("${req.session.passport.user.id}") {
+    // user {
+    //   id
+    //   email
+    // }
+//     timestamp
+    // permissions {
+    //   organization {
+    //     id
+    //     subdomain
+    //   }
+    //   role
+    // }
+//   }
+// }
