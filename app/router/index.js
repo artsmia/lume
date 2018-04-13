@@ -63,10 +63,15 @@ app.prepare().then(() => {
     },
   )
 
-  server.get('/logout', (req, res) => {
-    req.logout()
-    res.redirect('/')
-  })
+  server.get(
+    '/logout',
+    (req, res) => {
+      req.session.destroy()
+      console.log(req.session)
+      let page = '/logout'
+      app.render(req, res, page)
+    },
+  )
 
   server.get(
     '/callback',

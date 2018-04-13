@@ -1,12 +1,14 @@
 import User_Organization from '../../db/models/User_Organization'
 import Organization from '../../db/models/Organization'
 
-
-export default async function (src, args, {verified, userId}){
+export default async function (src, args, {verified, userId, authentication}){
   try {
 
+    if (authentication){
+      return authentication
+    }
 
-    let authentication = {
+    let auth = {
       user: {
         id: userId,
       },
@@ -23,13 +25,13 @@ export default async function (src, args, {verified, userId}){
       }]
     })
 
-    authentication.permissions = userOrganizations.map(({organization,role}) => ({
+    auth.permissions = userOrganizations.map(({organization,role}) => ({
       organization,
       role
     }))
 
 
-    return authentication
+    return auth
   } catch (ex) {
     console.error(ex)
   }

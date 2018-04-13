@@ -3,7 +3,6 @@ import Template from '../components/shared/Template'
 import getUser from '../auth/getUser'
 import router from 'next/router'
 import {Loading} from '../components/mia-ui/loading'
-import Cookie from 'js-cookie'
 import withData from '../apollo'
 
 class Auth extends Component {
@@ -35,7 +34,7 @@ class Auth extends Component {
 
   handleUser = async () => {
     try {
-      await this.setCookies()
+      await this.setLocal()
 
       let organizations = await this.getUserOrganizations()
 
@@ -58,7 +57,7 @@ class Auth extends Component {
     }
   }
 
-  setCookies = async () => {
+  setLocal = async () => {
     try {
 
         let {
@@ -66,8 +65,8 @@ class Auth extends Component {
           id
         } = this.props.user
 
-        Cookie.set("userId", id)
-        Cookie.set("idToken", idToken)
+        localStorage.setItem('userId', id)
+        localStorage.setItem('idToken', idToken)
 
 
     } catch (ex) {

@@ -1,3 +1,9 @@
+import authenticate from '../graphql/resolvers/authenticate'
+import jwt from 'jsonwebtoken'
+import fs from 'fs'
+
+const cert = fs.readFileSync('artsmia.pem')
+
 export default async (req, res, next) => {
   try {
     if (req.headers.authorization){
@@ -15,9 +21,12 @@ export default async (req, res, next) => {
         )
         req.verified = true
         req.userId = req.headers.userid
-
+        req.authentication = await authenticate('','',{
+          userId: req.headers.userid
+        })
+        console.log("verified")
       } catch (ex) {
-        console.log('verification failed', ex)
+        console.log('verification failed')
         req.verified = false
       }
     }

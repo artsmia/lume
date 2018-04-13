@@ -8,6 +8,7 @@ import { withClientState } from 'apollo-link-state'
 
 import defaults from './local/defaults'
 import resolvers from './local/resolvers'
+import getUser from '../auth/getUser'
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
@@ -16,15 +17,33 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 const cache = new InMemoryCache({ fragmentMatcher })
 
 
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('IDToken');
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : null,
+const authLink = setContext(
+  async(req, prevCtx) => {
+    try {
+
+      let authHeaders = {}
+      if (process.browser){
+        let idToken = localStorage.getItem('idToken')
+        let userId = localStorage.getItem('userId')
+        if (idToken && userId){
+          Object.assign(authHeaders, {
+            authorization: `Bearer ${idToken}`,
+            userid: userId
+          })
+        }
+      }
+
+      return {
+        headers: {
+          ...prevCtx.headers,
+          ...authHeaders
+        }
+      }
+    } catch (ex) {
+      console.error(ex)
     }
   }
-})
+)
 
 const stateLink = withClientState({ resolvers, cache, defaults })
 
@@ -33,7 +52,7 @@ const httpLink = new HttpLink({
   uri: process.env.API_URL,
 })
 
-const link = ApolloLink.from([stateLink, httpLink])
+const link = ApolloLink.from([stateLink, authLink, httpLink])
 
 const config = {
   cache,
