@@ -34,24 +34,40 @@ class Auth extends Component {
 
   handleUser = async () => {
     try {
+      console.log('hey')
       await this.setLocal()
 
+      console.log('hello')
       let organizations = await this.getUserOrganizations()
-
-      if (organizations.length > 0) {
-
-        let subdomain = organizations[0].subdomain
-        router.push({
-          pathname: '/cms',
-          query: {
-            subdomain
-          }
-        }, `/${subdomain}/cms`)
-      } else {
+      console.log("more")
+      console.log(organizations)
+      if (organizations.length === 0){
         router.push({
           pathname: '/cms/orgManager',
         }, `/new`)
       }
+
+      for (let {role, subdomain} of organizations){
+        if (role === 'pending'){
+          router.push({
+            pathname: '/cms/pendingApproval',
+            query: {
+              subdomain
+            }
+          }, `/${subdomain}/cms/pending`)
+        } else {
+          router.push({
+            pathname: '/cms',
+            query: {
+              subdomain
+            }
+          }, `/${subdomain}/cms`)
+        }
+
+      }
+
+
+
     } catch (ex) {
       console.error(ex)
     }

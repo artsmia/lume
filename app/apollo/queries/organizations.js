@@ -7,6 +7,7 @@ const query = gql`
       id
       name
       subdomain
+      newUsersRequireApproval
     }
   }
 `

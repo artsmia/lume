@@ -20,7 +20,7 @@ const Organization = db.define('organization', {
   },
   newUsersRequireApproval: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    defaultValue: true
   },
   customObjApiEnabled: {
     type: Sequelize.BOOLEAN,

@@ -126,11 +126,13 @@ export default class OrgManager extends Component {
         }
       } = this
 
+      const {newUsersRequireApproval} = this.props.organizations.find(org => org.id === organizationId)
+
       const {data: {editUserOrganizationRole: {organizations}}} = await joinOrganization({
         variables: {
           organizationId,
           userId,
-          role: "contributor"
+          role: newUsersRequireApproval ? 'pending': 'contributor'
         }
       })
 
@@ -147,7 +149,8 @@ export default class OrgManager extends Component {
           }
         }, `/${organization.subdomain}/cms`)
       } else {
-        window.alert("your request was sent")
+        window.alert("Your request was sent")
+        router.push('/')
       }
 
 

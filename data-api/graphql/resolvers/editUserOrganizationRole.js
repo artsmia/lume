@@ -1,46 +1,41 @@
 import User_Organization from '../../db/models/User_Organization'
 import Organization from '../../db/models/Organization'
+import {retrieveUserProfile} from './user'
 
-export default async function(src, args, ctx){
+export default async function(src, {organization,userId, role}, ctx){
   try {
 
-
-    await User_Organization.findOrCreate({
+    const org = await Organization.findOne({
       where: {
-        userId: args.userId,
-        organizationId: args.organization.id,
+        ...organization,
       }
     })
 
-    await User_Organization.update({
-      role: args.role
-    },{
-      where: {
-        userId: args.userId,
-        organizationId: args.organization.id,
-      }
-    })
-
-    let userOrgs = await User_Organization.findAll({
-      where: {
-        userId: args.userId
+    await User_Organization.upsert(
+      {
+        role,
+        organizationId: org.id,
+        userId,
       },
-      include:[{
-        model: Organization,
-        as: "organization"
-      }]
+    )
+
+    const userOrg = await User_Organization.findOne({
+      where: {
+        userId,
+        organizationId: org.id
+      }
     })
 
-
-    let result = {
-      id: args.userId,
-      organizations: userOrgs.map(userOrg => ({
-        ...userOrg.organization.dataValues,
-        role: userOrg.role
-      }))
+    let user = {
+      id: userOrg.userId,
+      role: userOrg.role,
     }
 
-    return result
+    let profile = await retrieveUserProfile(user.id)
+
+    Object.assign(user, profile)
+
+    return user
 
   } catch (ex) {
     console.error(ex)
