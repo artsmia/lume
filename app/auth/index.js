@@ -8,8 +8,6 @@ export default class Auth {
 
   constructor(ctx){
 
-    console.log("constructor")
-
     this.ctx = ctx
 
     if (process.browser){
@@ -30,8 +28,6 @@ export default class Auth {
 
   authenticate = async() => {
     try {
-
-      console.log("authenticate called")
 
       this.getUser()
 
@@ -157,11 +153,11 @@ export default class Auth {
   }
 
   pendingServer = () => {
-    this.ctx.res.redirect(`/${this.subdomain}/cms/pending`)
+    this.ctx.res.redirect(`/cms/${this.subdomain}/pending`)
   }
 
   pendingClient = () => {
-    router.replace(`/${this.subdomain}/cms/pending`)
+    router.replace(`/cms/${this.subdomain}/pending`)
   }
 
   fetchPermissions = async () => {

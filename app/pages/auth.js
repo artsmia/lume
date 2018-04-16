@@ -56,14 +56,14 @@ class Auth extends Component {
             query: {
               subdomain
             }
-          }, `/${subdomain}/cms/pending`)
+          }, `/cms/${subdomain}/pending`)
         } else {
           router.push({
             pathname: '/cms',
             query: {
               subdomain
             }
-          }, `/${subdomain}/cms`)
+          }, `/cms/${subdomain}`)
         }
 
       }

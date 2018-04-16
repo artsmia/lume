@@ -107,25 +107,7 @@ app.prepare().then(() => {
   })
 
 
-  server.get('/:subdomain/settings',
-    (req, res) => {
-      const page = '/cms/orgSettings'
-      app.render(req, res, page, req.params)
-    }
-  )
-
-  server.get('/:subdomain/story/:storySlug', (req, res) => {
-    const page = '/lume/story'
-    const {subdomain, storySlug} = req.params
-    const params = {
-        subdomain,
-        storySlug
-    }
-    app.render(req, res, page, params)
-  })
-
-
-  server.get('/:subdomain/cms/pending',
+  server.get('/cms/:subdomain/pending',
     async (req, res) => {
       try {
         const page = '/cms/pendingApproval'
@@ -140,7 +122,7 @@ app.prepare().then(() => {
     }
   )
 
-  server.get('/:subdomain/cms',
+  server.get('/cms/:subdomain',
     async (req, res) => {
       try {
         const page = '/cms'
@@ -155,16 +137,8 @@ app.prepare().then(() => {
     }
   )
 
-  server.get('/:subdomain', (req, res) => {
-    const page = '/lume'
-    let params = {
-      ...req.params,
-      ...req.query
-    }
-    app.render(req, res, page, params)
-  })
 
-  server.get('/:subdomain/cms/:storySlug',
+  server.get('/cms/:subdomain/:storySlug',
     (req, res) => {
       const page = '/cms/edit'
       const {subdomain, storySlug} = req.params
@@ -175,6 +149,59 @@ app.prepare().then(() => {
       app.render(req, res, page, params)
     }
   )
+
+
+  server.get('/cms/:subdomain/settings',
+    (req, res) => {
+      const page = '/cms/orgSettings'
+      app.render(req, res, page, req.params)
+    }
+  )
+
+  server.get('/:subdomain/:storySlug', (req, res) => {
+    const page = '/lume/story'
+    const {subdomain, storySlug} = req.params
+    const params = {
+        subdomain,
+        storySlug,
+        state0: 'about'
+    }
+    app.render(req, res, page, params)
+  })
+
+  server.get('/:subdomain/:storySlug/:state0', (req, res) => {
+    const page = '/lume/story'
+    const {subdomain, storySlug, state0} = req.params
+    const params = {
+        subdomain,
+        storySlug,
+        state0
+    }
+    app.render(req, res, page, params)
+  })
+
+  server.get('/:subdomain/:storySlug/:state0/:state1', (req, res) => {
+    const page = '/lume/story'
+    const {subdomain, storySlug, state0, state1} = req.params
+    const params = {
+        subdomain,
+        storySlug,
+        state0,
+        state1
+    }
+    app.render(req, res, page, params)
+  })
+
+  server.get('/:subdomain', (req, res) => {
+    const page = '/lume'
+    let params = {
+      ...req.params,
+      ...req.query
+    }
+    app.render(req, res, page, params)
+  })
+
+
 
   server.get('*', (req, res) => {
     return handle(req, res)

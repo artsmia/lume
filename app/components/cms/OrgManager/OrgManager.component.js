@@ -152,7 +152,7 @@ export default class OrgManager extends Component {
           query: {
             subdomain: organization.subdomain
           }
-        }, `/${organization.subdomain}/cms`)
+        }, `/cms/${organization.subdomain}`)
       } else {
         window.alert("Your request was sent")
         router.push('/')
@@ -200,7 +200,7 @@ export default class OrgManager extends Component {
           query: {
             subdomain: organization.subdomain
           }
-        }, `/${organization.subdomain}/cms`)
+        }, `/cms/${organization.subdomain}`)
       }
 
 
