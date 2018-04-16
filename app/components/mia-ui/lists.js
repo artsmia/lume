@@ -75,7 +75,8 @@ TileImage.propTypes = {
 
 export const Tile = (props) => (
   <Box
-    {...props}
+    w={props.w}
+    p={props.p}
   >
     {props.link ? (
       <Link

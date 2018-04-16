@@ -10,7 +10,7 @@ class Edit extends Component {
     try {
 
       let {
-        storyId,
+        storySlug,
         subdomain
       } = ctx.query
 
@@ -20,7 +20,7 @@ class Edit extends Component {
 
 
       return {
-        storyId,
+        storySlug,
         subdomain,
         auth,
         user: auth.user

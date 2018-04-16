@@ -11,11 +11,10 @@ class New extends Component {
 
 
       let auth = new Auth(ctx)
-      await auth.authenticate()
+      auth.getUser()
 
 
       return {
-        auth,
         user: auth.user
       }
     } catch (ex) {

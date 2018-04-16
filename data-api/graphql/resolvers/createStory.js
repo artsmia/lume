@@ -1,5 +1,6 @@
 import Organization from '../../db/models/Organization'
 import Story from '../../db/models/Story'
+import {Op} from 'sequelize'
 
 export default async function(src, args, ctx){
   try {
@@ -10,10 +11,26 @@ export default async function(src, args, ctx){
       }
     })
 
+    let slug = args.title.replace(/\s/g,'-').toLowerCase()
+
+    let storiesWithSlug = await Story.findAll({
+      where: {
+        organizationId: organization.id,
+        slug: {
+          [Op.regexp]: slug
+        }
+      }
+    })
+
+    if (storiesWithSlug.length > 0){
+      slug = slug.concat(`-${storiesWithSlug.length + 1}`)
+    }
 
     return await Story.create({
       organizationId: organization.id,
-      creatorId: args.creatorId
+      creatorId: args.creatorId,
+      title: args.title,
+      slug
     })
 
   } catch (ex) {

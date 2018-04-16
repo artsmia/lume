@@ -6,6 +6,7 @@ import {
   GraphQLList,
   GraphQLFloat,
   GraphQLBoolean,
+  GraphQLNonNull,
 } from 'graphql'
 import {DirectionEnum, ContentTypeEnum, TemplateEnum, VisibilityEnum} from './enums'
 import {GeometryEnum, GeometryInput} from './geometry'
@@ -157,5 +158,17 @@ export const ContentInput = new GraphQLInputObjectType({
     removeAdditionalImageId: {
       type: GraphQLID
     }
+  }
+})
+
+export const StorySlugInput = new GraphQLInputObjectType({
+  name: 'StorySlugInput',
+  fields: {
+    slug: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+    organization: {
+      type: new GraphQLNonNull(OrganizationInput)
+    },
   }
 })

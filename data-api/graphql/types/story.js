@@ -21,6 +21,9 @@ const story = new GraphQLObjectType({
     title: {
       type: GraphQLString
     },
+    slug: {
+      type: GraphQLString
+    },
     description: {
       type: GraphQLString
     },

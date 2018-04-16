@@ -93,7 +93,8 @@ export default class StoryList extends Component {
           previewImage,
           title,
           updatedAt,
-          template
+          template,
+          slug: storySlug
         }) => (
           <BodyRow
             key={storyId}
@@ -107,10 +108,10 @@ export default class StoryList extends Component {
                     pathname: "/cms/edit",
                     query: {
                       subdomain,
-                      storyId
+                      storySlug
                     }
                   }}
-                  as={`/${subdomain}/cms/${storyId}`}
+                  as={`/${subdomain}/cms/${storySlug}`}
                 >
                   <TableThumb
                     src={getImageSrc({
@@ -130,10 +131,10 @@ export default class StoryList extends Component {
                   pathname: "/cms/edit",
                   query: {
                     subdomain,
-                    storyId
+                    storySlug
                   }
                 }}
-                as={`/${subdomain}/cms/${storyId}`}
+                as={`/${subdomain}/cms/${storySlug}`}
               >
                 {title || 'Untitled Story'}
               </Link>

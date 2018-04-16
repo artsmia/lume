@@ -78,6 +78,7 @@ async function populate(){
             previewImageId: image.id,
             visibility: "published",
             title: oldStory.objContentTitle,
+            slug: oldStory.objContentTitle.replace(/\s/g,'-').toLowerCase(),
             localId: oldStory.objLocalId
           })
 
@@ -168,6 +169,7 @@ async function populate(){
             template: "slider",
             visibility: "published",
             title: oldStory.title,
+            slug: oldStory.title.replace(/\s/g,'-').toLowerCase(),
             localId: oldStory.localId
           })
 
