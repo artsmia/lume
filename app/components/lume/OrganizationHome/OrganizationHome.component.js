@@ -158,7 +158,7 @@ export default class Home extends Component {
                     subdomain: organization.subdomain
                   }
                 }}
-                as={`/${organization.subdomain}/story/${slug}`}
+                as={`/${organization.subdomain}/${slug}`}
                 link={true}
               />
             )): null}

@@ -67,7 +67,7 @@ export default class CmsHome extends Component {
                     subdomain: subdomain,
                   }
                 }}
-                as={`/${subdomain}/settings`}
+                as={`/cms/${subdomain}/settings`}
               >
                   <Icon
                     icon={'settings'}

@@ -6,7 +6,6 @@ import Zoomer from '../../shared/Zoomer'
 import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
 import {Button} from '../../mia-ui/buttons'
 import {Icon} from '../../mia-ui/icons'
-import router from 'next/router'
 import Link from 'next/link'
 import Markdown from 'react-markdown'
 import AdditionalImages from './AdditionalImages'
@@ -16,18 +15,25 @@ import {H3} from '../../mia-ui/text'
 
 export default class OriginalTemplate extends Component {
 
-  state = {
-    selectedTab: "about",
-    selectedContent: {
-      id: ''
-    }
-  }
 
   constructor(props){
     super(props)
+
+
+    let selectedContent = {}
+
+
+    if (props.router.query.state1){
+      selectedContent = props.story.contents.find(content => content.index === parseInt(props.router.query.state1))
+    } else {
+      selectedContent = props.story.contents.find(content => content.type === "obj") || props.story.contents[0]
+    }
+
     this.state = {
       ...this.state,
-      selectedContent: props.story.contents.find(content => content.type === "obj") || props.story.contents[0],
+      selectedContent,
+      selectedTab: this.props.router.query.state0 || 'about',
+
     }
   }
 
@@ -49,7 +55,10 @@ export default class OriginalTemplate extends Component {
         organization
       },
       handleContentSelection,
-      createMoreGeometry
+      createMoreGeometry,
+      selectTabAbout,
+      selectTabDetails,
+      selectTabMore
     } = this
 
     let objContent = story.contents.find(content => content.type === 'obj')
@@ -105,31 +114,19 @@ export default class OriginalTemplate extends Component {
             <TabHeader>
               <Tab
                 name={"about"}
-                onClick={ () => this.setState({
-                  selectedTab: "about",
-                  selectedContent: objContent
-                })}
+                onClick={selectTabAbout}
               >
                 About
               </Tab>
               <Tab
                 name={"details"}
-                onClick={()=>this.setState({
-                  selectedTab: "details",
-                  selectedContent: {
-                    ...objContent,
-                    type: 'all',
-                  },
-                })}
+                onClick={selectTabDetails}
               >
                 Details
               </Tab>
               <Tab
                 name={"more"}
-                onClick={()=>this.setState({
-                  selectedTab: "more",
-                  selectedContent: objContent
-                })}
+                onClick={selectTabMore}
               >
                 More
               </Tab>
@@ -221,10 +218,10 @@ export default class OriginalTemplate extends Component {
                       pathname: '/lume/story',
                       query: {
                         subdomain,
-                        storyId: story.id
+                        storySlug: story.slug
                       }
                     }}
-                    as={`/${subdomain}/${story.id}`}
+                    as={`/${subdomain}/${story.slug}`}
                     key={story.id}
                   >
                     <RelatedStoryBox
@@ -249,6 +246,108 @@ export default class OriginalTemplate extends Component {
       </Container>
     )
   }
+
+
+
+  selectTabAbout=()=>{
+    let objContent = this.props.story.contents.find(content => content.type === 'obj')
+
+    this.setState({
+      selectedTab: "about",
+      selectedContent: objContent
+    })
+
+    const {
+      query: {
+        subdomain,
+        storySlug,
+        state0,
+      },
+      replace,
+      pathname
+    } = this.props.router
+
+    if(pathname === '/lume/story'){
+      this.props.router.replace({
+        pathname: '/lume/story',
+        query: {
+          subdomain,
+          storySlug,
+          state0: 'about'
+        },
+      }, `/${subdomain}/${storySlug}`)
+    }
+
+
+
+  }
+
+  selectTabDetails = () => {
+    let objContent = this.props.story.contents.find(content => content.type === 'obj')
+
+    this.setState({
+      selectedTab: "details",
+      selectedContent: {
+        ...objContent,
+        type: 'all',
+      },
+    })
+
+    const {
+      query: {
+        subdomain,
+        storySlug,
+        state0,
+      },
+      replace,
+      pathname
+    } = this.props.router
+
+    if(pathname === '/lume/story'){
+      this.props.router.replace({
+        pathname: '/lume/story',
+        query: {
+          subdomain,
+          storySlug,
+          state0: 'details'
+        },
+      }, `/${subdomain}/${storySlug}/details`)
+    }
+
+
+  }
+
+  selectTabMore= () => {
+    let objContent = this.props.story.contents.find(content => content.type === 'obj')
+
+    this.setState({
+      selectedTab: "more",
+      selectedContent: objContent
+    })
+
+    const {
+      query: {
+        subdomain,
+        storySlug,
+        state0,
+      },
+      replace,
+      pathname
+    } = this.props.router
+
+    if(pathname === '/lume/story'){
+      this.props.router.replace({
+        pathname: '/lume/story',
+        query: {
+          subdomain,
+          storySlug,
+          state0: 'more'
+        },
+      }, `/${subdomain}/${storySlug}/more`)
+    }
+
+  }
+
 
   showFeature = (firstDetailContent) => {
 
@@ -358,6 +457,30 @@ export default class OriginalTemplate extends Component {
     this.setState({
       selectedContent: content
     })
+
+    const {
+      query: {
+        subdomain,
+        storySlug,
+        state0,
+      },
+      replace,
+      pathname
+    } = this.props.router
+
+    if(pathname === '/lume/story'){
+      this.props.router.replace({
+        pathname: '/lume/story',
+        query: {
+          subdomain,
+          storySlug,
+          state0: 'details',
+          state1: content.index
+        },
+      }, `/${subdomain}/${storySlug}/details/${content.index}`)
+    }
+
+
   }
 
 

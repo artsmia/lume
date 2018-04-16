@@ -85,6 +85,7 @@ export default class Editor extends Component {
         </PreviewButtonBox>
         <StoryPreview
           story={story}
+          router={this.props.router}
         />
       </PreviewContainer>
 

@@ -75,9 +75,9 @@ export default class CreateStoryButton extends Component {
         pathname: '/cms/edit',
         query: {
           subdomain,
-          storyId: story.id
+          storySlug: story.slug
         }
-      }, `/${subdomain}/cms/${story.id}`)
+      }, `/cms/${subdomain}/${story.slug}`)
     } catch (ex) {
       console.error(ex)
     }

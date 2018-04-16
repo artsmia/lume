@@ -111,7 +111,7 @@ export default class StoryList extends Component {
                       storySlug
                     }
                   }}
-                  as={`/${subdomain}/cms/${storySlug}`}
+                  as={`/cms/${subdomain}/${storySlug}`}
                 >
                   <TableThumb
                     src={getImageSrc({
@@ -134,7 +134,7 @@ export default class StoryList extends Component {
                     storySlug
                   }
                 }}
-                as={`/${subdomain}/cms/${storySlug}`}
+                as={`/cms/${subdomain}/${storySlug}`}
               >
                 {title || 'Untitled Story'}
               </Link>
@@ -263,86 +263,3 @@ export default class StoryList extends Component {
   }
 
 }
-
-
-// <Table>
-//   <Header
-//     hasSearch
-//     columns={[
-//       {
-//         title: "",
-//         width: "100px"
-//       },
-//       {
-//         title: "Title",
-//         column: "title",
-//         upDirection: "DESC",
-//         downDirection: "ASC"
-//       },
-//       {
-//         title: "Last Update",
-//         column: "updatedAt",
-//         upDirection: "ASC",
-//         downDirection: "DESC",
-//         width: "130px"
-//       }
-//     ]}
-//     variables={variables}
-//     onVariablesChange={handleVariableChange}
-//   />
-//   {
-//     (stories) ? (
-//       <Body>
-//         {stories.map(
-//           ({
-//             previewImage,
-//             id: storyId,
-//             title,
-//             updatedAt,
-//           }) => (
-//             <Link
-//               href={{
-//                 pathname: "/cms/edit",
-//                 query: {
-//                   subdomain,
-//                   storyId
-//                 }
-//               }}
-//               as={`/${subdomain}/cms/${storyId}`}
-//               key={storyId}
-//             >
-//               <Row>
-//                 <Cell
-//                   width={"100px"}
-//                 >
-//                   {previewImage ? (
-//                     <Image
-//                       imageId={previewImage.id}
-//                       size={"50px"}
-//                       thumb
-//                     />
-//                   ):(<NoThumb/>)}
-//
-//                 </Cell>
-//                 <Cell>
-//
-//                     {title}
-//
-//                 </Cell>
-//                 <Cell
-//                   width={"130px"}
-//                 >
-//                   {new Date(updatedAt).toLocaleDateString()}
-//                 </Cell>
-//               </Row>
-//             </Link>
-//         ))}
-//         <Button
-//           onClick={handleLoadMore}
-//         >
-//           Load More
-//         </Button>
-//       </Body>
-//     ): <Spinner/>
-//   }
-// </Table>
