@@ -16,9 +16,14 @@ export default class OriginalTemplate extends Component {
 
   constructor(props){
     super(props)
+
+    let selectedIndex = props.router.query.state0 ? parseInt(props.router.query.state0) - 1 : 0
+
+
     this.state = {
-      selectedContent: props.story.contents[0]
+      selectedContent: props.story.contents.find(content => content.index === selectedIndex)
     }
+
   }
 
   render() {
@@ -84,9 +89,9 @@ export default class OriginalTemplate extends Component {
             <PageContainer
               w={1/4}
               p={3}
-              flexDirection={'column'}
+              flexWrap={'wrap'}
             >
-              <Box
+              <TopBox
                 w={1}
               >
                 <Button
@@ -98,7 +103,7 @@ export default class OriginalTemplate extends Component {
                     icon={"arrow_back"}
                   />
                 </Button>
-              </Box>
+              </TopBox>
 
 
               <Box
@@ -141,14 +146,43 @@ export default class OriginalTemplate extends Component {
         selectedContent
       },
       props: {
-        story
+        story,
+        router: {
+          query,
+          pathname,
+          replace
+        }
       }
     } = this
 
     this.setState({selectedContent: story.contents.find(content => content.index === selectedContent.index + direction)})
+
+    if (pathname === '/lume/story'){
+
+      let newIndex = selectedContent.index + direction + 1
+
+      let path = `/${query.subdomain}/${query.storySlug}/${newIndex}`
+
+      if (newIndex === 1){
+        path = `/${query.subdomain}/${query.storySlug}`
+      }
+
+      replace({
+        pathname,
+        query: {
+          ...query,
+          state0: newIndex,
+        }
+      }, path)
+    }
+
   }
 
 }
+
+const TopBox = styled(Box)`
+  height: 120px;
+`
 
 const Container = styled(Flex)`
   height: 100vh;
@@ -168,6 +202,8 @@ const HeaderFooter = styled(Flex)`
 const BookContainer = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
 `
 
 const PageContainer = styled(Flex)`

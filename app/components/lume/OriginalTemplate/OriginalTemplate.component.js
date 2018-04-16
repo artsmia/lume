@@ -47,6 +47,7 @@ export default class OriginalTemplate extends Component {
       },
       props: {
         story,
+        router,
         router: {
           query: {
             subdomain

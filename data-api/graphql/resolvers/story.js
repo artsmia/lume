@@ -8,7 +8,7 @@ export default async function(src, args, ctx){
     let story
 
     if (args.id){
-      return await Story.findOne({
+      story =  await Story.findOne({
         where: {
           id: args.id
         }
@@ -20,13 +20,15 @@ export default async function(src, args, ctx){
         where: args.slugInput.organization
       })
 
-      return await Story.findOne({
+      story = await Story.findOne({
         where: {
           organizationId: organization.id,
           slug: args.slugInput.slug
         }
       })
     }
+
+    return story
 
   } catch (ex) {
     console.error(ex)

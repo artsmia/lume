@@ -54,11 +54,17 @@ const story = new GraphQLObjectType({
       type: new GraphQLList(contentType),
       async resolve(src){
         try {
-          return await src.getContents({
+
+
+          let contents = await src.getContents({
             order: [
               ["index", "asc"]
             ]
           })
+
+          console.log(contents.map(cont => cont.dataValues))
+
+          return contents
         } catch (ex) {
           console.error(ex)
         }
