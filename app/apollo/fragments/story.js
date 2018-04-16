@@ -7,6 +7,7 @@ const fragment = gql`
   fragment StoryFragment on story {
     id
     title
+    slug
     description
     template
     visibility

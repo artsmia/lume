@@ -117,8 +117,9 @@ export default class OriginalTemplate extends Component {
                 onClick={()=>this.setState({
                   selectedTab: "details",
                   selectedContent: {
-                    type: "all",
-                  }
+                    ...objContent,
+                    type: 'all',
+                  },
                 })}
               >
                 Details
@@ -167,7 +168,10 @@ export default class OriginalTemplate extends Component {
                     <Button
                       round
                     >
-                      {content.index}
+                      <IndexSpan>
+                        {content.index}
+
+                      </IndexSpan>
                     </Button>
                   }
                 >
@@ -254,7 +258,8 @@ export default class OriginalTemplate extends Component {
 
     if (
       selectedContent.type !== 'detail' &&
-      selectedContent.type !== 'obj'
+      selectedContent.type !== 'obj' &&
+      selectedContent.type !== 'all'
     ){
       return (
         <ContentDisplaySwitcher
@@ -375,6 +380,12 @@ const RelatedStoryBox = styled(Box)`
   border: 1px solid lightgrey;
   font-size: 20px;
   cursor: pointer;
+`
+
+const IndexSpan = styled.span`
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  color: ${({theme}) => theme.color.white};
 `
 
 // const RelatedStory = styled.a`

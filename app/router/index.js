@@ -114,12 +114,12 @@ app.prepare().then(() => {
     }
   )
 
-  server.get('/:subdomain/story/:storyId', (req, res) => {
+  server.get('/:subdomain/story/:storySlug', (req, res) => {
     const page = '/lume/story'
-    const {subdomain, storyId} = req.params
+    const {subdomain, storySlug} = req.params
     const params = {
         subdomain,
-        storyId
+        storySlug
     }
     app.render(req, res, page, params)
   })
@@ -164,13 +164,13 @@ app.prepare().then(() => {
     app.render(req, res, page, params)
   })
 
-  server.get('/:subdomain/cms/:storyId',
+  server.get('/:subdomain/cms/:storySlug',
     (req, res) => {
       const page = '/cms/edit'
-      const {subdomain, storyId} = req.params
+      const {subdomain, storySlug} = req.params
       const params = {
           subdomain,
-          storyId,
+          storySlug,
       }
       app.render(req, res, page, params)
     }

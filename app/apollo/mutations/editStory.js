@@ -14,6 +14,7 @@ const editStory = gql`
     $addRelatedStoryId: ID
     $removeRelatedStoryId: ID
     $setGroupsIds: [ID]
+    $slug: String
   ) {
     editStory(
       id: $id
@@ -25,6 +26,7 @@ const editStory = gql`
       addRelatedStoryId: $addRelatedStoryId
       removeRelatedStoryId: $removeRelatedStoryId
       setGroupsIds: $setGroupsIds
+      slug: $slug
     ) {
       ...StoryFragment
     }
@@ -43,7 +45,8 @@ const mutationConfig = {
       visibility,
       addRelatedStoryId,
       removeRelatedStoryId,
-      setGroupsIds
+      setGroupsIds,
+      slug
     }) => mutate({
       variables: {
         id: storyId,
@@ -54,7 +57,8 @@ const mutationConfig = {
         visibility,
         addRelatedStoryId,
         removeRelatedStoryId,
-        setGroupsIds
+        setGroupsIds,
+        slug
       },
     }),
   }),

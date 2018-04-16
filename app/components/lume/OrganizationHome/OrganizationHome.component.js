@@ -138,10 +138,11 @@ export default class Home extends Component {
 
         <DrawerPage>
           <GridList>
-            {stories ? stories.map( ({id, previewImage, title}) => (
+            {stories ? stories.map( ({id, previewImage, title, slug}) => (
               <Tile
                 key={id}
-                width={[1,1, 1/2, 1/4]}
+                w={[1,1, 1/2, 1/4]}
+                p={1}
                 key={id}
                 text={title}
                 height={'200px'}
@@ -153,11 +154,12 @@ export default class Home extends Component {
                 href={{
                   pathname: '/lume/story',
                   query: {
-                    storyId: id,
+                    storySlug: slug,
                     subdomain: organization.subdomain
                   }
                 }}
-                as={`/${organization.subdomain}/story/${id}`}
+                as={`/${organization.subdomain}/story/${slug}`}
+                link={true}
               />
             )): null}
           </GridList>

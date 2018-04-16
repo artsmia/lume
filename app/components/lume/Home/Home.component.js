@@ -35,11 +35,6 @@ export default class Home extends Component {
               <P>
                 You can check out Mia's Lume here or try creating your own Lume by logging in below.
               </P>
-              <Link
-                href={'/mia/cms'}
-              >
-                Testing
-              </Link>
               <Button
                 onClick={linkToLogin}
               >

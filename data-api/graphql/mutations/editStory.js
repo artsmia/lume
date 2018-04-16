@@ -18,6 +18,9 @@ const editStory = {
     title: {
       type: GraphQLString
     },
+    slug: {
+      type: GraphQLString
+    },
     description: {
       type: GraphQLString
     },

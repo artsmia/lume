@@ -39,8 +39,10 @@ export default class Editor extends Component {
 
     const {
       props: {
-        storyId,
         story,
+        story: {
+          id: storyId
+        },
         router: {
           query: {
             subdomain

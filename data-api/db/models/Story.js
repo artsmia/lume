@@ -35,6 +35,10 @@ const Story = db.define('story', {
     allowNull: false,
     defaultValue: ""
   },
+  slug: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  }
 }, {
   freezeTableName: true,
 })

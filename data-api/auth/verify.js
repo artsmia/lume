@@ -24,7 +24,6 @@ export default async (req, res, next) => {
         req.authentication = await authenticate('','',{
           userId: req.headers.userid
         })
-        console.log("verified")
       } catch (ex) {
         console.log('verification failed')
         req.verified = false

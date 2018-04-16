@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Template from '../components/shared/Template'
-import getUser from '../auth/getUser'
+import AuthClass from '../auth'
 import router from 'next/router'
 import {Loading} from '../components/mia-ui/loading'
 import withData from '../apollo'
@@ -10,9 +10,11 @@ class Auth extends Component {
   static getInitialProps = async (ctx) => {
     try {
 
-      let user = await getUser(ctx)
+      let auth = new AuthClass(ctx)
+
+      auth.getUser()
       return {
-        user
+        user: auth.user
       }
     } catch (ex) {
       console.log("error?", ex)

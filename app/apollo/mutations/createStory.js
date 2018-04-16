@@ -6,10 +6,12 @@ export const CreateStoryMutation = gql`
   mutation createStory (
     $organization: OrganizationInput!
     $creatorId: ID!
+    $title: String!
   ) {
     createStory(
       organization: $organization
       creatorId: $creatorId
+      title: $title
     ) {
       ...StoryFragment
     }
@@ -29,12 +31,13 @@ export const mutationConfig = {
     } = ownProps
     return {
       ...ownProps,
-      createStory: () => mutate({
+      createStory: ({title}) => mutate({
         variables: {
           organization: {
             subdomain
           },
-          creatorId: userId
+          creatorId: userId,
+          title
         },
         refetchQueries: [
           "StoriesQuery"

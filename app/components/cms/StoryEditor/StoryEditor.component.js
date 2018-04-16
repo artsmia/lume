@@ -191,7 +191,7 @@ export default class StoryEditor extends Component {
 
   mapPropsToState = (nextProps) => {
     if (
-      nextProps.story ||
+      nextProps.story &&
       nextProps.storyId !== this.state.id
     ) {
       let {

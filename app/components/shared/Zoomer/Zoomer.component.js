@@ -167,6 +167,14 @@ export default class extends Component {
         })
       }
 
+      if(
+        this.zoomCreated &&
+        !this.props.geometry &&
+        this.currentHighlight
+      ) {
+        this.map.removeLayer(this.currentHighlight)
+      }
+
     } catch (ex) {
       console.error(ex)
     }
@@ -696,8 +704,9 @@ const ZoomerMap = styled.div`
     border-radius: 20px;
     border: 2px solid white;
     font-size: 20px;
-    text-align: center;
-    line-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .leaflet-div-icon {

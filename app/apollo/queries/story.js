@@ -4,10 +4,12 @@ import storyFragment from '../fragments/story'
 
 export const StoryQuery = gql`
   query StoryQuery (
-    $storyId: ID!
+    $storyId: ID
+    $slugInput: StorySlugInput
   ) {
     story (
       id: $storyId
+      slugInput: $slugInput
     ) {
       ...StoryFragment
     }
@@ -17,11 +19,29 @@ export const StoryQuery = gql`
 
 
 const queryConfig = {
-  options: (props) => {
+  options: ({storyId,subdomain,storySlug}) => {
+
+    let variables = {}
+
+    if (storyId){
+      Object.assign(variables, {
+        storyId
+      })
+    }
+
+    if (subdomain && storySlug){
+      Object.assign(variables, {
+        slugInput: {
+          slug: storySlug,
+          organization: {
+            subdomain
+          }
+        }
+      })
+    }
+
     return {
-      variables: {
-        storyId: props.storyId
-      },
+      variables
     }
   },
   props: ({ ownProps, data }) => ({
