@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Editor from '../../components/cms/Editor'
 import withData from '../../apollo'
 import Template from '../../components/shared/Template'
-import getUser from '../../auth/getUser'
+import Auth from '../../auth'
 
 class Edit extends Component {
 
@@ -14,10 +14,16 @@ class Edit extends Component {
         subdomain
       } = ctx.query
 
+
+      let auth = new Auth(ctx)
+      await auth.authenticate()
+
+
       return {
         storyId,
         subdomain,
-        user: getUser(ctx)
+        auth,
+        user: auth.user
       }
     } catch (ex) {
       console.error(ex)

@@ -2,17 +2,21 @@ import React, {Component} from 'react'
 import OrgManager from '../../components/cms/OrgManager'
 import withData from '../../apollo'
 import Template from '../../components/shared/Template'
-import getUser from '../../auth/getUser'
+import Auth from '../../auth'
 
 class New extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
 
-      let user = await getUser(ctx)
+
+      let auth = new Auth(ctx)
+      await auth.authenticate()
+
 
       return {
-        user
+        auth,
+        user: auth.user
       }
     } catch (ex) {
       console.error(ex)
