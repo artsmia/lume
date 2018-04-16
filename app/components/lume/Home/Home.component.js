@@ -8,6 +8,7 @@ import {Page, Card} from '../../mia-ui/layout'
 import {Flex, Box} from 'grid-styled'
 import {GridList, Tile} from '../../mia-ui/lists'
 import {Waiting} from '../../mia-ui/loading'
+import Link from 'next/link'
 
 export default class Home extends Component {
 
@@ -34,6 +35,11 @@ export default class Home extends Component {
               <P>
                 You can check out Mia's Lume here or try creating your own Lume by logging in below.
               </P>
+              <Link
+                href={'/mia/cms'}
+              >
+                Testing
+              </Link>
               <Button
                 onClick={linkToLogin}
               >

@@ -4,12 +4,13 @@ import router from 'next/router'
 import {Loading} from '../components/mia-ui/loading'
 import withData from '../apollo'
 
+
 class Logout extends Component {
 
   render() {
     return (
       <Template>
-        <h3>congrats you logged out</h3>
+        <Loading/>
       </Template>
 
     )
@@ -19,6 +20,9 @@ class Logout extends Component {
     try {
       localStorage.removeItem('userId')
       localStorage.removeItem('idToken')
+      router.replace('/')
+
+
     } catch (ex) {
       console.error("localStorage error")
     }

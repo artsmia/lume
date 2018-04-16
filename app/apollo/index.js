@@ -8,7 +8,6 @@ import { withClientState } from 'apollo-link-state'
 
 import defaults from './local/defaults'
 import resolvers from './local/resolvers'
-import getUser from '../auth/getUser'
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData

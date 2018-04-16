@@ -10,8 +10,6 @@ const next = require('next')
 const fetch = require('isomorphic-unfetch')
 const session = require('express-session')
 
-const authenticate = require('./authenticate')
-
 // const RedisStore = require('connect-redis')(session)
 // const redisOptions = {
 //   url: process.env.REDIS_URL
@@ -67,7 +65,6 @@ app.prepare().then(() => {
     '/logout',
     (req, res) => {
       req.session.destroy()
-      console.log(req.session)
       let page = '/logout'
       app.render(req, res, page)
     },
@@ -111,7 +108,6 @@ app.prepare().then(() => {
 
 
   server.get('/:subdomain/settings',
-    authenticate,
     (req, res) => {
       const page = '/cms/orgSettings'
       app.render(req, res, page, req.params)
@@ -145,7 +141,6 @@ app.prepare().then(() => {
   )
 
   server.get('/:subdomain/cms',
-    authenticate,
     async (req, res) => {
       try {
         const page = '/cms'
@@ -170,7 +165,6 @@ app.prepare().then(() => {
   })
 
   server.get('/:subdomain/cms/:storyId',
-    authenticate,
     (req, res) => {
       const page = '/cms/edit'
       const {subdomain, storyId} = req.params
@@ -197,21 +191,3 @@ app.prepare().then(() => {
   console.error(ex.stack)
   process.exit(1)
 })
-
-
-// {
-//   authenticate("${req.session.passport.user.id}") {
-    // user {
-    //   id
-    //   email
-    // }
-//     timestamp
-    // permissions {
-    //   organization {
-    //     id
-    //     subdomain
-    //   }
-    //   role
-    // }
-//   }
-// }

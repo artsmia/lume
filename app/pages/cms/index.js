@@ -2,22 +2,25 @@ import React, {Component} from 'react'
 import CmsHome from '../../components/cms/CmsHome'
 import withData from '../../apollo'
 import Template from '../../components/shared/Template'
-import getUser from '../../auth/getUser'
+import Auth from '../../auth'
 
 class CmsIndex extends Component {
 
   static getInitialProps = async (ctx) => {
     try {
 
-      let user = await getUser(ctx)
+
+      let auth = new Auth(ctx)
+      await auth.authenticate()
 
       return {
-        user
+        auth
       }
     } catch (ex) {
       console.error(ex)
     }
   }
+
 
   render() {
 

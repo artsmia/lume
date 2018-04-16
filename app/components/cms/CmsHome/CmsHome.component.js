@@ -12,14 +12,14 @@ import {Page, Card} from '../../mia-ui/layout'
 
 export default class CmsHome extends Component {
 
-  static propTypes = {
-    organization: PropTypes.shape({
-      name: PropTypes.string.isRequired
-    }),
-    user: PropTypes.shape({
-      id: PropTypes.string.isRequired
-    })
-  }
+  // static propTypes = {
+  //   organization: PropTypes.shape({
+  //     name: PropTypes.string.isRequired
+  //   }),
+  //   user: PropTypes.shape({
+  //     id: PropTypes.string.isRequired
+  //   })
+  // }
 
 
   render() {
@@ -28,8 +28,10 @@ export default class CmsHome extends Component {
 
     const {
       props: {
-        user: {
-          id: userId
+        auth: {
+          user: {
+            id: userId
+          },
         },
         organization: {
           name
