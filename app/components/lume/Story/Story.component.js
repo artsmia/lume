@@ -21,7 +21,7 @@ export default class Story extends Component {
       case "slider": {
         return (
           <SliderTemplate
-            story={this.props.story}
+            {...this.props}
           />
         )
         break

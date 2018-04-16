@@ -164,7 +164,6 @@ app.prepare().then(() => {
     const params = {
         subdomain,
         storySlug,
-        state0: 'about'
     }
     app.render(req, res, page, params)
   })
