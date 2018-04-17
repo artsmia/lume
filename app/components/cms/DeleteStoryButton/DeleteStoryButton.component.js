@@ -62,7 +62,7 @@ export default class DeleteStoryButton extends Component {
         query: {
           subdomain
         }
-      }, `/${subdomain}/cms`)
+      }, `/cms/${subdomain}`)
 
 
     } catch (ex) {

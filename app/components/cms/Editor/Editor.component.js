@@ -9,10 +9,12 @@ import {Select, Option, Input} from '../../mia-ui/forms'
 import EditorSwitcher from '../../contents/EditorSwitcher'
 import DisplaySwitcher from '../../contents/DisplaySwitcher'
 import {Link} from '../../mia-ui/links'
+import NextLink from 'next/link'
 import StoryPreview from '../../lume/Story/Story.component'
 import {Flex, Box} from 'grid-styled'
-import {H3} from '../../mia-ui/text'
+import {H3, H2} from '../../mia-ui/text'
 import {Break} from '../../mia-ui/layout'
+import Head from '../../mia-ui/head'
 
 export default class Editor extends Component {
 
@@ -41,7 +43,8 @@ export default class Editor extends Component {
       props: {
         story,
         story: {
-          id: storyId
+          id: storyId,
+          slug
         },
         router: {
           query: {
@@ -67,7 +70,8 @@ export default class Editor extends Component {
       renderContentEditor,
       handleReorder,
       contentTypes,
-      togglePreview
+      togglePreview,
+      renderSaveStatus
 
     } = this
 
@@ -82,6 +86,32 @@ export default class Editor extends Component {
           >
             Return to Editing
           </Button>
+          {(story.visibility === 'published') ? (
+            <NextLink
+              href={{
+                pathname: '/lume/story',
+                query: {
+                  subdomain,
+                  storySlug: slug,
+                }
+              }}
+              as={`/${subdomain}/${slug}`}
+            >
+              <Button
+                color={'green'}
+                a
+              >
+                View Live
+              </Button>
+            </NextLink>
+          ): (
+            <Button
+              disabled
+              color={'green'}
+            >
+              Unpublished
+            </Button>
+          )}
         </PreviewButtonBox>
         <StoryPreview
           story={story}
@@ -96,6 +126,9 @@ export default class Editor extends Component {
         flexDirection={"column"}
         alignItems={'flex-start'}
       >
+        <Head
+          title={`Editing: ${story.title}`}
+        />
         <PreviewButtonBox
           width={1/6}
         >
@@ -105,6 +138,32 @@ export default class Editor extends Component {
           >
             Preview your Story
           </Button>
+          {(story.visibility === 'published') ? (
+            <NextLink
+              href={{
+                pathname: '/lume/story',
+                query: {
+                  subdomain,
+                  storySlug: slug,
+                }
+              }}
+              as={`/${subdomain}/${slug}`}
+            >
+              <Button
+                color={'green'}
+                a
+              >
+                View Live
+              </Button>
+            </NextLink>
+          ): (
+            <Button
+              disabled
+              color={'green'}
+            >
+              Unpublished
+            </Button>
+          )}
         </PreviewButtonBox>
         <TopBar
           w={1}
@@ -129,37 +188,17 @@ export default class Editor extends Component {
             </Link>
           </Box>
           <Box
-            w={1/6}
+            w={1/3}
           >
-            <H3>{story.title ? story.title : 'Untitled Story'}</H3>
+            <H2>{story.title ? story.title : 'Untitled Story'}</H2>
           </Box>
 
           <Box
-            w={1/6}
+            w={1/3}
           >
-            Save Status
+            {renderSaveStatus()}
           </Box>
-          <Flex
-            w={1/6}
-          >
-            {(story.visibility === 'published') ? (
-              <Button
-                color={'green'}
-              >
-                View Live
-              </Button>
-            ): (
-              <Button
-                disabled
-                color={'green'}
-              >
-                Live View
-              </Button>
-            )}
-            <span>
-              The permanent link?
-            </span>
-          </Flex>
+
 
         </TopBar>
         <Workspace
@@ -245,6 +284,26 @@ export default class Editor extends Component {
     )
   }
 
+  renderSaveStatus = () => {
+    const {
+      saving,
+      synced,
+      lastSave
+    } = this.props.saveStatus
+
+    switch (true) {
+
+      case (synced): {
+        return (<span>All Changes Saved</span>)
+      }
+      default:
+      case (saving): {
+
+        return (<span>Saving</span>)
+      }
+    }
+  }
+
   componentWillReceiveProps(nextProps){
     if (nextProps.story) {
       let contents = nextProps.story.contents.slice().sort( (a,b) => a.index - b.index)
@@ -267,7 +326,8 @@ export default class Editor extends Component {
 
   saveReorder = () => {
     this.props.reorderContents({
-      contentIds: this.state.contents.map(content => content.id)
+      contentIds: this.state.contents.map(content => content.id),
+      storyId: this.props.story.id
     })
   }
 

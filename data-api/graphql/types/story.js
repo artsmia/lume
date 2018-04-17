@@ -62,7 +62,6 @@ const story = new GraphQLObjectType({
             ]
           })
 
-          console.log(contents.map(cont => cont.dataValues))
 
           return contents
         } catch (ex) {

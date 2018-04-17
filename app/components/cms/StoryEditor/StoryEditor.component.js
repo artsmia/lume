@@ -5,7 +5,7 @@ import {H3} from '../../mia-ui/text'
 import {Waiting} from '../../mia-ui/loading'
 import {Button} from '../../mia-ui/buttons'
 // import Image from '../../shared/Image'
-import {Title, Description, Label, Select, Option, MultiSelect} from '../../mia-ui/forms'
+import {Title, Description, Label, Select, Option, MultiSelect, Input} from '../../mia-ui/forms'
 import {ChangeImage} from '../DefaultEditors'
 import ImageManager from '../ImageManager'
 import DeleteStoryButton from '../DeleteStoryButton'
@@ -27,7 +27,9 @@ export default class StoryEditor extends Component {
     description: "",
     previewImageId: undefined,
     template: "original",
-    visibility: "draft"
+    visibility: "draft",
+    slug: '',
+    slugPending: false
   }
 
   state = {
@@ -45,9 +47,12 @@ export default class StoryEditor extends Component {
         description,
         previewImageId,
         template,
-        visibility
+        visibility,
+        slug,
+        slugPending
       },
       handleChange,
+      handleSlugChange,
       handleSave,
       handleGroupSelectionSave,
       props: {
@@ -109,58 +114,95 @@ export default class StoryEditor extends Component {
 
         </Flex>
         <Flex
-          width={1/2}
-          flexDirection={'column'}
+          w={1/2}
+          flexDirection={'row'}
+          flexWrap={'wrap'}
         >
-          <Label>
-            Template
-          </Label>
-          <Select
-            name={"template"}
-            onChange={handleChange}
-            value={template || 'original'}
+
+          <Box
+            w={1}
           >
-            <Option
-              value={"original"}
-            >
-              Original
-            </Option>
-            <Option
-              value={"slider"}
-            >
-              Slider
-            </Option>
-          </Select>
-
-          <Label>
-            Visibility
-          </Label>
-          <Select
-            name={"visibility"}
-            onChange={handleChange}
-            value={visibility || 'draft'}
+            <Label>
+              Pretty Url
+            </Label>
+            <Input
+              name={'slug'}
+              value={slug}
+              onChange={handleSlugChange}
+              disabled={slugPending}
+            />
+          </Box>
+          <Box
+            w={1}
           >
-
-            <Option
-              value={"draft"}
+            <Label>
+              Template
+            </Label>
+            <Select
+              name={"template"}
+              onChange={handleChange}
+              value={template || 'original'}
             >
-              Draft
-            </Option>
-            <Option
-              value={"published"}
+              <Option
+                value={"original"}
+              >
+                Original
+              </Option>
+              <Option
+                value={"slider"}
+              >
+                Slider
+              </Option>
+            </Select>
+          </Box>
+          <Box
+            w={1}
+          >
+            <Label>
+              Visibility
+            </Label>
+            <Select
+              name={"visibility"}
+              onChange={handleChange}
+              value={visibility || 'draft'}
             >
-              Published
-            </Option>
-          </Select>
 
-
-
-          <StoryAssociator
-            storyId={storyId}
-          />
-            {/* <DeleteStoryButton
+              <Option
+                value={"draft"}
+              >
+                Draft
+              </Option>
+              <Option
+                value={"published"}
+              >
+                Published
+              </Option>
+            </Select>
+          </Box>
+          <Box
+            w={1}
+          >
+            <StoryAssociator
               storyId={storyId}
-            /> */}
+            />
+          </Box>
+          <Box
+            w={1}
+          >
+
+            <DeleteStoryButton
+              storyId={storyId}
+            />
+          </Box>
+
+
+
+
+
+
+
+
+
 
         </Flex>
 
@@ -226,6 +268,55 @@ export default class StoryEditor extends Component {
 
   }
 
+  handleSlugChange = (e) => {
+
+    e.target.value = e.target.value.replace(/\s/g, '-')
+
+    let name = e.target.name
+    let value = e.target.value
+
+    this.setState(
+      ()=>({
+        [name]: value,
+      }),
+      ()=>{
+        this.props.setSaveStatus({
+          synced: false
+        })
+        this.debounce(this.handleSlugSave)
+      }
+    )
+
+  }
+
+  handleSlugSave = async () => {
+    try {
+      this.setState({
+        slugPending: true
+      })
+      let {data : {editStory: {slug}}} = await this.props.editStory({
+        slug: this.state.slug
+      })
+
+      this.setState({
+        slugPending: false,
+        slug
+      })
+
+      this.props.router.replace({
+        pathname: this.props.router.pathname,
+        query: {
+          ...this.props.router.query,
+          storySlug: slug
+        }
+      }, `/cms/${this.props.router.query.subdomain}/${slug}`)
+
+    } catch (ex) {
+      console.error(ex)
+    }
+
+  }
+
   handleChange = ({target: {value, name}}) => {
     this.setState(
       ()=>({
@@ -249,6 +340,7 @@ export default class StoryEditor extends Component {
 
       await this.props.editStory({
         ...this.state,
+        slugPending: undefined,
         previewImageId: this.state.previewImageId || undefined
       })
 

@@ -23,7 +23,6 @@ export default class ClientDocument extends Document {
     return (
       <html lang="en">
         <Head>
-          <title>Storytellin.gg</title>
           <link
             rel='shortcut icon'
             type='image/x-icon'
