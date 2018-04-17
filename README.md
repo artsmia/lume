@@ -15,8 +15,6 @@ Open up your terminal, clone the repository, and the navigate into the lume dire
 ```bash
 git clone https://github.com/artsmia/lume.git
 cd lume
-yarn install
-
 
 ```
 
@@ -58,16 +56,28 @@ The `.env` file will initially be configured for local use. Advanced users may c
 
 5. Initialize the Database
 
-Now that your MySQL server is running and has a database named `lume`, you will need to provide the database with a schema. To do this, enter the following command in the terminal from lume's root directory.
+Now that your MySQL server is running and has a database named `lume`, you will need to provide the database with a schema. To do this, enter the following command in the terminal from lume's scripts directory.
 
 ```bash
 # from the root lume directory
+# navigate to the scripts directory
+cd scripts
+# install our scripts dependencies
+yarn install
+# initialize our database
 yarn run reinit
 ```
 
 6. Start up the application
 
-Because Lume actually consists of two separate node servers (one for the api, the other to serve and provide routing for the next.js application), you'll need to open up two different terminal windows and navigate one into `lume/data-api` and the other into `lume/app`. Once there you will enter the following command separately into each terminal window:
+Because Lume actually consists of two separate node servers (one for the api, the other to serve and provide routing for the next.js application), you'll need to open up two different terminal windows and navigate one into `lume/data-api` and the other into `lume/app`.
+
+```bash
+# first you'll need to install their respective dependencies
+yarn install
+```
+
+ And then you will enter the following command separately into each terminal window to start them up:
 
 ```bash
 yarn run start-api:local
