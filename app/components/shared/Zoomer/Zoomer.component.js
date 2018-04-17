@@ -558,7 +558,7 @@ export default class extends Component {
 
         if (process.env.FILE_STORAGE === "local") {
 
-          const response = await fetch(`${process.env.API_URL}/static/${imageId}/ImageProperties.xml`, {
+          const response = await fetch(`${process.env.LOCAL_TILE_URL}/static/${imageId}/ImageProperties.xml`, {
             method: "GET"
           })
 
@@ -568,7 +568,7 @@ export default class extends Component {
           width = new RegExp(/WIDTH="(\d*)"/g).exec(text)[1]
 
 
-          tileUrl = `${process.env.API_URL}/static/${imageId}/TileGroup0/{z}-{x}-{y}.png`
+          tileUrl = `${process.env.LOCAL_TILE_URL}/static/${imageId}/TileGroup0/{z}-{x}-{y}.png`
         } else {
 
           const response = await fetch(`${process.env.S3_URL}/mia-lume/${bucketId}/${imageId}/info.json`, {

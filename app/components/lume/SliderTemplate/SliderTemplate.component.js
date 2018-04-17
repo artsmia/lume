@@ -9,7 +9,7 @@ import router from 'next/router'
 import Markdown from 'react-markdown'
 import AdditionalImages from '../OriginalTemplate/AdditionalImages'
 import {Flex, Box} from 'grid-styled'
-import Head from '../../mia-ui/head'
+import Head from '../../shared/head'
 
 
 export default class OriginalTemplate extends Component {

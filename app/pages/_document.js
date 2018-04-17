@@ -23,6 +23,21 @@ export default class ClientDocument extends Document {
     return (
       <html lang="en">
         <Head>
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=UA-117678686-1"
+          />
+          <script
+            dangerouslySetInnerHTML={{__html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'UA-117678686-1');
+            `}}
+          />
+
+
           <link
             rel='shortcut icon'
             type='image/x-icon'

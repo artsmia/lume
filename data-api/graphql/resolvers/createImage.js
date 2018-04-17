@@ -4,6 +4,8 @@ import Image from '../../db/models/Image'
 export default async function(src, args, ctx){
   try {
 
+    console.log("createImage", args)
+
     let organization = await Organization.findOne({
       where: {
         ...args.organization

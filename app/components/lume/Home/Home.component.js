@@ -9,6 +9,7 @@ import {Flex, Box} from 'grid-styled'
 import {GridList, Tile} from '../../mia-ui/lists'
 import {Waiting} from '../../mia-ui/loading'
 import Link from 'next/link'
+import Head from '../../shared/head'
 
 export default class Home extends Component {
 
@@ -25,6 +26,9 @@ export default class Home extends Component {
 
     return (
         <Page>
+            <Head
+              title={'Welcome'}
+            />
             <Card>
               <H2>
                 Lume

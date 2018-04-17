@@ -61,11 +61,8 @@ export class Expander extends Component {
               />
             )}
           </A>
-          <A
-            onClick={open ? handleCloseRequest : handleOpenRequest}
-          >
+
             {header}
-          </A>
         </Header>
         <Body
           width={1}

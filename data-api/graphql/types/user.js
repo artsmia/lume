@@ -37,8 +37,6 @@ const user = new GraphQLObjectType({
             role: org.role
           }))
 
-          console.log(orgs)
-
           return orgs
         } catch (ex) {
           console.error(ex)

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Label, Input, Checkbox, Textarea} from '../../mia-ui/forms'
+import {Label, Input, CheckboxInput, Textarea} from '../../mia-ui/forms'
 // import {Row, Column} from '../../mia-ui/layout'
 import {Button} from '../../mia-ui/buttons'
 // import Snackbar from '../../mia-ui/Snackbar'
@@ -12,9 +12,9 @@ export default class extends Component {
   state = {
     files: [],
     uploading: false,
-    hasRights: false,
-    alt: "",
-    title: "",
+    hasRights: true,
+    alt: "meow",
+    title: "meow",
     snackMessage: "",
     snackId: Math.random(),
   }
@@ -40,17 +40,26 @@ export default class extends Component {
 
     return (
         <Flex>
-          <Box>
-
-            <Label>
-              Image
-            </Label>
-            <input
-              type={"file"}
-              name={"files"}
-              accept={"image/*"}
-              onChange={handleFile}
-            />
+          <Flex
+            w={1/3}
+            flexWrap={'wrap'}
+          >
+            <Box
+              w={1}
+            >
+              <Label>
+                Image
+              </Label>
+              <input
+                type={"file"}
+                name={"files"}
+                accept={"image/*"}
+                onChange={handleFile}
+              />
+            </Box>
+            <Box
+              w={1}
+            >
               <Label>
                 Title
               </Label>
@@ -59,6 +68,10 @@ export default class extends Component {
                 value={title}
                 onChange={handleChange}
               />
+            </Box>
+            <Box
+              w={1}
+            >
               <Label>
                 Description
               </Label>
@@ -67,16 +80,20 @@ export default class extends Component {
                 value={alt}
                 onChange={handleChange}
               />
-            <Box>
+            </Box>
+            <Box
+              w={1}
+            >
               <Label>
                 I have the right to distribute this image.
               </Label>
-              <Checkbox
-                name={"hasRights"}
+              <CheckboxInput
+                value={"hasRights"}
                 checked={hasRights}
                 onChange={handleCheckbox}
               />
             </Box>
+
             <Button
               onClick={handleUpload}
               disabled={(
@@ -89,7 +106,7 @@ export default class extends Component {
             >
               Upload
             </Button>
-          </Box>
+          </Flex>
           <Box>
             {(uploading) ? (
               <Spinner/>
@@ -120,7 +137,7 @@ export default class extends Component {
 
   }
 
-  handleCheckbox = ({target: {name, checked}}) => this.setState({[name]: checked})
+  handleCheckbox = ({target: {value, checked}}) => this.setState({[value]: checked})
 
   handleUpload = async () => {
     try {
@@ -146,7 +163,7 @@ export default class extends Component {
       form.append("alt", alt)
       form.append("subdomain", subdomain)
 
-      const url  = `${process.env.API_URL}/image`
+      const url  = (process.env.FILE_STORAGE === 's3') ? `${process.env.API_URL}/image` : 'http://localhost:3001/upload'
 
       let options = {
         method: 'POST',

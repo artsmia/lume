@@ -8,7 +8,7 @@ import resolve from '../resolvers/createImage'
 import {OrganizationInput} from '../types/inputs'
 
 const createImage = {
-  name: "story",
+  name: "createImage",
   type: imageType,
   args: {
     id: {

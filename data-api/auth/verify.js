@@ -6,6 +6,7 @@ const cert = fs.readFileSync('artsmia.pem')
 
 export default async (req, res, next) => {
   try {
+
     if (req.headers.authorization){
       try {
         let token = req.headers.authorization.split('Bearer ')[1]

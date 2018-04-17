@@ -12,7 +12,7 @@ import AdditionalImages from './AdditionalImages'
 import {Flex, Box} from 'grid-styled'
 import {Expander} from '../../mia-ui/expanders'
 import {H3} from '../../mia-ui/text'
-import Head from '../../mia-ui/head'
+import Head from '../../shared/head'
 
 
 export default class OriginalTemplate extends Component {

@@ -11,7 +11,7 @@ import {Drawer, DrawerCheck, DrawerButton, DrawerPage} from '../../mia-ui/drawer
 import {GridList, Tile} from '../../mia-ui/lists'
 import getImageSrc from '../../../utils/getImageSrc'
 import {Loading} from '../../mia-ui/loading'
-import Head from '../../mia-ui/head'
+import Head from '../../shared/head'
 
 export default class Home extends Component {
 

@@ -38,6 +38,11 @@ export default class Auth {
       )
 
       switch (true) {
+        case (process.env.AUTH_STRATEGY === 'local'): {
+          console.log("local auth strategy")
+          this.ctx = {}
+          break
+        }
         case (!this.permission): {
 
           console.log("couldn't find permissions for this subdomain")
@@ -71,16 +76,43 @@ export default class Auth {
 
   getUser = () => {
     try {
-      if (this.env === 'browser'){
-        this.getUserBrowser()
-      } else {
-        this.getUserServer()
+
+      switch (true) {
+        case (process.env.AUTH_STRATEGY === 'local'): {
+          this.getUserLocal()
+          break
+        }
+        case (this.env === 'browser'): {
+          this.getUserBrowser()
+
+          break
+        }
+        case (this.env === 'server'): {
+          this.getUserServer()
+
+          break
+        }
+        default: {
+
+          break
+        }
       }
+
     } catch (ex) {
       console.error(ex)
     }
   }
 
+  getUserLocal = () => {
+    try {
+      this.user = {
+        id: 'localuser',
+        idToken: 'localuser'
+      }
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
 
   getUserServer = () => {
     try {
@@ -162,6 +194,23 @@ export default class Auth {
 
   fetchPermissions = async () => {
     try {
+
+      if(process.env.AUTH_STRATEGY === 'local'){
+        this.authProfile = {
+          user: {
+            id: 'localuser'
+          },
+          permissions: [
+            {
+              organization: {
+                subdomain: 'local'
+              },
+              role: 'admin'
+            }
+          ]
+        }
+        return
+      }
 
       let response = await fetch(process.env.API_URL, {
         method: 'POST',

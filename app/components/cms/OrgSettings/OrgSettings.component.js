@@ -7,6 +7,7 @@ import CategoryGroupEditor from '../CategoryGroupEditor'
 import {Page, Card} from '../../mia-ui/layout'
 import {Flex, Box} from 'grid-styled'
 import ManageUsers from '../ManageUsers'
+import Head from '../../shared/head'
 
 export default class OrgSettings extends Component {
 
@@ -47,13 +48,17 @@ export default class OrgSettings extends Component {
     return (
         <Page>
 
+          <Head
+            title={`Settings –– ${organization.name}`}
+          />
+
           <Card>
 
             <H2>
               {organization.name} settings
             </H2>
 
-            <Box
+            <Flex
               w={1}
             >
               <Label>
@@ -66,37 +71,39 @@ export default class OrgSettings extends Component {
                 onChange={handleChange}
               />
 
-            </Box>
+            </Flex>
 
-            <Box
+            <Flex
               w={1}
             >
               <Label>
                 New Users Require Approval
               </Label>
 
-              <CheckboxInput
-                name={"newUsersRequireApproval"}
-                checked={newUsersRequireApproval}
+              <input
+                type={'checkbox'}
+                value={"newUsersRequireApproval"}
+                checked={organization.newUsersRequireApproval}
                 onChange={handleCheck}
               />
-            </Box>
+            </Flex>
 
-            <Box
+            <Flex
               w={1}
             >
               <Label>
                 Use Custom Object API
               </Label>
 
-              <CheckboxInput
-                name={"customObjApiEnabled"}
-                checked={customObjApiEnabled}
+              <input
+                type={'checkbox'}
+                value={"customObjApiEnabled"}
+                checked={organization.customObjApiEnabled}
                 onChange={handleCheck}
               />
-            </Box>
+            </Flex>
 
-            <Box
+            <Flex
               w={1}
             >
               <Label>
@@ -108,18 +115,10 @@ export default class OrgSettings extends Component {
                 value={customObjApiEndpoint}
                 onChange={handleChange}
               />
-            </Box>
+            </Flex>
 
 
-            <Box
-              w={1}
-            >
-              <Button
-                onClick={handleSave}
-              >
-                Save
-              </Button>
-            </Box>
+
 
 
           </Card>
@@ -143,9 +142,35 @@ export default class OrgSettings extends Component {
     )
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+  bounce = true
 
-  handleCheck = ({target: {checked, name}}) => this.setState({[name]: checked})
+  debounce = (func) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(
+        func,
+        2000
+      )
+    }
+  }
+
+
+  handleChange = ({target: {value, name}}) => {
+    this.setState(
+      ()=>({[name]: value}),
+      ()=>{
+        this.debounce(this.handleSave,2000)
+      }
+    )
+  }
+
+  handleCheck = ({target: {checked, value}}) => {
+    this.setState(
+      ()=>({[value]: checked}),
+      this.handleSave
+    )
+
+  }
 
   componentWillReceiveProps(nextProps){
     if (
