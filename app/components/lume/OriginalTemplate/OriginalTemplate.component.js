@@ -12,6 +12,8 @@ import AdditionalImages from './AdditionalImages'
 import {Flex, Box} from 'grid-styled'
 import {Expander} from '../../mia-ui/expanders'
 import {H3} from '../../mia-ui/text'
+import Head from '../../mia-ui/head'
+
 
 export default class OriginalTemplate extends Component {
 
@@ -83,6 +85,9 @@ export default class OriginalTemplate extends Component {
       <Container
         w={1}
       >
+        <Head
+          title={story.title}
+        />
         <SideContainer
           w={1/4}
           flexWrap={'wrap'}

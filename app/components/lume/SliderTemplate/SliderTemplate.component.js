@@ -9,6 +9,7 @@ import router from 'next/router'
 import Markdown from 'react-markdown'
 import AdditionalImages from '../OriginalTemplate/AdditionalImages'
 import {Flex, Box} from 'grid-styled'
+import Head from '../../mia-ui/head'
 
 
 export default class OriginalTemplate extends Component {
@@ -42,6 +43,9 @@ export default class OriginalTemplate extends Component {
       <Container
         w={1}
       >
+        <Head
+          title={story.title}
+        />
         <PageButtonContainer
           w={1}
           justifyContent={'space-between'}

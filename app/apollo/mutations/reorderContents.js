@@ -20,9 +20,10 @@ const reorderContents = gql`
 `
 
 const mutationConfig = {
-  props: ({mutate, ownProps: {storyId} }) => ({
+  props: ({mutate, ownProps}) => ({
     reorderContents: ({
-      contentIds
+      contentIds,
+      storyId
     }) => mutate({
       variables: {
         storyId,
