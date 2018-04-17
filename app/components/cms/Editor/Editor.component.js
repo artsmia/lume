@@ -14,7 +14,7 @@ import StoryPreview from '../../lume/Story/Story.component'
 import {Flex, Box} from 'grid-styled'
 import {H3, H2} from '../../mia-ui/text'
 import {Break} from '../../mia-ui/layout'
-import Head from '../../mia-ui/head'
+import Head from '../../shared/head'
 
 export default class Editor extends Component {
 
@@ -182,7 +182,7 @@ export default class Editor extends Component {
                   subdomain
                 }
               }}
-              as={`/${subdomain}/cms`}
+              as={`/cms/${subdomain}`}
             >
               Back to All Stories
             </Link>

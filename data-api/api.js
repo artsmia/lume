@@ -23,13 +23,15 @@ let port = process.env.PORT || 5000
 
 server.set('port', port)
 
-let corsOptions = {
-  origin: [
-    /http:\/\/localhost:3000.*/,
-  ]
-}
+// let corsOptions = {
+//   origin: [
+//     /http:\/\/localhost:3000.*/,
+//     /http:\/\/localhost:6000.*/,
+//   ]
+// }
 server.use(
-  cors(corsOptions),
+  cors(),
+  //cors(corsOptions),
   bodyParser.json(),
 )
 
@@ -52,7 +54,13 @@ server.use(
 
 server.use(
   '/',
-  verify,
+  (req, res, next) => {
+    if(process.env.AUTH_STRATEGY === 'local'){
+      next()
+    } else {
+      verify(req, res, next)
+    }
+  },
   graphqlExpress((req, res) => {
     return {
       schema,

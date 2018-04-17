@@ -10,19 +10,25 @@ const next = require('next')
 const fetch = require('isomorphic-unfetch')
 const session = require('express-session')
 
-// const RedisStore = require('connect-redis')(session)
-// const redisOptions = {
-//   url: process.env.REDIS_URL
-// }
-
-const MySQLStore = require('express-mysql-session')(session)
-const storeOptions = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE
+let store
+if (process.env.REDIS_URL){
+  const RedisStore = require('connect-redis')(session)
+  const redisOptions = {
+    url: process.env.REDIS_URL
+  }
+  store = new RedisStore(redisOptions)
+} else {
+  const MySQLStore = require('express-mysql-session')(session)
+  const storeOptions = {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
+  }
+  store = MySQLStore(storeOptions)
 }
+
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -38,8 +44,7 @@ app.prepare().then(() => {
   server.use(
     passport.initialize(),
     session({
-      // store: new RedisStore(redisOptions),
-      store: new MySQLStore(storeOptions),
+      store,
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false
@@ -136,7 +141,12 @@ app.prepare().then(() => {
       }
     }
   )
-
+  server.get('/cms/:subdomain/settings',
+    (req, res) => {
+      const page = '/cms/orgSettings'
+      app.render(req, res, page, req.params)
+    }
+  )
 
   server.get('/cms/:subdomain/:storySlug',
     (req, res) => {
@@ -151,12 +161,7 @@ app.prepare().then(() => {
   )
 
 
-  server.get('/cms/:subdomain/settings',
-    (req, res) => {
-      const page = '/cms/orgSettings'
-      app.render(req, res, page, req.params)
-    }
-  )
+
 
   server.get('/:subdomain/:storySlug', (req, res) => {
     const page = '/lume/story'

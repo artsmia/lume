@@ -77,6 +77,7 @@ export const Tile = (props) => (
   <Box
     w={props.w}
     p={props.p}
+    onClick={props.onClick}
   >
     {props.link ? (
       <Link

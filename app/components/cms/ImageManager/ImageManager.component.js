@@ -46,6 +46,8 @@ export default class ImageManager extends Component {
       handleRefetch
     } = this
 
+    console.log(images)
+
     return (
       <Flex>
 
@@ -173,6 +175,7 @@ export default class ImageManager extends Component {
 
 
   handleImageSave = () => {
+    console.log(this.state)
     this.props.onImageSave(this.state.selectedImageId)
   }
 

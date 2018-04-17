@@ -36,13 +36,9 @@ class Auth extends Component {
 
   handleUser = async () => {
     try {
-      console.log('hey')
       await this.setLocal()
 
-      console.log('hello')
       let organizations = await this.getUserOrganizations()
-      console.log("more")
-      console.log(organizations)
       if (organizations.length === 0){
         router.push({
           pathname: '/cms/orgManager',

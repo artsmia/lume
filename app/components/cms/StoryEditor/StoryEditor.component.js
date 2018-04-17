@@ -186,31 +186,16 @@ export default class StoryEditor extends Component {
               storyId={storyId}
             />
           </Box>
-          <Box
+          <Flex
             w={1}
           >
 
             <DeleteStoryButton
               storyId={storyId}
             />
-          </Box>
-
-
-
-
-
-
-
-
-
+          </Flex>
 
         </Flex>
-
-
-
-
-
-
       </Flex>
     )
   }
@@ -318,6 +303,8 @@ export default class StoryEditor extends Component {
   }
 
   handleChange = ({target: {value, name}}) => {
+    console.log(name, value)
+
     this.setState(
       ()=>({
         [name]: value,
@@ -337,6 +324,8 @@ export default class StoryEditor extends Component {
       this.props.setSaveStatus({
         saving: true,
       })
+
+      console.log(this.state)
 
       await this.props.editStory({
         ...this.state,

@@ -11,6 +11,7 @@ const fragment = gql`
     customImageEndpoint
     customObjApiEndpoint
     customObjApiEnabled
+    newUsersRequireApproval
     categories {
       ...CategoryFragment
     }

@@ -10,16 +10,17 @@ export default ({
     return src
   }
 
+
   if (
     organization.customImageApiEnabled
   ) {
     src = `https://cdn.dx.artsmia.org/thumbs/tn_${image.localId}.jpg`
   } else {
-    src = `${process.env.S3_URL}/mia-lume/${organization.id}/${image.id}/${quality}`
+    src = `${process.env.S3_URL}/mia-lume/${organization.id}/${image.id}/${quality}.png`
   }
 
-  if (process.env.FILE_STORAGE === "local") {
-    src = `${process.env.API_URL}/static/${image.id}/${imgQuality}.jpeg`
+  if (organization.subdomain === "local") {
+    src = `${process.env.LOCAL_TILE_URL}/static/${image.id}/${quality}.jpeg`
   }
 
   return src
