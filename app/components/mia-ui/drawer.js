@@ -25,30 +25,31 @@ export const Drawer = styled(Flex)`
 
 export const DrawerButton = styled.div`
   position: fixed;
-  top: 5px;
-  left:5px;
+  top: 15px;
+  left:15px;
   transition: all .4s;
-  height: 30px;
-  width: 35px;
+  height: 50px;
+  width: 50px;
   opacity: 1;
   z-index: 2;
-  margin: 10px;
-  border-radius: 50px;
   cursor: pointer;
+  background-color: white;
+  border-radius: 50px;
+
   span {
     display: block;
     position: absolute;
     height: 5px;
-    width: 35px;
+    width: 30px;
     background: ${black};
     opacity: 1;
-    right: 0;
+    right: 10px;
     transform: rotate(0deg);
     transition: all .2s ease-in-out;
   }
 
   span:nth-child(1){
-    top: 0;
+    top: 24%;
     transform-origin: left center;
   }
 
@@ -59,7 +60,7 @@ export const DrawerButton = styled.div`
   }
 
   span:nth-child(3){
-    bottom: 0;
+    bottom: 24%;
     transform-origin: left center;
   }
 `
@@ -105,7 +106,9 @@ export const DrawerCheck = styled.input`
 
     span:nth-child(1){
       transform: rotate(45deg);
-      top: 0px;
+      top: 10px;
+      left: 12px;
+      width: 36px;
     }
 
     span:nth-child(2){
@@ -115,7 +118,9 @@ export const DrawerCheck = styled.input`
 
     span:nth-child(3){
       transform: rotate(-45deg);
-      bottom: 0;
+      bottom: 10px;
+      left: 12px;
+      width: 36px;
     }
 
   }

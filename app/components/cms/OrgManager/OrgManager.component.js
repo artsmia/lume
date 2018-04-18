@@ -5,6 +5,7 @@ import {Form, Label, Input, Select, Option} from '../../mia-ui/forms'
 import {Button} from '../../mia-ui/buttons'
 import router from 'next/router'
 import {Page, Card} from '../../mia-ui/layout'
+import Head from '../../shared/head'
 
 export default class OrgManager extends Component {
 
@@ -37,6 +38,10 @@ export default class OrgManager extends Component {
 
     return (
         <Page>
+
+          <Head
+            title={'Join or Create an Organization'}
+          />
 
             <Card
               m={2}

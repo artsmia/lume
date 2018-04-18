@@ -15,11 +15,18 @@ async function reinitialize(){
 
     await createAssociations()
 
-    await db.query("SET foreign_key_checks = 0;")
+    if (process.env.DB_MODE !== 'local'){
+      await db.query("SET foreign_key_checks = 0;")
+
+    }
 
     await db.sync({force: true})
 
-    await db.query("SET foreign_key_checks = 1;")
+    if (process.env.DB_MODE !== 'local'){
+      await db.query("SET foreign_key_checks = 1;")
+
+    }
+
 
     let [organization] = await Organization.findOrCreate({
       where: {

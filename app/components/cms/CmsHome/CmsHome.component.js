@@ -9,6 +9,7 @@ import {NextA} from '../../mia-ui/links'
 import {Icon} from '../../mia-ui/icons'
 import {Flex, Box} from 'grid-styled'
 import {Page, Card} from '../../mia-ui/layout'
+import Head from '../../shared/head'
 
 export default class CmsHome extends Component {
 
@@ -24,14 +25,15 @@ export default class CmsHome extends Component {
 
   render() {
 
+    console.log(this.props)
+
     if (!this.props.organization) return <Loading/>
 
     const {
       props: {
-        auth: {
-          user: {
-            id: userId
-          },
+        user,
+        user: {
+          id: userId
         },
         organization: {
           name
@@ -44,27 +46,34 @@ export default class CmsHome extends Component {
       }
     } = this
 
+    let showSettings = user.organizations.find( org => (org.role === 'admin' && org.subdomain === subdomain))
+
     return (
       <Page>
-        <Card>
-          <Flex
-            flexWrap={'wrap'}
+        <Head
+          title={name}
+        />
+        <Flex
+          w={1}
+          pb={2}
+        >
+          <Box
+            width={9/10}
           >
-            <Box
-              width={9/10}
-            >
-              <H2>
-                {name}
-              </H2>
-            </Box>
-            <Box
-              width={1/10}
-            >
+            <H2>
+              {name}
+            </H2>
+          </Box>
+          <Flex
+            width={1/10}
+            justifyContent={'flex-end'}
+          >
+            {showSettings ? (
               <NextA
                 href={{
                   pathname: '/cms/orgSettings',
                   query: {
-                    subdomain: subdomain,
+                    subdomain,
                   }
                 }}
                 as={`/cms/${subdomain}/settings`}
@@ -73,9 +82,20 @@ export default class CmsHome extends Component {
                     icon={'settings'}
                     color={'black'}
                     title={"Settings"}
+                    size={'30px'}
                   />
               </NextA>
-            </Box>
+            ): null}
+
+          </Flex>
+        </Flex>
+        <Card
+          p={3}
+        >
+          <Flex
+            flexWrap={'wrap'}
+          >
+
             <Box
               width={1}
             >
@@ -90,10 +110,6 @@ export default class CmsHome extends Component {
             </Box>
           </Flex>
         </Card>
-
-
-
-
 
 
       </Page>

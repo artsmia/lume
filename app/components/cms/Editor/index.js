@@ -13,8 +13,6 @@ const SaveStatusQuery = gql`
   query SaveStatus {
     saveStatus {
       synced
-      saving
-      lastSave
     }
   }
 `

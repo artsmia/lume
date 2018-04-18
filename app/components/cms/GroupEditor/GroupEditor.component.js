@@ -13,7 +13,7 @@ export default class GroupEditor extends Component {
 
   render() {
 
-    if (!this.props.group) return null
+    if (!this.props.group) return <Container/>
 
     const {
       props: {
@@ -29,7 +29,7 @@ export default class GroupEditor extends Component {
     } = this
 
     return (
-      <Flex
+      <Container
         flexWrap={'wrap'}
         w={1}
       >
@@ -63,7 +63,7 @@ export default class GroupEditor extends Component {
 
 
 
-      </Flex>
+      </Container>
     )
   }
 
@@ -108,3 +108,7 @@ export default class GroupEditor extends Component {
     }
   }
 }
+
+const Container = styled(Flex)`
+  height: 160px;
+`

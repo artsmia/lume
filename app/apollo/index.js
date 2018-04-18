@@ -8,6 +8,7 @@ import { withClientState } from 'apollo-link-state'
 
 import defaults from './local/defaults'
 import resolvers from './local/resolvers'
+import typeDefs from './local/typeDefs'
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
@@ -44,7 +45,12 @@ const authLink = setContext(
   }
 )
 
-const stateLink = withClientState({ resolvers, cache, defaults })
+const stateLink = withClientState({
+  resolvers,
+  cache,
+  defaults,
+  typeDefs
+})
 
 
 const httpLink = new HttpLink({

@@ -5,10 +5,9 @@ export default class Auth {
 
   cmsRoles = ['admin', 'editor', 'contributor']
 
-
   constructor(ctx){
 
-    this.ctx = ctx
+    this.pathname = ctx.pathname
 
     if (process.browser){
       this.env = 'browser'
@@ -18,7 +17,8 @@ export default class Auth {
     ) {
       this.env = 'server'
       this.subdomain = ctx.req.params.subdomain
-
+      this.session = ctx.req.session
+      this.res = ctx.res
     } else {
       console.log("not server or browser?")
       this.authFail()
@@ -29,34 +29,41 @@ export default class Auth {
   authenticate = async() => {
     try {
 
-      this.getUser()
+      await this.getUser()
 
-      await this.fetchPermissions()
 
-      this.permission = this.authProfile.permissions.find(
-        ({organization}) => organization.subdomain === this.subdomain
+
+      this.organization = this.user.organizations.find(
+        organization => organization.subdomain === this.subdomain
       )
 
+
+
       switch (true) {
+
+
         case (process.env.AUTH_STRATEGY === 'local'): {
           console.log("local auth strategy")
-          this.ctx = {}
           break
         }
-        case (!this.permission): {
+        case(this.pathname === '/cms/orgSettings' && this.organization.role !== 'admin'): {
+          console.log('settings is only for admins')
+          this.authFail()
+          break
+        }
+        case (!this.organization): {
 
           console.log("couldn't find permissions for this subdomain")
           this.authFail()
           break
         }
-        case (this.permission.role === 'pending'): {
+        case (this.organization.role === 'pending'): {
           console.log("role is pending")
           this.pending()
           break
         }
-        case (this.cmsRoles.includes(this.permission.role)): {
+        case (this.cmsRoles.includes(this.organization.role)): {
           console.log("allowed")
-          this.ctx = {}
           break
         }
         default: {
@@ -66,7 +73,6 @@ export default class Auth {
         }
       }
 
-
     } catch (ex) {
       console.error(ex)
     }
@@ -74,7 +80,7 @@ export default class Auth {
 
 
 
-  getUser = () => {
+  getUser = async () => {
     try {
 
       switch (true) {
@@ -98,6 +104,9 @@ export default class Auth {
         }
       }
 
+      await this.fetchPermissions()
+
+
     } catch (ex) {
       console.error(ex)
     }
@@ -120,7 +129,7 @@ export default class Auth {
       const {
         id,
         idToken
-      } = this.ctx.req.session.passport.user
+      } = this.session.passport.user
 
       if (id && idToken){
         this.user = {
@@ -168,7 +177,7 @@ export default class Auth {
 
   authFailServer = () => {
     console.log("authFailServer")
-    this.ctx.res.redirect('/')
+    this.res.redirect('/')
   }
 
   authFailBrowser = () => {
@@ -185,7 +194,7 @@ export default class Auth {
   }
 
   pendingServer = () => {
-    this.ctx.res.redirect(`/cms/${this.subdomain}/pending`)
+    this.res.redirect(`/cms/${this.subdomain}/pending`)
   }
 
   pendingClient = () => {
@@ -225,13 +234,18 @@ export default class Auth {
               timestamp
               user {
                 id
-              }
-              permissions {
-                organization {
+                email
+                name {
+                  given
+                  family
+                }
+                picture
+                organizations {
                   id
                   subdomain
+                  role
+                  name
                 }
-                role
               }
             }
           }`
@@ -240,11 +254,13 @@ export default class Auth {
 
       let {
         data: {
-          authenticate
+          authenticate: {
+            user
+          }
         }
       } = await response.json()
 
-      this.authProfile = authenticate
+      this.user = user
 
     } catch (ex) {
       console.error('fetchPermissions fail')

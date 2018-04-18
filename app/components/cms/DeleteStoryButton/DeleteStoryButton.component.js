@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {Button} from '../../mia-ui/buttons'
 import PropTypes from 'prop-types'
 import router from 'next/router'
+import {Flex, Box} from 'grid-styled'
 
 export default class DeleteStoryButton extends Component {
 
@@ -18,8 +19,10 @@ export default class DeleteStoryButton extends Component {
 
     if (this.state.confirm) {
       return (
-        <Container>
-          Are you sure
+        <Container
+          w={1}
+        >
+          Are you sure you want to delete this story?
           <Button
             color={"green"}
             onClick={()=>this.setState({confirm:false})}
@@ -37,7 +40,10 @@ export default class DeleteStoryButton extends Component {
       )
     } else {
       return (
-        <Container>
+        <Container
+          w={1}
+
+        >
           <Button
             onClick={()=>this.setState({confirm: true})}
             color={"red"}
@@ -72,7 +78,7 @@ export default class DeleteStoryButton extends Component {
 
 }
 
-const Container = styled.div`
-  display: flex;
-  height: 100%;
+const Container = styled(Flex)`
+  justify-content: center;
+  align-items: center;
 `

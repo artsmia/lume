@@ -74,6 +74,7 @@ export default class StoryEditor extends Component {
         <Flex
           width={1/2}
           flexDirection={'column'}
+          pr={4}
         >
 
 
@@ -235,21 +236,23 @@ export default class StoryEditor extends Component {
     }
   }
 
-  handleGroupSelectionSave = (selectedGroupIds) => {
+  handleGroupSelectionSave = async (selectedGroupIds) => {
+    try {
+      this.props.setSaveStatus({
+        synced: false
+      })
 
-    this.props.setSaveStatus({
-      saving: true,
-    })
+      await this.props.editStory({
+        setGroupsIds: selectedGroupIds
+      })
 
-    this.props.editStory({
-      setGroupsIds: selectedGroupIds
-    })
+      this.props.setSaveStatus({
+        synced: true,
+      })
+    } catch (ex) {
+      console.error(ex)
+    }
 
-    this.props.setSaveStatus({
-      synced: true,
-      saving: false,
-      lastSave: Date.now()
-    })
 
   }
 
@@ -266,7 +269,7 @@ export default class StoryEditor extends Component {
       }),
       ()=>{
         this.props.setSaveStatus({
-          synced: false
+          synced: false,
         })
         this.debounce(this.handleSlugSave)
       }
@@ -303,8 +306,6 @@ export default class StoryEditor extends Component {
   }
 
   handleChange = ({target: {value, name}}) => {
-    console.log(name, value)
-
     this.setState(
       ()=>({
         [name]: value,
@@ -321,11 +322,7 @@ export default class StoryEditor extends Component {
   handleSave = async () => {
     try {
 
-      this.props.setSaveStatus({
-        saving: true,
-      })
 
-      console.log(this.state)
 
       await this.props.editStory({
         ...this.state,
@@ -335,8 +332,6 @@ export default class StoryEditor extends Component {
 
       this.props.setSaveStatus({
         synced: true,
-        saving: false,
-        lastSave: Date.now()
       })
 
     } catch (ex) {

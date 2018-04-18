@@ -97,6 +97,7 @@ export class Expander extends Component {
   }
 
   styleClose = () => {
+    this.body.style.height = `${this.state.openHeight}px`
     this.body.style.opacity = 0
     this.body.style.height = 0
     this.body.style.overflow = 'hidden'
@@ -108,6 +109,7 @@ export class Expander extends Component {
     this.body.style.height = `${this.state.openHeight}px`
     this.body.style.overflow = 'visible'
     this.body.style.visibility = 'visible'
+    this.body.style.height = 'auto'
   }
 
   handleCloseRequest = () => {

@@ -12,18 +12,18 @@ export default {
       }
 
       cache.writeData({data})
+      return data
     },
-    setSaveStatus(obj, {synced, saving, lastSave}, {cache}, info){
+    setSaveStatus(obj, variables, {cache}, info){
       const data = {
         saveStatus: {
           __typename: "SaveStatus",
-          synced,
-          saving,
-          lastSave
+          ...variables
         }
       }
 
       cache.writeData({data})
+      return data
     }
   }
 }

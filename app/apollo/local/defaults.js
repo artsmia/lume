@@ -6,8 +6,6 @@ export default {
   },
   saveStatus: {
     synced: true,
-    saving: false,
-    lastSave: '',
     __typename: "SaveStatus"
   }
 }
