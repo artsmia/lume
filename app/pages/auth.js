@@ -14,6 +14,8 @@ class Auth extends Component {
       let auth = new AuthClass(ctx)
 
       await auth.getUser()
+
+      console.log(auth.user)
       return {
         user: auth.user
       }
@@ -82,6 +84,9 @@ class Auth extends Component {
           idToken,
           id
         } = this.props.user
+
+        localStorage.removeItem('userId')
+        localStorage.removeItem('idToken')
 
         localStorage.setItem('userId', id)
         localStorage.setItem('idToken', idToken)

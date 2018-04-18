@@ -60,7 +60,7 @@ server.use(
     } else {
       verify(req, res, next)
     }
-    
+
   },
   graphqlExpress((req, res) => {
     return {
