@@ -7,16 +7,17 @@ export default class Auth {
 
   constructor(ctx){
 
+    console.log(ctx)
+
     this.pathname = ctx.pathname
+    this.query = ctx.query
 
     if (process.browser){
       this.env = 'browser'
-      this.subdomain = ctx.query.subdomain
     } else if (
       ctx.req
     ) {
       this.env = 'server'
-      this.subdomain = ctx.req.params.subdomain
       this.session = ctx.req.session
       this.res = ctx.res
     } else {
@@ -34,7 +35,7 @@ export default class Auth {
 
 
       this.organization = this.user.organizations.find(
-        organization => organization.subdomain === this.subdomain
+        organization => organization.subdomain === this.query.subdomain
       )
 
 
@@ -104,7 +105,10 @@ export default class Auth {
         }
       }
 
-      await this.fetchPermissions()
+      if(this.user){
+        await this.fetchPermissions()
+      }
+
 
 
     } catch (ex) {
@@ -126,19 +130,21 @@ export default class Auth {
   getUserServer = () => {
     try {
 
-      const {
-        id,
-        idToken
-      } = this.session.passport.user
-
-      if (id && idToken){
-        this.user = {
+      if (this.session.passport){
+        const {
           id,
           idToken
+        } = this.session.passport.user
+
+        if (id && idToken){
+          this.user = {
+            id,
+            idToken
+          }
         }
-      } else {
-        this.authFailServer()
       }
+
+
 
     } catch (ex) {
       console.error('getUserServer error')
@@ -156,12 +162,9 @@ export default class Auth {
           id,
           idToken
         }
-      } else {
-        this.authFailBrowser()
       }
 
     } catch (ex) {
-      this.authFailBrowser()
       console.error('getUserBrowser error')
       console.error(ex)
     }
@@ -260,7 +263,10 @@ export default class Auth {
         }
       } = await response.json()
 
-      this.user = user
+      this.user = {
+        ...user,
+        idToken: this.user.idToken
+      }
 
     } catch (ex) {
       console.error('fetchPermissions fail')

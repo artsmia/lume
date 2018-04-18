@@ -39,8 +39,8 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "reinit": "DEPLOYMENT_ENV=local babel-node reinit",
-    "mia": "yarn run reinit && DEPLOYMENT_ENV=local babel-node mia-migrate",
+    "reinit": "DEPLOYMENT_ENV=dev babel-node reinit",
+    "mia": "yarn run reinit && DEPLOYMENT_ENV=dev babel-node mia-migrate",
     "tiler": "cd ../image-tiler && rm -rf ImageTiler.zip && cp TilerDeps.zip ImageTiler.zip && zip ImageTiler.zip lambda_function.py && cd ../scripts && DEPLOYMENT_ENV=dev babel-node deploy-tiler"
   }
 }
