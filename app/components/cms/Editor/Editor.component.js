@@ -53,8 +53,6 @@ export default class Editor extends Component {
         },
         saveStatus: {
           synced,
-          saving,
-          lastSave
         }
       },
       state: {
@@ -286,22 +284,16 @@ export default class Editor extends Component {
 
   renderSaveStatus = () => {
     const {
-      saving,
       synced,
-      lastSave
     } = this.props.saveStatus
 
-    switch (true) {
+    if(synced){
+      return (<span>All Changes Saved</span>)
+    } else {
+      return (<span>...saving</span>)
 
-      case (synced): {
-        return (<span>All Changes Saved</span>)
-      }
-      default:
-      case (saving): {
-
-        return (<span>Saving</span>)
-      }
     }
+
   }
 
   componentWillReceiveProps(nextProps){
@@ -407,7 +399,7 @@ const PreviewButtonBox = styled.div`
   position: absolute;
   z-index: 1002;
   top: 8px;
-  right: 8px;
+  right: 110px;
 `
 
 

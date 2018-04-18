@@ -195,8 +195,7 @@ const Container = styled(Flex)`
 
 const PageButtonContainer = styled(Flex)`
   position: fixed;
-  top: 50%;
-  transform: translateY(%50);
+  bottom: 15%;
   z-index: 1001;
 `
 const HeaderFooter = styled(Flex)`

@@ -306,7 +306,6 @@ export const Title = ({name, value, onChange, label}) => (
   <Flex
     mb={3}
     flexDirection={'column'}
-    pr={5}
   >
     <TitleLabel
       name={name}
@@ -341,7 +340,6 @@ const DescriptionLabel = styled.label`
 export const Description = ({name, value, onChange, label}) => (
   <Flex
     mb={3}
-    pr={5}
     flexDirection={'column'}
   >
     <DescriptionLabel

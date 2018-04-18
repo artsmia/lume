@@ -35,7 +35,7 @@ const Content = db.define('content', {
     defaultValue: ""
   },
   geometry: {
-    type: Sequelize.GEOMETRY,
+    type: (process.env.DB_MODE !== 'local') ? Sequelize.GEOMETRY : Sequelize.JSON,
   },
   videoUrl: {
     type: Sequelize.STRING,

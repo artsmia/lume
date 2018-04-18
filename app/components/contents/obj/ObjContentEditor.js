@@ -104,6 +104,7 @@ class ObjContentEditor extends Component {
     this.setState(
       ()=>({[name]: value}),
       ()=>{
+        this.props.setSaveStatus({synced: false})
         this.debounce(this.saveEdits,2000)
       }
     )
@@ -136,9 +137,6 @@ class ObjContentEditor extends Component {
   saveEdits = async () => {
     try {
 
-      this.props.setSaveStatus({
-        saving: true
-      })
 
       await this.props.editContent({
         id: this.state.id,
@@ -146,8 +144,6 @@ class ObjContentEditor extends Component {
       })
 
       this.props.setSaveStatus({
-        saving: false,
-        lastSave: Date.now(),
         synced: true
       })
     } catch (ex) {

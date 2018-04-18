@@ -14,7 +14,6 @@ class Settings extends Component {
 
 
       return {
-        auth,
         user: auth.user
       }
     } catch (ex) {

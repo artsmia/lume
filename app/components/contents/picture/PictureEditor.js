@@ -118,10 +118,6 @@ class PictureEditor extends Component {
 
   saveEdits = async () => {
     try {
-      await this.props.setSaveStatus({
-        saving: true,
-      })
-
       const {
         title,
         description,
@@ -135,9 +131,7 @@ class PictureEditor extends Component {
       })
 
       await this.props.setSaveStatus({
-        saving: false,
         synced: true,
-        lastSave: Date.now()
       })
     } catch (ex) {
       console.error(ex)

@@ -4,13 +4,9 @@ import {graphql} from 'react-apollo'
 const setSaveStatus = gql`
   mutation SetSaveStatus (
     $synced: Boolean
-    $saving: Boolean
-    $lastSave: String
   ) {
     setSaveStatus(
       synced: $synced
-      saving: $saving
-      lastSave: $lastSave
     ) @client
   }
 `

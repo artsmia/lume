@@ -140,7 +140,10 @@ export default class Home extends Component {
 
         </Drawer>
 
-        <DrawerPage>
+        <DrawerPage
+          onScroll={handleScroll}
+          id={'results'}
+        >
           <GridList>
             {stories ? stories.map( ({id, previewImage, title, slug}) => (
               <Tile

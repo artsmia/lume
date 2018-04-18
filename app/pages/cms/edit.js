@@ -22,7 +22,6 @@ class Edit extends Component {
       return {
         storySlug,
         subdomain,
-        auth,
         user: auth.user
       }
     } catch (ex) {

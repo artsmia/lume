@@ -75,7 +75,7 @@ export default class StoryList extends Component {
             Template
           </HeaderCell>
           <HeaderCell
-            width={[1/6,1/6]}
+            width={[0,1/6]}
           >
             Updated
             <Sorter
@@ -145,7 +145,7 @@ export default class StoryList extends Component {
               {template}
             </BodyCell>
             <BodyCell
-              width={[1/6,1/6]}
+              width={[0,1/6]}
             >
               {new Date(updatedAt).toLocaleDateString()}
             </BodyCell>

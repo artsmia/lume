@@ -46,8 +46,6 @@ export default class ImageManager extends Component {
       handleRefetch
     } = this
 
-    console.log(images)
-
     return (
       <Flex>
 

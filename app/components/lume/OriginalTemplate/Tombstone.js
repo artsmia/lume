@@ -112,31 +112,31 @@ const Container = styled.div`
 
 const Title = styled.h1`
   font-family: ${({theme}) => theme.font.regular};
-  font-size: 1.2em;
+  font-size: 1.2rem;
   margin: 0;
 `
 
 const Attribution = styled.h2`
   font-family: ${({theme}) => theme.font.light};
-  font-size: 1em;
+  font-size: 1rem;
   margin: 0;
 `
 
 const CultureDate = styled.h3`
   font-family: ${({theme}) => theme.font.light};
-  font-size: 1em;
+  font-size: 1rem;
   margin: 0;
 `
 
 const CurrentLocation = styled.h3`
   font-family: ${({theme}) => theme.font.light};
-  font-size: 1em;
+  font-size: 1rem;
   margin: 0;
 `
 
 const ShowMore = styled.button`
   font-family: ${({theme}) => theme.font.light};
-  font-size: .8em;
+  font-size: .8rem;
   width: 100%;
   border: 0;
   background-color: white;
@@ -150,6 +150,6 @@ const More = styled.div`
 
 const MoreText = styled.h5`
   font-family: ${({theme}) => theme.font.light};
-  font-size: .9em;
+  font-size: .9rem;
   margin: 0;
 `

@@ -34,6 +34,7 @@
     "prop-types": "^15.6.0",
     "regenerator-runtime": "^0.11.1",
     "sequelize": "^4.31.2",
+    "sqlite3": "^4.0.0",
     "turndown": "^4.0.1",
     "webpack": "^3.10.0"
   },

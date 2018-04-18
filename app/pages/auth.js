@@ -4,6 +4,7 @@ import AuthClass from '../auth'
 import router from 'next/router'
 import {Loading} from '../components/mia-ui/loading'
 import withData from '../apollo'
+import Head from '../components/shared/head'
 
 class Auth extends Component {
 
@@ -12,7 +13,7 @@ class Auth extends Component {
 
       let auth = new AuthClass(ctx)
 
-      auth.getUser()
+      await auth.getUser()
       return {
         user: auth.user
       }
@@ -24,6 +25,9 @@ class Auth extends Component {
   render() {
     return (
       <Template>
+        <Head
+          title={'...authenticating'}
+        />
         <Loading/>
       </Template>
 

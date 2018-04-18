@@ -22,10 +22,12 @@ export default class OriginalTemplate extends Component {
     super(props)
 
 
-    let selectedContent = {}
+    let selectedContent = {
+      id: ''
+    }
 
 
-    if (props.router.query.state1){
+    if (props.router.query.state1 && props.story.contents){
       selectedContent = props.story.contents.find(content => content.index === parseInt(props.router.query.state1))
     } else {
       selectedContent = props.story.contents.find(content => content.type === "obj") || props.story.contents[0]
@@ -41,6 +43,16 @@ export default class OriginalTemplate extends Component {
 
 
   render() {
+
+    if (this.props.story.contents.length < 1){
+      return (
+        <Container
+          w={1}
+        >
+
+        </Container>
+      )
+    }
 
     const {
       state: {
@@ -89,7 +101,7 @@ export default class OriginalTemplate extends Component {
           title={story.title}
         />
         <SideContainer
-          w={1/4}
+          w={1/3}
           flexWrap={'wrap'}
           p={1}
         >
@@ -245,7 +257,7 @@ export default class OriginalTemplate extends Component {
           </TabContainer>
         </SideContainer>
         <FeatureContainer
-          w={[3/4]}
+          w={[2/3]}
         >
           {this.showFeature(firstDetailContent)}
         </FeatureContainer>

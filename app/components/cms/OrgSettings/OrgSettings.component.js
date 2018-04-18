@@ -8,6 +8,7 @@ import {Page, Card} from '../../mia-ui/layout'
 import {Flex, Box} from 'grid-styled'
 import ManageUsers from '../ManageUsers'
 import Head from '../../shared/head'
+import {Link} from '../../mia-ui/links'
 
 export default class OrgSettings extends Component {
 
@@ -52,11 +53,35 @@ export default class OrgSettings extends Component {
             title={`Settings –– ${organization.name}`}
           />
 
-          <Card>
+          <Flex
+            w={1}
+            mb={2}
+          >
+            <Link
+              href={{
+                pathname: '/cms',
+                query: {
+                  subdomain: organization.subdomain
+                }
+              }}
+              as={`/${organization.subdomain}`}
+            >
+              Back to Organization Home
+            </Link>
+          </Flex>
+          <Flex
+            w={1}
+            mb={2}
+          >
 
             <H2>
               {organization.name} settings
             </H2>
+          </Flex>
+
+          <Card>
+
+
 
             <Flex
               w={1}

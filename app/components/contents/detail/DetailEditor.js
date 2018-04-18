@@ -170,9 +170,6 @@ class DetailEditor extends Component {
 
   saveEdits = async () => {
     try {
-      this.props.setSaveStatus({
-        saving: true
-      })
       let edits = {
         ...this.state,
         image0Id: this.state.image0Id || undefined,
@@ -187,9 +184,7 @@ class DetailEditor extends Component {
       await this.props.editContent({...edits})
 
       this.props.setSaveStatus({
-        saving: false,
         synced: true,
-        lastSave: Date.now()
       })
     } catch (ex) {
       console.error(ex)

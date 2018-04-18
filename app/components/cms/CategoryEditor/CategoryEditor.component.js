@@ -10,7 +10,8 @@ import {Flex, Box} from 'grid-styled'
 export default class CategoryEditor extends Component {
 
   state = {
-    ...this.props.category
+    ...this.props.category,
+    expander: false
   }
 
   render() {
@@ -28,7 +29,8 @@ export default class CategoryEditor extends Component {
       },
       state: {
         title,
-        description
+        description,
+        expander
       },
       handleChange,
     } = this
@@ -59,11 +61,11 @@ export default class CategoryEditor extends Component {
 
           </Flex>
         }
+        open={expander}
+        onRequestOpen={()=>this.setState({expander: true})}
+        onRequestClose={()=>this.setState({expander: false})}
       >
-        <Flex
-          flexWrap={'wrap'}
-          w={1}
-        >
+
 
 
           <Flex
@@ -98,7 +100,6 @@ export default class CategoryEditor extends Component {
 
           </Flex>
 
-        </Flex>
 
 
 
@@ -135,10 +136,13 @@ export default class CategoryEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.category.id !== this.state.id){
-      this.setState({
-        ...nextProps.category
-      })
+    if (nextProps.category){
+      if (nextProps.category.id !== this.state.id){
+        this.setState({
+          ...nextProps.category
+        })
+      }
     }
+
   }
 }

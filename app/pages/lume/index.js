@@ -8,8 +8,9 @@ class LumeOrganization extends Component {
   static getInitialProps = async (ctx) => {
     try {
 
+
       return {
-        ...ctx.query
+        ...ctx.query,
       }
     } catch (ex) {
       console.error(ex)

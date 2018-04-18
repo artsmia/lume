@@ -14,7 +14,7 @@ class CmsIndex extends Component {
       await auth.authenticate()
 
       return {
-        auth
+        user: auth.user
       }
     } catch (ex) {
       console.error(ex)
@@ -26,8 +26,8 @@ class CmsIndex extends Component {
 
     return (
       <Template
-        drawer
         {...this.props}
+        user={this.props.user}
       >
         <CmsHome
           {...this.props}

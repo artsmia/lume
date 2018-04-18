@@ -11,7 +11,7 @@ class New extends Component {
 
 
       let auth = new Auth(ctx)
-      auth.getUser()
+      await auth.getUser()
 
 
       return {
