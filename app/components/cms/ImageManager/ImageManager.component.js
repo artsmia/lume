@@ -11,6 +11,15 @@ import {GridList, Tile} from '../../mia-ui/lists'
 import getImageSrc from '../../../utils/getImageSrc'
 import {Flex, Box} from 'grid-styled'
 import {H3} from '../../mia-ui/text'
+import imgSrcProvider from '../../shared/ImgSrcProvider'
+
+
+let Image = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+`
+Image = imgSrcProvider(Image)
 
 export default class ImageManager extends Component {
 
@@ -46,8 +55,10 @@ export default class ImageManager extends Component {
       handleRefetch
     } = this
 
+    console.log(this.props)
+
     return (
-      <Flex>
+      <Container>
 
         <TabContainer
           selectedTab={selectedTab}
@@ -76,7 +87,6 @@ export default class ImageManager extends Component {
                 <Flex
                   width={1/2}
                   flexDirection={'column'}
-                  flexWrap={'wrap'}
                 >
                   <Box
                     width={1}
@@ -86,23 +96,55 @@ export default class ImageManager extends Component {
                       name={"search"}
                       onChange={handleChange}
                     />
-                    <Button
-                      onClick={handleSearch}
-                    >
-                      Search
-                    </Button>
+
 
                   </Box>
 
 
-                <GridList>
+                  <ImageList
+                    w={1}
+                    flexWrap={'wrap'}
+                  >
+                    {images.map(image => (
+                      <ImageBox
+                        key={image.id}
+                        width={[1/3]}
+                        p={2}
+                        onClick={()=>this.setState({selectedImageId: image.id})}
+                      >
+                        <Image
+                          image={image}
+                          quality={"s"}
+                        />
+
+                      </ImageBox>
+                    ))}
+                    <Box
+                      width={1}
+                    >
+                      {(images.length < 1) ? (
+                        <p>You don't have any images yet</p>
+                      ):null}
+                      {(images.length % 10 === 0) ? (
+                        <Button
+                          onClick={handleLoadMore}
+                          color={'white'}
+                        >
+                          Load More
+                        </Button>
+                      ): null}
+                    </Box>
+                  </ImageList>
+
+                {/* <GridList>
 
                   {images.map( (image) => (
                     <Tile
+                      w={[1/2,1/3, 1/4]}
+                      height={'120px'}
                       key={image.id}
                       onClick={()=>this.setState({selectedImageId: image.id})}
                       selected={(selectedImageId === image.id)}
-                      height={"80px"}
                       src={getImageSrc({
                         image,
                         organization,
@@ -113,20 +155,11 @@ export default class ImageManager extends Component {
                     />
                   ))}
 
-                </GridList>
+                </GridList> */}
 
 
-              {(images.length < 1) ? (
-                <p>You don't have any images yet</p>
-              ):null}
-              {(images.length % 10 === 0) ? (
-                <Button
-                  onClick={handleLoadMore}
-                  color={'white'}
-                >
-                  Load More
-                </Button>
-              ): null}
+
+
 
             </Flex>
 
@@ -167,7 +200,7 @@ export default class ImageManager extends Component {
             />
           </TabBody>
         </TabContainer>
-      </Flex>
+      </Container>
     )
   }
 
@@ -218,6 +251,20 @@ handleRefetch = async () => {
 
 
 }
+
+
+const Container = styled(Flex)`
+  width: 80vw;
+  height: 80vh;
+`
+
+const ImageList = styled(Flex)`
+  overflow-y: scroll;
+`
+
+const ImageBox = styled(Box)`
+  height: 150px;
+`
 
 
 // const SearchRow = styled(Row)`
