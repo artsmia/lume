@@ -11,6 +11,13 @@ const ImagesQuery = gql`
       id
       localId
       title
+      description
+      organization {
+        id
+        subdomain
+        customImageApiEnabled
+        customImageEndpoint
+      }
     }
   }
 `
@@ -24,7 +31,7 @@ const queryOptions = {
     return {
       variables: {
         filter: {
-          limit: 10,
+          limit: 20,
           organization: {
             subdomain
           }
