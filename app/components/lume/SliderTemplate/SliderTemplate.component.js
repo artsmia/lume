@@ -34,7 +34,12 @@ export default class OriginalTemplate extends Component {
         selectedContent
       },
       props: {
-        story
+        story,
+        organization,
+        organization: {
+          customAnalyticsEnabled,
+          customAnalyticsId
+        }
       },
       slide
     } = this
@@ -45,6 +50,7 @@ export default class OriginalTemplate extends Component {
       >
         <Head
           title={story.title}
+          analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
         />
         <PageButtonContainer
           w={1}

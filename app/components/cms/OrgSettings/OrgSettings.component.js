@@ -16,7 +16,9 @@ export default class OrgSettings extends Component {
     name: "",
     newUsersRequireApproval: false,
     customObjApiEnabled: false,
-    customObjApiEndpoint: ""
+    customObjApiEndpoint: "",
+    customAnalyticsEnabled: false,
+    customAnalyticsId: ""
   }
 
   constructor(props){
@@ -36,7 +38,8 @@ export default class OrgSettings extends Component {
         name,
         newUsersRequireApproval,
         customObjApiEnabled,
-        customObjApiEndpoint
+        customObjApiEndpoint,
+        customAnalyticsId
       },
       handleChange,
       handleCheck,
@@ -64,7 +67,7 @@ export default class OrgSettings extends Component {
                   subdomain: organization.subdomain
                 }
               }}
-              as={`/${organization.subdomain}`}
+              as={`/cms/${organization.subdomain}`}
             >
               Back to Organization Home
             </Link>
@@ -142,7 +145,34 @@ export default class OrgSettings extends Component {
               />
             </Flex>
 
+            <Flex
+              w={1}
+            >
+              <Label>
+                Use Custom Analytics
+              </Label>
 
+              <input
+                type={'checkbox'}
+                value={"customAnalyticsEnabled"}
+                checked={organization.customAnalyticsEnabled}
+                onChange={handleCheck}
+              />
+            </Flex>
+
+            <Flex
+              w={1}
+            >
+              <Label>
+                Google Analytics ID
+              </Label>
+
+              <Input
+                name={"customAnalyticsId"}
+                value={customAnalyticsId}
+                onChange={handleChange}
+              />
+            </Flex>
 
 
 

@@ -4,8 +4,6 @@ export default async function(src, args, ctx){
   try {
 
 
-    console.log(args)
-
     await Organization.update(args, {
       where: {
         id: args.id

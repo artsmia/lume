@@ -40,6 +40,16 @@ const Organization = db.define('organization', {
     allowNull: false,
     defaultValue: ""
   },
+  customAnalyticsEnabled: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  customAnalyticsId: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
 }, {
   freezeTableName: true
 })

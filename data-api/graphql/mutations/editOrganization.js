@@ -38,6 +38,15 @@ const editOrganization = {
     },
     newUsersRequireApproval: {
       type: GraphQLBoolean
+    },
+    customAnalyticsEnabled: {
+      type: GraphQLBoolean
+    },
+    customAnalyticsId: {
+      type: GraphQLString
+    },
+    imageId: {
+      type: GraphQLID
     }
   },
   resolve

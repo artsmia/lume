@@ -104,7 +104,7 @@ export default class Template extends Component {
 
 const Menu = styled.ul`
   position: absolute;
-  top: 75px;
+  top: 58px;
   right: 10px;
   transition: all .2s;
   opacity: 0;
@@ -123,8 +123,8 @@ const Menu = styled.ul`
 const MenuCheck = styled.input`
   z-index: 3;
   position: absolute;
-  top: 20px;
-  right: 55px;
+  top: 5px;
+  right: 50px;
   width: 50px;
   height: 50px;
   opacity: 0;
@@ -169,6 +169,6 @@ const ProfPic = styled.img`
   border-radius: 50px;
   object-fit: cover;
   position: absolute;
-  top: 20px;
-  right: 55px;
+  top: 5px;
+  right: 50px;
 `

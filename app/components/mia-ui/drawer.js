@@ -92,8 +92,8 @@ export const DrawerCheck = styled.input`
   top: 5px;
   left: 5px;
   transition: all .4s;
-  height: 30px;
-  width: 30px;
+  height: 50px;
+  width: 50px;
   opacity: 0;
   cursor: pointer;
 

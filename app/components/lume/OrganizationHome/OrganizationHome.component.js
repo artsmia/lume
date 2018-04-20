@@ -43,7 +43,11 @@ export default class Home extends Component {
             subdomain
           }
         },
-        organization
+        organization,
+        organization: {
+          customAnalyticsEnabled,
+          customAnalyticsId
+        }
       },
       state: {
         search,
@@ -64,6 +68,7 @@ export default class Home extends Component {
       >
         <Head
           title={organization.name}
+          analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
         />
         <DrawerCheck/>
         <DrawerButton/>

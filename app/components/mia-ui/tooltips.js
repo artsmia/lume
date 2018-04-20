@@ -10,6 +10,7 @@ const Tip = styled.div`
 
 const position = ({position}) => {
   switch (position) {
+    default:
     case "below": {
       return css`
         ${Tip}{
@@ -27,10 +28,7 @@ const position = ({position}) => {
         }
       `
     }
-    default: {
 
-      break
-    }
   }
 }
 
@@ -48,7 +46,6 @@ const Tool = styled.div`
 
   ${Tip}{
     visibility: hidden;
-    height: 200px;
     width: 200px;
     background-color: ${white};
     border-radius: 5px;
