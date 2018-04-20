@@ -15,6 +15,7 @@ import {ToolTip} from '../../mia-ui/tooltips'
 import {Flex, Box} from 'grid-styled'
 import getImageSrc from '../../../utils/getImageSrc'
 import {Expander} from '../../mia-ui/expanders'
+import {ToolTio} from '../../mia-ui/tooltips'
 
 export default class StoryEditor extends Component {
 
@@ -79,7 +80,9 @@ export default class StoryEditor extends Component {
 
 
 
-
+          <ToolTip>
+            What is this thing here?
+          </ToolTip>
           <Title
             name={'title'}
             value={title}

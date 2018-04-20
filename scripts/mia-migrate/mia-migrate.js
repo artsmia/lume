@@ -3,6 +3,7 @@ import chalk from 'chalk'
 import db from '../../data-api/db/connect'
 import {createAssociations} from '../../data-api/db/associations'
 import Organization from '../../data-api/db/models/Organization'
+import User_Organization from '../../data-api/db/models/User_Organization'
 import Story from '../../data-api/db/models/Story'
 import Image from '../../data-api/db/models/Image'
 import Obj from '../../data-api/db/models/Obj'
@@ -39,6 +40,19 @@ async function populate(){
 
     })
 
+    const gretchenId = 'google-oauth2|112934604856216651589'
+
+    await User_Organization.create({
+      organizationId: Mia.id,
+      userId: gretchenId,
+      role: 'admin'
+    })
+
+    await User_Organization.create({
+      organizationId: Africa.id,
+      userId: gretchenId,
+      role: 'admin'
+    })
 
     const create = async (url, Org) => {
       try {

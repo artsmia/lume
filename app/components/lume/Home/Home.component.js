@@ -34,15 +34,20 @@ export default class Home extends Component {
                 Lume
               </H2>
               <P>
-                Lume is a tool for telling stories. It was created by Mia with the support of the Knight foundation to allow anyone (especially museum educators and curators) to present content in a interactive and compelling way.
+                Lume is a tool for telling stories. It was created by The Minneapolis Institute of Art with the support of the Knight Foundation to allow anyone (especially museum educators and curators) to present content in aN interactive and compelling way.
               </P>
               <P>
-                You can check out Mia's Lume here or try creating your own Lume by logging in below.
+                You can check out Mia's Lume <Link href={{
+                  pathname: '/lume',
+                  query: {
+                    subdomain: 'mia'
+                  }
+                }} as={'/mia'}>here</Link> or try creating your own stories by logging in or signing up below.
               </P>
               <Button
                 onClick={linkToLogin}
               >
-                Login to CMS
+                Login or Signup
               </Button>
             </Card>
 
@@ -77,21 +82,21 @@ export default class Home extends Component {
                     See more examples of what you can create with Lume.
                   </P>
 
-                  <GridList>
-                    {organizations ? organizations.map( ({id, name, subdomain}) => (
-                      <Tile
-                        key={id}
-                        text={name}
-                        href={{
-                          pathname: '/lume',
-                          query: {
-                            subdomain
-                          }
-                        }}
-                        as={`/${subdomain}`}
-                      />
-                    )) : <Waiting/>}
-                  </GridList>
+                  <Flex>
+                    <Link
+                      href={{
+                        pathname: '/lume',
+                        query: {
+                          subdomain: 'mia'
+                        }
+                      }}
+                      as={'/mia'}
+                    >
+                      <a>
+                        Minneapolis Institute of Art                        
+                      </a>
+                    </Link>
+                  </Flex>
 
                 </Card>
               </Box>

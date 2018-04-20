@@ -67,7 +67,12 @@ export default class OriginalTemplate extends Component {
             subdomain
           }
         },
-        organization
+        organization,
+        organization,
+        organization: {
+          customAnalyticsEnabled,
+          customAnalyticsId
+        }
       },
       handleContentSelection,
       createMoreGeometry,
@@ -99,6 +104,7 @@ export default class OriginalTemplate extends Component {
       >
         <Head
           title={story.title}
+          analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
         />
         <SideContainer
           w={1/3}

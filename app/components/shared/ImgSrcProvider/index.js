@@ -10,6 +10,13 @@ export default function imgSrcProvider(WrappedComponent){
 
     constructor(props){
       super(props)
+
+      if (!props.image){
+        this.state = {
+          src: '/static/placeholder0.png'
+        }
+        return
+      }
       
       const {
         image,
@@ -26,8 +33,7 @@ export default function imgSrcProvider(WrappedComponent){
         quality
       } = props
 
-      let src = ''
-
+      let src = '/static/placeholder0.png'
 
       switch (true) {
         case (subdomain === 'local'): {
@@ -55,6 +61,7 @@ export default function imgSrcProvider(WrappedComponent){
     render(){
       return (
         <WrappedComponent
+          {...this.props}
           src={this.state.src}
         />
       )

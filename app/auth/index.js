@@ -1,14 +1,31 @@
 import router from 'next/router'
 import fetch from 'isomorphic-unfetch'
+import jwt from 'jsonwebtoken'
+import chalk from 'chalk'
 
 export default class Auth {
+
+  log = (text, data) => {
+    if (process.env.NODE_ENV !== 'production'){
+      console.log(chalk.yellow("Auth: "), chalk.cyan(text))
+      if (data){
+        console.log(data)
+      }
+    }
+  }
+
+  ex = (text, ex) => {
+    if (process.env.NODE_ENV !== 'production'){
+      console.log(chalk.yellow("Auth: "), chalk.red('Exception!'))
+      console.log(chalk.red(text))
+      console.error(ex)
+    }
+  }
 
   cmsRoles = ['admin', 'editor', 'contributor']
 
   constructor(ctx){
-
-    console.log(ctx)
-
+    this.log("constructor")
     this.pathname = ctx.pathname
     this.query = ctx.query
 
@@ -29,9 +46,8 @@ export default class Auth {
 
   authenticate = async() => {
     try {
-
+      this.log('authenticate')
       await this.getUser()
-
 
 
       this.organization = this.user.organizations.find(
@@ -40,42 +56,43 @@ export default class Auth {
 
 
 
+
       switch (true) {
 
 
         case (process.env.AUTH_STRATEGY === 'local'): {
-          console.log("local auth strategy")
+          this.log("Using local auth strategy")
           break
         }
         case(this.pathname === '/cms/orgSettings' && this.organization.role !== 'admin'): {
-          console.log('settings is only for admins')
+          this.log('Settings page is only for admins.')
           this.authFail()
           break
         }
         case (!this.organization): {
 
-          console.log("couldn't find permissions for this subdomain")
+          this.log("Couldn't find permissions for this subdomain.")
           this.authFail()
           break
         }
         case (this.organization.role === 'pending'): {
-          console.log("role is pending")
+          this.log("This user's role is pending.")
           this.pending()
           break
         }
         case (this.cmsRoles.includes(this.organization.role)): {
-          console.log("allowed")
+          this.log("Access granted.")
           break
         }
         default: {
-          console.log("authFail")
+          this.log("Default: Access denied.")
           this.authFail()
           break
         }
       }
 
     } catch (ex) {
-      console.error(ex)
+      this.ex("authenticate", ex)
     }
   }
 
@@ -83,7 +100,7 @@ export default class Auth {
 
   getUser = async () => {
     try {
-
+      this.log('getUser')
       switch (true) {
         case (process.env.AUTH_STRATEGY === 'local'): {
           this.getUserLocal()
@@ -112,25 +129,28 @@ export default class Auth {
 
 
     } catch (ex) {
-      console.error(ex)
+      this.ex("getUser", ex)
     }
   }
 
   getUserLocal = () => {
     try {
+      this.log('getUserLocal')
+
       this.user = {
         id: 'localuser',
         idToken: 'localuser'
       }
     } catch (ex) {
-      console.error(ex)
+      this.ex("getUserLocal", ex)
     }
   }
 
   getUserServer = () => {
     try {
-
+      this.log("getUserServer")
       if (this.session.passport){
+
         const {
           id,
           idToken
@@ -147,15 +167,29 @@ export default class Auth {
 
 
     } catch (ex) {
-      console.error('getUserServer error')
-      console.error(ex)
+      this.ex('getUserServer', ex)
     }
   }
 
   getUserBrowser = () => {
     try {
+      this.log('getUserBrowser')
       let id = localStorage.getItem('userId')
       let idToken = localStorage.getItem('idToken')
+
+      if (idToken){
+        let {exp} = jwt.decode(idToken)
+        let now = Date.now()
+        exp = exp * 1000
+        this.log("token exp", exp)
+        this.log("now", now)
+
+        if (now > exp){
+          this.log('token is expired',(now > exp))
+          this.authFailBrowser()
+        }
+
+      }
 
       if (id && idToken){
         this.user = {
@@ -165,47 +199,78 @@ export default class Auth {
       }
 
     } catch (ex) {
-      console.error('getUserBrowser error')
-      console.error(ex)
+      this.ex('getUserBrowser', ex)
     }
   }
 
   authFail = () => {
-    if(this.env === 'server'){
-      this.authFailServer()
-    } else {
-      this.authFailBrowser()
+    try {
+      this.log('authFail')
+      if(this.env === 'server'){
+        this.authFailServer()
+      } else {
+        this.authFailBrowser()
+      }
+    } catch (ex) {
+      this.ex('authFail', ex)
     }
+
   }
 
   authFailServer = () => {
-    console.log("authFailServer")
-    this.res.redirect('/')
+    try {
+      this.log("authFailServer")
+      this.res.redirect('/logout')
+    } catch (ex) {
+      this.ex('authFailServer', ex)
+    }
+
   }
 
   authFailBrowser = () => {
-    console.log("authFailBrowser")
-    router.replace('/')
-  }
-
-  pending = () => {
-    if (this.env === 'server'){
-      this.pendingServer()
-    } else {
-      this.pendingClient()
+    try {
+      this.log('authFailBrowser')
+      router.replace('/logout')
+    } catch (ex) {
+      this.ex("authFailBrowser", ex)
     }
   }
 
+  pending = () => {
+    try {
+      this.log('pending')
+      if (this.env === 'server'){
+        this.pendingServer()
+      } else {
+        this.pendingClient()
+      }
+    } catch (ex) {
+      this.ex("pending", ex)
+    }
+
+  }
+
   pendingServer = () => {
-    this.res.redirect(`/cms/${this.subdomain}/pending`)
+    try {
+      this.log('pendingServer')
+      this.res.redirect(`/cms/${this.subdomain}/pending`)
+    } catch (ex) {
+      this.ex('pendingServer', ex)
+    }
   }
 
   pendingClient = () => {
-    router.replace(`/cms/${this.subdomain}/pending`)
+    try {
+      this.log('pendingClient')
+      router.replace(`/cms/${this.subdomain}/pending`)
+    } catch (ex) {
+      this.ex('pendingClient', ex)
+    }
   }
 
   fetchPermissions = async () => {
     try {
+      this.log('fetchPermissions')
 
       if(process.env.AUTH_STRATEGY === 'local'){
         this.authProfile = {
@@ -269,8 +334,7 @@ export default class Auth {
       }
 
     } catch (ex) {
-      console.error('fetchPermissions fail')
-      console.error(ex)
+      this.ex('fetchPermissions', ex)
       this.authFail()
     }
   }

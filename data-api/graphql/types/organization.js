@@ -25,6 +25,9 @@ const organization = new GraphQLObjectType({
     emailDomain: {
       type: GraphQLString
     },
+    image: {
+      type: imageType
+    },
     images: {
       type: new GraphQLList(imageType)
     },
@@ -41,6 +44,12 @@ const organization = new GraphQLObjectType({
       type: GraphQLBoolean
     },
     customObjApiEndpoint: {
+      type: GraphQLString
+    },
+    customAnalyticsEnabled: {
+      type: GraphQLBoolean
+    },
+    customAnalyticsId: {
       type: GraphQLString
     },
     newUsersRequireApproval: {

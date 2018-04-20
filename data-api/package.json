@@ -26,7 +26,8 @@
     "passport-auth0": "^0.6.1",
     "pg": "^7.4.0",
     "rimraf": "^2.6.2",
-    "sequelize": "^4.28.1"
+    "sequelize": "^4.28.1",
+    "sequelize-cli": "^4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

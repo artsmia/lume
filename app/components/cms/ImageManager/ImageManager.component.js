@@ -18,6 +18,9 @@ let Image = styled.img`
   height: 100%;
   width: 100%;
   object-fit: cover;
+  ${({selected, theme}) => selected ? `
+    box-shadow: 0 0 10px 3px ${theme.color.green};
+  ` : ''}
 `
 Image = imgSrcProvider(Image)
 
@@ -55,8 +58,6 @@ export default class ImageManager extends Component {
       handleRefetch
     } = this
 
-    console.log(this.props)
-
     return (
       <Container>
 
@@ -81,15 +82,17 @@ export default class ImageManager extends Component {
           <TabBody
             name={"select"}
           >
-            <Flex
+            <SelectFlex
               p={1}
             >
-                <Flex
+                <OrgImagesFlex
                   width={1/2}
                   flexDirection={'column'}
+                  p={2}
                 >
                   <Box
                     width={1}
+                    mb={2}
                   >
                     <Search
                       value={search}
@@ -104,6 +107,7 @@ export default class ImageManager extends Component {
                   <ImageList
                     w={1}
                     flexWrap={'wrap'}
+                    p={1}
                   >
                     {images.map(image => (
                       <ImageBox
@@ -115,6 +119,7 @@ export default class ImageManager extends Component {
                         <Image
                           image={image}
                           quality={"s"}
+                          selected={(selectedImageId === image.id)}
                         />
 
                       </ImageBox>
@@ -161,7 +166,7 @@ export default class ImageManager extends Component {
 
 
 
-            </Flex>
+            </OrgImagesFlex>
 
 
 
@@ -180,7 +185,7 @@ export default class ImageManager extends Component {
                   </H3>
                 )}
               </Flex>
-            </Flex>
+            </SelectFlex>
 
 
 
@@ -260,12 +265,20 @@ const Container = styled(Flex)`
 
 const ImageList = styled(Flex)`
   overflow-y: scroll;
+  border: 1px solid ${({theme}) => theme.color.gray30};
+  height: 100%;
 `
 
 const ImageBox = styled(Box)`
   height: 150px;
 `
 
+const OrgImagesFlex = styled(Flex)`
+  height: 100%;
+`
+const SelectFlex = styled(Flex)`
+  height: 100%;
+`
 
 // const SearchRow = styled(Row)`
 //   height: auto;

@@ -10,6 +10,9 @@ const editOrganization = gql`
     $newUsersRequireApproval: Boolean
     $customObjApiEnabled: Boolean
     $customObjApiEndpoint: String
+    $customAnalyticsEnabled: Boolean
+    $customAnalyticsId: String
+    $imageId: ID
   ) {
     editOrganization(
       id: $id
@@ -17,6 +20,9 @@ const editOrganization = gql`
       newUsersRequireApproval: $newUsersRequireApproval
       customObjApiEnabled: $customObjApiEnabled
       customObjApiEndpoint: $customObjApiEndpoint
+      customAnalyticsEnabled: $customAnalyticsEnabled
+      customAnalyticsId: $customAnalyticsId
+      imageId: $imageId
     ) {
       ...OrganizationFragment
     }
