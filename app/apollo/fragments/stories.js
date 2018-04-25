@@ -1,4 +1,6 @@
 import gql from 'graphql-tag'
+import imageFragment from './image'
+
 
 const fragment = gql`
   fragment StoriesFragment on story {
@@ -7,12 +9,12 @@ const fragment = gql`
     slug
     description
     previewImage{
-      id
-      localId
+      ...ImageFragment
     }
     updatedAt
     template
   }
+  ${imageFragment}
 `
 
 export default fragment

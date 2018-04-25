@@ -14,7 +14,8 @@ if (process.env.DB_MODE === 'local'){
 
 
   db = new Sequelize(process.env.DB_URL, {
-    logging: false
+    logging: false,
+    charset: 'utf8'
   })
 
 }

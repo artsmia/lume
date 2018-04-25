@@ -9,6 +9,8 @@ const s3 = new AWS.S3()
 export default async function (req,res, next) {
   try {
 
+    console.log(req.file)
+
     const {
       file: {
         mimetype,
@@ -35,14 +37,15 @@ export default async function (req,res, next) {
 
     const fileId = image.id
 
-
+    console.log(fileId)
 
     await upload({
-      Key: `${organization.id}/${fileId}/original.jpeg`,
+      Key: `${fileId}/original.jpeg`,
       Bucket: "mia-lume",
       Body: buffer,
       ACL: "public-read",
-      ContentType: mimetype
+      ContentType: mimetype,
+      Tagging: `organization=${organization.id}`
     })
 
 

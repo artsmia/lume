@@ -9,6 +9,8 @@ import {Row, Column} from '../../mia-ui/layout'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
 import {Flex, Box} from 'grid-styled'
 import {Title, Description} from '../../mia-ui/forms'
+import DeleteContentButton from '../../cms/DeleteContentButton'
+
 
 class MovieEditor extends Component {
 
@@ -71,6 +73,14 @@ class MovieEditor extends Component {
           />
         </Box>
 
+        <Box
+          w={1}
+          my={5}
+        >
+          <DeleteContentButton
+            contentId={this.props.content.id}
+          />
+        </Box>
 
       </Flex>
     )

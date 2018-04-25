@@ -40,19 +40,19 @@ async function populate(){
 
     })
 
-    const gretchenId = 'google-oauth2|112934604856216651589'
-
-    await User_Organization.create({
-      organizationId: Mia.id,
-      userId: gretchenId,
-      role: 'admin'
-    })
-
-    await User_Organization.create({
-      organizationId: Africa.id,
-      userId: gretchenId,
-      role: 'admin'
-    })
+    // const gretchenId = 'google-oauth2|112934604856216651589'
+    //
+    // await User_Organization.create({
+    //   organizationId: Mia.id,
+    //   userId: gretchenId,
+    //   role: 'admin'
+    // })
+    //
+    // await User_Organization.create({
+    //   organizationId: Africa.id,
+    //   userId: gretchenId,
+    //   role: 'admin'
+    // })
 
     const create = async (url, Org) => {
       try {
@@ -82,7 +82,8 @@ async function populate(){
         for (let oldStory of objStories) {
 
           let image = await Org.createImage({
-            localId: oldStory.primaryImageLocalId
+            localId: oldStory.primaryImageLocalId,
+            host: 'mia'
           })
 
 
@@ -116,7 +117,8 @@ async function populate(){
           for (let view of oldStory.views) {
             let [detailImage] = await Image.findOrCreate({
               where: {
-                localId: view.image
+                localId: view.image,
+                host: 'mia'
               },
               defaults: {
                 organizationId: Org.id
@@ -145,7 +147,8 @@ async function populate(){
               for (let attachment of detail.attachments) {
                 let [additionalImage] = await Image.findOrCreate({
                   where: {
-                    localId: attachment['image_id']
+                    localId: attachment['image_id'],
+                    host: 'mia'
                   },
                   defaults: {
                     organizationId: Org.id
@@ -203,7 +206,8 @@ async function populate(){
               type = "picture"
               let result = await Image.findOrCreate({
                 where: {
-                  localId: content.image
+                  localId: content.image,
+                  host: 'mia'
                 },
                 defaults: {
                   organizationId: Org.id
@@ -222,7 +226,8 @@ async function populate(){
               type = "comparison"
               let result = await Image.findOrCreate({
                 where: {
-                  localId: content.image
+                  localId: content.image,
+                  host: 'mia'
                 },
                 defaults: {
                   organizationId: Org.id
@@ -231,7 +236,8 @@ async function populate(){
               image0 = result[0]
               result = await Image.findOrCreate({
                 where: {
-                  localId: content.imageB
+                  localId: content.imageB,
+                  host: 'mia'
                 },
                 defaults: {
                   organizationId: Org.id
@@ -245,6 +251,7 @@ async function populate(){
               content.type === "video"
             ) {
               type = "movie"
+              
             }
 
             let description = content.text ? tdService.turndown(content.text) : ""

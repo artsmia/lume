@@ -1,13 +1,13 @@
 import router from 'next/router'
 import fetch from 'isomorphic-unfetch'
 import jwt from 'jsonwebtoken'
-import chalk from 'chalk'
+// import chalk from 'chalk'
 
 export default class Auth {
 
   log = (text, data) => {
     if (process.env.NODE_ENV !== 'production'){
-      console.log(chalk.yellow("Auth: "), chalk.cyan(text))
+      console.log("Auth: ", text)
       if (data){
         console.log(data)
       }
@@ -16,8 +16,8 @@ export default class Auth {
 
   ex = (text, ex) => {
     if (process.env.NODE_ENV !== 'production'){
-      console.log(chalk.yellow("Auth: "), chalk.red('Exception!'))
-      console.log(chalk.red(text))
+      console.log("Auth: ", 'Exception!')
+      console.log(text)
       console.error(ex)
     }
   }
@@ -156,6 +156,12 @@ export default class Auth {
           idToken
         } = this.session.passport.user
 
+        if (idToken){
+          if (this.isTokenExpired(idToken)){
+            this.authFail()
+          }
+        }
+
         if (id && idToken){
           this.user = {
             id,
@@ -171,6 +177,27 @@ export default class Auth {
     }
   }
 
+
+  isTokenExpired = (token) => {
+    try {
+      let {exp} = jwt.decode(token)
+      let now = Date.now()
+      exp = exp * 1000
+      this.log("token exp", exp)
+      this.log("now", now)
+
+      if (now > exp){
+        this.log('token is expired',(now > exp))
+        return true
+      } else {
+        return false
+      }
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+
   getUserBrowser = () => {
     try {
       this.log('getUserBrowser')
@@ -178,17 +205,9 @@ export default class Auth {
       let idToken = localStorage.getItem('idToken')
 
       if (idToken){
-        let {exp} = jwt.decode(idToken)
-        let now = Date.now()
-        exp = exp * 1000
-        this.log("token exp", exp)
-        this.log("now", now)
-
-        if (now > exp){
-          this.log('token is expired',(now > exp))
-          this.authFailBrowser()
+        if (this.isTokenExpired(idToken)){
+          this.authFail()
         }
-
       }
 
       if (id && idToken){

@@ -12,7 +12,7 @@ import {Row, Column} from '../../mia-ui/layout'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
 import {Flex, Box} from 'grid-styled'
 import {Title, Description} from '../../mia-ui/forms'
-import getImageSrc from '../../../utils/getImageSrc'
+import DeleteContentButton from '../../cms/DeleteContentButton'
 
 
 class PictureEditor extends Component {
@@ -73,12 +73,17 @@ class PictureEditor extends Component {
             <ChangeImage
               label={"Image"}
               name={"image0Id"}
-              src={getImageSrc({
-                organization,
-                image: content.image0,
-                quality: 'm'
-              })}
+              image={content.image0}
               onChange={handleChange}
+            />
+          </Box>
+
+          <Box
+            w={1}
+            my={5}
+          >
+            <DeleteContentButton
+              contentId={this.props.content.id}
             />
           </Box>
 

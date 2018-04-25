@@ -1,5 +1,8 @@
 import gql from 'graphql-tag'
 import categoryFragment from './category'
+import imageFragment from './image'
+
+
 const fragment = gql`
   fragment OrganizationFragment on organization {
     id
@@ -14,19 +17,14 @@ const fragment = gql`
     customAnalyticsEnabled
     customAnalyticsId
     image {
-      id
-      localId
-      organization {
-        id
-        customImageApiEnabled
-        customImageEndpoint
-      }
+      ...ImageFragment
     }
     categories {
       ...CategoryFragment
     }
   }
   ${categoryFragment}
+  ${imageFragment}
 `
 
 export default fragment

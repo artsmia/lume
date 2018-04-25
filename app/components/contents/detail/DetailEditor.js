@@ -9,9 +9,9 @@ import {compose} from 'react-apollo'
 import styled from 'styled-components'
 import {H2} from '../../mia-ui/text'
 import {Button} from '../../mia-ui/buttons'
-import getImageSrc from '../../../utils/getImageSrc'
 import {Flex, Box} from 'grid-styled'
 import {Title, Description} from '../../mia-ui/forms'
+import DeleteContentButton from '../../cms/DeleteContentButton'
 
 
 class DetailEditor extends Component {
@@ -37,6 +37,7 @@ class DetailEditor extends Component {
       },
       saveEdits,
       props: {
+        content,
         content: {
           additionalImages,
           image0
@@ -83,14 +84,7 @@ class DetailEditor extends Component {
           >
             <MultiImage
               label={"Additional Images"}
-              additionalImages={additionalImages.map(img => ({
-                ...img,
-                src: getImageSrc({
-                  organization,
-                  image: img,
-                  quality: 'm'
-                })
-              }))}
+              additionalImages={additionalImages}
               onAdd={handleAddAdditionalImage}
               onRemove={handleRemoveAdditionalImage}
             />
@@ -106,11 +100,8 @@ class DetailEditor extends Component {
             <ChangeImage
               label={"Image"}
               name={"image0Id"}
-              src={getImageSrc({
-                organization,
-                image: image0,
-                quality: 'm'
-              })}
+              image={image0}
+
               onChange={handleChange}
             />
           </Box>
@@ -125,6 +116,16 @@ class DetailEditor extends Component {
               detailImageId={image0Id}
             />
           </Box>
+
+          <Box
+            w={1}
+            my={5}
+          >
+            <DeleteContentButton
+              contentId={content.id}
+            />
+          </Box>
+
         </Flex>
 
       </Flex>

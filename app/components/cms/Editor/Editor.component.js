@@ -37,6 +37,8 @@ export default class Editor extends Component {
 
   render(){
 
+    console.log(this.props)
+
     if (!this.props.story) return null
 
     const {
@@ -46,6 +48,7 @@ export default class Editor extends Component {
           id: storyId,
           slug
         },
+        router,
         router: {
           query: {
             subdomain
@@ -53,7 +56,8 @@ export default class Editor extends Component {
         },
         saveStatus: {
           synced,
-        }
+        },
+        organization
       },
       state: {
         editing,
@@ -113,7 +117,8 @@ export default class Editor extends Component {
         </PreviewButtonBox>
         <StoryPreview
           story={story}
-          router={this.props.router}
+          router={router}
+          organization={organization}
         />
       </PreviewContainer>
 

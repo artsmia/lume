@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import imageFragment from './image'
 
 const fragment = gql`
   fragment ContentFragment on content {
@@ -8,12 +9,10 @@ const fragment = gql`
     title
     description
     image0{
-      id
-      localId
+      ...ImageFragment
     }
     image1{
-      id
-      localId
+      ...ImageFragment
     }
     videoUrl
     geometry {
@@ -24,10 +23,11 @@ const fragment = gql`
       id
     }
     additionalImages {
-      id
-      localId
+      ...ImageFragment
     }
   }
+  ${imageFragment}
+
 `
 
 export default fragment

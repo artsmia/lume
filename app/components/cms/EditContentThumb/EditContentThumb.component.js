@@ -6,10 +6,12 @@ import {Waiting} from '../../mia-ui/loading'
 // import Image from '../../shared/Image'
 import { DragSource, DropTarget } from 'react-dnd'
 import {Flex, Box} from 'grid-styled'
-import getImageSrc from '../../../utils/getImageSrc'
 import {gray60} from '../../mia-ui/colors'
 import {ContentIcon} from '../../mia-ui/icons'
 import {ThumbImage, ThumbOverlay, ThumbContainer} from '../../mia-ui/lume'
+import imgSrcProvider from '../../shared/ImgSrcProvider'
+
+const Thumb = imgSrcProvider(ThumbImage)
 
 class EditContentThumb extends Component {
 
@@ -53,12 +55,8 @@ class EditContentThumb extends Component {
 
 
           {(image0) ? (
-            <ThumbImage
-              src={getImageSrc({
-                organization,
-                image: image0,
-                quality: 's'
-              })}
+            <Thumb
+              image={image0}
             />
           ): null}
 

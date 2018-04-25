@@ -88,3 +88,18 @@ export const MediaEnum = new GraphQLEnumType({
     },
   }
 })
+
+export const HostEnum = new GraphQLEnumType({
+  name: 'HostEnum',
+  values: {
+    s3: {
+      value: "s3"
+    },
+    mia: {
+      value: "mia"
+    },
+    local: {
+      value: "local"
+    },
+  }
+})

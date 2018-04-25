@@ -5,11 +5,12 @@ import {H3} from '../../mia-ui/text'
 import {Loading} from '../../mia-ui/loading'
 // import Image from '../../shared/Image'
 import {Flex, Box} from 'grid-styled'
-import getImageSrc from '../../../utils/getImageSrc'
 import {gray60} from '../../mia-ui/colors'
 import {Icon} from '../../mia-ui/icons'
 import {ThumbImage, ThumbOverlay, ThumbContainer} from '../../mia-ui/lume'
+import imgSrcProvider from '../../shared/ImgSrcProvider'
 
+const Thumb = imgSrcProvider(ThumbImage)
 
 export default class EditStoryThumb extends Component {
 
@@ -41,13 +42,9 @@ export default class EditStoryThumb extends Component {
         selected={selected}
       >
         {previewImage ? (
-          <ThumbImage
-            src={getImageSrc({
-              organization,
-              image: previewImage,
-              quality: 's'
-            })}
-          />          
+          <Thumb
+            image={previewImage}
+          />
         ): null}
 
         <ThumbOverlay>

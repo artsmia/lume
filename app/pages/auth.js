@@ -47,8 +47,8 @@ class Auth extends Component {
       let organizations = await this.getUserOrganizations()
       if (organizations.length === 0){
         router.push({
-          pathname: '/cms/orgManager',
-        }, `/new`)
+          pathname: '/cms/organizations',
+        }, `/organizations`)
       }
 
       for (let {role, subdomain} of organizations){

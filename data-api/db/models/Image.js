@@ -27,7 +27,7 @@ const Image = db.define('image', {
   // },
   host: {
     type: Sequelize.ENUM,
-    values: ["s3","gdrive", "local"],
+    values: ["s3","mia", "local"],
     defaultValue: "s3"
   },
   s3Bucket: {
