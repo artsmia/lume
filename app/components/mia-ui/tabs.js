@@ -29,10 +29,12 @@ export class TabContainer extends Component {
 
     const childrenWithProps = Children.map(
       children,
-      (child) => (cloneElement(child, {
-        selectedTab,
-        selectTab
-      }))
+      (child) => {
+        return cloneElement(child, {
+          selectedTab,
+          selectTab
+        })
+      }
     )
     return (
       <Flex

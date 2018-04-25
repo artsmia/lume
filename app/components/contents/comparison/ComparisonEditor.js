@@ -8,9 +8,10 @@ import {compose} from 'react-apollo'
 import styled from 'styled-components'
 import {H2} from '../../mia-ui/text'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
-import getImageSrc from '../../../utils/getImageSrc'
 import {Flex, Box} from 'grid-styled'
 import {Title, Description} from '../../mia-ui/forms'
+import DeleteContentButton from '../../cms/DeleteContentButton'
+
 
 class ComparisonEditor extends Component {
 
@@ -70,13 +71,9 @@ class ComparisonEditor extends Component {
           w={1}
         >
           <ChangeImage
-            label={"Image"}
+            label={"Image One"}
             name={"image0Id"}
-            src={getImageSrc({
-              organization,
-              image: content.image0,
-              quality: 'm'
-            })}
+            image={content.image0}
             onChange={handleChange}
           />
         </Box>
@@ -84,17 +81,21 @@ class ComparisonEditor extends Component {
           w={1}
         >
           <ChangeImage
-            label={"Image"}
+            label={"Image Two"}
             name={"image1Id"}
-            src={getImageSrc({
-              organization,
-              image: content.image1,
-              quality: 'm'
-            })}
+            image={content.image1}
+
             onChange={handleChange}
           />
         </Box>
-
+        <Box
+          w={1}
+          my={5}
+        >
+          <DeleteContentButton
+            contentId={content.id}
+          />
+        </Box>
 
 
       </Flex>

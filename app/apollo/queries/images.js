@@ -1,25 +1,18 @@
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import imageFragment from '../fragments/image'
 
-const ImagesQuery = gql`
+export const ImagesQuery = gql`
   query ImagesQuery (
     $filter: FilterInput
   ) {
     images (
       filter: $filter
     ) {
-      id
-      localId
-      title
-      description
-      organization {
-        id
-        subdomain
-        customImageApiEnabled
-        customImageEndpoint
-      }
+      ...ImageFragment
     }
   }
+  ${imageFragment}
 `
 
 

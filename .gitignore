@@ -11,3 +11,4 @@ local-store
 .out
 .dist
 artsmia.pem
+liteDB.sqlite

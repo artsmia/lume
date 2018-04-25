@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {Modal} from '../../mia-ui/modals'
 import Zoomer from '../../shared/Zoomer'
 import {Flex, Box} from 'grid-styled'
-import getImageSrc from '../../../utils/getImageSrc'
+import ImgSrcProvider from '../../shared/ImgSrcProvider'
 
 export default class AdditionalImages extends Component {
 
@@ -35,11 +35,7 @@ export default class AdditionalImages extends Component {
             })}
           >
             <Image
-              src={getImageSrc({
-                organization,
-                image,
-                quality: 'm'
-              })}
+              image={image}
               title={'Click to Expand'}
             />
           </Box>
@@ -52,9 +48,7 @@ export default class AdditionalImages extends Component {
             modal: false
           })}
         >
-          <ZoomerContainer
-            w={1}
-          >
+          <ZoomerContainer>
             {(selectedImageId) ? (
               <Zoomer
                 imageId={selectedImageId}
@@ -74,9 +68,11 @@ const ZoomerContainer = styled(Flex)`
   width: 80vh;
 `
 
-const Image = styled.img`
+let Image = styled.img`
   height: 75px;
   width: 75px;
   object-fit: cover;
   cursor: pointer;
 `
+
+Image = ImgSrcProvider(Image)

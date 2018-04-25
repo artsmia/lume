@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import imageFragment from './image'
 
 const fragment = gql`
   fragment ObjFragment on obj {
@@ -17,10 +18,10 @@ const fragment = gql`
     description
     pullFromCustomApi
     primaryImage {
-      id
-      localId
+      ...ImageFragment
     }
   }
+  ${imageFragment}
 `
 
 export default fragment

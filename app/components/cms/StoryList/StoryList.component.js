@@ -4,9 +4,11 @@ import {Table, HeaderRow, HeaderCell, BodyRow, BodyCell, TableThumb, Sorter} fro
 import {Link, NextA} from '../../mia-ui/links'
 import {Button} from '../../mia-ui/buttons'
 import PropTypes from 'prop-types'
-import getImageSrc from '../../../utils/getImageSrc'
+import ImgSrcProvider from '../../shared/ImgSrcProvider'
 import {Search} from '../../mia-ui/forms'
 import {Box} from 'grid-styled'
+
+let Thumb = ImgSrcProvider(TableThumb)
 
 export default class StoryList extends Component {
 
@@ -113,13 +115,10 @@ export default class StoryList extends Component {
                   }}
                   as={`/cms/${subdomain}/${storySlug}`}
                 >
-                  <TableThumb
-                    src={getImageSrc({
-                      image: previewImage,
-                      organization,
-                      quality: 's'
-                    })}
+                  <Thumb
+                    image={previewImage}
                   />
+
                 </NextA>
               ):null}
             </BodyCell>

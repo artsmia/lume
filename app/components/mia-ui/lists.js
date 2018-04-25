@@ -30,9 +30,9 @@ const TileText = styled.div`
   height: 40%;
   bottom: 0;
   padding: 10px;
-  opacity: 0;
-  transform: translateY(100%);
   transition: all .2s;
+  opacity: 1;
+  transform: translateY(0);
 `
 
 const TileContainer = styled.a`
@@ -44,8 +44,7 @@ const TileContainer = styled.a`
   overflow: hidden;
   &:hover {
     ${TileText}{
-      opacity: 1;
-      transform: translateY(0);
+      height: 42%;
     }
   }
   ${({selected, theme})=> selected ? `

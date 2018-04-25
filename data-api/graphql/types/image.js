@@ -4,6 +4,7 @@ import {
   GraphQLID
 } from 'graphql'
 import organizationType from './organization'
+import {HostEnum} from './enums'
 
 const image = new GraphQLObjectType({
   name: "image",
@@ -13,6 +14,9 @@ const image = new GraphQLObjectType({
     },
     title: {
       type: GraphQLString
+    },
+    host: {
+      type: HostEnum
     },
     description: {
       type: GraphQLString

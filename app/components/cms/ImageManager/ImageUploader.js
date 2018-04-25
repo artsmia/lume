@@ -12,9 +12,9 @@ export default class extends Component {
   state = {
     files: [],
     uploading: false,
-    hasRights: true,
-    alt: "meow",
-    title: "meow",
+    hasRights: false,
+    alt: "",
+    title: "",
     snackMessage: "",
     snackId: Math.random(),
   }

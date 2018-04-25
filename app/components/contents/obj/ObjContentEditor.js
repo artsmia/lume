@@ -14,6 +14,8 @@ import {Button} from '../../mia-ui/buttons'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
 import {Flex, Box} from 'grid-styled'
 import {Title, Description} from '../../mia-ui/forms'
+import DeleteContentButton from '../../cms/DeleteContentButton'
+
 
 class ObjContentEditor extends Component {
 
@@ -29,6 +31,7 @@ class ObjContentEditor extends Component {
 
     const {
       props: {
+        content,
         content: {
           obj
         },
@@ -84,6 +87,17 @@ class ObjContentEditor extends Component {
         </Box>
 
 
+
+        <Box
+          w={1}
+          my={5}
+        >
+          <DeleteContentButton
+            contentId={this.props.content.id}
+          />
+        </Box>
+
+        
       </Flex>
     )
   }

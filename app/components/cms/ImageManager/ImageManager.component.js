@@ -8,13 +8,12 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Zoomer from '../../shared/Zoomer'
 import {GridList, Tile} from '../../mia-ui/lists'
-import getImageSrc from '../../../utils/getImageSrc'
 import {Flex, Box} from 'grid-styled'
 import {H3} from '../../mia-ui/text'
 import imgSrcProvider from '../../shared/ImgSrcProvider'
+import fetch from 'isomorphic-unfetch'
 
-
-let Image = styled.img`
+const ImageEl = styled.img`
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -22,14 +21,17 @@ let Image = styled.img`
     box-shadow: 0 0 10px 3px ${theme.color.green};
   ` : ''}
 `
-Image = imgSrcProvider(Image)
+let Image = imgSrcProvider(ImageEl)
 
 export default class ImageManager extends Component {
 
 
   state = {
     selectedTab: "select",
-    search: ""
+    search: "",
+    miaSearch: "",
+    miaImages: [],
+    selectedMiaImage: {}
   }
 
   render() {
@@ -40,7 +42,10 @@ export default class ImageManager extends Component {
       state: {
         selectedTab,
         selectedImageId,
-        search
+        search,
+        miaSearch,
+        miaImages,
+        selectedMiaImage
       },
       props: {
         images,
@@ -55,7 +60,10 @@ export default class ImageManager extends Component {
       handleImageSave,
       handleChange,
       handleSearch,
-      handleRefetch
+      handleRefetch,
+      addMiaImageToLume,
+      handleMiaImageSearchChange,
+      handleSearchChange
     } = this
 
     return (
@@ -71,6 +79,17 @@ export default class ImageManager extends Component {
             >
               Select
             </Tab>
+
+            {(subdomain === 'mia') ? (
+              <Tab
+                name={"mia"}
+                onClick={()=>this.setState({selectedTab: "mia"})}
+              >
+                Mia Images
+              </Tab>
+            ): <div/>}
+
+
             <Tab
               name={"upload"}
               onClick={()=>this.setState({selectedTab: "upload"})}
@@ -97,7 +116,7 @@ export default class ImageManager extends Component {
                     <Search
                       value={search}
                       name={"search"}
-                      onChange={handleChange}
+                      onChange={handleSearchChange}
                     />
 
 
@@ -141,28 +160,6 @@ export default class ImageManager extends Component {
                     </Box>
                   </ImageList>
 
-                {/* <GridList>
-
-                  {images.map( (image) => (
-                    <Tile
-                      w={[1/2,1/3, 1/4]}
-                      height={'120px'}
-                      key={image.id}
-                      onClick={()=>this.setState({selectedImageId: image.id})}
-                      selected={(selectedImageId === image.id)}
-                      src={getImageSrc({
-                        image,
-                        organization,
-                        quality: 's'
-                      })}
-                      alt={image.title}
-                      text={image.title}
-                    />
-                  ))}
-
-                </GridList> */}
-
-
 
 
 
@@ -196,6 +193,90 @@ export default class ImageManager extends Component {
               Select
             </Button>
           </TabBody>
+
+
+          {(subdomain === 'mia') ? (
+            <TabBody
+              name={"mia"}
+            >
+              <SelectFlex
+                p={1}
+              >
+                  <OrgImagesFlex
+                    width={1/2}
+                    flexDirection={'column'}
+                    p={2}
+                  >
+                    <Box
+                      width={1}
+                      mb={2}
+                    >
+                      <Search
+                        value={miaSearch}
+                        name={"miaSearch"}
+                        onChange={handleMiaImageSearchChange}
+                      />
+
+
+                    </Box>
+
+
+                    <ImageList
+                      w={1}
+                      flexWrap={'wrap'}
+                      p={1}
+                    >
+                      {miaImages.map(image => (
+                        <ImageBox
+                          key={image._id}
+                          width={[1/3]}
+                          p={2}
+                          onClick={()=>this.setState({selectedMiaImage: image})}
+                        >
+                          <MiaImage
+                            src={`https://1.api.artsmia.org/${image._id}.jpg`}
+                            selected={(selectedMiaImage._id === image._id)}
+                          />
+
+                        </ImageBox>
+                      ))}
+
+                    </ImageList>
+
+
+
+
+              </OrgImagesFlex>
+
+
+
+
+                <Flex
+                  width={1/2}
+                  p={2}
+                >
+                  {(selectedMiaImage._id) ? (
+                    <MiaDisplayImage
+                      src={`https://1.api.artsmia.org/${selectedMiaImage._id}.jpg`}
+                    />
+                  ):null}
+                </Flex>
+              </SelectFlex>
+
+
+
+
+              <Button
+                onClick={addMiaImageToLume}
+              >
+                Use Image
+              </Button>
+            </TabBody>
+          ):<div/>}
+
+
+
+
           <TabBody
             name={"upload"}
           >
@@ -209,9 +290,86 @@ export default class ImageManager extends Component {
     )
   }
 
+  handleSearchChange = ({target: {value, name}}) => {
+    this.setState(
+      ()=>({[name]:value}),
+      ()=>{
+        this.debounce(this.handleSearch, 2000)
+      }
+    )
+  }
+
+  addMiaImageToLume = async () => {
+    try {
+
+      let response = await fetch(`https://1.api.artsmia.org/full/${this.state.selectedMiaImage._id}.jpg`, {mode: 'cors'})
+
+      let arrayBuffer = await response.arrayBuffer()
+
+      let file = new File([arrayBuffer], this.state.selectedMiaImage._source.title, {
+        type: 'image/jpeg'
+      })
+
+      let form = new FormData()
+
+      form.append("file", file)
+      form.append("userId", localStorage.getItem('userId'))
+      form.append("title", this.state.selectedMiaImage._source.title)
+      form.append("alt", this.state.selectedMiaImage._source.description)
+      form.append("subdomain", this.props.organization.subdomain)
+
+      const url  = (process.env.FILE_STORAGE === 's3') ? `${process.env.API_URL}/image` : 'http://localhost:3001/upload'
+
+      let options = {
+        method: 'POST',
+        body: form
+      }
+
+      response = await fetch(url, options)
+
+      await response.json()
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  bounce = true
+
+  debounce = (func, wait) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(
+        func,
+        wait
+      )
+    }
+  }
+
+  handleMiaImageSearchChange = ({target: {value, name}}) => {
+    this.setState(
+      ()=>({[name]:value}),
+      ()=>{
+        this.debounce(this.handleMiaImageSearch, 2000)
+      }
+    )
+  }
+
+  handleMiaImageSearch = async () => {
+    try {
+      let response = await fetch(`http://search.artsmia.org/${this.state.miaSearch}`)
+
+      let json = await response.json()
+
+      this.setState({miaImages: json.hits.hits})
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
 
   handleImageSave = () => {
-    console.log(this.state)
     this.props.onImageSave(this.state.selectedImageId)
   }
 
@@ -278,6 +436,22 @@ const OrgImagesFlex = styled(Flex)`
 `
 const SelectFlex = styled(Flex)`
   height: 100%;
+`
+
+const MiaImage = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  ${({selected, theme}) => selected ? `
+    box-shadow: 0 0 10px 3px ${theme.color.green};
+  ` : ''}
+`
+
+const MiaDisplayImage = styled.img`
+  max-height: 90%;
+  max-width: 90%;
+  margin: auto;
+  object-fit: contain;
 `
 
 // const SearchRow = styled(Row)`

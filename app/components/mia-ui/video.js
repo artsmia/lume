@@ -13,9 +13,11 @@ export default class Video extends Component {
     } = this.props
 
 
+
     return (
       <ReactPlayer
         url={url}
+        controls={true}
       />
     )
   }

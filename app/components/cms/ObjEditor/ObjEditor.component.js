@@ -5,7 +5,7 @@ import {Button} from '../../mia-ui/buttons'
 import {CheckboxInput, Label, Input} from '../../mia-ui/forms'
 import {Flex, Box} from 'grid-styled'
 import {Expander} from '../../mia-ui/expanders'
-import getImageSrc from '../../../utils/getImageSrc'
+import ImgSrcProvider from '../../shared/ImgSrcProvider'
 
 export default class ObjEditor extends Component {
 
@@ -139,13 +139,7 @@ export default class ObjEditor extends Component {
             <ChangeImage
               label={"Image"}
               name={'primaryImageId'}
-              src={
-                getImageSrc({
-                  organization,
-                  image: obj.primaryImage,
-                  quality: 'm'
-                })
-              }
+              image={obj.primaryImage}
               onChange={handleChange}
             />
           </Box>

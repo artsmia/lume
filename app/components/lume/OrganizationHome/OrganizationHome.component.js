@@ -8,10 +8,13 @@ import Router from 'next/router'
 import {H3, H2, H4} from '../../mia-ui/text'
 import {Flex, Box} from 'grid-styled'
 import {Drawer, DrawerCheck, DrawerButton, DrawerPage} from '../../mia-ui/drawer'
-import {GridList, Tile} from '../../mia-ui/lists'
+import {GridList, Tile as StoryTile} from '../../mia-ui/lists'
 import getImageSrc from '../../../utils/getImageSrc'
 import {Loading} from '../../mia-ui/loading'
 import Head from '../../shared/head'
+import ImgSrcProvider from '../../shared/ImgSrcProvider'
+
+let Tile = ImgSrcProvider(StoryTile)
 
 export default class Home extends Component {
 
@@ -158,11 +161,7 @@ export default class Home extends Component {
                 key={id}
                 text={title}
                 height={'200px'}
-                src={getImageSrc({
-                  image: previewImage,
-                  organization,
-                  quality: 'm'
-                })}
+                image={previewImage}
                 href={{
                   pathname: '/lume/story',
                   query: {

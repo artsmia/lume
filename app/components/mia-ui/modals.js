@@ -18,6 +18,7 @@ const Container = styled.div`
   width: 100vw;
   background-color: ${gray85};
   display: ${({open}) => open ? 'block': 'none'};
+  z-index: 2000;
 `
 
 const ModalBox = styled.div`

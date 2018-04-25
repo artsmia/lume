@@ -45,7 +45,7 @@ const editOrganization = {
     customAnalyticsId: {
       type: GraphQLString
     },
-    imageId: {
+    orgImageId: {
       type: GraphQLID
     }
   },

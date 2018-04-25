@@ -1,6 +1,7 @@
 import gql from 'graphql-tag'
 import objFragment from './obj'
 import groupFragment from './group'
+import imageFragment from './image'
 
 
 const fragment = gql`
@@ -12,8 +13,7 @@ const fragment = gql`
     template
     visibility
     previewImage{
-      id
-      localId
+      ...ImageFragment
     }
     groups {
       ...GroupFragment
@@ -25,12 +25,12 @@ const fragment = gql`
       title
       description
       image0 {
-        id
-        localId
+        ...ImageFragment
+
       }
       image1 {
-        id
-        localId
+        ...ImageFragment
+
       }
       geometry {
         type
@@ -41,18 +41,19 @@ const fragment = gql`
       }
       videoUrl
       additionalImages {
-        id
-        localId
+        ...ImageFragment
       }
     }
     relatedStories {
       id
       title
+      slug
     }
   }
 
   ${objFragment}
   ${groupFragment}
+  ${imageFragment}
 `
 
 export default fragment

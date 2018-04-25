@@ -13,7 +13,6 @@ import StoryAssociator from '../StoryAssociator'
 import StoryGroupSelector from '../StoryGroupSelector'
 import {ToolTip} from '../../mia-ui/tooltips'
 import {Flex, Box} from 'grid-styled'
-import getImageSrc from '../../../utils/getImageSrc'
 import {Expander} from '../../mia-ui/expanders'
 import {ToolTio} from '../../mia-ui/tooltips'
 
@@ -67,6 +66,8 @@ export default class StoryEditor extends Component {
       }
     } = this
 
+    console.log(this.props.story)
+
     return (
       <Flex
         width={1}
@@ -100,11 +101,7 @@ export default class StoryEditor extends Component {
           <ChangeImage
             label={"Image"}
             name={"previewImageId"}
-            src={getImageSrc({
-              organization,
-              image: previewImage,
-              quality: 'm'
-            })}
+            image={previewImage}
             onChange={handleChange}
           />
 

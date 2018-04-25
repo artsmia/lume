@@ -68,7 +68,6 @@ export default class OriginalTemplate extends Component {
           }
         },
         organization,
-        organization,
         organization: {
           customAnalyticsEnabled,
           customAnalyticsId

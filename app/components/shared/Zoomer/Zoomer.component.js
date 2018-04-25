@@ -571,7 +571,7 @@ export default class extends Component {
           tileUrl = `${process.env.LOCAL_TILE_URL}/static/${imageId}/TileGroup0/{z}-{x}-{y}.png`
         } else {
 
-          const response = await fetch(`${process.env.S3_URL}/mia-lume/${bucketId}/${imageId}/info.json`, {
+          const response = await fetch(`${process.env.S3_URL}/mia-lume/${imageId}/info.json`, {
             method: "GET"
           })
 
@@ -580,7 +580,7 @@ export default class extends Component {
           height = json.height
           width = json.width
 
-          tileUrl = `${process.env.S3_URL}/mia-lume/${bucketId}/${imageId}/{z}_{x}_{y}.png`
+          tileUrl = `${process.env.S3_URL}/mia-lume/${imageId}/{z}_{x}_{y}.png`
 
 
         }

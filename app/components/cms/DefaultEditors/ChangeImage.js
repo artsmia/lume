@@ -6,6 +6,15 @@ import {Modal} from '../../mia-ui/modals'
 import ImageManager from '../ImageManager'
 import router from 'next/router'
 import {Flex, Box} from 'grid-styled'
+import imgSrcProvider from '../../shared/ImgSrcProvider'
+
+const ImgEl = styled.img`
+  height: 100px;
+  width: auto;
+`
+
+const Img = imgSrcProvider(ImgEl)
+
 
 export default class ChangeImage extends Component {
 
@@ -21,7 +30,7 @@ export default class ChangeImage extends Component {
       handleModalOpen,
       handleModalClose,
       props: {
-        src,
+        image,
         label,
       },
       handleChange,
@@ -46,9 +55,9 @@ export default class ChangeImage extends Component {
         <Box
           w={1}
         >
-          {(src) ? (
+          {(image) ? (
             <Img
-              src={src}
+              image={image}
             />
           ): null}
         </Box>
@@ -117,10 +126,7 @@ export default class ChangeImage extends Component {
 
 }
 
-const Img = styled.img`
-  height: 100px;
-  width: auto;
-`
+
 
 const Container = styled.div`
   width: 100%;

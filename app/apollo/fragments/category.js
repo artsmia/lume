@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
 import groupFragment from './group'
+import imageFragment from './image'
 
 const fragment = gql`
   fragment CategoryFragment on category {
@@ -7,13 +8,14 @@ const fragment = gql`
     title
     description
     image {
-      id
+      ...ImageFragment
     }
     groups {
       ...GroupFragment
     }
   }
   ${groupFragment}
+  ${imageFragment}
 `
 
 export default fragment

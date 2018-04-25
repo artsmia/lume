@@ -106,8 +106,8 @@ app.prepare().then(() => {
     app.render(req, res, page)
   })
 
-  server.get('/new', (req, res) => {
-    const page = '/cms/orgManager'
+  server.get('/organizations', (req, res) => {
+    const page = '/cms/organizations'
     app.render(req, res, page)
   })
 

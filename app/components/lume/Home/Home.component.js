@@ -34,7 +34,7 @@ export default class Home extends Component {
                 Lume
               </H2>
               <P>
-                Lume is a tool for telling stories. It was created by The Minneapolis Institute of Art with the support of the Knight Foundation to allow anyone (especially museum educators and curators) to present content in aN interactive and compelling way.
+                Lume is a tool for telling stories. It was created by The Minneapolis Institute of Art with the support of the Knight Foundation to allow anyone (especially museum educators and curators) to present content in an interactive and compelling way.
               </P>
               <P>
                 You can check out Mia's Lume <Link href={{
@@ -93,7 +93,7 @@ export default class Home extends Component {
                       as={'/mia'}
                     >
                       <a>
-                        Minneapolis Institute of Art                        
+                        Minneapolis Institute of Art
                       </a>
                     </Link>
                   </Flex>

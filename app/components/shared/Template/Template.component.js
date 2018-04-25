@@ -63,6 +63,18 @@ export default class Template extends Component {
                   ))}
                   <Item>
                     <Link
+                      href={{
+                        pathname: '/cms/organizations',
+                      }}
+                      as={'/organizations'}
+                    >
+                      <A>
+                        Join or Create an Organization
+                      </A>
+                    </Link>
+                  </Item>
+                  <Item>
+                    <Link
                       href={'/logout'}
                     >
                       <A>
