@@ -1,4 +1,4 @@
-import { compose, graphql } from 'react-apollo'
+import { compose, graphql, withApollo } from 'react-apollo'
 import Component from './Editor.component'
 import query from '../../../apollo/queries/story'
 import OrgQuery from '../../../apollo/queries/organization'
@@ -29,14 +29,21 @@ const localConfig = {
 
 const saveStatus = graphql(SaveStatusQuery, localConfig)
 
-ExportComponent = compose(saveStatus)(ExportComponent)
-ExportComponent = compose(OrgQuery)(ExportComponent)
+// ExportComponent = compose(saveStatus)(ExportComponent)
+// ExportComponent = compose(OrgQuery)(ExportComponent)
+//
 
 
+
+ExportComponent = compose(
+  withApollo,
+  query,
+  mutation,
+  saveStatus,
+  OrgQuery
+)(ExportComponent)
 
 ExportComponent = withRouter(ExportComponent)
-
-ExportComponent = compose(query, mutation)(ExportComponent)
 
 
 export default ExportComponent

@@ -5,7 +5,7 @@ import {withRouter} from 'next/router'
 import query from '../../../apollo/queries/content'
 import mutation from '../../../apollo/mutations/editContent'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
-import {compose} from 'react-apollo'
+import {compose,withApollo} from 'react-apollo'
 import styled from 'styled-components'
 import {H2} from '../../mia-ui/text'
 import {Button} from '../../mia-ui/buttons'
@@ -16,15 +16,9 @@ import DeleteContentButton from '../../cms/DeleteContentButton'
 
 class DetailEditor extends Component {
 
-
-  state = {
-    title: "",
-    description: "",
-    geometry: {},
-    image0Id: "",
-  }
-
   render(){
+
+    console.log(this.props)
 
     if (!this.props.content) return null
 
@@ -150,9 +144,21 @@ class DetailEditor extends Component {
     }
   }
 
+  constructor(props){
+    super(props)
+    this.state = {
+      title: "",
+      description: "",
+      geometry: {},
+      image0Id: "",
+    }
+    this.state = {
+      ...this.stateFromProps(props)
+    }
+  }
 
   componentWillReceiveProps(nextProps){
-    this.mapPropsToState(nextProps)
+    this.setState({...this.stateFromProps(nextProps)})
   }
 
   handleChange = ({target: {value, name}}) => {
@@ -193,11 +199,13 @@ class DetailEditor extends Component {
 
   }
 
-  mapPropsToState = (nextProps) => {
-    if (!nextProps.content || nextProps.contentId === this.state.id) return
+  stateFromProps = (props) => {
+
+    if (!props.content || props.contentId === this.state.id) return {}
+
     let {
       content
-    } = nextProps
+    } = props
     let state = {
       title: content.title || "",
       description: content.description || "",
@@ -209,7 +217,7 @@ class DetailEditor extends Component {
       id: content.id
     }
 
-    this.setState({...state})
+    return state
   }
 
   handleAddAdditionalImage = (addAdditionalImageId) => {
@@ -228,9 +236,14 @@ class DetailEditor extends Component {
 
 let ExportComponent = DetailEditor
 
-ExportComponent = compose(query, mutation)(DetailEditor)
-ExportComponent = compose(setSaveStatus)(ExportComponent)
-ExportComponent = compose(OrganizationQuery)(ExportComponent)
+ExportComponent = compose(
+  query,
+  mutation,
+  setSaveStatus,
+  OrganizationQuery
+)(DetailEditor)
+
+
 ExportComponent = withRouter(ExportComponent)
 
 export default ExportComponent

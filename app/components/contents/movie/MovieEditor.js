@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {VideoUrl} from '../../cms/DefaultEditors'
 import query from '../../../apollo/queries/content'
 import mutation from '../../../apollo/mutations/editContent'
-import {compose} from 'react-apollo'
+import {compose, withApollo} from 'react-apollo'
 import styled from 'styled-components'
 import {H2} from '../../mia-ui/text'
 import {Row, Column} from '../../mia-ui/layout'
@@ -13,12 +13,6 @@ import DeleteContentButton from '../../cms/DeleteContentButton'
 
 
 class MovieEditor extends Component {
-
-  state = {
-    title: "",
-    description: "",
-    videoUrl: ""
-  }
 
   render(){
 
@@ -98,8 +92,21 @@ class MovieEditor extends Component {
     }
   }
 
+  constructor(props){
+    super(props)
+    this.state = {
+      title: "",
+      description: "",
+      videoUrl: ""
+    }
+
+    this.state = {
+      ...this.stateFromProps(props)
+    }
+  }
+
   componentWillReceiveProps(nextProps){
-    this.mapPropsToState(nextProps)
+    this.setState({...this.mapPropsToState(nextProps)})
   }
 
   handleChange = ({target: {value, name}}) => {
@@ -132,10 +139,10 @@ class MovieEditor extends Component {
 
   }
 
-  mapPropsToState = (nextProps) => {
+  stateFromProps = (props) => {
     if (
-      !nextProps.content ||
-      nextProps.contentId === this.state.id
+      !props.content ||
+      props.contentId === this.state.id
     ) {
       return
     }
@@ -145,13 +152,13 @@ class MovieEditor extends Component {
         description,
         videoUrl
       }
-    } = nextProps
+    } = props
 
-    this.setState({
+    return {
       title,
       description,
       videoUrl
-    })
+    }
   }
 
 
@@ -159,7 +166,11 @@ class MovieEditor extends Component {
 
 let ExportComponent = MovieEditor
 
-ExportComponent = compose(query, mutation)(ExportComponent)
-ExportComponent = compose(setSaveStatus)(ExportComponent)
+ExportComponent = compose(
+  withApollo,
+  query,
+  mutation,
+  setSaveStatus
+)(ExportComponent)
 
 export default ExportComponent

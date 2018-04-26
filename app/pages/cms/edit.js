@@ -31,8 +31,7 @@ class Edit extends Component {
 
 
   render() {
-
-    console.log(this.props)
+    console.log("EditPage rendered")
     return (
       <Template
         {...this.props}
