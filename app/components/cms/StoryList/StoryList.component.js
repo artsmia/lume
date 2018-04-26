@@ -26,6 +26,9 @@ export default class StoryList extends Component {
 
 
   render() {
+
+    console.log("StoryList rendered", this.props)
+
     const {
       handleLoadMore,
       handleSort,

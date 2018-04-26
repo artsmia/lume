@@ -106,8 +106,6 @@ export default function({
     options.offset = offset
   }
 
-  console.log(options)
-
   return options
 
 }

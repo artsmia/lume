@@ -31,12 +31,13 @@ export class TabContainer extends Component {
 
     Children.forEach(
       children,
-      (child) => {
+      (child, index) => {
         if (child) {
           childrenWithProps.push(
             cloneElement(child, {
               selectedTab,
-              selectTab
+              selectTab,
+              key: index
             })
           )
         }
@@ -72,7 +73,8 @@ export class TabHeader extends Component {
       props: {
         children,
         selectedTab,
-        selectTab
+        selectTab,
+        name
       }
     } = this
 
@@ -80,12 +82,13 @@ export class TabHeader extends Component {
 
     Children.forEach(
       children,
-      (child) => {
+      (child, index) => {
         if (child) {
           childrenWithProps.push(
             cloneElement(child, {
               selectedTab,
-              selectTab
+              selectTab,
+              key: index
             })
           )
         }
