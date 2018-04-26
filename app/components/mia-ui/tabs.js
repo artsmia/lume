@@ -6,13 +6,13 @@ import {Flex, Box} from 'grid-styled'
 
 export class TabContainer extends Component {
 
-  static propTypes = {
-    selectedTab: PropTypes.string.isRequired,
-  }
+  // static propTypes = {
+  //   selectedTab: PropTypes.string.isRequired,
+  // }
 
-  state = {
-    selectedTab: this.props.selectedTab
-  }
+    state = {
+      selectedTab: this.props.selectedTab
+    }
 
   render(){
     const {
@@ -27,13 +27,19 @@ export class TabContainer extends Component {
 
     } = this
 
-    const childrenWithProps = Children.map(
+    let childrenWithProps = []
+
+    Children.forEach(
       children,
       (child) => {
-        return cloneElement(child, {
-          selectedTab,
-          selectTab
-        })
+        if (child) {
+          childrenWithProps.push(
+            cloneElement(child, {
+              selectedTab,
+              selectTab
+            })
+          )
+        }
       }
     )
     return (
@@ -70,12 +76,20 @@ export class TabHeader extends Component {
       }
     } = this
 
-    const childrenWithProps = Children.map(
+    let childrenWithProps = []
+
+    Children.forEach(
       children,
-      (child) => (cloneElement(child, {
-        selectedTab,
-        selectTab
-      }))
+      (child) => {
+        if (child) {
+          childrenWithProps.push(
+            cloneElement(child, {
+              selectedTab,
+              selectTab
+            })
+          )
+        }
+      }
     )
     return (
       <HeaderContainer>

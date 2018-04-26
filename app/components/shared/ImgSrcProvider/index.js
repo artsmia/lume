@@ -13,6 +13,17 @@ export default function imgSrcProvider(WrappedComponent){
     constructor(props){
       super(props)
 
+      this.state = {
+        src: this.generateSrcFromProps(props)
+      }
+    }
+
+    componentWillReceiveProps(nextProps){
+      this.setState({src: this.generateSrcFromProps(nextProps)})
+    }
+
+    generateSrcFromProps = (props) => {
+      let src = '/static/placeholder0.png'
       if (props.image && props.image.organization){
 
         const {
@@ -31,8 +42,6 @@ export default function imgSrcProvider(WrappedComponent){
           quality
         } = props
 
-        let src = '/static/placeholder0.png'
-
         let qual = quality || 'm'
 
         switch (true) {
@@ -50,17 +59,9 @@ export default function imgSrcProvider(WrappedComponent){
           }
         }
 
-        this.state = {
-          src
-        }
 
-      } else {
-        this.state = {
-          src: '/static/placeholder0.png'
-        }
       }
-
-
+      return src
     }
 
     render(){

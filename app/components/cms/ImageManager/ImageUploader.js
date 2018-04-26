@@ -13,7 +13,7 @@ export default class extends Component {
     files: [],
     uploading: false,
     hasRights: false,
-    alt: "",
+    description: "",
     title: "",
     snackMessage: "",
     snackId: Math.random(),
@@ -28,7 +28,7 @@ export default class extends Component {
       state: {
         files,
         hasRights,
-        alt,
+        description,
         title,
         uploading,
         snackId,
@@ -76,8 +76,8 @@ export default class extends Component {
                 Description
               </Label>
               <Textarea
-                name={"alt"}
-                value={alt}
+                name={"description"}
+                value={description}
                 onChange={handleChange}
               />
             </Box>
@@ -98,7 +98,7 @@ export default class extends Component {
               onClick={handleUpload}
               disabled={(
                 !hasRights ||
-                !alt ||
+                !description ||
                 !title ||
                 files.length < 1 ||
                 uploading
@@ -114,7 +114,7 @@ export default class extends Component {
             {(preview) ? (
               <Preview
                 src={preview}
-                alt={`Preview of ${alt}`}
+                alt={`Preview of ${description}`}
               />
             ): null}
           </Box>
@@ -148,7 +148,7 @@ export default class extends Component {
             file
           ],
           title,
-          alt
+          description
         },
         props: {
           subdomain
@@ -160,7 +160,7 @@ export default class extends Component {
       form.append("file", file)
       form.append("userId", localStorage.getItem('userId'))
       form.append("title", title)
-      form.append("alt", alt)
+      form.append("description", description)
       form.append("subdomain", subdomain)
 
       const url  = (process.env.FILE_STORAGE === 's3') ? `${process.env.API_URL}/image` : 'http://localhost:3001/upload'
@@ -184,7 +184,7 @@ export default class extends Component {
         uploading: false,
         files: [],
         hasRights: false,
-        alt: "",
+        description: "",
         title: "",
         snackMessage: "Upload Finished",
         snackId: Math.random(),
