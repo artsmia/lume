@@ -25,7 +25,9 @@ export default class CmsHome extends Component {
 
   render() {
 
-    if (!this.props.organization) return <Loading/>
+    console.log("CmsHome rendered")
+    console.log(this.props)
+    // if (!this.props.organization) return <Loading/>
 
     const {
       props: {
@@ -33,9 +35,7 @@ export default class CmsHome extends Component {
         user: {
           id: userId
         },
-        organization: {
-          name
-        },
+        organization,
         router: {
           query: {
             subdomain
@@ -49,7 +49,7 @@ export default class CmsHome extends Component {
     return (
       <Page>
         <Head
-          title={name}
+          title={organization ? organization.name : "Organization Stories"}
         />
         <Flex
           w={1}
@@ -59,7 +59,7 @@ export default class CmsHome extends Component {
             width={9/10}
           >
             <H2>
-              {name}
+              {organization ? organization.name : ""}
             </H2>
           </Box>
           <Flex

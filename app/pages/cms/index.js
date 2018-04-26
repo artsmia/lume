@@ -24,6 +24,8 @@ class CmsIndex extends Component {
 
   render() {
 
+    console.log("CmsIndex page rendered")
+
     return (
       <Template
         {...this.props}

@@ -2,7 +2,7 @@ import {graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import organizationFragment from '../fragments/organization'
 
-const query = gql`
+export const query = gql`
   query OrganizationQuery ($subdomain: String) {
     organization  (
       organization: {
@@ -15,7 +15,7 @@ const query = gql`
   ${organizationFragment}
 `
 
-const options = {
+export const options = {
   options: (props) => {
     const {router: {query: {subdomain}}} = props
     return {

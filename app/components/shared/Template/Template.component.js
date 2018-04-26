@@ -32,6 +32,8 @@ export default class Template extends Component {
       }
     } = this
 
+    console.log("Template rendered")
+
     return (
       <ThemeProvider>
         <DragDropContextProvider
