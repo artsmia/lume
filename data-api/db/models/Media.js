@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize'
 import db from '../connect'
 
-const Image = db.define('image', {
+const Media = db.define('media', {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
@@ -35,11 +35,6 @@ const Image = db.define('image', {
     allowNull: false,
     defaultValue: ""
   },
-  captionCredit: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-    defaultValue: ""
-  },
   organizationId: {
     type: Sequelize.UUID,
     references: {
@@ -53,4 +48,4 @@ const Image = db.define('image', {
 })
 
 
-export default Image
+export default Media

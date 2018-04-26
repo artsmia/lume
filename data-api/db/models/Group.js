@@ -17,6 +17,20 @@ const Group = db.define('group', {
     allowNull: false,
     defaultValue: ""
   },
+  imageId: {
+    type: Sequelize.UUID,
+    references: {
+      model: "image",
+      key: "id"
+    },
+  },
+  categoryId: {
+    type: Sequelize.UUID,
+    references: {
+      model: "category",
+      key: "id"
+    },
+  },
 }, {
   freezeTableName: true
 })

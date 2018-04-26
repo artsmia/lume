@@ -10,7 +10,8 @@ const User_Organization = db.define("user_organization", {
     references: {
       model: "organization",
       key: "id"
-    }
+    },
+    onDelete: 'cascade'
   },
   role: {
     type: Sequelize.ENUM,

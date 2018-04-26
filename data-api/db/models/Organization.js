@@ -40,6 +40,11 @@ const Organization = db.define('organization', {
     allowNull: false,
     defaultValue: ""
   },
+  customImageSearchEndpoint: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
   customAnalyticsEnabled: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
@@ -49,6 +54,17 @@ const Organization = db.define('organization', {
     type: Sequelize.STRING,
     allowNull: false,
     defaultValue: ""
+  },
+  locationEnabled: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  orgImageId: {
+    type: Sequelize.UUID,
+  },
+  locationImageId: {
+    type: Sequelize.UUID,
   },
 }, {
   freezeTableName: true

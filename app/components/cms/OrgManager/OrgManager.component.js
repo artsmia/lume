@@ -124,6 +124,7 @@ export default class OrgManager extends Component {
           organizationId,
         },
         props: {
+          user,
           user: {
             id: userId
           },
@@ -131,18 +132,27 @@ export default class OrgManager extends Component {
         }
       } = this
 
-      console.log(this.props.organizations)
 
-      const {newUsersRequireApproval} = this.props.organizations.find(org => org.id === organizationId)
+      const {
+        newUsersRequireApproval,
+        emailDomain
+      } = this.props.organizations.find(org => org.id === organizationId)
 
-      console.log(newUsersRequireApproval)
 
+      let role = "pending"
+
+      if (
+        !newUsersRequireApproval ||
+        user.email.split('@')[1] === emailDomain
+      ){
+        role = "contributor"
+      }
 
       const {data: {editUserOrganizationRole: {organizations}}} = await joinOrganization({
         variables: {
           organizationId,
           userId,
-          role: newUsersRequireApproval ? 'pending': 'contributor'
+          role
         }
       })
 

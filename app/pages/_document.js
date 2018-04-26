@@ -23,9 +23,9 @@ export default class ClientDocument extends Document {
     return (
       <html lang="en">
         <Head>
-          {/* <script
+          <script
             async
-            src="https://www.googletagmanager.com/gtag/js?id=UA-117678686-1"
+            src="https://www.googletagmanager.com/gtag/js?id=UA-32999675-8"
           />
           <script
             dangerouslySetInnerHTML={{__html: `
@@ -33,9 +33,9 @@ export default class ClientDocument extends Document {
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
 
-              gtag('config', 'UA-117678686-1');
+              gtag('config', 'UA-32999675-8');
             `}}
-          /> */}
+          />
 
 
           <link

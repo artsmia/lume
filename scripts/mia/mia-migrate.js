@@ -15,6 +15,7 @@ const tdService = new TurndownService()
 
 const log = (msg) => console.log(chalk.cyan(msg))
 
+
 async function populate(){
 
   try {
@@ -28,7 +29,9 @@ async function populate(){
       name: "Minneapolis Institute of Art",
       customObjApiEnabled: true,
       customObjApiEndpoint: " https://iexj7ikn39.execute-api.us-west-2.amazonaws.com/prod/lume-mia-micro",
-      customImageApiEnabled: true,
+      customImageApiEnabled: false,
+      emailDomain: 'artsmia.org',
+      newUsersRequireApproval: true,
     })
 
     const Africa = await Organization.create({
@@ -36,7 +39,9 @@ async function populate(){
       name: "Eyes on Africa",
       customObjApiEnabled: true,
       customObjApiEndpoint: " https://iexj7ikn39.execute-api.us-west-2.amazonaws.com/prod/lume-mia-micro",
-      customImageApiEnabled: true,
+      customImageApiEnabled: false,
+      emailDomain: 'artsmia.org',
+      newUsersRequireApproval: true,
 
     })
 

@@ -70,6 +70,28 @@ const Obj = db.define('obj', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  organizationId: {
+    type: Sequelize.UUID,
+    references: {
+      model: "organization",
+      key: "id"
+    },
+    onDelete: 'cascade'
+  },
+  primaryImageId: {
+    type: Sequelize.UUID,
+    references: {
+      model: "image",
+      key: "id"
+    },
+  },
+  primaryMediaId: {
+    type: Sequelize.UUID,
+    references: {
+      model: "media",
+      key: "id"
+    },
+  },
 }, {
   freezeTableName: true,
 })

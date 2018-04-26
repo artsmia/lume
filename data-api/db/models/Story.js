@@ -38,7 +38,22 @@ const Story = db.define('story', {
   slug: {
     type: Sequelize.STRING,
     allowNull: false,
-  }
+  },
+  organizationId: {
+    type: Sequelize.UUID,
+    references: {
+      model: "organization",
+      key: "id"
+    },
+    onDelete: 'cascade'
+  },
+  previewImageId: {
+    type: Sequelize.UUID,
+    references: {
+      model: "image",
+      key: "id"
+    },
+  },
 }, {
   freezeTableName: true,
 })
