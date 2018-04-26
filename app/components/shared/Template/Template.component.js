@@ -21,10 +21,6 @@ export default class Template extends Component {
       props,
       props: {
         children,
-        snack: {
-          message,
-          snackId
-        },
         user
       },
       state: {

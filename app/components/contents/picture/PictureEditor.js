@@ -5,7 +5,7 @@ import OrganizationQuery from '../../../apollo/queries/organization'
 import {withRouter} from 'next/router'
 
 import mutation from '../../../apollo/mutations/editContent'
-import {compose} from 'react-apollo'
+import {compose, withApollo} from 'react-apollo'
 import styled from 'styled-components'
 import {H2} from '../../mia-ui/text'
 import {Row, Column} from '../../mia-ui/layout'
@@ -17,11 +17,6 @@ import DeleteContentButton from '../../cms/DeleteContentButton'
 
 class PictureEditor extends Component {
 
-  state = {
-    title: "",
-    description: "",
-    image0Id: "",
-  }
 
   render(){
 
@@ -103,8 +98,21 @@ class PictureEditor extends Component {
     }
   }
 
+  constructor(props){
+    super(props)
+    this.state = {
+      title: "",
+      description: "",
+      image0Id: "",
+    }
+
+    this.state = {
+      ...this.stateFromProps(props)
+    }
+  }
+
   componentWillReceiveProps(nextProps){
-    this.mapPropsToState(nextProps)
+    this.setState({...this.stateFromProps(nextProps)})
   }
 
   handleChange = ({target: {value, name}}) => {
@@ -144,10 +152,10 @@ class PictureEditor extends Component {
 
   }
 
-  mapPropsToState = (nextProps) => {
+  stateFromProps = (props) => {
     if (
-      !nextProps.content ||
-      nextProps.contentId === this.state.id
+      !props.content ||
+      props.contentId === this.state.id
     ) {
       return
     }
@@ -156,12 +164,12 @@ class PictureEditor extends Component {
       content: {
         image0,
       }
-    } = nextProps
+    } = props
 
-    this.setState({
+    return {
       ...content,
       image0Id: image0 ? image0.id : "",
-    })
+    }
   }
 
 
@@ -169,9 +177,15 @@ class PictureEditor extends Component {
 
 let ExportComponent = PictureEditor
 
-ExportComponent = compose(query, mutation)(ExportComponent)
-ExportComponent = compose(setSaveStatus)(ExportComponent)
-ExportComponent = compose(OrganizationQuery)(ExportComponent)
+ExportComponent = compose(
+  withApollo,
+  query,
+  mutation,
+  setSaveStatus,
+  OrganizationQuery,
+
+)(ExportComponent)
+
 ExportComponent = withRouter(ExportComponent)
 
 

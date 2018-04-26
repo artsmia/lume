@@ -26,7 +26,6 @@ export default class CmsHome extends Component {
   render() {
 
     console.log("CmsHome rendered")
-    console.log(this.props)
     // if (!this.props.organization) return <Loading/>
 
     const {

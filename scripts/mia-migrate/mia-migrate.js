@@ -40,19 +40,26 @@ async function populate(){
 
     })
 
-    // const gretchenId = 'google-oauth2|112934604856216651589'
-    //
-    // await User_Organization.create({
-    //   organizationId: Mia.id,
-    //   userId: gretchenId,
-    //   role: 'admin'
-    // })
-    //
-    // await User_Organization.create({
-    //   organizationId: Africa.id,
-    //   userId: gretchenId,
-    //   role: 'admin'
-    // })
+    const gretchenId = 'google-oauth2|112934604856216651589'
+    const carlId = 'google-oauth2|116437175748732542207'
+
+    await User_Organization.create({
+      organizationId: Mia.id,
+      userId: gretchenId,
+      role: 'admin'
+    })
+
+    await User_Organization.create({
+      organizationId: Mia.id,
+      userId: carlId,
+      role: 'admin'
+    })
+
+    await User_Organization.create({
+      organizationId: Africa.id,
+      userId: gretchenId,
+      role: 'admin'
+    })
 
     const create = async (url, Org) => {
       try {
@@ -251,7 +258,7 @@ async function populate(){
               content.type === "video"
             ) {
               type = "movie"
-              
+
             }
 
             let description = content.text ? tdService.turndown(content.text) : ""

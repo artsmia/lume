@@ -44,10 +44,13 @@ const queryConfig = {
       variables
     }
   },
-  props: ({ ownProps, data }) => ({
-    ...ownProps,
-    ...data
-  }),
+  props: ({ ownProps, data }) => {
+    console.log(data)
+    return {
+      ...ownProps,
+      ...data
+    }
+  },
 }
 
 

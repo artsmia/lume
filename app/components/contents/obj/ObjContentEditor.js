@@ -4,7 +4,7 @@ import mutation from '../../../apollo/mutations/editContent'
 import OrganizationQuery from '../../../apollo/queries/organization'
 import {withRouter} from 'next/router'
 
-import {compose} from 'react-apollo'
+import {compose, withApollo} from 'react-apollo'
 import ObjEditor from '../../cms/ObjEditor'
 import ObjSelector from '../../cms/ObjSelector'
 import styled from 'styled-components'
@@ -19,11 +19,11 @@ import DeleteContentButton from '../../cms/DeleteContentButton'
 
 class ObjContentEditor extends Component {
 
-  state = {
-    ...this.props.content,
-    modal: false,
-    objId: "",
-  }
+  // state = {
+  //   ...this.props.content,
+  //   modal: false,
+  //   objId: "",
+  // }
 
   render(){
 
@@ -97,7 +97,7 @@ class ObjContentEditor extends Component {
           />
         </Box>
 
-        
+
       </Flex>
     )
   }
@@ -124,19 +124,38 @@ class ObjContentEditor extends Component {
     )
   }
 
-  componentWillReceiveProps(nextProps){
+  constructor(props){
+    super(props)
+    this.state = {
+      modal: false,
+      objId: "",
+    }
+    this.state = {
+      ...this.stateFromProps(props)
+    }
+  }
 
-    if (nextProps.contentId !== this.state.id){
-      this.setState({...nextProps.content})
+  stateFromProps = (props) => {
+    let state = {}
+
+    if (props.contentId !== this.state.id){
+      Object.assign(state, {...props.content})
     }
 
     if (
-      nextProps.content
+      props.content
     ) {
-      if (nextProps.content.obj) {
-        this.setState({objId: nextProps.content.obj.id || ""})
+      if (props.content.obj) {
+        Object.assign(state, {objId: props.content.obj.id || ""})
       }
     }
+
+    return state
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({...this.stateFromProps(nextProps)})
+
   }
 
   handleSelect = (objId) => {
@@ -167,9 +186,14 @@ class ObjContentEditor extends Component {
 }
 
 let ExportComponent = ObjContentEditor
-ExportComponent = compose(query, mutation)(ExportComponent)
-ExportComponent = compose(setSaveStatus)(ExportComponent)
-ExportComponent = compose(OrganizationQuery)(ExportComponent)
+ExportComponent = compose(
+  withApollo,
+  query,
+  mutation,
+  setSaveStatus,
+  OrganizationQuery
+)(ExportComponent)
+
 ExportComponent = withRouter(ExportComponent)
 
 export default ExportComponent

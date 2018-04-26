@@ -34,6 +34,7 @@ const Overlay = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${gray60};
+  z-index: 5000;
 `
 export const Box = styled.div`
   display: flex;

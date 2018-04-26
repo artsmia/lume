@@ -29,7 +29,8 @@ export default class StoryEditor extends Component {
     template: "original",
     visibility: "draft",
     slug: '',
-    slugPending: false
+    slugPending: false,
+    id: ''
   }
 
   state = {
@@ -37,7 +38,11 @@ export default class StoryEditor extends Component {
     sync: true
   }
 
+
+
   render() {
+
+    console.log("Story Editor render")
 
     if (!this.props.story) return null
 
@@ -211,26 +216,37 @@ export default class StoryEditor extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    this.mapPropsToState(nextProps)
+  constructor(props){
+    super(props)
+    this.state = {
+      ...this.createStateFromProps(props)
+    }
   }
 
-  mapPropsToState = (nextProps) => {
+  componentWillReceiveProps(nextProps){
+
+    this.setState({
+      ...this.createStateFromProps(nextProps)
+
+    })
+  }
+
+  createStateFromProps = (props) => {
     if (
-      nextProps.story &&
-      nextProps.storyId !== this.state.id
+      props.story &&
+      props.storyId !== this.state.id
     ) {
       let {
         story,
         story: {
           previewImage
         }
-      } = nextProps
+      } = props
 
-      this.setState({
+      return {
         ...story,
         previewImageId: previewImage ? previewImage.id : ""
-      })
+      }
     }
   }
 

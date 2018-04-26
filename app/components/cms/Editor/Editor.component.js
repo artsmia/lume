@@ -18,14 +18,6 @@ import Head from '../../shared/head'
 
 export default class Editor extends Component {
 
-  state = {
-    editing: "story",
-    selectedContent: null,
-    contentType: "comparison",
-    contents: [],
-    initialized: false,
-    preview: false
-  }
 
   contentTypes = [
     "comparison",
@@ -36,6 +28,8 @@ export default class Editor extends Component {
   ]
 
   render(){
+
+    console.log("Editor Rendered")
 
     if (!this.props.story) return null
 
@@ -299,24 +293,54 @@ export default class Editor extends Component {
 
   }
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps.story) {
-      let contents = nextProps.story.contents.slice().sort( (a,b) => a.index - b.index)
 
-      this.setState({
-        contents
-      })
+  constructor(props){
+    super(props)
+    this.state = {}
+    this.state = {
+      editing: "story",
+      selectedContent: null,
+      contentType: "comparison",
+      contents: [],
+      initialized: false,
+      preview: false,
+      ...this.propsToState(props)
+    }
+  }
+
+  propsToState = (props) => {
+    if (props.story) {
+
+      let state = {}
+
+      let contents = props.story.contents.slice().sort( (a,b) => a.index - b.index)
+
+      Object.assign(state, {contents})
 
       if (this.state.selectedContent) {
-        if (!nextProps.story.contents.find(content => content.id === this.state.selectedContent.id)) {
-          this.setState({
+        if (
+          !props.story.contents.find(
+            content => content.id === this.state.selectedContent.id
+          )
+        ) {
+          Object.assign(state, {
             selectedContent: null,
             editing: "story"
           })
         }
       }
 
+      return state
+
     }
+  }
+
+
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      ...this.propsToState(nextProps)
+    })
   }
 
   saveReorder = () => {
@@ -372,7 +396,7 @@ const FullPage = styled(Flex)`
 `
 
 const TopBar = styled(Flex)`
-  height: 55px;
+  height: 65px;
   border-bottom: 1px solid black;
 `
 
