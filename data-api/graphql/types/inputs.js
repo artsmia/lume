@@ -118,7 +118,10 @@ export const FilterInput = new GraphQLInputObjectType({
     },
     groups: {
       type: new GraphQLList(GraphQLID)
-    }
+    },
+    localId: {
+      type: GraphQLString
+    },
   }
 })
 

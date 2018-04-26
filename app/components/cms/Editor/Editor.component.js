@@ -37,8 +37,6 @@ export default class Editor extends Component {
 
   render(){
 
-    console.log(this.props)
-
     if (!this.props.story) return null
 
     const {

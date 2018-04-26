@@ -13,7 +13,8 @@ export default function({
   offset,
   template,
   visibility,
-  groups = []
+  groups = [],
+  localId
 }){
   let options = {
     where: {
@@ -58,6 +59,12 @@ export default function({
     })
   }
 
+  if (localId) {
+    Object.assign(options.where, {
+      localId
+    })
+  }
+
   if (template) {
     Object.assign(options.where, {
       template: {
@@ -98,6 +105,8 @@ export default function({
   if (offset) {
     options.offset = offset
   }
+
+  console.log(options)
 
   return options
 

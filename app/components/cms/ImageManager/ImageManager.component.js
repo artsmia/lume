@@ -12,6 +12,7 @@ import {Flex, Box} from 'grid-styled'
 import {H3} from '../../mia-ui/text'
 import imgSrcProvider from '../../shared/ImgSrcProvider'
 import fetch from 'isomorphic-unfetch'
+import {ImagesQuery} from '../../../apollo/queries/images'
 
 const ImageEl = styled.img`
   height: 100%;
@@ -31,7 +32,8 @@ export default class ImageManager extends Component {
     search: "",
     miaSearch: "",
     miaImages: [],
-    selectedMiaImage: {}
+    selectedMiaImage: {},
+    miaImageButton: ''
   }
 
   render() {
@@ -45,7 +47,8 @@ export default class ImageManager extends Component {
         search,
         miaSearch,
         miaImages,
-        selectedMiaImage
+        selectedMiaImage,
+        miaImageButton
       },
       props: {
         images,
@@ -87,7 +90,7 @@ export default class ImageManager extends Component {
               >
                 Mia Images
               </Tab>
-            ): <div/>}
+            ): null}
 
 
             <Tab
@@ -231,7 +234,7 @@ export default class ImageManager extends Component {
                           key={image._id}
                           width={[1/3]}
                           p={2}
-                          onClick={()=>this.setState({selectedMiaImage: image})}
+                          onClick={()=>this.handleMiaImageSelect(image)}
                         >
                           <MiaImage
                             src={`https://1.api.artsmia.org/${image._id}.jpg`}
@@ -264,15 +267,29 @@ export default class ImageManager extends Component {
               </SelectFlex>
 
 
+              {(miaImageButton === 'add') ? (
+                <Button
+                  onClick={addMiaImageToLume}
+                >
+                  Add Image to Lume
+                </Button>
+              ): null}
 
 
-              <Button
-                onClick={addMiaImageToLume}
-              >
-                Use Image
-              </Button>
+              {(miaImageButton === 'use') ? (
+                <Button
+                  onClick={handleImageSave}
+                >
+                  Use Image
+                </Button>
+              ): null}
+
+
+
+
+
             </TabBody>
-          ):<div/>}
+          ):null}
 
 
 
@@ -287,8 +304,45 @@ export default class ImageManager extends Component {
           </TabBody>
         </TabContainer>
       </Container>
+
     )
   }
+
+  handleMiaImageSelect = async (selectedMiaImage) => {
+    try {
+      this.setState({
+        selectedMiaImage,
+        miaImageButton: ''
+      })
+
+      let result = await this.props.client.query({
+        query: ImagesQuery,
+        variables: {
+          filter: {
+            organization: {
+              subdomain: 'mia'
+            },
+            limit: 10,
+            localId: selectedMiaImage._id
+          }
+        },
+        fetchPolicy: 'network-only'
+      })
+
+      if (result.data.images[0]){
+        this.setState({
+          miaImageButton: 'use',
+          selectedImageId: result.data.images[0].id
+        })
+      } else {
+        this.setState({miaImageButton: 'add'})
+      }
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
 
   handleSearchChange = ({target: {value, name}}) => {
     this.setState(
@@ -315,8 +369,9 @@ export default class ImageManager extends Component {
       form.append("file", file)
       form.append("userId", localStorage.getItem('userId'))
       form.append("title", this.state.selectedMiaImage._source.title)
-      form.append("alt", this.state.selectedMiaImage._source.description)
+      form.append("description", this.state.selectedMiaImage._source.description)
       form.append("subdomain", this.props.organization.subdomain)
+      form.append("localId", this.state.selectedMiaImage._id)
 
       const url  = (process.env.FILE_STORAGE === 's3') ? `${process.env.API_URL}/image` : 'http://localhost:3001/upload'
 
@@ -327,7 +382,9 @@ export default class ImageManager extends Component {
 
       response = await fetch(url, options)
 
-      await response.json()
+      let json = await response.json()
+
+      this.props.onImageSave(json.data.image.id)
 
     } catch (ex) {
       console.error(ex)

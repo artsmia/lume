@@ -8,7 +8,6 @@ import {withRouter} from 'next/router'
 import gql from 'graphql-tag'
 
 let ExportComponent = Component
-ExportComponent = compose(query, mutation)(ExportComponent)
 
 
 const SaveStatusQuery = gql`
@@ -36,5 +35,8 @@ ExportComponent = compose(OrgQuery)(ExportComponent)
 
 
 ExportComponent = withRouter(ExportComponent)
+
+ExportComponent = compose(query, mutation)(ExportComponent)
+
 
 export default ExportComponent

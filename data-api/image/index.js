@@ -9,8 +9,6 @@ const s3 = new AWS.S3()
 export default async function (req,res, next) {
   try {
 
-    console.log(req.file)
-
     const {
       file: {
         mimetype,
@@ -19,7 +17,8 @@ export default async function (req,res, next) {
       body: {
         subdomain,
         title,
-        description
+        description,
+        localId
       }
     } = req
 
@@ -31,13 +30,13 @@ export default async function (req,res, next) {
 
     let image = await organization.createImage({
       title,
-      description
+      description,
+      localId
     })
 
 
     const fileId = image.id
 
-    console.log(fileId)
 
     await upload({
       Key: `${fileId}/original.jpeg`,
@@ -50,7 +49,9 @@ export default async function (req,res, next) {
 
 
     res.json({
-      msg: "success"
+      data: {
+        image: image.dataValues
+      }
     })
 
 
