@@ -7,12 +7,25 @@ import {
   Image,
   Obj,
   Organization,
-  User_Organization
+  User_Organization,
+  Media
 } from './models'
 
 
 export async function createAssociations() {
   try {
+
+    Category.hasMany(Group, {
+      as: "groups"
+    })
+
+    Category.belongsTo(Image, {
+      as: "image"
+    })
+
+    Category.belongsTo(Organization, {
+      as: "organization"
+    })
 
 
     Content.belongsTo(Story, {
@@ -36,17 +49,11 @@ export async function createAssociations() {
       through: "content_image"
     })
 
-    Category.hasMany(Group, {
-      as: "groups"
+    Content.belongsToMany(Media, {
+      as: "additionalMedia",
+      through: "content_media"
     })
 
-    Category.belongsTo(Image, {
-      as: "image"
-    })
-
-    Category.belongsTo(Organization, {
-      as: "organization"
-    })
 
 
     Group.belongsTo(Category, {
@@ -75,6 +82,14 @@ export async function createAssociations() {
       through: "content_image"
     })
 
+    Media.belongsTo(Organization, {
+      as: "organization"
+    })
+
+    Media.belongsToMany(Content, {
+      as: "contents",
+      through: "content_media"
+    })
 
     Obj.belongsTo(Image, {
       as: "primaryImage"
@@ -89,24 +104,35 @@ export async function createAssociations() {
     })
 
 
-    Organization.belongsTo(Image, {
-      as: "orgImage"
+    Organization.hasOne(Image, {
+      as: "orgImage",
     })
 
+    Organization.hasOne(Image, {
+      as: "locationImage",
+    })
+
+
     Organization.hasMany(Story, {
-      as: "stories"
+      as: "stories",
     })
 
     Organization.hasMany(Image, {
       as: "images"
     })
 
+    Organization.hasMany(Media, {
+      as: "medias"
+    })
+
+
     Organization.hasMany(Obj, {
       as: "objs"
     })
 
     Organization.hasMany(Category, {
-      as: "categories"
+      as: "categories",
+      constraints: false
     })
 
     Organization.hasMany(User_Organization, {

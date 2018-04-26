@@ -17,6 +17,21 @@ const Category = db.define('category', {
     allowNull: false,
     defaultValue: ""
   },
+  organizationId: {
+    type: Sequelize.UUID,
+    references: {
+      model: "organization",
+      key: "id"
+    },
+    onDelete: 'cascade'
+  },
+  imageId: {
+    type: Sequelize.UUID,
+    references: {
+      model: "image",
+      key: "id"
+    },
+  },
 }, {
   freezeTableName: true
 })

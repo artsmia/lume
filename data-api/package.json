@@ -53,7 +53,7 @@
   },
   "scripts": {
     "start:local": "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js",
-    "deploy": "rm -rf build && babel ../data-api -d build --ignore node_modules && now",
+    "deploy": "rm -rf build && babel ../data-api -d build --ignore node_modules && now && now alias api.lume.space",
     "now-start": "DEPLOYMENT_ENV=dev node build",
     "test": "jest"
   }

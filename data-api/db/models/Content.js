@@ -42,6 +42,27 @@ const Content = db.define('content', {
     allowNull: false,
     defaultValue: ""
   },
+  image0Id: {
+    type: Sequelize.UUID,
+    references: {
+      model: "image",
+      key: "id"
+    },
+  },
+  image1Id: {
+    type: Sequelize.UUID,
+    references: {
+      model: "image",
+      key: "id"
+    },
+  },
+  objId: {
+    type: Sequelize.UUID,
+    references: {
+      model: "obj",
+      key: "id"
+    },
+  },
 }, {
   freezeTableName: true
 })
