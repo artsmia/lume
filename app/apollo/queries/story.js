@@ -45,7 +45,6 @@ const queryConfig = {
     }
   },
   props: ({ ownProps, data }) => {
-    console.log(data)
     return {
       ...ownProps,
       ...data

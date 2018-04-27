@@ -6,7 +6,7 @@ import {Modal} from '../../mia-ui/modals'
 import MediaManager from '../MediaManager'
 import router from 'next/router'
 import {Flex, Box} from 'grid-styled'
-
+import {Icon} from '../../mia-ui/icons'
 
 export default class MultiMedia extends Component {
 
@@ -21,10 +21,10 @@ export default class MultiMedia extends Component {
       handleModalOpen,
       handleModalClose,
       props: {
-        // additionalImages,
+        additionalMedias,
         label,
-        // onRemove,
-        // organization
+        onRemove,
+        organization
       },
       handleAdd,
       state: {
@@ -45,27 +45,37 @@ export default class MultiMedia extends Component {
           </Label>
         </Box>
 
-        {/* <Flex
+        <Flex
           w={1}
         >
-          {additionalImages.map( image => (
+          {additionalMedias.map( media => (
             <Flex
-              key={image.id}
+              key={media.id}
               flexDirection={'column'}
               mr={1}
             >
-              <Img
-                src={image.src}
-              />
+              <MediaContainer
+                justifyContent={'center'}
+                alignItems={'center'}
+              >
+                <Icon
+                  icon={(media.format === 'mp4') ? 'local_movies' : 'volume_up'}
+                  size={'70px'}
+                />
+                <TitleOverlay>
+                  {media.title}
+                </TitleOverlay>
+              </MediaContainer>
+
               <Button
                 color={"red"}
-                onClick={()=>onRemove(image.id)}
+                onClick={()=>onRemove(media.id)}
               >
                 Remove
               </Button>
             </Flex>
           ))}
-        </Flex> */}
+        </Flex>
 
         <Box
           w={1}
@@ -85,7 +95,10 @@ export default class MultiMedia extends Component {
           width={"60%"}
 
         >
-          <MediaManager/>
+          <MediaManager
+            onMediaSave={handleAdd}
+
+          />
 
         </Modal>
       </Flex>
@@ -105,20 +118,30 @@ export default class MultiMedia extends Component {
     })
   }
 
-  handleAdd = (imageId) => {
+  handleAdd = (mediaId) => {
     const {
       onAdd,
     } = this.props
 
-    onAdd(imageId)
+    onAdd(mediaId)
     this.setState({modal: false})
   }
 
 
 }
 
+const MediaContainer = styled(Flex)`
+  height: 150px;
+  width: 150px;
+  border: 1px solid black;
+  position: relative;
+`
 
-const Img = styled.img`
-  height: 100px;
-  width: auto;
+const TitleOverlay = styled(Box)`
+  background-color: ${({theme}) => theme.color.gray60};
+  color: white;
+  position: absolute;
+  bottom: 0;
+  height: 40%;
+  font-size: 20px;
 `

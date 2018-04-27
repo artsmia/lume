@@ -6,7 +6,14 @@ import {Modal} from '../../mia-ui/modals'
 import ImageManager from '../ImageManager'
 import router from 'next/router'
 import {Flex, Box} from 'grid-styled'
+import ImgSrcProvider from '../../shared/ImgSrcProvider'
 
+const Img = styled.img`
+  height: 100px;
+  width: auto;
+`
+
+const Image = ImgSrcProvider(Img)
 
 export default class ChangeImage extends Component {
 
@@ -54,8 +61,8 @@ export default class ChangeImage extends Component {
               flexDirection={'column'}
               mr={1}
             >
-              <Img
-                src={image.src}
+              <Image
+                image={image}
               />
               <Button
                 color={"red"}
@@ -118,9 +125,3 @@ export default class ChangeImage extends Component {
 
 
 }
-
-
-const Img = styled.img`
-  height: 100px;
-  width: auto;
-`

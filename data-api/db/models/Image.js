@@ -22,9 +22,11 @@ const Image = db.define('image', {
     allowNull: false,
     defaultValue: ""
   },
-  // metadata: {
-  //   type: Sequelize.JSON,
-  // },
+  format: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""  
+  },
   host: {
     type: Sequelize.ENUM,
     values: ["s3","mia", "local"],

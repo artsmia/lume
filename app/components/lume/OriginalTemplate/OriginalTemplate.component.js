@@ -9,6 +9,8 @@ import {Icon} from '../../mia-ui/icons'
 import Link from 'next/link'
 import Markdown from 'react-markdown'
 import AdditionalImages from './AdditionalImages'
+import AdditionalMedias from './AdditionalMedias'
+
 import {Flex, Box} from 'grid-styled'
 import {Expander} from '../../mia-ui/expanders'
 import {H3} from '../../mia-ui/text'
@@ -96,6 +98,8 @@ export default class OriginalTemplate extends Component {
         obj = objContent.obj
       }
     }
+
+    console.log(this)
 
     return (
       <Container
@@ -207,8 +211,7 @@ export default class OriginalTemplate extends Component {
                       />
                     </Box>
 
-                    {(content.additionalImages.length > 0) ? (
-                      <Box
+                      <Flex
                         w={1}
                         p={3}
                       >
@@ -216,9 +219,13 @@ export default class OriginalTemplate extends Component {
                           additionalImages={content.additionalImages}
                           organization={organization}
                         />
+                        <AdditionalMedias
+                          additionalMedias={content.additionalMedias}
+                          organization={organization}
+                        />
 
-                      </Box>
-                    ):null}
+                      </Flex>
+
 
 
 
@@ -373,6 +380,8 @@ export default class OriginalTemplate extends Component {
 
 
   showFeature = (firstDetailContent) => {
+
+    console.log(firstDetailContent)
 
     const {
       selectedContent

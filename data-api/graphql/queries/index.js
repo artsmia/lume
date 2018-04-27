@@ -16,6 +16,7 @@ import story from './story'
 import stories from './stories'
 import image from './image'
 import images from './images'
+import medias from './medias'
 
 
 const query = new GraphQLObjectType({
@@ -34,7 +35,8 @@ const query = new GraphQLObjectType({
     image,
     images,
     obj,
-    objs
+    objs,
+    medias
   }
 })
 

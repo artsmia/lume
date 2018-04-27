@@ -50,7 +50,7 @@ export async function createAssociations() {
     })
 
     Content.belongsToMany(Media, {
-      as: "additionalMedia",
+      as: "additionalMedias",
       through: "content_media"
     })
 

@@ -6,8 +6,8 @@ import {
 import organizationType from './organization'
 import {HostEnum} from './enums'
 
-const image = new GraphQLObjectType({
-  name: "image",
+const media = new GraphQLObjectType({
+  name: "media",
   fields: () => ({
     id: {
       type: GraphQLID
@@ -37,10 +37,7 @@ const image = new GraphQLObjectType({
     format: {
       type: GraphQLString
     },
-    captionCredit: {
-      type: GraphQLString
-    },
   })
 })
 
-export default image
+export default media

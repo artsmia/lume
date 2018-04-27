@@ -160,6 +160,12 @@ export const ContentInput = new GraphQLInputObjectType({
     },
     removeAdditionalImageId: {
       type: GraphQLID
+    },
+    addAdditionalMediaId: {
+      type: GraphQLID
+    },
+    removeAdditionalMediaId: {
+      type: GraphQLID
     }
   }
 })

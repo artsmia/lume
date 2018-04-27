@@ -33,6 +33,7 @@ export default class AdditionalImages extends Component {
               selectedImageId: image.id,
               modal: true
             })}
+            mx={2}
           >
             <Image
               image={image}
