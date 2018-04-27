@@ -6,7 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import {Flex, Box} from 'grid-styled'
 import Link from 'next/link'
 import {Icon} from '../../mia-ui/icons'
-
+import Feedback from '../Feedback'
 export default class Template extends Component {
 
 
@@ -89,6 +89,10 @@ export default class Template extends Component {
 
 
             {children}
+
+            <Feedback
+              user={user}
+            />
 
           </div>
 

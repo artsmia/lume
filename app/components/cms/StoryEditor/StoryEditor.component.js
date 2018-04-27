@@ -82,11 +82,6 @@ export default class StoryEditor extends Component {
           pr={4}
         >
 
-
-
-          <ToolTip>
-            What is this thing here?
-          </ToolTip>
           <Title
             name={'title'}
             value={title}
