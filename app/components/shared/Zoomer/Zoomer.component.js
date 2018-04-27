@@ -521,7 +521,8 @@ export default class extends Component {
             localId,
             organization: {
               id: bucketId,
-              customImageApiEnabled
+              customImageApiEnabled,
+              subdomain
             }
           }
         },
@@ -533,10 +534,10 @@ export default class extends Component {
       let height
       let width
 
+      console.log(this.state)
 
       if (
-        customImageApiEnabled &&
-        localId
+        subdomain === 'mia'
       ) {
 
         const response = await fetch(`https://tiles.dx.artsmia.org/${localId}.tif`, {

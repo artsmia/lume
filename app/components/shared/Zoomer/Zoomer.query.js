@@ -9,9 +9,11 @@ const query = gql`
       id: $imageId
     ) {
       id
+      host
       organization {
         id
         customImageApiEnabled
+        subdomain
       }
       localId
     }

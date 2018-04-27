@@ -1,7 +1,8 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
-import {blue, white, black} from './colors'
+import {blue, white, black, gray60} from './colors'
 import {Icon} from './icons'
+import {Flex, Box} from 'grid-styled'
 
 const Tip = styled.div`
 
@@ -34,25 +35,28 @@ const position = ({position}) => {
 
 
 const Tool = styled.div`
+  position: absolute;
   height: 25px;
   width: 25px;
   border-radius: 25px;
   background-color: ${blue};
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
-
+  font-size: 15px;
+  color: white;
+  font-family: ${({theme}) => theme.font.bold};
+  margin-top: 5px;
   ${Tip}{
     visibility: hidden;
     width: 200px;
-    background-color: ${white};
+    background-color: ${gray60};
     border-radius: 5px;
     border: 1px solid ${blue};
-    color: ${black};
+    color: ${white};
     position: absolute;
-    padding: 3px;
+    padding: 5px;
+    text-align: center;
   }
 
   ${Tip}:after {
@@ -60,6 +64,9 @@ const Tool = styled.div`
     position: absolute;
     border-style: solid;
     border-color: transparent transparent ${blue} transparent;
+
+
+
   }
 
   &:hover {
@@ -67,16 +74,32 @@ const Tool = styled.div`
       visibility: visible;
     }
   }
+
+  a {
+    color: white;
+  }
   ${position}
 `
 
+const Container = styled(Flex)`
+  height: 0;
+`
+
 export const ToolTip = ({children, position}) => (
-  <Tool
-    position={position}
+  <Container
+    w={1}
+    pr={1}
+    justifyContent={'flex-end'}
+    alignItems={'flex-start'}
   >
-    ?
-    <Tip>
-      {children}
-    </Tip>
-  </Tool>
+    <Tool
+      position={position}
+    >
+
+      ?
+      <Tip>
+        {children}
+      </Tip>
+    </Tool>
+  </Container>
 )
