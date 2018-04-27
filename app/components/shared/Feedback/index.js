@@ -165,12 +165,10 @@ class Feedback extends Component {
       } = this
 
 
-      let response = await fetch(`https://api.github.com/repos/artsmia/lume/issues`, {
+      let response = await fetch(`${process.env.API_URL}/bug`, {
         method: 'POST',
         headers: {
-          Accept: 'application/vnd.github.symmetra-preview+json',
           'Content-Type': 'application/json',
-          Authorization: `token 740e041cdd293a331392db55b7572babbe848f4e`
         },
         body: JSON.stringify({
           title: `BR: ${title}`,
