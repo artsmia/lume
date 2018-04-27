@@ -1,9 +1,13 @@
+
 let deploymentEnv = process.env.DEPLOYMENT_ENV
 const dotenv = require('dotenv')
 
-dotenv.config({
-  path: `.env.${deploymentEnv}`
-})
+if (deploymentEnv) {
+  dotenv.config({
+    path: `.env.${deploymentEnv}`
+  })
+}
+
 
 const express = require('express')
 const next = require('next')
@@ -57,7 +61,7 @@ app.prepare().then(() => {
     passport.authenticate('auth0', {
       clientID: process.env.AUTH0_CLIENT_ID,
       domain: process.env.AUTH0_DOMAIN,
-      redirectUri: `${process.env.NEXT_URL}/callback`,
+      redirectUri: `/callback`,
       audience: `https://${process.env.AUTH0_DOMAIN}/userinfo`,
       responseType: 'code',
       scope: 'openid'
@@ -222,7 +226,6 @@ app.prepare().then(() => {
 
   server.listen(3000, (err) => {
     if (err) throw err
-    console.log(`Ready at ${process.env.NEXT_URL}`)
   })
 
 
