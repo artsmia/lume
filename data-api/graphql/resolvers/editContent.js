@@ -19,6 +19,14 @@ export default async function(src, args, ctx){
       await content.removeAdditionalImages(args.content.removeAdditionalImageId)
     }
 
+    if (args.content.addAdditionalMediaId){
+      await content.addAdditionalMedias(args.content.addAdditionalMediaId)
+    }
+
+    if (args.content.removeAdditionalMediaId){
+      await content.removeAdditionalMedias(args.content.removeAdditionalMediaId)
+    }
+
     return content
 
   } catch (ex) {

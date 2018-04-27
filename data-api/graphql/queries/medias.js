@@ -3,13 +3,13 @@ import {
   GraphQLID,
   GraphQLList
 } from 'graphql'
-import imageType from '../types/image'
+import mediaType from '../types/media'
 import {FilterInput} from '../types/inputs'
-import resolve from '../resolvers/images'
+import resolve from '../resolvers/medias'
 
-const images = {
-  name: "images",
-  type: new GraphQLList(imageType),
+const medias = {
+  name: "medias",
+  type: new GraphQLList(mediaType),
   args: {
     filter: {
       type: FilterInput
@@ -18,4 +18,4 @@ const images = {
   resolve
 }
 
-export default images
+export default medias

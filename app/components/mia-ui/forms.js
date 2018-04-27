@@ -464,7 +464,6 @@ class MultiSelect extends Component {
               onBlur={()=>this.setState({showDrop: false})}
             />
             <DropDown
-              flexWrap={'wrap'}
               show={showDrop}
             >
               {filteredOptions.map( ({name, value}) => (
@@ -534,7 +533,9 @@ const MultiSearch = styled.input`
   font-style: 15px;
 `
 
-const DropDown = styled(Flex)`
+const DropDown = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   width: 220px;
   opacity: 0;
   position: absolute;
@@ -548,8 +549,9 @@ const DropDown = styled(Flex)`
   overflow-y: scroll;
   ${({show}) => show ? `
     opacity: 1;
-  `: null}
+  `: undefined}
 `
+
 
 const XBox = styled(Flex)`
   color: white;

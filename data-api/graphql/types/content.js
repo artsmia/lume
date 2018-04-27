@@ -8,6 +8,8 @@ import {
 import {ContentTypeEnum} from './enums'
 import geometryType, {GeometryInput} from './geometry'
 import imageType from './image'
+import mediaType from './media'
+
 import objType from './obj'
 import objResolve from '../resolvers/obj'
 
@@ -64,6 +66,16 @@ const contentType = new GraphQLObjectType({
       async resolve(src){
         try {
           return await src.getAdditionalImages()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
+    },
+    additionalMedias: {
+      type: new GraphQLList(mediaType),
+      async resolve(src){
+        try {
+          return await src.getAdditionalMedias()
         } catch (ex) {
           console.error(ex)
         }

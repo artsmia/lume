@@ -32,13 +32,16 @@ class DetailEditor extends Component {
         content,
         content: {
           additionalImages,
+          additionalMedias,
           image0
         },
         organization
       },
       handleChange,
       handleAddAdditionalImage,
-      handleRemoveAdditionalImage
+      handleRemoveAdditionalImage,
+      handleAddAdditionalMedia,
+      handleRemoveAdditionalMedia
     } = this
 
     return(
@@ -84,9 +87,12 @@ class DetailEditor extends Component {
           <Box
             w={1}
           >
-            {/* <MultiMedia
+            <MultiMedia
               label={"Additional Media"}
-            /> */}
+              additionalMedias={additionalMedias}
+              onAdd={handleAddAdditionalMedia}
+              onRemove={handleRemoveAdditionalMedia}
+            />
           </Box>
         </Flex>
         <Flex
@@ -234,6 +240,18 @@ class DetailEditor extends Component {
   handleRemoveAdditionalImage = (removeAdditionalImageId) => {
     this.props.editContent({
       removeAdditionalImageId
+    })
+  }
+
+  handleAddAdditionalMedia = (addAdditionalMediaId) => {
+    this.props.editContent({
+      addAdditionalMediaId
+    })
+  }
+
+  handleRemoveAdditionalMedia = (removeAdditionalMediaId) => {
+    this.props.editContent({
+      removeAdditionalMediaId
     })
   }
 

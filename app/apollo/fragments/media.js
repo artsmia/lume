@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 const fragment = gql`
-  fragment ImageFragment on image {
+  fragment MediaFragment on media {
     id
     localId
     title
@@ -11,8 +11,6 @@ const fragment = gql`
     organization {
       id
       subdomain
-      customImageApiEnabled
-      customImageEndpoint
     }
   }
 `

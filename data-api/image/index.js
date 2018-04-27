@@ -26,10 +26,13 @@ export default async function (req,res, next) {
       }
     })
 
+    let format = mimetype.split('/')[1]
+
     let image = await organization.createImage({
       title,
       description,
-      localId
+      localId,
+      format
     })
 
 
@@ -37,7 +40,7 @@ export default async function (req,res, next) {
 
 
     await upload({
-      Key: `${fileId}/original.jpeg`,
+      Key: `${fileId}/original.${format}`,
       Bucket: "mia-lume",
       Body: buffer,
       ACL: "public-read",

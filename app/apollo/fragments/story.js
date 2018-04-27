@@ -2,6 +2,7 @@ import gql from 'graphql-tag'
 import objFragment from './obj'
 import groupFragment from './group'
 import imageFragment from './image'
+import mediaFragment from './media'
 
 
 const fragment = gql`
@@ -43,6 +44,9 @@ const fragment = gql`
       additionalImages {
         ...ImageFragment
       }
+      additionalMedias {
+        ...MediaFragment
+      }
     }
     relatedStories {
       id
@@ -54,6 +58,8 @@ const fragment = gql`
   ${objFragment}
   ${groupFragment}
   ${imageFragment}
+  ${mediaFragment}
+
 `
 
 export default fragment

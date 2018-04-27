@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
 import imageFragment from './image'
+import mediaFragment from './media'
 
 const fragment = gql`
   fragment ContentFragment on content {
@@ -25,8 +26,12 @@ const fragment = gql`
     additionalImages {
       ...ImageFragment
     }
+    additionalMedias {
+      ...MediaFragment
+    }
   }
   ${imageFragment}
+  ${mediaFragment}
 
 `
 

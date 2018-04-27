@@ -116,6 +116,10 @@ export default class extends Component {
     }
   }
 
+  componentDidMount(){
+    this.setup()
+  }
+
   componentDidUpdate(){
     this.setup()
   }
@@ -123,6 +127,7 @@ export default class extends Component {
 
   setup = async() => {
     try {
+
       if (
         !this.zoomLoading &&
         !this.zoomCreated &&
@@ -533,8 +538,6 @@ export default class extends Component {
       let tileUrl
       let height
       let width
-
-      console.log(this.state)
 
       if (
         subdomain === 'mia'

@@ -9,6 +9,7 @@ export default async function (req,res, next) {
 
     const {
       file: {
+        originalname,
         mimetype,
         buffer
       },
@@ -26,27 +27,29 @@ export default async function (req,res, next) {
       }
     })
 
-    console.log(req.file, mimetype)
+    let format = mimetype.split('/')[1]
 
-    // let media = await organization.createMedia({
-    //   title,
-    //   description,
-    //   localId,
-    //   host: 's3'
-    // })
-    //
-    //
-    // const fileId = media.id
-    //
-    //
-    // await upload({
-    //   Key: `${fileId}/original.${mimetype}`,
-    //   Bucket: "mia-lume",
-    //   Body: buffer,
-    //   ACL: "public-read",
-    //   ContentType: mimetype,
-    //   Tagging: `organization=${organization.id}`
-    // })
+
+    let media = await organization.createMedia({
+      title,
+      description,
+      localId,
+      host: 's3',
+      format
+    })
+
+
+    const fileId = media.id
+
+
+    await upload({
+      Key: `${fileId}/original.${format}`,
+      Bucket: "mia-lume",
+      Body: buffer,
+      ACL: "public-read",
+      ContentType: mimetype,
+      Tagging: `organization=${organization.id}`
+    })
 
 
     res.json({
