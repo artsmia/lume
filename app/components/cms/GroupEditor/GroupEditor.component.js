@@ -4,12 +4,10 @@ import {Button, RoundButton} from '../../mia-ui/buttons'
 import {Input, Textarea, Label} from '../../mia-ui/forms'
 import {Icon} from '../../mia-ui/icons'
 import {Flex, Box} from 'grid-styled'
+import ChangeImage from '../DefaultEditors/ChangeImage'
 
 export default class GroupEditor extends Component {
 
-  state = {
-    ...this.props.group
-  }
 
   render() {
 
@@ -19,19 +17,25 @@ export default class GroupEditor extends Component {
       props: {
         group,
         deleteGroup,
+        group: {
+          image
+        }
       },
       state: {
         title,
-        description
+        description,
+        slug
       },
       handleChange,
-      handleSave
+      handleSave,
+      handleTitleChange
     } = this
 
     return (
       <Container
         flexWrap={'wrap'}
         w={1}
+        pr={4}
       >
         <Flex
           w={1}
@@ -40,7 +44,7 @@ export default class GroupEditor extends Component {
           <Input
             name={"title"}
             value={title}
-            onChange={handleChange}
+            onChange={handleTitleChange}
             placeholder={"Title"}
           />
           <Button
@@ -52,13 +56,49 @@ export default class GroupEditor extends Component {
           </Button>
         </Flex>
 
+        <Flex
+          w={1}
+        >
+          <Input
+            name={"slug"}
+            value={slug}
+            placeholder={"Slug"}
+            disabled
+          />
+        </Flex>
 
-        <Textarea
-          name={"description"}
-          value={description}
-          onChange={handleChange}
-          placeholder={"Description"}
-        />
+        <GroupFlex
+          w={1}
+          py={2}
+        >
+
+          <Box
+            width={2/3}
+            pr={1}
+          >
+            <Textarea
+              name={"description"}
+              value={description}
+              onChange={handleChange}
+              placeholder={"Description"}
+            />
+          </Box>
+          <Box
+            width={1/3}
+          >
+            <ChangeImage
+              label={"Image"}
+              name={"imageId"}
+              image={image}
+              onChange={handleChange}
+            />
+          </Box>
+
+
+
+
+        </GroupFlex>
+
 
 
 
@@ -73,8 +113,6 @@ export default class GroupEditor extends Component {
     })
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
-
   bounce = true
 
   debounce = (func, time) => {
@@ -85,6 +123,25 @@ export default class GroupEditor extends Component {
         time
       )
     }
+  }
+
+  handleTitleChange = (e) => {
+
+    let value = e.target.value
+
+    let slugValue = value.replace(/\s/g, '-').toLowerCase()
+
+
+    this.setState(
+      ()=>({
+        title: value,
+        slug: slugValue
+      }),
+      ()=>{
+        this.debounce(this.handleSave, 2000)
+      }
+    )
+
   }
 
   handleChange = ({target: {value, name}}) => {
@@ -99,16 +156,33 @@ export default class GroupEditor extends Component {
     )
   }
 
+  stateFromProps = (props) => {
+    if (!props.group){
+      return {}
+    }
+
+    if (props.group.id !== this.state.id){
+
+      return {
+        ...props.group
+      }
+    }
+  }
+
+  constructor(props){
+    super(props)
+    this.state = {}
+    this.state = {
+      ...this.stateFromProps(props)
+    }
+  }
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.group.id !== this.state.id){
-      this.setState({
-        ...nextProps.group
-      })
-    }
+    this.setState({...this.stateFromProps(nextProps)})
   }
 }
 
 const Container = styled(Flex)`
-  height: 160px;
+`
+const GroupFlex = styled(Flex)`
 `

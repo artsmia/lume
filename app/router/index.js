@@ -161,7 +161,16 @@ app.prepare().then(() => {
   )
 
 
+  server.get('/:subdomain/group/:groupSlug', (req, res) => {
+    const page = '/lume'
+    const {subdomain, groupSlug} = req.params
 
+    let params = {
+      subdomain,
+      groupSlug
+    }
+    app.render(req, res, page, params)
+  })
 
   server.get('/:subdomain/:storySlug', (req, res) => {
     const page = '/lume/story'

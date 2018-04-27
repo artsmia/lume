@@ -12,7 +12,8 @@ const editOrganization = gql`
     $customObjApiEndpoint: String
     $customAnalyticsEnabled: Boolean
     $customAnalyticsId: String
-    $imageId: ID
+    $orgImageId: ID
+    $locationImageId: ID
   ) {
     editOrganization(
       id: $id
@@ -22,7 +23,8 @@ const editOrganization = gql`
       customObjApiEndpoint: $customObjApiEndpoint
       customAnalyticsEnabled: $customAnalyticsEnabled
       customAnalyticsId: $customAnalyticsId
-      imageId: $imageId
+      orgImageId: $orgImageId
+      locationImageId: $locationImageId
     ) {
       ...OrganizationFragment
     }

@@ -12,6 +12,11 @@ const Group = db.define('group', {
     allowNull: false,
     defaultValue: ""
   },
+  slug: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
   description: {
     type: Sequelize.TEXT,
     allowNull: false,

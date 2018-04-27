@@ -12,6 +12,10 @@ export default async function(src, args, ctx){
 
     const organization = await Organization.findById(args.id)
 
+    if(args.locationImageId){
+      await organization.setLocationImage(args.locationImageId)
+    }
+
 
     return organization
 

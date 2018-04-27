@@ -8,6 +8,8 @@ import {Icon} from '../../mia-ui/icons'
 import router from 'next/router'
 import Markdown from 'react-markdown'
 import AdditionalImages from '../OriginalTemplate/AdditionalImages'
+import AdditionalMedias from '../OriginalTemplate/AdditionalMedias'
+
 import {Flex, Box} from 'grid-styled'
 import Head from '../../shared/head'
 
@@ -126,9 +128,15 @@ export default class OriginalTemplate extends Component {
                 <Markdown
                   source={selectedContent.description}
                 />
-                <AdditionalImages
-                  additionalImages={selectedContent.additionalImages}
-                />
+                <Flex>
+                  <AdditionalImages
+                    additionalImages={selectedContent.additionalImages}
+                  />
+                  <AdditionalMedias
+                    additionalMedias={selectedContent.additionalMedias}
+                  />  
+                </Flex>
+
               </Box>
             </PageContainer>
           </PageContainer>

@@ -9,6 +9,8 @@ import {Flex, Box} from 'grid-styled'
 import ManageUsers from '../ManageUsers'
 import Head from '../../shared/head'
 import {Link} from '../../mia-ui/links'
+import {ChangeImage} from '../DefaultEditors'
+
 
 export default class OrgSettings extends Component {
 
@@ -18,7 +20,9 @@ export default class OrgSettings extends Component {
     customObjApiEnabled: false,
     customObjApiEndpoint: "",
     customAnalyticsEnabled: false,
-    customAnalyticsId: ""
+    customAnalyticsId: "",
+    emailDomain: "",
+    locationEnabled: false
   }
 
   constructor(props){
@@ -39,7 +43,9 @@ export default class OrgSettings extends Component {
         newUsersRequireApproval,
         customObjApiEnabled,
         customObjApiEndpoint,
-        customAnalyticsId
+        customAnalyticsId,
+        emailDomain,
+        locationEnabled
       },
       handleChange,
       handleCheck,
@@ -88,6 +94,9 @@ export default class OrgSettings extends Component {
 
             <Flex
               w={1}
+              flexDirection={'column'}
+              my={2}
+              mb={2}
             >
               <Label>
                 Name
@@ -103,6 +112,8 @@ export default class OrgSettings extends Component {
 
             <Flex
               w={1}
+              mb={2}
+              alignItems={'center'}
             >
               <Label>
                 New Users Require Approval
@@ -118,6 +129,26 @@ export default class OrgSettings extends Component {
 
             <Flex
               w={1}
+              flexDirection={'column'}
+              my={2}
+              mb={2}
+            >
+              <Label>
+                Preaproved Email Domain
+              </Label>
+
+              <Input
+                name={"emailDomain"}
+                value={emailDomain}
+                onChange={handleChange}
+              />
+
+            </Flex>
+
+            <Flex
+              w={1}
+              my={2}
+              alignItems={'center'}
             >
               <Label>
                 Use Custom Object API
@@ -133,6 +164,9 @@ export default class OrgSettings extends Component {
 
             <Flex
               w={1}
+              flexDirection={'column'}
+              mb={2}
+
             >
               <Label>
                 Custom Object API Endpoint
@@ -147,6 +181,8 @@ export default class OrgSettings extends Component {
 
             <Flex
               w={1}
+              my={2}
+              alignItems={'center'}
             >
               <Label>
                 Use Custom Analytics
@@ -162,6 +198,9 @@ export default class OrgSettings extends Component {
 
             <Flex
               w={1}
+              flexDirection={'column'}
+              my={2}
+
             >
               <Label>
                 Google Analytics ID
@@ -174,6 +213,37 @@ export default class OrgSettings extends Component {
               />
             </Flex>
 
+            <Flex
+              w={1}
+              my={2}
+              alignItems={'center'}
+            >
+              <Label>
+                Use Custom Location Page
+              </Label>
+
+              <input
+                type={'checkbox'}
+                value={"locationEnabled"}
+                checked={organization.locationEnabled}
+                onChange={handleCheck}
+              />
+            </Flex>
+
+            <Flex
+              w={1}
+              flexDirection={'column'}
+              my={2}
+
+            >
+
+              <ChangeImage
+                label={"Location Image"}
+                name={"locationImageId"}
+                image={organization.locationImage}
+                onChange={handleChange}
+              />
+            </Flex>
 
 
           </Card>

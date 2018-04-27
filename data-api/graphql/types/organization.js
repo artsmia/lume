@@ -25,8 +25,28 @@ const organization = new GraphQLObjectType({
     emailDomain: {
       type: GraphQLString
     },
-    image: {
-      type: imageType
+    orgImage: {
+      type: imageType,
+      async resolve(src){
+        try {
+          return await src.getOrgImage()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
+    },
+    locationEnabled: {
+      type: GraphQLBoolean
+    },
+    locationImage: {
+      type: imageType,
+      async resolve(src){
+        try {
+          return await src.getLocationImage()
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
     },
     images: {
       type: new GraphQLList(imageType)

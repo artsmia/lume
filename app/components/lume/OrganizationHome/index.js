@@ -1,4 +1,4 @@
-import {compose, graphql} from 'react-apollo'
+import {compose, graphql, withApollo} from 'react-apollo'
 import Component from './OrganizationHome.component'
 import {StoriesQuery} from '../../../apollo/queries/stories'
 import OrganizationQuery from '../../../apollo/queries/organization'
@@ -6,6 +6,19 @@ import {withRouter} from 'next/router'
 
 const query = graphql(StoriesQuery, {
   options: ({router}) => {
+
+    let groups = []
+
+    if (router.query.groups) {
+      groups =  router.query.groups.split(',')
+    }
+
+    let groupSlug
+
+    if (router.query.groupSlug){
+      groupSlug = router.query.groupSlug
+    }
+
     return {
       variables: {
         filter: {
@@ -23,7 +36,8 @@ const query = graphql(StoriesQuery, {
             "published",
           ],
           search: router.query.search || "",
-          groups: (router.query.groups) ? router.query.groups.split(',') : []
+          groups,
+          groupSlug
         }
       },
     }
@@ -36,8 +50,12 @@ const query = graphql(StoriesQuery, {
 
 
 let ExportComponent = Component
-ExportComponent = compose(query)(ExportComponent)
-ExportComponent = compose(OrganizationQuery)(ExportComponent)
+ExportComponent = compose(
+  withApollo,
+  OrganizationQuery,
+  query,
+)(ExportComponent)
+
 ExportComponent = withRouter(ExportComponent)
 
 export default ExportComponent

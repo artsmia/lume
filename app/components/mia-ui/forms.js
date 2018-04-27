@@ -43,7 +43,7 @@ export const Input = styled.input`
   border: solid 1px ${gray30};
   color: inherit;
   font-size: 1rem;
-
+  width: 100%;
   &:placeholder {
     color: ${gray30};
   }
@@ -229,9 +229,6 @@ export const CheckboxInput = props => (
 
 CheckboxInput.displayName = "CheckboxInput"
 CheckboxInput.displayName = "CheckboxInput"
-CheckboxInput.propTypes = {
-  label: PropTypes.string,
-}
 CheckboxInput.defaultProps = {
   label: '',
 }

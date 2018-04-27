@@ -16,11 +16,15 @@ const fragment = gql`
     newUsersRequireApproval
     customAnalyticsEnabled
     customAnalyticsId
-    image {
-      ...ImageFragment
-    }
     categories {
       ...CategoryFragment
+    }
+    orgImage {
+      ...ImageFragment
+    }
+    locationEnabled
+    locationImage {
+      ...ImageFragment
     }
   }
   ${categoryFragment}
