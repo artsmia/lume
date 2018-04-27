@@ -285,14 +285,13 @@ const ColorBox = styled.div`
 
 
 const TitleInput = styled.input`
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   ${bold};
   &:placeholder {
     color: ${gray60};
   }
-  height: 150px
+  height: 50px
   width: 100%;
-  padding: 5px;
   background-color: white;
   border: 1px solid ${gray30};
   border-radius: 4px;
@@ -381,7 +380,8 @@ class MultiSelect extends Component {
   }
 
   state = {
-    search: ''
+    search: '',
+    showDrop: false
   }
 
   render(){
@@ -393,7 +393,8 @@ class MultiSelect extends Component {
         selections
       },
       state: {
-        search
+        search,
+        showDrop
       },
       handleSearchChange,
       handleUncheck,
@@ -426,66 +427,62 @@ class MultiSelect extends Component {
         flexWrap={'wrap'}
         w={1}
         alignItems={'flex-start'}
+        my={2}
       >
-        <Flex
-          w={1}
-        >
+        <Flex>
           {selections.map( ({name, value}) => (
-            <Box
+            <Chip
               key={value}
+              alignItems={'center'}
+              justifyContent={'flex-start'}
             >
-              <input
-                type={'checkbox'}
-                checked={true}
-                value={value}
-                onChange={handleUncheck}
-              />
-              {name}
-            </Box>
+              <Flex
+                mx={2}
+              >
+                {name}
+              </Flex>
+              <XBox
+                justifyContent={'center'}
+                alignItems={'center'}
+                onClick={()=>handleUncheck(value)}
+                mx={2}
+              >
+                x
+              </XBox>
+
+            </Chip>
           ))}
-        </Flex>
-
-
-
-
-
-
-
-        <Box
-          w={1}
-          my={3}
-        >
-          <label>
-            {label}
-          </label>
-          <input
-            name={'search'}
-            value={search}
-            onChange={handleSearchChange}
-            placeholder={'Search'}
-          />
-        </Box>
-        {filteredOptions.map( ({name, value}) => (
-          <Box
-            w={1}
-            key={value}
-            value={value}
+          <SearchAndDrop
+            mx={2}
           >
-            <input
-              type={'checkbox'}
-              checked={false}
-              value={value}
-              onChange={handleCheck}
+            <MultiSearch
+              name={'search'}
+              value={search}
+              onChange={handleSearchChange}
+              placeholder={'Search'}
+              onFocus={()=>this.setState({showDrop: true})}
+              onBlur={()=>this.setState({showDrop: false})}
             />
-            {name}
+            <DropDown
+              flexWrap={'wrap'}
+              show={showDrop}
+            >
+              {filteredOptions.map( ({name, value}) => (
+                <DropBox
+                  w={1}
+                  key={value}
+                  onClick={()=>handleCheck(value)}
+                  px={2}
+                  py={1}
+                >
+                  {name}
 
-          </Box>
-        ))}
+                </DropBox>
+              ))}
 
-
-
-
-
+            </DropDown>
+          </SearchAndDrop>
+        </Flex>
 
       </Flex>
     )
@@ -501,15 +498,70 @@ class MultiSelect extends Component {
 
   }
 
-  handleCheck = (e) => {
-    this.props.handleAdd(e.target.value)
+  handleCheck = (value) => {
+
+    this.props.onAdd(value)
   }
 
-  handleUncheck = (e) => {
-    this.props.handleRemove(e.target.value)
+  handleUncheck = (value) => {
+    this.props.onRemove(value)
   }
 
 }
+
+const Chip = styled(Flex)`
+  border-radius: 15px;
+  padding: 5px;
+  height: 35px;
+  color: ${({theme}) => theme.color.white};
+  background-color: ${({theme}) => theme.color.green};
+  font-size: 15px;
+`
+
+const SearchAndDrop = styled(Flex)`
+
+  position: relative;
+
+`
+
+const MultiSearch = styled.input`
+  border: 1px solid black;
+  border-radius: 2px;
+  outline: none;
+  height: 35px;
+  padding: 5px;
+  width: 220px;
+  font-style: 15px;
+`
+
+const DropDown = styled(Flex)`
+  width: 220px;
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  transform: translateY(98%);
+  transition: all .2s;
+  background-color: white;
+  border: 1px solid grey;
+  z-index: 500;
+  max-height: 400px;
+  overflow-y: scroll;
+  ${({show}) => show ? `
+    opacity: 1;
+  `: null}
+`
+
+const XBox = styled(Flex)`
+  color: white;
+  font-family: ${({theme}) => theme.font.bold};
+  cursor: pointer;
+`
+
+const DropBox = styled(Flex)`
+  &:hover {
+    background-color: ${({theme}) => theme.color.gray30};
+  }
+`
 
 export {
   MultiSelect

@@ -22,8 +22,6 @@ class EditContentThumb extends Component {
   }
 
   render() {
-    console.log("EditContentThumb render")
-
     if (!this.props.content) return <Waiting/>
 
     const {

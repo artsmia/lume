@@ -29,7 +29,6 @@ export default class Editor extends Component {
 
   render(){
 
-    console.log("Editor Rendered")
 
     if (!this.props.story) return null
 

@@ -26,29 +26,32 @@ export default async function (req,res, next) {
       }
     })
 
-    let image = await organization.createImage({
-      title,
-      description,
-      localId
-    })
+    console.log(req.file, mimetype)
 
-
-    const fileId = image.id
-
-
-    await upload({
-      Key: `${fileId}/original.jpeg`,
-      Bucket: "mia-lume",
-      Body: buffer,
-      ACL: "public-read",
-      ContentType: mimetype,
-      Tagging: `organization=${organization.id}`
-    })
+    // let media = await organization.createMedia({
+    //   title,
+    //   description,
+    //   localId,
+    //   host: 's3'
+    // })
+    //
+    //
+    // const fileId = media.id
+    //
+    //
+    // await upload({
+    //   Key: `${fileId}/original.${mimetype}`,
+    //   Bucket: "mia-lume",
+    //   Body: buffer,
+    //   ACL: "public-read",
+    //   ContentType: mimetype,
+    //   Tagging: `organization=${organization.id}`
+    // })
 
 
     res.json({
       data: {
-        image: image.dataValues
+        media: media.dataValues
       }
     })
 

@@ -186,8 +186,6 @@ export default class extends Component {
         hasRights: false,
         description: "",
         title: "",
-        snackMessage: "Upload Finished",
-        snackId: Math.random(),
         preview: "",
       })
 

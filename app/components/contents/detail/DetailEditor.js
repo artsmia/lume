@@ -12,13 +12,11 @@ import {Button} from '../../mia-ui/buttons'
 import {Flex, Box} from 'grid-styled'
 import {Title, Description} from '../../mia-ui/forms'
 import DeleteContentButton from '../../cms/DeleteContentButton'
-
+import MultiMedia from '../../cms/DefaultEditors/MultiMedia'
 
 class DetailEditor extends Component {
 
   render(){
-
-    console.log(this.props)
 
     if (!this.props.content) return null
 
@@ -82,6 +80,13 @@ class DetailEditor extends Component {
               onAdd={handleAddAdditionalImage}
               onRemove={handleRemoveAdditionalImage}
             />
+          </Box>
+          <Box
+            w={1}
+          >
+            {/* <MultiMedia
+              label={"Additional Media"}
+            /> */}
           </Box>
         </Flex>
         <Flex

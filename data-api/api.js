@@ -11,6 +11,8 @@ import {
 } from 'apollo-server-express'
 import multer from 'multer'
 import s3Image from './image'
+import s3Media from './media'
+
 import verify from './auth/verify'
 import createGithubIssue from './github/issue'
 import apphook from './github/apphook'
@@ -33,6 +35,12 @@ server.use(
   cors(),
   //cors(corsOptions),
   bodyParser.json(),
+)
+
+server.use(
+  "/media",
+  upload.single("file"),
+  s3Media
 )
 
 server.use(

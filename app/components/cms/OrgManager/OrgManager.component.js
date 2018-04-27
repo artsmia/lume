@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import {H2} from '../../mia-ui/text'
-import {Form, Label, Input, Select, Option} from '../../mia-ui/forms'
+import {Form, Label, Input, Select, Option, MultiSelect} from '../../mia-ui/forms'
 import {Button} from '../../mia-ui/buttons'
 import router from 'next/router'
 import {Page, Card} from '../../mia-ui/layout'
@@ -34,7 +34,19 @@ export default class OrgManager extends Component {
         name,
         subdomain
       },
+      handleAdd,
+      handleRemove
     } = this
+
+    let selections = []
+
+    if (organizationId) {
+      let selection = organizations.find(({id}) => id === organizationId)
+      selections.push({
+        value: selection.id,
+        name: selection.name
+      })
+    }
 
     return (
         <Page>
@@ -50,7 +62,15 @@ export default class OrgManager extends Component {
 
                 <Form>
 
-                  <Select
+                  <MultiSelect
+                    selections={selections}
+                    options={organizations.map(({id, name}) =>({name, value: id}))}
+                    onSearchChange={(e)=>console.log(e)}
+                    onAdd={handleAdd}
+                    onRemove={handleRemove}
+                  />
+
+                  {/* <Select
                     name={"organizationId"}
                     onChange={change}
                   >
@@ -70,7 +90,7 @@ export default class OrgManager extends Component {
                     ))}
 
 
-                  </Select>
+                  </Select> */}
 
                 </Form>
                 <Button
@@ -114,6 +134,14 @@ export default class OrgManager extends Component {
 
         </Page>
     )
+  }
+
+  handleAdd = (organizationId) => {
+    this.setState({organizationId})
+  }
+
+  handleRemove = (organizationId) => {
+    this.setState({organizationId: ''})
   }
 
   joinOrg = async() => {

@@ -14,7 +14,6 @@ import StoryGroupSelector from '../StoryGroupSelector'
 import {ToolTip} from '../../mia-ui/tooltips'
 import {Flex, Box} from 'grid-styled'
 import {Expander} from '../../mia-ui/expanders'
-import {ToolTio} from '../../mia-ui/tooltips'
 
 export default class StoryEditor extends Component {
 
@@ -82,12 +81,20 @@ export default class StoryEditor extends Component {
           pr={4}
         >
 
+          <ToolTip>
+            Give your story a title.
+          </ToolTip>
+
           <Title
             name={'title'}
             value={title}
             onChange={handleChange}
             label={'Title'}
           />
+
+          <ToolTip>
+            Pro-tip: Make use of <a href={"https://help.github.com/articles/basic-writing-and-formatting-syntax/"}>"markdown styling"</a> to add formatting to your description
+          </ToolTip>
           <Description
             name={'description'}
             value={description}
@@ -95,7 +102,9 @@ export default class StoryEditor extends Component {
             label={'Description'}
           />
 
-
+          <ToolTip>
+            Give users a sneak peak of the story they're about to visit by providing a preview image.
+          </ToolTip>
           <ChangeImage
             label={"Image"}
             name={"previewImageId"}
