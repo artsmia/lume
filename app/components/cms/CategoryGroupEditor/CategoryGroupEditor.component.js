@@ -24,10 +24,19 @@ export default class CategoryGroupEditor extends Component {
     } = this
 
     return (
-      <Box>
-        <H2>
-          Edit/Create Categories and Groups
-        </H2>
+      <Flex
+        flexDirection="column"
+        p={1}
+      >
+
+        <Box
+          my={2}
+        >
+          <H2>
+            Edit/Create Categories and Groups
+          </H2>
+        </Box>
+
         {categories.map( category => (
           <CategoryEditor
             key={category.id}
@@ -43,7 +52,7 @@ export default class CategoryGroupEditor extends Component {
           New Category
         </Button>
 
-      </Box>
+      </Flex>
     )
   }
 

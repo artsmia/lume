@@ -7,6 +7,8 @@ const editGroup = gql`
   mutation editGroup (
     $id: ID!
     $title: String
+    $slug: String
+
     $description: String
     $imageId: ID
   ) {
@@ -15,6 +17,7 @@ const editGroup = gql`
       title: $title
       description: $description
       imageId: $imageId
+      slug: $slug
     ) {
       ...GroupFragment
     }

@@ -14,7 +14,8 @@ export default function({
   template,
   visibility,
   groups = [],
-  localId
+  localId,
+  groupSlug
 }){
   let options = {
     where: {
@@ -89,6 +90,17 @@ export default function({
         id: {
           [Op.or]: groups
         }
+      }
+    })
+
+  }
+
+  if (groupSlug) {
+    options.include.push({
+      model: Group,
+      as: "groups",
+      where: {
+        slug: groupSlug
       }
     })
 

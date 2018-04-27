@@ -24,6 +24,9 @@ const editOrganization = {
     emailDomain: {
       type: GraphQLString
     },
+    locationEnabled: {
+      type: GraphQLBoolean
+    },
     customImageApiEnabled: {
       type: GraphQLBoolean
     },
@@ -46,6 +49,9 @@ const editOrganization = {
       type: GraphQLString
     },
     orgImageId: {
+      type: GraphQLID
+    },
+    locationImageId: {
       type: GraphQLID
     }
   },

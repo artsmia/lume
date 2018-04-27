@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import {Search} from '../../mia-ui/forms'
 import {Button} from '../../mia-ui/buttons'
-import Link from 'next/link'
+import {Link } from '../../mia-ui/links'
 import {Label, CheckboxInput} from '../../mia-ui/forms'
 import Router from 'next/router'
 import {H3, H2, H4} from '../../mia-ui/text'
@@ -14,6 +14,14 @@ import Head from '../../shared/head'
 import ImgSrcProvider from '../../shared/ImgSrcProvider'
 
 let Tile = ImgSrcProvider(StoryTile)
+
+const GroupImg = styled.img`
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+`
+
+const GroupImage = ImgSrcProvider(GroupImg)
 
 export default class Home extends Component {
 
@@ -74,78 +82,10 @@ export default class Home extends Component {
         />
         <DrawerCheck/>
         <DrawerButton/>
-        <Drawer>
-
-          <Box
-            width={1}
-            p={3}
-          >
-            <H2>Art Stories</H2>
-          </Box>
-
-          <Box
-            width={1}
-            p={3}
-          >
-            <Search
-              name={"search"}
-              value={search}
-              onChange={searchChange}
-              onKeyPress={handleEnter}
-            />
-          </Box>
-          <Box
-            width={1}
-            p={3}
-          >
-            <H3>
-              Story Type
-            </H3>
-
-            <CheckboxInput
-              name={"original"}
-              checked={template.includes("original")}
-              label={"Object Stories"}
-              onChange={handleCheck}
-            />
-
-            <CheckboxInput
-              name={"slider"}
-              checked={template.includes("slider")}
-              label={"Thematic Stories"}
-              onChange={handleCheck}
-            />
-
-            {organization ? organization.categories.map( category => (
-              <Flex
-                key={category.id}
-                width={1}
-                p={3}
-              >
-                <H3>
-                  {category.title}
-                </H3>
-                {category ? category.groups.map( group => (
-                  <Box
-                    key={group.id}
-                  >
-                    <CheckboxInput
-                      name={"selectedGroups"}
-                      value={group.id}
-                      checked={selectedGroupIds.includes(group.id)}
-                      onChange={handleGroupCheck}
-                    />
-                    {group.title}
-                  </Box>
-                )):null}
-              </Flex>
-            )):null}
-          </Box>
 
 
+        {this.renderGroupStuff()}
 
-
-        </Drawer>
 
         <DrawerPage
           onScroll={handleScroll}
@@ -191,6 +131,164 @@ export default class Home extends Component {
         </DrawerPage>
       </Flex>
     )
+  }
+
+  renderGroupStuff = () => {
+    if (this.props.groupSlug){
+
+      let groups = []
+
+      this.props.organization.categories.forEach( category => {
+        category.groups.forEach( group => {
+          groups.push(group)
+        })
+      })
+
+      let group = groups.find(group => group.slug === this.props.groupSlug)
+      return (
+        <Drawer>
+          <Flex
+            flexWrap={"wrap"}
+            w={1}
+            p={3}
+          >
+            <Box
+              mb={6}
+            >
+              <Link
+                href={{
+                  pathname: '/lume',
+                  query: {
+                    subdomain: this.props.router.query.subdomain
+                  }
+                }}
+                as={`/${this.props.router.query.subdomain}`}
+              >
+                  Back to all stories
+
+              </Link>
+            </Box>
+            <Box
+              width={1}
+              mb={5}
+            >
+              <H2>{group.title}</H2>
+            </Box>
+            <Box
+              width={1}
+              mb={5}
+            >
+              {group.description}
+            </Box>
+
+            <Box
+              width={1}
+            >
+              <GroupImage
+                image={group.image}
+              />
+            </Box>
+
+          </Flex>
+        </Drawer>
+
+      )
+    } else {
+      return (
+
+
+          <Drawer>
+
+            <Box
+              width={1}
+              p={3}
+            >
+              <H2>Art Stories</H2>
+            </Box>
+
+            <Box
+              width={1}
+              p={3}
+            >
+              <Search
+                name={"search"}
+                value={this.state.search}
+                onChange={this.searchChange}
+                onKeyPress={this.handleEnter}
+              />
+            </Box>
+            <Box
+              width={1}
+              p={3}
+            >
+              <H3>
+                Story Type
+              </H3>
+
+              <CheckboxInput
+                name={"original"}
+                checked={this.state.template.includes("original")}
+                label={"Object Stories"}
+                onChange={this.handleCheck}
+              />
+
+              <CheckboxInput
+                name={"slider"}
+                checked={this.state.template.includes("slider")}
+                label={"Thematic Stories"}
+                onChange={this.handleCheck}
+              />
+
+            </Box>
+            <Box
+              p={3}
+              width={1}
+            >
+              {this.props.organization ? this.props.organization.categories.map( category => (
+                <Flex
+                  key={category.id}
+                  width={1}
+                  flexDirection={'column'}
+                >
+                  <H3>
+                    {category.title}
+                  </H3>
+                  {category ? category.groups.map( group => (
+                    <Flex
+                      key={group.id}
+                    >
+                      <CheckboxInput
+                        name={"selectedGroups"}
+                        value={group.id}
+                        checked={this.state.selectedGroupIds.includes(group.id)}
+                        onChange={this.handleGroupCheck}
+                        label={(
+                          <Link
+                            href={{
+                              pathname: '/lume',
+                              query: {
+                                subdomain: this.props.router.query.subdomain,
+                                groupSlug: group.slug
+                              }
+                            }}
+                            as={`/${this.props.router.query.subdomain}/group/${group.slug}`}
+                          >
+                            {group.title}
+                          </Link>
+                        )}
+                      />
+                    </Flex>
+                  )):null}
+                </Flex>
+              )):null}
+            </Box>
+
+
+          </Drawer>
+
+        )
+
+    }
   }
 
   bounce = true
@@ -333,6 +431,7 @@ export default class Home extends Component {
         fetchMore({
           variables: newVariables,
           updateQuery: (previousResult, { fetchMoreResult }) => {
+
             if (!fetchMoreResult) { return previousResult }
 
             return Object.assign({}, previousResult, {

@@ -70,28 +70,6 @@ export default class OrgManager extends Component {
                     onRemove={handleRemove}
                   />
 
-                  {/* <Select
-                    name={"organizationId"}
-                    onChange={change}
-                  >
-                    <Option
-                      key={"default"}
-                      value={""}
-                    >
-                      Choose an Organization
-                    </Option>
-                    {organizations.map( ({id, name}) => (
-                      <Option
-                        key={id}
-                        value={id}
-                      >
-                        {name}
-                      </Option>
-                    ))}
-
-
-                  </Select> */}
-
                 </Form>
                 <Button
                   disabled={(!organizationId)}

@@ -41,8 +41,6 @@ export default class StoryEditor extends Component {
 
   render() {
 
-    console.log("Story Editor render")
-
     if (!this.props.story) return null
 
     const {
@@ -289,7 +287,7 @@ export default class StoryEditor extends Component {
         this.props.setSaveStatus({
           synced: false,
         })
-        this.debounce(this.handleSlugSave)
+        this.debounce(this.handleSlugSave, 2000)
       }
     )
 

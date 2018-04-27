@@ -122,6 +122,9 @@ export const FilterInput = new GraphQLInputObjectType({
     localId: {
       type: GraphQLString
     },
+    groupSlug: {
+      type: GraphQLString
+    },
   }
 })
 

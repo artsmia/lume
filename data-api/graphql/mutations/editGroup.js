@@ -17,6 +17,9 @@ const editGroup = {
     title: {
       type: GraphQLString
     },
+    slug: {
+      type: GraphQLString
+    },
     description: {
       type: GraphQLString
     },

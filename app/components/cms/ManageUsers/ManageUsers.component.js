@@ -54,22 +54,22 @@ export default class ManageUsers extends Component {
         <Table>
           <HeaderRow>
             <HeaderCell
-              w={[1/6]}
+              w={[1/8]}
             >
 
             </HeaderCell>
             <HeaderCell
-              w={[2/6]}
+              w={[2/8]}
             >
               Name
             </HeaderCell>
             <HeaderCell
-              w={[2/6]}
+              w={[3/8]}
             >
               Email
             </HeaderCell>
             <HeaderCell
-              w={[1/6]}
+              w={[2/8]}
             >
               Role
             </HeaderCell>
@@ -79,25 +79,25 @@ export default class ManageUsers extends Component {
               key={user.id}
             >
               <BodyCell
-                w={[1/6]}
+                w={[1/8]}
               >
                 <ProfPic
                   src={user.picture}
                 />
               </BodyCell>
               <BodyCell
-                w={[2/6]}
+                w={[2/8]}
 
               >
                 {user.name ? `${user.name.given} ${user.name.family}` : null}
               </BodyCell>
               <BodyCell
-                w={[2/6]}
+                w={[3/8]}
               >
                 {user.email}
               </BodyCell>
               <BodyCell
-                w={[1/6]}
+                w={[2/8]}
 
               >
                 <Select
