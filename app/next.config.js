@@ -3,9 +3,13 @@ const webpack = require('webpack')
 let deploymentEnv = process.env.DEPLOYMENT_ENV
 const dotenv = require('dotenv')
 
-dotenv.config({
-  path: `.env.${deploymentEnv}`
-})
+if (deploymentEnv){
+  dotenv.config({
+    path: `.env.${deploymentEnv}`
+  })
+}
+
+
 
 module.exports = {
   webpack: config => {

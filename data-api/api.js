@@ -82,7 +82,7 @@ server.use(
   graphqlExpress((req, res) => {
     return {
       schema,
-      context: req
+      context: req,
     }
   }
 ))

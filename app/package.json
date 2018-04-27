@@ -57,9 +57,9 @@
   },
   "scripts": {
     "start:local": "DEPLOYMENT_ENV=local BABEL_ENV=next node router",
-    "build": "DEPLOYMENT_ENV=prod BABEL_ENV=next next build",
-    "start": "DEPLOYMENT_ENV=prod NODE_ENV=production node router",
-    "deploy": "now && now alias lume.space && now scale lume.space sfo 1 3",
+    "build": "BABEL_ENV=next next build",
+    "start": "NODE_ENV=production node router",
+    "deploy": "now -e NODE_ENV=production --token $NOW_TOKEN --npm && now alias --token=$NOW_TOKEN && now scale lume.space sfo 1 3",
     "test": "jest"
   }
 }
