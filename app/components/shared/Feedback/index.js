@@ -6,7 +6,9 @@ import {Button} from '../../mia-ui/buttons'
 import {Icon} from '../../mia-ui/icons'
 import fetch from 'isomorphic-unfetch'
 import {Flex, Box} from 'grid-styled'
-import {Input, Textarea, Label} from '../../mia-ui/forms'
+import {Input, Textarea, Label, Select, Option} from '../../mia-ui/forms'
+import {H2} from '../../mia-ui/text'
+
 import {withRouter} from 'next/router'
 
 const BugText = styled(Textarea)`
@@ -35,7 +37,8 @@ class Feedback extends Component {
         title,
         bugDescription,
         location,
-        browser
+        browser,
+        sent
       },
       handleChange,
       submitBug
@@ -59,86 +62,133 @@ class Feedback extends Component {
           open={this.state.modal}
           onClose={()=>this.setState({modal: false})}
         >
-          <Flex
-            flexWrap={'wrap'}
-          >
-            <Box
-              w={1}
+          {sent ? (
+            <Flex
+              flexWrap={'wrap'}
             >
-              <Label>
-                Title
-              </Label>
-            </Box>
-            <Box
-              w={1}
+              <H2>Thanks for your feedback!</H2>
+            </Flex>
+          ): (
+            <Flex
+              flexWrap={'wrap'}
             >
-              <BugInput
-                name={'title'}
-                value={title}
-                onChange={handleChange}
-                hint={'Give a very brief title for the bug.'}
-              />
-            </Box>
-            <Box
-              w={1}
-            >
-              <Label>
-                Browser
-              </Label>
-
-            </Box>
-            <Box
-              w={1}
-            >
-              <BugInput
-                name={'browser'}
-                value={browser}
-                onChange={handleChange}
-              />
-            </Box>
-            <Box
-              w={1}
-            >
-              <Label>
-                Url Where Error Occurred
-              </Label>
-
-            </Box>
-            <Box
-              w={1}
-            >
-              <BugInput
-                name={'location'}
-                value={location}
-                onChange={handleChange}
-              />
-            </Box>
-            <Box
-              w={1}
-            >
-              <Label>
-                Bug Description
-              </Label>
-
-            </Box>
-            <Box
-              w={1}
-            >
-              <BugText
-                name={'bugDescription'}
-                value={bugDescription}
-                onChange={handleChange}
-                hint={'What were you doing before the bug occurred? Did something go wrong? Or is a feature just a bit confusing? What were you hoping would happen? Other comments?'}
-              />
-            </Box>
-            <Box>
-              <Button
-                onClick={submitBug}
+              <Box
+                w={1}
+                my={2}
               >
-                Submit
-              </Button>
-            </Box>
-          </Flex>
+                <H2>
+                  Report A Bug
+                </H2>
+              </Box>
+              <Box
+                w={1}
+              >
+                <Label>
+                  Title
+                </Label>
+              </Box>
+              <Box
+                w={1}
+              >
+                <BugInput
+                  name={'title'}
+                  value={title}
+                  onChange={handleChange}
+                  hint={'Give a very brief title for the bug.'}
+                />
+              </Box>
+              <Box
+                w={1}
+              >
+                <Label>
+                  Browser
+                </Label>
+
+              </Box>
+              <Box
+                w={1}
+              >
+                <Select
+                  name={'browser'}
+                  onChange={handleChange}
+                >
+                  <Option
+                    value={'Chrome'}
+                  >
+                    Chrome
+                  </Option>
+                  <Option
+                    value={'Safari'}
+                  >
+                    Safari
+                  </Option>
+                  <Option
+                    value={'Firefox'}
+                  >
+                    Firefox
+                  </Option>
+                  <Option
+                    value={'Edge'}
+                  >
+                    Edge
+                  </Option>
+                  <Option
+                    value={'Internet Explorer'}
+                  >
+                    Internet Explorer
+                  </Option>
+                  <Option
+                    value={'Other'}
+                  >
+                    Other
+                  </Option>
+                </Select>
+              </Box>
+              <Box
+                w={1}
+              >
+                <Label>
+                  Url Where Error Occurred
+                </Label>
+
+              </Box>
+              <Box
+                w={1}
+              >
+                <BugInput
+                  name={'location'}
+                  value={location}
+                  onChange={handleChange}
+                />
+              </Box>
+              <Box
+                w={1}
+              >
+                <Label>
+                  Bug Description
+                </Label>
+
+              </Box>
+              <Box
+                w={1}
+              >
+                <BugText
+                  name={'bugDescription'}
+                  value={bugDescription}
+                  onChange={handleChange}
+                  hint={'What were you doing before the bug occurred? Did something go wrong? Or is a feature just a bit confusing? What were you hoping would happen? Other comments?'}
+                />
+              </Box>
+              <Box>
+                <Button
+                  onClick={submitBug}
+                >
+                  Submit
+                </Button>
+              </Box>
+            </Flex>
+          )}
+
 
         </Modal>
       </Container>
@@ -164,6 +214,9 @@ class Feedback extends Component {
         }
       } = this
 
+      this.setState({
+        sent: true
+      })
 
       let response = await fetch(`${process.env.API_URL}/bug`, {
         method: 'POST',
@@ -186,7 +239,13 @@ class Feedback extends Component {
         })
       })
 
+
       let json = await response.json()
+
+      this.setState({
+        modal: false,
+        sent: false
+      })
 
       console.log(json)
     } catch (ex) {
