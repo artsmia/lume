@@ -1,10 +1,9 @@
 
-let deploymentEnv = process.env.DEPLOYMENT_ENV
 const dotenv = require('dotenv')
 
-if (deploymentEnv) {
+if (process.env.DEPLOYMENT_ENV === 'local') {
   dotenv.config({
-    path: `.env.${deploymentEnv}`
+    path: `.env.${process.env.DEPLOYMENT_ENV}`
   })
 }
 
@@ -13,32 +12,29 @@ const express = require('express')
 const next = require('next')
 const fetch = require('isomorphic-unfetch')
 const session = require('express-session')
-
-let store
-if (process.env.REDIS_URL){
-  const RedisStore = require('connect-redis')(session)
-  const redisOptions = {
-    url: process.env.REDIS_URL
-  }
-  store = new RedisStore(redisOptions)
-} else {
-  const MySQLStore = require('express-mysql-session')(session)
-  const storeOptions = {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-  }
-  store = MySQLStore(storeOptions)
-}
-
-
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
 const passport = require('./passport')
+
+
+let sessionConfig = {
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}
+
+if (process.env.DEPLOYMENT_ENV !== 'local'){
+  const RedisStore = require('connect-redis')(session)
+  const redisOptions = {
+    url: process.env.REDIS_URL
+  }
+  let store = new RedisStore(redisOptions)
+  Object.assign(sessionConfig, {store})
+}
+
+
 
 app.prepare().then(() => {
 
@@ -47,12 +43,7 @@ app.prepare().then(() => {
 
   server.use(
     passport.initialize(),
-    session({
-      store,
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false
-    }),
+    session(sessionConfig),
     passport.session()
   )
 
