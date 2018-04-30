@@ -5,18 +5,22 @@ cache: npm
 before_script:
   - cd app
   - npm install
-  # - cd ../data-api
-  # - npm install
+  - cd ../data-api
+  - npm install
   - cd ..
 script:
   - cd app
   - npm test
-  # - cd ../data-api
-  # - npm test
+  - cd ../data-api
+  - npm test
   - cd ..
 after_success:
   - npm install now -g
   - cd app
+  - npm run deploy
+  - npm run alias
+  - npm run scale
+  - cd ../data-api
   - npm run deploy
   - npm run alias
   - npm run scale
