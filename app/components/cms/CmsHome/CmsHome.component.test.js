@@ -13,7 +13,18 @@ describe("CmsHome component", ()=> {
       name: "mia"
     },
     user: {
-      id: "123abc"
+      id: "123abc",
+      organizations: [
+        {
+          subdomain: 'mia',
+          role: 'admin'
+        }
+      ]
+    },
+    router: {
+      query: {
+        subdomain: 'mia'
+      }
     }
   }
 
