@@ -2,6 +2,7 @@ language: node_js
 node_js:
 - "node"
 cache: npm
+before_script: npm install now -g
 script:
 - cd app
 - npm run deploy
