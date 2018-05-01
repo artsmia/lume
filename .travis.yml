@@ -21,7 +21,7 @@ after_success:
   - npm run alias
   - npm run scale
   - cd ../data-api
-  - npm run build
+  - npm run prepare
   - npm run deploy
   - npm run alias
   - npm run scale

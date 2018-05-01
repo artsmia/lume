@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Zoomer from '../../shared/Zoomer'
+import {ContentZoomer} from '../../shared/Zoomer'
 
 export default class PictureDisplay extends Component {
 
@@ -17,8 +17,7 @@ export default class PictureDisplay extends Component {
       <Container>
         {(image0) ? (
           <Zoomer
-            imageId={image0.id}
-            geometry={geometry}
+            contentId={this.props.content.id}
           />
         ): null}
 

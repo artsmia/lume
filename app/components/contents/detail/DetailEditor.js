@@ -263,11 +263,11 @@ const ZoomerBox = styled(Box)`
 let ExportComponent = DetailEditor
 
 ExportComponent = compose(
-  withApollo,
   query,
   mutation,
   setSaveStatus,
-  OrganizationQuery
+  OrganizationQuery,
+  withApollo,
 )(DetailEditor)
 
 

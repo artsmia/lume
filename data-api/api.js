@@ -72,6 +72,8 @@ server.use(
   '/',
   (req, res, next) => {
 
+    console.log("request")
+
     if(process.env.AUTH_STRATEGY === 'local'){
       next()
     } else {
