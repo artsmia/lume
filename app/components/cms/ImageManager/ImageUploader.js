@@ -163,7 +163,7 @@ export default class extends Component {
       form.append("description", description)
       form.append("subdomain", subdomain)
 
-      const url  = (process.env.FILE_STORAGE === 's3') ? `${process.env.API_URL}/image` : 'http://localhost:3001/upload'
+      const url  = (process.env.FILE_STORAGE === 'local') ? 'http://localhost:3001/upload' : `${process.env.API_URL}/image`
 
       let options = {
         method: 'POST',

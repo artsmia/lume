@@ -13,6 +13,7 @@ import {Flex, Box} from 'grid-styled'
 import {Title, Description} from '../../mia-ui/forms'
 import DeleteContentButton from '../../cms/DeleteContentButton'
 import MultiMedia from '../../cms/DefaultEditors/MultiMedia'
+import {ContentZoomer} from '../../shared/Zoomer'
 
 class DetailEditor extends Component {
 
@@ -25,7 +26,6 @@ class DetailEditor extends Component {
         title,
         description,
         image0Id,
-        geometry
       },
       saveEdits,
       props: {
@@ -110,17 +110,26 @@ class DetailEditor extends Component {
               onChange={handleChange}
             />
           </Box>
-          <Box
+          <Flex
             w={1}
           >
-            <DetailSelector
+            {/* <DetailSelector
               label={"Selection"}
               value={geometry}
               name={"geometry"}
               onChange={handleChange}
               detailImageId={image0Id}
-            />
-          </Box>
+            /> */}
+            <ZoomerBox
+              width={1}
+            >
+              <ContentZoomer
+                contentId={content.id}
+                mode={'editor'}
+              />
+            </ZoomerBox>
+
+          </Flex>
 
           <Box
             w={1}
@@ -160,7 +169,6 @@ class DetailEditor extends Component {
     this.state = {
       title: "",
       description: "",
-      geometry: {},
       image0Id: "",
     }
     this.state = {
@@ -193,11 +201,6 @@ class DetailEditor extends Component {
         image0Id: this.state.image0Id || undefined,
       }
 
-      if (this.state.geometry.coordinates){
-        Object.assign(edits, {
-          geometry: this.state.geometry
-        })
-      }
 
       await this.props.editContent({...edits})
 
@@ -221,10 +224,6 @@ class DetailEditor extends Component {
       title: content.title || "",
       description: content.description || "",
       image0Id: (content.image0) ? content.image0.id : "",
-      geometry: {
-        ...content.geometry,
-        __typename: undefined
-      },
       id: content.id
     }
 
@@ -257,9 +256,14 @@ class DetailEditor extends Component {
 
 }
 
+const ZoomerBox = styled(Box)`
+  min-height: 500px;
+`
+
 let ExportComponent = DetailEditor
 
 ExportComponent = compose(
+  withApollo,
   query,
   mutation,
   setSaveStatus,

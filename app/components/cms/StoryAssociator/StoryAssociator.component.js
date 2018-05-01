@@ -76,8 +76,8 @@ export default class StoryAssociator extends Component {
             name: title
           }))}
           onSearchChange={handleSearch}
-          handleAdd={handleAdd}
-          handleRemove={handleRemove}
+          onAdd={handleAdd}
+          onRemove={handleRemove}
         />
 
 

@@ -16,9 +16,15 @@ const fragment = gql`
       ...ImageFragment
     }
     videoUrl
-    geometry {
+    geoJSON {
       type
-      coordinates
+      features {
+        type
+        geometry {
+          type
+          coordinates
+        }
+      }
     }
     obj {
       id

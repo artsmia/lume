@@ -178,6 +178,7 @@ export default class ImageManager extends Component {
                 {(selectedImageId) ? (
                   <Zoomer
                     imageId={selectedImageId}
+                    mode={'image'}
                   />
                 ): (
                   <H3>

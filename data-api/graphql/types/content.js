@@ -6,7 +6,7 @@ import {
   GraphQLList
 } from 'graphql'
 import {ContentTypeEnum} from './enums'
-import geometryType, {GeometryInput} from './geometry'
+import featureCollectionType, {FeatureCollectionInput} from './geometry'
 import imageType from './image'
 import mediaType from './media'
 
@@ -54,8 +54,8 @@ const contentType = new GraphQLObjectType({
     videoUrl: {
       type: GraphQLString
     },
-    geometry: {
-      type: geometryType
+    geoJSON: {
+      type: featureCollectionType
     },
     obj: {
       type: objType,

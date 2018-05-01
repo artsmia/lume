@@ -2,6 +2,8 @@ node_modules
 .env
 .env.LOCAL
 .env.DEV
+.env.dev
+.env.local
 .env.prod
 build/
 yarn-error.log

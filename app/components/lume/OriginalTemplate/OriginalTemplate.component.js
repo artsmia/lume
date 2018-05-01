@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../mia-ui/tabs'
 import Tombstone from './Tombstone'
-import Zoomer from '../../shared/Zoomer'
+import Zoomer, {StoryZoomer} from '../../shared/Zoomer'
 import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
 import {Button} from '../../mia-ui/buttons'
 import {Icon} from '../../mia-ui/icons'
@@ -98,8 +98,6 @@ export default class OriginalTemplate extends Component {
         obj = objContent.obj
       }
     }
-
-    console.log(this)
 
     return (
       <Container
@@ -271,6 +269,7 @@ export default class OriginalTemplate extends Component {
         <FeatureContainer
           w={[2/3]}
         >
+
           {this.showFeature(firstDetailContent)}
         </FeatureContainer>
       </Container>
@@ -318,7 +317,7 @@ export default class OriginalTemplate extends Component {
     this.setState({
       selectedTab: "details",
       selectedContent: {
-        ...objContent,
+        id: '',
         type: 'all',
       },
     })
@@ -381,15 +380,12 @@ export default class OriginalTemplate extends Component {
 
   showFeature = (firstDetailContent) => {
 
-    console.log(firstDetailContent)
-
     const {
       selectedContent
     } = this.state
 
     if (
       selectedContent.type !== 'detail' &&
-      selectedContent.type !== 'obj' &&
       selectedContent.type !== 'all'
     ){
       return (
@@ -399,48 +395,63 @@ export default class OriginalTemplate extends Component {
       )
     }
 
-    let zoomerProps = {}
-
     if (
-      selectedContent.type === "obj" &&
-      selectedContent.obj.primaryImage
+      selectedContent.type === 'detail' ||
+      selectedContent.type === 'all'
     ) {
-      Object.assign(zoomerProps, {
-        imageId: selectedContent.obj.primaryImage.id,
-        onContentSelection: this.handleContentSelection,
-
-      })
+      return (
+        <StoryZoomer
+          mode={'content'}
+          storyId={this.props.story.id}
+          selectedContentId={selectedContent.id}
+          onContentSelection={this.handleContentSelection}
+        />
+      )
     }
 
-    if (
-      selectedContent.type === "all" &&
-      firstDetailContent.image0
-    ) {
-      Object.assign(zoomerProps, {
-        imageId: firstDetailContent.image0.id,
-        moreGeometry: this.createMoreGeometry(),
-        onContentSelection: this.handleContentSelection,
-      })
-    }
 
-    if (
-      selectedContent.type === 'detail' &&
-      selectedContent.image0
-    ) {
-      Object.assign(zoomerProps, {
-        imageId: selectedContent.image0.id,
-        geometry: selectedContent.geometry,
-        moreGeometry: this.createMoreGeometry(),
-        onContentSelection: this.handleContentSelection,
-        zoom: true
-      })
-    }
 
-    return (
-      <Zoomer
-        {...zoomerProps}
-      />
-    )
+    //
+    // if (
+    //   selectedContent.type === "obj" &&
+    //   selectedContent.obj.primaryImage
+    // ) {
+    //   Object.assign(zoomerProps, {
+    //     imageId: selectedContent.obj.primaryImage.id,
+    //     onContentSelection: this.handleContentSelection,
+    //
+    //   })
+    // }
+    //
+    // if (
+    //   selectedContent.type === "all" &&
+    //   firstDetailContent.image0
+    // ) {
+    //   Object.assign(zoomerProps, {
+    //     imageId: firstDetailContent.image0.id,
+    //     moreGeometry: this.createMoreGeometry(),
+    //     onContentSelection: this.handleContentSelection,
+    //   })
+    // }
+    //
+    // if (
+    //   selectedContent.type === 'detail' &&
+    //   selectedContent.image0
+    // ) {
+    //   Object.assign(zoomerProps, {
+    //     imageId: selectedContent.image0.id,
+    //     geometry: selectedContent.geometry,
+    //     moreGeometry: this.createMoreGeometry(),
+    //     onContentSelection: this.handleContentSelection,
+    //     zoom: true
+    //   })
+    // }
+    //
+    // return (
+    //   <Zoomer
+    //     {...zoomerProps}
+    //   />
+    // )
 
   }
 

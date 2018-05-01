@@ -3,7 +3,7 @@ import objFragment from './obj'
 import groupFragment from './group'
 import imageFragment from './image'
 import mediaFragment from './media'
-
+import contentFragment from './content'
 
 const fragment = gql`
   fragment StoryFragment on story {
@@ -20,33 +20,7 @@ const fragment = gql`
       ...GroupFragment
     }
     contents {
-      id
-      type
-      index
-      title
-      description
-      image0 {
-        ...ImageFragment
-
-      }
-      image1 {
-        ...ImageFragment
-
-      }
-      geometry {
-        type
-        coordinates
-      }
-      obj {
-        ...ObjFragment
-      }
-      videoUrl
-      additionalImages {
-        ...ImageFragment
-      }
-      additionalMedias {
-        ...MediaFragment
-      }
+      ...ContentFragment
     }
     relatedStories {
       id
@@ -55,11 +29,10 @@ const fragment = gql`
     }
   }
 
-  ${objFragment}
   ${groupFragment}
   ${imageFragment}
   ${mediaFragment}
-
+  ${contentFragment}
 `
 
 export default fragment

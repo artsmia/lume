@@ -1,7 +1,7 @@
 
 const dotenv = require('dotenv')
 
-if (process.env.DEPLOYMENT_ENV === 'local') {
+if (process.env.NODE_ENV !== 'production') {
   dotenv.config({
     path: `.env.${process.env.DEPLOYMENT_ENV}`
   })

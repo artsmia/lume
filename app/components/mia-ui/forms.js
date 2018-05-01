@@ -426,18 +426,21 @@ class MultiSelect extends Component {
         alignItems={'flex-start'}
         my={2}
       >
-        <Flex>
+        <ChipContainer
+          flexWrap={'wrap'}
+        >
           {selections.map( ({name, value}) => (
             <Chip
               key={value}
               alignItems={'center'}
               justifyContent={'flex-start'}
+              m={1}
             >
-              <Flex
+              <ChipText
                 mx={2}
               >
                 {name}
-              </Flex>
+              </ChipText>
               <XBox
                 justifyContent={'center'}
                 alignItems={'center'}
@@ -478,7 +481,7 @@ class MultiSelect extends Component {
 
             </DropDown>
           </SearchAndDrop>
-        </Flex>
+        </ChipContainer>
 
       </Flex>
     )
@@ -507,11 +510,23 @@ class MultiSelect extends Component {
 
 const Chip = styled(Flex)`
   border-radius: 15px;
+  border: 2px solid ${({theme}) => theme.color.green};
   padding: 5px;
   height: 35px;
-  color: ${({theme}) => theme.color.white};
-  background-color: ${({theme}) => theme.color.green};
+  color: ${({theme}) => theme.color.black};
+  background-color: ${({theme}) => theme.color.white};
   font-size: 15px;
+  &:focus {
+    background-color: red;
+  }
+`
+
+const ChipContainer = styled(Flex)`
+
+`
+
+const ChipText = styled.span`
+  white-space: nowrap;
 `
 
 const SearchAndDrop = styled(Flex)`
@@ -551,7 +566,7 @@ const DropDown = styled.div`
 
 
 const XBox = styled(Flex)`
-  color: white;
+  color: black;
   font-family: ${({theme}) => theme.font.bold};
   cursor: pointer;
 `
