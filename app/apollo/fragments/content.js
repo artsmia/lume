@@ -28,6 +28,10 @@ const fragment = gql`
     }
     obj {
       id
+      primaryMediaType
+      primaryImage {
+        ...ImageFragment
+      }
     }
     additionalImages {
       ...ImageFragment

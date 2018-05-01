@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import Zoomer from '../../shared/Zoomer'
 import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
 import {H3} from '../../mia-ui/text'
 import {Button} from '../../mia-ui/buttons'
@@ -134,7 +133,7 @@ export default class OriginalTemplate extends Component {
                   />
                   <AdditionalMedias
                     additionalMedias={selectedContent.additionalMedias}
-                  />  
+                  />
                 </Flex>
 
               </Box>

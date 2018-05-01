@@ -216,7 +216,7 @@ export default class extends Component {
       ) {
         return await this.localTileConfig()
       } else if (
-        this.state.image.organization.subdomain === 'mia'
+        this.state.image.host === 'mia'
       ) {
         return await this.miaTileConfig()
       } else {

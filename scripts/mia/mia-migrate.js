@@ -138,11 +138,22 @@ async function populate(){
             })
 
             for (let detail of view.annotations) {
+
               let geometry = {
                 type: "Polygon",
                 coordinates: [
-                  detail.geoJSON.geometry.coordinates[0].map( coord => ([coord[1] * 256, coord[0] * 256]) )
+                  detail.geoJSON.geometry.coordinates[0].map( coord => ([coord[0] * 256, coord[1] * 256]) )
                 ]
+              }
+
+              let feature = {
+                type: 'Feature',
+                geometry
+              }
+
+              let geoJSON = {
+                type: "FeatureCollection",
+                features: [feature]
               }
 
               contentIndex ++
@@ -151,7 +162,7 @@ async function populate(){
                 type: "detail",
                 title: detail.title,
                 description: tdService.turndown(detail.description),
-                geometry,
+                geoJSON,
                 index: contentIndex,
                 image0Id: detailImage.id
               })
