@@ -29,10 +29,6 @@ const localConfig = {
 
 const saveStatus = graphql(SaveStatusQuery, localConfig)
 
-// ExportComponent = compose(saveStatus)(ExportComponent)
-// ExportComponent = compose(OrgQuery)(ExportComponent)
-//
-
 
 
 ExportComponent = compose(

@@ -9,7 +9,7 @@ import {
   GraphQLNonNull,
 } from 'graphql'
 import {DirectionEnum, ContentTypeEnum, TemplateEnum, VisibilityEnum} from './enums'
-import {GeometryEnum, GeometryInput} from './geometry'
+import {GeometryEnum, FeatureCollectionInput} from './geometry'
 
 
 export const OrderInput = new GraphQLInputObjectType({
@@ -152,8 +152,8 @@ export const ContentInput = new GraphQLInputObjectType({
     videoUrl: {
       type: GraphQLString
     },
-    geometry: {
-      type: GeometryInput
+    geoJSON: {
+      type: FeatureCollectionInput
     },
     objId: {
       type: GraphQLID

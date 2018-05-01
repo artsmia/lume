@@ -3,7 +3,8 @@ import {
   GraphQLFloat,
   GraphQLObjectType,
   GraphQLEnumType,
-  GraphQLInputObjectType
+  GraphQLInputObjectType,
+  GraphQLString
 } from 'graphql'
 
 export const GeometryEnum = new GraphQLEnumType({
@@ -18,6 +19,32 @@ export const GeometryEnum = new GraphQLEnumType({
     Linestring: {
       value: "Linestring"
     },
+    MultiPoint: {
+      value: "MultiPoint"
+    },
+    MultiLineString: {
+      value: "MultiLineString"
+    },
+    MultiPolygon: {
+      value: "MultiPolygon"
+    },
+    Feature: {
+      value: "Feature"
+    },
+    FeatureCollection: {
+      value: "FeatureCollection"
+    },
+  }
+})
+
+const coordinates = new GraphQLList(new GraphQLList(new GraphQLList(GraphQLFloat)))
+
+export const GeometryPropertiesInput = new GraphQLInputObjectType({
+  name: 'GeometryPropertiesInput',
+  fields: {
+    name: {
+      type: GraphQLString
+    },
   }
 })
 
@@ -28,9 +55,48 @@ export const GeometryInput = new GraphQLInputObjectType({
       type: GeometryEnum
     },
     coordinates: {
-      type: new GraphQLList( new GraphQLList( new GraphQLList(GraphQLFloat)))
+      type: coordinates
     },
   }
+})
+
+export const FeatureInput = new GraphQLInputObjectType({
+  name: 'FeatureInput',
+  fields: {
+    type: {
+      type: GeometryEnum
+    },
+    geometry: {
+      type: GeometryInput
+    },
+    properties: {
+      type: GeometryPropertiesInput
+    }
+  }
+})
+
+export const FeatureCollectionInput = new GraphQLInputObjectType({
+  name: 'FeatureCollectionInput',
+  fields: {
+    type: {
+      type: GeometryEnum
+    },
+    features: {
+      type: new GraphQLList(FeatureInput)
+    },
+    properties: {
+      type: GeometryPropertiesInput
+    }
+  }
+})
+
+const geometryProperties = new GraphQLObjectType({
+  name: "geometryProperties",
+  fields: ()=>({
+    name: {
+      type: GraphQLString
+    }
+  })
 })
 
 const geometry = new GraphQLObjectType({
@@ -40,9 +106,42 @@ const geometry = new GraphQLObjectType({
       type: GeometryEnum
     },
     coordinates: {
-      type: new GraphQLList(new GraphQLList(new GraphQLList(GraphQLFloat)))
+      type: coordinates
+    },
+  })
+})
+
+const feature = new GraphQLObjectType({
+  name: "feature",
+  fields: () => ({
+    type: {
+      type: GeometryEnum
+    },
+    geometry: {
+      type: geometry
+    },
+    properties: {
+      type: geometryProperties
+    },
+  })
+})
+
+
+
+const featureCollection = new GraphQLObjectType({
+  name: "featureCollection",
+  fields: () => ({
+    type: {
+      type: GeometryEnum
+    },
+    properties: {
+      type: geometryProperties
+    },
+    features: {
+      type: new GraphQLList(feature)
     }
   })
 })
 
-export default geometry
+
+export default featureCollection

@@ -55,6 +55,7 @@
   },
   "scripts": {
     "start:local": "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js",
+    "start:dev": "DEPLOYMENT_ENV=dev nodemon --exec babel-node index.js",
     "build": "rm -rf build && babel ../data-api -d build --ignore node_modules",
     "deploy": "now -e NODE_ENV=production --token=$NOW_TOKEN --npm",
     "alias": "now alias --token=$NOW_TOKEN",

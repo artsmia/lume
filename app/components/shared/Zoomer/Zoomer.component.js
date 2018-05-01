@@ -2,118 +2,156 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 const L = (typeof window === 'object') ? require('leaflet') : null
-
+const LDraw = (typeof window === 'object') ? require('leaflet-draw') : null
 
 export default class extends Component {
 
-  // static propTypes = {
-  //   imageId: PropTypes.string,
-  //   detailId: PropTypes.string,
-  //   onCrop: PropTypes.func,
-  //   crop: PropTypes.bool
-  // }
-
-  static defaultProps = {
-    crop: false,
-    onCrop(geometry){console.log(geometry)}
+  static propTypes = {
+    imageId: PropTypes.string,
+    contentId: PropTypes.string,
+    storyId: PropTypes.string,
+    selectedContentId: PropTypes.string,
+    mode: PropTypes.string,
+    onContentSelection: PropTypes.func,
   }
 
   constructor(props){
     super(props)
-    const {
-      image,
-      detail,
-    } = props
-      this.state = {
-      ...this.state,
-      image: (detail) ? detail.image : image,
-      geometry: (detail) ? detail.geometry : false
+    this.mapRef = React.createRef()
+    this.state = {}
+    this.state = {
+      ...this.stateFromProps(props)
     }
-  }
-
-  render() {
-    if (this.props.loading || !this.state.image) return null
-
-    return (
-      <ZoomerMap
-        innerRef={mapRef => this.mapRef = mapRef}
-      />
-    )
   }
 
   componentWillReceiveProps(nextProps){
+    this.setState({...this.stateFromProps(nextProps)})
+  }
 
-    if (
-      nextProps.geometry &&
-      this.props.geometry
-    ) {
-      this.setState({
-        geometry: nextProps.geometry,
-      })
-      this.geometryLoading = false
-      this.geometryCreated = false
+  render() {
+
+    if (!this.state.image) {
+      return <div/>
+    } else {
+      return (
+        <ZoomerMap
+          innerRef={mapRef => this.mapRef = mapRef}
+        />
+      )
     }
-    if (
-      !this.state.image &&
-      !nextProps.loading
-    ) {
-      const {
-        image,
-      } = nextProps
+  }
 
-      let displayImage
+  componentWillUnmount(){
+    if (this.map){
+      this.map.remove()
+    }
+  }
 
-      this.setState({
-        image,
-      })
+
+  stateFromProps = (props) => {
+
+    let newState = {}
+
+    let image = false
+
+    let content = false
+
+    let markers = false
+
+    if (props.image){
+      image = props.image
+    }
+
+    if (props.content){
+      content = props.content
+      if (props.content.image0){
+        image = props.content.image0
+      }
     }
 
     if (
-      !nextProps.loading &&
-      nextProps.geometry
+      props.story
+    ){
+      let selectedContent = props.story.contents.find( content => content.id === props.selectedContentId)
+
+      if (selectedContent){
+        content = selectedContent
+        if (selectedContent.image0) {
+          image = selectedContent.image0
+        }
+      } else {
+        if (props.story.primaryImage){
+          image = props.story.primaryImage
+        } else {
+          let firstDetail = props.story.contents.find(content => {
+            if (content.type === 'detail' && content.image0){
+              return true
+            } else {
+              return false
+            }
+          })
+          if (firstDetail) {
+            image = firstDetail.image0
+          }
+        }
+      }
+    }
+
+    if (
+      props.story &&
+      image
     ) {
-      this.setState({geometry: nextProps.geometry})
+      let markers = props.story.contents.filter( content => {
+        if (content.image0){
+          if (content.image0.id === image.id){
+            return true
+          }
+        }
+        return false
+      })
+
+      Object.assign(newState, {markers})
+    }
+
+    if(!props.selectedContentId){
+      Object.assign(newState, {content: false})
+    }
+
+    if (!this.state.image){
+      Object.assign(newState, {image})
+    }
+
+    if (!this.state.content){
+      Object.assign(newState, {content})
     }
 
     if (
       this.state.image &&
-      this.props.image &&
-      nextProps.image
-    ) {
-      if (
-        this.props.image.id !== nextProps.image.id
-      ) {
-        this.setState({
-          image: nextProps.image,
-        })
-        this.zoomCreated = false
-        this.zoomLoading = false
-        this.cropperLoading = false
-        this.cropperCreated = false
-        this.geometryLoading = false
-        this.geometryCreated = false
+      image
+    ){
+      if (this.state.image.id !== image.id){
+        Object.assign(newState, {image})
       }
     }
-    if (
-      nextProps.image &&
-      this.props.image
-    ) {
-      if (
-        nextProps.image.id !==
-        this.props.image.id
-      ) {
-        this.setState({
-          image: nextProps.image,
-        })
-        this.zoomCreated = false
-        this.zoomLoading = false
-        this.cropperLoading = false
-        this.cropperCreated = false
-        this.geometryLoading = false
-        this.geometryCreated = false
-      }
 
+    if (
+      this.state.content &&
+      content
+    ) {
+      if (
+        this.state.content !== content.id
+      ) {
+        Object.assign(newState, {content})
+      }
     }
+
+    if (
+      !image
+    ) {
+      Object.assign(newState, {image})
+    }
+
+    return newState
   }
 
   componentDidMount(){
@@ -124,60 +162,32 @@ export default class extends Component {
     this.setup()
   }
 
-
-  setup = async() => {
+  setup = async () => {
     try {
 
-      if (
-        !this.zoomLoading &&
-        !this.zoomCreated &&
-        this.props.image
-      ) {
-        await this.createZoomer()
+      console.log("setup", this.state)
+      if (this.state.image){
+        await this.setupImage()
       }
 
       if (
-        this.zoomCreated &&
-        this.props.crop &&
-        !this.cropperLoading &&
-        !this.cropperCreated
+        this.state.image &&
+        this.state.content &&
+        this.props.mode === 'editor'
       ) {
-        await this.createCropper()
+        await this.createDetailEditor()
+      } else if (
+        this.state.image &&
+        this.state.content
+      ) {
+        await this.createContentLayer()
       }
 
       if (
-        this.zoomCreated &&
-        this.state.geometry &&
-        !this.geometryLoading &&
-        !this.geometryCreated
-      ) {
-        await this.showCrop()
-      }
-
-      if (
-        this.zoomCreated &&
-        !this.props.loading &&
-        this.props.moreGeometry
-      ) {
-        await this.createIndexMarkers()
-      }
-
-      if (
-        this.zoomCreated &&
-        !this.props.moreGeometry &&
-        this.indexMarkers.length > 0
-      ) {
-        this.indexMarkers.forEach(marker => {
-          this.map.removeLayer(marker)
-        })
-      }
-
-      if(
-        this.zoomCreated &&
-        !this.props.geometry &&
-        this.currentHighlight
-      ) {
-        this.map.removeLayer(this.currentHighlight)
+        this.state.image &&
+        this.state.markers
+      ){
+        await this.createMarkers()
       }
 
     } catch (ex) {
@@ -185,332 +195,100 @@ export default class extends Component {
     }
   }
 
-
-  getSelectionBounds() {
-
-    let lats = []
-    let lngs = []
-
-    const {
-      cropStart,
-      cropEnd
-    } = this.map
-
-    if (
-      cropStart &&
-      cropEnd
-    ) {
-      lats = [
-        cropStart._latlng.lat,
-        cropEnd._latlng.lat
-      ]
-      lngs = [
-        cropStart._latlng.lng,
-        cropEnd._latlng.lng
-      ]
-    } else {
-      const [
-        coordinates
-      ] = this.state.geometry.coordinates
-
-      lats = coordinates.map(([lat,lng]) => lat)
-      lngs = coordinates.map(([lat,lng]) => lng)
+  setupImage = async () => {
+    try {
+      let config = await this.config()
+      await this.createZoomer(config)
+    } catch (ex) {
+      console.error(ex)
     }
-
-
-
-    let top = Math.max(...lats)
-    let bottom = Math.min(...lats)
-    let left = Math.min(...lngs)
-    let right = Math.max(...lngs)
-
-
-
-    const selectionBounds = [
-      [top, left],
-      [top, right],
-      [bottom, right],
-      [bottom, left],
-      [top, left]
-    ]
-
-    return selectionBounds
   }
 
-  getOuterBounds(){
+  setupMulti = () => {
 
-    const {
-      _northEast: {
-        lat: north,
-        lng: east
-      },
-      _southWest: {
-        lat: south,
-        lng: west
+  }
+
+
+  config = async (image) => {
+    try {
+      if (
+        process.env.FILE_STORAGE === 'local'
+      ) {
+        return await this.localTileConfig()
+      } else if (
+        this.state.image.organization.subdomain === 'mia'
+      ) {
+        return await this.miaTileConfig()
+      } else {
+        return await this.lumeTileConfig()
       }
-    } = this.bounds
-
-    const outerBounds = [
-      [north, west],
-      [north, east],
-      [south, east],
-      [south, west],
-      [north, west],
-    ]
-
-
-    return outerBounds
-  }
-
-
-  highlight = () => {
-
-    const highlightBounds = [
-      this.getOuterBounds(),
-      this.getSelectionBounds()
-    ]
-
-
-
-    if (this.currentHighlight) {
-      this.currentHighlight.removeFrom(this.map)
+    } catch (ex) {
+      console.error(ex)
     }
-    this.highlightPolygon = L.polygon(highlightBounds, {
-      stroke: false,
-      fillColor: "black",
-      fillOpacity: .8,
-    })
-    this.currentHighlight = this.highlightPolygon.addTo(this.map)
-
-
   }
 
-  indexMarkers = []
-
-  createIndexMarkers = () => {
-    const {
-      props: {
-        moreGeometry,
-        onContentSelection
-      },
-    } = this
-
-    moreGeometry.forEach( (content) => {
-
-      const {
-        index,
-        geometry: {coordinates}
-      } = content
-
-      let southWest = L.polygon(coordinates).getBounds().getSouthWest()
-
-      let html = `<div class="index-icon"> ${index} </div>`
-
-      let icon = L.divIcon({
-        html
+  miaTileConfig = async () => {
+    try {
+      const response = await fetch(`https://tiles.dx.artsmia.org/${this.state.image.localId}.tif`, {
+        method: "GET"
       })
 
-      let indexMarker = L.marker(southWest, {
-        icon,
-        opacity: .75
+      let json = await response.json()
+
+      return {
+        height: json.height,
+        width: json.width,
+        tileUrl: json.tileUrl || json.tiles[0],
+        tileSize: json.tileSize || 256
+      }
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  localTileConfig = async () => {
+    try {
+      const response = await fetch(`${process.env.LOCAL_TILE_URL}/static/${this.state.image.id}/ImageProperties.xml`, {
+        method: "GET"
       })
 
-      indexMarker.addTo(this.map)
+      let text = await response.text()
 
-      this.indexMarkers.push(indexMarker)
-
-      indexMarker.on(
-        "click",
-        () => {
-          onContentSelection(content)
-        }
-      )
-
-
-    })
-
-  }
-
-
-  saveGeometry = () => {
-    const geometry = {
-      type: "Polygon",
-      coordinates: [this.getSelectionBounds()],
-      __typename: undefined
-
+      return {
+        height: new RegExp(/HEIGHT="(\d*)"/g).exec(text)[1],
+        width: new RegExp(/WIDTH="(\d*)"/g).exec(text)[1],
+        tileUrl: `${process.env.LOCAL_TILE_URL}/static/${this.state.image.id}/TileGroup0/{z}-{x}-{y}.png` ,
+        tileSize: 512
+      }
+    } catch (ex) {
+      console.error(ex)
     }
-    this.setState({
-      ...geometry,
-    })
-    this.props.onCrop(geometry)
   }
 
-
-  showCrop = async () => {
+  lumeTileConfig = async() => {
     try {
-      this.geometryLoading = true
+      const response = await fetch(`${process.env.S3_URL}/mia-lume/${this.state.image.id}/info.json`, {
+        method: "GET"
+      })
 
+      let json = await response.json()
 
-
-      this.highlight()
-
-      if (this.props.zoom){
-        this.map.flyToBounds(this.getSelectionBounds(),{
-          padding: [80,80]
-        })
+      return {
+        height: json.height,
+        width: json.width,
+        tileUrl: `${process.env.S3_URL}/mia-lume/${this.state.image.id}/{z}_{x}_{y}.png`,
+        tileSize: 512
       }
 
-
-
-      this.geometryLoading = false
-      this.geometryCreated = true
-
-
-
     } catch (ex) {
       console.error(ex)
     }
   }
 
-  zoomIn = () => {
-    this.map.flyToBounds(this.getSelectionBounds())
-  }
-
-
-  handleMouseDown = ({latlng}) => {
-    if (
-      !this.map.cropStart &&
-      this.map.cropping
-    ) {
-
-      this.map.cropStart = this.createMarker(latlng)
-
-      this.map.cropStart.on(
-        "moveend",
-        this.handleCropEnd
-      )
-
-      this.map.cropStart.on(
-        "drag",
-        this.highlight
-      )
-
-      this.map.cropStart.addTo(this.map)
-    }
-  }
-
-  handleMouseMove = ({latlng}) => {
-
-    if (
-      this.map.cropping &&
-      this.map.cropStart &&
-      this.map.cropEnd
-    ){
-
-      this.map.cropEnd.setLatLng(latlng)
-      this.map.cropEnd.setLatLng(latlng)
-      this.highlight()
-
-    } else if (
-      this.map.cropping &&
-      this.map.cropStart &&
-      !this.map.cropEnd
-    ) {
-
-      this.map.cropEnd = this.createMarker(latlng)
-
-      this.map.cropEnd.addTo(this.map)
-
-      this.map.cropEnd.on(
-        "moveend",
-        this.handleCropEnd
-      )
-
-      this.map.cropEnd.on(
-        "drag",
-        this.highlight
-      )
-    }
-  }
-
-  handleMouseUp =({latlng}) => {
-
-    if (
-      this.map.cropEnd &&
-      this.map.cropping
-    ) {
-
-      this.map.cropEnd.setLatLng(latlng)
-
-      this.map.cropping = false
-      this.map._container.style.cursor = ""
-      this.map.dragging._draggable._enabled = true
-
-      this.handleCropEnd()
-    }
-  }
-
-  handleCropEnd = () => {
-    this.highlight()
-    this.saveGeometry()
-  }
-
-
-  get cropIcon() {
-    return L.icon({
-      iconUrl: `/static/x.png`,
-      iconSize: 30,
-      iconAnchor: [15,15]
-    })
-  }
-
-  createMarker = (latlng) => {
-    return L.marker(latlng, {
-      icon: this.cropIcon,
-      draggable: true
-    })
-  }
-
-  createCropper = async () => {
+  createZoomer = async ({ height, width, tileUrl, tileSize}) => {
     try {
 
-      this.cropperLoading = true
-
-      L.control.cropper({
-        position: "bottomleft"
-      }).addTo(this.map)
-
-
-      this.map.on(
-        "mousedown",
-        this.handleMouseDown
-      )
-
-      this.map.on(
-        "mousemove",
-        this.handleMouseMove
-      )
-
-      this.map.on(
-        "mouseup",
-        this.handleMouseUp
-      )
-
-      this.cropperLoading = false,
-      this.cropperCreated = true
-
-
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-
-  createZoomer = async () => {
-    try {
-
-
-      this.zoomLoading = true
+      console.log("createZoomer")
 
       if (
         this.map
@@ -518,86 +296,11 @@ export default class extends Component {
         this.map.remove()
       }
 
-      const {
-        mapRef,
-        state: {
-          image: {
-            id: imageId,
-            localId,
-            organization: {
-              id: bucketId,
-              customImageApiEnabled,
-              subdomain
-            }
-          }
-        },
-      } = this
-
-
-      let tileSize
-      let tileUrl
-      let height
-      let width
-
-      if (
-        subdomain === 'mia'
-      ) {
-
-        const response = await fetch(`https://tiles.dx.artsmia.org/${localId}.tif`, {
-          method: "GET"
-        })
-        let json = await response.json()
-
-        height = json.height
-        width = json.width
-
-        tileUrl = json.tileUrl || json.tiles[0]
-
-        tileSize = json.tileSize || 256
-
-      } else {
-
-        tileSize = 512
-
-
-        if (process.env.FILE_STORAGE === "local") {
-
-          const response = await fetch(`${process.env.LOCAL_TILE_URL}/static/${imageId}/ImageProperties.xml`, {
-            method: "GET"
-          })
-
-          let text = await response.text()
-
-          height = new RegExp(/HEIGHT="(\d*)"/g).exec(text)[1]
-          width = new RegExp(/WIDTH="(\d*)"/g).exec(text)[1]
-
-
-          tileUrl = `${process.env.LOCAL_TILE_URL}/static/${imageId}/TileGroup0/{z}-{x}-{y}.png`
-        } else {
-
-          const response = await fetch(`${process.env.S3_URL}/mia-lume/${imageId}/info.json`, {
-            method: "GET"
-          })
-
-          let json = await response.json()
-
-          height = json.height
-          width = json.width
-
-          tileUrl = `${process.env.S3_URL}/mia-lume/${imageId}/{z}_{x}_{y}.png`
-
-
-        }
-
-      }
-
-      const larger = Math.max(height, width)
+      let larger = Math.max(height, width)
 
       let maxTiles = Math.ceil(larger / tileSize)
 
       let maxZoom = Math.ceil(Math.log2(maxTiles))
-
-
 
       while (
         height > tileSize ||
@@ -610,16 +313,13 @@ export default class extends Component {
       let ne = L.latLng(0, width)
       let sw = L.latLng(-1 * height, 0)
 
-      const bounds = L.latLngBounds(sw, ne)
+      this.bounds = L.latLngBounds(sw, ne)
 
-      this.bounds = bounds
-
-      this.map = L.map(mapRef, {
+      this.map = L.map(this.mapRef, {
         crs: L.CRS.Simple,
-        maxBounds: bounds,
-        //zoomSnap: 0,
+        maxBounds: this.bounds,
         attributionControl: false,
-        maxZoom
+        maxZoom,
       })
 
       const container = this.map.getContainer()
@@ -637,13 +337,13 @@ export default class extends Component {
           maxNativeZoom: maxZoom,
           minNativeZoom: 0,
           noWrap: true,
-          bounds,
+          bounds: this.bounds,
           minZoom: Math.floor(initialZoom),
           maxZoom
         }
       )
 
-      let initialLatLng = [height / 2, -1 * width / 2]
+      const initialLatLng = [height / 2, -1 * width / 2]
 
       this.map.setView(
         initialLatLng,
@@ -669,17 +369,135 @@ export default class extends Component {
 
       this.map.invalidateSize()
 
-      this.map.fitBounds(bounds)
+      this.map.fitBounds(this.bounds)
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
 
-      this.zoomCreated = true
+  createDetailEditor = async () => {
+    try {
+      let layers = this.state.content.geoJSON ? this.state.content.geoJSON.features.map( feature => {
+        return L.GeoJSON.geometryToLayer(feature)
+      }) : []
 
+      this.editableLayers = new L.FeatureGroup(layers)
+
+      this.map.addLayer(this.editableLayers)
+
+      this.drawControl = new L.Control.Draw({
+        draw: {
+          polygon: {
+            allowIntersection: false,
+          },
+          polyline: false,
+          circle: false,
+          marker: false,
+          circlemarker: false
+        },
+        position: 'topright',
+        edit: {
+          featureGroup: this.editableLayers
+        }
+      })
+
+      this.map.addControl(this.drawControl)
+
+      this.map.on(L.Draw.Event.CREATED, (e) => {
+        this.editableLayers.addLayer(e.layer)
+
+        this.props.editContent({
+          geoJSON: this.editableLayers.toGeoJSON()
+        })
+
+      })
+
+      this.map.on(L.Draw.Event.EDITED, (e) => {
+
+        this.props.editContent({
+          geoJSON: this.editableLayers.toGeoJSON()
+        })
+
+      })
+
+
+      this.map.on(L.Draw.Event.DELETED, (e) => {
+
+        this.props.editContent({
+          geoJSON: this.editableLayers.toGeoJSON()
+        })
+
+      })
 
     } catch (ex) {
       console.error(ex)
     }
   }
 
+  createContentLayer = async () => {
+    try {
 
+      let details = this.state.content.geoJSON.features.map( feature => {
+        return L.GeoJSON.geometryToLayer(feature)
+      })
+
+      details = details.map(detail => detail._latlngs)
+
+      let outline = L.rectangle(this.bounds)
+
+      this.contentLayer = L.polygon([outline._latlngs, ...details], {
+        fill: 'black',
+        stroke: 0,
+        fillOpacity: .3
+      })
+
+      this.map.addLayer(this.contentLayer)
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  createMarkers = async() => {
+    try {
+      let markers = this.state.markers.map(marker => {
+        return {
+          sw: L.geoJSON(marker.geoJSON).getBounds().getSouthWest(),
+          marker
+        }
+      })
+
+      this.indexMarkers = []
+
+      markers.forEach( ({sw, marker}) => {
+
+        let html = `<div class="index-icon"> ${marker.index} </div>`
+
+        let icon = L.divIcon({
+          html
+        })
+
+        let indexMarker = L.marker(sw, {
+          icon,
+          opacity: .75
+        })
+
+        indexMarker.addTo(this.map)
+
+        this.indexMarkers.push(indexMarker)
+
+        indexMarker.on(
+          "click",
+          () => {
+            this.props.onContentSelection(marker)
+          }
+        )
+      })
+
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
 
 }
 
@@ -791,4 +609,6 @@ if (typeof window === 'object') {
   L.tileLayer.knight = function(...args){
     return new L.TileLayer.Knight(...args)
   }
+
+
 }
