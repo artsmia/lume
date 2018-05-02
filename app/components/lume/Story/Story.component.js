@@ -2,8 +2,12 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import OriginalTemplate from '../OriginalTemplate'
 import SliderTemplate from '../SliderTemplate'
+import {withRouter} from 'next/router'
+import organizationQuery from '../../../apollo/queries/organization'
+import {compose} from 'react-apollo'
 
-export default class Story extends Component {
+
+class Story extends Component {
 
   render() {
 
@@ -35,3 +39,7 @@ export default class Story extends Component {
 
   }
 }
+
+let ExportComponent = compose(organizationQuery)(Story)
+
+export default withRouter(ExportComponent)

@@ -7,11 +7,8 @@ import {withRouter} from 'next/router'
 let ExportComponent = Component
 
 
-
 ExportComponent = compose(
-  withApollo,
   StoryQuery,
-  OrganizationQuery
 )(ExportComponent)
 
 ExportComponent = withRouter(ExportComponent)

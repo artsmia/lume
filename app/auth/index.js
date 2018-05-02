@@ -5,8 +5,10 @@ import jwt from 'jsonwebtoken'
 
 export default class Auth {
 
+  logging = false
+
   log = (text, data) => {
-    if (process.env.NODE_ENV !== 'production'){
+    if (process.env.NODE_ENV !== 'production' && this.logging){
       console.log("Auth: ", text)
       if (data){
         console.log(data)
@@ -15,7 +17,7 @@ export default class Auth {
   }
 
   ex = (text, ex) => {
-    if (process.env.NODE_ENV !== 'production'){
+    if (process.env.NODE_ENV !== 'production' && this.logging){
       console.log("Auth: ", 'Exception!')
       console.log(text)
       console.error(ex)

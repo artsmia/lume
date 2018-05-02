@@ -456,45 +456,45 @@ export default class OriginalTemplate extends Component {
   }
 
 
-  createMoreGeometry = () => {
-
-    const {
-      state: {
-        selectedContent
-      },
-      props: {
-        story
-      }
-    } = this
-
-    if (
-      selectedContent.type === "detail"
-    ) {
-      let more = story.contents.slice().filter(content => {
-        if (content.type === "detail") {
-          if (content.image0.id === selectedContent.image0.id) {
-            return true
-          }
-        }
-        return false
-      })
-      return more
-    }
-    if (
-      selectedContent.type === "all"
-    ) {
-      let firstDetailContent = story.contents.find(content => content.type === 'detail')
-      let more = story.contents.slice().filter(content => {
-        if (content.type === "detail") {
-          if (content.image0.id === firstDetailContent.image0.id) {
-            return true
-          }
-        }
-        return false
-      })
-      return more
-    }
-  }
+  // createMoreGeometry = () => {
+  //
+  //   const {
+  //     state: {
+  //       selectedContent
+  //     },
+  //     props: {
+  //       story
+  //     }
+  //   } = this
+  //
+  //   if (
+  //     selectedContent.type === "detail"
+  //   ) {
+  //     let more = story.contents.slice().filter(content => {
+  //       if (content.type === "detail") {
+  //         if (content.image0.id === selectedContent.image0.id) {
+  //           return true
+  //         }
+  //       }
+  //       return false
+  //     })
+  //     return more
+  //   }
+  //   if (
+  //     selectedContent.type === "all"
+  //   ) {
+  //     let firstDetailContent = story.contents.find(content => content.type === 'detail')
+  //     let more = story.contents.slice().filter(content => {
+  //       if (content.type === "detail") {
+  //         if (content.image0.id === firstDetailContent.image0.id) {
+  //           return true
+  //         }
+  //       }
+  //       return false
+  //     })
+  //     return more
+  //   }
+  // }
 
   handleContentSelection = (content) => {
     this.setState({
@@ -553,93 +553,3 @@ const IndexSpan = styled.span`
   line-height: 1.8rem;
   color: ${({theme}) => theme.color.white};
 `
-
-// const RelatedStory = styled.a`
-//   display: flex;
-//   width: 100%;
-//   height: 50px;
-//   font-size: 22px;
-//   align-items: center;
-//   border: 1px solid lightgrey;
-//   padding: 5px;
-//   cursor: pointer;
-//   box-sizing:border-box;
-//   margin-top: 5px;
-// `
-//
-// const ContentBody = styled.div`
-//   height: ${({selected}) => selected ? "auto" : 0};
-//   visibility: ${({selected}) => selected ? "visible" : "hidden"};
-//   opacity: ${({selected}) => selected ? "1" : "0"};
-//   width: 100%;
-//   transition: all .2s ease;
-// `
-//
-//
-// const ContentHeader = styled.div`
-//   display: flex;
-//   flex-direction:row;
-//   align-items: center;
-//   width: 100%;
-//   height: 60px;
-// `
-//
-// const Index = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   color: white;
-//   background-color: black;
-//   height: 50px;
-//   width: 50px;
-//   border-radius: 50px;
-//   margin-right: 15px;
-//   font-size: 24px;
-// `
-//
-// const Content = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content:flex-start;
-//   align-items: flex-start;
-//   margin: 10px;
-// `
-//
-// const Container = styled.div`
-//   display: flex;
-//   width: 100vw;
-//   box-sizing: border-box;
-//   height: 100vh;
-// `
-//
-// const SideContainer = styled.div`
-//   max-width: 370px;
-//   width: 100%;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: flex-start;
-//   align-items: flex-start;
-//   padding: 10px;
-//   box-sizing: border-box;
-// `
-//
-// const FeatureContainer = styled.div`
-//   width: 100%;
-//   display: flex;
-//   background-color: lightgrey;
-// `
-//
-// const AboutText = styled.div`
-//   margin: 15px;
-// `
-//
-// const HomeButton = styled.button`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 40px;
-//   width: 40px;
-//   border-radius: 40px;
-//   background-color: black;
-//   cursor: pointer;
-// `
