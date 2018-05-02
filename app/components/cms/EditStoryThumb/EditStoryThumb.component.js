@@ -53,7 +53,7 @@ export default class EditStoryThumb extends Component {
             Story Information
           </H3>
           <Icon
-            color={'white'}
+            color={selected ? 'blue' : 'white'}
             icon={'book'}
           />
         </ThumbOverlay>

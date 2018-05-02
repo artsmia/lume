@@ -36,19 +36,34 @@ export default class Home extends Component {
               <P>
                 Lume is a tool for telling stories. It was created by The Minneapolis Institute of Art with the support of the Knight Foundation to allow anyone (especially museum educators and curators) to present content in an interactive and compelling way.
               </P>
-              <P>
-                You can check out Mia's Lume <Link href={{
-                  pathname: '/lume',
-                  query: {
-                    subdomain: 'mia'
-                  }
-                }} as={'/mia'}>here</Link> or try creating your own stories by logging in or signing up below.
-              </P>
-              <Button
-                onClick={linkToLogin}
-              >
-                Login or Signup
-              </Button>
+
+              {(process.env.DEPLOYMENT_ENV !== 'local') ? (
+                <Box>
+                  <P>
+                    You can check out Mia's Lume <Link href={{
+                      pathname: '/lume',
+                      query: {
+                        subdomain: 'mia'
+                      }
+                    }} as={'/mia'}>here</Link> or try creating your own stories by logging in or signing up below.
+                  </P>
+                  <Button
+                    onClick={linkToLogin}
+                  >
+                    Login or Signup
+                  </Button>
+                </Box>
+              ): null}
+
+              {(process.env.DEPLOYMENT_ENV === 'local') ? (
+                <Box>
+                  <H3>
+                    You are currently using Lume in Local Mode
+                  </H3>
+                  
+                </Box>
+              ): null}
+
             </Card>
 
             <Flex

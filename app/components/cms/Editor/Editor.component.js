@@ -109,7 +109,6 @@ export default class Editor extends Component {
         <StoryPreview
           story={story}
           router={router}
-          organization={organization}
         />
       </PreviewContainer>
 

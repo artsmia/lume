@@ -16,7 +16,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-const passport = require('./passport')
+const passport = (process.env.AUTH_STRATEGY !== 'local') ? require('./passport') : {}
 
 
 let sessionConfig = {
@@ -40,61 +40,65 @@ app.prepare().then(() => {
 
   const server = express()
 
+  if (process.env.AUTH_STRATEGY !== 'local'){
 
-  server.use(
-    passport.initialize(),
-    session(sessionConfig),
-    passport.session()
-  )
+    server.use(
+      passport.initialize(),
+      session(sessionConfig),
+      passport.session()
+    )
 
-  server.get(
-    '/login',
-    passport.authenticate('auth0', {
-      clientID: process.env.AUTH0_CLIENT_ID,
-      domain: process.env.AUTH0_DOMAIN,
-      redirectUri: `/callback`,
-      audience: `https://${process.env.AUTH0_DOMAIN}/userinfo`,
-      responseType: 'code',
-      scope: 'openid'
-    }),
-    (req, res) => {
-    },
-  )
+    server.get(
+      '/login',
+      passport.authenticate('auth0', {
+        clientID: process.env.AUTH0_CLIENT_ID,
+        domain: process.env.AUTH0_DOMAIN,
+        redirectUri: `/callback`,
+        audience: `https://${process.env.AUTH0_DOMAIN}/userinfo`,
+        responseType: 'code',
+        scope: 'openid'
+      }),
+      (req, res) => {
+      },
+    )
 
-  server.get(
-    '/logout',
-    (req, res) => {
-      req.session.destroy()
-      let page = '/logout'
-      app.render(req, res, page)
-    },
-  )
+    server.get(
+      '/logout',
+      (req, res) => {
+        req.session.destroy()
+        let page = '/logout'
+        app.render(req, res, page)
+      },
+    )
 
-  server.get(
-    '/callback',
-    passport.authenticate('auth0', {
-      failureRedirect: '/'
-    }),
-    (req, res) => {
+    server.get(
+      '/callback',
+      passport.authenticate('auth0', {
+        failureRedirect: '/'
+      }),
+      (req, res) => {
 
-      res.redirect('/auth')
+        res.redirect('/auth')
 
-    }
-  )
+      }
+    )
+
+  }
+
 
   server.get('/error', (req, res) => {
     const page = '/error'
     app.render(req, res, page)
   })
 
-  server.get('/live', (req, res) => {
-    const page = '/lume'
-    let params = {
-      ...req.query,
-      subdomain: req.subdomains[0]
-    }
-    app.render(req, res, page, params)
-  })
+  // server.get('/live', (req, res) => {
+  //   const page = '/lume'
+  //   let params = {
+  //     ...req.query,
+  //     subdomain: req.subdomains[0]
+  //   }
+  //   app.render(req, res, page, params)
+  // })
 
   server.get('/auth', (req, res) => {
     const page = '/auth'
@@ -106,6 +110,23 @@ app.prepare().then(() => {
     app.render(req, res, page)
   })
 
+
+
+
+  server.get('/cms/:subdomain',
+    async (req, res) => {
+      try {
+        const page = '/cms'
+        const {subdomain} = req.params
+        const params = {
+          subdomain,
+        }
+        app.render(req, res, page, params)
+      } catch (ex) {
+        console.error(ex)
+      }
+    }
+  )
 
   server.get('/cms/:subdomain/pending',
     async (req, res) => {
@@ -122,20 +143,6 @@ app.prepare().then(() => {
     }
   )
 
-  server.get('/cms/:subdomain',
-    async (req, res) => {
-      try {
-        const page = '/cms'
-        const {subdomain} = req.params
-        const params = {
-          subdomain,
-        }
-        app.render(req, res, page, params)
-      } catch (ex) {
-        console.error(ex)
-      }
-    }
-  )
   server.get('/cms/:subdomain/settings',
     (req, res) => {
       const page = '/cms/orgSettings'

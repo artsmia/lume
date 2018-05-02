@@ -25,7 +25,7 @@ const Image = db.define('image', {
   format: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: ""  
+    defaultValue: ""
   },
   host: {
     type: Sequelize.ENUM,
@@ -42,13 +42,15 @@ const Image = db.define('image', {
     allowNull: false,
     defaultValue: ""
   },
-  organizationId: {
+  organizationId: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "organization",
       key: "id"
     },
     onDelete: 'cascade'
+  } : {
+    type: Sequelize.UUID
   },
 }, {
   freezeTableName: true

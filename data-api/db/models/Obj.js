@@ -70,13 +70,15 @@ const Obj = db.define('obj', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  organizationId: {
+  organizationId: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "organization",
       key: "id"
     },
     onDelete: 'cascade'
+  } : {
+    type: Sequelize.UUID,    
   },
   primaryImageId: {
     type: Sequelize.UUID,

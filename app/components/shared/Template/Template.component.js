@@ -38,7 +38,7 @@ export default class Template extends Component {
               <div>
                 <MenuCheck/>
                 <Menu>
-                  { user.organizations.map(({subdomain, id, name}) => (
+                  { user.organizations ? user.organizations.map(({subdomain, id, name}) => (
                     <Item
                       key={id}
                     >
@@ -56,7 +56,7 @@ export default class Template extends Component {
                         </A>
                       </Link>
                     </Item>
-                  ))}
+                  )) : null}
                   <Item>
                     <Link
                       href={{

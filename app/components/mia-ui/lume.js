@@ -31,7 +31,16 @@ export const ThumbContainer = styled(Flex)`
   border: 1px solid ${gray60};
   border-radius: 4px;
   box-shadow: 0px 3px 15px rgba(0,0,0,0.3);
-  ${({selected}) => selected ? 'box-shadow: 10px 14px 25px rgba(0,0,0,0.7);': null }
+  transition: .2s all;
+  ${({selected, theme}) => {
+    if (selected) {
+      return `
+        box-shadow: 10px 14px 25px rgba(0,0,0,0.7);
+        transform: scale(1.05);
+        border: 1px solid ${theme.color.blue};  
+      `
+      }
+  }}
   &:hover {
     ${ThumbOverlay}{
       opacity: 1;

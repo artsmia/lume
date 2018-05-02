@@ -1,9 +1,9 @@
 import mailgun from 'mailgun-js'
 
-const mg = mailgun({
+const mg = (process.env.MAILGUN_API_KEY) ? mailgun({
   apiKey: process.env.MAILGUN_API_KEY,
   domain: process.env.MAILGUN_DOMAIN
-})
+}) : {}
 
 export default async({subject, to, html}) => {
   try {

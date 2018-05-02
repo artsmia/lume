@@ -6,11 +6,13 @@ import storyQuery from '../../../apollo/queries/story'
 import editStory from '../../../apollo/mutations/editStory'
 
 let ExportComponent = Component
-ExportComponent = compose(storyQuery)(ExportComponent)
+ExportComponent = compose(
+  storyQuery,
+  editStory,
+  query,
+)(ExportComponent)
 
-ExportComponent = compose(editStory)(ExportComponent)
 
-ExportComponent = compose(query)(ExportComponent)
 ExportComponent = withRouter(ExportComponent)
 
 export default ExportComponent

@@ -57,7 +57,6 @@ export default class ImageManager extends Component {
             subdomain
           }
         },
-        organization
       },
       handleLoadMore,
       handleImageSave,
@@ -371,7 +370,7 @@ export default class ImageManager extends Component {
       form.append("userId", localStorage.getItem('userId'))
       form.append("title", this.state.selectedMiaImage._source.title)
       form.append("description", this.state.selectedMiaImage._source.description)
-      form.append("subdomain", this.props.organization.subdomain)
+      form.append("subdomain", this.props.router.query.subdomain)
       form.append("localId", this.state.selectedMiaImage._id)
 
       const url  = (process.env.FILE_STORAGE === 's3') ? `${process.env.API_URL}/image` : 'http://localhost:3001/upload'
@@ -436,7 +435,9 @@ export default class ImageManager extends Component {
       variables: {
         filter: {
           limit: 10,
-          organizationId: this.props.organization.id,
+          organization: {
+            subdomain: this.props.router.subdomain
+          },
           offset: this.props.images.length
         }
       },

@@ -140,8 +140,8 @@ export default class Auth {
       this.log('getUserLocal')
 
       this.user = {
-        id: 'localuser',
-        idToken: 'localuser'
+        id: 'local',
+        idToken: 'local'
       }
     } catch (ex) {
       this.ex("getUserLocal", ex)
@@ -293,22 +293,20 @@ export default class Auth {
     try {
       this.log('fetchPermissions')
 
-      if(process.env.AUTH_STRATEGY === 'local'){
-        this.authProfile = {
-          user: {
-            id: 'localuser'
-          },
-          permissions: [
-            {
-              organization: {
-                subdomain: 'local'
-              },
-              role: 'admin'
-            }
-          ]
-        }
-        return
-      }
+      // if(process.env.AUTH_STRATEGY === 'local'){
+      //   this.user = {
+      //     id: 'local',
+      //     organizations: [
+      //       {
+      //         id: 'local',
+      //         name: 'local',
+      //         role: 'admin',
+      //         subdomain: 'local'
+      //       }
+      //     ]
+      //   }
+      //   return
+      // }
 
       let response = await fetch(process.env.API_URL, {
         method: 'POST',

@@ -52,6 +52,7 @@ class DetailEditor extends Component {
         <Flex
           width={1/2}
           flexWrap={'wrap'}
+          pr={3}
         >
           <Box
             w={1}

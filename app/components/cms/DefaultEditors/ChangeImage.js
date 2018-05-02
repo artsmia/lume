@@ -80,10 +80,12 @@ export default class ChangeImage extends Component {
           open={modal}
           onClose={handleModalClose}
         >
-          <ImageManager
-            subdomain={subdomain}
-            onImageSave={handleChange}
-          />
+          {modal ? (
+            <ImageManager
+              subdomain={subdomain}
+              onImageSave={handleChange}
+            />
+          ):null}
 
         </Modal>
       </Flex>

@@ -39,20 +39,24 @@ const Story = db.define('story', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  organizationId: {
+  organizationId: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "organization",
       key: "id"
     },
     onDelete: 'cascade'
+  } : {
+    type: Sequelize.UUID,
   },
-  previewImageId: {
+  previewImageId: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "image",
       key: "id"
     },
+  } : {
+    type: Sequelize.UUID
   },
 }, {
   freezeTableName: true,

@@ -9,6 +9,8 @@ export default async function (src, args, {verified, userId, authentication}){
       return authentication
     }
 
+    console.log(userId)
+
     let profile = await retrieveUserProfile(userId)
 
     let auth = {

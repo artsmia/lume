@@ -39,9 +39,9 @@ Icon.propTypes = {
 }
 
 
-export const ContentIcon = ({type}) => {
+export const ContentIcon = ({type, selected}) => {
   let icon = ''
-  let color = 'blue'
+  let color = selected ? 'blue' : 'white'
   switch (type) {
     case 'comparison': {
       icon = 'compare'

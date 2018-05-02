@@ -16,7 +16,9 @@ export default class OrgManager extends Component {
   state = {
     organizations: [],
     name: "",
-    subdomain: ""
+    subdomain: "",
+    subdomainValid: false,
+    subdomainInvalid: false
   }
 
   render() {
@@ -32,10 +34,14 @@ export default class OrgManager extends Component {
       state: {
         organizationId,
         name,
-        subdomain
+        subdomain,
+        subdomainErrorMsg,
+        subdomainValid,
+        subdomainInvalid
       },
       handleAdd,
-      handleRemove
+      handleRemove,
+      handleSubdomainChange
     } = this
 
     let selections = []
@@ -91,6 +97,8 @@ export default class OrgManager extends Component {
                     name={"name"}
                     type={"text"}
                     onChange={change}
+                    valid={(name)}
+                    value={name}
                   />
                   <Label>
                     Subdomain
@@ -98,11 +106,15 @@ export default class OrgManager extends Component {
                   <Input
                     name={"subdomain"}
                     type={"text"}
-                    onChange={change}
+                    onChange={handleSubdomainChange}
+                    valid={subdomainValid}
+                    invalid={subdomainInvalid}
+                    errorMsg={subdomainErrorMsg}
+                    value={subdomain}
                   />
                 </Form>
                 <Button
-                  disabled={(!name || !subdomain)}
+                  disabled={(!name || !subdomain || subdomainInvalid || !subdomainInvalid)}
                   onClick={createAndJoinOrg}
                 >
                   Create and Join
@@ -112,6 +124,49 @@ export default class OrgManager extends Component {
 
         </Page>
     )
+  }
+
+  handleSubdomainChange = ({target: {name, value}}) => {
+    let invalidSubdomains = ['login', 'logout', 'callback', 'error', 'auth', 'organizations', 'cms']
+
+    let subdomainValid = true
+    let subdomainInvalid = false
+
+    let subdomainErrorMsg = ""
+
+    let newValue = value
+
+    newValue = newValue.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
+
+    if (newValue.length > 20){
+      subdomainValid = false
+      subdomainInvalid = true
+      subdomainErrorMsg = 'Subdomain must be less than 20 characters.'
+    }
+
+    if (newValue.length < 5){
+      subdomainValid = false
+      subdomainInvalid = true
+      subdomainErrorMsg = 'Subdomain must be at least 5 characters.'
+    }
+
+    if (invalidSubdomains.includes(newValue)){
+      subdomainValid = false
+      subdomainInvalid = true
+      subdomainErrorMsg = 'That subdomain is already taken.'
+
+    }
+
+    console.log(newValue)
+
+
+    this.setState({
+      [name]: newValue,
+      subdomainValid,
+      subdomainInvalid,
+      subdomainErrorMsg
+    })
+
   }
 
   handleAdd = (organizationId) => {

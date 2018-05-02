@@ -75,6 +75,9 @@ server.use(
     console.log("request")
 
     if(process.env.AUTH_STRATEGY === 'local'){
+
+      req.userId = 'local'
+
       next()
     } else {
       verify(req, res, next)

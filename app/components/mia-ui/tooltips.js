@@ -47,6 +47,7 @@ const Tool = styled.div`
   color: white;
   font-family: ${({theme}) => theme.font.bold};
   margin-top: 5px;
+  transition: .1s all;
   ${Tip}{
     visibility: hidden;
     width: 200px;
@@ -57,6 +58,7 @@ const Tool = styled.div`
     position: absolute;
     padding: 5px;
     text-align: center;
+    z-index: 2000;
   }
 
   ${Tip}:after {
@@ -64,7 +66,6 @@ const Tool = styled.div`
     position: absolute;
     border-style: solid;
     border-color: transparent transparent ${blue} transparent;
-
 
 
   }

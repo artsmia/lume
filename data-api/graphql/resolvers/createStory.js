@@ -16,9 +16,7 @@ export default async function(src, args, ctx){
     let storiesWithSlug = await Story.findAll({
       where: {
         organizationId: organization.id,
-        slug: {
-          [Op.regexp]: slug
-        }
+        slug
       }
     })
 

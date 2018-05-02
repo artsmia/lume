@@ -42,26 +42,32 @@ const Content = db.define('content', {
     allowNull: false,
     defaultValue: ""
   },
-  image0Id: {
+  image0Id: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "image",
       key: "id"
     },
+  }: {
+    type: Sequelize.UUID
   },
-  image1Id: {
+  image1Id: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "image",
       key: "id"
     },
+  }: {
+    type: Sequelize.UUID
   },
-  objId: {
+  objId: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "obj",
       key: "id"
     },
+  } : {
+    type: Sequelize.UUID
   },
 }, {
   freezeTableName: true

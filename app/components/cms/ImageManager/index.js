@@ -7,10 +7,11 @@ import {withRouter} from 'next/router'
 
 let ExportComponent = Component
 
-ExportComponent = compose(query)(ExportComponent)
-ExportComponent = compose(OrgQuery)(ExportComponent)
+ExportComponent = compose(
+  query,
+  withApollo
+)(ExportComponent)
 
 ExportComponent = withRouter(ExportComponent)
-ExportComponent = withApollo(ExportComponent)
 
 export default ExportComponent
