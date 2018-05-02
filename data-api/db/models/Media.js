@@ -37,13 +37,15 @@ const Media = db.define('media', {
     allowNull: false,
     defaultValue: ""
   },
-  organizationId: {
+  organizationId: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "organization",
       key: "id"
     },
     onDelete: 'cascade'
+  } : {
+    type: Sequelize.UUID
   },
 }, {
   freezeTableName: true

@@ -17,20 +17,24 @@ const Category = db.define('category', {
     allowNull: false,
     defaultValue: ""
   },
-  organizationId: {
+  organizationId: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "organization",
       key: "id"
     },
     onDelete: 'cascade'
+  } : {
+    type: Sequelize.UUID
   },
-  imageId: {
+  imageId: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "image",
       key: "id"
     },
+  } : {
+    type: Sequelize.UUID
   },
 }, {
   freezeTableName: true

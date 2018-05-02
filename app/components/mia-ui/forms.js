@@ -35,7 +35,7 @@ export const Label = styled.label`
 Label.displayName = "Label"
 
 
-export const Input = styled.input`
+const InputEl = styled.input`
   outline: none;
   padding: .65em;
   border-radius: 2px;
@@ -51,11 +51,36 @@ export const Input = styled.input`
   &:disabled {
     background-color: ${gray30};
   }
+
+  ${({valid}) => valid ? css`
+    border: 2px solid ${({theme})=> theme.color.green};
+  ` : null}
+
+
+  ${({invalid}) => invalid ? css`
+    border: 2px solid ${({theme})=> theme.color.red};
+  ` : null}
 `
-Input.displayName = "Input"
 
 
-export const Textarea = Input.withComponent('textarea').extend`
+InputEl.displayName = "InputEl"
+
+
+const ErrorSpan = styled.span`
+  color: ${red};
+  ${bold}
+`
+
+export const Input = (props) => (
+  <div>
+    <InputEl
+      {...props}
+    />
+    <ErrorSpan>{props.errorMsg}</ErrorSpan>
+  </div>
+)
+
+export const Textarea = InputEl.withComponent('textarea').extend`
   min-height: ${({minHeight}) => minHeight};
   width: ${({width}) => width};
 `

@@ -32,11 +32,9 @@ const saveStatus = graphql(SaveStatusQuery, localConfig)
 
 
 ExportComponent = compose(
-  withApollo,
   query,
   mutation,
   saveStatus,
-  OrgQuery
 )(ExportComponent)
 
 ExportComponent = withRouter(ExportComponent)

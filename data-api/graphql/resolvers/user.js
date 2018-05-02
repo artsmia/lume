@@ -36,6 +36,19 @@ export default async function (src, {id}, ctx){
 
 export async function retrieveUserProfile(userId){
   try {
+
+    if (userId === 'local') {
+      return {
+        name: {
+          given: "local",
+          family: 'user'
+        },
+        picture: '/static/placeholder0.png',
+        email: ''
+      }
+    }
+
+
     let {
       email,
       given_name: given,

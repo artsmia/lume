@@ -31,12 +31,22 @@ class EditContentThumb extends Component {
       content: {
         title,
         type,
-        image0
+        image0,
+        obj
       },
       selected,
       connectDropTarget,
       connectDragSource
     } = this.props
+
+    let image = image0
+
+    if (
+      type === 'obj' &&
+      obj
+    ){
+      image = obj.primaryImage ? obj.primaryImage : image
+    }
 
     return connectDragSource(connectDropTarget(
       <div
@@ -53,11 +63,13 @@ class EditContentThumb extends Component {
         >
 
 
-          {(image0) ? (
+          {(image) ? (
             <Thumb
-              image={image0}
+              image={image}
             />
           ): null}
+
+          
 
           <ThumbOverlay>
 
@@ -68,6 +80,7 @@ class EditContentThumb extends Component {
             </H4>
             <ContentIcon
               type={type}
+              selected={selected}
             />
           </ThumbOverlay>
 

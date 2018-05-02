@@ -20,7 +20,7 @@ module.exports = {
         'process.env.AUTH_STRATEGY': JSON.stringify(process.env.AUTH_STRATEGY),
         'process.env.FILE_STORAGE': JSON.stringify(process.env.FILE_STORAGE),
         'process.env.LOCAL_TILE_URL': JSON.stringify(process.env.LOCAL_TILE_URL),
-
+        'process.env.DEPLOYMENT_ENV': JSON.stringify(process.env.DEPLOYMENT_ENV),
       })
     );
     return config

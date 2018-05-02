@@ -273,10 +273,18 @@ export default class StoryEditor extends Component {
 
   handleSlugChange = (e) => {
 
-    e.target.value = e.target.value.replace(/\s/g, '-')
+    e.target.value = e.target.value.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
+
 
     let name = e.target.name
     let value = e.target.value
+
+    let reservedSlugs = ['pending', 'settings']
+
+    if (reservedSlugs.includes(value)){
+      value = value.concat('-story')
+    }
+
 
     this.setState(
       ()=>({

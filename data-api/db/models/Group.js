@@ -29,12 +29,14 @@ const Group = db.define('group', {
       key: "id"
     },
   },
-  categoryId: {
+  categoryId: (process.env.DB_MODE !== 'local') ? {
     type: Sequelize.UUID,
     references: {
       model: "category",
       key: "id"
     },
+  } : {
+    type: Sequelize.UUID
   },
 }, {
   freezeTableName: true
