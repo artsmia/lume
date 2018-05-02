@@ -33,10 +33,16 @@ const editOrganization = {
     customImageEndpoint: {
       type: GraphQLString
     },
+    imageSearchEndpoint: {
+      type: GraphQLString
+    },
     customObjApiEnabled: {
       type: GraphQLBoolean
     },
     customObjApiEndpoint: {
+      type: GraphQLString
+    },
+    objSearchEndpoint: {
       type: GraphQLString
     },
     newUsersRequireApproval: {

@@ -22,7 +22,8 @@ export default class OrgSettings extends Component {
     customAnalyticsEnabled: false,
     customAnalyticsId: "",
     emailDomain: "",
-    locationEnabled: false
+    locationEnabled: false,
+    objSearchEndpoint: ""
   }
 
   constructor(props){
@@ -45,7 +46,8 @@ export default class OrgSettings extends Component {
         customObjApiEndpoint,
         customAnalyticsId,
         emailDomain,
-        locationEnabled
+        locationEnabled,
+        objSearchEndpoint
       },
       handleChange,
       handleCheck,
@@ -175,6 +177,23 @@ export default class OrgSettings extends Component {
               <Input
                 name={"customObjApiEndpoint"}
                 value={customObjApiEndpoint}
+                onChange={handleChange}
+              />
+            </Flex>
+
+            <Flex
+              w={1}
+              flexDirection={'column'}
+              mb={2}
+
+            >
+              <Label>
+                Custom Object Search Endpoint
+              </Label>
+
+              <Input
+                name={"objSearchEndpoint"}
+                value={objSearchEndpoint}
                 onChange={handleChange}
               />
             </Flex>

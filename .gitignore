@@ -14,4 +14,4 @@ local-store
 .dist
 artsmia.pem
 github.pem
-liteDB.sqlite
+localDB.sqlite

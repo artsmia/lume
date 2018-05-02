@@ -1,6 +1,18 @@
 import {compose} from 'react-apollo'
 import Component from './ObjEditor.component.js'
 import query from '../../../apollo/queries/obj'
-import mutation from '../../../apollo/mutations/editObj'
+import organization from '../../../apollo/queries/organization'
 
-export default compose(query, mutation)(Component)
+import mutation from '../../../apollo/mutations/editObj'
+import {withRouter} from 'next/router'
+
+let ExportComponent = Component
+
+ExportComponent = compose(
+  query,
+  mutation,
+  organization
+)(ExportComponent)
+
+
+export default withRouter(ExportComponent)

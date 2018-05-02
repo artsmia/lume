@@ -40,9 +40,10 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "reinit": "DEPLOYMENT_ENV=prod babel-node reinit",
-    "migrate-mia": "yarn run reinit && DEPLOYMENT_ENV=prod babel-node mia/migrate",
+    "reinit": "DEPLOYMENT_ENV=dev babel-node reinit",
+    "migrate-mia": "yarn run reinit && DEPLOYMENT_ENV=dev babel-node mia/migrate",
     "destroy-mia": "DEPLOYMENT_ENV=local babel-node mia/destroy",
-    "tiler": "cd ../image-tiler && rm -rf ImageTiler.zip && cp TilerDeps.zip ImageTiler.zip && zip ImageTiler.zip lambda_function.py && cd ../scripts && DEPLOYMENT_ENV=dev babel-node deploy-tiler"
+    "tiler": "cd ../image-tiler && rm -rf ImageTiler.zip && cp TilerDeps.zip ImageTiler.zip && zip ImageTiler.zip lambda_function.py && cd ../scripts && DEPLOYMENT_ENV=dev babel-node deploy-tiler",
+    "aws:obj-search": "cd ../mia-micro-obj-search && rm -rf app.zip && cp TilerDeps.zip ImageTiler.zip && zip ImageTiler.zip lambda_function.py && cd ../scripts && DEPLOYMENT_ENV=dev babel-node deploy-tiler",
   }
 }
