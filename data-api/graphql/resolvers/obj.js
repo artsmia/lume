@@ -9,20 +9,35 @@ export default async function(src, args, ctx){
     let obj
 
     if (args.id) {
-      obj = await Obj.findById(args.id)
+      obj = await Obj.findOne({
+        where: {
+          id: args.id
+        },
+        include: [{
+          model: Organization,
+          as: 'organization'
+        }]
+      })
     } else {
-      obj = await src.getObj()
+      obj = await src.getObj({
+        include: [{
+          model: Organization,
+          as: 'organization'
+        }]
+      })
     }
 
     if (!obj) return null
 
+    if (
+      obj.pullFromCustomApi &&
+      obj.organization.customObjApiEndpoint &&
+      obj.organization.customObjApiEnabled
 
-    if (obj.pullFromCustomApi){
-      let {
-        customObjApiEndpoint
-      } = await Organization.findById(obj.organizationId)
+    ){
 
-      let resp = await fetch(customObjApiEndpoint, {
+
+      let resp = await fetch(obj.organization.customObjApiEndpoint, {
         method: "POST",
         headers: {
           "content-type": "application/json",
