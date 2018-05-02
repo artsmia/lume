@@ -30,7 +30,6 @@ export default class EditStoryThumb extends Component {
         previewImage
       },
       onSelect,
-      organization,
       selected
     } = this.props
 

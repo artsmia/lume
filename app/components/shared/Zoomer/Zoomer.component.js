@@ -42,6 +42,7 @@ export default class extends Component {
   }
 
   componentWillUnmount(){
+    console.log("Zoomer Unmounting")
     if (this.map){
       this.map.remove()
     }
@@ -155,40 +156,94 @@ export default class extends Component {
   }
 
   componentDidMount(){
-    this.setup()
+    console.log("Zoomer mounted")
+    this.setup({})
   }
 
-  componentDidUpdate(){
-    this.setup()
+
+  componentDidUpdate(prevProps, prevState){
+    this.setup(prevState)
   }
 
-  setup = async () => {
+  setup = async (prevState) => {
     try {
 
       console.log("setup", this.state)
-      if (this.state.image){
-        await this.setupImage()
-      }
 
       if (
-        this.state.image &&
-        this.state.content &&
-        this.props.mode === 'editor'
+        this.state.image
       ) {
-        await this.createDetailEditor()
-      } else if (
-        this.state.image &&
-        this.state.content
-      ) {
-        await this.createContentLayer()
+
+        if (prevState.image){
+          if (
+            prevState.image.id !== this.state.image.id
+          ) {
+            this.map.remove()
+            await this.setupImage()
+          }
+        } else {
+          await this.setupImage()
+        }
+
+
+        if (
+          this.map
+        ) {
+
+          if (
+            this.state.content
+          ) {
+
+            if (this.props.mode === 'editor') {
+              await this.createDetailEditor()
+            } else {
+              await this.createContentLayer()
+
+              if (
+                this.detailBounds
+              ) {
+                this.map.flyToBounds(this.detailBounds, {
+                  padding: [5,5],
+                  animate: false
+                })
+              }
+
+            }
+          }
+
+          if (
+            this.state.markers
+          ) {
+            await this.createMarkers()
+          }
+        }
       }
 
-      if (
-        this.state.image &&
-        this.state.markers
-      ){
-        await this.createMarkers()
-      }
+
+
+      // if (this.state.image){
+      //   await this.setupImage()
+      // }
+
+      // if (
+      //   this.state.image &&
+      //   this.state.content &&
+      //   this.props.mode === 'editor'
+      // ) {
+      //   await this.createDetailEditor()
+      // } else if (
+      //   this.state.image &&
+      //   this.state.content
+      // ) {
+      //   await this.createContentLayer()
+      // }
+
+      // if (
+      //   this.state.image &&
+      //   this.state.markers
+      // ){
+      //   await this.createMarkers()
+      // }
 
     } catch (ex) {
       console.error(ex)
@@ -203,11 +258,6 @@ export default class extends Component {
       console.error(ex)
     }
   }
-
-  setupMulti = () => {
-
-  }
-
 
   config = async (image) => {
     try {
@@ -290,11 +340,11 @@ export default class extends Component {
 
       console.log("createZoomer")
 
-      if (
-        this.map
-      ) {
-        this.map.remove()
-      }
+      // if (
+      //   this.map
+      // ) {
+      //   this.map.remove()
+      // }
 
       let larger = Math.max(height, width)
 
@@ -339,7 +389,7 @@ export default class extends Component {
           noWrap: true,
           bounds: this.bounds,
           minZoom: Math.floor(initialZoom),
-          maxZoom
+          maxZoom,
         }
       )
 
@@ -377,6 +427,16 @@ export default class extends Component {
 
   createDetailEditor = async () => {
     try {
+
+
+      if (
+        this.editableLayers
+      ) {
+        this.map.removeLayer(this.editableLayers)
+      }
+
+
+
       let layers = this.state.content.geoJSON ? this.state.content.geoJSON.features.map( feature => {
         return L.GeoJSON.geometryToLayer(feature)
       }) : []
@@ -384,24 +444,6 @@ export default class extends Component {
       this.editableLayers = new L.FeatureGroup(layers)
 
       this.map.addLayer(this.editableLayers)
-
-      this.drawControl = new L.Control.Draw({
-        draw: {
-          polygon: {
-            allowIntersection: false,
-          },
-          polyline: false,
-          circle: false,
-          marker: false,
-          circlemarker: false
-        },
-        position: 'topright',
-        edit: {
-          featureGroup: this.editableLayers
-        }
-      })
-
-      this.map.addControl(this.drawControl)
 
       this.map.on(L.Draw.Event.CREATED, (e) => {
         this.editableLayers.addLayer(e.layer)
@@ -429,6 +471,28 @@ export default class extends Component {
 
       })
 
+      if (
+        !this.drawControl
+      ) {
+        this.drawControl = new L.Control.Draw({
+          draw: {
+            polygon: {
+              allowIntersection: false,
+            },
+            polyline: false,
+            circle: false,
+            marker: false,
+            circlemarker: false
+          },
+          position: 'topright',
+          edit: {
+            featureGroup: this.editableLayers
+          }
+        })
+
+        this.map.addControl(this.drawControl)
+      }
+
     } catch (ex) {
       console.error(ex)
     }
@@ -437,11 +501,17 @@ export default class extends Component {
   createContentLayer = async () => {
     try {
 
+      if (this.contentLayer){
+        this.map.removeLayer(this.contentLayer)
+      }
+
       let details = this.state.content.geoJSON.features.map( feature => {
         return L.GeoJSON.geometryToLayer(feature)
       })
 
       details = details.map(detail => detail._latlngs)
+
+      this.detailBounds = L.polygon(details).getBounds()
 
       let outline = L.rectangle(this.bounds)
 

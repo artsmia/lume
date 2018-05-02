@@ -11,11 +11,9 @@ import {withRouter} from 'next/router'
 let ExportComponent = Component
 
 ExportComponent = compose(
-  withApollo,
   query,
   mutation,
   setSaveStatus,
-  OrganizationQuery
 )(ExportComponent)
 
 // ExportComponent = compose(setSaveStatus)(ExportComponent)

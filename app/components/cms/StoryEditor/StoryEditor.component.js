@@ -64,7 +64,6 @@ export default class StoryEditor extends Component {
           groups,
           previewImage
         },
-        organization
       }
     } = this
 

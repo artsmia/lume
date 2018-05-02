@@ -21,6 +21,7 @@ class EditContentThumb extends Component {
 
   }
 
+
   render() {
     if (!this.props.content) return <Waiting/>
 
@@ -33,7 +34,6 @@ class EditContentThumb extends Component {
         image0
       },
       selected,
-      organization,
       connectDropTarget,
       connectDragSource
     } = this.props
