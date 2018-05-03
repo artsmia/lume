@@ -2,7 +2,15 @@
 
 Welcome to Lume, a digital storytelling platform by the Minneapolis Institute of Art.
 
-## Lume Local Quickstart
+## Table of Contents
+
+- [Running Lume] (#running-lume)
+  - [Local Quickstart] (#local-quickstart)
+
+
+## Running Lume
+
+## Local Quickstart
 
 If you're interested in contributing to Lume (or you just want to try it out on your own machine), you can follow these directions to get the application running on your local machine.
 
