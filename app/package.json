@@ -58,7 +58,7 @@
   },
   "scripts": {
     "start": "BABEL_ENV=next node router",
-    "build": "BABEL_ENV=next NODE_ENV=production next build",
+    "build": "BABEL_ENV=next next build",
     "now-start": "NODE_ENV=production node router",
     "deploy": "now -e NODE_ENV=production --token=$NOW_TOKEN --npm",
     "alias": "now alias --token=$NOW_TOKEN",
