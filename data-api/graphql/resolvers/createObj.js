@@ -10,10 +10,23 @@ export default async function(src, args, ctx){
       }
     })
 
+    console.log(args)
 
-    return await Obj.create({
-      organizationId: organization.id,
+    let [obj] = await Obj.findOrCreate({
+      where: {
+        localId: args.localId,
+        organizationId: organization.id
+      },
+      defaults: {
+        localId: args.localId,
+        organizationId: organization.id,
+        pullFromCustomApi: args.pullFromCustomApi
+      }
     })
+
+    console.log(obj.dataValues)
+
+    return obj
 
   } catch (ex) {
     console.error(ex)

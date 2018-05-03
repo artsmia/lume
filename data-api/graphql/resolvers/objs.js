@@ -8,44 +8,52 @@ export default async function (src, args, ctx){
       filter
     } = args
 
-    let options = (filter) ? createOptions(filter) : {}
-
-    let objs = await Model.findAll(options)
-
-    let organization
-
-    if (objs[0]){
-      organization = await Organization.findById(objs[0].organizationId)
-    }
-
-
-    for (let [index, obj] of objs.entries()) {
-      if (
-        obj.pullFromCustomApi &&
-        organization.customObjApiEndpoint
-      ){
-
-        let resp = await fetch(organization.customObjApiEndpoint, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({
-            id: obj.localId
-          })
-        })
-
-        let json = await resp.json()
-
-        Object.assign(objs[index], json.obj)
+    let org = await Organization.findOne({
+      where: {
+        subdomain: filter.organization.subdomain
       }
+    })
+
+    if (
+      org.customObjApiEnabled &&
+      org.customObjApiEndpoint &&
+      org.objSearchEndpoint
+    ) {
+
+      if (!filter.search){
+        return []
+      }
+
+      let resp = await fetch(`${org.objSearchEndpoint}${filter.search}`)
+
+      let {data} = await resp.json()
+
+
+      data = data.map(item => ({
+        ...item,
+        id: `localId:${item.localId}`
+      }))
+
+      return data
+
+    } else {
+
+
+      let options = (filter) ? createOptions(filter) : {}
+
+      let objs = await Model.findAll(options)
+      return objs
+
+
     }
 
 
 
 
 
-    return objs
+
+
+
   } catch (ex) {
     console.error(ex)
   }

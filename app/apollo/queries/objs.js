@@ -19,7 +19,7 @@ export const ObjsQuery = gql`
 
 
 export const queryConfig = {
-  options: ({subdomain}) => ({
+  options: ({router: {query: {subdomain}}}) => ({
     variables: {
       filter: {
         organization: {

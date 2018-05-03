@@ -6,9 +6,13 @@ import {ObjsQuery} from '../queries/objs'
 export const CreateObjMutation = gql`
   mutation createObj (
     $organization: OrganizationInput!
+    $localId: String
+    $pullFromCustomApi: Boolean
   ) {
     createObj(
       organization: $organization
+      localId: $localId
+      pullFromCustomApi: $pullFromCustomApi
     ) {
       ...ObjFragment
     }
@@ -17,14 +21,19 @@ export const CreateObjMutation = gql`
 `
 
 export const mutationConfig = {
-  props: ({mutate, ownProps: {subdomain, variables} }) => ({
-    createObj: () => mutate({
-      variables: {
-        organization: {
-          subdomain
+  props: ({mutate, ownProps: {router: {query: {subdomain}}} }) => ({
+    createObj: (variables) => {
+
+      return mutate({
+        variables: {
+          organization: {
+            subdomain
+          },
+          localId: variables.localId,
+          pullFromCustomApi: variables.pullFromCustomApi
         },
-      },
-    }),
+      })
+    }
   }),
 }
 

@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-unfetch'
 import chalk from 'chalk'
-import db from '../../data-api/db/connect'
-import {createAssociations} from '../../data-api/db/associations'
+import db from '../../data-api/db'
+// import associations from '../../data-api/db/associations'
 import Organization from '../../data-api/db/models/Organization'
 import User_Organization from '../../data-api/db/models/User_Organization'
 import Story from '../../data-api/db/models/Story'
@@ -20,8 +20,6 @@ async function populate(){
 
   try {
 
-    await createAssociations()
-
 
 
     const Mia = await Organization.create({
@@ -32,6 +30,9 @@ async function populate(){
       customImageApiEnabled: false,
       emailDomain: 'artsmia.org',
       newUsersRequireApproval: true,
+      objSearchEndpoint: 'http://search.artsmia.org/',
+      imageSearchEndpoint: 'http://search.artsmia.org/'
+
     })
 
     const Africa = await Organization.create({
@@ -42,6 +43,8 @@ async function populate(){
       customImageApiEnabled: false,
       emailDomain: 'artsmia.org',
       newUsersRequireApproval: true,
+      objSearchEndpoint: 'http://search.artsmia.org/',
+      imageSearchEndpoint: 'http://search.artsmia.org/'
 
     })
 

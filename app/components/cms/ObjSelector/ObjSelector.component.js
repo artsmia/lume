@@ -17,8 +17,6 @@ export default class ObjSelector extends Component {
 
   render() {
 
-    if (!this.props.objs) return null
-
     const {
       props: {
         objs,
@@ -30,7 +28,8 @@ export default class ObjSelector extends Component {
         exp
       },
       handleChange,
-      handleSearch
+      handleSearch,
+      handleObjSelection
     } = this
 
     return (
@@ -48,46 +47,51 @@ export default class ObjSelector extends Component {
           w={1}
           flexWrap={'wrap'}
         >
+          {this.props.organization ? (<Box
+            w={1}
+          >
+            {
+              !this.props.organization.customObjApiEnabled ? (
+                <Button
+                  onClick={handleCreate}
+                  color={"green"}
+                >
+                  Create Object
+                </Button>
+              ): null
+            }
+          </Box>) : null}
           <Box
             w={1}
           >
             <Input
+              name={'search'}
               value={search}
               onChange={handleChange}
+              placeholder={"Search for Objects"}
             />
-            <Button
-              onClick={handleSearch}
-            >
-              Search
-            </Button>
-          </Box>
-          <Box
-            w={1}
-          >
-            <Button
-              onClick={handleCreate}
-              color={"green"}
-            >
-              Create Object
-            </Button>
           </Box>
 
 
-          <Flex
-            flexWrap={'wrap'}
+
+          <ObjList
             w={1}
+            flexDirection={'column'}
+            alignItems={'flex-start'}
+            justifyContent={'flex-start'}
           >
-            {objs.map(obj => (
-              <Box
-                key={obj.id}
-                onClick={()=>onSelect(obj.id)}
+            {objs ? objs.map(obj => (
+              <ObjItem
+                key={obj.id || obj.localId}
+                onClick={()=>{handleObjSelection(obj)}}
                 w={1}
+                p={1}
               >
 
                 {obj.title || "Untitled"}
-              </Box>
-            ))}
-          </Flex>
+              </ObjItem>
+            )) : null}
+          </ObjList>
 
 
         </Flex>
@@ -96,7 +100,56 @@ export default class ObjSelector extends Component {
     )
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+  bounce = true
+
+  debounce = (func, wait) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(
+        func,
+        wait
+      )
+    }
+  }
+
+  handleObjSelection = async (obj) => {
+    try {
+      if (
+        this.props.organization.customObjApiEnabled
+      ) {
+        let {
+          data: {
+            createObj: {
+              id: objId
+            }
+          }
+        } = await this.props.createObj({
+          localId: obj.localId,
+          pullFromCustomApi: true
+        })
+
+
+        this.props.onSelect(objId)
+
+      } else {
+        this.props.onSelect(obj.id)
+      }
+    } catch (ex) {
+      console.error(ex)
+    }
+
+  }
+
+  handleChange = ({target: {value, name}}) => {
+
+
+    this.setState(
+      ()=> ({[name]: value}),
+      ()=>{
+        this.debounce(this.handleSearch, 1000)
+      }
+    )
+  }
 
   handleCreate = async () => {
     try {
@@ -107,7 +160,7 @@ export default class ObjSelector extends Component {
             id: objId
           }
         }
-      } = await this.props.createObj()
+      } = await this.props.createObj({})
 
       this.props.onSelect(objId)
     } catch (ex) {
@@ -124,5 +177,18 @@ export default class ObjSelector extends Component {
     })
   }
 
-
 }
+
+const ObjList = styled(Flex)`
+  height: 500px;
+  overflow-y: scroll;
+
+`
+
+const ObjItem = styled(Box)`
+  cursor: pointer;
+  height: 30px;
+  &:hover {
+    background-color: ${({theme}) => theme.color.gray30};
+  }
+`

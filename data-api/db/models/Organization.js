@@ -31,6 +31,11 @@ const Organization = db.define('organization', {
     allowNull: false,
     defaultValue: ""
   },
+  objSearchEndpoint: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: ""
+  },
   customImageApiEnabled: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
@@ -40,7 +45,7 @@ const Organization = db.define('organization', {
     allowNull: false,
     defaultValue: ""
   },
-  customImageSearchEndpoint: {
+  imageSearchEndpoint: {
     type: Sequelize.STRING,
     allowNull: false,
     defaultValue: ""

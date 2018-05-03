@@ -1,6 +1,8 @@
 import {
   GraphQLID,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLBoolean,
+  GraphQLString
 } from 'graphql'
 import objType from '../types/obj'
 import resolve from '../resolvers/createObj'
@@ -14,6 +16,12 @@ const createObj = {
     organization: {
       type: new GraphQLNonNull(OrganizationInput)
     },
+    localId: {
+      type: GraphQLString
+    },
+    pullFromCustomApi: {
+      type: GraphQLBoolean
+    }
   },
   resolve
 }
