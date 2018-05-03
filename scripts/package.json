@@ -44,10 +44,6 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "reinit": "DEPLOYMENT_ENV=dev babel-node reinit",
-    "migrate-mia": "yarn run reinit && DEPLOYMENT_ENV=dev babel-node mia/migrate",
-    "destroy-mia": "DEPLOYMENT_ENV=local babel-node mia/destroy",
-    "tiler": "cd ../image-tiler && rm -rf ImageTiler.zip && cp TilerDeps.zip ImageTiler.zip && zip ImageTiler.zip lambda_function.py && cd ../scripts && DEPLOYMENT_ENV=dev babel-node deploy-tiler",
-    "dump": "node -r dotenv/config db/dump dotenv_config_path=.env.prod"
+    "deploy:tiler": "cd ../image-tiler && rm -rf ImageTiler.zip && cp TilerDeps.zip ImageTiler.zip && zip ImageTiler.zip lambda_function.py && cd ../scripts && DEPLOYMENT_ENV=dev babel-node deploy-tiler dotenv_config_path=../config/.env"
   }
 }

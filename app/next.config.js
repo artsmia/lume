@@ -1,14 +1,9 @@
-const webpack = require('webpack')
-
-let deploymentEnv = process.env.DEPLOYMENT_ENV
-const dotenv = require('dotenv')
-
-if (deploymentEnv){
-  dotenv.config({
-    path: `.env.${deploymentEnv}`
+if (process.env.NODE_ENV !== 'production'){
+  require('dotenv').config({
+    path: '../config/.env'
   })
 }
-
+const webpack = require('webpack')
 
 
 module.exports = {

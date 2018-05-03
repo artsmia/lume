@@ -10,7 +10,7 @@ const User_Organization = db.define("user_organization", {
   userId: {
     type: Sequelize.STRING,
   },
-  organizationId: process.env.DB_MODE !== 'local' ? {
+  organizationId: process.env.DB_MODE !== 'sqlite' ? {
     type: Sequelize.UUID,
     references: {
       model: "organization",

@@ -70,7 +70,7 @@ const Obj = db.define('obj', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  organizationId: (process.env.DB_MODE !== 'local') ? {
+  organizationId: (process.env.DB_MODE !== 'sqlite') ? {
     type: Sequelize.UUID,
     references: {
       model: "organization",

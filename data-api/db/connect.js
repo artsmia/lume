@@ -3,7 +3,7 @@ import sqlite from 'sqlite3'
 
 let db
 
-if (process.env.DB_MODE === 'local'){
+if (process.env.DB_MODE === 'sqlite'){
 
   let liteDb = new sqlite.Database(
     'localDB.sqlite',

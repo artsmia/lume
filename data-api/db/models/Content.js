@@ -42,7 +42,7 @@ const Content = db.define('content', {
     allowNull: false,
     defaultValue: ""
   },
-  image0Id: (process.env.DB_MODE !== 'local') ? {
+  image0Id: (process.env.DB_MODE !== 'sqlite') ? {
     type: Sequelize.UUID,
     references: {
       model: "image",
@@ -51,7 +51,7 @@ const Content = db.define('content', {
   }: {
     type: Sequelize.UUID
   },
-  image1Id: (process.env.DB_MODE !== 'local') ? {
+  image1Id: (process.env.DB_MODE !== 'sqlite') ? {
     type: Sequelize.UUID,
     references: {
       model: "image",
@@ -60,7 +60,7 @@ const Content = db.define('content', {
   }: {
     type: Sequelize.UUID
   },
-  objId: (process.env.DB_MODE !== 'local') ? {
+  objId: (process.env.DB_MODE !== 'sqlite') ? {
     type: Sequelize.UUID,
     references: {
       model: "obj",

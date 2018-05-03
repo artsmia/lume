@@ -36,9 +36,6 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "start:local": "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js",
-    "deploy": "rm -rf build && babel ../data-api -d build --ignore node_modules && now",
-    "now-start": "DEPLOYMENT_ENV=dev node build",
-    "test": "jest"
+    "start": "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js"
   }
 }

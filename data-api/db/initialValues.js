@@ -15,7 +15,7 @@ import db from './connect'
 export default async function createInitialValues(){
   try {
 
-    if (process.env.DB_MODE === 'local'){
+    if (process.env.DB_MODE === 'sqlite'){
       let [LocalOrg] = await Organization.findOrCreate({
         where: {
           name: "Local Organization",

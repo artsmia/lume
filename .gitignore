@@ -16,3 +16,5 @@ artsmia.pem
 github.pem
 localDB.sqlite
 *.sql
+env.md
+*.pem

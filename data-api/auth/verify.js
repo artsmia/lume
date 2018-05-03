@@ -2,7 +2,7 @@ import authenticate from '../graphql/resolvers/authenticate'
 import jwt from 'jsonwebtoken'
 import fs from 'fs'
 
-const cert = (process.env.NOW) ? Buffer.from(process.env.AUTH0_PEM, 'base64').toString() : fs.readFileSync('artsmia.pem')
+const cert = (process.env.NOW) ? Buffer.from(process.env.AUTH0_PEM, 'base64').toString() : fs.readFileSync('../config/auth0.pem')
 
 
 export default async (req, res, next) => {

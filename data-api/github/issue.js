@@ -5,7 +5,7 @@ import fs from 'fs'
 export default async (req, res, next) => {
   try {
 
-    let cert = (process.env.NOW) ? Buffer.from(process.env.GITHUB_PEM, 'base64').toString() : fs.readFileSync('github.pem')
+    let cert = (process.env.NOW) ? Buffer.from(process.env.GITHUB_PEM, 'base64').toString() : fs.readFileSync('../config/github.pem')
 
 
     let jwtToken = jwt.sign(

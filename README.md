@@ -12,29 +12,75 @@ Lume is a feature-rich, full stack application that utilizes a number of differe
 *Disclaimer: These directions are for Mac users. Because Lume is largely a Node application, some of its dependencies don't play well with Microsoft operating systems.*
 
 
-1. Clone the repository and install dependencies
+1. Clone the repository
 
 Open up your terminal, navigate to the directory where you like to keep your coding projects, clone the repository, and the navigate into the lume directory.
 
 ```bash
+# /<your-code-directory>
 git clone https://github.com/artsmia/lume.git
 cd lume
 
 ```
 
-2. Start up the application
+2. Edit the config file
 
-Because Lume is actually made up of a number of different services, you'll need to open up three different terminal windows. In one, cd into `lume/data-api`, in the next `lume/local-tiler`, and in the last `lume/app`.
+When running locally, Lume takes all of its environment variables from a single `.env` configuration file located in `lume/config`.
 
-In each of these terminal windows you'll need to install dependencies.
+To start, we will copy and rename the `.env.TEMPLATE` file. The file is currently configured to run Lume in local mode however you may reconfigure it if you please.
 
 ```bash
-# first you'll need to install their respective dependencies
+# /lume
+cp config/.env.TEMPLATE config/.env
+```
+
+
+3. Install dependencies and start up the application(s)
+
+Because Lume is actually made up of a number of different services, you'll need to open up three different terminal windows.
+
+In the first terminal:
+
+```bash
+# /lume
+# navigate into app
+cd app
+
+# install dependencies
 yarn install
+
+# start up the server
+yarn start
 ```
 
-Finally, you will enter the following command separately into each terminal window to start them each up:
+In the second terminal:
 
 ```bash
-yarn run start-api:local
+# /lume
+# navigate into data-api
+cd data-api
+
+# install dependencies
+yarn install
+
+# start up the server
+yarn start
 ```
+
+In the third terminal:
+
+```bash
+# /lume
+# navigate into local-tiler
+cd local-tiler
+
+# install dependencies
+yarn install
+
+# start up the server
+yarn start
+```
+
+4. Try the site!
+
+Great! Now if everything worked, you should be able to visit http://localhost:3000 to see Lume running locally.

@@ -57,8 +57,7 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "start:local": "DEPLOYMENT_ENV=local BABEL_ENV=next node router",
-    "start:dev": "DEPLOYMENT_ENV=dev BABEL_ENV=next node router",
+    "start": "BABEL_ENV=next node router",
     "build": "BABEL_ENV=next next build",
     "now-start": "NODE_ENV=production node router",
     "deploy": "now -e NODE_ENV=production --token=$NOW_TOKEN --npm",

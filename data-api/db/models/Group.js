@@ -29,7 +29,7 @@ const Group = db.define('group', {
       key: "id"
     },
   },
-  categoryId: (process.env.DB_MODE !== 'local') ? {
+  categoryId: (process.env.DB_MODE !== 'sqlite') ? {
     type: Sequelize.UUID,
     references: {
       model: "category",

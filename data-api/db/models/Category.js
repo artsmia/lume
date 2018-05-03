@@ -17,7 +17,7 @@ const Category = db.define('category', {
     allowNull: false,
     defaultValue: ""
   },
-  organizationId: (process.env.DB_MODE !== 'local') ? {
+  organizationId: (process.env.DB_MODE !== 'sqlite') ? {
     type: Sequelize.UUID,
     references: {
       model: "organization",
@@ -27,7 +27,7 @@ const Category = db.define('category', {
   } : {
     type: Sequelize.UUID
   },
-  imageId: (process.env.DB_MODE !== 'local') ? {
+  imageId: (process.env.DB_MODE !== 'sqlite') ? {
     type: Sequelize.UUID,
     references: {
       model: "image",

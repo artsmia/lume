@@ -39,7 +39,7 @@ const Story = db.define('story', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  organizationId: (process.env.DB_MODE !== 'local') ? {
+  organizationId: (process.env.DB_MODE !== 'sqlite') ? {
     type: Sequelize.UUID,
     references: {
       model: "organization",
@@ -49,7 +49,7 @@ const Story = db.define('story', {
   } : {
     type: Sequelize.UUID,
   },
-  previewImageId: (process.env.DB_MODE !== 'local') ? {
+  previewImageId: (process.env.DB_MODE !== 'sqlite') ? {
     type: Sequelize.UUID,
     references: {
       model: "image",

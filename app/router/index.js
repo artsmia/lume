@@ -1,12 +1,8 @@
-
-const dotenv = require('dotenv')
-
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config({
-    path: `.env.${process.env.DEPLOYMENT_ENV}`
+if (process.env.NODE_ENV !== 'production'){
+  require('dotenv').config({
+    path: '../config/.env'
   })
 }
-
 
 const express = require('express')
 const next = require('next')
@@ -25,7 +21,7 @@ let sessionConfig = {
   saveUninitialized: false
 }
 
-if (process.env.DEPLOYMENT_ENV !== 'local'){
+if (process.env.SESSION_STORE === 'redis'){
   const RedisStore = require('connect-redis')(session)
   const redisOptions = {
     url: process.env.REDIS_URL
