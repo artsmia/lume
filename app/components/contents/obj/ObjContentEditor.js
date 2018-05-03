@@ -183,7 +183,6 @@ class ObjContentEditor extends Component {
 
 let ExportComponent = ObjContentEditor
 ExportComponent = compose(
-  withApollo,
   query,
   mutation,
   setSaveStatus,
