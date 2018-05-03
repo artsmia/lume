@@ -114,7 +114,7 @@ export default class OrgManager extends Component {
                   />
                 </Form>
                 <Button
-                  disabled={(!name || !subdomain || subdomainInvalid || !subdomainInvalid)}
+                  disabled={(!name || !subdomain || subdomainInvalid || !subdomainValid)}
                   onClick={createAndJoinOrg}
                 >
                   Create and Join
