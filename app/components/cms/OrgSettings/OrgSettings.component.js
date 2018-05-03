@@ -23,7 +23,8 @@ export default class OrgSettings extends Component {
     customAnalyticsId: "",
     emailDomain: "",
     locationEnabled: false,
-    objSearchEndpoint: ""
+    objSearchEndpoint: "",
+    imageSearchEndpoint: ""
   }
 
   constructor(props){

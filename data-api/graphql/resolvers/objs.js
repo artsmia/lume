@@ -14,6 +14,7 @@ export default async function (src, args, ctx){
       }
     })
 
+
     if (
       org.customObjApiEnabled &&
       org.customObjApiEndpoint &&
@@ -25,6 +26,7 @@ export default async function (src, args, ctx){
       }
 
       let resp = await fetch(`${org.objSearchEndpoint}${filter.search}`)
+
 
       let {data} = await resp.json()
 

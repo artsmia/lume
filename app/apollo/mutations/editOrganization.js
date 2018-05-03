@@ -14,6 +14,9 @@ const editOrganization = gql`
     $customAnalyticsId: String
     $orgImageId: ID
     $locationImageId: ID
+    $objSearchEndpoint: String
+    $imageSearchEndpoint: String
+
   ) {
     editOrganization(
       id: $id
@@ -25,6 +28,9 @@ const editOrganization = gql`
       customAnalyticsId: $customAnalyticsId
       orgImageId: $orgImageId
       locationImageId: $locationImageId
+      objSearchEndpoint: $objSearchEndpoint
+      imageSearchEndpoint: $imageSearchEndpoint
+
     ) {
       ...OrganizationFragment
     }
