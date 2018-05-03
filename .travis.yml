@@ -1,33 +1,34 @@
 language: node_js
 branches:
   only:
-    - production
+  - production
 node_js:
-  - "node"
+- node
 cache: npm
 before_script:
-  - cd app
-  - npm install
-  - cd ../data-api
-  - npm install
-  - cd ..
+- cd app
+- npm install
+- cd ../data-api
+- npm install
+- cd ..
 script:
-  - cd app
-  - npm test
-  - cd ../data-api
-  - npm test
-  - cd ..
+- cd app
+- npm test
+- cd ../data-api
+- npm test
+- cd ..
 after_success:
-  - npm install now -g
-  - cd app
-  - npm run deploy
-  - npm run alias
-  - npm run scale
-  - cd ../data-api
-  - npm run prepare
-  - npm run deploy
-  - npm run alias
-  - npm run scale
+- npm install now -g
+- cd app
+- npm run deploy
+- npm run alias
+- npm run scale
+- cd ../data-api
+- npm run prepare
+- npm run deploy
+- npm run alias
+- npm run scale
 env:
   global:
-    secure: gdZUj9VHYqPYeyhRxel7v8Wc75dVIzYxcvYOxINy5z9ZevQJPOJ0P8r12ozb78aq4nmfP1lwHme//Tdt7GCJaxQh49qGb80PDJt04KP7QPxkyvpif3wVNGxEH40H19bmrrfKjkbbHtRy7b4/opitvk+/Q8xBctlVeS6qNuw9jlKJfcVYUqM4dtME9xpUgPf9cbRfdrRe8c9jBosyz29WTmE4WMVupuyp1fWPacEoU/C6LJCaMaAz6R5N8+bFqYRdw1N/OIusuzx6WjaQSbv7uHc+VeZKCG6XywJYsxrGe0Hv++r10TbiFoj/lOdfJwMdNZ0UiOenUkzHi9Zgg5h9LxJlinfcDu710gn5kwIpYa3mD/8UJpH2dsEdPiqkeDcfUxesRE5e0t5jFQIRYVnd8pe091IfePlBTBOiArech35StfUTmGCpotyoV1euHzLvUjWTE4U2TLtKNZ5H3eefrV8i6tHHh4KdipHmH5L5PjOlj6aArOEj3MNdmNmfgRTCNIrKM3uzK8NljSrRcI+9kNnDOCcaNlBzUz0CY4wPqdWxxTAISs5yC2vKpz6YMrFXzQv4KuHqiVxEYoFhS/MKqL/A5jEcdcwGomV/QSlP9H0/5Rhbla6DjpzPaXh4bRivvX7NVdL7fWbqwo8fR9wvsWqwjKYmKayncG27KGjhOwI=
+  - secure: gdZUj9VHYqPYeyhRxel7v8Wc75dVIzYxcvYOxINy5z9ZevQJPOJ0P8r12ozb78aq4nmfP1lwHme//Tdt7GCJaxQh49qGb80PDJt04KP7QPxkyvpif3wVNGxEH40H19bmrrfKjkbbHtRy7b4/opitvk+/Q8xBctlVeS6qNuw9jlKJfcVYUqM4dtME9xpUgPf9cbRfdrRe8c9jBosyz29WTmE4WMVupuyp1fWPacEoU/C6LJCaMaAz6R5N8+bFqYRdw1N/OIusuzx6WjaQSbv7uHc+VeZKCG6XywJYsxrGe0Hv++r10TbiFoj/lOdfJwMdNZ0UiOenUkzHi9Zgg5h9LxJlinfcDu710gn5kwIpYa3mD/8UJpH2dsEdPiqkeDcfUxesRE5e0t5jFQIRYVnd8pe091IfePlBTBOiArech35StfUTmGCpotyoV1euHzLvUjWTE4U2TLtKNZ5H3eefrV8i6tHHh4KdipHmH5L5PjOlj6aArOEj3MNdmNmfgRTCNIrKM3uzK8NljSrRcI+9kNnDOCcaNlBzUz0CY4wPqdWxxTAISs5yC2vKpz6YMrFXzQv4KuHqiVxEYoFhS/MKqL/A5jEcdcwGomV/QSlP9H0/5Rhbla6DjpzPaXh4bRivvX7NVdL7fWbqwo8fR9wvsWqwjKYmKayncG27KGjhOwI=
+  - secure: Eztcnd/ZadR9iNV1++uRTIcyXG8l3RWyIOMsTopUceLzFWd9db779oaJiQj3c7M6UZqHs+Hanka7rHWtfYWaYanEG6JV49WTMcGtiarxRSDbXRQpb2LXSHAgq54S+hbRTZXUVNMmEUTAx4/b71iJNeslDpXH0NcbZFej6kivuRpwv3XfaagtlFYsMtKyxgueizNjkEgGoKKSIU8wFTKJFgJPsUWJxXu2TCI8e+fUh0yblZltNMtp/ZDCe+BCkpGMg3yPiop8dKs+RgVHRo6IQbvkTcVBpopN533En5P7b/TK5OKDsO/ZHbtBIv9q4Z1w9ya00mUF3FLXrqlviRwISAxZGIYy06yy/JY8WLvfj1jrbQFL4NYM6xVqH2gnUyM+1tmTDR9NZjHezmpa6cNlzD8I7qYAnOjDnmuMlFFsMEaXyMhUC6PlgIzbwAD+GymqsE8aqRks5QFLwJNFn2xMxArG4+UCX18AEB1MQg3Rx5phPPHod3YBIsSPHoZgkZYE4FPpn26nq8HJK+9P0G7SNhOtQzyLZzO1/lJKJVGS5asqhik2fCxlyGbRWJ4r1CFwW2FlBGjaAQY+ETJPAIznDfMK7Psum9fY47GFGLGC6XHea74V7/F4V1/NzZoFFALjhc5EztYOIsyVpaAwIgMYT/kWYbENOhmf6TcjrpI6Xjk=
