@@ -1,8 +1,8 @@
 {
   "rules": [
     {
-      "pathname": "/cms/**",
-      "dest": "cms.lume.space" 
+      "pathname": "/cheese",
+      "dest": "cheese.lume.space"
     }
   ]
 }

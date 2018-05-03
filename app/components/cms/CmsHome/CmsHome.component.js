@@ -16,18 +16,20 @@ export default class CmsHome extends Component {
   // static propTypes = {
   //   organization: PropTypes.shape({
   //     name: PropTypes.string.isRequired
-  //   }),
+  //   }).isRequired,
   //   user: PropTypes.shape({
   //     id: PropTypes.string.isRequired
-  //   })
+  //   }).isRequired,
+  //   router: PropTypes.shape({
+  //     query: PropTypes.shape({
+  //       subdomain: PropTypes.string.isRequired
+  //     }).isRequired
+  //   }).isRequired
   // }
 
 
   render() {
-
-    console.log("CmsHome rendered")
     // if (!this.props.organization) return <Loading/>
-
     const {
       props: {
         user,

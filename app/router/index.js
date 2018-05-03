@@ -87,6 +87,11 @@ app.prepare().then(() => {
     app.render(req, res, page)
   })
 
+
+  server.get('/cheese', (req, res) => {
+    const page = '/error'
+    app.render(req, res, page)
+  })
   // server.get('/live', (req, res) => {
   //   const page = '/lume'
   //   let params = {
@@ -157,6 +162,8 @@ app.prepare().then(() => {
       app.render(req, res, page, params)
     }
   )
+
+
 
 
   server.get('/:subdomain/group/:groupSlug', (req, res) => {
