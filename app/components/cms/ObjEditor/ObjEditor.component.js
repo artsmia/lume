@@ -21,7 +21,6 @@ export default class ObjEditor extends Component {
     currentLocation: "",
     creditLine: "",
     pullFromCustomApi: false,
-    primaryImageId: undefined,
     localId: "",
     exp: true
   }
@@ -33,7 +32,7 @@ export default class ObjEditor extends Component {
 
   render(){
 
-    if (!this.props.obj) return null
+    if (!this.props.obj || !this.props.organization) return null
 
     const {
       state,
@@ -49,7 +48,7 @@ export default class ObjEditor extends Component {
       }
     } = this
 
-    let disabled = (state.pullFromCustomApi)
+    let disabled = this.props.organization.customObjApiEnabled
 
     return (
       <Expander
@@ -62,32 +61,38 @@ export default class ObjEditor extends Component {
           flexWrap={'wrap'}
           w={1}
         >
-          <Flex
-            w={1}
-          >
-            <Label>
-              Pull From Custom API
-            </Label>
-            <CheckboxInput
-              name={"pullFromCustomApi"}
-              checked={state.pullFromCustomApi}
-              onChange={handleCheck}
-            />
-          </Flex>
-          <Box
-            w={1}
-          >
-            <Label>
-              Local ID
-            </Label>
-            <Input
-              placeholder={"Local ID"}
-              name={"localId"}
-              value={state.localId}
-              onChange={handleChange}
-              disabled={disabled}
-            />
-          </Box>
+          {this.props.organization.customObjApiEnabled ? (
+            <Flex
+              w={1}
+            >
+              <Label>
+                Pulling From Custom API
+              </Label>
+              <CheckboxInput
+                name={"pullFromCustomApi"}
+                checked={state.pullFromCustomApi}
+                onChange={handleCheck}
+                disabled
+              />
+            </Flex>
+          ): null}
+          {this.props.organization.customObjApiEnabled ? (
+            <Box
+              w={1}
+            >
+              <Label>
+                Local ID
+              </Label>
+              <Input
+                placeholder={"Local ID"}
+                name={"localId"}
+                value={state.localId}
+                onChange={handleChange}
+                disabled={disabled}
+              />
+            </Box>
+          ): null}
+
           <Box
             w={1}
           >
@@ -122,6 +127,21 @@ export default class ObjEditor extends Component {
             w={1}
           >
             <Label>
+              Current Location
+            </Label>
+            <Input
+              placeholder={"Current Location"}
+              name={"currentLocation"}
+              value={state.currentLocation}
+              onChange={handleChange}
+              disabled={disabled}
+
+            />
+          </Box>
+          <Box
+            w={1}
+          >
+            <Label>
               Date
             </Label>
             <Input
@@ -140,17 +160,8 @@ export default class ObjEditor extends Component {
               label={"Image"}
               name={'primaryImageId'}
               image={obj.primaryImage}
-              onChange={handleChange}
+              onChange={this.handleImageChange}
             />
-          </Box>
-          <Box
-            w={1}
-          >
-            <Button
-              onClick={handleSave}
-            >
-              Save Obj
-            </Button>
           </Box>
 
 
@@ -160,13 +171,41 @@ export default class ObjEditor extends Component {
     )
   }
 
+  handleImageChange = ({target: {value, name}}) => {
+    this.props.editObj({
+      id: this.props.objId,
+      primaryImageId: value
+    })
+  }
+
+  bounce = true
+
+  debounce = (func, wait) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(
+        func,
+        wait
+      )
+    }
+  }
 
   handleChange = ({target: {value, name, checked}}) => {
-    this.setState({[name]: value})
+    this.setState(
+      () => ({[name]: value}),
+      ()=>{
+        this.debounce(this.handleSave, 1000)
+      }
+    )
   }
 
   handleCheck = ({target: {name, checked}}) => {
-    this.setState({[name]: checked})
+    this.setState(
+      () => ({[name]: checked}),
+      ()=>{
+        this.debounce(this.handleSave, 1000)
+      }
+    )
   }
 
   handleSave = () => {

@@ -11,8 +11,10 @@ const fragment = gql`
     emailDomain
     customImageApiEnabled
     customImageEndpoint
+    imageSearchEndpoint
     customObjApiEndpoint
     customObjApiEnabled
+    objSearchEndpoint
     newUsersRequireApproval
     customAnalyticsEnabled
     customAnalyticsId

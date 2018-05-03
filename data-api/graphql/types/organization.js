@@ -66,6 +66,12 @@ const organization = new GraphQLObjectType({
     customObjApiEndpoint: {
       type: GraphQLString
     },
+    objSearchEndpoint: {
+      type: GraphQLString
+    },
+    imageSearchEndpoint: {
+      type: GraphQLString
+    },
     customAnalyticsEnabled: {
       type: GraphQLBoolean
     },

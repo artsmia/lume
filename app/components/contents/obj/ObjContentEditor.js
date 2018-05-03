@@ -1,7 +1,6 @@
 import react, {Component} from 'react'
 import query from '../../../apollo/queries/content'
 import mutation from '../../../apollo/mutations/editContent'
-import OrganizationQuery from '../../../apollo/queries/organization'
 import {withRouter} from 'next/router'
 
 import {compose, withApollo} from 'react-apollo'
@@ -35,7 +34,6 @@ class ObjContentEditor extends Component {
         content: {
           obj
         },
-        organization
       },
       state: {
         modal,
@@ -69,7 +67,6 @@ class ObjContentEditor extends Component {
         >
 
           <ObjSelector
-            subdomain={router.query.subdomain}
             onSelect={handleSelect}
           />
         </Box>
@@ -78,10 +75,9 @@ class ObjContentEditor extends Component {
         <Box
           w={1/2}
         >
-          {(objId) ? (
+          {(obj) ? (
             <ObjEditor
-              objId={objId}
-              organization={organization}
+              objId={obj.id}
             />
           ): null}
         </Box>
@@ -187,11 +183,9 @@ class ObjContentEditor extends Component {
 
 let ExportComponent = ObjContentEditor
 ExportComponent = compose(
-  withApollo,
   query,
   mutation,
   setSaveStatus,
-  OrganizationQuery
 )(ExportComponent)
 
 ExportComponent = withRouter(ExportComponent)

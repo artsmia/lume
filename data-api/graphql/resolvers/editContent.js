@@ -27,6 +27,8 @@ export default async function(src, args, ctx){
       await content.removeAdditionalMedias(args.content.removeAdditionalMediaId)
     }
 
+    console.log(content.dataValues)
+
     return content
 
   } catch (ex) {
