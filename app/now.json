@@ -3,12 +3,15 @@
   "alias": "lume.space",
   "env": {
     "S3_URL": "https://s3-us-west-2.amazonaws.com",
+    "AUTH_STRATEGY": "auth0",
+    "FILE_STORAGE": "s3",
     "AUTH0_DOMAIN": "artsmia.auth0.com",
     "AUTH0_CLIENT_ID": "Bv2hCusQZ27IS1KXnjQFhICIRr6TMTfw",
     "API_URL": "https://api.lume.space",
     "AUTH0_CLIENT_SECRET": "@lume-auth0-secret",
     "REDIS_URL": "@lume-redis",
-    "SESSION_SECRET": "@lume-session-secret"
+    "SESSION_SECRET": "@lume-session-secret",
+    "SESSION_STORE": "redis"
   },
   "scale": {
     "sfo1": {
