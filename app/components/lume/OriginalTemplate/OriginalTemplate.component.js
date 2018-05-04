@@ -118,7 +118,7 @@ export default class OriginalTemplate extends Component {
           flexDirection={'column'}
           open={drawer}
         >
-          <Flex
+          {(this.props.router.pathname === '/lume/story') ? (<Flex
             w={1}
           >
             <Button
@@ -147,7 +147,7 @@ export default class OriginalTemplate extends Component {
                 icon={"home"}
               />
             </NavButton>
-          </Flex>
+          </Flex>) : null}
 
 
           {(obj) ? (

@@ -126,32 +126,36 @@ export default class SliderTemplate extends Component {
               <TopFlex
                 w={1}
               >
-                <Button
-                  round
-                  size={'40px'}
-                  onClick={()=>{this.props.router.back()}}
+                {(this.props.router.pathname === '/lume/story') ? (<Flex
+                  w={1}
                 >
-                  <Icon
-                    color={"white"}
-                    icon={"arrow_back"}
-                  />
-                </Button>
-                <NavButton
-                  href={{
-                    pathname: '/lume',
-                    query: {
-                      subdomain
-                    }
-                  }}
-                  size={'40px'}
-                  as={`/${subdomain}`}
-                  round
-                >
-                  <Icon
-                    color={"white"}
-                    icon={"home"}
-                  />
-                </NavButton>
+                  <Button
+                    round
+                    size={'40px'}
+                    onClick={()=>{this.props.router.back()}}
+                  >
+                    <Icon
+                      color={"white"}
+                      icon={"arrow_back"}
+                    />
+                  </Button>
+                  <NavButton
+                    href={{
+                      pathname: '/lume',
+                      query: {
+                        subdomain
+                      }
+                    }}
+                    size={'40px'}
+                    as={`/${subdomain}`}
+                    round
+                  >
+                    <Icon
+                      color={"white"}
+                      icon={"home"}
+                    />
+                  </NavButton>
+                </Flex>) : null}
 
               </TopFlex>
 
