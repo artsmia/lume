@@ -51,12 +51,16 @@ export default class CategoryEditor extends Component {
             />
 
             <Button
+              round
               size={"40px"}
               color={"red"}
               onClick={deleteCategory}
               title={"Delete Category"}
             >
-              Delete Category
+              <Icon
+                color={'white'}
+                icon={'clear'}
+              />
             </Button>
 
           </Flex>
@@ -90,11 +94,15 @@ export default class CategoryEditor extends Component {
               w={1}
             >
               <Button
+                round
                 color={"green"}
                 onClick={createGroup}
                 title={"Create Group"}
               >
-                New Group
+                <Icon
+                  color={'white'}
+                  icon={'add'}
+                />
               </Button>
             </Box>
 

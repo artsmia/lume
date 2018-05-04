@@ -7,7 +7,6 @@ import {H2} from '../../mia-ui/text'
 import {Page, Card} from '../../mia-ui/layout'
 import {Flex, Box} from 'grid-styled'
 
-
 export default class CategoryGroupEditor extends Component {
 
   render() {
@@ -43,14 +42,20 @@ export default class CategoryGroupEditor extends Component {
             categoryId={category.id}
           />
         ))}
-        <Button
-          onClick={handleCreate}
-          title={"Create Category"}
-          size={"50px"}
-          color={"green"}
-        >
-          New Category
-        </Button>
+        <Box>
+          <Button
+            round
+            onClick={handleCreate}
+            title={"Create Category"}
+            color={"green"}
+          >
+            <Icon
+              color={'white'}
+              icon={'add'}
+            />
+          </Button>
+        </Box>
+
 
       </Flex>
     )

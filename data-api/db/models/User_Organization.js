@@ -2,11 +2,6 @@ import Sequelize from 'sequelize'
 import db from '../connect'
 
 const User_Organization = db.define("user_organization", {
-  id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
-    primaryKey: true
-  },
   userId: {
     type: Sequelize.STRING,
   },

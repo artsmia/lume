@@ -13,12 +13,16 @@ export default async function(src, {organization,userId, role}, ctx){
       }
     })
 
+    console.log("16")
+
     let userOrg = await User_Organization.findOne({
       where: {
         userId,
         organizationId: org.id
       }
     })
+
+    console.log("25")
 
     if (userOrg){
 
@@ -42,9 +46,13 @@ export default async function(src, {organization,userId, role}, ctx){
 
 
     } else {
-      await User_Organization.create({
+
+      console.log("50")
+
+      console.log(org.dataValues, userId, role)
+
+      let newUser = await org.createUser({
         userId,
-        organizationId: org.id,
         role
       })
 
@@ -52,6 +60,9 @@ export default async function(src, {organization,userId, role}, ctx){
         await notifyAdminsOfPending(org)
       }
     }
+
+    console.log("60")
+
 
     userOrg = await User_Organization.findOne({
       where: {

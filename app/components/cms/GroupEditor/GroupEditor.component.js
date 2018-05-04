@@ -48,11 +48,15 @@ export default class GroupEditor extends Component {
             placeholder={"Title"}
           />
           <Button
+            round
             onClick={deleteGroup}
             title={"Delete Group"}
             color={"red"}
           >
-            Delete Group
+            <Icon
+              color={'white'}
+              icon={'clear'}
+            />
           </Button>
         </Flex>
 
