@@ -101,6 +101,7 @@ export default class OriginalTemplate extends Component {
             </ContentContainer>
             <DrawerButton
               round
+              display={''}
               open={drawer}
               onClick={()=>{this.setState(({drawer}) => ({drawer: !drawer}))}}
             >
@@ -212,10 +213,11 @@ export default class OriginalTemplate extends Component {
 
 const DrawerButton = styled(Button)`
   transition: .2s all;
-  display: none;
+  visibility: hidden;
+  position: absolute;
+
   @media only screen and (max-width: 40em) {
-    display: block;
-    position: absolute;
+    visibility: visible;
     height:50px;
     width: 50px;
     z-index: 5000;
