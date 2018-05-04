@@ -18,7 +18,7 @@ const Container = styled.div`
   width: 100vw;
   background-color: ${gray85};
   display: ${({open}) => open ? 'block': 'none'};
-  z-index: 2000;
+  z-index: 5000;
 `
 
 const ModalBox = styled.div`
@@ -29,6 +29,7 @@ const ModalBox = styled.div`
   transform: translateY(-50%) translateX(-50%);
   border-radius: 5px;
   padding: 10px;
+  z-index: 5000;
 `
 
 const CloseButton = styled.button`

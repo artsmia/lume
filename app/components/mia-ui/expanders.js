@@ -18,6 +18,10 @@ export class Expander extends Component {
     onRequestOpen: PropTypes.func,
   }
 
+  static defaultProps = {
+    border: true
+  }
+
 
   state = {
     open: this.props.open || false,
@@ -47,6 +51,7 @@ export class Expander extends Component {
         p={2}
         my={2}
         innerRef={ref => {this.container = ref}}
+        border={this.props.border}
       >
         <Header
           w={1}
@@ -134,7 +139,10 @@ export class Expander extends Component {
 
 
 const ExpanderContainer = styled(Flex)`
-  border: 1px solid ${gray30};
+
+  ${({border})=> border ? css`
+    border: 1px solid ${gray30};
+  `: null}
   border-radius: 4px;
   overflow: visible;
 `

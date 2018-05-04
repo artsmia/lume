@@ -84,6 +84,7 @@ export const Tile = (props) => (
         as={props.as}
       >
         <TileContainer
+          href={props.as}
           height={props.height}
           selected={props.selected}
         >

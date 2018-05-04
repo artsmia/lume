@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import styled, {css} from 'styled-components'
 import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
 import {H3} from '../../mia-ui/text'
-import {Button} from '../../mia-ui/buttons'
+import {Button, NavButton} from '../../mia-ui/buttons'
 import {Icon} from '../../mia-ui/icons'
 import router from 'next/router'
 import Markdown from 'react-markdown'
@@ -29,6 +29,7 @@ export default class OriginalTemplate extends Component {
 
   }
 
+
   render() {
 
     const {
@@ -42,6 +43,11 @@ export default class OriginalTemplate extends Component {
         organization: {
           customAnalyticsEnabled,
           customAnalyticsId
+        },
+        router: {
+          query: {
+            subdomain
+          }
         }
       },
       slide
@@ -120,15 +126,22 @@ export default class OriginalTemplate extends Component {
               <TopBox
                 w={1}
               >
-                <Button
-                  onClick={()=>router.back()}
+                <NavButton
+                  href={{
+                    pathname: '/lume',
+                    query: {
+                      subdomain
+                    }
+                  }}
+                  size={'40px'}
+                  as={`/${subdomain}`}
                   round
                 >
                   <Icon
                     color={"white"}
                     icon={"arrow_back"}
                   />
-                </Button>
+                </NavButton>
               </TopBox>
 
 

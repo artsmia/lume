@@ -203,7 +203,7 @@ export default class Home extends Component {
               width={1}
               p={3}
             >
-              <H2>Art Stories</H2>
+              <H2>{this.props.organization ? this.props.organization.name : 'Art Stories'}</H2>
             </Box>
 
             <Box

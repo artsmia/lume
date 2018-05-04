@@ -13,6 +13,7 @@ import styled from 'styled-components'
 const I = styled.i`
   font-size: ${({size}) => size};
   color: ${({color, theme}) => theme.color[color]};
+  text-decoration: none;
 `
 
 export const Icon = props => (

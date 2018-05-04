@@ -12,6 +12,7 @@ import {
 import {
   bold as fontBold
 } from './fonts'
+import Link from 'next/link'
 
 
 const display = (props) => {
@@ -62,7 +63,18 @@ const round = ({round}) => {
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 0;
 
+    `
+  }
+}
+
+const roundSize = ({size}) => {
+  if (round && size) {
+    return css`
+      height: ${size};
+      width: ${size};
+      border-radius: ${size};
     `
   }
 }
@@ -81,6 +93,7 @@ const buttonBaseStyles = css`
   margin-right: .5em;
   color: ${white};
   text-transform: uppercase;
+  text-decoration: none;
   &:hover {
     opacity: 0.75;
   }
@@ -91,6 +104,7 @@ const buttonBaseStyles = css`
   ${display}
   ${color}
   ${round}
+  ${roundSize}
 `
 
 const buttonBaseProps = {
@@ -137,3 +151,20 @@ export const Button = (props) => {
 Button.displayName = "Button"
 Button.propTypes = buttonBaseProps
 Button.defaultProps = buttonBaseDefaultProps
+
+
+export const NavButton = (props) => (
+  <Link
+    href={props.href}
+    as={props.as}
+  >
+    <Button
+      a
+      round
+      size={props.size}
+      href={props.as}
+    >
+      {props.children}
+    </Button>
+  </Link>
+)

@@ -4,7 +4,7 @@ import {TabContainer, TabHeader, Tab, TabBody} from '../../mia-ui/tabs'
 import Tombstone from './Tombstone'
 import Zoomer, {StoryZoomer} from '../../shared/Zoomer'
 import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
-import {Button} from '../../mia-ui/buttons'
+import {Button, NavButton} from '../../mia-ui/buttons'
 import {Icon} from '../../mia-ui/icons'
 import Link from 'next/link'
 import Markdown from 'react-markdown'
@@ -121,15 +121,22 @@ export default class OriginalTemplate extends Component {
           <Box
             w={1}
           >
-            <Button
-              onClick={()=>router.back()}
+            <NavButton
+              href={{
+                pathname: '/lume',
+                query: {
+                  subdomain
+                }
+              }}
+              size={'40px'}
+              as={`/${subdomain}`}
               round
             >
               <Icon
                 color={"white"}
                 icon={"arrow_back"}
               />
-            </Button>
+            </NavButton>
           </Box>
 
 
@@ -185,6 +192,7 @@ export default class OriginalTemplate extends Component {
               >
                 {otherContents.map( (content) => (
                   <Expander
+                    border={false}
                     key={content.id}
                     open={(selectedContent.id === content.id)}
                     onRequestOpen={()=>{handleContentSelection(content)}}
@@ -201,6 +209,7 @@ export default class OriginalTemplate extends Component {
                     icon={
                       <Button
                         round
+                        size={'35px'}
                       >
                         <IndexSpan>
                           {content.index}
@@ -481,10 +490,10 @@ export default class OriginalTemplate extends Component {
 
 const DrawerButton = styled(Button)`
   transition: .2s all;
-  display: none;
+  visibility: hidden;
+  position: absolute;
   @media only screen and (max-width: 40em) {
-    display: block;
-    position: absolute;
+    visibility: visible;
     height:50px;
     width: 50px;
     z-index: 5000;
@@ -538,7 +547,6 @@ const RelatedStoryBox = styled(Box)`
 `
 
 const IndexSpan = styled.span`
-  font-size: 1.8rem;
-  line-height: 1.8rem;
+  font-size: 25px;
   color: ${({theme}) => theme.color.white};
 `

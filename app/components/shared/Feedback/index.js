@@ -26,7 +26,7 @@ class Feedback extends Component {
     modal: false,
     title: "",
     description: "",
-    location: this.props.router.pathname,
+    location: this.props.router.asPath,
     expectedOutcome: "",
     browser: ""
   }
@@ -205,11 +205,9 @@ class Feedback extends Component {
           browser
         },
         props: {
-          user: {
-            email
-          },
+          user,
           router: {
-            pathname
+            asPath
           }
         }
       } = this
@@ -230,9 +228,9 @@ class Feedback extends Component {
 
             Browser: ${browser}
 
-            Submitted from: ${pathname}
+            Submitted from: ${asPath}
 
-            User: ${email || 'anonymous'}
+            User: ${user ? user.email : ''}
 
             Description: ${bugDescription}
           `
@@ -264,7 +262,7 @@ const Container = styled(Flex)`
   right: 20px;
   width: 60px;
   height: 60px;
-
+  z-index: 5000;
   @media only screen and (max-width: 40em) {
     visibility: hidden;
   }
