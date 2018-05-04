@@ -13,7 +13,7 @@ import {Flex, Box} from 'grid-styled'
 import Head from '../../shared/head'
 
 
-export default class OriginalTemplate extends Component {
+export default class SliderTemplate extends Component {
 
 
   constructor(props){
@@ -123,9 +123,19 @@ export default class OriginalTemplate extends Component {
               open={drawer}
               flexDirection={'column'}
             >
-              <TopBox
+              <TopFlex
                 w={1}
               >
+                <Button
+                  round
+                  size={'40px'}
+                  onClick={()=>{this.props.router.back()}}
+                >
+                  <Icon
+                    color={"white"}
+                    icon={"arrow_back"}
+                  />
+                </Button>
                 <NavButton
                   href={{
                     pathname: '/lume',
@@ -139,10 +149,11 @@ export default class OriginalTemplate extends Component {
                 >
                   <Icon
                     color={"white"}
-                    icon={"arrow_back"}
+                    icon={"home"}
                   />
                 </NavButton>
-              </TopBox>
+
+              </TopFlex>
 
 
               <Box
@@ -183,6 +194,8 @@ export default class OriginalTemplate extends Component {
       </Container>
     )
   }
+
+
 
   slide = (direction) => {
     const {
@@ -241,7 +254,7 @@ const DrawerButton = styled(Button)`
 
 `
 
-const TopBox = styled(Box)`
+const TopFlex = styled(Flex)`
   height: 120px;
 `
 

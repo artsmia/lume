@@ -118,9 +118,19 @@ export default class OriginalTemplate extends Component {
           flexDirection={'column'}
           open={drawer}
         >
-          <Box
+          <Flex
             w={1}
           >
+            <Button
+              round
+              size={'40px'}
+              onClick={()=>{this.props.router.back()}}
+            >
+              <Icon
+                color={"white"}
+                icon={"arrow_back"}
+              />
+            </Button>
             <NavButton
               href={{
                 pathname: '/lume',
@@ -134,10 +144,10 @@ export default class OriginalTemplate extends Component {
             >
               <Icon
                 color={"white"}
-                icon={"arrow_back"}
+                icon={"home"}
               />
             </NavButton>
-          </Box>
+          </Flex>
 
 
           {(obj) ? (
