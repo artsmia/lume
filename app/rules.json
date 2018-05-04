@@ -1,8 +1,0 @@
-{
-  "rules": [
-    {
-      "pathname": "/mia",
-      "dest": "mia.lume.space"
-    }
-  ]
-}

@@ -19,6 +19,16 @@ import verify from './auth/verify'
 import createGithubIssue from './github/issue'
 import apphook from './github/apphook'
 
+
+import {ApolloEngine} from 'apollo-engine'
+
+
+const engine = new ApolloEngine({
+  apiKey: process.env.APOLLO_ENGINE_APIKEY
+})
+
+
+
 const upload = multer()
 
 const server = express()
@@ -90,10 +100,20 @@ server.use(
     return {
       schema,
       context: req,
+      tracing: true,
+      cacheControl: true
     }
   }
 ))
 
-server.listen(server.get('port'), ()=>{
-  console.log(`Server is running at port ${server.get('port')}`)
+// Call engine.listen instead of app.listen(port)
+engine.listen({
+  port: 5000,
+  expressApp: server,
+  graphqlPaths: ['/','/graphiql']
 })
+
+
+// server.listen(server.get('port'), ()=>{
+//   console.log(`Server is running at port ${server.get('port')}`)
+// })

@@ -87,15 +87,6 @@ app.prepare().then(() => {
     app.render(req, res, page)
   })
 
-  // server.get('/live', (req, res) => {
-  //   const page = '/lume'
-  //   let params = {
-  //     ...req.query,
-  //     subdomain: req.subdomains[0]
-  //   }
-  //   app.render(req, res, page, params)
-  // })
-
   server.get('/auth', (req, res) => {
     const page = '/auth'
     app.render(req, res, page)
