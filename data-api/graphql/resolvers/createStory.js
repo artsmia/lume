@@ -11,7 +11,7 @@ export default async function(src, args, ctx){
       }
     })
 
-    let slug = args.title.replace(/\s/g,'-').toLowerCase()
+    let slug = args.title.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
 
     let storiesWithSlug = await Story.findAll({
       where: {

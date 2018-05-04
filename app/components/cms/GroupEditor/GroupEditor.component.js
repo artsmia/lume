@@ -129,8 +129,11 @@ export default class GroupEditor extends Component {
 
     let value = e.target.value
 
-    let slugValue = value.replace(/\s/g, '-').toLowerCase()
+    let slugValue = value.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
 
+    if (slugValue.length < 5){
+      slugValue = slugValue.concat(`-${this.props.group.id.substring(0,5-slugValue.length)}`)
+    }
 
     this.setState(
       ()=>({
