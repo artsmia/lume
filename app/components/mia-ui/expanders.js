@@ -136,6 +136,7 @@ export class Expander extends Component {
 const ExpanderContainer = styled(Flex)`
   border: 1px solid ${gray30};
   border-radius: 4px;
+  overflow: visible;
 `
 
 const Header = styled(Flex)`

@@ -264,6 +264,10 @@ const Container = styled(Flex)`
   right: 20px;
   width: 60px;
   height: 60px;
+
+  @media only screen and (max-width: 40em) {
+    visibility: hidden;
+  }
 `
 
 

@@ -70,7 +70,7 @@ const round = ({round}) => {
 
 const buttonBaseStyles = css`
   border: none;
-  background: ${colorBlack};
+  background-color: ${colorBlack};
   padding: .75em;
   ${fontBold}
   font-size: 0.8rem;

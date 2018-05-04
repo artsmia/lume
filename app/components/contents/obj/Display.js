@@ -18,6 +18,7 @@ export default class ObjDisplay extends Component {
       videoUrl
     } = this.props.content.obj
 
+    console.log("ObjDisplay")
     console.log(this.props)
 
     return (

@@ -6,6 +6,7 @@ import {grey30, black} from './colors'
 import styled from 'styled-components'
 
 const drawerWidth = '400px'
+const drawerWidthMobile = '66%'
 
 export const Drawer = styled(Flex)`
   height: 100vh;
@@ -21,6 +22,10 @@ export const Drawer = styled(Flex)`
   background-color: white;
   align-items: flex-start;
   justify-content: flex-start;
+
+  @media only screen and (max-width: 400px) {
+    width: ${drawerWidthMobile};
+  }
 `
 
 export const DrawerButton = styled.div`
@@ -131,6 +136,22 @@ export const DrawerCheck = styled.input`
 
   &:checked ~ ${DrawerPage} {
     margin-left: ${drawerWidth};
+  }
+
+
+
+  @media only screen and (max-width: 400px) {
+    &:checked ~ ${DrawerPage} {
+      margin-left: ${drawerWidthMobile};
+    }
+
+    &:checked {
+      left: ${drawerWidthMobile};
+    }
+    &:checked ~ ${DrawerButton} {
+      left: ${drawerWidthMobile};
+    }
+
   }
 
 `

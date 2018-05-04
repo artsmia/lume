@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
 import {H3} from '../../mia-ui/text'
 import {Button} from '../../mia-ui/buttons'
@@ -23,7 +23,8 @@ export default class OriginalTemplate extends Component {
 
 
     this.state = {
-      selectedContent: props.story.contents.find(content => content.index === selectedIndex)
+      selectedContent: props.story.contents.find(content => content.index === selectedIndex),
+      drawer: true
     }
 
   }
@@ -32,7 +33,8 @@ export default class OriginalTemplate extends Component {
 
     const {
       state: {
-        selectedContent
+        selectedContent,
+        drawer
       },
       props: {
         story,
@@ -90,17 +92,29 @@ export default class OriginalTemplate extends Component {
           <PageContainer
             w={1}
           >
-            <PageContainer
-              w={3/4}
+            <ContentContainer
+              w={[1,3/4]}
             >
               <ContentDisplaySwitcher
                 content={selectedContent}
               />
-            </PageContainer>
-            <PageContainer
-              w={1/4}
+            </ContentContainer>
+            <DrawerButton
+              round
+              open={drawer}
+              onClick={()=>{this.setState(({drawer}) => ({drawer: !drawer}))}}
+            >
+              <Icon
+                color={'white'}
+                icon={'menu'}
+              />
+            </DrawerButton>
+            <SideContainer
+              w={[3/4, 1/4]}
               p={3}
               flexWrap={'wrap'}
+              open={drawer}
+              flexDirection={'column'}
             >
               <TopBox
                 w={1}
@@ -119,7 +133,6 @@ export default class OriginalTemplate extends Component {
 
               <Box
                 w={1}
-                my={3}
               >
                 <H3>
                   {selectedContent.title}
@@ -137,7 +150,7 @@ export default class OriginalTemplate extends Component {
                 </Flex>
 
               </Box>
-            </PageContainer>
+            </SideContainer>
           </PageContainer>
 
           <HeaderFooter
@@ -197,6 +210,22 @@ export default class OriginalTemplate extends Component {
 
 }
 
+const DrawerButton = styled(Button)`
+  transition: .2s all;
+  display: none;
+  @media only screen and (max-width: 40em) {
+    display: block;
+    position: absolute;
+    height:50px;
+    width: 50px;
+    z-index: 5000;
+    bottom: 10px;
+    right: ${({open}) => open ? '78%': '10px'};
+
+  }
+
+`
+
 const TopBox = styled(Box)`
   height: 120px;
 `
@@ -204,12 +233,13 @@ const TopBox = styled(Box)`
 const Container = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
+  max-width: 100vw;
 `
 
 const PageButtonContainer = styled(Flex)`
   position: fixed;
-  bottom: 15%;
-  z-index: 1001;
+  bottom: 25%;
+  z-index: 4001;
 `
 const HeaderFooter = styled(Flex)`
   height: 50px;
@@ -222,6 +252,29 @@ const BookContainer = styled(Flex)`
   max-width: 100vw;
 `
 
+const ContentContainer = styled(Flex)`
+  height: 100%;
+  @media only screen and (max-width: 40em) {
+    position: absolute;
+  }
+`
+
+const SideContainer = styled(Flex)`
+  height: 100%;
+  transition: .2s all;
+  @media only screen and (max-width: 40em) {
+    position: absolute;
+    background-color: white;
+    z-index: 4000;
+    right: 0;
+    ${({open}) => !open ? css`
+      transform: translateX(100%);
+    ` : null}
+  }
+`
+
 const PageContainer = styled(Flex)`
   height: 100%;
+  position: relative;
+  overflow: hidden;
 `

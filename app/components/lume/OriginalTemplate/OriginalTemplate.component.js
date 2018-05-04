@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {TabContainer, TabHeader, Tab, TabBody} from '../../mia-ui/tabs'
 import Tombstone from './Tombstone'
 import Zoomer, {StoryZoomer} from '../../shared/Zoomer'
@@ -36,6 +36,7 @@ export default class OriginalTemplate extends Component {
     }
 
     this.state = {
+      drawer: true,
       ...this.state,
       selectedContent,
       selectedTab: this.props.router.query.state0 || 'about',
@@ -59,7 +60,8 @@ export default class OriginalTemplate extends Component {
     const {
       state: {
         selectedTab,
-        selectedContent
+        selectedContent,
+        drawer
       },
       props: {
         story,
@@ -107,10 +109,14 @@ export default class OriginalTemplate extends Component {
           title={story.title}
           analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
         />
+
         <SideContainer
-          w={1/3}
-          flexWrap={'wrap'}
+          w={[3/4,1/2, 1/3]}
           p={1}
+          justifyContent={'flex-start'}
+          alignItems={'flex-start'}
+          flexDirection={'column'}
+          open={drawer}
         >
           <Box
             w={1}
@@ -171,68 +177,76 @@ export default class OriginalTemplate extends Component {
             <TabBody
               name={"details"}
             >
-              {otherContents.map( (content) => (
-                <Expander
-                  key={content.id}
-                  open={(selectedContent.id === content.id)}
-                  onRequestOpen={()=>{handleContentSelection(content)}}
-                  onRequestClose={()=>{this.setState({
-                    selectedContent: {
-                      type: 'all'
+              <DetailsContainer
+                w={1}
+                justifyContent={'flex-start'}
+                alignItems={'flex-start'}
+                flexDirection={"column"}
+              >
+                {otherContents.map( (content) => (
+                  <Expander
+                    key={content.id}
+                    open={(selectedContent.id === content.id)}
+                    onRequestOpen={()=>{handleContentSelection(content)}}
+                    onRequestClose={()=>{this.setState({
+                      selectedContent: {
+                        type: 'all'
+                      }
+                    })}}
+                    header={
+                      <H3>
+                        {content.title}
+                      </H3>
                     }
-                  })}}
-                  header={
-                    <H3>
-                      {content.title}
-                    </H3>
-                  }
-                  icon={
-                    <Button
-                      round
-                    >
-                      <IndexSpan>
-                        {content.index}
+                    icon={
+                      <Button
+                        round
+                      >
+                        <IndexSpan>
+                          {content.index}
 
-                      </IndexSpan>
-                    </Button>
-                  }
-                >
-                  <Flex
-                    flexWrap={'wrap'}
+                        </IndexSpan>
+                      </Button>
+                    }
                   >
-                    <Box
-                      w={1}
-                      p={3}
+                    <Flex
+                      flexWrap={'wrap'}
                     >
-                      <Markdown
-                        source={content.description}
-                      />
-                    </Box>
-
-                      <Flex
+                      <Box
                         w={1}
                         p={3}
                       >
-                        <AdditionalImages
-                          additionalImages={content.additionalImages}
-                          organization={organization}
+                        <Markdown
+                          source={content.description}
                         />
-                        <AdditionalMedias
-                          additionalMedias={content.additionalMedias}
-                          organization={organization}
-                        />
+                      </Box>
 
-                      </Flex>
+                        <Flex
+                          w={1}
+                          p={3}
+                        >
+                          <AdditionalImages
+                            additionalImages={content.additionalImages}
+                            organization={organization}
+                          />
+                          <AdditionalMedias
+                            additionalMedias={content.additionalMedias}
+                            organization={organization}
+                          />
+
+                        </Flex>
 
 
 
 
 
 
-                  </Flex>
+                    </Flex>
 
-                </Expander>
-              ))}
+                  </Expander>
+                ))}
+              </DetailsContainer>
+
             </TabBody>
             <TabBody
               name={"more"}
@@ -265,12 +279,25 @@ export default class OriginalTemplate extends Component {
               </Flex>
             </TabBody>
           </TabContainer>
+
         </SideContainer>
+        <DrawerButton
+          round
+          onClick={()=>{this.setState(({drawer})=>({drawer: !drawer}))}}
+          open={drawer}
+        >
+          <Icon
+            icon={'menu'}
+            color={'white'}
+          />
+        </DrawerButton>
+
+
         <FeatureContainer
-          w={[2/3]}
+          w={[1, 1/2, 2/3]}
         >
 
-          {this.showFeature(firstDetailContent)}
+          {this.showFeature()}
         </FeatureContainer>
       </Container>
     )
@@ -351,7 +378,10 @@ export default class OriginalTemplate extends Component {
 
     this.setState({
       selectedTab: "more",
-      selectedContent: objContent
+      selectedContent: {
+        id: '',
+        type: 'all',
+      },
     })
 
     const {
@@ -378,7 +408,7 @@ export default class OriginalTemplate extends Component {
   }
 
 
-  showFeature = (firstDetailContent) => {
+  showFeature = () => {
 
     const {
       selectedContent
@@ -411,90 +441,10 @@ export default class OriginalTemplate extends Component {
 
 
 
-    //
-    // if (
-    //   selectedContent.type === "obj" &&
-    //   selectedContent.obj.primaryImage
-    // ) {
-    //   Object.assign(zoomerProps, {
-    //     imageId: selectedContent.obj.primaryImage.id,
-    //     onContentSelection: this.handleContentSelection,
-    //
-    //   })
-    // }
-    //
-    // if (
-    //   selectedContent.type === "all" &&
-    //   firstDetailContent.image0
-    // ) {
-    //   Object.assign(zoomerProps, {
-    //     imageId: firstDetailContent.image0.id,
-    //     moreGeometry: this.createMoreGeometry(),
-    //     onContentSelection: this.handleContentSelection,
-    //   })
-    // }
-    //
-    // if (
-    //   selectedContent.type === 'detail' &&
-    //   selectedContent.image0
-    // ) {
-    //   Object.assign(zoomerProps, {
-    //     imageId: selectedContent.image0.id,
-    //     geometry: selectedContent.geometry,
-    //     moreGeometry: this.createMoreGeometry(),
-    //     onContentSelection: this.handleContentSelection,
-    //     zoom: true
-    //   })
-    // }
-    //
-    // return (
-    //   <Zoomer
-    //     {...zoomerProps}
-    //   />
-    // )
-
   }
 
 
-  // createMoreGeometry = () => {
-  //
-  //   const {
-  //     state: {
-  //       selectedContent
-  //     },
-  //     props: {
-  //       story
-  //     }
-  //   } = this
-  //
-  //   if (
-  //     selectedContent.type === "detail"
-  //   ) {
-  //     let more = story.contents.slice().filter(content => {
-  //       if (content.type === "detail") {
-  //         if (content.image0.id === selectedContent.image0.id) {
-  //           return true
-  //         }
-  //       }
-  //       return false
-  //     })
-  //     return more
-  //   }
-  //   if (
-  //     selectedContent.type === "all"
-  //   ) {
-  //     let firstDetailContent = story.contents.find(content => content.type === 'detail')
-  //     let more = story.contents.slice().filter(content => {
-  //       if (content.type === "detail") {
-  //         if (content.image0.id === firstDetailContent.image0.id) {
-  //           return true
-  //         }
-  //       }
-  //       return false
-  //     })
-  //     return more
-  //   }
-  // }
+
 
   handleContentSelection = (content) => {
     this.setState({
@@ -529,17 +479,56 @@ export default class OriginalTemplate extends Component {
 
 }
 
+const DrawerButton = styled(Button)`
+  transition: .2s all;
+  display: none;
+  @media only screen and (max-width: 40em) {
+    display: block;
+    position: absolute;
+    height:50px;
+    width: 50px;
+    z-index: 5000;
+    bottom: 10px;
+    left: ${({open}) => open ? '78%': '10px'};
+
+  }
+
+`
+
+const DetailsContainer = styled.div`
+  overflow-y: scroll;
+  height: 100%;
+`
+
 const Container = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
 `
-const SideContainer = styled(Box)`
+const SideContainer = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
+  transition: .2s all;
+  overflow-y: scroll;
+  @media only screen and (max-width: 40em) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5000;
+    background-color: white;
+    ${({open}) => !open ? css`
+      transform: translateX(-100%);
+    ` : null}
+  }
 `
 const FeatureContainer = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
+
+  @media only screen and (max-width: 40em) {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `
 
 const RelatedStoryBox = styled(Box)`

@@ -17,6 +17,7 @@ const fragment = gql`
     creditLine
     description
     pullFromCustomApi
+    primaryMediaType
     primaryImage {
       ...ImageFragment
     }

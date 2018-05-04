@@ -31,7 +31,9 @@ export default class AppTombstone extends Component {
     } = this
 
     return (
-      <Container>
+      <Container
+        flex={'0 0 auto'}
+      >
 
         {(title) ? (
           <Title>
@@ -102,9 +104,6 @@ export default class AppTombstone extends Component {
 
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   width: 100%;
   padding: 10px;
   box-sizing: border-box;

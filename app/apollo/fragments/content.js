@@ -1,6 +1,7 @@
 import gql from 'graphql-tag'
 import imageFragment from './image'
 import mediaFragment from './media'
+import objFragment from './obj'
 
 const fragment = gql`
   fragment ContentFragment on content {
@@ -27,11 +28,7 @@ const fragment = gql`
       }
     }
     obj {
-      id
-      primaryMediaType
-      primaryImage {
-        ...ImageFragment
-      }
+      ...ObjFragment
     }
     additionalImages {
       ...ImageFragment
@@ -42,6 +39,7 @@ const fragment = gql`
   }
   ${imageFragment}
   ${mediaFragment}
+  ${objFragment}
 
 `
 

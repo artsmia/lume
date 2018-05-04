@@ -95,7 +95,9 @@ export class TabHeader extends Component {
       }
     )
     return (
-      <HeaderContainer>
+      <HeaderContainer
+        flex={'0 0 auto'}
+      >
         {childrenWithProps}
       </HeaderContainer>
     )
