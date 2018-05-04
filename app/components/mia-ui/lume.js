@@ -37,7 +37,6 @@ export const ThumbContainer = styled(Flex)`
       return `
         box-shadow: 10px 14px 25px rgba(0,0,0,0.7);
         transform: scale(1.05);
-        border: 1px solid ${theme.color.blue};  
       `
       }
   }}

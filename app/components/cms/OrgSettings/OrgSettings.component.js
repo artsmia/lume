@@ -98,14 +98,7 @@ export default class OrgSettings extends Component {
             <Input name={"name"} value={name} onChange={handleChange} />
           </Flex>
 
-          <Flex w={1} flexDirection={"column"} my={2}>
-            <ChangeImage
-              label={"Location Image"}
-              name={"locationImageId"}
-              image={organization.locationImage}
-              onChange={handleChange}
-            />
-          </Flex>
+
 
           <Hr/>
 
@@ -149,15 +142,19 @@ export default class OrgSettings extends Component {
             />
           </Flex>
 
-          <Flex w={1} flexDirection={"column"} my={2}>
-            <Label>Google Analytics ID</Label>
+          {organization.customAnalyticsEnabled ? (
+            <Flex w={1} flexDirection={"column"} my={2}>
+              <Label>Google Analytics ID</Label>
 
-            <Input
-              name={"customAnalyticsId"}
-              value={customAnalyticsId}
-              onChange={handleChange}
-            />
-          </Flex>
+              <Input
+                name={"customAnalyticsId"}
+                value={customAnalyticsId}
+                onChange={handleChange}
+              />
+            </Flex>
+          ):null}
+
+
 
 
           <Hr/>
@@ -202,14 +199,18 @@ export default class OrgSettings extends Component {
           ): null}
 
 
-          <Hr/>
-
-          <H3>
-            Custom Location Page
-          </H3>
 
 
-          <Flex w={1} my={2} alignItems={"center"}>
+
+          {/*
+
+            <Hr/>
+
+            <H3>
+              Custom Location Page
+            </H3>
+
+            <Flex w={1} my={2} alignItems={"center"}>
             <Label>Use Custom Location Page</Label>
 
             <input
@@ -219,6 +220,17 @@ export default class OrgSettings extends Component {
               onChange={handleCheck}
             />
           </Flex>
+
+          {organization.locationEnabled ? (
+            <Flex w={1} flexDirection={"column"} my={2}>
+              <ChangeImage
+                label={"Location Image"}
+                name={"locationImageId"}
+                image={organization.locationImage}
+                onChange={handleChange}
+              />
+            </Flex>
+          ) : null} */}
 
 
         </Card>

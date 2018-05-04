@@ -69,14 +69,14 @@ class EditContentThumb extends Component {
             />
           ): null}
 
-          
+
 
           <ThumbOverlay>
 
             <H4
               color={'white'}
             >
-              {title ? title : `Edit your ${type} content`}
+              {title ? title : type}
             </H4>
             <ContentIcon
               type={type}

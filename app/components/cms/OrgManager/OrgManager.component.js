@@ -129,6 +129,8 @@ export default class OrgManager extends Component {
   handleSubdomainChange = ({target: {name, value}}) => {
     let invalidSubdomains = ['login', 'logout', 'callback', 'error', 'auth', 'organizations', 'cms']
 
+    this.props.organizations.forEach(org => invalidSubdomains.push(org.subdomain))
+
     let subdomainValid = true
     let subdomainInvalid = false
 
