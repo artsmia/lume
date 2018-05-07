@@ -22,6 +22,7 @@ export default class CreateStoryButton extends Component {
       <Flex>
         <Button
           onClick={()=>this.setState({modal: true})}
+          color={'green'}
         >
           New Story
         </Button>
@@ -39,6 +40,7 @@ export default class CreateStoryButton extends Component {
           />
           <Button
             onClick={this.createStory}
+            color={'green'}
           >
             Create
           </Button>

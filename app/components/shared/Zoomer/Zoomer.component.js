@@ -219,32 +219,6 @@ export default class extends Component {
         }
       }
 
-
-
-      // if (this.state.image){
-      //   await this.setupImage()
-      // }
-
-      // if (
-      //   this.state.image &&
-      //   this.state.content &&
-      //   this.props.mode === 'editor'
-      // ) {
-      //   await this.createDetailEditor()
-      // } else if (
-      //   this.state.image &&
-      //   this.state.content
-      // ) {
-      //   await this.createContentLayer()
-      // }
-
-      // if (
-      //   this.state.image &&
-      //   this.state.markers
-      // ){
-      //   await this.createMarkers()
-      // }
-
     } catch (ex) {
       console.error(ex)
     }
@@ -478,6 +452,7 @@ export default class extends Component {
           draw: {
             polygon: {
               allowIntersection: false,
+              title: "Hello?"
             },
             polyline: false,
             circle: false,
@@ -487,7 +462,7 @@ export default class extends Component {
           position: 'topright',
           edit: {
             featureGroup: this.editableLayers
-          }
+          },
         })
 
         this.map.addControl(this.drawControl)
@@ -605,6 +580,14 @@ const ZoomerMap = styled.div`
     background-color: rgba(0,0,0,0);
     border: none;
 
+  }
+
+  .leaflet-draw-toolbar {
+    a {
+      span {
+        display: none;
+      }
+    }
   }
 
 `

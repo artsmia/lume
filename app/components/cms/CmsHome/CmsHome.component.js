@@ -91,23 +91,24 @@ export default class CmsHome extends Component {
         <Card
           p={3}
         >
-          <Flex
+          <StoryFlex
             flexWrap={'wrap'}
           >
 
-            <Box
-              width={1}
+            <CreateFlex
+              w={1}
+              justifyContent={'flex-end'}
             >
               <CreateStoryButton
                 userId={userId}
               />
-            </Box>
+            </CreateFlex>
             <Box
               width={1}
             >
               <StoryList/>
             </Box>
-          </Flex>
+          </StoryFlex>
         </Card>
 
 
@@ -116,3 +117,11 @@ export default class CmsHome extends Component {
   }
 
 }
+
+const StoryFlex = styled(Flex)`
+  position: relative;
+`
+
+const CreateFlex = styled(Flex)`
+  position: absolute;
+`
