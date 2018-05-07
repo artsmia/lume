@@ -61,7 +61,7 @@
     "build": "BABEL_ENV=next next build",
     "now-start": "NODE_ENV=production node router",
     "deploy": "now -e NODE_ENV=production --token=$NOW_TOKEN --npm",
-    "alias": "now alias --token=$NOW_TOKEN -r rules.json",
+    "alias": "now alias --token=$NOW_TOKEN",
     "scale": "now scale lume.space sfo 1 3 --token=$NOW_TOKEN",
     "test": "jest"
   }

@@ -1,9 +1,10 @@
+const webpack = require('webpack')
+
 if (process.env.NODE_ENV !== 'production'){
   require('dotenv').config({
     path: '../config/.env'
   })
 }
-const webpack = require('webpack')
 
 
 module.exports = {
@@ -15,8 +16,8 @@ module.exports = {
         'process.env.S3_URL': JSON.stringify(process.env.S3_URL),
         'process.env.AUTH_STRATEGY': JSON.stringify(process.env.AUTH_STRATEGY),
         'process.env.FILE_STORAGE': JSON.stringify(process.env.FILE_STORAGE),
-        'process.env.LOCAL_TILE_URL': JSON.stringify(process.env.LOCAL_TILE_URL),
-        // 'process.env.DEPLOYMENT_ENV': JSON.stringify(process.env.DEPLOYMENT_ENV),
+        'process.env.LOCAL_TILE_URL': JSON.stringify(process.env.LOCAL_TILE_URL)
+
       })
     );
     return config

@@ -1,7 +1,6 @@
 {
   "name": "lume-app",
   "alias": [
-    "mia.lume.space",
     "lume.space"
   ],
   "env": {

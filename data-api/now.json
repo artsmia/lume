@@ -14,7 +14,9 @@
     "MAILGUN_API_KEY": "@lume-mailgun-key",
     "MAILGUN_DOMAIN": "mail.lume.space",
     "AUTH0_PEM": "@lume-auth0-pem",
-    "GITHUB_PEM": "@lume-github-pem"
+    "GITHUB_PEM": "@lume-github-pem",
+    "APOLLO_ENGINE_APIKEY": "@lume-apollo-engine-apikey",
+    "DB_MODE": "mysql"
   },
   "scale": {
     "sfo1": {
