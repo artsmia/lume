@@ -27,7 +27,13 @@ const queryOptions = {
           limit: 20,
           organization: {
             subdomain
-          }
+          },
+          order:[
+            {
+              direction: 'DESC',
+              column: 'createdAt'
+            }
+          ]
         },
       }
     }

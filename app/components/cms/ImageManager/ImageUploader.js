@@ -39,10 +39,14 @@ export default class extends Component {
 
 
     return (
-        <Flex>
+        <Flex
+          my={2}
+        >
           <Flex
-            w={1/3}
+            w={1/2}
             flexWrap={'wrap'}
+            flexDirection={'column'}
+            pr={2}
           >
             <Box
               w={1}
@@ -111,7 +115,7 @@ export default class extends Component {
             {(uploading) ? (
               <Spinner/>
             ): null}
-            {(preview) ? (
+            {(preview && !uploading) ? (
               <Preview
                 src={preview}
                 alt={`Preview of ${description}`}

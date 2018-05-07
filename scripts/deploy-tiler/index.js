@@ -8,7 +8,7 @@ const lam = new AWS.Lambda({
 })
 
 
-fs.readFile('image-tiler/ImageTiler.zip', (err, ZipFile) => {
+fs.readFile('../image-tiler/ImageTiler.zip', (err, ZipFile) => {
 
   let params = {
     FunctionName: "image-tiler",
