@@ -6,7 +6,7 @@
     "AUTH0_CLIENT_ID": "Bv2hCusQZ27IS1KXnjQFhICIRr6TMTfw",
     "AUTH0_CLIENT_SECRET": "@lume-auth0-secret",
     "AWS_ACCESS_KEY_ID": "@lume-aws-key-id",
-    "AWS_SECRET_ACCESS_KEY": " @lume-aws-secret",
+    "AWS_SECRET_ACCESS_KEY": "@lume-aws-secret",
     "AUTH0_MGMT_ID": "@lume-auth0-mgmt-id",
     "AUTH0_MGMT_SECRET": "@lume-auth0-mgmt-secret",
     "DB_URL": "@lume-mysql-db-compose",
