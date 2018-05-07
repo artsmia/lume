@@ -2,10 +2,16 @@ import AWS from 'aws-sdk'
 import uuid from 'uuid/v4'
 import Organization from '../db/models/Organization'
 
+console.log(process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY)
+
+console.log(process.env)
+
 const s3 = new AWS.S3()
 
 export default async function (req,res, next) {
   try {
+
+    console.log(process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY)
 
     const {
       file: {
