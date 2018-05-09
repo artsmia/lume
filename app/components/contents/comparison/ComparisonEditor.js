@@ -4,6 +4,9 @@ import query from '../../../apollo/queries/content'
 import OrganizationQuery from '../../../apollo/queries/organization'
 import {withRouter} from 'next/router'
 import mutation from '../../../apollo/mutations/editContent'
+import addTips from '../../../apollo/local/addTips'
+import removeTips from '../../../apollo/local/removeTips'
+
 import {compose, withApollo} from 'react-apollo'
 import styled from 'styled-components'
 import {H2} from '../../mia-ui/text'
@@ -14,6 +17,8 @@ import DeleteContentButton from '../../cms/DeleteContentButton'
 
 
 class ComparisonEditor extends Component {
+
+  tips = []
 
   render(){
 
@@ -187,8 +192,18 @@ class ComparisonEditor extends Component {
       image0Id: image0 ? image0.id : "",
       image1Id: image1 ? image1.id : ""
     }
+  }
 
+  componentDidMount(){
+    this.props.addTips({
+      tips: this.tips
+    })
+  }
 
+  componentWillUnmount(){
+    this.props.removeTips({
+      tips: this.tips
+    })
   }
 
 
@@ -202,7 +217,9 @@ ExportComponent = compose(
   query,
   mutation,
   setSaveStatus,
-  OrganizationQuery
+  OrganizationQuery,
+  addTips,
+  removeTips
 )(ExportComponent)
 
 

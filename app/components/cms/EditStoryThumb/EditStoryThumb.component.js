@@ -39,6 +39,7 @@ export default class EditStoryThumb extends Component {
         onClick={onSelect}
         width={1}
         selected={selected}
+        id={'story-thumb'}
       >
         {previewImage ? (
           <Thumb

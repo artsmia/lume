@@ -7,5 +7,10 @@ export default {
   saveStatus: {
     synced: true,
     __typename: "SaveStatus"
+  },
+  toolTips: {
+    show: false,
+    tips: [],
+    __typename: 'ToolTips'
   }
 }

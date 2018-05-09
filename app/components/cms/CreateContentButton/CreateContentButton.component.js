@@ -13,6 +13,7 @@ export default class CreateContentButton extends Component {
     return (
       <Button
         onClick={this.createContent}
+        id={'create-content'}
       >
         Create Content
       </Button>

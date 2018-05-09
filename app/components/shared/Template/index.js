@@ -1,31 +1,19 @@
 import Component from './Template.component'
 import {compose, graphql} from 'react-apollo'
-import gql from 'graphql-tag'
-
+import showTips from '../../../apollo/local/showTips'
+import getToolTips from '../../../apollo/local/getToolTips'
 
 let ExportComponent = Component
-//
-// const snackQuery = gql`
-//   query {
-//     snack @client {
-//       message
-//       snackId
-//     }
-//   }
-// `
-//
-// const localConfig = {
-//   props({ownProps, data}){
-//     return {
-//       ...ownProps,
-//       ...data
-//     }
-//   }
-// }
-//
-// const localQuery = graphql(snackQuery, localConfig)
-//
-// ExportComponent = compose(localQuery)(ExportComponent)
+
+
+
+
+
+
+ExportComponent = compose(
+  showTips,
+  getToolTips,
+)(ExportComponent)
 
 
 export default ExportComponent

@@ -48,7 +48,9 @@ export default class StoryList extends Component {
     } = this
 
     return (
-      <Table>
+      <Table
+        id={'story-list'}
+      >
         <Box>
           <Search
             value={variables.filter.search || ""}

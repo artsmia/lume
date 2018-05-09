@@ -32,6 +32,7 @@ export default class ChangeImage extends Component {
       props: {
         image,
         label,
+        id
       },
       handleChange,
       state: {
@@ -44,6 +45,7 @@ export default class ChangeImage extends Component {
     return (
       <Flex
         flexWrap={'wrap'}
+        id={id}
       >
         <Box
           w={1}

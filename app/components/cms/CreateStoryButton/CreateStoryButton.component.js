@@ -23,6 +23,7 @@ export default class CreateStoryButton extends Component {
         <Button
           onClick={()=>this.setState({modal: true})}
           color={'green'}
+          id={'create-story-button'}
         >
           New Story
         </Button>

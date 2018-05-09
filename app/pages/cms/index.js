@@ -3,7 +3,6 @@ import CmsHome from '../../components/cms/CmsHome'
 import withData from '../../apollo'
 import Template from '../../components/shared/Template'
 import Auth from '../../auth'
-
 class CmsIndex extends Component {
 
   static getInitialProps = async (ctx) => {
@@ -22,6 +21,8 @@ class CmsIndex extends Component {
   }
 
 
+
+
   render() {
 
     console.log("CmsIndex page rendered")
@@ -31,6 +32,7 @@ class CmsIndex extends Component {
         {...this.props}
         user={this.props.user}
       >
+
         <CmsHome
           {...this.props}
         />

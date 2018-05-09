@@ -27,6 +27,51 @@ export default class Editor extends Component {
     "movie"
   ]
 
+  tips = [
+    {
+      target: '#save-status',
+      content: 'Your story will be automatically saved after each change. You can see the save status here.',
+      placement: 'bottom-end'
+    },
+    {
+      target: '#preview-button',
+      content: 'You can see a preview of your story at anytime by clicking here.',
+      placement: 'bottom-start'
+    },
+    {
+      target: '#live-button',
+      content: "And once you've published your story, you can see it live by clicking here.",
+      placement: 'bottom-start'
+    },
+    {
+      target: '#sidebar',
+      content: "By clicking on the various tiles on the left, you can edit your story and the content items that make up your story.",
+      placement: 'auto'
+    },
+    {
+      target: '#story-thumb',
+      content: "The top tile in the sidebar allows you to edit the details of your story. This is where you can change its title, main image, visibility and more.",
+      placement: 'auto'
+    },
+    {
+      target: '#create-content',
+      content: 'Each story is made up of "Contents". To create a new Content, select the content\'s type and then click "Create Content."',
+      placement: 'auto'
+    }
+  ]
+
+  componentDidMount(){
+    this.props.addTips({
+      tips: this.tips
+    })
+  }
+
+  componentWillUnmount(){
+    this.props.removeTips({
+      tips: this.tips
+    })
+  }
+
   render(){
 
 
@@ -131,6 +176,7 @@ export default class Editor extends Component {
           <Button
             onClick={()=>this.setState({preview: true})}
             color={'blue'}
+            id={'preview-button'}
           >
             Preview your Story
           </Button>
@@ -148,6 +194,7 @@ export default class Editor extends Component {
               <Button
                 color={'green'}
                 a
+                id={'live-button'}
               >
                 View Live
               </Button>
@@ -156,6 +203,7 @@ export default class Editor extends Component {
             <Button
               disabled
               color={'green'}
+              id={'live-button'}
             >
               Unpublished
             </Button>
@@ -209,6 +257,8 @@ export default class Editor extends Component {
               p={3}
               justifyContent={'flex-start'}
               alignItems={'center'}
+              id={'sidebar'}
+
             >
               <EditStoryThumb
                 storyId={storyId}
@@ -286,9 +336,9 @@ export default class Editor extends Component {
     } = this.props.saveStatus
 
     if(synced){
-      return (<span>All Changes Saved</span>)
+      return (<span id={'save-status'}>All Changes Saved</span>)
     } else {
-      return (<span>...saving</span>)
+      return (<span id={'save-status'}>...saving</span>)
 
     }
 

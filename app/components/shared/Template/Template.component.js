@@ -6,13 +6,23 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import {Flex, Box} from 'grid-styled'
 import Link from 'next/link'
 import {Icon} from '../../mia-ui/icons'
+import {CheckboxInput} from '../../mia-ui/forms'
+
 import Feedback from '../Feedback'
+import Joyride from 'react-joyride'
+import Floater from 'react-floater'
+
 export default class Template extends Component {
 
 
   state = {
     message: "",
-    menu: false
+    menu: false,
+  }
+
+
+  showTips = ({target: {checked}}) => {
+    this.props.showTips({show: checked})
   }
 
   render() {
@@ -21,11 +31,14 @@ export default class Template extends Component {
       props,
       props: {
         children,
-        user
+        user,
+        tips,
+        toolTips
       },
       state: {
-        menu
-      }
+        menu,
+      },
+      showTips
     } = this
 
     return (
@@ -34,10 +47,12 @@ export default class Template extends Component {
           backend={HTML5Backend}
         >
           <div>
+
             {user ? (
               <div>
                 <MenuCheck/>
                 <Menu>
+
                   { user.organizations ? user.organizations.map(({subdomain, id, name}) => (
                     <Item
                       key={id}
@@ -57,6 +72,7 @@ export default class Template extends Component {
                       </Link>
                     </Item>
                   )) : null}
+                  <Hr/>
                   <Item>
                     <Link
                       href={{
@@ -69,6 +85,18 @@ export default class Template extends Component {
                       </A>
                     </Link>
                   </Item>
+                  <Hr/>
+
+                  <Item>
+                    <span>Show Tips</span>
+                    <input
+                      type={'checkbox'}
+                      checked={toolTips.show}
+                      onChange={showTips}
+                    />
+                  </Item>
+                  <Hr/>
+
                   <Item>
                     <Link
                       href={'/logout'}
@@ -92,6 +120,31 @@ export default class Template extends Component {
               user={user}
             />
 
+
+
+            {/* <Joyride
+              steps={toolTips.tips}
+              run={toolTips.show}
+              showSkipButton={true}
+            /> */}
+
+            {toolTips.show ? toolTips.tips.map((tip, index) => (
+              <Floater
+                key={`tip.target-${index}`}
+                target={tip.target}
+                content={tip.content}
+                placement={tip.placement}
+                wrapperOptions={{
+                  offset: -22,
+                  placement: tip.placement,
+                  position: true
+                }}
+              >
+                <Tip>?</Tip>
+
+              </Floater>
+            )) : null}
+
           </div>
 
         </DragDropContextProvider>
@@ -113,6 +166,24 @@ export default class Template extends Component {
   }
 
 }
+
+const Tip = styled.span`
+  background-color: ${({theme}) => theme.color.blue};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+  font-size: 25px;
+  opacity: .5;
+  transition: .2s all;
+  z-index: 3000;
+  &:hover {
+    opacity: 1;
+  }
+`
 
 const Menu = styled.ul`
   position: absolute;
@@ -174,6 +245,10 @@ const Item = styled.li`
   }
 `
 
+const Hr = styled.hr`
+  width: 100%;
+  margin: 0;
+`
 
 const ProfPic = styled.img`
   height: 50px;

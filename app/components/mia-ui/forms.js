@@ -189,12 +189,7 @@ export const TextInput = props => (
 )
 
 TextInput.displayName = "TextInput"
-TextInput.propTypes = {
-  label: PropTypes.string,
-}
-TextInput.defaultProps = {
-  label: '',
-}
+
 
 export const TextareaInput = props => (
   <Flex
@@ -214,17 +209,17 @@ export const TextareaInput = props => (
   </Flex>
 )
 TextareaInput.displayName = "TextareaInput"
-TextareaInput.propTypes = {
-  label: PropTypes.string,
-  minHeight: PropTypes.string,
-  width: PropTypes.string,
-
-}
-TextareaInput.defaultProps = {
-  label: '',
-  minHeight: '',
-  width: '',
-}
+// TextareaInput.propTypes = {
+//   label: PropTypes.string,
+//   minHeight: PropTypes.string,
+//   width: PropTypes.string,
+//
+// }
+// TextareaInput.defaultProps = {
+//   label: '',
+//   minHeight: '',
+//   width: '',
+// }
 
 export const Checkbox = styled.input`
   margin-right: 8px;
@@ -323,21 +318,22 @@ const TitleLabel = styled.label`
   display: none;
 `
 
-export const Title = ({name, value, onChange, label}) => (
+export const Title = (props) => (
   <Flex
     mb={3}
     flexDirection={'column'}
   >
     <TitleLabel
-      name={name}
+      name={props.name}
     >
-      {label}
+      {props.label}
     </TitleLabel>
     <TitleInput
-      name={name}
-      value={value}
-      onChange={onChange}
+      name={props.name}
+      value={props.value}
+      onChange={props.onChange}
       placeholder={"Add a title here."}
+      {...props}
     />
 
   </Flex>
@@ -358,22 +354,22 @@ const DescriptionLabel = styled.label`
   display: none;
 `
 
-export const Description = ({name, value, onChange, label}) => (
+export const Description = (props) => (
   <Flex
     mb={3}
     flexDirection={'column'}
   >
     <DescriptionLabel
-      name={name}
+      name={props.name}
     >
-      {label}
+      {props.label}
     </DescriptionLabel>
     <DescriptionTextarea
-      name={name}
-      value={value}
-      onChange={onChange}
+      name={props.name}
+      value={props.value}
+      onChange={props.onChange}
       placeholder={"Enter a description here."}
-
+      {...props}
     />
   </Flex>
 )

@@ -60,11 +60,11 @@ export default function imgSrcProvider(WrappedComponent){
 
         }
 
-        let resp = await fetch(src)
-
-        if (resp.status !== 200){
-          src = '/static/placeholder0.png'
-        }
+        // let resp = await fetch(src)
+        //
+        // if (resp.status !== 200){
+        //   src = '/static/placeholder0.png'
+        // }
 
         this.setState({src})
       } catch (ex) {

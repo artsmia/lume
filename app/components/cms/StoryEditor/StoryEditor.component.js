@@ -37,6 +37,43 @@ export default class StoryEditor extends Component {
     sync: true
   }
 
+  tips = [
+    {
+      target: '#story-title',
+      content: "You can edit the title of your story here.",
+      placement: 'auto'
+    },
+    {
+      target: '#story-description',
+      content: "Edit your story's description here. This field accepts mark down styling!",
+      placement: 'auto'
+    },
+    {
+      target: '#change-story-image',
+      content: "Give your story a main image so users can get a preview when the story appears in search results.",
+      placement: 'auto'
+    },
+    {
+      target: '#story-slug',
+      content: "The Pretty Url field allows you to change the address of your story. Be careful, however, changing this could break old links!",
+      placement: 'auto'
+    },
+    {
+      target: '#story-template',
+      content: "Stories can be presented in several different ways.",
+      placement: 'auto'
+    },
+    {
+      target: '#story-visibility',
+      content: "When you're ready to share your story with the public, change the visibility setting to published. Now your story will appear with your other stories on your organization's public page!",
+      placement: 'auto'
+    },
+    {
+      target: '#delete-story',
+      content: "This button will permanently delete your story. Be careful! There is no undoing this!",
+      placement: 'auto'
+    },
+  ]
 
 
   render() {
@@ -78,35 +115,31 @@ export default class StoryEditor extends Component {
           pr={4}
         >
 
-          <ToolTip>
-            Give your story a title.
-          </ToolTip>
 
           <Title
             name={'title'}
             value={title}
             onChange={handleChange}
             label={'Title'}
+            id={'story-title'}
           />
 
-          <ToolTip>
-            Pro-tip: Make use of <a href={"https://help.github.com/articles/basic-writing-and-formatting-syntax/"}>"markdown styling"</a> to add formatting to your description
-          </ToolTip>
+
           <Description
             name={'description'}
             value={description}
             onChange={handleChange}
             label={'Description'}
+            id={'story-description'}
+
           />
 
-          <ToolTip>
-            Give users a sneak peak of the story they're about to visit by providing a preview image.
-          </ToolTip>
           <ChangeImage
             label={"Image"}
             name={"previewImageId"}
             image={previewImage}
             onChange={handleChange}
+            id={'change-story-image'}
           />
 
           <StoryGroupSelector
@@ -126,6 +159,7 @@ export default class StoryEditor extends Component {
 
           <Box
             w={1}
+            id={'story-slug'}
           >
             <Label>
               Pretty Url
@@ -139,6 +173,7 @@ export default class StoryEditor extends Component {
           </Box>
           <Box
             w={1}
+            id={'story-template'}
           >
             <Label>
               Template
@@ -162,6 +197,7 @@ export default class StoryEditor extends Component {
           </Box>
           <Box
             w={1}
+            id={'story-visibility'}
           >
             <Label>
               Visibility
@@ -222,6 +258,12 @@ export default class StoryEditor extends Component {
     this.state = {
       ...this.createStateFromProps(props)
     }
+  }
+
+  componentDidMount(){
+    this.props.addTips({
+      tips: this.tips
+    })
   }
 
   componentWillReceiveProps(nextProps){
@@ -364,6 +406,9 @@ export default class StoryEditor extends Component {
 
   componentWillUnmount(){
     this.handleSave()
+    this.props.removeTips({
+      tips: this.tips
+    })
   }
 
 }

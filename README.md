@@ -4,8 +4,19 @@ Welcome to Lume, a digital storytelling platform by the Minneapolis Institute of
 
 If you are interested in contributing to Lume or running your own instance with further configuration, head over to the [Wiki](/wiki) for more detail information about Lume.
 
+## Table of Contents
 
-## Local Quickstart
+- [Running Lume](#running-lume)
+  - [Local Quickstart](#local-quickstart)
+  - [Configuration](#configuration)
+  - [Deploying with Now](#deploying-with-now)
+- [Overview](#overview)
+
+## Running Lume
+
+
+
+### Local Quickstart
 
 If you're interested in contributing to Lume (or you just want to try it out on your own machine), you can follow these directions to get the application running on your local machine.
 
@@ -87,3 +98,33 @@ yarn start
 4. Try the site!
 
 Great! Now if everything worked, you should be able to visit http://localhost:3000 to see Lume running locally.
+
+### Configuration
+
+### Deploying with Now
+
+## Overview
+
+The Lume repository is actually composed of a number of smaller applications and microservices.
+
+### [app](/tree/master/app)
+
+The `app` directory contains the codebase for the front end UI for Lume's CMS and storytelling application. It is written in es6+ Javascript and compiled using `babel`.
+
+Production is deployed using Now.
+
+The application has been configured for unit tests –– and several have been written, however, more development is needed in this area.
+
+#### [router](/tree/master/app/router)
+
+It's routing is handled by `next` and an `express` server
+
+Most of the styling is through `styled-components` and `grid-styled`.
+
+Image tiling is handled by LeafletJS.
+
+The frontend uses a client-side store powered by apollo to manage data-fetching and to maintain local state.
+
+Authorization is handled by [Auth0](https://auth0.com) and `passport`–– though this can be disabled by running the application in local mode.
+
+A redis store is used for session cacheing.

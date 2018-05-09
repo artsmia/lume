@@ -6,16 +6,24 @@ import {Icon} from './icons'
 import {gray30} from './colors'
 import {A} from './links'
 
-let Table = styled(Flex)`
+const Table = (props)=> (
+  <Flex
+    width={1}
+    flexDirection={'column'}
+    alignItems={'flex-start'}
+    p={2}
+    {...props}
+  >
+    {props.children}
+  </Flex>
+)
 
-`
-
-Table.defaultProps = {
-  width: 1,
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  p: 2
-}
+// Table.defaultProps = {
+//   width: 1,
+//   flexDirection: 'column',
+//   alignItems: 'flex-start',
+//   p: 2
+// }
 
 let Row = styled(Flex)`
   &:hover{

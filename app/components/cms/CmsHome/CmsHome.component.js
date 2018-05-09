@@ -28,6 +28,31 @@ export default class CmsHome extends Component {
   // }
 
 
+    tips = [
+      {
+        target: '#story-list',
+        content: "These are all your organization's stories",
+        placement: 'top-start'
+      },
+      {
+        target: '#create-story-button',
+        content: 'Click here to create your first story!',
+        placement: 'top-start'
+      }
+    ]
+
+    componentDidMount(){
+      this.props.addTips({
+        tips: this.tips
+      })
+    }
+
+    componentWillUnmount(){
+      this.props.removeTips({
+        tips: this.tips
+      })
+    }
+
   render() {
     // if (!this.props.organization) return <Loading/>
     const {
@@ -52,10 +77,13 @@ export default class CmsHome extends Component {
         <Head
           title={organization ? organization.name : "Organization Stories"}
         />
+
+
         <Flex
           w={1}
           pb={2}
         >
+
           <Box
             width={9/10}
           >
@@ -101,6 +129,7 @@ export default class CmsHome extends Component {
             >
               <CreateStoryButton
                 userId={userId}
+                id={'create-story'}
               />
             </CreateFlex>
             <Box
