@@ -107,7 +107,7 @@ Great! Now if everything worked, you should be able to visit http://localhost:30
 
 The Lume repository is actually composed of a number of smaller applications and microservices.
 
-### [app](/tree/master/app)
+### [app](/app)
 
 The `app` directory contains the codebase for the front end UI for Lume's CMS and storytelling application. It is written in es6+ Javascript and compiled using `babel`.
 
