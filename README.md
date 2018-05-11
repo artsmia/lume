@@ -22,7 +22,7 @@ If you are interested in contributing to Lume or running your own instance with 
 - [In Depth](#in-depth)
 
 - [How To](#how-to)
-  - [Create a new type of content][#create-a-new-type-of-content]
+  - [Create a new type of content](#create-a-new-type-of-content)
 
 ## Running Lume
 

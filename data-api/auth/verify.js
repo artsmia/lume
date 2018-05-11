@@ -36,7 +36,7 @@ export default async (req, res, next) => {
     next()
   } catch (ex) {
     console.log('verification failed')
-    console.error(ex)
+    // console.error(ex)
     req.verified = false
     next()
   }

@@ -37,15 +37,18 @@ let port = process.env.PORT || 5000
 
 server.set('port', port)
 
-// let corsOptions = {
-//   origin: [
-//     /http:\/\/localhost:3000.*/,
-//     /http:\/\/localhost:6000.*/,
-//   ]
-// }
+let corsOptions = (process.env.NODE_ENV === 'production') ? {
+  origin: [
+    /https:\/\/lume.space.*/,
+  ]
+} : {
+  origin: [
+    /http:\/\/localhost:3000.*/,
+    /http:\/\/localhost:6000.*/,
+  ]
+}
 server.use(
-  cors(),
-  //cors(corsOptions),
+  cors(corsOptions),
   bodyParser.json(),
 )
 
@@ -84,8 +87,6 @@ server.use(
   '/',
   (req, res, next) => {
 
-    console.log("request")
-
     if(process.env.AUTH_STRATEGY === 'local'){
 
       req.userId = 'local'
@@ -106,14 +107,8 @@ server.use(
   }
 ))
 
-// Call engine.listen instead of app.listen(port)
 engine.listen({
   port: 5000,
   expressApp: server,
   graphqlPaths: ['/','/graphiql']
 })
-
-
-// server.listen(server.get('port'), ()=>{
-//   console.log(`Server is running at port ${server.get('port')}`)
-// })
