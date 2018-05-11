@@ -25,6 +25,9 @@ describe("CmsHome component", ()=> {
       query: {
         subdomain: 'mia'
       }
+    },
+    addTips(){
+      console.log("addTips")
     }
   }
 
