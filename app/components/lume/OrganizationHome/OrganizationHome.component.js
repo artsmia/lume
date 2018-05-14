@@ -12,6 +12,8 @@ import {GridList, Tile as StoryTile} from '../../mia-ui/lists'
 import {Loading} from '../../mia-ui/loading'
 import Head from '../../shared/head'
 import ImgSrcProvider from '../../shared/ImgSrcProvider'
+import Joyride from 'react-joyride'
+
 
 let Tile = ImgSrcProvider(StoryTile)
 
@@ -35,10 +37,123 @@ export default class Home extends Component {
     } = this.props.router.query
 
     this.state = {
+      drawer: false,
       search: search || "",
       template: template ? template.split(',') : ["original","slider"],
-      selectedGroupIds: []
+      selectedGroupIds: [],
+      showGrandTour: false,
+      grandTourIndex: 0,
+      grandTourSteps: [
+        {
+          target: 'body',
+          content: (
+            <div>
+              <h2>Welcome to Lume!</h2>
+              <p>Thanks for taking the grand tour!</p>
+              <p>First off, let's take a look at some of the stories we've created at the Minneapolis Institute of Art.</p>
+              <Button
+                onClick={()=>{this.setState(({grandTourIndex})=>({grandTourIndex: grandTourIndex + 1}))}}
+              >Next</Button>
+            </div>
+          ),
+          placement: "center",
+          disableBeacon: true,
+
+        },
+        {
+          target: '#results',
+          content: (
+            <div>
+              <p>
+                An organization's published stories appear here, on the organization's main page.
+              </p>
+              <Button
+                onClick={()=>{this.setState(({grandTourIndex})=>({grandTourIndex: grandTourIndex + 1}))}}
+              >
+                Next
+              </Button>
+            </div>
+          ),
+          disableBeacon: true
+        },
+        {
+          target: '#drawer-button',
+          content: (
+            <div>
+              <p>To search for specific stories or to filter the kinds of stories you see, open up the drawer on the left by clicking the button.</p>
+              <Button
+                onClick={()=>{
+                  this.setState(
+                    ()=>({drawer: true}),
+                    ()=>{
+                      setTimeout(
+                        ()=> {
+                          this.setState(({grandTourIndex})=>({grandTourIndex: grandTourIndex + 1}))
+                        },
+                        250
+                      )
+                    }
+                  )
+
+                }}
+              >
+                Next
+              </Button>
+            </div>
+          ),
+          disableBeacon: true,
+        },
+        {
+          target: '#drawer',
+          content: (
+            <div>
+              <p>You can search for specific stories by title or keyword...</p>
+              <Button
+                onClick={
+                  ()=>{
+                    this.searchChange({target: {
+                      name: 'search',
+                      value: 'horse'
+                    }})
+                    this.setState(
+                      ({grandTourIndex})=>({
+                        grandTourIndex: grandTourIndex + 1,
+                    }))
+                  }
+                }
+              >
+                Next
+              </Button>
+            </div>
+          ),
+          disableBeacon: true,
+          placement: 'right-start'
+
+        },
+        {
+          target: '#drawer',
+          content: (
+            <div>
+              <p>You can also filter stories based on their type or group.</p>
+              <p>(We'll check out the difference between Object Stories and Thematic Stories in a second!)</p>
+              <Button
+                onClick={()=>{this.setState(({grandTourIndex})=>({grandTourIndex: grandTourIndex + 1}))}}
+              >
+                Next
+              </Button>
+            </div>
+          ),
+          disableBeacon: true,
+          placement: 'right-start'
+
+        }
+      ]
     }
+  }
+
+  handleTourCallback = (tourState) => {
+    console.log(tourState)
+
   }
 
   render() {
@@ -76,12 +191,17 @@ export default class Home extends Component {
       <Flex
         width={1}
       >
+
         <Head
           title={organization.name}
           analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
         />
-        <DrawerCheck/>
-        <DrawerButton/>
+        {/* <DrawerCheck/> */}
+        <DrawerButton
+          id={'drawer-button'}
+          open={this.state.drawer}
+          onClick={()=>{this.setState( ({drawer})=>({drawer: !drawer})) }}
+        />
 
 
         {this.renderGroupStuff()}
@@ -90,6 +210,7 @@ export default class Home extends Component {
         <DrawerPage
           onScroll={handleScroll}
           id={'results'}
+          open={this.state.drawer}
         >
           <GridList>
             {stories ? stories.map( ({id, previewImage, title, slug}) => (
@@ -129,6 +250,24 @@ export default class Home extends Component {
             ): null}
           </Box>
         </DrawerPage>
+
+        <Joyride
+          run={false}
+          steps={this.state.grandTourSteps}
+          callback={this.handleTourCallback}
+          stepIndex={this.state.grandTourIndex}
+          styles={{
+            buttonClose:{
+              display: 'none'
+            },
+            buttonNext: {
+              display: 'none'
+            },
+            buttonBack: {
+              display: 'none'
+            }
+          }}
+        />
       </Flex>
     )
   }
@@ -146,7 +285,10 @@ export default class Home extends Component {
 
       let group = groups.find(group => group.slug === this.props.groupSlug)
       return (
-        <Drawer>
+        <Drawer
+          open={this.state.drawer}
+          id={'drawer'}
+        >
           <Flex
             flexWrap={"wrap"}
             w={1}
@@ -197,7 +339,10 @@ export default class Home extends Component {
       return (
 
 
-          <Drawer>
+          <Drawer
+            open={this.state.drawer}
+            id={'drawer'}
+          >
 
             <Box
               width={1}
@@ -460,6 +605,13 @@ export default class Home extends Component {
       },
       1000
     )
+  }
+
+  componentDidMount(){
+    console.log("OrganizationHome did mount")
+    // this.setState({
+    //   showGrandTour: true
+    // })
   }
 
 }

@@ -92,9 +92,12 @@ export default class ChangeImage extends Component {
           width={"60%"}
 
         >
-          <ImageManager
-            onImageSave={handleAdd}
-          />
+          {modal ? (
+            <ImageManager
+              onImageSave={handleAdd}
+            />
+  
+          ):null}
 
         </Modal>
       </Flex>

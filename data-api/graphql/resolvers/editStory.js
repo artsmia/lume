@@ -4,9 +4,9 @@ import {Op} from 'sequelize'
 export default async function(src, args, ctx){
   try {
 
-    let newSlug = args.slug || undefined
-    if (newSlug){
-      newSlug = newSlug.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
+    let updates = args
+    if (updates.slug){
+      updates.slug = updates.slug.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
 
       let story = await Story.findById(args.id)
 
@@ -16,19 +16,21 @@ export default async function(src, args, ctx){
           id: {
             [Op.not]: story.id
           },
-          slug: newSlug
+          slug: updates.slug
         }
       })
 
       if(existingStory.length > 0){
-        newSlug = newSlug.concat(`-${args.id.substring(0,5)}`)
+        updates.slug = updates.slug.concat(`-${args.id.substring(0,5)}`)
       }
 
     }
 
+
+
+
     await Story.update({
-      ...args,
-      slug: newSlug
+      ...updates
     }, {
       where: {
         id: args.id

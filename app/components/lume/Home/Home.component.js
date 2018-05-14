@@ -60,7 +60,7 @@ export default class Home extends Component {
                   <H3>
                     You are currently using Lume in Local Mode
                   </H3>
-                  
+
                 </Box>
               ): null}
 
@@ -80,7 +80,19 @@ export default class Home extends Component {
                   </H3>
 
                   <P>
-                    Try out the tutorial.
+                    <Link
+                      href={{
+                        pathname: '/lume',
+                        query: {
+                          subdomain: 'mia',
+                          grandTour:true
+                        }
+                      }}
+                      as={`/mia`}
+                    >
+                      <a>Take the grand tour!
+</a>
+                    </Link>
                   </P>
                 </Card>
               </Box>

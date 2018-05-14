@@ -118,9 +118,9 @@ export default class MediaManager extends Component {
                         width={1}
                       >
                         {(medias.length < 1) ? (
-                          <p>You don't have any images yet</p>
+                          <p>You don't have any media yet</p>
                         ):null}
-                        {(medias.length % 10 === 0) ? (
+                        {(medias.length % 10 === 0 && medias.length !== 0) ? (
                           <Button
                             onClick={handleLoadMore}
                             color={'white'}
@@ -174,9 +174,11 @@ export default class MediaManager extends Component {
               <Flex
                 w={1/3}
                 flexWrap={'wrap'}
+                p={3}
               >
                 <Box
                   w={1}
+                  my={2}
                 >
                   <input
                     type={"file"}
@@ -186,6 +188,8 @@ export default class MediaManager extends Component {
                 </Box>
                 <Box
                   w={1}
+                  my={2}
+
                 >
                   <Label>
                     Title
@@ -198,6 +202,8 @@ export default class MediaManager extends Component {
                 </Box>
                 <Box
                   w={1}
+                  my={2}
+
                 >
                   <Label>
                     Description
@@ -208,18 +214,20 @@ export default class MediaManager extends Component {
                     onChange={handleChange}
                   />
                 </Box>
-                <Box
-                  w={1}
+                <Flex
+                  width={1}
+                  my={2}
+
                 >
                   <Label>
-                    I have the right to distribute this image.
+                    I have the right to distribute this media.
                   </Label>
                   <CheckboxInput
                     value={"hasRights"}
                     checked={hasRights}
                     onChange={handleCheckbox}
                   />
-                </Box>
+                </Flex>
 
                 <Button
                   onClick={handleUpload}

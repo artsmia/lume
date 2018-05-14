@@ -106,7 +106,7 @@ class MovieEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({...this.mapPropsToState(nextProps)})
+    this.setState({...this.stateFromProps(nextProps)})
   }
 
   handleChange = ({target: {value, name}}) => {

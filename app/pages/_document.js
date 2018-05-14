@@ -23,7 +23,7 @@ export default class ClientDocument extends Document {
     return (
       <html lang="en">
         <Head>
-          <script
+          {/* <script
             async
             src="https://www.googletagmanager.com/gtag/js?id=UA-32999675-8"
           />
@@ -35,7 +35,7 @@ export default class ClientDocument extends Document {
 
               gtag('config', 'UA-32999675-8');
             `}}
-          />
+          /> */}
 
 
           <link

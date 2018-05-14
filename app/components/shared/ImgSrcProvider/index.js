@@ -18,7 +18,7 @@ export default function imgSrcProvider(WrappedComponent){
       this.generateSrcFromProps(nextProps)
     }
 
-    generateSrcFromProps = async (props) => {
+    generateSrcFromProps = (props) => {
       try {
         let src = '/static/placeholder0.png'
         if (props.image && props.image.organization){

@@ -9,13 +9,13 @@ class New extends Component {
   static getInitialProps = async (ctx) => {
     try {
 
-
       let auth = new Auth(ctx)
       await auth.getUser()
 
 
       return {
-        user: auth.user
+        user: auth.user,
+        tutorial: ctx.query ? ctx.query.tutorial : false
       }
     } catch (ex) {
       console.error(ex)

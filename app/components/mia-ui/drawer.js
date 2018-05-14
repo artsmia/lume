@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Flex, Box} from 'grid-styled'
 import {Button} from './buttons'
 import {grey30, black} from './colors'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
 const drawerWidth = '400px'
 const drawerWidthMobile = '66%'
@@ -26,6 +26,12 @@ export const Drawer = styled(Flex)`
   @media only screen and (max-width: 400px) {
     width: ${drawerWidthMobile};
   }
+
+  ${({open}) => open ? css`
+    transform: translateX(0);
+
+
+  `: null}
 `
 
 export const DrawerButton = styled.div`
@@ -68,6 +74,30 @@ export const DrawerButton = styled.div`
     bottom: 24%;
     transform-origin: left center;
   }
+
+  ${({open}) => open ? css`
+    left: ${drawerWidth};
+
+    span:nth-child(1){
+      transform: rotate(45deg);
+      top: 10px;
+      left: 12px;
+      width: 36px;
+    }
+
+    span:nth-child(2){
+      width: 0%;
+      opacity: 0;
+    }
+
+    span:nth-child(3){
+      transform: rotate(-45deg);
+      bottom: 10px;
+      left: 12px;
+      width: 36px;
+    }
+
+  `: null}
 `
 
 
@@ -87,6 +117,13 @@ export const DrawerPage = styled(Box)`
   margin-left: 0;
   overflow-y: scroll;
   transition: all .4s;
+  ${({open}) => open ? css`
+    margin-left: ${drawerWidth};
+    @media only screen and (max-width: 400px) {
+      margin-left: ${drawerWidthMobile};
+
+    }
+  `: null}
 `
 
 

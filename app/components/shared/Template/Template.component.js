@@ -9,7 +9,6 @@ import {Icon} from '../../mia-ui/icons'
 import {CheckboxInput} from '../../mia-ui/forms'
 
 import Feedback from '../Feedback'
-import Joyride from 'react-joyride'
 import Floater from 'react-floater'
 
 export default class Template extends Component {
@@ -33,7 +32,8 @@ export default class Template extends Component {
         children,
         user,
         tips,
-        toolTips
+        toolTips,
+        tutorial
       },
       state: {
         menu,
@@ -122,12 +122,6 @@ export default class Template extends Component {
 
 
 
-            {/* <Joyride
-              steps={toolTips.tips}
-              run={toolTips.show}
-              showSkipButton={true}
-            /> */}
-
             {toolTips.show ? toolTips.tips.map((tip, index) => (
               <Floater
                 key={`tip.target-${index}`}
@@ -177,7 +171,7 @@ const Tip = styled.span`
   width: 30px;
   border-radius: 30px;
   font-size: 25px;
-  opacity: .5;
+  opacity: 1;
   transition: .2s all;
   z-index: 3000;
   &:hover {
@@ -214,7 +208,7 @@ const MenuCheck = styled.input`
   cursor: pointer;
 
 
-  &:checked ~ ${Menu} {
+  &:focus ~ ${Menu} {
     opacity: 1;
   }
 `

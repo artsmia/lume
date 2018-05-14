@@ -48,6 +48,9 @@ class Auth extends Component {
       if (organizations.length === 0){
         router.push({
           pathname: '/cms/organizations',
+          query: {
+            tutorial: true
+          }
         }, `/organizations`)
       }
 

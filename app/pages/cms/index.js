@@ -13,7 +13,8 @@ class CmsIndex extends Component {
       await auth.authenticate()
 
       return {
-        user: auth.user
+        user: auth.user,
+        tutorial: ctx.query.tutorial
       }
     } catch (ex) {
       console.error(ex)
@@ -24,8 +25,6 @@ class CmsIndex extends Component {
 
 
   render() {
-
-    console.log("CmsIndex page rendered")
 
     return (
       <Template

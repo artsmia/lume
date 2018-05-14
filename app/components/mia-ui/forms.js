@@ -60,6 +60,9 @@ const InputEl = styled.input`
   ${({invalid}) => invalid ? css`
     border: 2px solid ${({theme})=> theme.color.red};
   ` : null}
+  ${({paddingLeft}) => paddingLeft ? css`
+    padding-left: ${paddingLeft};
+  `:null}
 `
 
 
@@ -72,12 +75,14 @@ const ErrorSpan = styled.span`
 `
 
 export const Input = (props) => (
-  <div>
+  <Flex
+    w={1}
+  >
     <InputEl
       {...props}
     />
     <ErrorSpan>{props.errorMsg}</ErrorSpan>
-  </div>
+  </Flex>
 )
 
 export const Textarea = InputEl.withComponent('textarea').extend`
@@ -482,7 +487,12 @@ class MultiSelect extends Component {
               onChange={handleSearchChange}
               placeholder={'Search'}
               onFocus={()=>this.setState({showDrop: true})}
-              onBlur={()=>this.setState({showDrop: false})}
+              onBlur={()=>{
+                setTimeout(
+                  () => {this.setState({showDrop: false})},
+                  200
+                )
+            }}
             />
             <DropDown
               show={showDrop}
@@ -519,7 +529,6 @@ class MultiSelect extends Component {
   }
 
   handleCheck = (value) => {
-
     this.props.onAdd(value)
   }
 
@@ -567,8 +576,8 @@ const MultiSearch = styled.input`
 `
 
 const DropDown = styled.div`
-  display: flex;
   flex-wrap: wrap;
+  display: none;
   width: 220px;
   opacity: 0;
   position: absolute;
@@ -582,6 +591,8 @@ const DropDown = styled.div`
   overflow-y: scroll;
   ${({show}) => show ? `
     opacity: 1;
+    display: flex;
+
   `: undefined}
 `
 

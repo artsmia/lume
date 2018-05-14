@@ -6,6 +6,8 @@ import {Button} from '../../mia-ui/buttons'
 import router from 'next/router'
 import {Page, Card} from '../../mia-ui/layout'
 import Head from '../../shared/head'
+import Joyride from 'react-joyride'
+import {Flex, Box} from 'grid-styled'
 
 export default class OrgManager extends Component {
 
@@ -18,12 +20,72 @@ export default class OrgManager extends Component {
     name: "",
     subdomain: "",
     subdomainValid: false,
-    subdomainInvalid: false
+    subdomainInvalid: false,
+    showTutorial: this.props.tutorial ? true : false,
+    tutorial: [
+      {
+        content: (
+          <div>
+            <h2>Welcome to Lume!</h2>
+            <p>First thing: Let's get you set up with an organization!</p>
+          </div>
+        ),
+        placement: "center",
+        disableBeacon: true,
+        styles: {
+          options: {
+            zIndex: 10000
+          }
+        },
+        target: "body"
+      },
+      {
+        content: (
+          <div>
+            <p>All users on Lume are organized into organizations. An organization might be a museum, a class project, or just a group of story tellers who want to collaborate.</p>
+            <p>Organization members can share images and edit each others' stories. All of the stories that they've published will appear together on their organization's public page.</p>
+          </div>
+        ),
+        placement: "center",
+        disableBeacon: true,
+        styles: {
+          options: {
+            zIndex: 10000
+          }
+        },
+        target: "body"
+      },
+      {
+        target: "#join-org",
+        content:(
+          <div>
+            <p>You can join an organization by searching for the organization by name and then selecting it from the dropdown menu. </p>
+            <p>Note: some organizations require approval for new users or only allow users with organization specific email addresses. If you join such an organization, the admins will be notified of your join request and you will have to wait for their approval.</p>
+          </div>
+        )
+      },
+      {
+        target: "#create-org",
+        content:(
+          <div>
+            <p>You can also create your own organization by entering a name and subdomain here.</p>
+          </div>
+        )
+      },
+      {
+        target: "#subdomain",
+        content:(
+          <div>
+            <p>Each organization is given its own unique url at https://lume.space/~subdomain~</p>
+            <p>Choose your subdomain wisely as this value can't currently be changed!</p>
+          </div>
+        )
+      },
+    ]
   }
 
+
   render() {
-
-
     const {
       createAndJoinOrg,
       joinOrg,
@@ -63,6 +125,7 @@ export default class OrgManager extends Component {
 
             <Card
               m={2}
+              id={'join-org'}
             >
               <H2>Join an Organization</H2>
 
@@ -87,8 +150,9 @@ export default class OrgManager extends Component {
             </Card>
             <Card
               m={2}
+              id={"create-org"}
             >
-              <H2>...Or Create a New One</H2>
+              <H2>Create a New Organization</H2>
                 <Form>
                   <Label>
                     Organization Name
@@ -100,18 +164,29 @@ export default class OrgManager extends Component {
                     valid={(name)}
                     value={name}
                   />
-                  <Label>
-                    Subdomain
-                  </Label>
-                  <Input
-                    name={"subdomain"}
-                    type={"text"}
-                    onChange={handleSubdomainChange}
-                    valid={subdomainValid}
-                    invalid={subdomainInvalid}
-                    errorMsg={subdomainErrorMsg}
-                    value={subdomain}
-                  />
+                  <Flex
+                    id={'subdomain'}
+                    w={1}
+                  >
+
+                    <Flex
+                      w={1}
+                    >
+                      <UrlSpan>https://lume.space/</UrlSpan>
+                      <Input
+                        name={"subdomain"}
+                        type={"text"}
+                        onChange={handleSubdomainChange}
+                        valid={subdomainValid}
+                        invalid={subdomainInvalid}
+                        errorMsg={subdomainErrorMsg}
+                        value={subdomain}
+                        paddingLeft={'160px'}
+                      />
+                    </Flex>
+
+                  </Flex>
+
                 </Form>
                 <Button
                   disabled={(!name || !subdomain || subdomainInvalid || !subdomainValid)}
@@ -121,12 +196,31 @@ export default class OrgManager extends Component {
                 </Button>
             </Card>
 
-
+          <Joyride
+            run={this.state.showTutorial}
+            steps={this.state.tutorial}
+            showProgress
+            showSkipButton
+            continuous
+          />
         </Page>
     )
   }
 
+  // componentDidMount(){
+  //   this.props.addTips({
+  //     tips: this.state.tutorial
+  //   })
+  // }
+  //
+  // componentWillUnmount(){
+  //   this.props.removeTips({
+  //     tips: this.state.tutorial
+  //   })
+  // }
+
   handleSubdomainChange = ({target: {name, value}}) => {
+
     let invalidSubdomains = ['login', 'logout', 'callback', 'error', 'auth', 'organizations', 'cms']
 
     this.props.organizations.forEach(org => invalidSubdomains.push(org.subdomain))
@@ -158,8 +252,6 @@ export default class OrgManager extends Component {
       subdomainErrorMsg = 'That subdomain is already taken.'
 
     }
-
-    console.log(newValue)
 
 
     this.setState({
@@ -228,7 +320,8 @@ export default class OrgManager extends Component {
         router.push({
           pathname: '/cms',
           query: {
-            subdomain: organization.subdomain
+            subdomain: organization.subdomain,
+            tutorial: (organizations.length === 1) ? true : false
           }
         }, `/cms/${organization.subdomain}`)
       } else {
@@ -244,9 +337,15 @@ export default class OrgManager extends Component {
     }
   }
 
+  componentDidMount(){
+    if (this.props.user) {
+      if (this.props.user.organizations.length < 1){
+        this.setState({showTutorial: true})
+      }
+    }
+  }
 
   change = ({target: {name, value}}) => this.setState({[name]: value})
-
 
   createAndJoinOrg = async () => {
     try {
@@ -276,7 +375,8 @@ export default class OrgManager extends Component {
         router.push({
           pathname: '/cms',
           query: {
-            subdomain: organization.subdomain
+            subdomain: organization.subdomain,
+            tutorial: (this.props.user.organizations.length < 1) ? true : false
           }
         }, `/cms/${organization.subdomain}`)
       }
@@ -289,6 +389,15 @@ export default class OrgManager extends Component {
 
 
 }
+
+const UrlSpan = styled.span`
+  position: absolute;
+  font-size: 1rem;
+  margin-top: 12.4px;
+  margin-left: 14px;
+  font-family: ${({theme}) => theme.font.bold};
+  color: ${({theme}) => theme.color.gray60};
+`
 
 const Centered = styled.div`
   display: flex;

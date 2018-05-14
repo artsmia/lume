@@ -95,10 +95,14 @@ export default class MultiMedia extends Component {
           width={"60%"}
 
         >
-          <MediaManager
-            onMediaSave={handleAdd}
 
-          />
+          {modal ? (
+            <MediaManager
+              onMediaSave={handleAdd}
+
+            />  
+          ): null}
+
 
         </Modal>
       </Flex>

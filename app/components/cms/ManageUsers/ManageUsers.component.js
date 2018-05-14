@@ -89,7 +89,7 @@ export default class ManageUsers extends Component {
                 w={[2/8]}
 
               >
-                {user.name ? `${user.name.given} ${user.name.family}` : null}
+                {user.name ? `${user.name.given || ''} ${user.name.family || ''}` : null}
               </BodyCell>
               <BodyCell
                 w={[3/8]}

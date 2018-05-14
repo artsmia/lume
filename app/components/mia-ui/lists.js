@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {Flex, Box} from 'grid-styled'
@@ -125,20 +125,20 @@ export const Tile = (props) => (
 
 )
 
-Tile.defaultProps = {
-  p: 1,
-  width: [1, 1/2, 1/2]
-}
-
-Tile.propTypes = {
-  href: PropTypes.shape({
-    pathname: PropTypes.string,
-    query: PropTypes.object
-  }),
-  as: PropTypes.string,
-  src: PropTypes.string,
-  alt: PropTypes.string,
-  text: PropTypes.string,
-  height: PropTypes.string,
-  link: PropTypes.bool
-}
+// Tile.defaultProps = {
+//   p: 1,
+//   width: [1, 1/2, 1/2]
+// }
+//
+// Tile.propTypes = {
+//   href: PropTypes.shape({
+//     pathname: PropTypes.string,
+//     query: PropTypes.object
+//   }),
+//   as: PropTypes.string,
+//   src: PropTypes.string,
+//   alt: PropTypes.string,
+//   text: PropTypes.string,
+//   height: PropTypes.string,
+//   link: PropTypes.bool
+// }
