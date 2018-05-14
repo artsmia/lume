@@ -1,26 +1,22 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import {Flex, Box} from 'grid-styled'
-import {gray60, blue} from './colors'
-import {H2} from './text'
-import Link from 'next/link'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { Flex, Box } from "grid-styled"
+import { gray60, blue } from "./colors"
+import { H2 } from "./text"
+import Link from "next/link"
 
 const GridFlex = styled(Flex)`
   position: relative;
   min-height: 300px;
 `
 
-export const GridList = (props) => (
-  <GridFlex
-    {...props}
-  >
-    {props.children}
-  </GridFlex>
+export const GridList = props => (
+  <GridFlex {...props}>{props.children}</GridFlex>
 )
 
 GridList.defaultProps = {
-  flexWrap: 'wrap'
+  flexWrap: "wrap"
 }
 
 const TileText = styled.div`
@@ -30,7 +26,7 @@ const TileText = styled.div`
   height: 40%;
   bottom: 0;
   padding: 10px;
-  transition: all .2s;
+  transition: all 0.2s;
   opacity: 1;
   transform: translateY(0);
 `
@@ -39,26 +35,28 @@ const TileContainer = styled.a`
   position: relative;
   display: block;
   width: 100%;
-  height: ${({height}) => height};
+  height: ${({ height }) => height};
   cursor: pointer;
   overflow: hidden;
   &:hover {
-    ${TileText}{
+    ${TileText} {
       height: 42%;
     }
   }
-  ${({selected, theme})=> selected ? `
+  ${({ selected, theme }) =>
+    selected
+      ? `
     box-shadow: 0 0 10px 3px ${theme.color.green};
-  ` : null}
-
+  `
+      : null};
 `
 
 TileContainer.propTypes = {
-  height: PropTypes.string,
+  height: PropTypes.string
 }
 
 TileContainer.defaultProps = {
-  height: '180px'
+  height: "180px"
 }
 
 const TileImage = styled.img`
@@ -72,57 +70,31 @@ TileImage.propTypes = {
   alt: PropTypes.string
 }
 
-export const Tile = (props) => (
-  <Box
-    w={props.w}
-    p={props.p}
-    onClick={props.onClick}
-  >
+export const Tile = props => (
+  <Box w={props.w} p={props.p} onClick={props.onClick}>
     {props.link ? (
-      <Link
-        href={props.href}
-        as={props.as}
-      >
+      <Link href={props.href} as={props.as}>
         <TileContainer
           href={props.as}
           height={props.height}
           selected={props.selected}
+          id={props.id}
         >
-          <TileImage
-            src={props.src}
-            alt={props.alt}
-          />
+          <TileImage src={props.src} alt={props.alt} />
           <TileText>
-            <H2
-              color={"white"}
-            >
-              {props.text}
-            </H2>
+            <H2 color={"white"}>{props.text}</H2>
           </TileText>
         </TileContainer>
       </Link>
-    ): (
-      <TileContainer
-        height={props.height}
-        selected={props.selected}
-      >
-        <TileImage
-          src={props.src}
-          alt={props.alt}
-        />
+    ) : (
+      <TileContainer height={props.height} selected={props.selected}>
+        <TileImage src={props.src} alt={props.alt} />
         <TileText>
-          <H2
-            color={"white"}
-          >
-            {props.text}
-          </H2>
+          <H2 color={"white"}>{props.text}</H2>
         </TileText>
       </TileContainer>
-
     )}
-
   </Box>
-
 )
 
 // Tile.defaultProps = {
