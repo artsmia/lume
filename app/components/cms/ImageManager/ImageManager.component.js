@@ -2,7 +2,7 @@ import React from "react"
 import { Component } from "react"
 import { TabContainer, TabHeader, Tab, TabBody } from "../../mia-ui/tabs"
 import { Button } from "../../mia-ui/buttons"
-import { Search } from "../../mia-ui/forms"
+import { Search, Input, Textarea } from "../../mia-ui/forms"
 import ImageUploader from "./ImageUploader"
 import styled from "styled-components"
 import PropTypes from "prop-types"
@@ -67,8 +67,11 @@ export default class ImageManager extends Component {
       handleRefetch,
       addMiaImageToLume,
       handleMiaImageSearchChange,
-      handleSearchChange
+      handleSearchChange,
+      handleImageSelect
     } = this
+
+    console.log(this.props)
 
     return (
       <Container w={"80vw"}>
@@ -103,10 +106,11 @@ export default class ImageManager extends Component {
             <SelectFlex p={1}>
               <OrgImagesFlex width={1 / 2} flexDirection={"column"} p={2}>
                 <Box width={1} mb={2}>
-                  <Search
+                  <Input
                     value={search}
                     name={"search"}
                     onChange={handleSearchChange}
+                    placeholder={"Search images"}
                   />
                 </Box>
 
@@ -116,9 +120,7 @@ export default class ImageManager extends Component {
                       key={image.id}
                       width={[1 / 3]}
                       p={2}
-                      onClick={() =>
-                        this.setState({ selectedImageId: image.id })
-                      }
+                      onClick={() => handleImageSelect(image)}
                     >
                       <Image
                         image={image}
@@ -140,13 +142,32 @@ export default class ImageManager extends Component {
                 </ImageList>
               </OrgImagesFlex>
 
-              <Flex width={1 / 2} p={2}>
+              <ZoomerInputContainer
+                width={1 / 2}
+                p={2}
+                flexDirection={"column"}
+                justifyContent={"center"}
+              >
                 {selectedImageId ? (
                   <Zoomer imageId={selectedImageId} mode={"image"} />
                 ) : (
                   <H3>Choose an image from the left</H3>
                 )}
-              </Flex>
+                {selectedImageId ? (
+                  <Input
+                    name={`${selectedImageId}|title`}
+                    value={this.state[`${selectedImageId}|title`] || ""}
+                    onChange={handleChange}
+                  />
+                ) : null}
+                {selectedImageId ? (
+                  <Textarea
+                    name={`${selectedImageId}|description`}
+                    value={this.state[`${selectedImageId}|description`] || ""}
+                    onChange={handleChange}
+                  />
+                ) : null}
+              </ZoomerInputContainer>
             </SelectFlex>
 
             <Button onClick={handleImageSave}>Select</Button>
@@ -208,6 +229,37 @@ export default class ImageManager extends Component {
         </TabContainer>
       </Container>
     )
+  }
+
+  bounce = true
+
+  debounce = (func, wait) => {
+    if (this.bounce) {
+      clearTimeout(this.bounce)
+      this.bounce = setTimeout(func, wait)
+    }
+  }
+
+  handleChange = ({ target: { value, name } }) => {
+    this.setState(
+      () => ({ [name]: value }),
+      this.debounce(() => {
+        let id = name.split("|")[0]
+        this.props.editImage({
+          id,
+          title: this.state[`${id}|title`],
+          description: this.state[`${id}|description`]
+        })
+      }, 1000)
+    )
+  }
+
+  handleImageSelect = image => {
+    this.setState({
+      selectedImageId: image.id,
+      [`${image.id}|title`]: image.title,
+      [`${image.id}|description`]: image.description
+    })
   }
 
   handleMiaImageSelect = async selectedMiaImage => {
@@ -365,9 +417,6 @@ export default class ImageManager extends Component {
     })
   }
 
-  handleChange = ({ target: { value, name } }) =>
-    this.setState({ [name]: value })
-
   handleSearch = () => {
     this.props.refetch({
       filter: {
@@ -426,6 +475,10 @@ const MiaDisplayImage = styled.img`
   max-width: 90%;
   margin: auto;
   object-fit: contain;
+`
+
+const ZoomerInputContainer = styled(Flex)`
+  height: 100%;
 `
 
 // const SearchRow = styled(Row)`
