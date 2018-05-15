@@ -18,9 +18,11 @@ import apphook from "./github/apphook"
 
 import { ApolloEngine } from "apollo-engine"
 
+let apolloEngineApiKey = process.env.APOLLO_ENGINE_APIKEY
+
 const engine = apolloEngineApiKey
   ? new ApolloEngine({
-      apiKey: process.env.APOLLO_ENGINE_APIKEY
+      apiKey: apolloEngineApiKey
     })
   : {}
 

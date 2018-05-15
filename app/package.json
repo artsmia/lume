@@ -60,6 +60,7 @@
   },
   "scripts": {
     "start": "BABEL_ENV=next node router",
+    "start:local": "BABEL_ENV=next node router",
     "build": "BABEL_ENV=next next build",
     "now-start": "NODE_ENV=production node router",
     "deploy": "now -e --token=$NOW_TOKEN",

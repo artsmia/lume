@@ -57,6 +57,8 @@
   "scripts": {
     "start":
       "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js dotenv_config_path=../config/.env",
+    "start:local":
+      "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js dotenv_config_path=../config/.env.local",
     "prepare":
       "rm -rf build && babel ../data-api -d build --ignore node_modules",
     "deploy": "now -e NODE_ENV=production --token=$NOW_TOKEN --npm",
