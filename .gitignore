@@ -18,3 +18,5 @@ localDB.sqlite
 *.sql
 env.md
 *.pem
+
+compose.cert

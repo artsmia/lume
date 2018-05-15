@@ -9,7 +9,7 @@
     "AWS_SECRET_ACCESS_KEY": "@lume-aws-secret",
     "AUTH0_MGMT_ID": "@lume-auth0-mgmt-id",
     "AUTH0_MGMT_SECRET": "@lume-auth0-mgmt-secret",
-    "DB_URL": "@lume-mysql-db-compose",
+    "DB_URL": "@lume-mysql-aws",
     "GITHUB_ISS": "11539",
     "MAILGUN_API_KEY": "@lume-mailgun-key",
     "MAILGUN_DOMAIN": "mail.lume.space",
