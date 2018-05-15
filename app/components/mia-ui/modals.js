@@ -1,14 +1,11 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import {
-  gray85
-} from './colors'
-import {Button} from './buttons'
-import {Box, Flex} from 'grid-styled'
-import {Icon} from './icons'
-import {Span} from './text'
-
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { gray85 } from "./colors"
+import { Button } from "./buttons"
+import { Box, Flex } from "grid-styled"
+import { Icon } from "./icons"
+import { Span } from "./text"
 
 const Container = styled.div`
   position: fixed;
@@ -17,18 +14,17 @@ const Container = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: ${gray85};
-  display: ${({open}) => open ? 'block': 'none'};
+  display: ${({ open }) => (open ? "block" : "none")};
   z-index: 5000;
 `
 
-const ModalBox = styled.div`
+const ModalBox = styled(Flex)`
   background-color: white;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   border-radius: 5px;
-  padding: 10px;
   z-index: 5000;
 `
 
@@ -47,30 +43,17 @@ const CloseButton = styled.button`
 `
 
 class Modal extends Component {
-
   static propTypes = {
     onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
+    open: PropTypes.bool.isRequired
   }
 
-
-  render(){
+  render() {
     return (
-      <Container
-        onClick={this.props.onClose}
-        open={this.props.open}
-      >
-        <ModalBox
-          onClick={this.stopPropagation}
-        >
-          <CloseButton
-            onClick={this.props.onClose}
-          >
-            <Icon
-              size={'25px'}
-              color={'white'}
-              icon={'close'}
-            />
+      <Container onClick={this.props.onClose} open={this.props.open}>
+        <ModalBox onClick={this.stopPropagation} p={1}>
+          <CloseButton onClick={this.props.onClose}>
+            <Icon size={"25px"} color={"white"} icon={"close"} />
           </CloseButton>
           {this.props.children}
         </ModalBox>
@@ -85,9 +68,7 @@ class Modal extends Component {
   //   }
   // }
 
-  stopPropagation = (e) => e.stopPropagation()
-
-
+  stopPropagation = e => e.stopPropagation()
 }
 
 const WarnFooter = styled.div`
@@ -99,45 +80,28 @@ const WarnFooter = styled.div`
   width: 200px;
 `
 
-
 class Warn extends Component {
-
   static defaultProps = {
-    onConfirm(){
+    onConfirm() {
       console.log("Confirmed")
     },
-    onReject(){
+    onReject() {
       console.log("Rejected")
     }
   }
 
-  render(){
+  render() {
     return (
-      <Container
-        open={this.props.open}
-      >
+      <Container open={this.props.open}>
         <ModalBox>
-
-          <Span>
-            {this.props.children}
-          </Span>
-
+          <Span>{this.props.children}</Span>
 
           <WarnFooter>
-            <Button
-              onClick={this.handleConfirm}
-            >
-              Yes
-            </Button>
-            <Button
-              onClick={this.handleReject}
-              color={'red'}
-            >
+            <Button onClick={this.handleConfirm}>Yes</Button>
+            <Button onClick={this.handleReject} color={"red"}>
               No
             </Button>
           </WarnFooter>
-
-
         </ModalBox>
       </Container>
     )
@@ -153,7 +117,4 @@ class Warn extends Component {
     this.props.onClose()
   }
 }
-export {
-  Modal,
-  Warn
-}
+export { Modal, Warn }

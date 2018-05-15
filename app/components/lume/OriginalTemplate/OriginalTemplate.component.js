@@ -235,9 +235,9 @@ export default class OriginalTemplate extends Component {
   }
 
   render() {
-    if (this.props.story.contents.length < 1) {
-      return <Container w={1} />
-    }
+    // if (this.props.story.contents.length < 1) {
+    //   return <Container w={1} />
+    // }
 
     const {
       state: { selectedTab, selectedContent, drawer },
@@ -265,9 +265,13 @@ export default class OriginalTemplate extends Component {
 
     let firstContent = objContent || story.contents[0]
 
-    let otherContents = story.contents
-      .slice()
-      .filter(content => content.id !== firstContent.id)
+    let otherContents = story.contents.slice()
+
+    if (objContent) {
+      otherContents = otherContents.filter(
+        content => content.id !== objContent.id
+      )
+    }
 
     let obj = false
 
@@ -319,7 +323,11 @@ export default class OriginalTemplate extends Component {
             </Flex>
           ) : null}
 
-          {obj ? <Tombstone obj={obj} /> : null}
+          {obj ? (
+            <Tombstone obj={obj} />
+          ) : (
+            <Tombstone obj={{ title: story.title }} />
+          )}
 
           <TabContainer selectedTab={selectedTab}>
             <TabHeader>
@@ -346,7 +354,7 @@ export default class OriginalTemplate extends Component {
                 flexDirection={"column"}
                 id={"details"}
               >
-                {otherContents.map(content => (
+                {otherContents.map((content, index) => (
                   <Expander
                     border={false}
                     key={content.id}
@@ -364,7 +372,7 @@ export default class OriginalTemplate extends Component {
                     header={<H3>{content.title}</H3>}
                     icon={
                       <Button round size={"35px"}>
-                        <IndexSpan>{content.index}</IndexSpan>
+                        <IndexSpan>{index + 1}</IndexSpan>
                       </Button>
                     }
                   >
@@ -551,6 +559,10 @@ export default class OriginalTemplate extends Component {
 
   showFeature = () => {
     const { selectedContent } = this.state
+
+    if (!selectedContent) {
+      return null
+    }
 
     if (selectedContent.type !== "detail" && selectedContent.type !== "all") {
       return <ContentDisplaySwitcher content={selectedContent} />

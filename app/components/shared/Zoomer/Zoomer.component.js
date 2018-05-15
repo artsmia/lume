@@ -1,21 +1,20 @@
-import React, {Component} from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-const L = (typeof window === 'object') ? require('leaflet') : null
-const LDraw = (typeof window === 'object') ? require('leaflet-draw') : null
+import React, { Component } from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
+const L = typeof window === "object" ? require("leaflet") : null
+const LDraw = typeof window === "object" ? require("leaflet-draw") : null
 
 export default class extends Component {
-
   static propTypes = {
     imageId: PropTypes.string,
     contentId: PropTypes.string,
     storyId: PropTypes.string,
     selectedContentId: PropTypes.string,
     mode: PropTypes.string,
-    onContentSelection: PropTypes.func,
+    onContentSelection: PropTypes.func
   }
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.mapRef = React.createRef()
     this.state = {}
@@ -24,33 +23,26 @@ export default class extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({...this.stateFromProps(nextProps)})
+  componentWillReceiveProps(nextProps) {
+    this.setState({ ...this.stateFromProps(nextProps) })
   }
 
   render() {
-
     if (!this.state.image) {
-      return <div/>
+      return <div />
     } else {
-      return (
-        <ZoomerMap
-          innerRef={mapRef => this.mapRef = mapRef}
-        />
-      )
+      return <ZoomerMap innerRef={mapRef => (this.mapRef = mapRef)} />
     }
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     console.log("Zoomer Unmounting")
-    if (this.map){
+    if (this.map) {
       this.map.remove()
     }
   }
 
-
-  stateFromProps = (props) => {
-
+  stateFromProps = props => {
     let newState = {}
 
     let image = false
@@ -59,33 +51,33 @@ export default class extends Component {
 
     let markers = false
 
-    if (props.image){
+    if (props.image) {
       image = props.image
     }
 
-    if (props.content){
+    if (props.content) {
       content = props.content
-      if (props.content.image0){
+      if (props.content.image0) {
         image = props.content.image0
       }
     }
 
-    if (
-      props.story
-    ){
-      let selectedContent = props.story.contents.find( content => content.id === props.selectedContentId)
+    if (props.story) {
+      let selectedContent = props.story.contents.find(
+        content => content.id === props.selectedContentId
+      )
 
-      if (selectedContent){
+      if (selectedContent) {
         content = selectedContent
         if (selectedContent.image0) {
           image = selectedContent.image0
         }
       } else {
-        if (props.story.primaryImage){
+        if (props.story.primaryImage) {
           image = props.story.primaryImage
         } else {
           let firstDetail = props.story.contents.find(content => {
-            if (content.type === 'detail' && content.image0){
+            if (content.type === "detail" && content.image0) {
               return true
             } else {
               return false
@@ -98,86 +90,66 @@ export default class extends Component {
       }
     }
 
-    if (
-      props.story &&
-      image
-    ) {
-      let markers = props.story.contents.filter( content => {
-        if (content.image0){
-          if (content.image0.id === image.id){
+    if (props.story && image) {
+      let markers = props.story.contents.filter(content => {
+        if (content.image0) {
+          if (content.image0.id === image.id) {
             return true
           }
         }
         return false
       })
 
-      Object.assign(newState, {markers})
+      Object.assign(newState, { markers })
     }
 
-    if(!props.selectedContentId){
-      Object.assign(newState, {content: false})
+    if (!props.selectedContentId) {
+      Object.assign(newState, { content: false })
     }
 
-    if (!this.state.image){
-      Object.assign(newState, {image})
+    if (!this.state.image) {
+      Object.assign(newState, { image })
     }
 
-    if (!this.state.content){
-      Object.assign(newState, {content})
+    if (!this.state.content) {
+      Object.assign(newState, { content })
     }
 
-    if (
-      this.state.image &&
-      image
-    ){
-      if (this.state.image.id !== image.id){
-        Object.assign(newState, {image})
+    if (this.state.image && image) {
+      if (this.state.image.id !== image.id) {
+        Object.assign(newState, { image })
       }
     }
 
-    if (
-      this.state.content &&
-      content
-    ) {
-      if (
-        this.state.content !== content.id
-      ) {
-        Object.assign(newState, {content})
+    if (this.state.content && content) {
+      if (this.state.content !== content.id) {
+        Object.assign(newState, { content })
       }
     }
 
-    if (
-      !image
-    ) {
-      Object.assign(newState, {image})
+    if (!image) {
+      Object.assign(newState, { image })
     }
 
     return newState
   }
 
-  componentDidMount(){
+  componentDidMount() {
     console.log("Zoomer mounted")
     this.setup({})
   }
 
-
-  componentDidUpdate(prevProps, prevState){
+  componentDidUpdate(prevProps, prevState) {
     this.setup(prevState)
   }
 
-  setup = async (prevState) => {
+  setup = async prevState => {
     try {
-
       console.log("setup", this.state)
 
-      if (
-        this.state.image
-      ) {
-
-        if (prevState.image){
-          if (
-            prevState.image.id !== this.state.image.id
-          ) {
+      if (this.state.image) {
+        if (prevState.image) {
+          if (prevState.image.id !== this.state.image.id) {
             this.map.remove()
             await this.setupImage()
           }
@@ -185,40 +157,27 @@ export default class extends Component {
           await this.setupImage()
         }
 
-
-        if (
-          this.map
-        ) {
-
-          if (
-            this.state.content
-          ) {
-
-            if (this.props.mode === 'editor') {
+        if (this.map) {
+          if (this.state.content) {
+            if (this.props.mode === "editor") {
               await this.createDetailEditor()
             } else {
               await this.createContentLayer()
 
-              if (
-                this.detailBounds
-              ) {
+              if (this.detailBounds) {
                 this.map.flyToBounds(this.detailBounds, {
-                  padding: [5,5],
+                  padding: [5, 5],
                   animate: false
                 })
               }
-
             }
           }
 
-          if (
-            this.state.markers
-          ) {
+          if (this.state.markers) {
             await this.createMarkers()
           }
         }
       }
-
     } catch (ex) {
       console.error(ex)
     }
@@ -233,15 +192,11 @@ export default class extends Component {
     }
   }
 
-  config = async (image) => {
+  config = async image => {
     try {
-      if (
-        process.env.FILE_STORAGE === 'local'
-      ) {
+      if (process.env.FILE_STORAGE === "local") {
         return await this.localTileConfig()
-      } else if (
-        this.state.image.host === 'mia'
-      ) {
+      } else if (this.state.image.host === "mia") {
         return await this.miaTileConfig()
       } else {
         return await this.lumeTileConfig()
@@ -253,9 +208,12 @@ export default class extends Component {
 
   miaTileConfig = async () => {
     try {
-      const response = await fetch(`https://tiles.dx.artsmia.org/${this.state.image.localId}.tif`, {
-        method: "GET"
-      })
+      const response = await fetch(
+        `https://tiles.dx.artsmia.org/${this.state.image.localId}.tif`,
+        {
+          method: "GET"
+        }
+      )
 
       let json = await response.json()
 
@@ -272,16 +230,23 @@ export default class extends Component {
 
   localTileConfig = async () => {
     try {
-      const response = await fetch(`${process.env.LOCAL_TILE_URL}/static/${this.state.image.id}/ImageProperties.xml`, {
-        method: "GET"
-      })
+      const response = await fetch(
+        `${process.env.LOCAL_TILE_URL}/static/${
+          this.state.image.id
+        }/ImageProperties.xml`,
+        {
+          method: "GET"
+        }
+      )
 
       let text = await response.text()
 
       return {
         height: new RegExp(/HEIGHT="(\d*)"/g).exec(text)[1],
         width: new RegExp(/WIDTH="(\d*)"/g).exec(text)[1],
-        tileUrl: `${process.env.LOCAL_TILE_URL}/static/${this.state.image.id}/TileGroup0/{z}-{x}-{y}.png` ,
+        tileUrl: `${process.env.LOCAL_TILE_URL}/static/${
+          this.state.image.id
+        }/TileGroup0/{z}-{x}-{y}.png`,
         tileSize: 512
       }
     } catch (ex) {
@@ -289,29 +254,32 @@ export default class extends Component {
     }
   }
 
-  lumeTileConfig = async() => {
+  lumeTileConfig = async () => {
     try {
-      const response = await fetch(`${process.env.S3_URL}/mia-lume/${this.state.image.id}/info.json`, {
-        method: "GET"
-      })
+      const response = await fetch(
+        `${process.env.S3_URL}/mia-lume/${this.state.image.id}/info.json`,
+        {
+          method: "GET"
+        }
+      )
 
       let json = await response.json()
 
       return {
         height: json.height,
         width: json.width,
-        tileUrl: `${process.env.S3_URL}/mia-lume/${this.state.image.id}/{z}_{x}_{y}.png`,
+        tileUrl: `${process.env.S3_URL}/mia-lume/${
+          this.state.image.id
+        }/{z}_{x}_{y}.png`,
         tileSize: 512
       }
-
     } catch (ex) {
       console.error(ex)
     }
   }
 
-  createZoomer = async ({ height, width, tileUrl, tileSize}) => {
+  createZoomer = async ({ height, width, tileUrl, tileSize }) => {
     try {
-
       console.log("createZoomer")
 
       // if (
@@ -326,10 +294,7 @@ export default class extends Component {
 
       let maxZoom = Math.ceil(Math.log2(maxTiles))
 
-      while (
-        height > tileSize ||
-        width > tileSize
-      ) {
+      while (height > tileSize || width > tileSize) {
         height = height / 2
         width = width / 2
       }
@@ -343,7 +308,7 @@ export default class extends Component {
         crs: L.CRS.Simple,
         maxBounds: this.bounds,
         attributionControl: false,
-        maxZoom,
+        maxZoom
       })
 
       const container = this.map.getContainer()
@@ -355,39 +320,29 @@ export default class extends Component {
 
       const initialZoom = Math.log2(longDimension / tileSize)
 
-      this.tiles = L.tileLayer.knight(
-        tileUrl, {
-          tileSize,
-          maxNativeZoom: maxZoom,
-          minNativeZoom: 0,
-          noWrap: true,
-          bounds: this.bounds,
-          minZoom: Math.floor(initialZoom),
-          maxZoom,
-        }
-      )
+      this.tiles = L.tileLayer.knight(tileUrl, {
+        tileSize,
+        maxNativeZoom: maxZoom,
+        minNativeZoom: 0,
+        noWrap: true,
+        bounds: this.bounds,
+        minZoom: Math.floor(initialZoom),
+        maxZoom
+      })
 
       const initialLatLng = [height / 2, -1 * width / 2]
 
-      this.map.setView(
-        initialLatLng,
-        initialZoom
-      )
+      this.map.setView(initialLatLng, initialZoom)
 
-      this.map.on('zoomstart', (e) => {
-
+      this.map.on("zoomstart", e => {
         let zoomReq = e.target._zoom
 
-        if (
-          zoomReq < initialZoom
-        ) {
+        if (zoomReq < initialZoom) {
           e.target._zoom = initialZoom
         } else {
           e.target._zoom = Math.round(zoomReq)
         }
-
       })
-
 
       this.tiles.addTo(this.map)
 
@@ -401,53 +356,41 @@ export default class extends Component {
 
   createDetailEditor = async () => {
     try {
-
-
-      if (
-        this.editableLayers
-      ) {
+      if (this.editableLayers) {
         this.map.removeLayer(this.editableLayers)
       }
 
-
-
-      let layers = this.state.content.geoJSON ? this.state.content.geoJSON.features.map( feature => {
-        return L.GeoJSON.geometryToLayer(feature)
-      }) : []
+      let layers = this.state.content.geoJSON
+        ? this.state.content.geoJSON.features.map(feature => {
+            return L.GeoJSON.geometryToLayer(feature)
+          })
+        : []
 
       this.editableLayers = new L.FeatureGroup(layers)
 
       this.map.addLayer(this.editableLayers)
 
-      this.map.on(L.Draw.Event.CREATED, (e) => {
+      this.map.on(L.Draw.Event.CREATED, e => {
         this.editableLayers.addLayer(e.layer)
 
         this.props.editContent({
           geoJSON: this.editableLayers.toGeoJSON()
         })
-
       })
 
-      this.map.on(L.Draw.Event.EDITED, (e) => {
-
+      this.map.on(L.Draw.Event.EDITED, e => {
         this.props.editContent({
           geoJSON: this.editableLayers.toGeoJSON()
         })
-
       })
 
-
-      this.map.on(L.Draw.Event.DELETED, (e) => {
-
+      this.map.on(L.Draw.Event.DELETED, e => {
         this.props.editContent({
           geoJSON: this.editableLayers.toGeoJSON()
         })
-
       })
 
-      if (
-        !this.drawControl
-      ) {
+      if (!this.drawControl) {
         this.drawControl = new L.Control.Draw({
           draw: {
             polygon: {
@@ -459,15 +402,14 @@ export default class extends Component {
             marker: false,
             circlemarker: false
           },
-          position: 'topright',
+          position: "topright",
           edit: {
             featureGroup: this.editableLayers
-          },
+          }
         })
 
         this.map.addControl(this.drawControl)
       }
-
     } catch (ex) {
       console.error(ex)
     }
@@ -475,12 +417,11 @@ export default class extends Component {
 
   createContentLayer = async () => {
     try {
-
-      if (this.contentLayer){
+      if (this.contentLayer) {
         this.map.removeLayer(this.contentLayer)
       }
 
-      let details = this.state.content.geoJSON.features.map( feature => {
+      let details = this.state.content.geoJSON.features.map(feature => {
         return L.GeoJSON.geometryToLayer(feature)
       })
 
@@ -491,31 +432,31 @@ export default class extends Component {
       let outline = L.rectangle(this.bounds)
 
       this.contentLayer = L.polygon([outline._latlngs, ...details], {
-        fill: 'black',
+        fill: "black",
         stroke: 0,
-        fillOpacity: .3
+        fillOpacity: 0.3
       })
 
       this.map.addLayer(this.contentLayer)
-
     } catch (ex) {
       console.error(ex)
     }
   }
 
-  createMarkers = async() => {
+  createMarkers = async () => {
     try {
       let markers = this.state.markers.map(marker => {
         return {
-          sw: L.geoJSON(marker.geoJSON).getBounds().getSouthWest(),
+          sw: L.geoJSON(marker.geoJSON)
+            .getBounds()
+            .getSouthWest(),
           marker
         }
       })
 
       this.indexMarkers = []
 
-      markers.forEach( ({sw, marker}) => {
-
+      markers.forEach(({ sw, marker }) => {
         let html = `<div class="index-icon"> ${marker.index} </div>`
 
         let icon = L.divIcon({
@@ -524,26 +465,21 @@ export default class extends Component {
 
         let indexMarker = L.marker(sw, {
           icon,
-          opacity: .75
+          opacity: 0.75
         })
 
         indexMarker.addTo(this.map)
 
         this.indexMarkers.push(indexMarker)
 
-        indexMarker.on(
-          "click",
-          () => {
-            this.props.onContentSelection(marker)
-          }
-        )
+        indexMarker.on("click", () => {
+          this.props.onContentSelection(marker)
+        })
       })
-
     } catch (ex) {
       console.error(ex)
     }
   }
-
 }
 
 const ZoomerMap = styled.div`
@@ -556,8 +492,8 @@ const ZoomerMap = styled.div`
     background: url("/static/crop.png") center;
     background-size: cover;
     background-color: white;
-    border: 1px solid ${({theme}) => theme.color.gray30};
-    box-shadow: 0 0 2px ${({theme}) => theme.color.gray60};
+    border: 1px solid ${({ theme }) => theme.color.gray30};
+    box-shadow: 0 0 2px ${({ theme }) => theme.color.gray60};
     border-radius: 2px;
     &:active {
       background-color: grey;
@@ -577,9 +513,8 @@ const ZoomerMap = styled.div`
   }
 
   .leaflet-div-icon {
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     border: none;
-
   }
 
   .leaflet-draw-toolbar {
@@ -589,79 +524,65 @@ const ZoomerMap = styled.div`
       }
     }
   }
-
 `
-if (typeof window === 'object') {
+if (typeof window === "object") {
+  // L.Control.Cropper = L.Control.extend({
+  //   onAdd(map) {
+  //     map.cropStart = false
+  //     map.cropEnd = false
+  //     map.cropping = false
+  //
+  //     this.button = L.DomUtil.create("button")
+  //     L.DomUtil.setClass(this.button, "crop-button")
+  //
+  //     L.DomEvent.on(this.button, "click", e => this.cropButtonClick(e, map))
+  //
+  //     return this.button
+  //   },
+  //
+  //   cropButtonClick(e, map) {
+  //     if (map.highlight) {
+  //       map.highlight.remove()
+  //       map.highlight = false
+  //     }
+  //     if (map.cropStart) {
+  //       map.cropStart.remove()
+  //       map.cropStart = false
+  //     }
+  //
+  //     if (map.cropEnd) {
+  //       map.cropEnd.remove()
+  //       map.cropEnd = false
+  //     }
+  //
+  //     if (map.cropping === false) {
+  //       map.cropping = true
+  //       map._container.style.cursor = "crosshair"
+  //       map.dragging._draggable._enabled = false
+  //     }
+  //   }
+  // })
+  //
+  // L.control.cropper = function(...args) {
+  //   return new L.Control.Cropper(...args)
+  // }
 
-  L.Control.Cropper = L.Control.extend({
-
-    onAdd(map){
-
-      map.cropStart = false
-      map.cropEnd = false
-      map.cropping = false
-
-      this.button = L.DomUtil.create('button')
-      L.DomUtil.setClass(this.button, "crop-button")
-
-      L.DomEvent.on(
-        this.button,
-        "click",
-        (e) => this.cropButtonClick(e, map)
-      )
-
-      return this.button
-    },
-
-    cropButtonClick(e, map){
-
-      if (
-        map.highlight
-      ) {
-        map.highlight.remove()
-        map.highlight = false
-      }
-      if (
-        map.cropStart
-      ) {
-        map.cropStart.remove()
-        map.cropStart = false
-      }
-
-      if (
-        map.cropEnd
-      ) {
-        map.cropEnd.remove()
-        map.cropEnd = false
-      }
-
-      if (map.cropping === false) {
-        map.cropping = true
-        map._container.style.cursor = "crosshair"
-        map.dragging._draggable._enabled = false
-      }
+  L.TileLayer.Knight = L.TileLayer.extend({
+    createTile({ z, x, y }) {
+      let tile = document.createElement("div")
+      let image = document.createElement("img")
+      image.src = this._url
+        .replace("{z}", z)
+        .replace("{x}", x)
+        .replace("{y}", y)
+        .replace("{s}", 0)
+      image.style["object-fit"] = "contain"
+      tile.appendChild(image)
+      return tile
     }
   })
 
-  L.control.cropper = function(...args){
-    return new L.Control.Cropper(...args)
-  }
-
-  L.TileLayer.Knight = L.TileLayer.extend({
-      createTile({z,x,y}) {
-
-        let tile = document.createElement("div")
-        let image = document.createElement("img")
-        image.src = this._url.replace("{z}",z).replace("{x}", x).replace("{y}", y).replace("{s}", 0)
-        image.style["object-fit"] = "contain"
-        tile.appendChild(image)
-        return tile
-      }
-  })
-
-  L.tileLayer.knight = function(...args){
+  L.tileLayer.knight = function(...args) {
     return new L.TileLayer.Knight(...args)
   }
-
-
 }

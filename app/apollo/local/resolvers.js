@@ -1,11 +1,9 @@
-import gql from 'graphql-tag'
-import {tipsQuery} from './getToolTips'
+import gql from "graphql-tag"
+import { tipsQuery } from "./getToolTips"
 
 export default {
   Mutation: {
-    showSnack(obj, {message}, {cache}, info){
-
-
+    showSnack(obj, { message }, { cache }, info) {
       const data = {
         snack: {
           __typename: "Snack",
@@ -14,10 +12,10 @@ export default {
         }
       }
 
-      cache.writeData({data})
+      cache.writeData({ data })
       return data
     },
-    setSaveStatus(obj, variables, {cache}, info){
+    setSaveStatus(obj, variables, { cache }, info) {
       const data = {
         saveStatus: {
           __typename: "SaveStatus",
@@ -25,11 +23,10 @@ export default {
         }
       }
 
-      cache.writeData({data})
+      cache.writeData({ data })
       return data
     },
-    showTips(obj, {show}, {cache}, info){
-
+    showTips(obj, { show }, { cache }, info) {
       console.log("show tips")
       let data = {
         toolTips: {
@@ -37,33 +34,31 @@ export default {
           show
         }
       }
-      cache.writeData({data})
+      cache.writeData({ data })
       return data
     },
-    addTips(obj, {tips}, {cache}, info){
-      let data = cache.readQuery({query:tipsQuery})
+    addTips(obj, { tips }, { cache }, info) {
+      let data = cache.readQuery({ query: tipsQuery })
 
+      data.toolTips.tips = tips
+        .map(tip => ({
+          ...tip,
+          __typename: "Tip"
+        }))
+        .concat(...data.toolTips.tips)
 
-
-      data.toolTips.tips = tips.map(tip => ({
-        ...tip,
-        __typename: 'Tip'
-      })).concat(...data.toolTips.tips)
-
-      cache.writeData({data})
+      cache.writeData({ data })
       return data
     },
-    removeTips(obj, {tips}, {cache}, info){
+    removeTips(obj, { tips }, { cache }, info) {
+      let data = cache.readQuery({ query: tipsQuery })
 
-      let data = cache.readQuery({query:tipsQuery})
+      data.toolTips.tips = data.toolTips.tips.filter(
+        currentTip => !tips.find(tip => currentTip.target === tip.target)
+      )
 
-
-      data.toolTips.tips = data.toolTips.tips.filter(currentTip => !tips.find(tip => currentTip.target === tip.target))
-
-      console.log(data.toolTips.tips)
-
-      cache.writeData({data})
+      cache.writeData({ data })
       return data
-    },
+    }
   }
 }

@@ -1,88 +1,82 @@
-import router from 'next/router'
-import fetch from 'isomorphic-unfetch'
-import jwt from 'jsonwebtoken'
+import router from "next/router"
+import fetch from "isomorphic-unfetch"
+import jwt from "jsonwebtoken"
 // import chalk from 'chalk'
 
 export default class Auth {
-
-  logging = false
+  logging = true
 
   log = (text, data) => {
-    if (process.env.NODE_ENV !== 'production' && this.logging){
+    if (process.env.NODE_ENV !== "production" && this.logging) {
       console.log("Auth: ", text)
-      if (data){
+      if (data) {
         console.log(data)
       }
     }
   }
 
   ex = (text, ex) => {
-    if (process.env.NODE_ENV !== 'production' && this.logging){
-      console.log("Auth: ", 'Exception!')
+    if (process.env.NODE_ENV !== "production" && this.logging) {
+      console.log("Auth: ", "Exception!")
       console.log(text)
       console.error(ex)
     }
   }
 
-  cmsRoles = ['admin', 'editor', 'contributor']
+  cmsRoles = ["admin", "editor", "contributor"]
 
-  constructor(ctx){
+  constructor(ctx) {
     this.log("constructor")
     this.pathname = ctx.pathname
     this.query = ctx.query
 
-    if (process.browser){
-      this.env = 'browser'
-    } else if (
-      ctx.req
-    ) {
-      this.env = 'server'
+    if (process.browser) {
+      this.env = "browser"
+    } else if (ctx.req) {
+      this.env = "server"
       this.session = ctx.req.session
       this.res = ctx.res
     } else {
       console.log("not server or browser?")
       this.authFail()
     }
-
   }
 
-  authenticate = async() => {
+  authenticate = async () => {
     try {
-      this.log('authenticate')
+      this.log("authenticate")
       await this.getUser()
 
+      if (!this.user) {
+        this.authFail()
+      }
 
       this.organization = this.user.organizations.find(
         organization => organization.subdomain === this.query.subdomain
       )
 
-
-
-
       switch (true) {
-
-
-        case (process.env.AUTH_STRATEGY === 'local'): {
+        case process.env.AUTH_STRATEGY === "local": {
           this.log("Using local auth strategy")
           break
         }
-        case(this.pathname === '/cms/orgSettings' && this.organization.role !== 'admin'): {
-          this.log('Settings page is only for admins.')
+        case this.pathname === "/cms/orgSettings" &&
+          this.organization.role !== "admin": {
+          this.log("Settings page is only for admins.")
           this.authFail()
           break
         }
-        case (!this.organization): {
-
+        case !this.organization: {
           this.log("Couldn't find permissions for this subdomain.")
           this.authFail()
           break
         }
-        case (this.organization.role === 'pending'): {
+        case this.organization.role === "pending": {
           this.log("This user's role is pending.")
           this.pending()
           break
         }
-        case (this.cmsRoles.includes(this.organization.role)): {
+        case this.cmsRoles.includes(this.organization.role): {
           this.log("Access granted.")
           break
         }
@@ -92,44 +86,37 @@ export default class Auth {
           break
         }
       }
-
     } catch (ex) {
       this.ex("authenticate", ex)
     }
   }
 
-
-
   getUser = async () => {
     try {
-      this.log('getUser')
+      this.log("getUser")
       switch (true) {
-        case (process.env.AUTH_STRATEGY === 'local'): {
+        case process.env.AUTH_STRATEGY === "local": {
           this.getUserLocal()
           break
         }
-        case (this.env === 'browser'): {
+        case this.env === "browser": {
           this.getUserBrowser()
 
           break
         }
-        case (this.env === 'server'): {
+        case this.env === "server": {
           this.getUserServer()
 
           break
         }
         default: {
-
           break
         }
       }
 
-      if(this.user){
+      if (this.user) {
         await this.fetchPermissions()
       }
-
-
-
     } catch (ex) {
       this.ex("getUser", ex)
     }
@@ -137,11 +124,11 @@ export default class Auth {
 
   getUserLocal = () => {
     try {
-      this.log('getUserLocal')
+      this.log("getUserLocal")
 
       this.user = {
-        id: 'local',
-        idToken: 'local'
+        id: "local",
+        idToken: "local"
       }
     } catch (ex) {
       this.ex("getUserLocal", ex)
@@ -151,45 +138,37 @@ export default class Auth {
   getUserServer = () => {
     try {
       this.log("getUserServer")
-      if (this.session.passport){
+      if (this.session.passport) {
+        const { id, idToken } = this.session.passport.user
 
-        const {
-          id,
-          idToken
-        } = this.session.passport.user
-
-        if (idToken){
-          if (this.isTokenExpired(idToken)){
+        if (idToken) {
+          if (this.isTokenExpired(idToken)) {
             this.authFail()
           }
         }
 
-        if (id && idToken){
+        if (id && idToken) {
           this.user = {
             id,
             idToken
           }
         }
       }
-
-
-
     } catch (ex) {
-      this.ex('getUserServer', ex)
+      this.ex("getUserServer", ex)
     }
   }
 
-
-  isTokenExpired = (token) => {
+  isTokenExpired = token => {
     try {
-      let {exp} = jwt.decode(token)
+      let { exp } = jwt.decode(token)
       let now = Date.now()
       exp = exp * 1000
       this.log("token exp", exp)
       this.log("now", now)
 
-      if (now > exp){
-        this.log('token is expired',(now > exp))
+      if (now > exp) {
+        this.log("token is expired", now > exp)
         return true
       } else {
         return false
@@ -199,59 +178,55 @@ export default class Auth {
     }
   }
 
-
   getUserBrowser = () => {
     try {
-      this.log('getUserBrowser')
-      let id = localStorage.getItem('userId')
-      let idToken = localStorage.getItem('idToken')
+      this.log("getUserBrowser")
+      let id = localStorage.getItem("userId")
+      let idToken = localStorage.getItem("idToken")
 
-      if (idToken){
-        if (this.isTokenExpired(idToken)){
+      if (idToken) {
+        if (this.isTokenExpired(idToken)) {
           this.authFail()
         }
       }
 
-      if (id && idToken){
+      if (id && idToken) {
         this.user = {
           id,
           idToken
         }
       }
-
     } catch (ex) {
-      this.ex('getUserBrowser', ex)
+      this.ex("getUserBrowser", ex)
     }
   }
 
   authFail = () => {
     try {
-      this.log('authFail')
-      if(this.env === 'server'){
+      this.log("authFail")
+      if (this.env === "server") {
         this.authFailServer()
       } else {
         this.authFailBrowser()
       }
     } catch (ex) {
-      this.ex('authFail', ex)
+      this.ex("authFail", ex)
     }
-
   }
 
   authFailServer = () => {
     try {
       this.log("authFailServer")
-      this.res.redirect('/logout')
+      this.res.redirect("/logout")
     } catch (ex) {
-      this.ex('authFailServer', ex)
+      this.ex("authFailServer", ex)
     }
-
   }
 
   authFailBrowser = () => {
     try {
-      this.log('authFailBrowser')
-      router.replace('/logout')
+      this.log("authFailBrowser")
+      router.replace("/logout")
     } catch (ex) {
       this.ex("authFailBrowser", ex)
     }
@@ -259,8 +234,8 @@ export default class Auth {
 
   pending = () => {
     try {
-      this.log('pending')
-      if (this.env === 'server'){
+      this.log("pending")
+      if (this.env === "server") {
         this.pendingServer()
       } else {
         this.pendingClient()
@@ -268,30 +243,29 @@ export default class Auth {
     } catch (ex) {
       this.ex("pending", ex)
     }
-
   }
 
   pendingServer = () => {
     try {
-      this.log('pendingServer')
-      this.res.redirect(`/cms/${this.subdomain}/pending`)
+      this.log("pendingServer")
+      this.res.redirect(`/cms/${this.query.subdomain}/pending`)
     } catch (ex) {
-      this.ex('pendingServer', ex)
+      this.ex("pendingServer", ex)
     }
   }
 
   pendingClient = () => {
     try {
-      this.log('pendingClient')
-      router.replace(`/cms/${this.subdomain}/pending`)
+      this.log("pendingClient")
+      router.replace(`/cms/${this.query.subdomain}/pending`)
     } catch (ex) {
-      this.ex('pendingClient', ex)
+      this.ex("pendingClient", ex)
     }
   }
 
   fetchPermissions = async () => {
     try {
-      this.log('fetchPermissions')
+      this.log("fetchPermissions")
 
       // if(process.env.AUTH_STRATEGY === 'local'){
       //   this.user = {
@@ -309,11 +283,11 @@ export default class Auth {
       // }
 
       let response = await fetch(process.env.API_URL, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${this.user.idToken}`,
-          'content-type': 'application/json',
-          'userid': this.user.id
+          Authorization: `Bearer ${this.user.idToken}`,
+          "content-type": "application/json",
+          userid: this.user.id
         },
         body: JSON.stringify({
           query: `{
@@ -341,9 +315,7 @@ export default class Auth {
 
       let {
         data: {
-          authenticate: {
-            user
-          }
+          authenticate: { user }
         }
       } = await response.json()
 
@@ -351,12 +323,9 @@ export default class Auth {
         ...user,
         idToken: this.user.idToken
       }
-
     } catch (ex) {
-      this.ex('fetchPermissions', ex)
+      this.ex("fetchPermissions", ex)
       this.authFail()
     }
   }
-
-
 }

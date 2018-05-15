@@ -1,16 +1,14 @@
-import React, {Component} from 'react'
-import Template from '../components/shared/Template'
-import AuthClass from '../auth'
-import router from 'next/router'
-import {Loading} from '../components/mia-ui/loading'
-import withData from '../apollo'
-import Head from '../components/shared/head'
+import React, { Component } from "react"
+import Template from "../components/shared/Template"
+import AuthClass from "../auth"
+import router from "next/router"
+import { Loading } from "../components/mia-ui/loading"
+import withData from "../apollo"
+import Head from "../components/shared/head"
 
 class Auth extends Component {
-
-  static getInitialProps = async (ctx) => {
+  static getInitialProps = async ctx => {
     try {
-
       let auth = new AuthClass(ctx)
 
       await auth.getUser()
@@ -27,16 +25,13 @@ class Auth extends Component {
   render() {
     return (
       <Template>
-        <Head
-          title={'...authenticating'}
-        />
-        <Loading/>
+        <Head title={"...authenticating"} />
+        <Loading />
       </Template>
-
     )
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.handleUser()
   }
 
@@ -45,36 +40,55 @@ class Auth extends Component {
       await this.setLocal()
 
       let organizations = await this.getUserOrganizations()
-      if (organizations.length === 0){
-        router.push({
-          pathname: '/cms/organizations',
-          query: {
-            tutorial: true
-          }
-        }, `/organizations`)
-      }
+      if (organizations.length === 0) {
+        return router.push(
+          {
+            pathname: "/cms/organizations",
+            query: {
+              tutorial: true
+            }
+          },
+          `/organizations`
+        )
+      } else {
+        let adminOrg = organizations.find(org => org.role === "admin")
 
-      for (let {role, subdomain} of organizations){
-        if (role === 'pending'){
-          router.push({
-            pathname: '/cms/pendingApproval',
-            query: {
-              subdomain
-            }
-          }, `/cms/${subdomain}/pending`)
-        } else {
-          router.push({
-            pathname: '/cms',
-            query: {
-              subdomain
-            }
-          }, `/cms/${subdomain}`)
+        if (adminOrg) {
+          return router.push(
+            {
+              pathname: "/cms",
+              query: {
+                subdomain: adminOrg.subdomain
+              }
+            },
+            `/cms/${adminOrg.subdomain}`
+          )
         }
 
+        let nonPending = organizations.find(org => org.role !== "pending")
+
+        if (nonPending) {
+          return router.push(
+            {
+              pathname: "/cms",
+              query: {
+                subdomain: nonPending.subdomain
+              }
+            },
+            `/cms/${nonPending.subdomain}`
+          )
+        } else {
+          return router.push(
+            {
+              pathname: "/cms",
+              query: {
+                subdomain: organizations[0].subdomain
+              }
+            },
+            `/cms/${organizations[0].subdomain}`
+          )
+        }
       }
-
-
-
     } catch (ex) {
       console.error(ex)
     }
@@ -82,31 +96,24 @@ class Auth extends Component {
 
   setLocal = async () => {
     try {
+      let { idToken, id } = this.props.user
 
-        let {
-          idToken,
-          id
-        } = this.props.user
+      localStorage.removeItem("userId")
+      localStorage.removeItem("idToken")
 
-        localStorage.removeItem('userId')
-        localStorage.removeItem('idToken')
-
-        localStorage.setItem('userId', id)
-        localStorage.setItem('idToken', idToken)
-
-
+      localStorage.setItem("userId", id)
+      localStorage.setItem("idToken", idToken)
     } catch (ex) {
       console.error(ex)
     }
   }
 
-
-  getUserOrganizations= async() => {
+  getUserOrganizations = async () => {
     try {
       const response = await fetch(process.env.API_URL, {
         method: "POST",
         headers: {
-          "content-type": "application/json",
+          "content-type": "application/json"
         },
         body: JSON.stringify({
           query: `{
@@ -130,9 +137,6 @@ class Auth extends Component {
       console.error(ex)
     }
   }
-
-
 }
-
 
 export default withData(Auth)

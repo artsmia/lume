@@ -1,6 +1,7 @@
-import React from 'react'
-import styled, {keyframes} from 'styled-components'
-import {black, gray30, gray60} from './colors'
+import React from "react"
+import styled, { keyframes } from "styled-components"
+import { black, gray30, gray60 } from "./colors"
+import { Flex, Box } from "grid-styled"
 
 const spin = keyframes`
   0% {
@@ -12,9 +13,8 @@ const spin = keyframes`
   }
 `
 
-export const Spinner = styled.div`
+export const Spinner = styled(Box)`
   height: 100%;
-  width: 100%;
   max-width: 40px;
   max-height: 40px;
   background-color: ${black};
@@ -22,43 +22,31 @@ export const Spinner = styled.div`
   z-index: 3;
 `
 
-const Overlay = styled.div`
+const Overlay = styled(Flex)`
   position: fixed;
   display: flex;
-  justify-content: center;
-  align-items: center;
+
   top: 0;
   left: 0;
-  width: 100%;
   height: 100%;
-  justify-content: center;
-  align-items: center;
   background-color: ${gray60};
   z-index: 5000;
 `
-export const Box = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const LoadFlex = styled(Flex)`
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  height: 100%;
   background-color: ${gray30};
   z-index: 2;
 `
 
-
-
 export const Waiting = () => (
-  <Box>
-    <Spinner/>
-  </Box>
+  <LoadFlex w={1} justifyContent={"center"} alignItems={"center"}>
+    <Spinner w={1} />
+  </LoadFlex>
 )
 
 export const Loading = () => (
-  <Overlay>
-    <Spinner/>
+  <Overlay w={1} justifyContent={"center"} alignItems={"center"}>
+    <Spinner w={1} />
   </Overlay>
 )

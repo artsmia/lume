@@ -117,11 +117,13 @@ def lambda_handler(event, context):
                 for y in range(0, yMax):
 
                     box = makeBox(x, y)
-                    name = makeName(x,y)
-                    path = f"/tmp/{name}"
-                    key = f"{s3Dir}/{name}"
-                    o.crop(box).save(path, "PNG")
-                    s3_client.upload_file(path, bucket, key, ExtraArgs={'ACL':'public-read'})
+
+                    if box[0] < o.size[0] and box[1] < o.size[1]:
+                        name = makeName(x,y)
+                        path = f"/tmp/{name}"
+                        key = f"{s3Dir}/{name}"
+                        o.crop(box).save(path, "PNG")
+                        s3_client.upload_file(path, bucket, key, ExtraArgs={'ACL':'public-read'})
 
             w = int(w / 2)
             h = int(h / 2)

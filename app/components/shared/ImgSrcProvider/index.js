@@ -1,54 +1,45 @@
-import React, {Component} from 'react'
-import fetch from 'isomorphic-unfetch'
+import React, { Component } from "react"
+import fetch from "isomorphic-unfetch"
 
-export default function imgSrcProvider(WrappedComponent){
-
-
+export default function imgSrcProvider(WrappedComponent) {
   return class ImgSrcProvider extends Component {
-
     state = {
-      src: '/static/placeholder0.png'
+      src: "/static/spinner.gif"
     }
 
-    componentDidMount(){
+    componentDidMount() {
       this.generateSrcFromProps(this.props)
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
       this.generateSrcFromProps(nextProps)
     }
 
-    generateSrcFromProps = (props) => {
+    generateSrcFromProps = async props => {
       try {
-        let src = '/static/placeholder0.png'
-        if (props.image && props.image.organization){
-
+        let src = "/static/placeholder0.png"
+        if (props.image && props.image.organization) {
           const {
             image,
             image: {
               host,
               localId,
               organization,
-              organization: {
-                subdomain,
-                id: orgId,
-                customImageApiEnabled
-              },
-
+              organization: { subdomain, id: orgId, customImageApiEnabled }
             },
             quality
           } = props
 
-          let qual = quality || 'm'
-
-
+          let qual = quality || "m"
 
           switch (true) {
-            case (subdomain === 'local'): {
-              src = `${process.env.LOCAL_TILE_URL}/static/${image.id}/${qual}.jpeg`
+            case subdomain === "local": {
+              src = `${process.env.LOCAL_TILE_URL}/static/${
+                image.id
+              }/${qual}.jpeg`
               break
             }
-            case (host === 'mia'): {
+            case host === "mia": {
               src = `https://cdn.dx.artsmia.org/thumbs/tn_${image.localId}.jpg`
               break
             }
@@ -57,31 +48,22 @@ export default function imgSrcProvider(WrappedComponent){
               break
             }
           }
-
         }
 
-        // let resp = await fetch(src)
-        //
-        // if (resp.status !== 200){
-        //   src = '/static/placeholder0.png'
-        // }
+        let resp = await fetch(src)
 
-        this.setState({src})
+        if (resp.status !== 200) {
+          src = "/static/spinner.gif"
+        }
+
+        this.setState({ src })
       } catch (ex) {
         console.error(ex)
       }
-
     }
 
-    render(){
-      return (
-        <WrappedComponent
-          {...this.props}
-          src={this.state.src}
-        />
-      )
+    render() {
+      return <WrappedComponent {...this.props} src={this.state.src} />
     }
-
   }
-
 }
