@@ -16,39 +16,6 @@ export default class CreateStoryButton extends Component {
     title: ""
   }
 
-  wait = async duration => {
-    return new Promise((resolve, reject) => {
-      setTimeout(resolve, duration)
-    })
-  }
-
-  startRideAlong = async () => {
-    try {
-      await this.wait(500)
-      this.setState({ modal: true })
-      await this.wait(500)
-
-      let text = "Frankenstein"
-
-      for (let i = 0; i <= text.length; i++) {
-        await this.wait(300)
-        this.setState({ title: text.slice(0, i) })
-      }
-
-      await this.wait(500)
-
-      this.createStory()
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.rideAlong && !this.props.rideAlong) {
-      this.startRideAlong()
-    }
-  }
-
   render() {
     return (
       <Flex>
@@ -102,11 +69,10 @@ export default class CreateStoryButton extends Component {
           pathname: "/cms/edit",
           query: {
             subdomain,
-            storySlug: story.slug,
-            rideAlong: this.props.rideAlong ? true : false
+            storySlug: story.slug
           }
         },
-        `/cms/${subdomain}/${story.slug}`
+        `/${subdomain}/${story.slug}`
       )
     } catch (ex) {
       console.error(ex)

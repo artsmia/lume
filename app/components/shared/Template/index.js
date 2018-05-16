@@ -1,19 +1,10 @@
-import Component from './Template.component'
-import {compose, graphql} from 'react-apollo'
-import showTips from '../../../apollo/local/showTips'
-import getToolTips from '../../../apollo/local/getToolTips'
+import Component from "./Template.component"
+import { compose, graphql } from "react-apollo"
+// import showTips from "../../../apollo/local/showTips"
+import { withRouter } from "next/router"
 
 let ExportComponent = Component
-
-
-
-
-
-
-ExportComponent = compose(
-  showTips,
-  getToolTips,
-)(ExportComponent)
-
+//
+ExportComponent = withRouter(ExportComponent)
 
 export default ExportComponent

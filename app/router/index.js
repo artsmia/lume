@@ -45,7 +45,7 @@ app
         passport.authenticate("auth0", {
           clientID: process.env.AUTH0_CLIENT_ID,
           domain: process.env.AUTH0_DOMAIN,
-          redirectUri: `/callback`,
+          redirectUri: `${process.env.CMS_URL}`,
           audience: `https://${process.env.AUTH0_DOMAIN}/userinfo`,
           responseType: "code",
           scope: "openid"
@@ -85,20 +85,20 @@ app
       app.render(req, res, page)
     })
 
-    server.get("/cms/:subdomain", async (req, res) => {
-      try {
-        const page = "/cms"
-        const { subdomain } = req.params
-        const params = {
-          subdomain
-        }
-        app.render(req, res, page, params)
-      } catch (ex) {
-        console.error(ex)
-      }
-    })
+    // server.get("/cms/:subdomain", async (req, res) => {
+    //   try {
+    //     const page = "/cms"
+    //     const { subdomain } = req.params
+    //     const params = {
+    //       subdomain
+    //     }
+    //     app.render(req, res, page, params)
+    //   } catch (ex) {
+    //     console.error(ex)
+    //   }
+    // })
 
-    server.get("/cms/:subdomain/pending", async (req, res) => {
+    server.get("/:subdomain/pending", async (req, res) => {
       try {
         const page = "/cms/pendingApproval"
         const { subdomain } = req.params
@@ -111,20 +111,20 @@ app
       }
     })
 
-    server.get("/cms/:subdomain/settings", (req, res) => {
+    server.get("/:subdomain/settings", (req, res) => {
       const page = "/cms/orgSettings"
       app.render(req, res, page, req.params)
     })
 
-    server.get("/cms/:subdomain/:storySlug", (req, res) => {
-      const page = "/cms/edit"
-      const { subdomain, storySlug } = req.params
-      const params = {
-        subdomain,
-        storySlug
-      }
-      app.render(req, res, page, params)
-    })
+    // server.get("/cms/:subdomain/:storySlug", (req, res) => {
+    //   const page = "/cms/edit"
+    //   const { subdomain, storySlug } = req.params
+    //   const params = {
+    //     subdomain,
+    //     storySlug
+    //   }
+    //   app.render(req, res, page, params)
+    // })
 
     server.get("/:subdomain/group/:groupSlug", (req, res) => {
       const page = "/lume"
@@ -138,7 +138,8 @@ app
     })
 
     server.get("/:subdomain/:storySlug", (req, res) => {
-      const page = "/lume/story"
+      const page = req.subdomains.includes("cms") ? "/cms/edit" : "/lume/story"
+
       const { subdomain, storySlug } = req.params
       const params = {
         subdomain,
@@ -171,7 +172,7 @@ app
     })
 
     server.get("/:subdomain", (req, res) => {
-      const page = "/lume"
+      const page = req.subdomains.includes("cms") ? "/cms" : "/lume"
       let params = {
         ...req.params,
         ...req.query
@@ -184,7 +185,10 @@ app
     })
 
     server.listen(process.env.CLIENT_PORT, err => {
-      console.log(`Lume is up and running at : ${process.env.CLIENT_URL}`)
+      console.log(
+        `Lume is up and running at : ${process.env.CMS_URL ||
+          process.env.NOW_URL}`
+      )
       if (err) throw err
     })
   })

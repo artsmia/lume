@@ -61,7 +61,7 @@ export default class Auth extends Component {
                 subdomain: adminOrg.subdomain
               }
             },
-            `/cms/${adminOrg.subdomain}`
+            `/${adminOrg.subdomain}`
           )
         }
 
@@ -75,7 +75,7 @@ export default class Auth extends Component {
                 subdomain: nonPending.subdomain
               }
             },
-            `/cms/${nonPending.subdomain}`
+            `/${nonPending.subdomain}`
           )
         } else {
           return router.push(
@@ -85,7 +85,7 @@ export default class Auth extends Component {
                 subdomain: organizations[0].subdomain
               }
             },
-            `/cms/${organizations[0].subdomain}`
+            `/${organizations[0].subdomain}`
           )
         }
       }

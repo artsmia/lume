@@ -12,13 +12,13 @@ class MyApp extends App {
 
     return (
       <Container>
-        <ApolloProvider client={apolloClient}>
-          <ThemeProvider>
-            <DragDropContextProvider backend={HTML5Backend}>
+        <ThemeProvider>
+          <DragDropContextProvider backend={HTML5Backend}>
+            <ApolloProvider client={apolloClient}>
               <Component {...pageProps} />
-            </DragDropContextProvider>
-          </ThemeProvider>
-        </ApolloProvider>
+            </ApolloProvider>
+          </DragDropContextProvider>
+        </ThemeProvider>
       </Container>
     )
   }

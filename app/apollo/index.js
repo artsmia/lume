@@ -33,28 +33,24 @@ function create(initialState) {
     cache
   })
 
-  const authLink = setContext(async (req, prevCtx) => {
-    try {
-      let authHeaders = {}
-      if (process.browser) {
-        let idToken = localStorage.getItem("idToken")
-        let userId = localStorage.getItem("userId")
-        if (idToken && userId) {
-          Object.assign(authHeaders, {
-            authorization: `Bearer ${idToken}`,
-            userid: userId
-          })
-        }
+  const authLink = setContext((req, prevCtx) => {
+    let authHeaders = {}
+    if (process.browser) {
+      let idToken = localStorage.getItem("idToken")
+      let userId = localStorage.getItem("userId")
+      if (idToken && userId) {
+        Object.assign(authHeaders, {
+          authorization: `Bearer ${idToken}`,
+          userid: userId
+        })
       }
+    }
 
-      return {
-        headers: {
-          ...prevCtx.headers,
-          ...authHeaders
-        }
+    return {
+      headers: {
+        ...prevCtx.headers,
+        ...authHeaders
       }
-    } catch (ex) {
-      console.error(ex)
     }
   })
 
@@ -92,18 +88,19 @@ export default App => {
 
         const { Component, router } = ctx
 
+        // Run all GraphQL queries in the component tree
+        // and extract the resulting data
+        const apollo = initApollo()
+
         let appProps = {}
         if (App.getInitialProps) {
           console.log("App getInitialProps start")
-          appProps = await App.getInitialProps(ctx)
+          appProps = await App.getInitialProps(ctx, apollo)
           console.log("App getInitialProps done")
         }
 
         const apolloState = {}
 
-        // Run all GraphQL queries in the component tree
-        // and extract the resulting data
-        const apollo = initApollo()
         try {
           console.log("getDataFromTree")
           // Run all GraphQL queries

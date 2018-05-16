@@ -32,8 +32,6 @@ export default class StoryList extends Component {
   }
 
   render() {
-    console.log("StoryList rendered")
-
     const {
       handleLoadMore,
       handleSort,
@@ -103,7 +101,7 @@ export default class StoryList extends Component {
                             storySlug
                           }
                         }}
-                        as={`/cms/${subdomain}/${storySlug}`}
+                        as={`/${subdomain}/${storySlug}`}
                       >
                         <Thumb image={previewImage} />
                       </NextA>
@@ -118,7 +116,7 @@ export default class StoryList extends Component {
                           storySlug
                         }
                       }}
-                      as={`/cms/${subdomain}/${storySlug}`}
+                      as={`/${subdomain}/${storySlug}`}
                     >
                       {title || "Untitled Story"}
                     </Link>

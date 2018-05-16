@@ -29,162 +29,6 @@ export default class CmsHome extends Component {
   //   }).isRequired
   // }
 
-  generateTutorial = () => {
-    let tutorial = []
-
-    if (this.props.organization) {
-      tutorial.push({
-        content: (
-          <div>
-            <h2>Welcome to {this.props.organization.name}!</h2>
-            <p>This is your organization's main content management page.</p>
-          </div>
-        ),
-        placement: "center",
-        disableBeacon: true,
-        styles: {
-          options: {
-            zIndex: 10000
-          }
-        },
-        target: "body"
-      })
-    }
-
-    let { role } = this.props.user.organizations.find(
-      org => org.id === this.props.organization.id
-    )
-
-    if (role === "admin") {
-      tutorial.push({
-        target: "#org-settings",
-        content: (
-          <div>
-            <p>
-              Because you are an administrator for your organization, you can
-              edit its settings by click on the gear icon.(Non-administrators
-              can't edit organization settings.)
-            </p>
-            <p>
-              Your organization settings page is where you go to do things like:
-              change the name of your organization, add new members and change
-              member permissions, adjust who can join your organization, create
-              special groups for your stories, and configure some of Lume's more
-              advanced organization settings.
-            </p>
-          </div>
-        )
-      })
-    }
-
-    tutorial = tutorial.concat([
-      {
-        target: "#story-list",
-        content:
-          "This is where your organization's stories are listed. You search through them using the search input and sort the results using the arrows at the top of the table."
-      },
-      {
-        target: "body",
-        placement: "center",
-        disableBeacon: true,
-        content: (
-          <div>
-            <p>
-              If you'd like help creating your first story, you can click the
-              button below to start the ride along!
-            </p>
-            <Button
-              onClick={() => {
-                this.setState(({ tourIndex }) => ({
-                  tourIndex: tourIndex + 1
-                }))
-              }}
-            >
-              Start Ride Along
-            </Button>
-          </div>
-        )
-      },
-      {
-        target: "#create-story-button",
-        content: (
-          <div>
-            <p>
-              We're going to create our first story together about one of the
-              greatest books of all time: Frankenstein by Mary Shelley.
-            </p>
-            <Button
-              onClick={() => {
-                this.setState(({ tourIndex }) => ({
-                  tourIndex: tourIndex + 1,
-                  rideAlong: true
-                }))
-              }}
-            >
-              Next
-            </Button>
-          </div>
-        )
-      }
-    ])
-
-    this.setState({
-      tutorial,
-      showTutorial: true
-    })
-  }
-
-  state = {
-    showTutorial: false,
-    tutorial: [],
-    tourIndex: 3,
-    rideAlong: false
-  }
-
-  tips = [
-    {
-      target: "#story-list",
-      content: "These are all your organization's stories",
-      placement: "top-start"
-    },
-    {
-      target: "#create-story-button",
-      content: "Click here to create your first story!",
-      placement: "top-start"
-    }
-  ]
-
-  componentDidMount() {
-    // this.props.addTips({
-    //   tips: this.tips
-    // })
-
-    if (this.props.user && this.props.organization) {
-      this.generateTutorial()
-    }
-  }
-
-  tutorialCallback = event => {
-    console.log(event)
-
-    const { action, index, lifecycle } = event
-    if (action === "close" && lifecycle === "complete") {
-      this.setState(({ tourIndex }) => ({ tourIndex: tourIndex + 1 }))
-    }
-  }
-
-  // componentDidUpdate() {
-  //   if (this.props.user && this.props.organization) {
-  //     this.generateTutorial()
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  //   this.props.removeTips({
-  //     tips: this.tips
-  //   })
-  // }
-
   render() {
     // if (!this.props.organization) return <Loading/>
     const {
@@ -221,7 +65,7 @@ export default class CmsHome extends Component {
                     subdomain
                   }
                 }}
-                as={`/cms/${subdomain}/settings`}
+                as={`/${subdomain}/settings`}
               >
                 <Icon
                   icon={"settings"}
@@ -236,36 +80,13 @@ export default class CmsHome extends Component {
         <Card p={3}>
           <StoryFlex flexWrap={"wrap"}>
             <CreateFlex w={1} justifyContent={"flex-end"}>
-              <CreateStoryButton
-                userId={userId}
-                id={"create-story"}
-                tutorial={this.state.showTutorial && this.state.tourIndex === 4}
-                rideAlong={this.state.rideAlong}
-              />
+              <CreateStoryButton userId={userId} id={"create-story"} />
             </CreateFlex>
             <Box width={1}>
               <StoryList />
             </Box>
           </StoryFlex>
         </Card>
-
-        <Joyride
-          steps={this.state.tutorial}
-          run={this.state.showTutorial}
-          callback={this.tutorialCallback}
-          stepIndex={this.state.tourIndex}
-          styles={{
-            options: {
-              zIndex: 10000
-            },
-            buttonNext: {
-              display: "none"
-            },
-            buttonBack: {
-              display: "none"
-            }
-          }}
-        />
       </Page>
     )
   }

@@ -1,32 +1,78 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import ThemeProvider from "../../mia-ui"
-import { DragDropContextProvider } from "react-dnd"
-import HTML5Backend from "react-dnd-html5-backend"
 import { Flex, Box } from "grid-styled"
 import Link from "next/link"
 import { Icon } from "../../mia-ui/icons"
 import { CheckboxInput } from "../../mia-ui/forms"
-
+import Joyride from "react-joyride"
 import Feedback from "../Feedback"
 import Floater from "react-floater"
+import tours from "./tours.js"
 
 export default class Template extends Component {
   state = {
     message: "",
-    menu: false
+    menu: false,
+    showTour: false,
+    showTips: false,
+    tourIndex: 0,
+    tour: []
   }
 
-  showTips = ({ target: { checked } }) => {
-    this.props.showTips({ show: checked })
+  handleTourClick = () => {
+    this.setState(
+      ({ showTour }) => ({ showTour: !showTour }),
+      () => {
+        if (this.state.showTour) {
+          switch (this.props.router.pathname) {
+            case "/cms/organizations": {
+              this.setState({ tour: tours.organizations })
+              break
+            }
+            case "/cms": {
+              let tour = tours.cmsHome.basic
+
+              let org = this.props.user.organizations.find(
+                org => org.subdomain === this.props.router.query.subdomain
+              )
+
+              if (org.role === "admin") {
+                tour.splice(1, 0, ...tours.cmsHome.adminOnly)
+              }
+
+              this.setState({ tour })
+              break
+            }
+            case "/cms/edit": {
+              this.setState({ tour: tours.editor.frankenstein })
+              break
+            }
+            default: {
+              break
+            }
+          }
+        }
+      }
+    )
+  }
+
+  tourCallback = async e => {
+    try {
+      if (e.lifecycle === "tooltip" && e.step.code) {
+        await e.step.code()
+      }
+    } catch (ex) {
+      console.error(ex)
+    }
   }
 
   render() {
     const {
       props,
-      props: { children, user, tips, toolTips, tutorial },
-      state: { menu },
-      showTips
+      props: { children, user, tutorial },
+      state: { menu, showTips, showTour },
+      handleTourClick,
+      tourCallback
     } = this
 
     return (
@@ -45,7 +91,7 @@ export default class Template extends Component {
                             subdomain
                           }
                         }}
-                        as={`/cms/${subdomain}`}
+                        as={`/${subdomain}`}
                       >
                         <A>{name}</A>
                       </Link>
@@ -69,8 +115,18 @@ export default class Template extends Component {
                 <span>Show Tips</span>
                 <input
                   type={"checkbox"}
-                  checked={toolTips.show}
-                  onChange={showTips}
+                  checked={showTips}
+                  onChange={() => {
+                    this.setState(({ showTips }) => ({ showTips: !showTips }))
+                  }}
+                />
+              </Item>
+              <Item>
+                <span>Show Tour</span>
+                <input
+                  type={"checkbox"}
+                  checked={showTour}
+                  onChange={handleTourClick}
                 />
               </Item>
               <Hr />
@@ -88,6 +144,14 @@ export default class Template extends Component {
         {children}
 
         <Feedback user={user} />
+        {showTour ? (
+          <Joyride
+            run={showTour}
+            steps={this.state.tour}
+            continuous
+            callback={tourCallback}
+          />
+        ) : null}
       </div>
     )
   }

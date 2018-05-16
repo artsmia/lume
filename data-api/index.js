@@ -42,7 +42,9 @@ let corsOptions =
           /http:\/\/localhost:3333.*/,
           /http:\/\/localhost:5555.*/,
           /http:\/\/lume.space:3333.*/,
-          /http:\/\/cms.lume.space:3333.*/
+          /http:\/\/cms.lume.space:3333.*/,
+          /http:\/\/dev.cms.lume.space:3333.*/,
+          /http:\/\/dev.lume.space:3333.*/
         ]
       }
 server.use(cors(corsOptions), bodyParser.json())

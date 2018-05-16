@@ -20,12 +20,6 @@ import Joyride from "react-joyride"
 export default class Editor extends Component {
   contentTypes = ["comparison", "detail", "obj", "picture", "movie"]
 
-  rideAlong = [
-    {
-      target: "body"
-    }
-  ]
-
   tips = [
     {
       target: "#save-status",
@@ -65,18 +59,6 @@ export default class Editor extends Component {
     }
   ]
 
-  componentDidMount() {
-    this.props.addTips({
-      tips: this.tips
-    })
-  }
-
-  componentWillUnmount() {
-    this.props.removeTips({
-      tips: this.tips
-    })
-  }
-
   render() {
     if (!this.props.story) return null
 
@@ -113,20 +95,13 @@ export default class Editor extends Component {
               Return to Editing
             </Button>
             {story.visibility === "published" ? (
-              <NextLink
-                href={{
-                  pathname: "/lume/story",
-                  query: {
-                    subdomain,
-                    storySlug: slug
-                  }
-                }}
-                as={`/${subdomain}/${slug}`}
+              <Button
+                color={"green"}
+                a
+                href={`${process.env.LUME_URL}/${subdomain}/${slug}`}
               >
-                <Button color={"green"} a>
-                  View Live
-                </Button>
-              </NextLink>
+                View Live
+              </Button>
             ) : (
               <Button disabled color={"green"}>
                 Unpublished
@@ -179,7 +154,7 @@ export default class Editor extends Component {
                   subdomain
                 }
               }}
-              as={`/cms/${subdomain}`}
+              as={`/${subdomain}`}
             >
               Back to All Stories
             </Link>
@@ -247,17 +222,9 @@ export default class Editor extends Component {
             ) : null}
           </EditingPane>
         </Workspace>
-        <Joyride
-          run={this.props.router.query.rideAlong}
-          steps={this.state.rideAlong}
-          stepIndex={this.state.rideAlongIndex}
-          callback={this.rideAlongCallback}
-        />
       </FullPage>
     )
   }
-
-  rideAlongCallback = ({ action, index, lifecycle }) => {}
 
   renderSaveStatus = () => {
     const { synced } = this.props.saveStatus
@@ -273,8 +240,6 @@ export default class Editor extends Component {
     super(props)
     this.state = {}
     this.state = {
-      rideAlong: this.rideAlong,
-      rideAlongIndex: 0,
       editing: "story",
       selectedContent: null,
       contentType: "comparison",

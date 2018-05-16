@@ -71,7 +71,7 @@ export default class OrgSettings extends Component {
                 subdomain: organization.subdomain
               }
             }}
-            as={`/cms/${organization.subdomain}`}
+            as={`/${organization.subdomain}`}
           >
             Back to Organization Home
           </Link>
@@ -89,7 +89,6 @@ export default class OrgSettings extends Component {
         </Card>
 
         <Card>
-
           <H2>Advanced Settings</H2>
 
           <Flex w={1} flexDirection={"column"} my={2} mb={2}>
@@ -98,9 +97,7 @@ export default class OrgSettings extends Component {
             <Input name={"name"} value={name} onChange={handleChange} />
           </Flex>
 
-
-
-          <Hr/>
+          <Hr />
 
           <H3>Rules for new users</H3>
 
@@ -125,11 +122,9 @@ export default class OrgSettings extends Component {
             />
           </Flex>
 
-          <Hr/>
+          <Hr />
 
-          <H3>
-            Custom Analytics Settings
-          </H3>
+          <H3>Custom Analytics Settings</H3>
 
           <Flex w={1} my={2} alignItems={"center"}>
             <Label>Use Custom Analytics</Label>
@@ -152,16 +147,11 @@ export default class OrgSettings extends Component {
                 onChange={handleChange}
               />
             </Flex>
-          ):null}
+          ) : null}
 
+          <Hr />
 
-
-
-          <Hr/>
-
-          <H3>
-            Custom Object Settings
-          </H3>
+          <H3>Custom Object Settings</H3>
 
           <Flex w={1} my={2} alignItems={"center"}>
             <Label>Use Custom Object API</Label>
@@ -196,11 +186,7 @@ export default class OrgSettings extends Component {
                 />
               </Flex>
             </div>
-          ): null}
-
-
-
-
+          ) : null}
 
           {/*
 
@@ -231,8 +217,6 @@ export default class OrgSettings extends Component {
               />
             </Flex>
           ) : null} */}
-
-
         </Card>
       </Page>
     )

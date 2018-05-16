@@ -248,7 +248,7 @@ export default class Auth {
   pendingServer = () => {
     try {
       this.log("pendingServer")
-      this.res.redirect(`/cms/${this.query.subdomain}/pending`)
+      this.res.redirect(`/${this.query.subdomain}/pending`)
     } catch (ex) {
       this.ex("pendingServer", ex)
     }
@@ -257,7 +257,7 @@ export default class Auth {
   pendingClient = () => {
     try {
       this.log("pendingClient")
-      router.replace(`/cms/${this.query.subdomain}/pending`)
+      router.replace(`/${this.query.subdomain}/pending`)
     } catch (ex) {
       this.ex("pendingClient", ex)
     }
