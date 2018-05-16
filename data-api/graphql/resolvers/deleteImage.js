@@ -8,7 +8,7 @@ export default async function(src, args, ctx) {
       }
     })
 
-    return "Success"
+    return {}
   } catch (ex) {
     console.error(ex)
   }

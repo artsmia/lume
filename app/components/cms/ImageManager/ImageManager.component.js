@@ -68,7 +68,8 @@ export default class ImageManager extends Component {
       addMiaImageToLume,
       handleMiaImageSearchChange,
       handleSearchChange,
-      handleImageSelect
+      handleImageSelect,
+      handleDeleteImage
     } = this
 
     console.log(this.props)
@@ -154,11 +155,16 @@ export default class ImageManager extends Component {
                   <H3>Choose an image from the left</H3>
                 )}
                 {selectedImageId ? (
-                  <Input
-                    name={`${selectedImageId}|title`}
-                    value={this.state[`${selectedImageId}|title`] || ""}
-                    onChange={handleChange}
-                  />
+                  <Flex>
+                    <Input
+                      name={`${selectedImageId}|title`}
+                      value={this.state[`${selectedImageId}|title`] || ""}
+                      onChange={handleChange}
+                    />
+                    <Button color={"red"} onClick={handleDeleteImage}>
+                      Delete Image
+                    </Button>
+                  </Flex>
                 ) : null}
                 {selectedImageId ? (
                   <Textarea
@@ -238,6 +244,11 @@ export default class ImageManager extends Component {
       clearTimeout(this.bounce)
       this.bounce = setTimeout(func, wait)
     }
+  }
+
+  handleDeleteImage = () => {
+    this.props.deleteImage({ id: this.state.selectedImageId })
+    this.setState({ selectedImageId: "" })
   }
 
   handleChange = ({ target: { value, name } }) => {

@@ -95,6 +95,8 @@ export default class Editor extends Component {
       renderSaveStatus
     } = this
 
+    console.log(this.props)
+
     if (preview)
       return (
         <PreviewContainer w={1}>
