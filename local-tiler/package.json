@@ -36,6 +36,7 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "start": "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js"
+    "start":
+      "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js DEPLOYMENT_ENV=local nodemon --exec babel-node index.js dotenv_config_path=../config/.env"
   }
 }

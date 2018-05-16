@@ -32,7 +32,7 @@ export default class Home extends Component {
             curators) to present content in an interactive and compelling way.
           </P>
 
-          {process.env.DEPLOYMENT_ENV !== "local" ? (
+          {process.env.AUTH_STRATEGY !== "local" ? (
             <Box>
               <P>
                 You can check out Mia's Lume{" "}
@@ -54,7 +54,7 @@ export default class Home extends Component {
             </Box>
           ) : null}
 
-          {process.env.DEPLOYMENT_ENV === "local" ? (
+          {process.env.AUTH_STRATEGY === "local" ? (
             <Box>
               <H3>You are currently using Lume in Local Mode</H3>
             </Box>

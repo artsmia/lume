@@ -18,11 +18,9 @@ import apphook from "./github/apphook"
 
 import { ApolloEngine } from "apollo-engine"
 
-let apolloEngineApiKey = process.env.APOLLO_ENGINE_APIKEY
-
-const engine = apolloEngineApiKey
+const engine = process.env.APOLLO_ENGINE_APIKEY
   ? new ApolloEngine({
-      apiKey: apolloEngineApiKey
+      apiKey: process.env.APOLLO_ENGINE_APIKEY
     })
   : {}
 
@@ -30,7 +28,7 @@ const upload = multer()
 
 const server = express()
 
-let port = process.env.PORT || 5000
+let port = process.env.API_PORT
 
 server.set("port", port)
 
@@ -40,7 +38,7 @@ let corsOptions =
         origin: [/https:\/\/lume.space.*/]
       }
     : {
-        origin: [/http:\/\/localhost:3000.*/, /http:\/\/localhost:6000.*/]
+        origin: [/http:\/\/localhost:3333.*/, /http:\/\/localhost:5555.*/]
       }
 server.use(cors(corsOptions), bodyParser.json())
 
@@ -75,14 +73,12 @@ server.use(
   graphqlExpress((req, res) => {
     return {
       schema,
-      context: req,
-      tracing: true,
-      cacheControl: true
+      context: req
     }
   })
 )
 
-if (apolloEngineApiKey) {
+if (process.env.APOLLO_ENGINE_APIKEY) {
   engine.listen({
     port,
     expressApp: server,
@@ -90,6 +86,6 @@ if (apolloEngineApiKey) {
   })
 } else {
   server.listen(server.get("port"), () => {
-    console.log(`Server is running at port ${server.get("port")}`)
+    console.log(`Data api is running at ${process.env.API_URL}`)
   })
 }

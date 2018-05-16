@@ -1,15 +1,12 @@
-import User_Organization from '../../db/models/User_Organization'
-import Organization from '../../db/models/Organization'
-import {retrieveUserProfile} from './user'
+import User_Organization from "../../db/models/User_Organization"
+import Organization from "../../db/models/Organization"
+import { retrieveUserProfile } from "./user"
 
-export default async function (src, args, {verified, userId, authentication}){
+export default async function(src, args, { verified, userId, authentication }) {
   try {
-
-    if (authentication){
+    if (authentication) {
       return authentication
     }
-
-    console.log(userId)
 
     let profile = await retrieveUserProfile(userId)
 
@@ -18,26 +15,25 @@ export default async function (src, args, {verified, userId, authentication}){
         id: userId,
         ...profile
       },
-      timestamp: Date.now(),
+      timestamp: Date.now()
     }
-
-
 
     let userOrganizations = await User_Organization.findAll({
       where: {
         userId
       },
-      include: [{
-        model: Organization,
-        as: 'organization'
-      }]
+      include: [
+        {
+          model: Organization,
+          as: "organization"
+        }
+      ]
     })
 
-    auth.permissions = userOrganizations.map(({organization,role}) => ({
+    auth.permissions = userOrganizations.map(({ organization, role }) => ({
       organization,
       role
     }))
-
 
     return auth
   } catch (ex) {

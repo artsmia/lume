@@ -59,8 +59,9 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "start": "BABEL_ENV=next node router",
-    "start:local": "BABEL_ENV=next node router",
+    "start": "BABEL_ENV=next node router dotenv_config_path=../config/.env",
+    "start:local":
+      "BABEL_ENV=next node router dotenv_config_path=../config/.env.local",
     "build": "BABEL_ENV=next next build",
     "now-start": "NODE_ENV=production node router",
     "deploy": "now -e --token=$NOW_TOKEN",
