@@ -5,7 +5,7 @@ import { Loading } from "../components/mia-ui/loading"
 import withData from "../apollo"
 import Head from "../components/shared/head"
 
-class Logout extends Component {
+export default class Logout extends Component {
   static getInitialProps = async ctx => {
     return {}
   }
@@ -30,5 +30,3 @@ class Logout extends Component {
     }
   }
 }
-
-export default withData(Logout)

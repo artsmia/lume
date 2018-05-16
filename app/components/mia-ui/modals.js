@@ -50,7 +50,11 @@ class Modal extends Component {
 
   render() {
     return (
-      <Container onClick={this.props.onClose} open={this.props.open}>
+      <Container
+        onClick={this.props.onClose}
+        open={this.props.open}
+        id={this.props.id}
+      >
         <ModalBox onClick={this.stopPropagation} p={1}>
           <CloseButton onClick={this.props.onClose}>
             <Icon size={"25px"} color={"white"} icon={"close"} />

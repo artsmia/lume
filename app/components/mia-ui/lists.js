@@ -5,6 +5,7 @@ import { Flex, Box } from "grid-styled"
 import { gray60, blue } from "./colors"
 import { H2 } from "./text"
 import Link from "next/link"
+import getImgSrc from "../shared/ImgSrcProvider"
 
 const GridFlex = styled(Flex)`
   position: relative;
@@ -51,14 +52,6 @@ const TileContainer = styled.a`
       : null};
 `
 
-TileContainer.propTypes = {
-  height: PropTypes.string
-}
-
-TileContainer.defaultProps = {
-  height: "180px"
-}
-
 const TileImage = styled.img`
   width: 100%;
   height: 100%;
@@ -70,13 +63,13 @@ TileImage.propTypes = {
   alt: PropTypes.string
 }
 
-export const Tile = props => (
+const TileEl = props => (
   <Box w={props.w} p={props.p} onClick={props.onClick}>
     {props.link ? (
       <Link href={props.href} as={props.as}>
         <TileContainer
           href={props.as}
-          height={props.height}
+          height={"180px" || props.height}
           selected={props.selected}
           id={props.id}
         >
@@ -96,6 +89,8 @@ export const Tile = props => (
     )}
   </Box>
 )
+
+export const Tile = getImgSrc(TileEl)
 
 // Tile.defaultProps = {
 //   p: 1,

@@ -12,13 +12,13 @@ import {
   DrawerButton,
   DrawerPage
 } from "../../mia-ui/drawer"
-import { GridList, Tile as StoryTile } from "../../mia-ui/lists"
+import { GridList, Tile } from "../../mia-ui/lists"
 import { Loading } from "../../mia-ui/loading"
 import Head from "../../shared/head"
 import ImgSrcProvider from "../../shared/ImgSrcProvider"
 import Joyride from "react-joyride"
 
-let Tile = ImgSrcProvider(StoryTile)
+// let Tile = ImgSrcProvider(StoryTile)
 
 const GroupImg = styled.img`
   width: 100%;
@@ -204,7 +204,7 @@ export default class Home extends Component {
                       query: {
                         subdomain: "mia",
                         storySlug: "writing-desk",
-                        grandTour: "true"
+                        grandTour: true
                       }
                     },
                     "/mia/writing-desk"

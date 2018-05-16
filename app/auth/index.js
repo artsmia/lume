@@ -206,7 +206,7 @@ export default class Auth {
       this.log("authFail")
       if (this.env === "server") {
         this.authFailServer()
-      } else {
+      } else if (this.env === "browser") {
         this.authFailBrowser()
       }
     } catch (ex) {

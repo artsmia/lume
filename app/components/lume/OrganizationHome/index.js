@@ -1,21 +1,20 @@
-import {compose, graphql, withApollo} from 'react-apollo'
-import Component from './OrganizationHome.component'
-import {StoriesQuery} from '../../../apollo/queries/stories'
-import OrganizationQuery from '../../../apollo/queries/organization'
-import {withRouter} from 'next/router'
+import { compose, graphql, withApollo } from "react-apollo"
+import Component from "./OrganizationHome.component"
+import { StoriesQuery } from "../../../apollo/queries/stories"
+import OrganizationQuery from "../../../apollo/queries/organization"
+import { withRouter } from "next/router"
 
 const query = graphql(StoriesQuery, {
-  options: ({router}) => {
-
+  options: ({ router }) => {
     let groups = []
 
     if (router.query.groups) {
-      groups =  router.query.groups.split(',')
+      groups = router.query.groups.split(",")
     }
 
     let groupSlug
 
-    if (router.query.groupSlug){
+    if (router.query.groupSlug) {
       groupSlug = router.query.groupSlug
     }
 
@@ -31,30 +30,25 @@ const query = graphql(StoriesQuery, {
             column: "updatedAt",
             direction: "DESC"
           },
-          template: (router.query.template) ? router.query.template.split(',') : ["original", "slider"],
-          visibility: [
-            "published",
-          ],
+          template: router.query.template
+            ? router.query.template.split(",")
+            : ["original", "slider"],
+          visibility: ["published"],
           search: router.query.search || "",
           groups,
           groupSlug
         }
-      },
+      }
     }
   },
   props: ({ ownProps, data }) => ({
     ...ownProps,
     ...data
-  }),
+  })
 })
 
-
 let ExportComponent = Component
-ExportComponent = compose(
-  withApollo,
-  OrganizationQuery,
-  query,
-)(ExportComponent)
+ExportComponent = compose(OrganizationQuery, query)(ExportComponent)
 
 ExportComponent = withRouter(ExportComponent)
 

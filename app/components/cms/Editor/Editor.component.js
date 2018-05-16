@@ -15,9 +15,16 @@ import { Flex, Box } from "grid-styled"
 import { H3, H2 } from "../../mia-ui/text"
 import { Break } from "../../mia-ui/layout"
 import Head from "../../shared/head"
+import Joyride from "react-joyride"
 
 export default class Editor extends Component {
   contentTypes = ["comparison", "detail", "obj", "picture", "movie"]
+
+  rideAlong = [
+    {
+      target: "body"
+    }
+  ]
 
   tips = [
     {
@@ -94,8 +101,6 @@ export default class Editor extends Component {
       togglePreview,
       renderSaveStatus
     } = this
-
-    console.log(this.props)
 
     if (preview)
       return (
@@ -242,9 +247,17 @@ export default class Editor extends Component {
             ) : null}
           </EditingPane>
         </Workspace>
+        <Joyride
+          run={this.props.router.query.rideAlong}
+          steps={this.state.rideAlong}
+          stepIndex={this.state.rideAlongIndex}
+          callback={this.rideAlongCallback}
+        />
       </FullPage>
     )
   }
+
+  rideAlongCallback = ({ action, index, lifecycle }) => {}
 
   renderSaveStatus = () => {
     const { synced } = this.props.saveStatus
@@ -260,6 +273,8 @@ export default class Editor extends Component {
     super(props)
     this.state = {}
     this.state = {
+      rideAlong: this.rideAlong,
+      rideAlongIndex: 0,
       editing: "story",
       selectedContent: null,
       contentType: "comparison",

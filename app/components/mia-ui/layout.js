@@ -1,24 +1,21 @@
-import React from 'react'
-import { Flex, Box } from 'grid-styled'
-import styled from 'styled-components'
-import {black, white, gray60} from './colors'
-
+import React from "react"
+import { Flex, Box } from "grid-styled"
+import styled from "styled-components"
+import { black, white, gray60 } from "./colors"
 
 const PageFlex = styled(Flex)`
   width: 100%;
   min-height: 100vh;
-  background-color: rgba(0,0,0,.1)
+  background-color: rgb(240, 240, 240);
 `
 
-export const Page = (props) => (
-  <PageFlex
-    flexWrap={'wrap'}
-  >
+export const Page = props => (
+  <PageFlex flexWrap={"wrap"}>
     <Box
-      width={[1, 3/4, 3/4, 2/3]}
-      mx={'auto'}
-      my={[1,3, 3,5]}
-      p={[2,3,3,4]}
+      width={[1, 3 / 4, 3 / 4, 2 / 3]}
+      mx={"auto"}
+      my={[1, 3, 3, 5]}
+      p={[2, 3, 3, 4]}
     >
       {props.children}
     </Box>
@@ -33,7 +30,6 @@ export const Card = styled(Box)`
 Card.defaultProps = {
   p: 2
 }
-
 
 export const Break = styled.hr`
   width: 100%;

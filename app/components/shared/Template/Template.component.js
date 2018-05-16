@@ -1,168 +1,110 @@
-import React, {Component} from 'react'
-import styled from 'styled-components'
-import ThemeProvider from '../../mia-ui'
-import {DragDropContextProvider} from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
-import {Flex, Box} from 'grid-styled'
-import Link from 'next/link'
-import {Icon} from '../../mia-ui/icons'
-import {CheckboxInput} from '../../mia-ui/forms'
+import React, { Component } from "react"
+import styled from "styled-components"
+import ThemeProvider from "../../mia-ui"
+import { DragDropContextProvider } from "react-dnd"
+import HTML5Backend from "react-dnd-html5-backend"
+import { Flex, Box } from "grid-styled"
+import Link from "next/link"
+import { Icon } from "../../mia-ui/icons"
+import { CheckboxInput } from "../../mia-ui/forms"
 
-import Feedback from '../Feedback'
-import Floater from 'react-floater'
+import Feedback from "../Feedback"
+import Floater from "react-floater"
 
 export default class Template extends Component {
-
-
   state = {
     message: "",
-    menu: false,
+    menu: false
   }
 
-
-  showTips = ({target: {checked}}) => {
-    this.props.showTips({show: checked})
+  showTips = ({ target: { checked } }) => {
+    this.props.showTips({ show: checked })
   }
 
   render() {
-
     const {
       props,
-      props: {
-        children,
-        user,
-        tips,
-        toolTips,
-        tutorial
-      },
-      state: {
-        menu,
-      },
+      props: { children, user, tips, toolTips, tutorial },
+      state: { menu },
       showTips
     } = this
 
     return (
-      <ThemeProvider>
-        <DragDropContextProvider
-          backend={HTML5Backend}
-        >
+      <div>
+        {user ? (
           <div>
-
-            {user ? (
-              <div>
-                <MenuCheck/>
-                <Menu>
-
-                  { user.organizations ? user.organizations.map(({subdomain, id, name}) => (
-                    <Item
-                      key={id}
-                    >
+            <MenuCheck />
+            <Menu>
+              {user.organizations
+                ? user.organizations.map(({ subdomain, id, name }) => (
+                    <Item key={id}>
                       <Link
                         href={{
-                          pathname: '/cms',
+                          pathname: "/cms",
                           query: {
                             subdomain
                           }
                         }}
                         as={`/cms/${subdomain}`}
                       >
-                        <A>
-                          {name}
-                        </A>
+                        <A>{name}</A>
                       </Link>
                     </Item>
-                  )) : null}
-                  <Hr/>
-                  <Item>
-                    <Link
-                      href={{
-                        pathname: '/cms/organizations',
-                      }}
-                      as={'/organizations'}
-                    >
-                      <A>
-                        Join or Create an Organization
-                      </A>
-                    </Link>
-                  </Item>
-                  <Hr/>
+                  ))
+                : null}
+              <Hr />
+              <Item>
+                <Link
+                  href={{
+                    pathname: "/cms/organizations"
+                  }}
+                  as={"/organizations"}
+                >
+                  <A>Join or Create an Organization</A>
+                </Link>
+              </Item>
+              <Hr />
 
-                  <Item>
-                    <span>Show Tips</span>
-                    <input
-                      type={'checkbox'}
-                      checked={toolTips.show}
-                      onChange={showTips}
-                    />
-                  </Item>
-                  <Hr/>
-
-                  <Item>
-                    <Link
-                      href={'/logout'}
-                    >
-                      <A>
-                        Logout
-                      </A>
-                    </Link>
-                  </Item>
-                </Menu>
-                <ProfPic
-                  src={user.picture}
+              <Item>
+                <span>Show Tips</span>
+                <input
+                  type={"checkbox"}
+                  checked={toolTips.show}
+                  onChange={showTips}
                 />
-              </div>
-            ): null}
+              </Item>
+              <Hr />
 
-
-            {children}
-
-            <Feedback
-              user={user}
-            />
-
-
-
-            {toolTips.show ? toolTips.tips.map((tip, index) => (
-              <Floater
-                key={`tip.target-${index}`}
-                target={tip.target}
-                content={tip.content}
-                placement={tip.placement}
-                wrapperOptions={{
-                  offset: -22,
-                  placement: tip.placement,
-                  position: true
-                }}
-              >
-                <Tip>?</Tip>
-
-              </Floater>
-            )) : null}
-
+              <Item>
+                <Link href={"/logout"}>
+                  <A>Logout</A>
+                </Link>
+              </Item>
+            </Menu>
+            <ProfPic src={user.picture} />
           </div>
+        ) : null}
 
-        </DragDropContextProvider>
-      </ThemeProvider>
+        {children}
+
+        <Feedback user={user} />
+      </div>
     )
   }
 
-
   renderName = () => {
-    const {
-      user
-    } = this.props
+    const { user } = this.props
 
-    if (user.name){
+    if (user.name) {
       return <Name>{user.name.given}</Name>
     } else {
       return <Name>{user.email}</Name>
     }
   }
-
 }
 
 const Tip = styled.span`
-  background-color: ${({theme}) => theme.color.blue};
+  background-color: ${({ theme }) => theme.color.blue};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -172,7 +114,7 @@ const Tip = styled.span`
   border-radius: 30px;
   font-size: 25px;
   opacity: 1;
-  transition: .2s all;
+  transition: 0.2s all;
   z-index: 3000;
   &:hover {
     opacity: 1;
@@ -183,7 +125,7 @@ const Menu = styled.ul`
   position: absolute;
   top: 58px;
   right: 10px;
-  transition: all .2s;
+  transition: all 0.2s;
   opacity: 0;
   width: 140px;
   display: flex;
@@ -207,15 +149,13 @@ const MenuCheck = styled.input`
   opacity: 0;
   cursor: pointer;
 
-
   &:focus ~ ${Menu} {
     opacity: 1;
   }
 `
 
-
 MenuCheck.defaultProps = {
-  type: 'checkbox'
+  type: "checkbox"
 }
 
 const A = styled.a`
@@ -233,9 +173,9 @@ const Item = styled.li`
   width: 100%;
   padding: 5px 0;
   font-size: 14px;
-  transition: all .2s;
-  &:hover{
-    background-color: ${({theme}) => theme.color.gray30};
+  transition: all 0.2s;
+  &:hover {
+    background-color: ${({ theme }) => theme.color.gray30};
   }
 `
 

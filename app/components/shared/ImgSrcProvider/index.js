@@ -4,7 +4,7 @@ import fetch from "isomorphic-unfetch"
 export default function imgSrcProvider(WrappedComponent) {
   return class ImgSrcProvider extends Component {
     state = {
-      src: "/static/spinner.gif"
+      src: "/static/placeholder0.png"
     }
 
     componentDidMount() {
@@ -50,11 +50,11 @@ export default function imgSrcProvider(WrappedComponent) {
           }
         }
 
-        let resp = await fetch(src)
-
-        if (resp.status !== 200) {
-          src = "/static/spinner.gif"
-        }
+        // let resp = await fetch(src)
+        //
+        // if (resp.status !== 200) {
+        //   src = "/static/spinner.gif"
+        // }
 
         this.setState({ src })
       } catch (ex) {

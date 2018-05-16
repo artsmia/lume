@@ -1,32 +1,37 @@
-import React, {Component} from 'react'
-import styled from 'styled-components'
-import {Table, HeaderRow, HeaderCell, BodyRow, BodyCell, TableThumb, Sorter} from '../../mia-ui/tables'
-import {Link, NextA} from '../../mia-ui/links'
-import {Button} from '../../mia-ui/buttons'
-import PropTypes from 'prop-types'
-import ImgSrcProvider from '../../shared/ImgSrcProvider'
-import {Search} from '../../mia-ui/forms'
-import {Box} from 'grid-styled'
+import React, { Component } from "react"
+import styled from "styled-components"
+import {
+  Table,
+  HeaderRow,
+  HeaderCell,
+  BodyRow,
+  BodyCell,
+  TableThumb,
+  Sorter
+} from "../../mia-ui/tables"
+import { Link, NextA } from "../../mia-ui/links"
+import { Button } from "../../mia-ui/buttons"
+import PropTypes from "prop-types"
+import ImgSrcProvider from "../../shared/ImgSrcProvider"
+import { Search } from "../../mia-ui/forms"
+import { Box } from "grid-styled"
 
-let Thumb = ImgSrcProvider(TableThumb)
+const Thumb = ImgSrcProvider(TableThumb)
 
 export default class StoryList extends Component {
-
   static defaultProps = {
     stories: []
   }
 
   static propTypes = {
-    stories: PropTypes.array.isRequired,
+    stories: PropTypes.array.isRequired
   }
 
   state = {
-    variables: this.props.variables,
+    variables: this.props.variables
   }
 
-
   render() {
-
     console.log("StoryList rendered")
 
     const {
@@ -36,21 +41,15 @@ export default class StoryList extends Component {
       props: {
         stories,
         router: {
-          query: {
-            subdomain
-          }
+          query: { subdomain }
         },
-        organization,
+        organization
       },
-      state: {
-        variables
-      }
+      state: { variables }
     } = this
 
     return (
-      <Table
-        id={'story-list'}
-      >
+      <Table id={"story-list"}>
         <Box>
           <Search
             value={variables.filter.search || ""}
@@ -59,106 +58,80 @@ export default class StoryList extends Component {
           />
         </Box>
         <HeaderRow>
-          <HeaderCell
-            width={[1/3,1/6]}
-          >
-
-          </HeaderCell>
-          <HeaderCell
-            width={[1/3, 1/3]}
-          >
+          <HeaderCell width={[1 / 3, 1 / 6]} />
+          <HeaderCell width={[1 / 3, 1 / 3]}>
             Title
             <Sorter
               variables={variables}
-              column={'title'}
-              upValue={'ASC'}
-              downValue={'DESC'}
+              column={"title"}
+              upValue={"ASC"}
+              downValue={"DESC"}
               onSort={handleSort}
             />
           </HeaderCell>
-          <HeaderCell
-            width={[0,1/5]}
-          >
-            Template
-          </HeaderCell>
-          <HeaderCell
-            width={[0,1/5]}
-          >
+          <HeaderCell width={[0, 1 / 5]}>Template</HeaderCell>
+          <HeaderCell width={[0, 1 / 5]}>
             Updated
             <Sorter
               variables={variables}
-              column={'updatedAt'}
-              upValue={'ASC'}
-              downValue={'DESC'}
+              column={"updatedAt"}
+              upValue={"ASC"}
+              downValue={"DESC"}
               onSort={handleSort}
             />
           </HeaderCell>
         </HeaderRow>
 
-        {stories ? stories.map(({
-          id: storyId,
-          previewImage,
-          title,
-          updatedAt,
-          template,
-          slug: storySlug
-        }) => (
-          <BodyRow
-            key={storyId}
-          >
-            <BodyCell
-              width={[1/3,1/6]}
-            >
-              {previewImage ? (
-                <NextA
-                  href={{
-                    pathname: "/cms/edit",
-                    query: {
-                      subdomain,
-                      storySlug
-                    }
-                  }}
-                  as={`/cms/${subdomain}/${storySlug}`}
-                >
-                  <Thumb
-                    image={previewImage}
-                  />
-
-                </NextA>
-              ):null}
-            </BodyCell>
-            <BodyCell
-              width={[1/3, 1/3]}
-            >
-              <Link
-                href={{
-                  pathname: "/cms/edit",
-                  query: {
-                    subdomain,
-                    storySlug
-                  }
-                }}
-                as={`/cms/${subdomain}/${storySlug}`}
-              >
-                {title || 'Untitled Story'}
-              </Link>
-            </BodyCell>
-            <BodyCell
-              width={[0,1/5]}
-            >
-              {template}
-            </BodyCell>
-            <BodyCell
-              width={[0,1/5]}
-            >
-              {new Date(updatedAt).toLocaleDateString()}
-            </BodyCell>
-          </BodyRow>
-        )):null}
-
+        {stories
+          ? stories.map(
+              ({
+                id: storyId,
+                previewImage,
+                title,
+                updatedAt,
+                template,
+                slug: storySlug
+              }) => (
+                <BodyRow key={storyId}>
+                  <BodyCell width={[1 / 3, 1 / 6]}>
+                    {previewImage ? (
+                      <NextA
+                        href={{
+                          pathname: "/cms/edit",
+                          query: {
+                            subdomain,
+                            storySlug
+                          }
+                        }}
+                        as={`/cms/${subdomain}/${storySlug}`}
+                      >
+                        <Thumb image={previewImage} />
+                      </NextA>
+                    ) : null}
+                  </BodyCell>
+                  <BodyCell width={[1 / 3, 1 / 3]}>
+                    <Link
+                      href={{
+                        pathname: "/cms/edit",
+                        query: {
+                          subdomain,
+                          storySlug
+                        }
+                      }}
+                      as={`/cms/${subdomain}/${storySlug}`}
+                    >
+                      {title || "Untitled Story"}
+                    </Link>
+                  </BodyCell>
+                  <BodyCell width={[0, 1 / 5]}>{template}</BodyCell>
+                  <BodyCell width={[0, 1 / 5]}>
+                    {new Date(updatedAt).toLocaleDateString()}
+                  </BodyCell>
+                </BodyRow>
+              )
+            )
+          : null}
       </Table>
-
-
     )
   }
 
@@ -167,39 +140,33 @@ export default class StoryList extends Component {
   debounce = (func, wait) => {
     if (this.bounce) {
       clearTimeout(this.bounce)
-      this.bounce = setTimeout(
-        func,
-        wait
-      )
+      this.bounce = setTimeout(func, wait)
     }
   }
 
-  handleSearch = ({target: {name, value}}) => {
+  handleSearch = ({ target: { name, value } }) => {
     this.setState(
-      ({variables: oldVariables}) => {
-        let variables = {...oldVariables}
+      ({ variables: oldVariables }) => {
+        let variables = { ...oldVariables }
         variables.filter.search = value
         return {
           variables
         }
       },
-      ()=>{
-        this.debounce(
-          ()=>this.props.refetch(this.state.variables),
-          2000
-        )
+      () => {
+        this.debounce(() => this.props.refetch(this.state.variables), 2000)
       }
     )
   }
 
-  handleSort = ({column, newValue}) => {
+  handleSort = ({ column, newValue }) => {
     this.setState(
-      (prevState) => {
-        let variables = {...this.props.variables}
+      prevState => {
+        let variables = { ...this.props.variables }
 
-        for (let [index, order] of variables.filter.order.entries()){
-          if (order.column === column){
-            variables.filter.order.splice(index,1)
+        for (let [index, order] of variables.filter.order.entries()) {
+          if (order.column === column) {
+            variables.filter.order.splice(index, 1)
             variables.filter.order.unshift({
               column,
               direction: newValue
@@ -208,8 +175,6 @@ export default class StoryList extends Component {
               variables
             }
           }
-
-
         }
 
         variables.filter.order.unshift({
@@ -217,53 +182,45 @@ export default class StoryList extends Component {
           direction: newValue
         })
 
-
         return {
           variables
         }
-
       },
-      ()=>{
+      () => {
         this.props.refetch(this.state.variables)
       }
     )
-
   }
 
   handleLoadMore = async () => {
     try {
-
       const {
-        props: {
-          fetchMore,
-          stories
-        },
-        state: {
-          variables
-        }
+        props: { fetchMore, stories },
+        state: { variables }
       } = this
 
       let newVariables = {
         filter: {
           ...variables.filter,
           limit: variables.filter.limit,
-          offset: this.props.stories.length,
+          offset: this.props.stories.length
         }
       }
 
       fetchMore({
         variables: newVariables,
         updateQuery: (previousResult, { fetchMoreResult }) => {
-          if (!fetchMoreResult) { return previousResult }
+          if (!fetchMoreResult) {
+            return previousResult
+          }
 
           return Object.assign({}, previousResult, {
             stories: [...previousResult.stories, ...fetchMoreResult.stories]
           })
-        },
+        }
       })
     } catch (ex) {
       console.error(ex)
     }
   }
-
 }

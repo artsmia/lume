@@ -1,14 +1,10 @@
-import React, {Component} from 'react'
-import CmsHome from '../../components/cms/CmsHome'
-import withData from '../../apollo'
-import Template from '../../components/shared/Template'
-import Auth from '../../auth'
-class CmsIndex extends Component {
-
-  static getInitialProps = async (ctx) => {
+import React, { Component } from "react"
+import CmsHome from "../../components/cms/CmsHome"
+import Template from "../../components/shared/Template"
+import Auth from "../../auth"
+export default class CmsIndex extends Component {
+  static getInitialProps = async ctx => {
     try {
-
-
       let auth = new Auth(ctx)
       await auth.authenticate()
 
@@ -21,23 +17,11 @@ class CmsIndex extends Component {
     }
   }
 
-
-
-
   render() {
-
     return (
-      <Template
-        {...this.props}
-        user={this.props.user}
-      >
-
-        <CmsHome
-          {...this.props}
-        />
+      <Template {...this.props}>
+        <CmsHome {...this.props} />
       </Template>
     )
   }
 }
-
-export default withData(CmsIndex)

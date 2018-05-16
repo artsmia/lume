@@ -1,17 +1,13 @@
-import React, {Component} from 'react'
-import OrgManager from '../../components/cms/OrgManager'
-import withData from '../../apollo'
-import Template from '../../components/shared/Template'
-import Auth from '../../auth'
+import React, { Component } from "react"
+import OrgManager from "../../components/cms/OrgManager"
+import Template from "../../components/shared/Template"
+import Auth from "../../auth"
 
-class New extends Component {
-
-  static getInitialProps = async (ctx) => {
+export default class New extends Component {
+  static getInitialProps = async ctx => {
     try {
-
       let auth = new Auth(ctx)
       await auth.getUser()
-
 
       return {
         user: auth.user,
@@ -24,15 +20,9 @@ class New extends Component {
 
   render() {
     return (
-      <Template
-        {...this.props}
-      >
-        <OrgManager
-          {...this.props}
-        />
+      <Template {...this.props}>
+        <OrgManager {...this.props} />
       </Template>
     )
   }
 }
-
-export default withData(New)

@@ -6,7 +6,7 @@ import { Loading } from "../components/mia-ui/loading"
 import withData from "../apollo"
 import Head from "../components/shared/head"
 
-class Auth extends Component {
+export default class Auth extends Component {
   static getInitialProps = async ctx => {
     try {
       let auth = new AuthClass(ctx)
@@ -138,5 +138,3 @@ class Auth extends Component {
     }
   }
 }
-
-export default withData(Auth)

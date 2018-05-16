@@ -1,16 +1,12 @@
-import React, {Component} from 'react'
-import OrganizationHome from '../../components/lume/OrganizationHome'
-import withData from '../../apollo'
-import Template from '../../components/shared/Template'
+import React, { Component } from "react"
+import OrganizationHome from "../../components/lume/OrganizationHome"
+import Template from "../../components/shared/Template"
 
-class LumeOrganization extends Component {
-
-  static getInitialProps = async (ctx) => {
+export default class LumeOrganization extends Component {
+  static getInitialProps = async ctx => {
     try {
-
-
       return {
-        ...ctx.query,
+        ...ctx.query
       }
     } catch (ex) {
       console.error(ex)
@@ -18,20 +14,10 @@ class LumeOrganization extends Component {
   }
 
   render() {
-
-
-
     return (
-      <Template
-        drawer
-        {...this.props}
-      >
-        <OrganizationHome
-          {...this.props}
-        />
+      <Template {...this.props}>
+        <OrganizationHome {...this.props} />
       </Template>
     )
   }
 }
-
-export default withData(LumeOrganization)

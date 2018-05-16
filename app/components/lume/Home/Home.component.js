@@ -64,22 +64,20 @@ export default class Home extends Component {
         <Flex flexWrap={"wrap"}>
           <Box w={[1, 1 / 2, 1 / 2]} pr={[0, 3, 3]} my={3}>
             <Card>
-              <H3>New to Lume?</H3>
+              <H3>New to Lume? Check out our tutorials</H3>
 
-              <P>
-                <Link
-                  href={{
-                    pathname: "/lume",
-                    query: {
-                      subdomain: "mia",
-                      grandTour: true
-                    }
-                  }}
-                  as={`/mia`}
-                >
-                  <a>Take a tour!</a>
-                </Link>
-              </P>
+              <Link
+                href={{
+                  pathname: "/lume",
+                  query: {
+                    subdomain: "mia",
+                    grandTour: true
+                  }
+                }}
+                as={`/mia`}
+              >
+                <a>Take a tour!</a>
+              </Link>
             </Card>
           </Box>
 

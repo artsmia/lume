@@ -1,0 +1,8 @@
+{
+  "rules": [
+    {
+      "pathname": "/api",
+      "dest": "api.lume.space"
+    }
+  ]
+}

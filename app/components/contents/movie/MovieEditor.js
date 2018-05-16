@@ -1,42 +1,29 @@
-import React, {Component} from 'react'
-import {VideoUrl} from '../../cms/DefaultEditors'
-import query from '../../../apollo/queries/content'
-import mutation from '../../../apollo/mutations/editContent'
-import {compose, withApollo} from 'react-apollo'
-import styled from 'styled-components'
-import {H2} from '../../mia-ui/text'
-import {Row, Column} from '../../mia-ui/layout'
-import setSaveStatus from '../../../apollo/local/setSaveStatus'
-import {Flex, Box} from 'grid-styled'
-import {Title, Description} from '../../mia-ui/forms'
-import DeleteContentButton from '../../cms/DeleteContentButton'
-
+import React, { Component } from "react"
+import { VideoUrl } from "../../cms/DefaultEditors"
+import query from "../../../apollo/queries/content"
+import mutation from "../../../apollo/mutations/editContent"
+import { compose, withApollo } from "react-apollo"
+import styled from "styled-components"
+import { H2 } from "../../mia-ui/text"
+import { Row, Column } from "../../mia-ui/layout"
+import setSaveStatus from "../../../apollo/local/setSaveStatus"
+import { Flex, Box } from "grid-styled"
+import { Title, Description } from "../../mia-ui/forms"
+import DeleteContentButton from "../../cms/DeleteContentButton"
 
 class MovieEditor extends Component {
-
-  render(){
-
+  render() {
     if (!this.props.content) return null
 
     const {
-      state: {
-        title,
-        description,
-        videoUrl
-      },
+      state: { title, description, videoUrl },
       saveEdits,
-      handleChange,
+      handleChange
     } = this
 
-    return(
-      <Flex
-        flexWrap={'wrap'}
-        m={3}
-      >
-
-        <Box
-          w={1}
-        >
+    return (
+      <Flex flexWrap={"wrap"} m={3}>
+        <Box w={1}>
           <Title
             label={"Title"}
             value={title}
@@ -45,9 +32,7 @@ class MovieEditor extends Component {
           />
         </Box>
 
-        <Box
-          w={1}
-        >
+        <Box w={1}>
           <Description
             label={"Description"}
             value={description}
@@ -56,9 +41,7 @@ class MovieEditor extends Component {
           />
         </Box>
 
-        <Box
-          w={1}
-        >
+        <Box w={1}>
           <VideoUrl
             label={"Video Url"}
             value={videoUrl}
@@ -67,15 +50,9 @@ class MovieEditor extends Component {
           />
         </Box>
 
-        <Box
-          w={1}
-          my={5}
-        >
-          <DeleteContentButton
-            contentId={this.props.content.id}
-          />
+        <Box w={1} my={5}>
+          <DeleteContentButton contentId={this.props.content.id} />
         </Box>
-
       </Flex>
     )
   }
@@ -85,14 +62,11 @@ class MovieEditor extends Component {
   debounce = (func, wait) => {
     if (this.bounce) {
       clearTimeout(this.bounce)
-      this.bounce = setTimeout(
-        func,
-        wait
-      )
+      this.bounce = setTimeout(func, wait)
     }
   }
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       title: "",
@@ -105,53 +79,44 @@ class MovieEditor extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({...this.stateFromProps(nextProps)})
+  componentWillReceiveProps(nextProps) {
+    this.setState({ ...this.stateFromProps(nextProps) })
   }
 
-  handleChange = ({target: {value, name}}) => {
+  handleChange = ({ target: { value, name } }) => {
     this.props.setSaveStatus({
       synced: false
     })
     this.setState(
-      ()=>({
-        [name]: value,
+      () => ({
+        [name]: value
       }),
-      ()=>{
-        this.debounce(this.saveEdits,2000)
+      () => {
+        this.debounce(this.saveEdits, 2000)
       }
     )
   }
 
   saveEdits = async () => {
     try {
-
       await this.props.editContent({
         ...this.state
       })
 
       await this.props.setSaveStatus({
-        synced: true,
+        synced: true
       })
     } catch (ex) {
       console.error(ex)
     }
-
   }
 
-  stateFromProps = (props) => {
-    if (
-      !props.content ||
-      props.contentId === this.state.id
-    ) {
+  stateFromProps = props => {
+    if (!props.content || props.contentId === this.state.id) {
       return
     }
     let {
-      content: {
-        title,
-        description,
-        videoUrl
-      }
+      content: { title, description, videoUrl }
     } = props
 
     return {
@@ -160,17 +125,10 @@ class MovieEditor extends Component {
       videoUrl
     }
   }
-
-
 }
 
 let ExportComponent = MovieEditor
 
-ExportComponent = compose(
-  withApollo,
-  query,
-  mutation,
-  setSaveStatus
-)(ExportComponent)
+ExportComponent = compose(query, mutation, setSaveStatus)(ExportComponent)
 
 export default ExportComponent

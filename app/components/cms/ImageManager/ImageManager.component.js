@@ -27,7 +27,7 @@ const ImageEl = styled.img`
   `
       : ""};
 `
-let Image = imgSrcProvider(ImageEl)
+const Image = imgSrcProvider(ImageEl)
 
 export default class ImageManager extends Component {
   state = {

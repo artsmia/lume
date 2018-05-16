@@ -1,8 +1,6 @@
 {
   "name": "lume-app",
-  "alias": [
-    "lume.space"
-  ],
+  "alias": ["lume.space", "cms.lume.space"],
   "env": {
     "S3_URL": "https://s3-us-west-2.amazonaws.com",
     "AUTH_STRATEGY": "auth0",
@@ -13,7 +11,8 @@
     "AUTH0_CLIENT_SECRET": "@lume-auth0-secret",
     "REDIS_URL": "@lume-redis",
     "SESSION_SECRET": "@lume-session-secret",
-    "SESSION_STORE": "redis"
+    "SESSION_STORE": "redis",
+    "CLIENT_PORT": "3333"
   },
   "scale": {
     "sfo1": {

@@ -1,17 +1,12 @@
-import React, {Component} from 'react'
-import withData from '../apollo'
-import Template from '../components/shared/Template'
+import React, { Component } from "react"
+import withData from "../apollo"
+import Template from "../components/shared/Template"
 
-class Error extends Component {
-
-  static getInitialProps = async (context) => {
+export default class Error extends Component {
+  static getInitialProps = async context => {
     try {
-
-      return {
-      }
-    } catch (ex) {
-
-    }
+      return {}
+    } catch (ex) {}
   }
 
   render() {
@@ -19,10 +14,6 @@ class Error extends Component {
       <Template>
         <h2>Whoops that's an error</h2>
       </Template>
-
     )
   }
-
 }
-
-export default withData(Error)

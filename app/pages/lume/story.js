@@ -1,11 +1,9 @@
-import React, {Component} from 'react'
-import Story from '../../components/lume/Story'
-import withData from '../../apollo'
-import Template from '../../components/shared/Template'
+import React, { Component } from "react"
+import Story from "../../components/lume/Story"
+import Template from "../../components/shared/Template"
 
-class StoryPage extends Component {
-
-  static getInitialProps = async (ctx) => {
+export default class StoryPage extends Component {
+  static getInitialProps = async ctx => {
     try {
       return {
         ...ctx.query
@@ -16,20 +14,10 @@ class StoryPage extends Component {
   }
 
   render() {
-
-
-
     return (
-      <Template
-        drawer
-        {...this.props}
-      >
-        <Story
-          {...this.props}
-        />
+      <Template {...this.props}>
+        <Story {...this.props} />
       </Template>
     )
   }
 }
-
-export default withData(StoryPage)

@@ -16,7 +16,9 @@
     "AUTH0_PEM": "@lume-auth0-pem",
     "GITHUB_PEM": "@lume-github-pem",
     "APOLLO_ENGINE_APIKEY": "@lume-apollo-engine-apikey",
-    "DB_MODE": "mysql"
+    "DB_MODE": "mysql",
+    "AUTH_STRATEGY": "auth0",
+    "API_PORT": "4444"
   },
   "scale": {
     "sfo1": {
