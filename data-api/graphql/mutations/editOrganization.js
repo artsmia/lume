@@ -9,7 +9,7 @@ import organizationType from '../types/organization'
 import resolve from '../resolvers/editOrganization'
 
 const editOrganization = {
-  name: "editOrganization",
+  name: 'editOrganization',
   type: organizationType,
   args: {
     id: {

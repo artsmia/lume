@@ -1,19 +1,18 @@
 import User_Organization from '../../db/models/User_Organization'
 import Organization from '../../db/models/Organization'
-import {retrieveUserProfile} from './user'
+import { retrieveUserProfile } from './user'
 import sendEmail from '../../mailgun'
 import mjml2html from 'mjml'
 
-export default async function(src, {organization,userId, role}, ctx){
+export default async function(src, { organization, userId, role }, ctx) {
   try {
-
     const org = await Organization.findOne({
       where: {
-        ...organization,
+        ...organization
       }
     })
 
-    console.log("16")
+    console.log('16')
 
     let userOrg = await User_Organization.findOne({
       where: {
@@ -22,15 +21,10 @@ export default async function(src, {organization,userId, role}, ctx){
       }
     })
 
-    console.log("25")
+    console.log('25')
 
-    if (userOrg){
-
-      if (
-        userOrg.role === 'pending' &&
-        role !== 'pending'
-      ) {
-
+    if (userOrg) {
+      if (userOrg.role === 'pending' && role !== 'pending') {
         await notifyNewlyApprovedUser({
           org,
           userId
@@ -38,16 +32,12 @@ export default async function(src, {organization,userId, role}, ctx){
       }
 
       await userOrg.update({
-          role,
-          organizationId: org.id,
-          userId,
-        },
-      )
-
-
+        role,
+        organizationId: org.id,
+        userId
+      })
     } else {
-
-      console.log("50")
+      console.log('50')
 
       console.log(org.dataValues, userId, role)
 
@@ -56,13 +46,12 @@ export default async function(src, {organization,userId, role}, ctx){
         role
       })
 
-      if (role === 'pending'){
+      if (role === 'pending') {
         await notifyAdminsOfPending(org)
       }
     }
 
-    console.log("60")
-
+    console.log('60')
 
     userOrg = await User_Organization.findOne({
       where: {
@@ -73,7 +62,7 @@ export default async function(src, {organization,userId, role}, ctx){
 
     let user = {
       id: userOrg.userId,
-      role: userOrg.role,
+      role: userOrg.role
     }
 
     let profile = await retrieveUserProfile(user.id)
@@ -81,14 +70,12 @@ export default async function(src, {organization,userId, role}, ctx){
     Object.assign(user, profile)
 
     return user
-
   } catch (ex) {
     console.error(ex)
   }
 }
 
-
-function adminEmail({admin, org}) {
+function adminEmail({ admin, org }) {
   return mjml2html(`
     <mjml>
       <mj-body>
@@ -98,7 +85,9 @@ function adminEmail({admin, org}) {
 
               A new user has joined your Lume organization, ${org.name}.
 
-              Go to your organization's <a href="https://lume.space/cms/${org.subdomain}/settings">settings panel</a> to approve them.
+              Go to your organization's <a href="https://lume.space/cms/${
+                org.subdomain
+              }/settings">settings panel</a> to approve them.
             </mj-text>
           </mj-column>
         </mj-section>
@@ -107,7 +96,7 @@ function adminEmail({admin, org}) {
   `)
 }
 
-const notifyAdminsOfPending = async (org) =>{
+const notifyAdminsOfPending = async org => {
   try {
     let admins = await User_Organization.findAll({
       where: {
@@ -122,28 +111,24 @@ const notifyAdminsOfPending = async (org) =>{
 
     await Promise.all(
       admins.map(admin => {
-
-        const {html} = adminEmail({
+        const { html } = adminEmail({
           admin,
           org
         })
 
         return sendEmail({
           to: admin.email,
-          subject: "New User Pending Approval",
+          subject: 'New User Pending Approval',
           html
         })
       })
     )
-
-
   } catch (ex) {
     console.error(ex)
   }
 }
 
-
-function pendingEmail({user,org}){
+function pendingEmail({ user, org }) {
   return mjml2html(`
     <mjml>
       <mj-body>
@@ -153,7 +138,9 @@ function pendingEmail({user,org}){
 
               Your request to join ${org.name} has been approved.
 
-              Head over to <a href="https://lume.space/cms/${org.subdomain}">your organization's home</a> to start working on a story now!
+              Head over to <a href="https://lume.space/cms/${
+                org.subdomain
+              }">your organization's home</a> to start working on a story now!
 
             </mj-text>
           </mj-column>
@@ -163,10 +150,8 @@ function pendingEmail({user,org}){
   `)
 }
 
-
-const notifyNewlyApprovedUser = async ({userId, org}) => {
+const notifyNewlyApprovedUser = async ({ userId, org }) => {
   try {
-
     let user = await retrieveUserProfile(userId)
 
     let email = pendingEmail({
@@ -174,7 +159,7 @@ const notifyNewlyApprovedUser = async ({userId, org}) => {
       org
     })
 
-    const {html} = pendingEmail({
+    const { html } = pendingEmail({
       user,
       org
     })
@@ -184,7 +169,6 @@ const notifyNewlyApprovedUser = async ({userId, org}) => {
       subject: `Welcome to ${org.name}!`,
       html
     })
-
   } catch (ex) {
     console.error(ex)
   }

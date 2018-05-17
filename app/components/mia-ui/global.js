@@ -1,5 +1,5 @@
 import React from 'react'
-import {injectGlobal} from 'styled-components'
+import { injectGlobal } from 'styled-components'
 
 injectGlobal`
   @font-face {

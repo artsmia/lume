@@ -1,7 +1,7 @@
-import React, { Component, cloneElement, Children } from "react"
-import styled from "styled-components"
-import PropTypes from "prop-types"
-import { Flex, Box } from "grid-styled"
+import React, { Component, cloneElement, Children } from 'react'
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import { Flex, Box } from 'grid-styled'
 
 export class TabContainer extends Component {
   // static propTypes = {
@@ -34,7 +34,7 @@ export class TabContainer extends Component {
       }
     })
     return (
-      <Flex width={1} flexDirection={"column"}>
+      <Flex width={1} flexDirection={'column'}>
         {childrenWithProps}
       </Flex>
     )
@@ -70,7 +70,7 @@ export class TabHeader extends Component {
       }
     })
     return (
-      <HeaderContainer flex={"0 0 auto"} id={"tab-header"}>
+      <HeaderContainer flex={'0 0 auto'} id={'tab-header'}>
         {childrenWithProps}
       </HeaderContainer>
     )
@@ -146,7 +146,7 @@ const TabButton = styled.a`
 `
 
 const TabBodyContainer = styled(Flex)`
-  display: ${({ selected }) => (selected ? "flex" : "none")};
+  display: ${({ selected }) => (selected ? 'flex' : 'none')};
   width: 100%;
   height: 100%;
   flex-direction: column;

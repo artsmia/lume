@@ -10,7 +10,7 @@ import categoryType from './category'
 import imageType from './image'
 
 const group = new GraphQLObjectType({
-  name: "group",
+  name: 'group',
   fields: () => ({
     id: {
       type: GraphQLID
@@ -29,14 +29,14 @@ const group = new GraphQLObjectType({
     },
     image: {
       type: imageType,
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getImage()
         } catch (ex) {
           console.error(ex)
         }
       }
-    },
+    }
   })
 })
 

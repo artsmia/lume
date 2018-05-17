@@ -1,9 +1,8 @@
 import Organization from '../../db/models/Organization'
 import Obj from '../../db/models/Obj'
 
-export default async function(src, args, ctx){
+export default async function(src, args, ctx) {
   try {
-
     let organization = await Organization.findOne({
       where: {
         ...args.organization
@@ -27,7 +26,6 @@ export default async function(src, args, ctx){
     console.log(obj.dataValues)
 
     return obj
-
   } catch (ex) {
     console.error(ex)
   }

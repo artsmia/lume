@@ -1,15 +1,10 @@
-import {
-  GraphQLID,
-  GraphQLNonNull,
-  GraphQLString
-} from 'graphql'
+import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql'
 import storyType from '../types/story'
 import resolve from '../resolvers/createStory'
-import {OrganizationInput} from '../types/inputs'
-
+import { OrganizationInput } from '../types/inputs'
 
 const createStory = {
-  name: "createStory",
+  name: 'createStory',
   type: storyType,
   args: {
     organization: {
@@ -20,7 +15,7 @@ const createStory = {
     },
     title: {
       type: new GraphQLNonNull(GraphQLString)
-    },
+    }
   },
   resolve
 }

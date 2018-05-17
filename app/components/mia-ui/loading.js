@@ -1,7 +1,7 @@
-import React from "react"
-import styled, { keyframes } from "styled-components"
-import { black, gray30, gray60 } from "./colors"
-import { Flex, Box } from "grid-styled"
+import React from 'react'
+import styled, { keyframes } from 'styled-components'
+import { black, gray30, gray60 } from './colors'
+import { Flex, Box } from 'grid-styled'
 
 const spin = keyframes`
   0% {
@@ -40,13 +40,13 @@ export const LoadFlex = styled(Flex)`
 `
 
 export const Waiting = () => (
-  <LoadFlex w={1} justifyContent={"center"} alignItems={"center"}>
+  <LoadFlex w={1} justifyContent={'center'} alignItems={'center'}>
     <Spinner w={1} />
   </LoadFlex>
 )
 
 export const Loading = () => (
-  <Overlay w={1} justifyContent={"center"} alignItems={"center"}>
+  <Overlay w={1} justifyContent={'center'} alignItems={'center'}>
     <Spinner w={1} />
   </Overlay>
 )

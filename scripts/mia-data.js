@@ -1,18 +1,18 @@
-import "dotenv/config"
-import fetch from "isomorphic-unfetch"
-import chalk from "chalk"
-import db from "../data-api/db"
-import associations from "../data-api/db/associations"
-import Organization from "../data-api/db/models/Organization"
-import User_Organization from "../data-api/db/models/User_Organization"
-import Story from "../data-api/db/models/Story"
-import Image from "../data-api/db/models/Image"
-import Media from "../data-api/db/models/Media"
+import 'dotenv/config'
+import fetch from 'isomorphic-unfetch'
+import chalk from 'chalk'
+import db from '../data-api/db'
+import associations from '../data-api/db/associations'
+import Organization from '../data-api/db/models/Organization'
+import User_Organization from '../data-api/db/models/User_Organization'
+import Story from '../data-api/db/models/Story'
+import Image from '../data-api/db/models/Image'
+import Media from '../data-api/db/models/Media'
 
-import Obj from "../data-api/db/models/Obj"
-import Content from "../data-api/db/models/Content"
-import { Op } from "sequelize"
-import TurndownService from "turndown"
+import Obj from '../data-api/db/models/Obj'
+import Content from '../data-api/db/models/Content'
+import { Op } from 'sequelize'
+import TurndownService from 'turndown'
 
 const tdService = new TurndownService()
 
@@ -22,13 +22,13 @@ async function populate() {
   try {
     const Mia = await Organization.findOne({
       where: {
-        subdomain: "mia"
+        subdomain: 'mia'
       }
     })
 
     const Africa = await Organization.findOne({
       where: {
-        subdomain: "africa"
+        subdomain: 'africa'
       }
     })
 
@@ -115,31 +115,31 @@ async function populate() {
 
           let image = await Org.createImage({
             localId: oldStory.primaryImageLocalId,
-            host: "mia",
+            host: 'mia',
             title,
             description
           })
 
           let story = await Org.createStory({
-            template: "original",
+            template: 'original',
             previewImageId: image.id,
-            visibility: "published",
+            visibility: 'published',
             title: oldStory.objContentTitle,
-            slug: oldStory.objContentTitle.replace(/\s/g, "-").toLowerCase(),
+            slug: oldStory.objContentTitle.replace(/\s/g, '-').toLowerCase(),
             localId: oldStory.objLocalId
           })
 
           let obj = await Org.createObj({
             localId: oldStory.objLocalId,
             pullFromCustomApi: true,
-            primaryMediaType: "image",
+            primaryMediaType: 'image',
             primaryImageId: image.id
           })
 
           let contentIndex = 0
 
           let objContent = await story.createContent({
-            type: "obj",
+            type: 'obj',
             title: oldStory.objContentTitle,
             description: oldStory.objContentDescription,
             objId: obj.id,
@@ -152,7 +152,7 @@ async function populate() {
             let [detailImage] = await Image.findOrCreate({
               where: {
                 localId: view.image,
-                host: "mia"
+                host: 'mia'
               },
               defaults: {
                 organizationId: Org.id,
@@ -163,7 +163,7 @@ async function populate() {
 
             for (let detail of view.annotations) {
               let geometry = {
-                type: "Polygon",
+                type: 'Polygon',
                 coordinates: [
                   detail.geoJSON.geometry.coordinates[0].map(coord => [
                     coord[0] * 256,
@@ -173,19 +173,19 @@ async function populate() {
               }
 
               let feature = {
-                type: "Feature",
+                type: 'Feature',
                 geometry
               }
 
               let geoJSON = {
-                type: "FeatureCollection",
+                type: 'FeatureCollection',
                 features: [feature]
               }
 
               contentIndex++
 
               let content = await story.createContent({
-                type: "detail",
+                type: 'detail',
                 title: detail.title,
                 description: tdService.turndown(detail.description),
                 geoJSON,
@@ -195,13 +195,13 @@ async function populate() {
 
               for (let attachment of detail.attachments) {
                 let { title, description } = await getImageDescTitle(
-                  attachment["image_id"]
+                  attachment['image_id']
                 )
 
                 let [additionalImage] = await Image.findOrCreate({
                   where: {
-                    localId: attachment["image_id"],
-                    host: "mia"
+                    localId: attachment['image_id'],
+                    host: 'mia'
                   },
                   defaults: {
                     organizationId: Org.id
@@ -218,9 +218,9 @@ async function populate() {
           let story = sliders[key]
           if (!story) {
             return {
-              title: "error",
-              contents: "error",
-              localId: "error"
+              title: 'error',
+              contents: 'error',
+              localId: 'error'
             }
           }
           return {
@@ -232,10 +232,10 @@ async function populate() {
 
         for (let oldStory of slideStories) {
           let story = await Org.createStory({
-            template: "slider",
-            visibility: "published",
+            template: 'slider',
+            visibility: 'published',
             title: oldStory.title,
-            slug: oldStory.title.replace(/\s/g, "-").toLowerCase(),
+            slug: oldStory.title.replace(/\s/g, '-').toLowerCase(),
             localId: oldStory.localId
           })
 
@@ -248,8 +248,8 @@ async function populate() {
             let image1
             let type
 
-            if (content.type === "image") {
-              type = "picture"
+            if (content.type === 'image') {
+              type = 'picture'
 
               let { title, description } = await getImageDescTitle(
                 content.image
@@ -257,7 +257,7 @@ async function populate() {
               let result = await Image.findOrCreate({
                 where: {
                   localId: content.image,
-                  host: "mia"
+                  host: 'mia'
                 },
                 defaults: {
                   organizationId: Org.id,
@@ -272,15 +272,15 @@ async function populate() {
               }
             }
 
-            if (content.type === "comparison") {
-              type = "comparison"
+            if (content.type === 'comparison') {
+              type = 'comparison'
               let { title, description } = await getImageDescTitle(
                 content.image
               )
               let result = await Image.findOrCreate({
                 where: {
                   localId: content.image,
-                  host: "mia"
+                  host: 'mia'
                 },
                 defaults: {
                   organizationId: Org.id,
@@ -293,7 +293,7 @@ async function populate() {
               result = await Image.findOrCreate({
                 where: {
                   localId: content.imageB,
-                  host: "mia"
+                  host: 'mia'
                 },
                 defaults: {
                   organizationId: Org.id,
@@ -305,13 +305,13 @@ async function populate() {
               image1 = result[0]
             }
 
-            if (content.type === "video") {
-              type = "movie"
+            if (content.type === 'video') {
+              type = 'movie'
             }
 
             let description = content.text
               ? tdService.turndown(content.text)
-              : ""
+              : ''
 
             await story.createContent({
               type,
@@ -352,11 +352,11 @@ async function populate() {
       }
     }
 
-    await create("https://new.artsmia.org/crashpad/", Mia)
+    await create('https://new.artsmia.org/crashpad/', Mia)
 
-    await create("https://new.artsmia.org/teachers-crashpad/", Africa)
+    await create('https://new.artsmia.org/teachers-crashpad/', Africa)
 
-    log("Success")
+    log('Success')
   } catch (ex) {
     console.error(ex)
     process.exit(1)

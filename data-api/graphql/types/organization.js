@@ -6,12 +6,12 @@ import {
   GraphQLBoolean
 } from 'graphql'
 import imageType from './image'
-import {RoleEnum} from './enums'
+import { RoleEnum } from './enums'
 
 import categoryType from './category'
 
 const organization = new GraphQLObjectType({
-  name: "organization",
+  name: 'organization',
   fields: () => ({
     id: {
       type: GraphQLID
@@ -27,7 +27,7 @@ const organization = new GraphQLObjectType({
     },
     orgImage: {
       type: imageType,
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getOrgImage()
         } catch (ex) {
@@ -40,7 +40,7 @@ const organization = new GraphQLObjectType({
     },
     locationImage: {
       type: imageType,
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getLocationImage()
         } catch (ex) {
@@ -52,7 +52,7 @@ const organization = new GraphQLObjectType({
       type: new GraphQLList(imageType)
     },
     role: {
-      type: RoleEnum,
+      type: RoleEnum
     },
     customImageApiEnabled: {
       type: GraphQLBoolean
@@ -83,7 +83,7 @@ const organization = new GraphQLObjectType({
     },
     categories: {
       type: new GraphQLList(categoryType),
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getCategories()
         } catch (ex) {

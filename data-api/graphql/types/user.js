@@ -5,13 +5,12 @@ import {
   GraphQLList
 } from 'graphql'
 import organizationType from './organization'
-import {RoleEnum} from './enums'
+import { RoleEnum } from './enums'
 import User_Organization from '../../db/models/User_Organization'
 import Organization from '../../db/models/Organization'
 
-
 const user = new GraphQLObjectType({
-  name: "user",
+  name: 'user',
   fields: () => ({
     id: {
       type: GraphQLID
@@ -21,18 +20,20 @@ const user = new GraphQLObjectType({
     },
     organizations: {
       type: new GraphQLList(organizationType),
-      async resolve({id}, args, ctx){
+      async resolve({ id }, args, ctx) {
         try {
           const userOrgs = await User_Organization.findAll({
             where: {
               userId: id
             },
-            include: [{
-              model: Organization,
-              as: 'organization'
-            }]
+            include: [
+              {
+                model: Organization,
+                as: 'organization'
+              }
+            ]
           })
-          let orgs = userOrgs.map( org => ({
+          let orgs = userOrgs.map(org => ({
             ...org.organization.dataValues,
             role: org.role
           }))
@@ -46,13 +47,13 @@ const user = new GraphQLObjectType({
     name: {
       type: new GraphQLObjectType({
         name: 'name',
-        fields: ()=>({
+        fields: () => ({
           given: {
             type: GraphQLString
           },
           family: {
             type: GraphQLString
-          },
+          }
         })
       })
     },

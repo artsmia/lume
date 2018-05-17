@@ -5,8 +5,8 @@ import {
   GraphQLInt,
   GraphQLList
 } from 'graphql'
-import {ContentTypeEnum} from './enums'
-import featureCollectionType, {FeatureCollectionInput} from './geometry'
+import { ContentTypeEnum } from './enums'
+import featureCollectionType, { FeatureCollectionInput } from './geometry'
 import imageType from './image'
 import mediaType from './media'
 
@@ -14,7 +14,7 @@ import objType from './obj'
 import objResolve from '../resolvers/obj'
 
 const contentType = new GraphQLObjectType({
-  name: "content",
+  name: 'content',
   fields: () => ({
     id: {
       type: GraphQLID
@@ -33,7 +33,7 @@ const contentType = new GraphQLObjectType({
     },
     image0: {
       type: imageType,
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getImage0()
         } catch (ex) {
@@ -43,7 +43,7 @@ const contentType = new GraphQLObjectType({
     },
     image1: {
       type: imageType,
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getImage1()
         } catch (ex) {
@@ -59,11 +59,11 @@ const contentType = new GraphQLObjectType({
     },
     obj: {
       type: objType,
-      resolve: objResolve,
+      resolve: objResolve
     },
     additionalImages: {
       type: new GraphQLList(imageType),
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getAdditionalImages()
         } catch (ex) {
@@ -73,7 +73,7 @@ const contentType = new GraphQLObjectType({
     },
     additionalMedias: {
       type: new GraphQLList(mediaType),
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getAdditionalMedias()
         } catch (ex) {

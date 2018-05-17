@@ -1,33 +1,33 @@
-import { GraphQLObjectType } from "graphql"
-import createCategory from "./createCategory"
+import { GraphQLObjectType } from 'graphql'
+import createCategory from './createCategory'
 
-import createContent from "./createContent"
-import createGroup from "./createGroup"
-import createImage from "./createImage"
-import createObj from "./createObj"
-import createStory from "./createStory"
-import createOrganization from "./createOrganization"
+import createContent from './createContent'
+import createGroup from './createGroup'
+import createImage from './createImage'
+import createObj from './createObj'
+import createStory from './createStory'
+import createOrganization from './createOrganization'
 
-import deleteCategory from "./deleteCategory"
-import deleteContent from "./deleteContent"
-import deleteGroup from "./deleteGroup"
-import deleteStory from "./deleteStory"
-import deleteImage from "./deleteImage"
+import deleteCategory from './deleteCategory'
+import deleteContent from './deleteContent'
+import deleteGroup from './deleteGroup'
+import deleteStory from './deleteStory'
+import deleteImage from './deleteImage'
 
-import editContent from "./editContent"
-import editImage from "./editImage"
+import editContent from './editContent'
+import editImage from './editImage'
 
-import editObj from "./editObj"
-import editOrganization from "./editOrganization"
-import editCategory from "./editCategory"
-import editGroup from "./editGroup"
+import editObj from './editObj'
+import editOrganization from './editOrganization'
+import editCategory from './editCategory'
+import editGroup from './editGroup'
 
-import editStory from "./editStory"
-import editUserOrganizationRole from "./editUserOrganizationRole"
-import reorderContents from "./reorderContents"
+import editStory from './editStory'
+import editUserOrganizationRole from './editUserOrganizationRole'
+import reorderContents from './reorderContents'
 
 const mutation = new GraphQLObjectType({
-  name: "Mutation",
+  name: 'Mutation',
   fields: {
     createCategory,
     createContent,

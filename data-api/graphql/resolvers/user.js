@@ -2,18 +2,18 @@ import User_Organization from '../../db/models/User_Organization'
 import Organization from '../../db/models/Organization'
 import auth0 from '../../auth/auth0'
 
-
-export default async function (src, {id}, ctx){
+export default async function(src, { id }, ctx) {
   try {
-
     const userOrgs = await User_Organization.findAll({
       where: {
         userId: id
       },
-      include:[{
-        model: Organization,
-        as: "organization"
-      }]
+      include: [
+        {
+          model: Organization,
+          as: 'organization'
+        }
+      ]
     })
 
     let user = {
@@ -34,13 +34,12 @@ export default async function (src, {id}, ctx){
   }
 }
 
-export async function retrieveUserProfile(userId){
+export async function retrieveUserProfile(userId) {
   try {
-
     if (userId === 'local') {
       return {
         name: {
-          given: "local",
+          given: 'local',
           family: 'user'
         },
         picture: '/static/placeholder0.png',
@@ -48,14 +47,13 @@ export async function retrieveUserProfile(userId){
       }
     }
 
-
     let {
       email,
       given_name: given,
       family_name: family,
       picture
     } = await auth0.getUser({
-      id: userId,
+      id: userId
     })
 
     return {
@@ -73,9 +71,7 @@ export async function retrieveUserProfile(userId){
 
 export async function organizationsResolve(src, args, ctx) {
   try {
-
-    console.log("user org", src)
-
+    console.log('user org', src)
 
     return organizations
   } catch (ex) {

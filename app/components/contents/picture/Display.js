@@ -1,26 +1,15 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import Zoomer from '../../shared/Zoomer'
 
 export default class PictureDisplay extends Component {
-
   render() {
-
     if (!this.props.content) return null
 
-    const {
-      image0
-    } = this.props.content
+    const { image0 } = this.props.content
 
     return (
-      <Container>
-        {(image0) ? (
-          <Zoomer
-            imageId={image0.id}
-          />
-        ): null}
-
-      </Container>
+      <Container>{image0 ? <Zoomer imageId={image0.id} /> : null}</Container>
     )
   }
 }

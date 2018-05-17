@@ -1,16 +1,16 @@
-import { ApolloClient } from "apollo-boost"
-import { HttpLink } from "apollo-boost"
-import { InMemoryCache } from "apollo-boost"
-import fetch from "isomorphic-unfetch"
-import Head from "next/head"
-import { getDataFromTree } from "react-apollo"
-import propTypes from "prop-types"
-import { withClientState } from "apollo-link-state"
-import defaults from "./local/defaults"
-import resolvers from "./local/resolvers"
-import typeDefs from "./local/typeDefs"
-import { setContext } from "apollo-link-context"
-import { ApolloLink } from "apollo-link"
+import { ApolloClient } from 'apollo-boost'
+import { HttpLink } from 'apollo-boost'
+import { InMemoryCache } from 'apollo-boost'
+import fetch from 'isomorphic-unfetch'
+import Head from 'next/head'
+import { getDataFromTree } from 'react-apollo'
+import propTypes from 'prop-types'
+import { withClientState } from 'apollo-link-state'
+import defaults from './local/defaults'
+import resolvers from './local/resolvers'
+import typeDefs from './local/typeDefs'
+import { setContext } from 'apollo-link-context'
+import { ApolloLink } from 'apollo-link'
 
 let apolloClient = null
 
@@ -36,8 +36,8 @@ function create(initialState) {
   const authLink = setContext((req, prevCtx) => {
     let authHeaders = {}
     if (process.browser) {
-      let idToken = localStorage.getItem("idToken")
-      let userId = localStorage.getItem("userId")
+      let idToken = localStorage.getItem('idToken')
+      let userId = localStorage.getItem('userId')
       if (idToken && userId) {
         Object.assign(authHeaders, {
           authorization: `Bearer ${idToken}`,
@@ -81,10 +81,10 @@ function initApollo(initialState) {
 
 export default App => {
   return class Apollo extends React.Component {
-    static displayName = "withApollo(App)"
+    static displayName = 'withApollo(App)'
     static async getInitialProps(ctx) {
       try {
-        console.log("withApollo static")
+        console.log('withApollo static')
 
         const { Component, router } = ctx
 
@@ -94,15 +94,15 @@ export default App => {
 
         let appProps = {}
         if (App.getInitialProps) {
-          console.log("App getInitialProps start")
+          console.log('App getInitialProps start')
           appProps = await App.getInitialProps(ctx, apollo)
-          console.log("App getInitialProps done")
+          console.log('App getInitialProps done')
         }
 
         const apolloState = {}
 
         try {
-          console.log("getDataFromTree")
+          console.log('getDataFromTree')
           // Run all GraphQL queries
           await getDataFromTree(
             <App
@@ -117,7 +117,7 @@ export default App => {
           // Prevent Apollo Client GraphQL errors from crashing SSR.
           // Handle them in components via the data.error prop:
           // http://dev.apollodata.com/react/api-queries.html#graphql-query-data-error
-          console.error("Error while running `getDataFromTree`", error)
+          console.error('Error while running `getDataFromTree`', error)
         }
 
         if (!process.browser) {

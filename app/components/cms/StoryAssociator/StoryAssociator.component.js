@@ -1,14 +1,13 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
-import {Button} from '../../mia-ui/buttons'
-import {Modal} from '../../mia-ui/modals'
-import {H4, H2} from '../../mia-ui/text'
-import {CheckboxInput, Search, MultiSelect} from '../../mia-ui/forms'
-import {Link} from '../../mia-ui/links'
-import {Flex, Box} from 'grid-styled'
+import { Button } from '../../mia-ui/buttons'
+import { Modal } from '../../mia-ui/modals'
+import { H4, H2 } from '../../mia-ui/text'
+import { CheckboxInput, Search, MultiSelect } from '../../mia-ui/forms'
+import { Link } from '../../mia-ui/links'
+import { Flex, Box } from 'grid-styled'
 
 export default class StoryAssociator extends Component {
-
   static defaultProps = {
     stories: [],
     story: {
@@ -18,25 +17,18 @@ export default class StoryAssociator extends Component {
 
   state = {
     modal: false,
-    search: "",
+    search: ''
   }
 
   render() {
     const {
-      state: {
-        search,
-        checked
-      },
+      state: { search, checked },
       props: {
         stories,
-        story: {
-          relatedStories
-        },
+        story: { relatedStories },
         storyId,
         router: {
-          query: {
-            subdomain
-          }
+          query: { subdomain }
         }
       },
       handleSearch,
@@ -46,32 +38,22 @@ export default class StoryAssociator extends Component {
 
     let relatedStoryIds = relatedStories.map(story => story.id)
 
-    let unrelatedStories = stories.slice().filter( story => {
+    let unrelatedStories = stories.slice().filter(story => {
       return !relatedStoryIds.includes(story.id) && story.id !== storyId
     })
 
-
     return (
-      <Container
-        flexWrap={'wrap'}
-        my={2}
-        p={1}
-        alignItems={'flex-start'}
-      >
-        <Box
-          w={1}
-        >
-          <H2>
-            Associated Stories
-          </H2>
+      <Container flexWrap={'wrap'} my={2} p={1} alignItems={'flex-start'}>
+        <Box w={1}>
+          <H2>Associated Stories</H2>
         </Box>
 
         <MultiSelect
-          options={unrelatedStories.map(({title,id}) => ({
+          options={unrelatedStories.map(({ title, id }) => ({
             value: id,
             name: title
           }))}
-          selections={relatedStories.map(({title, id}) => ({
+          selections={relatedStories.map(({ title, id }) => ({
             value: id,
             name: title
           }))}
@@ -79,46 +61,37 @@ export default class StoryAssociator extends Component {
           onAdd={handleAdd}
           onRemove={handleRemove}
         />
-
-
       </Container>
     )
   }
 
-  handleSearch = (search) => {
+  handleSearch = search => {
     this.setState(
-      (prevProps) => ({search}),
-      ()=>{
-
-        let {
-          variables,
-          refetch
-        } = this.props
+      prevProps => ({ search }),
+      () => {
+        let { variables, refetch } = this.props
 
         variables.filter.search = search
-
 
         refetch(variables)
       }
     )
   }
 
-  handleAdd = (addRelatedStoryId) => {
+  handleAdd = addRelatedStoryId => {
     this.props.editStory({
       addRelatedStoryId
     })
   }
 
-  handleRemove = (removeRelatedStoryId) => {
+  handleRemove = removeRelatedStoryId => {
     this.props.editStory({
       removeRelatedStoryId
     })
   }
-
 }
 
-
 const Container = styled(Flex)`
-  border: 1px solid ${({theme}) => theme.color.gray30};
+  border: 1px solid ${({ theme }) => theme.color.gray30};
   border-radius: 4px;
 `

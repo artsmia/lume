@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import { H2, Hr, H3 } from "../../mia-ui/text"
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import { H2, Hr, H3 } from '../../mia-ui/text'
 import {
   Form,
   Label,
@@ -8,28 +8,28 @@ import {
   Select,
   Option,
   CheckboxInput
-} from "../../mia-ui/forms"
-import { Button } from "../../mia-ui/buttons"
-import CategoryGroupEditor from "../CategoryGroupEditor"
-import { Page, Card } from "../../mia-ui/layout"
-import { Flex, Box } from "grid-styled"
-import ManageUsers from "../ManageUsers"
-import Head from "../../shared/head"
-import { Link } from "../../mia-ui/links"
-import { ChangeImage } from "../DefaultEditors"
+} from '../../mia-ui/forms'
+import { Button } from '../../mia-ui/buttons'
+import CategoryGroupEditor from '../CategoryGroupEditor'
+import { Page, Card } from '../../mia-ui/layout'
+import { Flex, Box } from 'grid-styled'
+import ManageUsers from '../ManageUsers'
+import Head from '../../shared/head'
+import { Link } from '../../mia-ui/links'
+import { ChangeImage } from '../DefaultEditors'
 
 export default class OrgSettings extends Component {
   state = {
-    name: "",
+    name: '',
     newUsersRequireApproval: false,
     customObjApiEnabled: false,
-    customObjApiEndpoint: "",
+    customObjApiEndpoint: '',
     customAnalyticsEnabled: false,
-    customAnalyticsId: "",
-    emailDomain: "",
+    customAnalyticsId: '',
+    emailDomain: '',
     locationEnabled: false,
-    objSearchEndpoint: "",
-    imageSearchEndpoint: ""
+    objSearchEndpoint: '',
+    imageSearchEndpoint: ''
   }
 
   constructor(props) {
@@ -66,7 +66,7 @@ export default class OrgSettings extends Component {
         <Flex w={1} mb={2}>
           <Link
             href={{
-              pathname: "/cms",
+              pathname: '/cms',
               query: {
                 subdomain: organization.subdomain
               }
@@ -91,32 +91,32 @@ export default class OrgSettings extends Component {
         <Card>
           <H2>Advanced Settings</H2>
 
-          <Flex w={1} flexDirection={"column"} my={2} mb={2}>
+          <Flex w={1} flexDirection={'column'} my={2} mb={2}>
             <Label>Name</Label>
 
-            <Input name={"name"} value={name} onChange={handleChange} />
+            <Input name={'name'} value={name} onChange={handleChange} />
           </Flex>
 
           <Hr />
 
           <H3>Rules for new users</H3>
 
-          <Flex w={1} mb={2} alignItems={"center"}>
+          <Flex w={1} mb={2} alignItems={'center'}>
             <Label>New Users Require Approval</Label>
 
             <input
-              type={"checkbox"}
-              value={"newUsersRequireApproval"}
+              type={'checkbox'}
+              value={'newUsersRequireApproval'}
               checked={organization.newUsersRequireApproval}
               onChange={handleCheck}
             />
           </Flex>
 
-          <Flex w={1} flexDirection={"column"} my={2} mb={2}>
+          <Flex w={1} flexDirection={'column'} my={2} mb={2}>
             <Label>Preaproved Email Domain</Label>
 
             <Input
-              name={"emailDomain"}
+              name={'emailDomain'}
               value={emailDomain}
               onChange={handleChange}
             />
@@ -126,23 +126,23 @@ export default class OrgSettings extends Component {
 
           <H3>Custom Analytics Settings</H3>
 
-          <Flex w={1} my={2} alignItems={"center"}>
+          <Flex w={1} my={2} alignItems={'center'}>
             <Label>Use Custom Analytics</Label>
 
             <input
-              type={"checkbox"}
-              value={"customAnalyticsEnabled"}
+              type={'checkbox'}
+              value={'customAnalyticsEnabled'}
               checked={organization.customAnalyticsEnabled}
               onChange={handleCheck}
             />
           </Flex>
 
           {organization.customAnalyticsEnabled ? (
-            <Flex w={1} flexDirection={"column"} my={2}>
+            <Flex w={1} flexDirection={'column'} my={2}>
               <Label>Google Analytics ID</Label>
 
               <Input
-                name={"customAnalyticsId"}
+                name={'customAnalyticsId'}
                 value={customAnalyticsId}
                 onChange={handleChange}
               />
@@ -153,12 +153,12 @@ export default class OrgSettings extends Component {
 
           <H3>Custom Object Settings</H3>
 
-          <Flex w={1} my={2} alignItems={"center"}>
+          <Flex w={1} my={2} alignItems={'center'}>
             <Label>Use Custom Object API</Label>
 
             <input
-              type={"checkbox"}
-              value={"customObjApiEnabled"}
+              type={'checkbox'}
+              value={'customObjApiEnabled'}
               checked={organization.customObjApiEnabled}
               onChange={handleCheck}
             />
@@ -166,21 +166,21 @@ export default class OrgSettings extends Component {
 
           {organization.customObjApiEnabled ? (
             <div>
-              <Flex w={1} flexDirection={"column"} mb={2}>
+              <Flex w={1} flexDirection={'column'} mb={2}>
                 <Label>Custom Object API Endpoint</Label>
 
                 <Input
-                  name={"customObjApiEndpoint"}
+                  name={'customObjApiEndpoint'}
                   value={customObjApiEndpoint}
                   onChange={handleChange}
                 />
               </Flex>
 
-              <Flex w={1} flexDirection={"column"} mb={2}>
+              <Flex w={1} flexDirection={'column'} mb={2}>
                 <Label>Custom Object Search Endpoint</Label>
 
                 <Input
-                  name={"objSearchEndpoint"}
+                  name={'objSearchEndpoint'}
                   value={objSearchEndpoint}
                   onChange={handleChange}
                 />

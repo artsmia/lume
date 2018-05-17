@@ -26,14 +26,14 @@ export default {
           <p>First thing: Let's get you set up with an organization!</p>
         </div>
       ),
-      placement: "center",
+      placement: 'center',
       disableBeacon: true,
       styles: {
         options: {
           zIndex: 10000
         }
       },
-      target: "body"
+      target: 'body'
     },
     {
       content: (
@@ -50,22 +50,22 @@ export default {
           </p>
         </div>
       ),
-      placement: "center",
+      placement: 'center',
       disableBeacon: true,
       styles: {
         options: {
           zIndex: 10000
         }
       },
-      target: "body"
+      target: 'body'
     },
     {
-      target: "#join-org",
+      target: '#join-org',
       content: (
         <div>
           <p>
             You can join an organization by searching for the organization by
-            name and then selecting it from the dropdown menu.{" "}
+            name and then selecting it from the dropdown menu.{' '}
           </p>
           <p>
             Note: some organizations require approval for new users or only
@@ -77,7 +77,7 @@ export default {
       )
     },
     {
-      target: "#create-org",
+      target: '#create-org',
       content: (
         <div>
           <p>
@@ -88,7 +88,7 @@ export default {
       )
     },
     {
-      target: "#subdomain",
+      target: '#subdomain',
       content: (
         <div>
           <p>
@@ -112,12 +112,12 @@ export default {
             <p>This is your organization's main content management page.</p>
           </div>
         ),
-        placement: "center",
+        placement: 'center',
         disableBeacon: true,
-        target: "body"
+        target: 'body'
       },
       {
-        target: "#create-story-button",
+        target: '#create-story-button',
         content: (
           <div>
             <p>
@@ -130,7 +130,7 @@ export default {
     ],
     adminOnly: [
       {
-        target: "#org-settings",
+        target: '#org-settings',
         content: (
           <div>
             <p>
@@ -160,9 +160,9 @@ export default {
             </p>
           </div>
         ),
-        placement: "center",
+        placement: 'center',
         disableBeacon: true,
-        target: "body"
+        target: 'body'
       },
       {
         content: (
@@ -174,12 +174,12 @@ export default {
             </p>
           </div>
         ),
-        target: "#story-description",
+        target: '#story-description',
         async code() {
           try {
-            let el = document.getElementById("story-description")
+            let el = document.getElementById('story-description')
             await write(
-              "Some stuff here about Frankenstein and then about how you can do *this with the asterisks*.",
+              'Some stuff here about Frankenstein and then about how you can do *this with the asterisks*.',
               el
             )
           } catch (ex) {

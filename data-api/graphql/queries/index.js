@@ -1,6 +1,4 @@
-import {
-  GraphQLObjectType,
-} from 'graphql'
+import { GraphQLObjectType } from 'graphql'
 import authenticate from './authenticate'
 import obj from './obj'
 import objs from './objs'
@@ -17,7 +15,6 @@ import stories from './stories'
 import image from './image'
 import images from './images'
 import medias from './medias'
-
 
 const query = new GraphQLObjectType({
   name: 'Query',

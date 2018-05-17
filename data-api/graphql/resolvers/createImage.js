@@ -1,10 +1,9 @@
 import Organization from '../../db/models/Organization'
 import Image from '../../db/models/Image'
 
-export default async function(src, args, ctx){
+export default async function(src, args, ctx) {
   try {
-
-    console.log("createImage", args)
+    console.log('createImage', args)
 
     let organization = await Organization.findOne({
       where: {
@@ -12,12 +11,10 @@ export default async function(src, args, ctx){
       }
     })
 
-
     return await Image.create({
       organizationId: organization.id,
       ...args
     })
-
   } catch (ex) {
     console.error(ex)
   }

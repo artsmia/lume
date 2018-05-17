@@ -9,171 +9,171 @@ import {
   Organization,
   User_Organization,
   Media
-} from "./models"
+} from './models'
 
 Category.hasMany(Group, {
-  as: "groups",
-  onDelete: "cascade",
+  as: 'groups',
+  onDelete: 'cascade',
   hooks: true
 })
 
 Category.belongsTo(Image, {
-  as: "image"
+  as: 'image'
 })
 
 Category.belongsTo(Organization, {
-  as: "organization",
-  onDelete: "CASCADE"
+  as: 'organization',
+  onDelete: 'CASCADE'
 })
 
 Content.belongsTo(Story, {
-  as: "story",
-  onDelete: "CASCADE"
+  as: 'story',
+  onDelete: 'CASCADE'
 })
 
 Content.belongsTo(Image, {
-  as: "image0",
-  onDelete: "SET NULL",
+  as: 'image0',
+  onDelete: 'SET NULL',
   hooks: true,
   constraints: false
 })
 
 Content.belongsTo(Image, {
-  as: "image1"
+  as: 'image1'
 })
 
 Content.belongsTo(Obj, {
-  as: "obj"
+  as: 'obj'
 })
 
 Content.belongsToMany(Image, {
-  as: "additionalImages",
-  through: "content_image"
+  as: 'additionalImages',
+  through: 'content_image'
 })
 
 Content.belongsToMany(Media, {
-  as: "additionalMedias",
-  through: "content_media"
+  as: 'additionalMedias',
+  through: 'content_media'
 })
 
 Group.belongsTo(Category, {
-  as: "category"
+  as: 'category'
 })
 
 Group.belongsTo(Image, {
-  as: "image"
+  as: 'image'
 })
 
 Group.belongsToMany(Story, {
-  as: "groups",
-  through: "story_group"
+  as: 'groups',
+  through: 'story_group'
 })
 
 Image.hasMany(Group, {
-  as: "groups"
+  as: 'groups'
 })
 
 Image.belongsTo(Organization, {
-  as: "organization"
+  as: 'organization'
 })
 
 Image.belongsToMany(Content, {
-  as: "contents",
-  through: "content_image"
+  as: 'contents',
+  through: 'content_image'
 })
 
 Media.belongsTo(Organization, {
-  as: "organization"
+  as: 'organization'
 })
 
 Media.belongsToMany(Content, {
-  as: "contents",
-  through: "content_media"
+  as: 'contents',
+  through: 'content_media'
 })
 
 Obj.belongsTo(Image, {
-  as: "primaryImage"
+  as: 'primaryImage'
 })
 
 Obj.hasMany(Content, {
-  as: "contents"
+  as: 'contents'
 })
 
 Obj.belongsTo(Organization, {
-  as: "organization"
+  as: 'organization'
 })
 
 Organization.hasOne(Image, {
-  as: "orgImage"
+  as: 'orgImage'
 })
 
 Organization.hasOne(Image, {
-  as: "locationImage"
+  as: 'locationImage'
 })
 
 Organization.hasMany(Story, {
-  as: "stories",
-  onDelete: "cascade",
+  as: 'stories',
+  onDelete: 'cascade',
   hooks: true
 })
 
 Organization.hasMany(Image, {
-  as: "images",
-  onDelete: "cascade",
+  as: 'images',
+  onDelete: 'cascade',
   hooks: true
 })
 
 Organization.hasMany(Media, {
-  as: "medias",
-  onDelete: "cascade",
+  as: 'medias',
+  onDelete: 'cascade',
   hooks: true
 })
 
 Organization.hasMany(Obj, {
-  as: "objs",
-  onDelete: "cascade",
+  as: 'objs',
+  onDelete: 'cascade',
   hooks: true
 })
 
 Organization.hasMany(Category, {
-  as: "categories",
+  as: 'categories',
   constraints: false,
-  onDelete: "cascade",
+  onDelete: 'cascade',
   hooks: true
 })
 
 Organization.hasMany(User_Organization, {
-  as: "users",
-  onDelete: "cascade",
+  as: 'users',
+  onDelete: 'cascade',
   hooks: true
 })
 
 Story.belongsToMany(Group, {
-  as: "groups",
-  through: "story_group"
+  as: 'groups',
+  through: 'story_group'
 })
 
 Story.belongsToMany(Story, {
-  as: "relatedStories",
-  through: "story_story"
+  as: 'relatedStories',
+  through: 'story_story'
 })
 
 Story.belongsTo(Organization, {
-  as: "organization"
+  as: 'organization'
 })
 
 Story.belongsTo(Image, {
-  as: "previewImage"
+  as: 'previewImage'
 })
 
 Story.hasMany(Content, {
-  as: "contents",
-  onDelete: "cascade",
+  as: 'contents',
+  onDelete: 'cascade',
   hooks: true
 })
 
 User_Organization.belongsTo(Organization, {
-  as: "organization"
+  as: 'organization'
 })
 
 //

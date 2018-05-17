@@ -1,32 +1,26 @@
-import {graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import groupFragment from '../fragments/group'
 
 export const GroupQuery = gql`
-  query GroupQuery (
-    $groupId: ID!
-  ) {
-    group (
-      id: $groupId
-    ) {
+  query GroupQuery($groupId: ID!) {
+    group(id: $groupId) {
       ...GroupFragment
     }
   }
   ${groupFragment}
 `
 
-
 const queryConfig = {
-  options: ({groupId}) => ({
+  options: ({ groupId }) => ({
     variables: {
       groupId
-    },
+    }
   }),
   props: ({ ownProps, data }) => ({
     ...ownProps,
     ...data
-  }),
+  })
 }
-
 
 export default graphql(GroupQuery, queryConfig)

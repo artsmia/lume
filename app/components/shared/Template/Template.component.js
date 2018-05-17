@@ -1,17 +1,17 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import { Flex, Box } from "grid-styled"
-import Link from "next/link"
-import { Icon } from "../../mia-ui/icons"
-import { CheckboxInput } from "../../mia-ui/forms"
-import Joyride from "react-joyride"
-import Feedback from "../Feedback"
-import Floater from "react-floater"
-import tours from "./tours.js"
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import { Flex, Box } from 'grid-styled'
+import Link from 'next/link'
+import { Icon } from '../../mia-ui/icons'
+import { CheckboxInput } from '../../mia-ui/forms'
+import Joyride from 'react-joyride'
+import Feedback from '../Feedback'
+import Floater from 'react-floater'
+import tours from './tours.js'
 
 export default class Template extends Component {
   state = {
-    message: "",
+    message: '',
     menu: false,
     showTour: false,
     showTips: false,
@@ -25,25 +25,25 @@ export default class Template extends Component {
       () => {
         if (this.state.showTour) {
           switch (this.props.router.pathname) {
-            case "/cms/organizations": {
+            case '/cms/organizations': {
               this.setState({ tour: tours.organizations })
               break
             }
-            case "/cms": {
+            case '/cms': {
               let tour = tours.cmsHome.basic
 
               let org = this.props.user.organizations.find(
                 org => org.subdomain === this.props.router.query.subdomain
               )
 
-              if (org.role === "admin") {
+              if (org.role === 'admin') {
                 tour.splice(1, 0, ...tours.cmsHome.adminOnly)
               }
 
               this.setState({ tour })
               break
             }
-            case "/cms/edit": {
+            case '/cms/edit': {
               this.setState({ tour: tours.editor.frankenstein })
               break
             }
@@ -58,7 +58,7 @@ export default class Template extends Component {
 
   tourCallback = async e => {
     try {
-      if (e.lifecycle === "tooltip" && e.step.code) {
+      if (e.lifecycle === 'tooltip' && e.step.code) {
         await e.step.code()
       }
     } catch (ex) {
@@ -86,7 +86,7 @@ export default class Template extends Component {
                     <Item key={id}>
                       <Link
                         href={{
-                          pathname: "/cms",
+                          pathname: '/cms',
                           query: {
                             subdomain
                           }
@@ -102,9 +102,9 @@ export default class Template extends Component {
               <Item>
                 <Link
                   href={{
-                    pathname: "/cms/organizations"
+                    pathname: '/cms/organizations'
                   }}
-                  as={"/organizations"}
+                  as={'/organizations'}
                 >
                   <A>Join or Create an Organization</A>
                 </Link>
@@ -114,7 +114,7 @@ export default class Template extends Component {
               <Item>
                 <span>Show Tips</span>
                 <input
-                  type={"checkbox"}
+                  type={'checkbox'}
                   checked={showTips}
                   onChange={() => {
                     this.setState(({ showTips }) => ({ showTips: !showTips }))
@@ -124,7 +124,7 @@ export default class Template extends Component {
               <Item>
                 <span>Show Tour</span>
                 <input
-                  type={"checkbox"}
+                  type={'checkbox'}
                   checked={showTour}
                   onChange={handleTourClick}
                 />
@@ -132,7 +132,7 @@ export default class Template extends Component {
               <Hr />
 
               <Item>
-                <Link href={"/logout"}>
+                <Link href={'/logout'}>
                   <A>Logout</A>
                 </Link>
               </Item>
@@ -219,7 +219,7 @@ const MenuCheck = styled.input`
 `
 
 MenuCheck.defaultProps = {
-  type: "checkbox"
+  type: 'checkbox'
 }
 
 const A = styled.a`

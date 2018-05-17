@@ -1,19 +1,19 @@
-import React, { Component } from "react"
-import { ChangeImage } from "../../cms/DefaultEditors"
-import query from "../../../apollo/queries/content"
-import OrganizationQuery from "../../../apollo/queries/organization"
-import { withRouter } from "next/router"
-import mutation from "../../../apollo/mutations/editContent"
-import addTips from "../../../apollo/local/addTips"
-import removeTips from "../../../apollo/local/removeTips"
+import React, { Component } from 'react'
+import { ChangeImage } from '../../cms/DefaultEditors'
+import query from '../../../apollo/queries/content'
+import OrganizationQuery from '../../../apollo/queries/organization'
+import { withRouter } from 'next/router'
+import mutation from '../../../apollo/mutations/editContent'
+import addTips from '../../../apollo/local/addTips'
+import removeTips from '../../../apollo/local/removeTips'
 
-import { compose, withApollo } from "react-apollo"
-import styled from "styled-components"
-import { H2 } from "../../mia-ui/text"
-import setSaveStatus from "../../../apollo/local/setSaveStatus"
-import { Flex, Box } from "grid-styled"
-import { Title, Description } from "../../mia-ui/forms"
-import DeleteContentButton from "../../cms/DeleteContentButton"
+import { compose, withApollo } from 'react-apollo'
+import styled from 'styled-components'
+import { H2 } from '../../mia-ui/text'
+import setSaveStatus from '../../../apollo/local/setSaveStatus'
+import { Flex, Box } from 'grid-styled'
+import { Title, Description } from '../../mia-ui/forms'
+import DeleteContentButton from '../../cms/DeleteContentButton'
 
 class ComparisonEditor extends Component {
   tips = []
@@ -29,35 +29,35 @@ class ComparisonEditor extends Component {
     } = this
 
     return (
-      <Flex w={[1, 1 / 2]} flexWrap={"wrap"} m={3}>
+      <Flex w={[1, 1 / 2]} flexWrap={'wrap'} m={3}>
         <Box w={1}>
           <Title
-            label={"Title"}
+            label={'Title'}
             value={title}
-            name={"title"}
+            name={'title'}
             onChange={handleChange}
           />
         </Box>
         <Box w={1}>
           <Description
-            label={"Description"}
+            label={'Description'}
             value={description}
-            name={"description"}
+            name={'description'}
             onChange={handleChange}
           />
         </Box>
         <Box w={1}>
           <ChangeImage
-            label={"Image One"}
-            name={"image0Id"}
+            label={'Image One'}
+            name={'image0Id'}
             image={content.image0}
             onChange={handleChange}
           />
         </Box>
         <Box w={1}>
           <ChangeImage
-            label={"Image Two"}
-            name={"image1Id"}
+            label={'Image Two'}
+            name={'image1Id'}
             image={content.image1}
             onChange={handleChange}
           />
@@ -81,10 +81,10 @@ class ComparisonEditor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      title: "",
-      description: "",
-      image0Id: "",
-      image1Id: ""
+      title: '',
+      description: '',
+      image0Id: '',
+      image1Id: ''
     }
 
     this.state = {
@@ -142,8 +142,8 @@ class ComparisonEditor extends Component {
 
     return {
       ...content,
-      image0Id: image0 ? image0.id : "",
-      image1Id: image1 ? image1.id : ""
+      image0Id: image0 ? image0.id : '',
+      image1Id: image1 ? image1.id : ''
     }
   }
 

@@ -1,15 +1,15 @@
-import { compose, graphql, withApollo } from "react-apollo"
-import Component from "./OrganizationHome.component"
-import { StoriesQuery } from "../../../apollo/queries/stories"
-import OrganizationQuery from "../../../apollo/queries/organization"
-import { withRouter } from "next/router"
+import { compose, graphql, withApollo } from 'react-apollo'
+import Component from './OrganizationHome.component'
+import { StoriesQuery } from '../../../apollo/queries/stories'
+import OrganizationQuery from '../../../apollo/queries/organization'
+import { withRouter } from 'next/router'
 
 const query = graphql(StoriesQuery, {
   options: ({ router }) => {
     let groups = []
 
     if (router.query.groups) {
-      groups = router.query.groups.split(",")
+      groups = router.query.groups.split(',')
     }
 
     let groupSlug
@@ -27,14 +27,14 @@ const query = graphql(StoriesQuery, {
           limit: 30,
           offset: 0,
           order: {
-            column: "updatedAt",
-            direction: "DESC"
+            column: 'updatedAt',
+            direction: 'DESC'
           },
           template: router.query.template
-            ? router.query.template.split(",")
-            : ["original", "slider"],
-          visibility: ["published"],
-          search: router.query.search || "",
+            ? router.query.template.split(',')
+            : ['original', 'slider'],
+          visibility: ['published'],
+          search: router.query.search || '',
           groups,
           groupSlug
         }

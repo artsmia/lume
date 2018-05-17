@@ -1,25 +1,15 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import ReactPlayer from 'react-player'
-import {Flex, Box} from 'grid-styled'
+import { Flex, Box } from 'grid-styled'
 
 export default class Video extends Component {
-  render(){
-
+  render() {
     if (!this.props.url) return null
 
-    const {
-      url
-    } = this.props
+    const { url } = this.props
 
-
-
-    return (
-      <ReactPlayer
-        url={url}
-        controls={true}
-      />
-    )
+    return <ReactPlayer url={url} controls={true} />
   }
 }
 
@@ -34,5 +24,4 @@ const VideoBox = styled(Box)`
   .vimeo {
     height: 300px;
   }
-
 `

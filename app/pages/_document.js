@@ -2,8 +2,6 @@ import Document, { Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
 export default class ClientDocument extends Document {
-
-
   constructor(props) {
     super(props)
     const { __NEXT_DATA__, ids } = props
@@ -12,14 +10,16 @@ export default class ClientDocument extends Document {
     }
   }
 
-  static getInitialProps ({ renderPage }) {
+  static getInitialProps({ renderPage }) {
     const sheet = new ServerStyleSheet()
-    const page = renderPage(Lume => props => sheet.collectStyles(<Lume {...props} />))
+    const page = renderPage(Lume => props =>
+      sheet.collectStyles(<Lume {...props} />)
+    )
     const styleTags = sheet.getStyleElement()
     return { ...page, styleTags }
   }
 
-  render () {
+  render() {
     return (
       <html lang="en">
         <Head>
@@ -37,31 +37,33 @@ export default class ClientDocument extends Document {
             `}}
           /> */}
 
+          <link
+            rel="shortcut icon"
+            type="image/x-icon"
+            href="/static/favicon.png"
+          />
 
           <link
-            rel='shortcut icon'
-            type='image/x-icon'
-            href='/static/favicon.png'/>
-
-            <link
-              href="https://fonts.googleapis.com/icon?family=Material+Icons"
-              rel="stylesheet"
-            />
-            <link
-              rel="stylesheet"
-              href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
-              integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
-              crossOrigin=""
-            />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+          />
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+            integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+            crossOrigin=""
+          />
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"
+          />
           {this.props.styleTags}
         </Head>
         <body>
-          <Main/>
+          <Main />
           <NextScript />
         </body>
       </html>
     )
   }
-
 }

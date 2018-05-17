@@ -1,99 +1,61 @@
-import react, {Component} from 'react'
+import react, { Component } from 'react'
 import query from '../../../apollo/queries/content'
 import mutation from '../../../apollo/mutations/editContent'
-import {withRouter} from 'next/router'
+import { withRouter } from 'next/router'
 
-import {compose, withApollo} from 'react-apollo'
+import { compose, withApollo } from 'react-apollo'
 import ObjEditor from '../../cms/ObjEditor'
 import ObjSelector from '../../cms/ObjSelector'
 import styled from 'styled-components'
 import router from 'next/router'
-import {Modal} from '../../mia-ui/modals'
-import {Button} from '../../mia-ui/buttons'
+import { Modal } from '../../mia-ui/modals'
+import { Button } from '../../mia-ui/buttons'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
-import {Flex, Box} from 'grid-styled'
-import {Title, Description} from '../../mia-ui/forms'
+import { Flex, Box } from 'grid-styled'
+import { Title, Description } from '../../mia-ui/forms'
 import DeleteContentButton from '../../cms/DeleteContentButton'
 
-
 class ObjContentEditor extends Component {
-
   // state = {
   //   ...this.props.content,
   //   modal: false,
   //   objId: "",
   // }
 
-  render(){
-
+  render() {
     if (!this.props.content) return null
 
     const {
       props: {
         content,
-        content: {
-          obj
-        },
+        content: { obj }
       },
-      state: {
-        modal,
-        objId,
-        description
-      },
+      state: { modal, objId, description },
       handleSelect,
       handleChange,
       saveEdits
     } = this
 
     return (
-      <Flex
-        flexWrap={'wrap'}
-        m={3}
-      >
-        <Box
-          w={1}
-        >
+      <Flex flexWrap={'wrap'} m={3}>
+        <Box w={1}>
           <Description
-            label={"Description"}
+            label={'Description'}
             value={description}
-            name={"description"}
+            name={'description'}
             onChange={handleChange}
           />
         </Box>
 
-        <Box
-          w={1/2}
-          pr={3}
-        >
-
-          <ObjSelector
-            onSelect={handleSelect}
-          />
+        <Box w={1 / 2} pr={3}>
+          <ObjSelector onSelect={handleSelect} />
         </Box>
 
+        <Box w={1 / 2}>{obj ? <ObjEditor objId={obj.id} /> : null}</Box>
 
-        <Box
-          w={1/2}
-        >
-          {(obj) ? (
-            <ObjEditor
-              objId={obj.id}
-            />
-          ): null}
+        <Box w={1} my={5}>
+          <DeleteContentButton contentId={this.props.content.id} />
         </Box>
-
-
-
-        <Box
-          w={1}
-          my={5}
-        >
-          <DeleteContentButton
-            contentId={this.props.content.id}
-          />
-        </Box>
-
-
       </Flex>
     )
   }
@@ -103,73 +65,65 @@ class ObjContentEditor extends Component {
   debounce = (func, wait) => {
     if (this.bounce) {
       clearTimeout(this.bounce)
-      this.bounce = setTimeout(
-        func,
-        wait
-      )
+      this.bounce = setTimeout(func, wait)
     }
   }
 
-  handleChange = ({target: {value, name}}) => {
+  handleChange = ({ target: { value, name } }) => {
     this.setState(
-      ()=>({[name]: value}),
-      ()=>{
-        this.props.setSaveStatus({synced: false})
-        this.debounce(this.saveEdits,2000)
+      () => ({ [name]: value }),
+      () => {
+        this.props.setSaveStatus({ synced: false })
+        this.debounce(this.saveEdits, 2000)
       }
     )
   }
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       modal: false,
-      objId: "",
+      objId: ''
     }
     this.state = {
       ...this.stateFromProps(props)
     }
   }
 
-  stateFromProps = (props) => {
+  stateFromProps = props => {
     let state = {}
 
-    if (props.contentId !== this.state.id){
-      Object.assign(state, {...props.content})
+    if (props.contentId !== this.state.id) {
+      Object.assign(state, { ...props.content })
     }
 
-    if (
-      props.content
-    ) {
+    if (props.content) {
       if (props.content.obj) {
-        Object.assign(state, {objId: props.content.obj.id || ""})
+        Object.assign(state, { objId: props.content.obj.id || '' })
       }
     }
 
     return state
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({...this.stateFromProps(nextProps)})
-
+  componentWillReceiveProps(nextProps) {
+    this.setState({ ...this.stateFromProps(nextProps) })
   }
 
-  handleSelect = (objId) => {
+  handleSelect = objId => {
     this.setState({
-      objId,
+      objId
     })
     this.props.editContent({
-      objId,
+      objId
     })
   }
 
   saveEdits = async () => {
     try {
-
-
       await this.props.editContent({
         id: this.state.id,
-        description: this.state.description,
+        description: this.state.description
       })
 
       this.props.setSaveStatus({
@@ -182,16 +136,11 @@ class ObjContentEditor extends Component {
 }
 
 let ExportComponent = ObjContentEditor
-ExportComponent = compose(
-  query,
-  mutation,
-  setSaveStatus,
-)(ExportComponent)
+ExportComponent = compose(query, mutation, setSaveStatus)(ExportComponent)
 
 ExportComponent = withRouter(ExportComponent)
 
 export default ExportComponent
-
 
 const Container = styled.div`
   width: 100%;

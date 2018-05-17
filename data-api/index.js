@@ -1,22 +1,22 @@
-import "babel-polyfill"
-import "dotenv/config"
+import 'babel-polyfill'
+import 'dotenv/config'
 
-import express from "express"
-import bodyParser from "body-parser"
-import cors from "cors"
-import db from "./db"
-import schema from "./graphql"
-import chalk from "chalk"
-import { graphqlExpress, graphiqlExpress } from "apollo-server-express"
-import multer from "multer"
-import s3Image from "./image"
-import s3Media from "./media"
+import express from 'express'
+import bodyParser from 'body-parser'
+import cors from 'cors'
+import db from './db'
+import schema from './graphql'
+import chalk from 'chalk'
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+import multer from 'multer'
+import s3Image from './image'
+import s3Media from './media'
 
-import verify from "./auth/verify"
-import createGithubIssue from "./github/issue"
-import apphook from "./github/apphook"
+import verify from './auth/verify'
+import createGithubIssue from './github/issue'
+import apphook from './github/apphook'
 
-import { ApolloEngine } from "apollo-engine"
+import { ApolloEngine } from 'apollo-engine'
 
 const engine = process.env.APOLLO_ENGINE_APIKEY
   ? new ApolloEngine({
@@ -30,10 +30,10 @@ const server = express()
 
 let port = process.env.API_PORT
 
-server.set("port", port)
+server.set('port', port)
 
 let corsOptions =
-  process.env.NODE_ENV === "production"
+  process.env.NODE_ENV === 'production'
     ? {
         origin: [/https:\/\/lume.space.*/, /https:\/\/cms.lume.space.*/]
       }
@@ -49,28 +49,28 @@ let corsOptions =
       }
 server.use(cors(corsOptions), bodyParser.json())
 
-server.use("/media", upload.single("file"), s3Media)
+server.use('/media', upload.single('file'), s3Media)
 
-server.use("/image", upload.single("file"), s3Image)
+server.use('/image', upload.single('file'), s3Image)
 
-server.use("/static", express.static("local-store"))
+server.use('/static', express.static('local-store'))
 
 server.use(
-  "/graphiql",
+  '/graphiql',
   graphiqlExpress({
-    endpointURL: "/"
+    endpointURL: '/'
   })
 )
 
-server.use("/apphook", apphook)
+server.use('/apphook', apphook)
 
-server.use("/bug", createGithubIssue)
+server.use('/bug', createGithubIssue)
 
 server.use(
-  "/",
+  '/',
   (req, res, next) => {
-    if (process.env.AUTH_STRATEGY === "local") {
-      req.userId = "local"
+    if (process.env.AUTH_STRATEGY === 'local') {
+      req.userId = 'local'
 
       next()
     } else {
@@ -89,10 +89,10 @@ if (process.env.APOLLO_ENGINE_APIKEY) {
   engine.listen({
     port,
     expressApp: server,
-    graphqlPaths: ["/", "/graphiql"]
+    graphqlPaths: ['/', '/graphiql']
   })
 } else {
-  server.listen(server.get("port"), () => {
+  server.listen(server.get('port'), () => {
     console.log(`Data api is running at ${process.env.API_URL}`)
   })
 }

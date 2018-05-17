@@ -1,15 +1,10 @@
-import {
-  GraphQLID,
-  GraphQLString,
-  GraphQLNonNull,
-  GraphQLList
-} from 'graphql'
+import { GraphQLID, GraphQLString, GraphQLNonNull, GraphQLList } from 'graphql'
 import storyType from '../types/story'
 
 import resolve from '../resolvers/reorderContents'
 
 const reorderContents = {
-  name: "reorderContents",
+  name: 'reorderContents',
   type: storyType,
   args: {
     storyId: {

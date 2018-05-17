@@ -1,6 +1,6 @@
-import { graphql } from "react-apollo"
-import gql from "graphql-tag"
-import imageFragment from "../fragments/image"
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
+import imageFragment from '../fragments/image'
 
 const editImage = gql`
   mutation editImage($id: ID!, $title: String, $description: String) {
@@ -14,7 +14,7 @@ const editImage = gql`
 const mutationConfig = {
   props: ({ mutate, ownProps: { categoryId } }) => ({
     editImage: image => {
-      console.log("edit Image called")
+      console.log('edit Image called')
       mutate({
         variables: {
           ...image

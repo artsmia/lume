@@ -1,12 +1,8 @@
-import {
-  GraphQLID,
-  GraphQLString,
-  GraphQLNonNull
-} from 'graphql'
+import { GraphQLID, GraphQLString, GraphQLNonNull } from 'graphql'
 import resolve from '../resolvers/deleteStory'
 
 const deleteStory = {
-  name: "deleteStory",
+  name: 'deleteStory',
   type: GraphQLString,
   args: {
     id: {

@@ -1,15 +1,15 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { ApolloProvider, getDataFromTree } from "react-apollo"
-import Head from "next/head"
-import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost"
-import fetch from "isomorphic-unfetch"
-import defaults from "./local/defaults"
-import resolvers from "./local/resolvers"
-import typeDefs from "./local/typeDefs"
-import { ApolloLink } from "apollo-link"
-import { withClientState } from "apollo-link-state"
-import { setContext } from "apollo-link-context"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { ApolloProvider, getDataFromTree } from 'react-apollo'
+import Head from 'next/head'
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
+import fetch from 'isomorphic-unfetch'
+import defaults from './local/defaults'
+import resolvers from './local/resolvers'
+import typeDefs from './local/typeDefs'
+import { ApolloLink } from 'apollo-link'
+import { withClientState } from 'apollo-link-state'
+import { setContext } from 'apollo-link-context'
 
 let apolloClient = null
 
@@ -36,8 +36,8 @@ function create(initialState) {
     try {
       let authHeaders = {}
       if (process.browser) {
-        let idToken = localStorage.getItem("idToken")
-        let userId = localStorage.getItem("userId")
+        let idToken = localStorage.getItem('idToken')
+        let userId = localStorage.getItem('userId')
         if (idToken && userId) {
           Object.assign(authHeaders, {
             authorization: `Bearer ${idToken}`,
@@ -84,7 +84,7 @@ function initApollo(initialState) {
 
 // Gets the display name of a JSX component for dev tools
 function getComponentDisplayName(Component) {
-  return Component.displayName || Component.name || "Unknown"
+  return Component.displayName || Component.name || 'Unknown'
 }
 
 export default ComposedComponent => {

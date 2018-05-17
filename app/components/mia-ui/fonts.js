@@ -1,17 +1,17 @@
-import {css} from 'styled-components'
+import { css } from 'styled-components'
 
 export const light = css`
-  font-family: ${({theme}) => theme.font.light};
+  font-family: ${({ theme }) => theme.font.light};
 `
 
 export const regular = css`
-  font-family: ${({theme}) => theme.font.regular};
+  font-family: ${({ theme }) => theme.font.regular};
 `
 
 export const bold = css`
-  font-family: ${({theme}) => theme.font.bold};
+  font-family: ${({ theme }) => theme.font.bold};
 `
 
 export const black = css`
-  font-family: ${({theme}) => theme.font.black};
+  font-family: ${({ theme }) => theme.font.black};
 `

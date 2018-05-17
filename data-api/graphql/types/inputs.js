@@ -6,11 +6,15 @@ import {
   GraphQLList,
   GraphQLFloat,
   GraphQLBoolean,
-  GraphQLNonNull,
+  GraphQLNonNull
 } from 'graphql'
-import {DirectionEnum, ContentTypeEnum, TemplateEnum, VisibilityEnum} from './enums'
-import {GeometryEnum, FeatureCollectionInput} from './geometry'
-
+import {
+  DirectionEnum,
+  ContentTypeEnum,
+  TemplateEnum,
+  VisibilityEnum
+} from './enums'
+import { GeometryEnum, FeatureCollectionInput } from './geometry'
 
 export const OrderInput = new GraphQLInputObjectType({
   name: 'OrderInput',
@@ -20,13 +24,13 @@ export const OrderInput = new GraphQLInputObjectType({
     },
     column: {
       type: GraphQLString
-    },
+    }
   }
 })
 
-
-const coordinatesInput = new GraphQLList( new GraphQLList( new GraphQLList(GraphQLFloat)))
-
+const coordinatesInput = new GraphQLList(
+  new GraphQLList(new GraphQLList(GraphQLFloat))
+)
 
 export const OrganizationInput = new GraphQLInputObjectType({
   name: 'OrganizationInput',
@@ -36,10 +40,9 @@ export const OrganizationInput = new GraphQLInputObjectType({
     },
     subdomain: {
       type: GraphQLString
-    },
+    }
   }
 })
-
 
 export const ObjInput = new GraphQLInputObjectType({
   name: 'ObjInput',
@@ -124,7 +127,7 @@ export const FilterInput = new GraphQLInputObjectType({
     },
     groupSlug: {
       type: GraphQLString
-    },
+    }
   }
 })
 
@@ -181,6 +184,6 @@ export const StorySlugInput = new GraphQLInputObjectType({
     },
     organization: {
       type: new GraphQLNonNull(OrganizationInput)
-    },
+    }
   }
 })

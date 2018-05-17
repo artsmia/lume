@@ -1,14 +1,14 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import { Modal } from "../../mia-ui/modals"
-import Zoomer from "../../shared/Zoomer"
-import { Flex, Box } from "grid-styled"
-import ImgSrcProvider from "../../shared/ImgSrcProvider"
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import { Modal } from '../../mia-ui/modals'
+import Zoomer from '../../shared/Zoomer'
+import { Flex, Box } from 'grid-styled'
+import ImgSrcProvider from '../../shared/ImgSrcProvider'
 
 export default class AdditionalImages extends Component {
   state = {
     modal: false,
-    selectedImageId: ""
+    selectedImageId: ''
   }
 
   render() {
@@ -29,7 +29,7 @@ export default class AdditionalImages extends Component {
             }
             mx={2}
           >
-            <Image image={image} title={"Click to Expand"} />
+            <Image image={image} title={'Click to Expand'} />
           </Box>
         ))}
 
@@ -37,7 +37,7 @@ export default class AdditionalImages extends Component {
           open={modal}
           onClose={() =>
             this.setState({
-              selectedImageId: "",
+              selectedImageId: '',
               modal: false
             })
           }

@@ -1,14 +1,10 @@
-import {
-  GraphQLID,
-  GraphQLNonNull,
-  GraphQLString
-} from 'graphql'
+import { GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql'
 import imageType from '../types/story'
 import resolve from '../resolvers/createImage'
-import {OrganizationInput} from '../types/inputs'
+import { OrganizationInput } from '../types/inputs'
 
 const createImage = {
-  name: "createImage",
+  name: 'createImage',
   type: imageType,
   args: {
     id: {
@@ -22,7 +18,7 @@ const createImage = {
     },
     description: {
       type: GraphQLString
-    },
+    }
   },
   resolve
 }

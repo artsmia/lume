@@ -6,10 +6,10 @@ import {
 } from 'graphql'
 import organizationType from '../types/organization'
 import resolve from '../resolvers/organization'
-import {OrganizationInput} from '../types/inputs'
+import { OrganizationInput } from '../types/inputs'
 
 const organization = {
-  name: "organization",
+  name: 'organization',
   type: organizationType,
   args: {
     organization: {

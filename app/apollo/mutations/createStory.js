@@ -1,9 +1,9 @@
-import {graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import storyFragment from '../fragments/story'
 
 export const CreateStoryMutation = gql`
-  mutation createStory (
+  mutation createStory(
     $organization: OrganizationInput!
     $creatorId: ID!
     $title: String!
@@ -20,31 +20,28 @@ export const CreateStoryMutation = gql`
 `
 
 export const mutationConfig = {
-  props: ({mutate, ownProps }) => {
+  props: ({ mutate, ownProps }) => {
     const {
       userId,
       router: {
-        query: {
-          subdomain
-        }
+        query: { subdomain }
       }
     } = ownProps
     return {
       ...ownProps,
-      createStory: ({title}) => mutate({
-        variables: {
-          organization: {
-            subdomain
+      createStory: ({ title }) =>
+        mutate({
+          variables: {
+            organization: {
+              subdomain
+            },
+            creatorId: userId,
+            title
           },
-          creatorId: userId,
-          title
-        },
-        refetchQueries: [
-          "StoriesQuery"
-        ]
-      }),
+          refetchQueries: ['StoriesQuery']
+        })
     }
-  },
+  }
 }
 
 export default graphql(CreateStoryMutation, mutationConfig)

@@ -1,12 +1,9 @@
 import Organization from '../../db/models/Organization'
 import Group from '../../db/models/Group'
-import {Op} from 'sequelize'
+import { Op } from 'sequelize'
 
 export default function({
-  organization: {
-    subdomain,
-    id: organizationId
-  },
+  organization: { subdomain, id: organizationId },
   search,
   order,
   limit,
@@ -16,17 +13,15 @@ export default function({
   groups = [],
   localId,
   groupSlug
-}){
+}) {
   let options = {
-    where: {
-
-    },
+    where: {},
     include: []
   }
   if (organizationId) {
     options.include.push({
       model: Organization,
-      as: "organization",
+      as: 'organization',
       where: {
         id: organizationId
       }
@@ -36,7 +31,7 @@ export default function({
   if (subdomain) {
     options.include.push({
       model: Organization,
-      as: "organization",
+      as: 'organization',
       where: {
         subdomain: subdomain
       }
@@ -55,7 +50,7 @@ export default function({
           description: {
             [Op.regexp]: search
           }
-        },
+        }
       ]
     })
   }
@@ -85,29 +80,27 @@ export default function({
   if (groups.length > 0) {
     options.include.push({
       model: Group,
-      as: "groups",
+      as: 'groups',
       where: {
         id: {
           [Op.or]: groups
         }
       }
     })
-
   }
 
   if (groupSlug) {
     options.include.push({
       model: Group,
-      as: "groups",
+      as: 'groups',
       where: {
         slug: groupSlug
       }
     })
-
   }
 
   if (order) {
-    options.order = order.map( ({column,direction}) => ([column, direction]))
+    options.order = order.map(({ column, direction }) => [column, direction])
   }
 
   if (limit) {
@@ -119,5 +112,4 @@ export default function({
   }
 
   return options
-
 }

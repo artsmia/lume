@@ -1,14 +1,10 @@
-import {
-  GraphQLID,
-  GraphQLNonNull
-} from 'graphql'
+import { GraphQLID, GraphQLNonNull } from 'graphql'
 import objType from '../types/obj'
 import resolve from '../resolvers/editObj'
-import {OrganizationInput, ObjInput} from '../types/inputs'
-
+import { OrganizationInput, ObjInput } from '../types/inputs'
 
 const editObj = {
-  name: "editObj",
+  name: 'editObj',
   type: objType,
   args: {
     obj: {

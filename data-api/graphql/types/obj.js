@@ -8,11 +8,10 @@ import {
 } from 'graphql'
 
 import imageType from './image'
-import {MediaEnum} from './enums'
-
+import { MediaEnum } from './enums'
 
 const obj = new GraphQLObjectType({
-  name: "obj",
+  name: 'obj',
   fields: () => ({
     id: {
       type: GraphQLID
@@ -55,7 +54,7 @@ const obj = new GraphQLObjectType({
     },
     primaryImage: {
       type: imageType,
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getPrimaryImage()
         } catch (ex) {

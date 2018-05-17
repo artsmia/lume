@@ -1,19 +1,15 @@
-import {
-  GraphQLObjectType,
-  GraphQLID,
-  GraphQLList
-} from 'graphql'
+import { GraphQLObjectType, GraphQLID, GraphQLList } from 'graphql'
 import imageType from '../types/image'
-import {FilterInput} from '../types/inputs'
+import { FilterInput } from '../types/inputs'
 import resolve from '../resolvers/images'
 
 const images = {
-  name: "images",
+  name: 'images',
   type: new GraphQLList(imageType),
   args: {
     filter: {
       type: FilterInput
-    },
+    }
   },
   resolve
 }

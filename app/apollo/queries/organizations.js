@@ -16,10 +16,7 @@ const queryConfig = {
   props: ({ ownProps, data }) => ({
     ...ownProps,
     ...data
-  }),
+  })
 }
-
-
-
 
 export default graphql(query, queryConfig)

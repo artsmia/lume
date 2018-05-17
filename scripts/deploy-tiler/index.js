@@ -7,22 +7,17 @@ const lam = new AWS.Lambda({
   region: 'us-west-2'
 })
 
-
 fs.readFile('../image-tiler/ImageTiler.zip', (err, ZipFile) => {
-
   let params = {
-    FunctionName: "image-tiler",
+    FunctionName: 'image-tiler',
     Publish: true,
     ZipFile
   }
 
-  lam.updateFunctionCode( params, (err, data) => {
+  lam.updateFunctionCode(params, (err, data) => {
     if (err) console.log(err)
     console.log(data)
 
     process.exit()
   })
-
-
-
 })

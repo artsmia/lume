@@ -1,18 +1,18 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import { H2 } from "../../mia-ui/text"
-import { Loading } from "../../mia-ui/loading"
-import StoryList from "../StoryList"
-import CreateStoryButton from "../CreateStoryButton"
-import PropTypes from "prop-types"
-import { NextA } from "../../mia-ui/links"
-import { Icon } from "../../mia-ui/icons"
-import { Flex, Box } from "grid-styled"
-import { Page, Card } from "../../mia-ui/layout"
-import Head from "../../shared/head"
-import Joyride from "react-joyride"
-import Link from "next/link"
-import { Button } from "../../mia-ui/buttons"
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import { H2 } from '../../mia-ui/text'
+import { Loading } from '../../mia-ui/loading'
+import StoryList from '../StoryList'
+import CreateStoryButton from '../CreateStoryButton'
+import PropTypes from 'prop-types'
+import { NextA } from '../../mia-ui/links'
+import { Icon } from '../../mia-ui/icons'
+import { Flex, Box } from 'grid-styled'
+import { Page, Card } from '../../mia-ui/layout'
+import Head from '../../shared/head'
+import Joyride from 'react-joyride'
+import Link from 'next/link'
+import { Button } from '../../mia-ui/buttons'
 
 export default class CmsHome extends Component {
   // static propTypes = {
@@ -43,24 +43,24 @@ export default class CmsHome extends Component {
     } = this
 
     let showSettings = user.organizations.find(
-      org => org.role === "admin" && org.subdomain === subdomain
+      org => org.role === 'admin' && org.subdomain === subdomain
     )
 
     return (
       <Page>
         <Head
-          title={organization ? organization.name : "Organization Stories"}
+          title={organization ? organization.name : 'Organization Stories'}
         />
 
         <Flex w={1} pb={2}>
           <Box width={9 / 10}>
-            <H2>{organization ? organization.name : ""}</H2>
+            <H2>{organization ? organization.name : ''}</H2>
           </Box>
-          <Flex width={1 / 10} justifyContent={"flex-end"} id={"org-settings"}>
+          <Flex width={1 / 10} justifyContent={'flex-end'} id={'org-settings'}>
             {showSettings ? (
               <NextA
                 href={{
-                  pathname: "/cms/orgSettings",
+                  pathname: '/cms/orgSettings',
                   query: {
                     subdomain
                   }
@@ -68,19 +68,19 @@ export default class CmsHome extends Component {
                 as={`/${subdomain}/settings`}
               >
                 <Icon
-                  icon={"settings"}
-                  color={"black"}
-                  title={"Settings"}
-                  size={"30px"}
+                  icon={'settings'}
+                  color={'black'}
+                  title={'Settings'}
+                  size={'30px'}
                 />
               </NextA>
             ) : null}
           </Flex>
         </Flex>
         <Card p={3}>
-          <StoryFlex flexWrap={"wrap"}>
-            <CreateFlex w={1} justifyContent={"flex-end"}>
-              <CreateStoryButton userId={userId} id={"create-story"} />
+          <StoryFlex flexWrap={'wrap'}>
+            <CreateFlex w={1} justifyContent={'flex-end'}>
+              <CreateStoryButton userId={userId} id={'create-story'} />
             </CreateFlex>
             <Box width={1}>
               <StoryList />

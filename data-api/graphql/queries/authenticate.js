@@ -1,16 +1,11 @@
-import {
-  GraphQLID,
-  GraphQLString,
-  GraphQLNonNull
-} from 'graphql'
+import { GraphQLID, GraphQLString, GraphQLNonNull } from 'graphql'
 import authentication from '../types/authentication'
 import resolve from '../resolvers/authenticate'
 
 const authenticate = {
-  name: "user",
+  name: 'user',
   type: authentication,
-  args: {
-  },
+  args: {},
   resolve
 }
 

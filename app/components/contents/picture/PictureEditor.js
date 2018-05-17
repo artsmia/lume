@@ -1,18 +1,18 @@
-import React, { Component } from "react"
-import { ChangeImage } from "../../cms/DefaultEditors"
-import query from "../../../apollo/queries/content"
-import OrganizationQuery from "../../../apollo/queries/organization"
-import { withRouter } from "next/router"
+import React, { Component } from 'react'
+import { ChangeImage } from '../../cms/DefaultEditors'
+import query from '../../../apollo/queries/content'
+import OrganizationQuery from '../../../apollo/queries/organization'
+import { withRouter } from 'next/router'
 
-import mutation from "../../../apollo/mutations/editContent"
-import { compose, withApollo } from "react-apollo"
-import styled from "styled-components"
-import { H2 } from "../../mia-ui/text"
-import { Row, Column } from "../../mia-ui/layout"
-import setSaveStatus from "../../../apollo/local/setSaveStatus"
-import { Flex, Box } from "grid-styled"
-import { Title, Description } from "../../mia-ui/forms"
-import DeleteContentButton from "../../cms/DeleteContentButton"
+import mutation from '../../../apollo/mutations/editContent'
+import { compose, withApollo } from 'react-apollo'
+import styled from 'styled-components'
+import { H2 } from '../../mia-ui/text'
+import { Row, Column } from '../../mia-ui/layout'
+import setSaveStatus from '../../../apollo/local/setSaveStatus'
+import { Flex, Box } from 'grid-styled'
+import { Title, Description } from '../../mia-ui/forms'
+import DeleteContentButton from '../../cms/DeleteContentButton'
 
 class PictureEditor extends Component {
   render() {
@@ -26,27 +26,27 @@ class PictureEditor extends Component {
     } = this
 
     return (
-      <Flex w={[1, 1 / 2]} flexWrap={"wrap"} m={3}>
+      <Flex w={[1, 1 / 2]} flexWrap={'wrap'} m={3}>
         <Box w={1}>
           <Title
-            label={"Title"}
+            label={'Title'}
             value={title}
-            name={"title"}
+            name={'title'}
             onChange={handleChange}
           />
         </Box>
         <Box w={1}>
           <Description
-            label={"Description"}
+            label={'Description'}
             value={description}
-            name={"description"}
+            name={'description'}
             onChange={handleChange}
           />
         </Box>
         <Box w={1}>
           <ChangeImage
-            label={"Image"}
-            name={"image0Id"}
+            label={'Image'}
+            name={'image0Id'}
             image={content.image0}
             onChange={handleChange}
           />
@@ -71,9 +71,9 @@ class PictureEditor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      title: "",
-      description: "",
-      image0Id: ""
+      title: '',
+      description: '',
+      image0Id: ''
     }
 
     this.state = {
@@ -128,7 +128,7 @@ class PictureEditor extends Component {
 
     return {
       ...content,
-      image0Id: image0 ? image0.id : ""
+      image0Id: image0 ? image0.id : ''
     }
   }
 }

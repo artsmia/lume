@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import Home from "../components/lume/Home"
-import Template from "../components/shared/Template"
-import Auth from "../auth"
+import React, { Component } from 'react'
+import Home from '../components/lume/Home'
+import Template from '../components/shared/Template'
+import Auth from '../auth'
 
 export default class Index extends Component {
   static getInitialProps = async context => {

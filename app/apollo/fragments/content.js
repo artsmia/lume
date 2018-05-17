@@ -10,10 +10,10 @@ const fragment = gql`
     index
     title
     description
-    image0{
+    image0 {
       ...ImageFragment
     }
-    image1{
+    image1 {
       ...ImageFragment
     }
     videoUrl
@@ -40,7 +40,6 @@ const fragment = gql`
   ${imageFragment}
   ${mediaFragment}
   ${objFragment}
-
 `
 
 export default fragment

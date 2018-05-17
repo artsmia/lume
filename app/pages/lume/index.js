@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import OrganizationHome from "../../components/lume/OrganizationHome"
-import Template from "../../components/shared/Template"
+import React, { Component } from 'react'
+import OrganizationHome from '../../components/lume/OrganizationHome'
+import Template from '../../components/shared/Template'
 
 export default class LumeOrganization extends Component {
   static getInitialProps = async ctx => {

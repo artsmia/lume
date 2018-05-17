@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import Story from "../../components/lume/Story"
-import Template from "../../components/shared/Template"
+import React, { Component } from 'react'
+import Story from '../../components/lume/Story'
+import Template from '../../components/shared/Template'
 
 export default class StoryPage extends Component {
   static getInitialProps = async ctx => {

@@ -1,12 +1,12 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import { Button } from "../../mia-ui/buttons"
-import { Label } from "../../mia-ui/forms"
-import { Modal } from "../../mia-ui/modals"
-import ImageManager from "../ImageManager"
-import router from "next/router"
-import { Flex, Box } from "grid-styled"
-import imgSrcProvider from "../../shared/ImgSrcProvider"
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import { Button } from '../../mia-ui/buttons'
+import { Label } from '../../mia-ui/forms'
+import { Modal } from '../../mia-ui/modals'
+import ImageManager from '../ImageManager'
+import router from 'next/router'
+import { Flex, Box } from 'grid-styled'
+import imgSrcProvider from '../../shared/ImgSrcProvider'
 
 const ImgEl = styled.img`
   height: auto;
@@ -24,7 +24,7 @@ const Img = imgSrcProvider(ImgEl)
 export default class ChangeImage extends Component {
   state = {
     modal: false,
-    subdomain: "local"
+    subdomain: 'local'
   }
 
   render() {
@@ -37,7 +37,7 @@ export default class ChangeImage extends Component {
     } = this
 
     return (
-      <Flex flexWrap={"wrap"}>
+      <Flex flexWrap={'wrap'}>
         <Box w={1}>
           <Label>{label}</Label>
         </Box>

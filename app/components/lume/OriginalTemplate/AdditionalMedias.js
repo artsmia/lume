@@ -1,47 +1,43 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
-import {Modal} from '../../mia-ui/modals'
-import {Flex, Box} from 'grid-styled'
+import { Modal } from '../../mia-ui/modals'
+import { Flex, Box } from 'grid-styled'
 import ReactPlayer from 'react-player'
-import {Icon} from '../../mia-ui/icons'
+import { Icon } from '../../mia-ui/icons'
 
 export default class AdditionalMedias extends Component {
-
   state = {
     modal: false,
-    selectedMediaId: ""
+    selectedMediaId: ''
   }
-
 
   render() {
     const {
-      props: {
-        additionalMedias,
-        organization
-      },
-      state: {
-        modal,
-        selectedMediaId
-      }
+      props: { additionalMedias, organization },
+      state: { modal, selectedMediaId }
     } = this
 
-    let selectedMedia = selectedMediaId ? this.props.additionalMedias.find(media => media.id === selectedMediaId) : null
+    let selectedMedia = selectedMediaId
+      ? this.props.additionalMedias.find(media => media.id === selectedMediaId)
+      : null
 
     return (
       <Flex>
         {additionalMedias.map(media => (
           <MediaBox
             key={media.id}
-            onClick={()=>this.setState({
-              selectedMediaId: media.id,
-              modal: true
-            })}
+            onClick={() =>
+              this.setState({
+                selectedMediaId: media.id,
+                modal: true
+              })
+            }
             justifyContent={'center'}
             alignItems={'center'}
             mx={2}
           >
             <Icon
-              icon={(media.format === 'mp4') ? 'local_movies':'volume_up'}
+              icon={media.format === 'mp4' ? 'local_movies' : 'volume_up'}
               title={'Click to Expand'}
               size={'50px'}
             />
@@ -50,24 +46,23 @@ export default class AdditionalMedias extends Component {
 
         <Modal
           open={modal}
-          onClose={()=>this.setState({
-            selectedMediaId: "",
-            modal: false
-          })}
+          onClose={() =>
+            this.setState({
+              selectedMediaId: '',
+              modal: false
+            })
+          }
         >
-          <VideoContainer
-            justifyContent={"center"}
-            alignItems={'center'}
-          >
-            {(selectedMedia) ? (
+          <VideoContainer justifyContent={'center'} alignItems={'center'}>
+            {selectedMedia ? (
               <ReactPlayer
-                url={`${process.env.S3_URL}/mia-lume/${selectedMedia.id}/original.${selectedMedia.format}`}
+                url={`${process.env.S3_URL}/mia-lume/${
+                  selectedMedia.id
+                }/original.${selectedMedia.format}`}
                 controls={true}
               />
-            ): null}
+            ) : null}
           </VideoContainer>
-
-
         </Modal>
       </Flex>
     )

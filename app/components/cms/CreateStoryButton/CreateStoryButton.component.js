@@ -1,10 +1,10 @@
-import React, { Component } from "react"
-import { Button } from "../../mia-ui/buttons"
-import { Input, Label } from "../../mia-ui/forms"
-import PropTypes from "prop-types"
-import { Flex, Box } from "grid-styled"
-import { Modal } from "../../mia-ui/modals"
-import Joyride from "react-joyride"
+import React, { Component } from 'react'
+import { Button } from '../../mia-ui/buttons'
+import { Input, Label } from '../../mia-ui/forms'
+import PropTypes from 'prop-types'
+import { Flex, Box } from 'grid-styled'
+import { Modal } from '../../mia-ui/modals'
+import Joyride from 'react-joyride'
 
 export default class CreateStoryButton extends Component {
   static propTypes = {
@@ -13,7 +13,7 @@ export default class CreateStoryButton extends Component {
 
   state = {
     modal: false,
-    title: ""
+    title: ''
   }
 
   render() {
@@ -21,8 +21,8 @@ export default class CreateStoryButton extends Component {
       <Flex>
         <Button
           onClick={() => this.setState({ modal: true })}
-          color={"green"}
-          id={"create-story-button"}
+          color={'green'}
+          id={'create-story-button'}
         >
           New Story
         </Button>
@@ -33,10 +33,10 @@ export default class CreateStoryButton extends Component {
           <Label>Story Title</Label>
           <Input
             value={this.state.title}
-            name={"title"}
+            name={'title'}
             onChange={this.handleChange}
           />
-          <Button onClick={this.createStory} color={"green"}>
+          <Button onClick={this.createStory} color={'green'}>
             Create
           </Button>
         </Modal>
@@ -66,7 +66,7 @@ export default class CreateStoryButton extends Component {
 
       router.push(
         {
-          pathname: "/cms/edit",
+          pathname: '/cms/edit',
           query: {
             subdomain,
             storySlug: story.slug

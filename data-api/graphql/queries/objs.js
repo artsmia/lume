@@ -1,19 +1,15 @@
-import {
-  GraphQLObjectType,
-  GraphQLID,
-  GraphQLList
-} from 'graphql'
+import { GraphQLObjectType, GraphQLID, GraphQLList } from 'graphql'
 import objType from '../types/obj'
-import {FilterInput} from '../types/inputs'
+import { FilterInput } from '../types/inputs'
 import resolve from '../resolvers/objs'
 
 const objs = {
-  name: "objs",
+  name: 'objs',
   type: new GraphQLList(objType),
   args: {
     filter: {
       type: FilterInput
-    },
+    }
   },
   resolve
 }

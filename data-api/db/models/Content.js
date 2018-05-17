@@ -1,8 +1,8 @@
-import Sequelize from "sequelize"
-import db from "../connect"
+import Sequelize from 'sequelize'
+import db from '../connect'
 
 const Content = db.define(
-  "content",
+  'content',
   {
     id: {
       type: Sequelize.UUID,
@@ -11,9 +11,9 @@ const Content = db.define(
     },
     type: {
       type: Sequelize.ENUM,
-      values: ["comparison", "detail", "movie", "obj", "picture"],
+      values: ['comparison', 'detail', 'movie', 'obj', 'picture'],
       allowNull: false,
-      defaultValue: "picture"
+      defaultValue: 'picture'
     },
     index: {
       type: Sequelize.INTEGER,
@@ -23,12 +23,12 @@ const Content = db.define(
     title: {
       type: Sequelize.STRING,
       allowNull: false,
-      defaultValue: ""
+      defaultValue: ''
     },
     description: {
       type: Sequelize.TEXT,
       allowNull: false,
-      defaultValue: ""
+      defaultValue: ''
     },
     geoJSON: {
       type: Sequelize.JSON
@@ -36,10 +36,10 @@ const Content = db.define(
     videoUrl: {
       type: Sequelize.STRING,
       allowNull: false,
-      defaultValue: ""
+      defaultValue: ''
     },
     image0Id:
-      process.env.DB_MODE !== "sqlite"
+      process.env.DB_MODE !== 'sqlite'
         ? {
             type: Sequelize.UUID
             // references: {
@@ -53,24 +53,24 @@ const Content = db.define(
             type: Sequelize.UUID
           },
     image1Id:
-      process.env.DB_MODE !== "sqlite"
+      process.env.DB_MODE !== 'sqlite'
         ? {
             type: Sequelize.UUID,
             references: {
-              model: "image",
-              key: "id"
+              model: 'image',
+              key: 'id'
             }
           }
         : {
             type: Sequelize.UUID
           },
     objId:
-      process.env.DB_MODE !== "sqlite"
+      process.env.DB_MODE !== 'sqlite'
         ? {
             type: Sequelize.UUID,
             references: {
-              model: "obj",
-              key: "id"
+              model: 'obj',
+              key: 'id'
             }
           }
         : {

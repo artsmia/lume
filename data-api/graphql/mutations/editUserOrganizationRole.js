@@ -1,16 +1,11 @@
-import {
-  GraphQLID,
-  GraphQLString,
-  GraphQLNonNull,
-  GraphQLList
-} from 'graphql'
+import { GraphQLID, GraphQLString, GraphQLNonNull, GraphQLList } from 'graphql'
 import userType from '../types/user'
 import resolve from '../resolvers/editUserOrganizationRole'
-import {OrganizationInput} from '../types/inputs'
-import {RoleEnum} from '../types/enums'
+import { OrganizationInput } from '../types/inputs'
+import { RoleEnum } from '../types/enums'
 
 const editUserOrganizationRole = {
-  name: "editUserOrganizationRole",
+  name: 'editUserOrganizationRole',
   type: userType,
   args: {
     userId: {

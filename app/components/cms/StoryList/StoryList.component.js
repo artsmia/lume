@@ -1,5 +1,5 @@
-import React, { Component } from "react"
-import styled from "styled-components"
+import React, { Component } from 'react'
+import styled from 'styled-components'
 import {
   Table,
   HeaderRow,
@@ -8,13 +8,13 @@ import {
   BodyCell,
   TableThumb,
   Sorter
-} from "../../mia-ui/tables"
-import { Link, NextA } from "../../mia-ui/links"
-import { Button } from "../../mia-ui/buttons"
-import PropTypes from "prop-types"
-import ImgSrcProvider from "../../shared/ImgSrcProvider"
-import { Search } from "../../mia-ui/forms"
-import { Box } from "grid-styled"
+} from '../../mia-ui/tables'
+import { Link, NextA } from '../../mia-ui/links'
+import { Button } from '../../mia-ui/buttons'
+import PropTypes from 'prop-types'
+import ImgSrcProvider from '../../shared/ImgSrcProvider'
+import { Search } from '../../mia-ui/forms'
+import { Box } from 'grid-styled'
 
 const Thumb = ImgSrcProvider(TableThumb)
 
@@ -47,11 +47,11 @@ export default class StoryList extends Component {
     } = this
 
     return (
-      <Table id={"story-list"}>
+      <Table id={'story-list'}>
         <Box>
           <Search
-            value={variables.filter.search || ""}
-            name={"search"}
+            value={variables.filter.search || ''}
+            name={'search'}
             onChange={handleSearch}
           />
         </Box>
@@ -61,9 +61,9 @@ export default class StoryList extends Component {
             Title
             <Sorter
               variables={variables}
-              column={"title"}
-              upValue={"ASC"}
-              downValue={"DESC"}
+              column={'title'}
+              upValue={'ASC'}
+              downValue={'DESC'}
               onSort={handleSort}
             />
           </HeaderCell>
@@ -72,9 +72,9 @@ export default class StoryList extends Component {
             Updated
             <Sorter
               variables={variables}
-              column={"updatedAt"}
-              upValue={"ASC"}
-              downValue={"DESC"}
+              column={'updatedAt'}
+              upValue={'ASC'}
+              downValue={'DESC'}
               onSort={handleSort}
             />
           </HeaderCell>
@@ -95,7 +95,7 @@ export default class StoryList extends Component {
                     {previewImage ? (
                       <NextA
                         href={{
-                          pathname: "/cms/edit",
+                          pathname: '/cms/edit',
                           query: {
                             subdomain,
                             storySlug
@@ -110,7 +110,7 @@ export default class StoryList extends Component {
                   <BodyCell width={[1 / 3, 1 / 3]}>
                     <Link
                       href={{
-                        pathname: "/cms/edit",
+                        pathname: '/cms/edit',
                         query: {
                           subdomain,
                           storySlug
@@ -118,7 +118,7 @@ export default class StoryList extends Component {
                       }}
                       as={`/${subdomain}/${storySlug}`}
                     >
-                      {title || "Untitled Story"}
+                      {title || 'Untitled Story'}
                     </Link>
                   </BodyCell>
                   <BodyCell width={[0, 1 / 5]}>{template}</BodyCell>

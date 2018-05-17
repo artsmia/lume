@@ -1,15 +1,11 @@
-import {
-  GraphQLID,
-  GraphQLString,
-  GraphQLNonNull
-} from 'graphql'
-import contentType, {fields} from '../types/content'
-import {ContentTypeEnum} from '../types/enums'
+import { GraphQLID, GraphQLString, GraphQLNonNull } from 'graphql'
+import contentType, { fields } from '../types/content'
+import { ContentTypeEnum } from '../types/enums'
 import { ContentInput } from '../types/inputs'
 import resolve from '../resolvers/editContent'
 
 const editContent = {
-  name: "editContent",
+  name: 'editContent',
   type: contentType,
   args: {
     content: {

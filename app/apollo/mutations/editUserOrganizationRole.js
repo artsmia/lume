@@ -1,10 +1,9 @@
-import {graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import userFragment from '../fragments/user'
 
-
 const mutation = gql`
-  mutation EditUserOrganizationRole (
+  mutation EditUserOrganizationRole(
     $userId: ID!
     $organization: OrganizationInput!
     $role: RoleEnum
@@ -18,22 +17,20 @@ const mutation = gql`
     }
   }
   ${userFragment}
-
 `
 
 const mutationConfig = {
-
-  props: ({mutate, ownProps}) => ({
-    editUserOrganizationRole: (variables) => mutate({
-      variables: {
-        organization: {
-          subdomain: ownProps.router.query.subdomain
-        },
-        ...variables,
-      },
-    }),
-  }),
-
+  props: ({ mutate, ownProps }) => ({
+    editUserOrganizationRole: variables =>
+      mutate({
+        variables: {
+          organization: {
+            subdomain: ownProps.router.query.subdomain
+          },
+          ...variables
+        }
+      })
+  })
 }
 
 export default graphql(mutation, mutationConfig)

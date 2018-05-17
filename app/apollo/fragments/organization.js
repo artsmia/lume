@@ -2,7 +2,6 @@ import gql from 'graphql-tag'
 import categoryFragment from './category'
 import imageFragment from './image'
 
-
 const fragment = gql`
   fragment OrganizationFragment on organization {
     id

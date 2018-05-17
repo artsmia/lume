@@ -1,18 +1,14 @@
-import {
-  GraphQLObjectType,
-  GraphQLID,
-  GraphQLString
-} from 'graphql'
+import { GraphQLObjectType, GraphQLID, GraphQLString } from 'graphql'
 import contentType from '../types/content'
 import resolve from '../resolvers/content'
 
 const content = {
-  name: "content",
+  name: 'content',
   type: contentType,
   args: {
     id: {
       type: GraphQLID
-    },
+    }
   },
   resolve
 }

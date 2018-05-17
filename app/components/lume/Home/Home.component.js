@@ -1,15 +1,15 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import { H2, H3, P } from "../../mia-ui/text"
-import PropTypes from "prop-types"
-import router from "next/router"
-import { Button } from "../../mia-ui/buttons"
-import { Page, Card } from "../../mia-ui/layout"
-import { Flex, Box } from "grid-styled"
-import { GridList, Tile } from "../../mia-ui/lists"
-import { Waiting } from "../../mia-ui/loading"
-import Link from "next/link"
-import Head from "../../shared/head"
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import { H2, H3, P } from '../../mia-ui/text'
+import PropTypes from 'prop-types'
+import router from 'next/router'
+import { Button } from '../../mia-ui/buttons'
+import { Page, Card } from '../../mia-ui/layout'
+import { Flex, Box } from 'grid-styled'
+import { GridList, Tile } from '../../mia-ui/lists'
+import { Waiting } from '../../mia-ui/loading'
+import Link from 'next/link'
+import Head from '../../shared/head'
 
 export default class Home extends Component {
   render() {
@@ -22,7 +22,7 @@ export default class Home extends Component {
 
     return (
       <Page>
-        <Head title={"Welcome"} />
+        <Head title={'Welcome'} />
         <Card>
           <H2>Lume</H2>
           <P>
@@ -32,21 +32,21 @@ export default class Home extends Component {
             curators) to present content in an interactive and compelling way.
           </P>
 
-          {process.env.AUTH_STRATEGY !== "local" ? (
+          {process.env.AUTH_STRATEGY !== 'local' ? (
             <Box>
               <P>
-                You can check out Mia's Lume{" "}
+                You can check out Mia's Lume{' '}
                 <Link
                   href={{
-                    pathname: "/lume",
+                    pathname: '/lume',
                     query: {
-                      subdomain: "mia"
+                      subdomain: 'mia'
                     }
                   }}
-                  as={"/mia"}
+                  as={'/mia'}
                 >
                   here
-                </Link>{" "}
+                </Link>{' '}
                 or try creating your own stories by logging in or signing up
                 below.
               </P>
@@ -54,23 +54,23 @@ export default class Home extends Component {
             </Box>
           ) : null}
 
-          {process.env.AUTH_STRATEGY === "local" ? (
+          {process.env.AUTH_STRATEGY === 'local' ? (
             <Box>
               <H3>You are currently using Lume in Local Mode</H3>
             </Box>
           ) : null}
         </Card>
 
-        <Flex flexWrap={"wrap"}>
+        <Flex flexWrap={'wrap'}>
           <Box w={[1, 1 / 2, 1 / 2]} pr={[0, 3, 3]} my={3}>
             <Card>
               <H3>New to Lume? Check out our tutorials</H3>
 
               <Link
                 href={{
-                  pathname: "/lume",
+                  pathname: '/lume',
                   query: {
-                    subdomain: "mia",
+                    subdomain: 'mia',
                     grandTour: true
                   }
                 }}
@@ -89,12 +89,12 @@ export default class Home extends Component {
               <Flex>
                 <Link
                   href={{
-                    pathname: "/lume",
+                    pathname: '/lume',
                     query: {
-                      subdomain: "mia"
+                      subdomain: 'mia'
                     }
                   }}
-                  as={"/mia"}
+                  as={'/mia'}
                 >
                   <a>Minneapolis Institute of Art</a>
                 </Link>
@@ -107,18 +107,18 @@ export default class Home extends Component {
   }
 
   linkToLogin = () => {
-    if (process.env.AUTH_STRATEGY === "local") {
+    if (process.env.AUTH_STRATEGY === 'local') {
       router.push(
         {
-          pathname: "/cms",
+          pathname: '/cms',
           query: {
-            subdomain: "local"
+            subdomain: 'local'
           }
         },
-        "/local/cms"
+        '/local/cms'
       )
     } else {
-      window.location.href = "/login"
+      window.location.href = '/login'
     }
   }
 }

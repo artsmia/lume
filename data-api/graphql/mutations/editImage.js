@@ -1,9 +1,9 @@
-import { GraphQLID, GraphQLString, GraphQLNonNull, GraphQLList } from "graphql"
-import imageType from "../types/image"
-import resolve from "../resolvers/editImage"
+import { GraphQLID, GraphQLString, GraphQLNonNull, GraphQLList } from 'graphql'
+import imageType from '../types/image'
+import resolve from '../resolvers/editImage'
 
 const editImage = {
-  name: "editImage",
+  name: 'editImage',
   type: imageType,
   args: {
     id: {

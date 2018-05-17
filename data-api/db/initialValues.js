@@ -12,14 +12,13 @@ import {
 } from './models'
 import db from './connect'
 
-export default async function createInitialValues(){
+export default async function createInitialValues() {
   try {
-
-    if (process.env.DB_MODE === 'sqlite'){
+    if (process.env.DB_MODE === 'sqlite') {
       let [LocalOrg] = await Organization.findOrCreate({
         where: {
-          name: "Local Organization",
-          subdomain: 'local',
+          name: 'Local Organization',
+          subdomain: 'local'
         }
       })
 
@@ -30,12 +29,7 @@ export default async function createInitialValues(){
           role: 'admin'
         }
       })
-      
     }
-
-
-
-
   } catch (ex) {
     console.error(ex)
   }

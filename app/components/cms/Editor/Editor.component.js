@@ -1,61 +1,61 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import { Button } from "../../mia-ui/buttons"
-import CreateContentButton from "../CreateContentButton"
-import EditStoryThumb from "../EditStoryThumb"
-import EditContentThumb from "../EditContentThumb"
-import StoryEditor from "../StoryEditor"
-import { Select, Option, Input } from "../../mia-ui/forms"
-import EditorSwitcher from "../../contents/EditorSwitcher"
-import DisplaySwitcher from "../../contents/DisplaySwitcher"
-import { Link } from "../../mia-ui/links"
-import NextLink from "next/link"
-import StoryPreview from "../../lume/Story/Story.component"
-import { Flex, Box } from "grid-styled"
-import { H3, H2 } from "../../mia-ui/text"
-import { Break } from "../../mia-ui/layout"
-import Head from "../../shared/head"
-import Joyride from "react-joyride"
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import { Button } from '../../mia-ui/buttons'
+import CreateContentButton from '../CreateContentButton'
+import EditStoryThumb from '../EditStoryThumb'
+import EditContentThumb from '../EditContentThumb'
+import StoryEditor from '../StoryEditor'
+import { Select, Option, Input } from '../../mia-ui/forms'
+import EditorSwitcher from '../../contents/EditorSwitcher'
+import DisplaySwitcher from '../../contents/DisplaySwitcher'
+import { Link } from '../../mia-ui/links'
+import NextLink from 'next/link'
+import StoryPreview from '../../lume/Story/Story.component'
+import { Flex, Box } from 'grid-styled'
+import { H3, H2 } from '../../mia-ui/text'
+import { Break } from '../../mia-ui/layout'
+import Head from '../../shared/head'
+import Joyride from 'react-joyride'
 
 export default class Editor extends Component {
-  contentTypes = ["comparison", "detail", "obj", "picture", "movie"]
+  contentTypes = ['comparison', 'detail', 'obj', 'picture', 'movie']
 
   tips = [
     {
-      target: "#save-status",
+      target: '#save-status',
       content:
-        "Your story will be automatically saved after each change. You can see the save status here.",
-      placement: "bottom-end"
+        'Your story will be automatically saved after each change. You can see the save status here.',
+      placement: 'bottom-end'
     },
     {
-      target: "#preview-button",
+      target: '#preview-button',
       content:
-        "You can see a preview of your story at anytime by clicking here.",
-      placement: "bottom-start"
+        'You can see a preview of your story at anytime by clicking here.',
+      placement: 'bottom-start'
     },
     {
-      target: "#live-button",
+      target: '#live-button',
       content:
         "And once you've published your story, you can see it live by clicking here.",
-      placement: "bottom-start"
+      placement: 'bottom-start'
     },
     {
-      target: "#sidebar",
+      target: '#sidebar',
       content:
-        "By clicking on the various tiles on the left, you can edit your story and the content items that make up your story.",
-      placement: "auto"
+        'By clicking on the various tiles on the left, you can edit your story and the content items that make up your story.',
+      placement: 'auto'
     },
     {
-      target: "#story-thumb",
+      target: '#story-thumb',
       content:
-        "The top tile in the sidebar allows you to edit the details of your story. This is where you can change its title, main image, visibility and more.",
-      placement: "auto"
+        'The top tile in the sidebar allows you to edit the details of your story. This is where you can change its title, main image, visibility and more.',
+      placement: 'auto'
     },
     {
-      target: "#create-content",
+      target: '#create-content',
       content:
         'Each story is made up of "Contents". To create a new Content, select the content\'s type and then click "Create Content."',
-      placement: "auto"
+      placement: 'auto'
     }
   ]
 
@@ -90,20 +90,20 @@ export default class Editor extends Component {
           <PreviewButtonBox>
             <Button
               onClick={() => this.setState({ preview: false })}
-              color={"blue"}
+              color={'blue'}
             >
               Return to Editing
             </Button>
-            {story.visibility === "published" ? (
+            {story.visibility === 'published' ? (
               <Button
-                color={"green"}
+                color={'green'}
                 a
                 href={`${process.env.LUME_URL}/${subdomain}/${slug}`}
               >
                 View Live
               </Button>
             ) : (
-              <Button disabled color={"green"}>
+              <Button disabled color={'green'}>
                 Unpublished
               </Button>
             )}
@@ -113,21 +113,21 @@ export default class Editor extends Component {
       )
 
     return (
-      <FullPage flexDirection={"column"} alignItems={"flex-start"}>
+      <FullPage flexDirection={'column'} alignItems={'flex-start'}>
         {story ? <Head title={`Editing: ${story.title}`} /> : null}
 
         <PreviewButtonBox width={1 / 6}>
           <Button
             onClick={() => this.setState({ preview: true })}
-            color={"blue"}
-            id={"preview-button"}
+            color={'blue'}
+            id={'preview-button'}
           >
             Preview your Story
           </Button>
-          {story.visibility === "published" ? (
+          {story.visibility === 'published' ? (
             <NextLink
               href={{
-                pathname: "/lume/story",
+                pathname: '/lume/story',
                 query: {
                   subdomain,
                   storySlug: slug
@@ -135,21 +135,21 @@ export default class Editor extends Component {
               }}
               as={`/${subdomain}/${slug}`}
             >
-              <Button color={"green"} a id={"live-button"}>
+              <Button color={'green'} a id={'live-button'}>
                 View Live
               </Button>
             </NextLink>
           ) : (
-            <Button disabled color={"green"} id={"live-button"}>
+            <Button disabled color={'green'} id={'live-button'}>
               Unpublished
             </Button>
           )}
         </PreviewButtonBox>
-        <TopBar w={1} p={2} alignItems={"center"} justifyContent={"flex-start"}>
+        <TopBar w={1} p={2} alignItems={'center'} justifyContent={'flex-start'}>
           <Box w={1 / 6}>
             <Link
               href={{
-                pathname: "/cms",
+                pathname: '/cms',
                 query: {
                   subdomain
                 }
@@ -160,7 +160,7 @@ export default class Editor extends Component {
             </Link>
           </Box>
           <Box w={1 / 3}>
-            <H2>{story.title ? story.title : "Untitled Story"}</H2>
+            <H2>{story.title ? story.title : 'Untitled Story'}</H2>
           </Box>
 
           <Box w={1 / 3}>{renderSaveStatus()}</Box>
@@ -168,15 +168,15 @@ export default class Editor extends Component {
         <Workspace w={1}>
           <Sidebar w={1 / 5}>
             <Flex
-              flexDirection={"column"}
+              flexDirection={'column'}
               p={3}
-              justifyContent={"flex-start"}
-              alignItems={"center"}
-              id={"sidebar"}
+              justifyContent={'flex-start'}
+              alignItems={'center'}
+              id={'sidebar'}
             >
               <EditStoryThumb
                 storyId={storyId}
-                selected={editing === "story"}
+                selected={editing === 'story'}
                 onSelect={handleStorySelection}
               />
 
@@ -200,7 +200,7 @@ export default class Editor extends Component {
               <Break />
 
               <Select
-                name={"contentType"}
+                name={'contentType'}
                 onChange={handleChange}
                 value={contentType}
               >
@@ -215,9 +215,9 @@ export default class Editor extends Component {
           </Sidebar>
 
           <EditingPane width={1}>
-            {editing === "story" ? <StoryEditor storyId={storyId} /> : null}
+            {editing === 'story' ? <StoryEditor storyId={storyId} /> : null}
 
-            {editing === "content" ? (
+            {editing === 'content' ? (
               <EditorSwitcher content={selectedContent} />
             ) : null}
           </EditingPane>
@@ -230,9 +230,9 @@ export default class Editor extends Component {
     const { synced } = this.props.saveStatus
 
     if (synced) {
-      return <span id={"save-status"}>All Changes Saved</span>
+      return <span id={'save-status'}>All Changes Saved</span>
     } else {
-      return <span id={"save-status"}>...saving</span>
+      return <span id={'save-status'}>...saving</span>
     }
   }
 
@@ -240,9 +240,9 @@ export default class Editor extends Component {
     super(props)
     this.state = {}
     this.state = {
-      editing: "story",
+      editing: 'story',
       selectedContent: null,
-      contentType: "comparison",
+      contentType: 'comparison',
       contents: [],
       initialized: false,
       preview: false,
@@ -268,7 +268,7 @@ export default class Editor extends Component {
         ) {
           Object.assign(state, {
             selectedContent: null,
-            editing: "story"
+            editing: 'story'
           })
         }
       }
@@ -312,7 +312,7 @@ export default class Editor extends Component {
 
   handleStorySelection = () => {
     this.setState({
-      editing: "story",
+      editing: 'story',
       selectedContent: null
     })
   }
@@ -322,7 +322,7 @@ export default class Editor extends Component {
       content => content.id === selectedContentId
     )
     this.setState({
-      editing: "content",
+      editing: 'content',
       selectedContent
     })
   }

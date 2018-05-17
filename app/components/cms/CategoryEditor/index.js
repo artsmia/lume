@@ -1,4 +1,4 @@
-import {compose} from 'react-apollo'
+import { compose } from 'react-apollo'
 import Component from './CategoryEditor.component.js'
 import query from '../../../apollo/queries/category'
 import editCategory from '../../../apollo/mutations/editCategory'

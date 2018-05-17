@@ -1,20 +1,16 @@
 import gql from 'graphql-tag'
-import {graphql} from 'react-apollo'
+import { graphql } from 'react-apollo'
 
 const mutation = gql`
-  mutation AddTips (
-    $tips: Boolean
-  ) {
-    addTips(
-      tips: $tips
-    ) @client
+  mutation AddTips($tips: Boolean) {
+    addTips(tips: $tips) @client
   }
 `
 
 const config = {
-  props({mutate}){
+  props({ mutate }) {
     return {
-      addTips(variables){
+      addTips(variables) {
         return mutate({
           variables: {
             __typename: 'ToolTips',

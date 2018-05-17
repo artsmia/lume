@@ -1,32 +1,39 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {H3} from '../../mia-ui/text'
-import {Waiting} from '../../mia-ui/loading'
-import {Button} from '../../mia-ui/buttons'
+import { H3 } from '../../mia-ui/text'
+import { Waiting } from '../../mia-ui/loading'
+import { Button } from '../../mia-ui/buttons'
 // import Image from '../../shared/Image'
-import {Title, Description, Label, Select, Option, MultiSelect, Input} from '../../mia-ui/forms'
-import {ChangeImage} from '../DefaultEditors'
+import {
+  Title,
+  Description,
+  Label,
+  Select,
+  Option,
+  MultiSelect,
+  Input
+} from '../../mia-ui/forms'
+import { ChangeImage } from '../DefaultEditors'
 import ImageManager from '../ImageManager'
 import DeleteStoryButton from '../DeleteStoryButton'
 import StoryAssociator from '../StoryAssociator'
 import StoryGroupSelector from '../StoryGroupSelector'
-import {ToolTip} from '../../mia-ui/tooltips'
-import {Flex, Box} from 'grid-styled'
-import {Expander} from '../../mia-ui/expanders'
+import { ToolTip } from '../../mia-ui/tooltips'
+import { Flex, Box } from 'grid-styled'
+import { Expander } from '../../mia-ui/expanders'
 
 export default class StoryEditor extends Component {
-
   static defaultProps = {
-    storyId: PropTypes.string.isRequired,
+    storyId: PropTypes.string.isRequired
   }
 
   initialValues = {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     previewImageId: undefined,
-    template: "original",
-    visibility: "draft",
+    template: 'original',
+    visibility: 'draft',
     slug: '',
     slugPending: false,
     id: ''
@@ -40,44 +47,47 @@ export default class StoryEditor extends Component {
   tips = [
     {
       target: '#story-title',
-      content: "You can edit the title of your story here.",
+      content: 'You can edit the title of your story here.',
       placement: 'auto'
     },
     {
       target: '#story-description',
-      content: "Edit your story's description here. This field accepts mark down styling!",
+      content:
+        "Edit your story's description here. This field accepts mark down styling!",
       placement: 'auto'
     },
     {
       target: '#change-story-image',
-      content: "Give your story a main image so users can get a preview when the story appears in search results.",
+      content:
+        'Give your story a main image so users can get a preview when the story appears in search results.',
       placement: 'auto'
     },
     {
       target: '#story-slug',
-      content: "The Pretty Url field allows you to change the address of your story. Be careful, however, changing this could break old links!",
+      content:
+        'The Pretty Url field allows you to change the address of your story. Be careful, however, changing this could break old links!',
       placement: 'auto'
     },
     {
       target: '#story-template',
-      content: "Stories can be presented in several different ways.",
+      content: 'Stories can be presented in several different ways.',
       placement: 'auto'
     },
     {
       target: '#story-visibility',
-      content: "When you're ready to share your story with the public, change the visibility setting to published. Now your story will appear with your other stories on your organization's public page!",
+      content:
+        "When you're ready to share your story with the public, change the visibility setting to published. Now your story will appear with your other stories on your organization's public page!",
       placement: 'auto'
     },
     {
       target: '#delete-story',
-      content: "This button will permanently delete your story. Be careful! There is no undoing this!",
+      content:
+        'This button will permanently delete your story. Be careful! There is no undoing this!',
       placement: 'auto'
-    },
+    }
   ]
 
-
   render() {
-
     if (!this.props.story) return null
 
     const {
@@ -97,25 +107,13 @@ export default class StoryEditor extends Component {
       props: {
         storyId,
         router,
-        story: {
-          groups,
-          previewImage
-        },
+        story: { groups, previewImage }
       }
     } = this
 
     return (
-      <Flex
-        width={1}
-        p={3}
-      >
-        <Flex
-          width={1/2}
-          flexDirection={'column'}
-          pr={4}
-        >
-
-
+      <Flex width={1} p={3}>
+        <Flex width={1 / 2} flexDirection={'column'} pr={4}>
           <Title
             name={'title'}
             value={title}
@@ -124,19 +122,17 @@ export default class StoryEditor extends Component {
             id={'story-title'}
           />
 
-
           <Description
             name={'description'}
             value={description}
             onChange={handleChange}
             label={'Description'}
             id={'story-description'}
-
           />
 
           <ChangeImage
-            label={"Image"}
-            name={"previewImageId"}
+            label={'Image'}
+            name={'previewImageId'}
             image={previewImage}
             onChange={handleChange}
             id={'change-story-image'}
@@ -147,23 +143,10 @@ export default class StoryEditor extends Component {
             selectedGroupIds={groups.map(group => group.id)}
             storyId={storyId}
           />
-
-
-
         </Flex>
-        <Flex
-          w={1/2}
-          flexDirection={'row'}
-          flexWrap={'wrap'}
-        >
-
-          <Box
-            w={1}
-            id={'story-slug'}
-          >
-            <Label>
-              Pretty Url
-            </Label>
+        <Flex w={1 / 2} flexDirection={'row'} flexWrap={'wrap'}>
+          <Box w={1} id={'story-slug'}>
+            <Label>Pretty Url</Label>
             <Input
               name={'slug'}
               value={slug}
@@ -171,71 +154,34 @@ export default class StoryEditor extends Component {
               disabled={slugPending}
             />
           </Box>
-          <Box
-            w={1}
-            id={'story-template'}
-          >
-            <Label>
-              Template
-            </Label>
+          <Box w={1} id={'story-template'}>
+            <Label>Template</Label>
             <Select
-              name={"template"}
+              name={'template'}
               onChange={handleChange}
               value={template || 'original'}
             >
-              <Option
-                value={"original"}
-              >
-                Original
-              </Option>
-              <Option
-                value={"slider"}
-              >
-                Slider
-              </Option>
+              <Option value={'original'}>Original</Option>
+              <Option value={'slider'}>Slider</Option>
             </Select>
           </Box>
-          <Box
-            w={1}
-            id={'story-visibility'}
-          >
-            <Label>
-              Visibility
-            </Label>
+          <Box w={1} id={'story-visibility'}>
+            <Label>Visibility</Label>
             <Select
-              name={"visibility"}
+              name={'visibility'}
               onChange={handleChange}
               value={visibility || 'draft'}
             >
-
-              <Option
-                value={"draft"}
-              >
-                Draft
-              </Option>
-              <Option
-                value={"published"}
-              >
-                Published
-              </Option>
+              <Option value={'draft'}>Draft</Option>
+              <Option value={'published'}>Published</Option>
             </Select>
           </Box>
-          <Box
-            w={1}
-          >
-            <StoryAssociator
-              storyId={storyId}
-            />
+          <Box w={1}>
+            <StoryAssociator storyId={storyId} />
           </Box>
-          <Flex
-            w={1}
-          >
-
-            <DeleteStoryButton
-              storyId={storyId}
-            />
+          <Flex w={1}>
+            <DeleteStoryButton storyId={storyId} />
           </Flex>
-
         </Flex>
       </Flex>
     )
@@ -243,57 +189,47 @@ export default class StoryEditor extends Component {
 
   bounce = true
 
-  debounce = (func) => {
+  debounce = func => {
     if (this.bounce) {
       clearTimeout(this.bounce)
-      this.bounce = setTimeout(
-        func,
-        2000
-      )
+      this.bounce = setTimeout(func, 2000)
     }
   }
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       ...this.createStateFromProps(props)
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.addTips({
       tips: this.tips
     })
   }
 
-  componentWillReceiveProps(nextProps){
-
+  componentWillReceiveProps(nextProps) {
     this.setState({
       ...this.createStateFromProps(nextProps)
-
     })
   }
 
-  createStateFromProps = (props) => {
-    if (
-      props.story &&
-      props.storyId !== this.state.id
-    ) {
+  createStateFromProps = props => {
+    if (props.story && props.storyId !== this.state.id) {
       let {
         story,
-        story: {
-          previewImage
-        }
+        story: { previewImage }
       } = props
 
       return {
         ...story,
-        previewImageId: previewImage ? previewImage.id : ""
+        previewImageId: previewImage ? previewImage.id : ''
       }
     }
   }
 
-  handleGroupSelectionSave = async (selectedGroupIds) => {
+  handleGroupSelectionSave = async selectedGroupIds => {
     try {
       this.props.setSaveStatus({
         synced: false
@@ -304,42 +240,39 @@ export default class StoryEditor extends Component {
       })
 
       this.props.setSaveStatus({
-        synced: true,
+        synced: true
       })
     } catch (ex) {
       console.error(ex)
     }
-
-
   }
 
-  handleSlugChange = (e) => {
-
-    e.target.value = e.target.value.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
-
+  handleSlugChange = e => {
+    e.target.value = e.target.value
+      .trim()
+      .replace(/[^a-zA-Z0-9]+/g, '-')
+      .toLowerCase()
 
     let name = e.target.name
     let value = e.target.value
 
     let reservedSlugs = ['pending', 'settings']
 
-    if (reservedSlugs.includes(value)){
+    if (reservedSlugs.includes(value)) {
       value = value.concat('-story')
     }
 
-
     this.setState(
-      ()=>({
-        [name]: value,
+      () => ({
+        [name]: value
       }),
-      ()=>{
+      () => {
         this.props.setSaveStatus({
-          synced: false,
+          synced: false
         })
         this.debounce(this.handleSlugSave, 2000)
       }
     )
-
   }
 
   handleSlugSave = async () => {
@@ -347,7 +280,11 @@ export default class StoryEditor extends Component {
       this.setState({
         slugPending: true
       })
-      let {data : {editStory: {slug}}} = await this.props.editStory({
+      let {
+        data: {
+          editStory: { slug }
+        }
+      } = await this.props.editStory({
         slug: this.state.slug
       })
 
@@ -356,26 +293,27 @@ export default class StoryEditor extends Component {
         slug
       })
 
-      this.props.router.replace({
-        pathname: this.props.router.pathname,
-        query: {
-          ...this.props.router.query,
-          storySlug: slug
-        }
-      }, `/cms/${this.props.router.query.subdomain}/${slug}`)
-
+      this.props.router.replace(
+        {
+          pathname: this.props.router.pathname,
+          query: {
+            ...this.props.router.query,
+            storySlug: slug
+          }
+        },
+        `/cms/${this.props.router.query.subdomain}/${slug}`
+      )
     } catch (ex) {
       console.error(ex)
     }
-
   }
 
-  handleChange = ({target: {value, name}}) => {
+  handleChange = ({ target: { value, name } }) => {
     this.setState(
-      ()=>({
-        [name]: value,
+      () => ({
+        [name]: value
       }),
-      ()=>{
+      () => {
         this.props.setSaveStatus({
           synced: false
         })
@@ -386,9 +324,6 @@ export default class StoryEditor extends Component {
 
   handleSave = async () => {
     try {
-
-
-
       await this.props.editStory({
         ...this.state,
         slugPending: undefined,
@@ -396,21 +331,19 @@ export default class StoryEditor extends Component {
       })
 
       this.props.setSaveStatus({
-        synced: true,
+        synced: true
       })
-
     } catch (ex) {
       console.error(ex)
     }
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.handleSave()
     this.props.removeTips({
       tips: this.tips
     })
   }
-
 }
 
 // const Top = styled.div`

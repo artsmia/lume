@@ -1,14 +1,9 @@
-import {
-  GraphQLID,
-  GraphQLString,
-  GraphQLNonNull,
-  GraphQLList
-} from 'graphql'
+import { GraphQLID, GraphQLString, GraphQLNonNull, GraphQLList } from 'graphql'
 import categoryType from '../types/category'
 import resolve from '../resolvers/editCategory'
 
 const editCategory = {
-  name: "editCategory",
+  name: 'editCategory',
   type: categoryType,
   args: {
     id: {
@@ -22,7 +17,7 @@ const editCategory = {
     },
     imageId: {
       type: GraphQLID
-    },
+    }
   },
   resolve
 }

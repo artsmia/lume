@@ -1,23 +1,23 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 import {
   ChangeImage,
   MultiImage,
   DetailSelector
-} from "../../cms/DefaultEditors"
-import OrganizationQuery from "../../../apollo/queries/organization"
-import { withRouter } from "next/router"
-import query from "../../../apollo/queries/content"
-import mutation from "../../../apollo/mutations/editContent"
-import setSaveStatus from "../../../apollo/local/setSaveStatus"
-import { compose, withApollo } from "react-apollo"
-import styled from "styled-components"
-import { H2 } from "../../mia-ui/text"
-import { Button } from "../../mia-ui/buttons"
-import { Flex, Box } from "grid-styled"
-import { Title, Description } from "../../mia-ui/forms"
-import DeleteContentButton from "../../cms/DeleteContentButton"
-import MultiMedia from "../../cms/DefaultEditors/MultiMedia"
-import { ContentZoomer } from "../../shared/Zoomer"
+} from '../../cms/DefaultEditors'
+import OrganizationQuery from '../../../apollo/queries/organization'
+import { withRouter } from 'next/router'
+import query from '../../../apollo/queries/content'
+import mutation from '../../../apollo/mutations/editContent'
+import setSaveStatus from '../../../apollo/local/setSaveStatus'
+import { compose, withApollo } from 'react-apollo'
+import styled from 'styled-components'
+import { H2 } from '../../mia-ui/text'
+import { Button } from '../../mia-ui/buttons'
+import { Flex, Box } from 'grid-styled'
+import { Title, Description } from '../../mia-ui/forms'
+import DeleteContentButton from '../../cms/DeleteContentButton'
+import MultiMedia from '../../cms/DefaultEditors/MultiMedia'
+import { ContentZoomer } from '../../shared/Zoomer'
 
 class DetailEditor extends Component {
   render() {
@@ -40,26 +40,26 @@ class DetailEditor extends Component {
 
     return (
       <Flex width={1} p={3}>
-        <Flex width={1 / 2} flexWrap={"wrap"} pr={3}>
+        <Flex width={1 / 2} flexWrap={'wrap'} pr={3}>
           <Box w={1}>
             <Title
-              name={"title"}
+              name={'title'}
               value={title}
               onChange={handleChange}
-              label={"Title"}
+              label={'Title'}
             />
           </Box>
           <Box w={1}>
             <Description
-              name={"description"}
+              name={'description'}
               value={description}
               onChange={handleChange}
-              label={"Description"}
+              label={'Description'}
             />
           </Box>
           <Box w={1}>
             <MultiImage
-              label={"Additional Images"}
+              label={'Additional Images'}
               additionalImages={additionalImages}
               onAdd={handleAddAdditionalImage}
               onRemove={handleRemoveAdditionalImage}
@@ -67,18 +67,18 @@ class DetailEditor extends Component {
           </Box>
           <Box w={1}>
             <MultiMedia
-              label={"Additional Media"}
+              label={'Additional Media'}
               additionalMedias={additionalMedias}
               onAdd={handleAddAdditionalMedia}
               onRemove={handleRemoveAdditionalMedia}
             />
           </Box>
         </Flex>
-        <Flex width={1 / 2} flexWrap={"wrap"}>
+        <Flex width={1 / 2} flexWrap={'wrap'}>
           <Box w={1}>
             <ChangeImage
-              label={"Image"}
-              name={"image0Id"}
+              label={'Image'}
+              name={'image0Id'}
               image={image0}
               onChange={handleChange}
             />
@@ -92,7 +92,7 @@ class DetailEditor extends Component {
               detailImageId={image0Id}
             /> */}
             <ZoomerBox width={1}>
-              <ContentZoomer contentId={content.id} mode={"editor"} />
+              <ContentZoomer contentId={content.id} mode={'editor'} />
             </ZoomerBox>
           </Flex>
 
@@ -116,9 +116,9 @@ class DetailEditor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      title: "",
-      description: "",
-      image0Id: ""
+      title: '',
+      description: '',
+      image0Id: ''
     }
     this.state = {
       ...this.stateFromProps(props)
@@ -165,9 +165,9 @@ class DetailEditor extends Component {
 
     let { content } = props
     let state = {
-      title: content.title || "",
-      description: content.description || "",
-      image0Id: content.image0 ? content.image0.id : "",
+      title: content.title || '',
+      description: content.description || '',
+      image0Id: content.image0 ? content.image0.id : '',
       id: content.id
     }
 

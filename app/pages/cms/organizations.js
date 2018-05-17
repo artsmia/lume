@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import OrgManager from "../../components/cms/OrgManager"
-import Template from "../../components/shared/Template"
-import Auth from "../../auth"
+import React, { Component } from 'react'
+import OrgManager from '../../components/cms/OrgManager'
+import Template from '../../components/shared/Template'
+import Auth from '../../auth'
 
 export default class New extends Component {
   static getInitialProps = async ctx => {

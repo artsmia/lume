@@ -1,13 +1,11 @@
 import Model from '../../db/models/Story'
 import createOptions from './filter'
 
-export default async function (src, args, ctx){
+export default async function(src, args, ctx) {
   try {
-    const {
-      filter
-    } = args
+    const { filter } = args
 
-    let options = (filter) ? createOptions(filter) : {}
+    let options = filter ? createOptions(filter) : {}
 
     return await Model.findAll(options)
   } catch (ex) {

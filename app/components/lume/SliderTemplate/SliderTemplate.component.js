@@ -1,16 +1,16 @@
-import React, { Component } from "react"
-import styled, { css } from "styled-components"
-import ContentDisplaySwitcher from "../../contents/DisplaySwitcher"
-import { H3 } from "../../mia-ui/text"
-import { Button, NavButton } from "../../mia-ui/buttons"
-import { Icon } from "../../mia-ui/icons"
-import router from "next/router"
-import Markdown from "react-markdown"
-import AdditionalImages from "../OriginalTemplate/AdditionalImages"
-import AdditionalMedias from "../OriginalTemplate/AdditionalMedias"
+import React, { Component } from 'react'
+import styled, { css } from 'styled-components'
+import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
+import { H3 } from '../../mia-ui/text'
+import { Button, NavButton } from '../../mia-ui/buttons'
+import { Icon } from '../../mia-ui/icons'
+import router from 'next/router'
+import Markdown from 'react-markdown'
+import AdditionalImages from '../OriginalTemplate/AdditionalImages'
+import AdditionalMedias from '../OriginalTemplate/AdditionalMedias'
 
-import { Flex, Box } from "grid-styled"
-import Head from "../../shared/head"
+import { Flex, Box } from 'grid-styled'
+import Head from '../../shared/head'
 
 export default class SliderTemplate extends Component {
   constructor(props) {
@@ -55,7 +55,7 @@ export default class SliderTemplate extends Component {
           analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
         />
         {selectedContent ? (
-          <PageButtonContainer w={1} justifyContent={"space-between"}>
+          <PageButtonContainer w={1} justifyContent={'space-between'}>
             {selectedContent.index !== 0 ? (
               <Button onClick={() => slide(-1)}>Back</Button>
             ) : (
@@ -69,9 +69,9 @@ export default class SliderTemplate extends Component {
           </PageButtonContainer>
         ) : null}
 
-        <BookContainer flexDirection={"column"}>
-          <HeaderFooter w={1} justifyContent={"center"} alignItems={"center"}>
-            <H3 color={"white"}>{story.title}</H3>
+        <BookContainer flexDirection={'column'}>
+          <HeaderFooter w={1} justifyContent={'center'} alignItems={'center'}>
+            <H3 color={'white'}>{story.title}</H3>
           </HeaderFooter>
           <PageContainer w={1}>
             <ContentContainer w={[1, 3 / 4]}>
@@ -81,45 +81,45 @@ export default class SliderTemplate extends Component {
             </ContentContainer>
             <DrawerButton
               round
-              display={""}
+              display={''}
               open={drawer}
               onClick={() => {
                 this.setState(({ drawer }) => ({ drawer: !drawer }))
               }}
             >
-              <Icon color={"white"} icon={"menu"} />
+              <Icon color={'white'} icon={'menu'} />
             </DrawerButton>
             <SideContainer
               w={[3 / 4, 1 / 4]}
               p={3}
-              flexWrap={"wrap"}
+              flexWrap={'wrap'}
               open={drawer}
-              flexDirection={"column"}
+              flexDirection={'column'}
             >
               <TopFlex w={1}>
-                {this.props.router.pathname === "/lume/story" ? (
+                {this.props.router.pathname === '/lume/story' ? (
                   <Flex w={1}>
                     <Button
                       round
-                      size={"40px"}
+                      size={'40px'}
                       onClick={() => {
                         this.props.router.back()
                       }}
                     >
-                      <Icon color={"white"} icon={"arrow_back"} />
+                      <Icon color={'white'} icon={'arrow_back'} />
                     </Button>
                     <NavButton
                       href={{
-                        pathname: "/lume",
+                        pathname: '/lume',
                         query: {
                           subdomain
                         }
                       }}
-                      size={"40px"}
+                      size={'40px'}
                       as={`/${subdomain}`}
                       round
                     >
-                      <Icon color={"white"} icon={"home"} />
+                      <Icon color={'white'} icon={'home'} />
                     </NavButton>
                   </Flex>
                 ) : null}
@@ -142,13 +142,13 @@ export default class SliderTemplate extends Component {
             </SideContainer>
           </PageContainer>
 
-          <HeaderFooter w={1} justifyContent={"center"} alignItems={"center"}>
+          <HeaderFooter w={1} justifyContent={'center'} alignItems={'center'}>
             {selectedContent ? (
-              <H3 color={"white"}>
+              <H3 color={'white'}>
                 Page {selectedContent.index + 1} of {story.contents.length}
               </H3>
             ) : (
-              <H3 color={"white"}>Page 0 of 0</H3>
+              <H3 color={'white'}>Page 0 of 0</H3>
             )}
           </HeaderFooter>
         </BookContainer>
@@ -171,7 +171,7 @@ export default class SliderTemplate extends Component {
       )
     })
 
-    if (pathname === "/lume/story") {
+    if (pathname === '/lume/story') {
       let newIndex = selectedContent.index + direction + 1
 
       let path = `/${query.subdomain}/${query.storySlug}/${newIndex}`
@@ -205,7 +205,7 @@ const DrawerButton = styled(Button)`
     width: 50px;
     z-index: 5000;
     bottom: 10px;
-    right: ${({ open }) => (open ? "78%" : "10px")};
+    right: ${({ open }) => (open ? '78%' : '10px')};
   }
 `
 

@@ -1,7 +1,7 @@
-import { Component } from "react"
-import styled from "styled-components"
-import { Loading } from "../../mia-ui/loading"
-import PropTypes from "prop-types"
+import { Component } from 'react'
+import styled from 'styled-components'
+import { Loading } from '../../mia-ui/loading'
+import PropTypes from 'prop-types'
 
 export default class AppTombstone extends Component {
   state = {
@@ -27,7 +27,7 @@ export default class AppTombstone extends Component {
     } = this
 
     return (
-      <Container flex={"0 0 auto"} id={"tombstone"}>
+      <Container flex={'0 0 auto'} id={'tombstone'}>
         {title ? <Title>{title}</Title> : null}
 
         {attribution ? <Attribution>{attribution}</Attribution> : null}
@@ -57,7 +57,7 @@ export default class AppTombstone extends Component {
             this.setState(({ showMore }) => ({ showMore: !showMore }))
           }
         >
-          {showMore ? "Hide" : "Show More"}
+          {showMore ? 'Hide' : 'Show More'}
         </ShowMore>
       </Container>
     )

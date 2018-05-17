@@ -9,7 +9,6 @@ const strategy = new Auth0Strategy(
     callbackURL: `/callback`
   },
   (accessToken, refreshToken, extraParams, profile, done) => {
-
     return done(null, {
       ...profile,
       idToken: extraParams.id_token

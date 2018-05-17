@@ -1,13 +1,9 @@
-import {
-  GraphQLID,
-  GraphQLString,
-  GraphQLNonNull
-} from 'graphql'
+import { GraphQLID, GraphQLString, GraphQLNonNull } from 'graphql'
 import organizationType from '../types/organization'
 import resolve from '../resolvers/createOrganization'
 
 const createOrganization = {
-  name: "createOrganization",
+  name: 'createOrganization',
   type: organizationType,
   args: {
     name: {

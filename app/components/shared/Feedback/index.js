@@ -1,15 +1,15 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {Modal} from '../../mia-ui/modals'
-import {Button} from '../../mia-ui/buttons'
-import {Icon} from '../../mia-ui/icons'
+import { Modal } from '../../mia-ui/modals'
+import { Button } from '../../mia-ui/buttons'
+import { Icon } from '../../mia-ui/icons'
 import fetch from 'isomorphic-unfetch'
-import {Flex, Box} from 'grid-styled'
-import {Input, Textarea, Label, Select, Option} from '../../mia-ui/forms'
-import {H2} from '../../mia-ui/text'
+import { Flex, Box } from 'grid-styled'
+import { Input, Textarea, Label, Select, Option } from '../../mia-ui/forms'
+import { H2 } from '../../mia-ui/text'
 
-import {withRouter} from 'next/router'
+import { withRouter } from 'next/router'
 
 const BugText = styled(Textarea)`
   width: 100%;
@@ -21,25 +21,18 @@ const BugInput = styled(Input)`
 `
 
 class Feedback extends Component {
-
   state = {
     modal: false,
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     location: this.props.router.asPath,
-    expectedOutcome: "",
-    browser: ""
+    expectedOutcome: '',
+    browser: ''
   }
 
   render() {
     const {
-      state: {
-        title,
-        bugDescription,
-        location,
-        browser,
-        sent
-      },
+      state: { title, bugDescription, location, browser, sent },
       handleChange,
       submitBug
     } = this
@@ -50,46 +43,27 @@ class Feedback extends Component {
           round
           color={'blue'}
           title={'Report a Bug'}
-          onClick={()=>this.setState({modal: true})}
+          onClick={() => this.setState({ modal: true })}
         >
-          <Icon
-            icon={'bug_report'}
-            color={'white'}
-          />
-
+          <Icon icon={'bug_report'} color={'white'} />
         </Button>
         <Modal
           open={this.state.modal}
-          onClose={()=>this.setState({modal: false})}
+          onClose={() => this.setState({ modal: false })}
         >
           {sent ? (
-            <Flex
-              flexWrap={'wrap'}
-            >
+            <Flex flexWrap={'wrap'}>
               <H2>Thanks for your feedback!</H2>
             </Flex>
-          ): (
-            <Flex
-              flexWrap={'wrap'}
-            >
-              <Box
-                w={1}
-                my={2}
-              >
-                <H2>
-                  Report A Bug
-                </H2>
+          ) : (
+            <Flex flexWrap={'wrap'}>
+              <Box w={1} my={2}>
+                <H2>Report A Bug</H2>
               </Box>
-              <Box
-                w={1}
-              >
-                <Label>
-                  Title
-                </Label>
+              <Box w={1}>
+                <Label>Title</Label>
               </Box>
-              <Box
-                w={1}
-              >
+              <Box w={1}>
                 <BugInput
                   name={'title'}
                   value={title}
@@ -97,99 +71,47 @@ class Feedback extends Component {
                   hint={'Give a very brief title for the bug.'}
                 />
               </Box>
-              <Box
-                w={1}
-              >
-                <Label>
-                  Browser
-                </Label>
-
+              <Box w={1}>
+                <Label>Browser</Label>
               </Box>
-              <Box
-                w={1}
-              >
-                <Select
-                  name={'browser'}
-                  onChange={handleChange}
-                >
-                  <Option
-                    value={'Chrome'}
-                  >
-                    Chrome
-                  </Option>
-                  <Option
-                    value={'Safari'}
-                  >
-                    Safari
-                  </Option>
-                  <Option
-                    value={'Firefox'}
-                  >
-                    Firefox
-                  </Option>
-                  <Option
-                    value={'Edge'}
-                  >
-                    Edge
-                  </Option>
-                  <Option
-                    value={'Internet Explorer'}
-                  >
-                    Internet Explorer
-                  </Option>
-                  <Option
-                    value={'Other'}
-                  >
-                    Other
-                  </Option>
+              <Box w={1}>
+                <Select name={'browser'} onChange={handleChange}>
+                  <Option value={'Chrome'}>Chrome</Option>
+                  <Option value={'Safari'}>Safari</Option>
+                  <Option value={'Firefox'}>Firefox</Option>
+                  <Option value={'Edge'}>Edge</Option>
+                  <Option value={'Internet Explorer'}>Internet Explorer</Option>
+                  <Option value={'Other'}>Other</Option>
                 </Select>
               </Box>
-              <Box
-                w={1}
-              >
-                <Label>
-                  Url Where Error Occurred
-                </Label>
-
+              <Box w={1}>
+                <Label>Url Where Error Occurred</Label>
               </Box>
-              <Box
-                w={1}
-              >
+              <Box w={1}>
                 <BugInput
                   name={'location'}
                   value={location}
                   onChange={handleChange}
                 />
               </Box>
-              <Box
-                w={1}
-              >
-                <Label>
-                  Bug Description
-                </Label>
-
+              <Box w={1}>
+                <Label>Bug Description</Label>
               </Box>
-              <Box
-                w={1}
-              >
+              <Box w={1}>
                 <BugText
                   name={'bugDescription'}
                   value={bugDescription}
                   onChange={handleChange}
-                  hint={'What were you doing before the bug occurred? Did something go wrong? Or is a feature just a bit confusing? What were you hoping would happen? Other comments?'}
+                  hint={
+                    'What were you doing before the bug occurred? Did something go wrong? Or is a feature just a bit confusing? What were you hoping would happen? Other comments?'
+                  }
                 />
               </Box>
               <Box>
-                <Button
-                  onClick={submitBug}
-                >
-                  Submit
-                </Button>
+                <Button onClick={submitBug}>Submit</Button>
               </Box>
             </Flex>
           )}
-
-
         </Modal>
       </Container>
     )
@@ -198,17 +120,10 @@ class Feedback extends Component {
   submitBug = async () => {
     try {
       const {
-        state: {
-          title,
-          location,
-          bugDescription,
-          browser
-        },
+        state: { title, location, bugDescription, browser },
         props: {
           user,
-          router: {
-            asPath
-          }
+          router: { asPath }
         }
       } = this
 
@@ -219,7 +134,7 @@ class Feedback extends Component {
       let response = await fetch(`${process.env.API_URL}/bug`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           title: `BR: ${title}`,
@@ -237,7 +152,6 @@ class Feedback extends Component {
         })
       })
 
-
       let json = await response.json()
 
       this.setState({
@@ -251,10 +165,9 @@ class Feedback extends Component {
     }
   }
 
-  handleChange = ({target: {value, name}}) => this.setState({[name]: value})
+  handleChange = ({ target: { value, name } }) =>
+    this.setState({ [name]: value })
 }
-
-
 
 const Container = styled(Flex)`
   position: fixed;
@@ -267,6 +180,5 @@ const Container = styled(Flex)`
     visibility: hidden;
   }
 `
-
 
 export default withRouter(Feedback)

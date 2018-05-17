@@ -1,15 +1,15 @@
-import React, { Component } from "react"
-import { VideoUrl } from "../../cms/DefaultEditors"
-import query from "../../../apollo/queries/content"
-import mutation from "../../../apollo/mutations/editContent"
-import { compose, withApollo } from "react-apollo"
-import styled from "styled-components"
-import { H2 } from "../../mia-ui/text"
-import { Row, Column } from "../../mia-ui/layout"
-import setSaveStatus from "../../../apollo/local/setSaveStatus"
-import { Flex, Box } from "grid-styled"
-import { Title, Description } from "../../mia-ui/forms"
-import DeleteContentButton from "../../cms/DeleteContentButton"
+import React, { Component } from 'react'
+import { VideoUrl } from '../../cms/DefaultEditors'
+import query from '../../../apollo/queries/content'
+import mutation from '../../../apollo/mutations/editContent'
+import { compose, withApollo } from 'react-apollo'
+import styled from 'styled-components'
+import { H2 } from '../../mia-ui/text'
+import { Row, Column } from '../../mia-ui/layout'
+import setSaveStatus from '../../../apollo/local/setSaveStatus'
+import { Flex, Box } from 'grid-styled'
+import { Title, Description } from '../../mia-ui/forms'
+import DeleteContentButton from '../../cms/DeleteContentButton'
 
 class MovieEditor extends Component {
   render() {
@@ -22,30 +22,30 @@ class MovieEditor extends Component {
     } = this
 
     return (
-      <Flex flexWrap={"wrap"} m={3}>
+      <Flex flexWrap={'wrap'} m={3}>
         <Box w={1}>
           <Title
-            label={"Title"}
+            label={'Title'}
             value={title}
-            name={"title"}
+            name={'title'}
             onChange={handleChange}
           />
         </Box>
 
         <Box w={1}>
           <Description
-            label={"Description"}
+            label={'Description'}
             value={description}
-            name={"description"}
+            name={'description'}
             onChange={handleChange}
           />
         </Box>
 
         <Box w={1}>
           <VideoUrl
-            label={"Video Url"}
+            label={'Video Url'}
             value={videoUrl}
-            name={"videoUrl"}
+            name={'videoUrl'}
             onChange={handleChange}
           />
         </Box>
@@ -69,9 +69,9 @@ class MovieEditor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      title: "",
-      description: "",
-      videoUrl: ""
+      title: '',
+      description: '',
+      videoUrl: ''
     }
 
     this.state = {

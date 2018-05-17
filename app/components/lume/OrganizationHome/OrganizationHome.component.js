@@ -1,22 +1,22 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import { Button } from "../../mia-ui/buttons"
-import { Link } from "../../mia-ui/links"
-import { Label, CheckboxInput, Search, Input } from "../../mia-ui/forms"
-import Router from "next/router"
-import { H3, H2, H4 } from "../../mia-ui/text"
-import { Flex, Box } from "grid-styled"
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import { Button } from '../../mia-ui/buttons'
+import { Link } from '../../mia-ui/links'
+import { Label, CheckboxInput, Search, Input } from '../../mia-ui/forms'
+import Router from 'next/router'
+import { H3, H2, H4 } from '../../mia-ui/text'
+import { Flex, Box } from 'grid-styled'
 import {
   Drawer,
   DrawerCheck,
   DrawerButton,
   DrawerPage
-} from "../../mia-ui/drawer"
-import { GridList, Tile } from "../../mia-ui/lists"
-import { Loading } from "../../mia-ui/loading"
-import Head from "../../shared/head"
-import ImgSrcProvider from "../../shared/ImgSrcProvider"
-import Joyride from "react-joyride"
+} from '../../mia-ui/drawer'
+import { GridList, Tile } from '../../mia-ui/lists'
+import { Loading } from '../../mia-ui/loading'
+import Head from '../../shared/head'
+import ImgSrcProvider from '../../shared/ImgSrcProvider'
+import Joyride from 'react-joyride'
 
 // let Tile = ImgSrcProvider(StoryTile)
 
@@ -36,14 +36,14 @@ export default class Home extends Component {
 
     this.state = {
       drawer: true,
-      search: search || "",
-      template: template ? template.split(",") : ["original", "slider"],
+      search: search || '',
+      template: template ? template.split(',') : ['original', 'slider'],
       selectedGroupIds: [],
       showGrandTour: false,
       grandTourIndex: 0,
       grandTourSteps: [
         {
-          target: "body",
+          target: 'body',
           content: (
             <div>
               <h2>Welcome to Lume!</h2>
@@ -63,11 +63,11 @@ export default class Home extends Component {
               </Button>
             </div>
           ),
-          placement: "center",
+          placement: 'center',
           disableBeacon: true
         },
         {
-          target: "#results",
+          target: '#results',
           content: (
             <div>
               <p>
@@ -86,10 +86,10 @@ export default class Home extends Component {
             </div>
           ),
           disableBeacon: true,
-          placement: "center"
+          placement: 'center'
         },
         {
-          target: "#drawer-button",
+          target: '#drawer-button',
           content: (
             <div>
               <p>
@@ -117,7 +117,7 @@ export default class Home extends Component {
           disableBeacon: true
         },
         {
-          target: "#template-filter",
+          target: '#template-filter',
           content: (
             <div>
               <p>You can filter stories based on their type.</p>
@@ -132,8 +132,8 @@ export default class Home extends Component {
                   }))
                   this.searchChange({
                     target: {
-                      name: "search",
-                      value: "writing desk"
+                      name: 'search',
+                      value: 'writing desk'
                     }
                   })
                 }}
@@ -143,10 +143,10 @@ export default class Home extends Component {
             </div>
           ),
           disableBeacon: true,
-          placement: "right-start"
+          placement: 'right-start'
         },
         {
-          target: "#group-filter",
+          target: '#group-filter',
           content: (
             <div>
               <p>
@@ -167,10 +167,10 @@ export default class Home extends Component {
             </div>
           ),
           disableBeacon: true,
-          placement: "right-start"
+          placement: 'right-start'
         },
         {
-          target: "#search",
+          target: '#search',
           content: (
             <div>
               <p>You can search for specific stories by title or keyword.</p>
@@ -186,10 +186,10 @@ export default class Home extends Component {
             </div>
           ),
           disableBeacon: true,
-          placement: "right-start"
+          placement: 'right-start'
         },
         {
-          target: "#writing-desk",
+          target: '#writing-desk',
           content: (
             <div>
               <p>
@@ -200,14 +200,14 @@ export default class Home extends Component {
                 onClick={() => {
                   this.props.router.push(
                     {
-                      pathname: "/lume/story",
+                      pathname: '/lume/story',
                       query: {
-                        subdomain: "mia",
-                        storySlug: "writing-desk",
+                        subdomain: 'mia',
+                        storySlug: 'writing-desk',
                         grandTour: true
                       }
                     },
-                    "/mia/writing-desk"
+                    '/mia/writing-desk'
                   )
                 }}
               >
@@ -216,7 +216,7 @@ export default class Home extends Component {
             </div>
           ),
           disableBeacon: true,
-          placement: "right-start"
+          placement: 'right-start'
         }
       ]
     }
@@ -268,7 +268,7 @@ export default class Home extends Component {
         />
         {/* <DrawerCheck/> */}
         <DrawerButton
-          id={"drawer-button"}
+          id={'drawer-button'}
           open={this.state.drawer}
           onClick={() => {
             this.setState(({ drawer }) => ({
@@ -277,58 +277,58 @@ export default class Home extends Component {
           }}
         />
 
-        <Drawer open={this.state.drawer} id={"drawer"}>
+        <Drawer open={this.state.drawer} id={'drawer'}>
           {!group ? (
-            <Flex flexWrap={"wrap"}>
+            <Flex flexWrap={'wrap'}>
               <Box width={1} p={3}>
                 <H2>
                   {this.props.organization
                     ? this.props.organization.name
-                    : "Art Stories"}
+                    : 'Art Stories'}
                 </H2>
               </Box>
 
-              <Box width={1} p={3} id={"search"}>
+              <Box width={1} p={3} id={'search'}>
                 <Input
                   focus
-                  name={"search"}
+                  name={'search'}
                   value={this.state.search}
                   onChange={this.searchChange}
                   onKeyPress={this.handleEnter}
-                  placeholder={"Search for stories"}
+                  placeholder={'Search for stories'}
                 />
               </Box>
-              <Box width={1} p={3} id={"template-filter"}>
+              <Box width={1} p={3} id={'template-filter'}>
                 <H3>Story Type</H3>
 
                 <CheckboxInput
-                  name={"original"}
-                  checked={this.state.template.includes("original")}
-                  label={"Object Stories"}
+                  name={'original'}
+                  checked={this.state.template.includes('original')}
+                  label={'Object Stories'}
                   onChange={this.handleCheck}
                 />
 
                 <CheckboxInput
-                  name={"slider"}
-                  checked={this.state.template.includes("slider")}
-                  label={"Thematic Stories"}
+                  name={'slider'}
+                  checked={this.state.template.includes('slider')}
+                  label={'Thematic Stories'}
                   onChange={this.handleCheck}
                 />
               </Box>
-              <Box p={3} width={1} id={"group-filter"}>
+              <Box p={3} width={1} id={'group-filter'}>
                 {this.props.organization
                   ? this.props.organization.categories.map(category => (
                       <Flex
                         key={category.id}
                         width={1}
-                        flexDirection={"column"}
+                        flexDirection={'column'}
                       >
                         <H3>{category.title}</H3>
                         {category
                           ? category.groups.map(group => (
                               <Flex key={group.id}>
                                 <CheckboxInput
-                                  name={"selectedGroups"}
+                                  name={'selectedGroups'}
                                   value={group.id}
                                   checked={this.state.selectedGroupIds.includes(
                                     group.id
@@ -337,7 +337,7 @@ export default class Home extends Component {
                                   label={
                                     <Link
                                       href={{
-                                        pathname: "/lume",
+                                        pathname: '/lume',
                                         query: {
                                           subdomain: this.props.router.query
                                             .subdomain,
@@ -363,11 +363,11 @@ export default class Home extends Component {
           ) : null}
 
           {group ? (
-            <Flex flexWrap={"wrap"} w={1} p={3}>
+            <Flex flexWrap={'wrap'} w={1} p={3}>
               <Box mb={6}>
                 <Link
                   href={{
-                    pathname: "/lume",
+                    pathname: '/lume',
                     query: {
                       subdomain: this.props.router.query.subdomain
                     }
@@ -393,7 +393,7 @@ export default class Home extends Component {
 
         <DrawerPage
           onScroll={handleScroll}
-          id={"results"}
+          id={'results'}
           open={this.state.drawer}
         >
           <GridList>
@@ -401,15 +401,15 @@ export default class Home extends Component {
               ? stories.map(({ id, previewImage, title, slug }) => (
                   <Tile
                     key={id}
-                    id={title === "Writing Desk" ? "writing-desk" : undefined}
+                    id={title === 'Writing Desk' ? 'writing-desk' : undefined}
                     w={[1, 1, 1 / 2, 1 / 4]}
                     p={1}
                     key={id}
                     text={title}
-                    height={"200px"}
+                    height={'200px'}
                     image={previewImage}
                     href={{
-                      pathname: "/lume/story",
+                      pathname: '/lume/story',
                       query: {
                         storySlug: slug,
                         subdomain: organization.subdomain
@@ -438,13 +438,13 @@ export default class Home extends Component {
           stepIndex={this.state.grandTourIndex}
           styles={{
             buttonClose: {
-              display: "none"
+              display: 'none'
             },
             buttonNext: {
-              display: "none"
+              display: 'none'
             },
             buttonBack: {
-              display: "none"
+              display: 'none'
             }
           }}
           spotlightClicks={false}
@@ -528,12 +528,12 @@ export default class Home extends Component {
 
     this.props.router.replace(
       {
-        pathname: "/lume",
+        pathname: '/lume',
         query: {
           search,
           subdomain,
-          template: template.join(","),
-          groups: groups.join(",")
+          template: template.join(','),
+          groups: groups.join(',')
         }
       },
       queryString,
@@ -575,7 +575,7 @@ export default class Home extends Component {
 
   handleScroll = () => {
     this.debounce(() => {
-      let results = document.getElementById("results")
+      let results = document.getElementById('results')
 
       if (
         results.scrollTop + results.clientHeight >=

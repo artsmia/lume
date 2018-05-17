@@ -1,30 +1,30 @@
 import React from 'react'
-import {ThemeProvider} from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 import Global from './global'
 
-const gray = "#e9e8e8"
+const gray = '#e9e8e8'
 
-const gray30 = "rgba(35,31,32, 0.3)"
+const gray30 = 'rgba(35,31,32, 0.3)'
 
-const gray60 = "rgba(35,31,32, 0.6)"
+const gray60 = 'rgba(35,31,32, 0.6)'
 
-const gray85 = "rgba(35,31,32, 0.85)"
+const gray85 = 'rgba(35,31,32, 0.85)'
 
-const colorBlack = "#231f20"
+const colorBlack = '#231f20'
 
-const blue = "#48ccdf"
+const blue = '#48ccdf'
 
-const red = "#e54c60"
+const red = '#e54c60'
 
-const purple = "#946db6"
+const purple = '#946db6'
 
-const taupe = "#d4c6c3"
+const taupe = '#d4c6c3'
 
-const green = "#98d789"
+const green = '#98d789'
 
-const white = "#ffffff"
+const white = '#ffffff'
 
-const transparent = "rgba(35,31,32, 0)"
+const transparent = 'rgba(35,31,32, 0)'
 
 const light = `"Mia Light", "Helvetica Neue", Helvetica, san-serif`
 
@@ -57,13 +57,9 @@ export const theme = {
   },
   primaryTextColor: colorBlack,
   alternateTextColor: white,
-  primaryColor: blue,
+  primaryColor: blue
 }
 
-export default ({children}) => (
-    <ThemeProvider
-      theme={theme}
-    >
-      {children}
-    </ThemeProvider>
+export default ({ children }) => (
+  <ThemeProvider theme={theme}>{children}</ThemeProvider>
 )

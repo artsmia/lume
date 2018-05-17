@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {Flex, Box} from 'grid-styled'
-import {Icon} from './icons'
-import {gray30} from './colors'
-import {A} from './links'
+import { Flex, Box } from 'grid-styled'
+import { Icon } from './icons'
+import { gray30 } from './colors'
+import { A } from './links'
 
-const Table = (props)=> (
+const Table = props => (
   <Flex
     width={1}
     flexDirection={'column'}
@@ -26,8 +26,8 @@ const Table = (props)=> (
 // }
 
 let Row = styled(Flex)`
-  &:hover{
-    background-color: rgba(0,0,0,.1);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
   border-bottom: 1px solid ${gray30};
 `
@@ -43,31 +43,21 @@ let Cell = styled(Box)`
   padding: 5px;
 `
 
-let HeaderRow = styled(Row)`
-
-`
+let HeaderRow = styled(Row)``
 
 HeaderRow.defaultProps = {
   width: 1
 }
 
-let HeaderCell = styled(Cell)`
+let HeaderCell = styled(Cell)``
 
-`
-
-
-let BodyRow = styled(Row)`
-
-
-`
+let BodyRow = styled(Row)``
 
 BodyRow.defaultProps = {
   width: 1
 }
 
-let BodyCell = styled(Cell)`
-
-`
+let BodyCell = styled(Cell)``
 
 let TableThumb = styled.img`
   height: 50px;
@@ -75,24 +65,24 @@ let TableThumb = styled.img`
   object-fit: cover;
 `
 
-
-export const Sorter = ({onSort,variables, column, upValue, downValue}) => {
-
+export const Sorter = ({ onSort, variables, column, upValue, downValue }) => {
   let value = variables.filter.order.find(order => order.column === column)
 
   if (value) {
     value = value.direction
   }
 
-  if (value === upValue){
+  if (value === upValue) {
     return (
       <A>
         <Icon
           icon={'keyboard_arrow_up'}
-          onClick={()=>onSort({
-            column,
-            newValue: downValue
-          })}
+          onClick={() =>
+            onSort({
+              column,
+              newValue: downValue
+            })
+          }
         />
       </A>
     )
@@ -101,23 +91,16 @@ export const Sorter = ({onSort,variables, column, upValue, downValue}) => {
       <A>
         <Icon
           icon={'keyboard_arrow_down'}
-          onClick={()=>onSort({
-            column,
-            newValue: upValue
-          })}
+          onClick={() =>
+            onSort({
+              column,
+              newValue: upValue
+            })
+          }
         />
       </A>
-
     )
   }
 }
 
-
-export {
-  Table,
-  HeaderRow,
-  HeaderCell,
-  BodyRow,
-  BodyCell,
-  TableThumb
-}
+export { Table, HeaderRow, HeaderCell, BodyRow, BodyCell, TableThumb }

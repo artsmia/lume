@@ -1,9 +1,8 @@
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
-
 const createOrganizationMutation = gql`
-  mutation createOrganization (
+  mutation createOrganization(
     $subdomain: String!
     $name: String!
     $creatorId: ID!
@@ -21,5 +20,5 @@ const createOrganizationMutation = gql`
 `
 
 export default graphql(createOrganizationMutation, {
-  name: "createOrganization"
+  name: 'createOrganization'
 })

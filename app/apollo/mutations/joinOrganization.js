@@ -1,18 +1,15 @@
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
-
 const joinOrganizationMutation = gql`
-  mutation joinOrganization (
+  mutation joinOrganization(
     $userId: ID!
     $organizationId: ID
     $role: RoleEnum
   ) {
     editUserOrganizationRole(
       userId: $userId
-      organization: {
-        id: $organizationId
-      }
+      organization: { id: $organizationId }
       role: $role
     ) {
       id
@@ -25,8 +22,6 @@ const joinOrganizationMutation = gql`
   }
 `
 
-
-
 export default graphql(joinOrganizationMutation, {
-  name: "joinOrganization"
+  name: 'joinOrganization'
 })

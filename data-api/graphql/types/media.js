@@ -1,13 +1,9 @@
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLID
-} from 'graphql'
+import { GraphQLObjectType, GraphQLString, GraphQLID } from 'graphql'
 import organizationType from './organization'
-import {HostEnum} from './enums'
+import { HostEnum } from './enums'
 
 const media = new GraphQLObjectType({
-  name: "media",
+  name: 'media',
   fields: () => ({
     id: {
       type: GraphQLID
@@ -26,7 +22,7 @@ const media = new GraphQLObjectType({
     },
     organization: {
       type: organizationType,
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getOrganization()
         } catch (ex) {
@@ -36,7 +32,7 @@ const media = new GraphQLObjectType({
     },
     format: {
       type: GraphQLString
-    },
+    }
   })
 })
 

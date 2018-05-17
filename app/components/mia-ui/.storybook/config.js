@@ -1,19 +1,13 @@
 import { configure } from '@storybook/react'
 import { setDefaults } from '@storybook/addon-info'
-import { withKnobs} from '@storybook/addon-knobs/react'
+import { withKnobs } from '@storybook/addon-knobs/react'
 import { addDecorator } from '@storybook/react'
 import ThemeProvider from './theme'
 import React from 'react'
 
 addDecorator(withKnobs)
 
-addDecorator( story => (
-  <ThemeProvider>
-    {story()}
-  </ThemeProvider>
-))
-
-
+addDecorator(story => <ThemeProvider>{story()}</ThemeProvider>)
 
 setDefaults({
   inline: true,

@@ -1,9 +1,7 @@
 import Organization from '../../db/models/Organization'
 
-export default async function(src, args, ctx){
+export default async function(src, args, ctx) {
   try {
-
-
     await Organization.update(args, {
       where: {
         id: args.id
@@ -12,13 +10,11 @@ export default async function(src, args, ctx){
 
     const organization = await Organization.findById(args.id)
 
-    if(args.locationImageId){
+    if (args.locationImageId) {
       await organization.setLocationImage(args.locationImageId)
     }
 
-
     return organization
-
   } catch (ex) {
     console.error(ex)
   }

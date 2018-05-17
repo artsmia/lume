@@ -11,7 +11,7 @@ import groupType from './group'
 import organizationType from './organization'
 
 const category = new GraphQLObjectType({
-  name: "category",
+  name: 'category',
   fields: () => ({
     id: {
       type: GraphQLID
@@ -24,7 +24,7 @@ const category = new GraphQLObjectType({
     },
     image: {
       type: imageType,
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getImage()
         } catch (ex) {
@@ -34,7 +34,7 @@ const category = new GraphQLObjectType({
     },
     groups: {
       type: new GraphQLList(groupType),
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getGroups()
         } catch (ex) {

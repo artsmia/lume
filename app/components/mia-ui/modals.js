@@ -1,11 +1,11 @@
-import React, { Component } from "react"
-import PropTypes from "prop-types"
-import styled from "styled-components"
-import { gray85 } from "./colors"
-import { Button } from "./buttons"
-import { Box, Flex } from "grid-styled"
-import { Icon } from "./icons"
-import { Span } from "./text"
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { gray85 } from './colors'
+import { Button } from './buttons'
+import { Box, Flex } from 'grid-styled'
+import { Icon } from './icons'
+import { Span } from './text'
 
 const Container = styled.div`
   position: fixed;
@@ -14,7 +14,7 @@ const Container = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: ${gray85};
-  display: ${({ open }) => (open ? "block" : "none")};
+  display: ${({ open }) => (open ? 'block' : 'none')};
   z-index: 5000;
 `
 
@@ -57,7 +57,7 @@ class Modal extends Component {
       >
         <ModalBox onClick={this.stopPropagation} p={1}>
           <CloseButton onClick={this.props.onClose}>
-            <Icon size={"25px"} color={"white"} icon={"close"} />
+            <Icon size={'25px'} color={'white'} icon={'close'} />
           </CloseButton>
           {this.props.children}
         </ModalBox>
@@ -87,10 +87,10 @@ const WarnFooter = styled.div`
 class Warn extends Component {
   static defaultProps = {
     onConfirm() {
-      console.log("Confirmed")
+      console.log('Confirmed')
     },
     onReject() {
-      console.log("Rejected")
+      console.log('Rejected')
     }
   }
 
@@ -102,7 +102,7 @@ class Warn extends Component {
 
           <WarnFooter>
             <Button onClick={this.handleConfirm}>Yes</Button>
-            <Button onClick={this.handleReject} color={"red"}>
+            <Button onClick={this.handleReject} color={'red'}>
               No
             </Button>
           </WarnFooter>

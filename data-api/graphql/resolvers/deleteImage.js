@@ -1,4 +1,4 @@
-import Image from "../../db/models/Image"
+import Image from '../../db/models/Image'
 
 export default async function(src, args, ctx) {
   try {

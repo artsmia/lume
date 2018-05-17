@@ -1,42 +1,27 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { storiesOf } from '@storybook/react'
 import { text, boolean, number, select } from '@storybook/addon-knobs/react'
 import { withInfo } from '@storybook/addon-info'
 
-import {
-  Modal,
-  Warn
-} from '../modals'
-import {
-  Button
-} from '../buttons'
+import { Modal, Warn } from '../modals'
+import { Button } from '../buttons'
 
-
-
-const props = () => ({
-
-})
+const props = () => ({})
 
 class ModalExample extends Component {
-
   state = {
     modal: false
   }
 
-  render(){
+  render() {
     return (
       <div>
-
-        <Button
-          onClick={()=>this.setState({modal: true})}
-        >
-          Open
-        </Button>
+        <Button onClick={() => this.setState({ modal: true })}>Open</Button>
 
         <Modal
           open={this.state.modal}
-          onClose={()=>this.setState({modal: false})}
+          onClose={() => this.setState({ modal: false })}
         >
           <div
             style={{
@@ -51,24 +36,18 @@ class ModalExample extends Component {
 }
 
 class WarnExample extends Component {
-
   state = {
     modal: false
   }
 
-  render(){
+  render() {
     return (
       <div>
-
-        <Button
-          onClick={()=>this.setState({modal: true})}
-        >
-          Open
-        </Button>
+        <Button onClick={() => this.setState({ modal: true })}>Open</Button>
 
         <Warn
           open={this.state.modal}
-          onClose={()=>this.setState({modal: false})}
+          onClose={() => this.setState({ modal: false })}
         >
           Are you sure?
         </Warn>
@@ -77,21 +56,16 @@ class WarnExample extends Component {
   }
 }
 
-
 storiesOf('Modal', module)
   .add(
     'Modal',
     withInfo(`
       something here
-    `)(() => (
-      <ModalExample/>
-    ))
+    `)(() => <ModalExample />)
   )
   .add(
     'Warn',
     withInfo(`
       something here
-    `)(() => (
-      <WarnExample/>
-    ))
+    `)(() => <WarnExample />)
   )

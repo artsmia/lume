@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { Flex, Box } from 'grid-styled'
-import styled, {css, keyframes} from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import PropTypes from 'prop-types'
-import {TextBase} from './text'
+import { TextBase } from './text'
 import {
   gray30,
   gray60,
@@ -12,28 +12,18 @@ import {
   green,
   red
 } from './colors'
-import {
-  regular,
-  light,
-  bold
-} from './fonts'
+import { regular, light, bold } from './fonts'
 
-
-export const Form = styled.form`
-
-`
-Form.displayName = "Form"
-
+export const Form = styled.form``
+Form.displayName = 'Form'
 
 export const Label = styled.label`
   font-size: 1.2rem;
   margin-right: 10px;
-  ${regular}
-  ${TextBase}
+  ${regular} ${TextBase};
 `
 
-Label.displayName = "Label"
-
+Label.displayName = 'Label'
 
 const InputEl = styled.input`
   outline: none;
@@ -52,46 +42,48 @@ const InputEl = styled.input`
     background-color: ${gray30};
   }
 
-  ${({valid}) => valid ? css`
-    border: 2px solid ${({theme})=> theme.color.green};
-  ` : null}
+  ${({ valid }) =>
+    valid
+      ? css`
+          border: 2px solid ${({ theme }) => theme.color.green};
+        `
+      : null}
 
 
-  ${({invalid}) => invalid ? css`
-    border: 2px solid ${({theme})=> theme.color.red};
-  ` : null}
-  ${({paddingLeft}) => paddingLeft ? css`
-    padding-left: ${paddingLeft};
-  `:null}
+  ${({ invalid }) =>
+    invalid
+      ? css`
+          border: 2px solid ${({ theme }) => theme.color.red};
+        `
+      : null}
+  ${({ paddingLeft }) =>
+    paddingLeft
+      ? css`
+          padding-left: ${paddingLeft};
+        `
+      : null}
 `
 
-
-InputEl.displayName = "InputEl"
-
+InputEl.displayName = 'InputEl'
 
 const ErrorSpan = styled.span`
   color: ${red};
-  ${bold}
+  ${bold};
 `
 
-export const Input = (props) => (
-  <Flex
-    w={1}
-  >
-    <InputEl
-      {...props}
-    />
+export const Input = props => (
+  <Flex w={1}>
+    <InputEl {...props} />
     <ErrorSpan>{props.errorMsg}</ErrorSpan>
   </Flex>
 )
 
 export const Textarea = InputEl.withComponent('textarea').extend`
-  min-height: ${({minHeight}) => minHeight};
-  width: ${({width}) => width};
+  min-height: ${({ minHeight }) => minHeight};
+  width: ${({ width }) => width};
 `
 
-Textarea.displayName = "Textarea"
-
+Textarea.displayName = 'Textarea'
 
 Textarea.defaultProps = {
   minHeight: '100px',
@@ -100,35 +92,35 @@ Textarea.defaultProps = {
 
 const focusCss = css`
   width: 160px;
-  background-color: rgba(255,255,255, 0.9);
+  background-color: rgba(255, 255, 255, 0.9);
   border-color: ${gray30};
-  border-top: 1px solid rgba(233,232,232, 0);
+  border-top: 1px solid rgba(233, 232, 232, 0);
   padding-left: 35px;
   color: ${colorBlack};
   cursor: auto;
   background-size: 20px;
-  z-index: 30000
+  z-index: 30000;
 `
 
-const searchFocus = ({focus}) => {
-  if (focus){
+const searchFocus = ({ focus }) => {
+  if (focus) {
     return focusCss
   }
 }
 
 export const Search = styled.input`
-  background: url(https://styleguide.staging.artsmia.org/src/images/search.svg) no-repeat 8px center;
+  background: url(https://styleguide.staging.artsmia.org/src/images/search.svg)
+    no-repeat 8px center;
   -webkit-appearance: textfield;
   -webkit-box-sizing: content-box;
-  ${light}
-  font-size: 100%;
+  ${light} font-size: 100%;
   background-size: 26px;
   border: 0;
-  border-top: 1px solid rgba(233,232,232, 0);
-  border-bottom: solid 1px rgba(233,232,232, 0);
-  padding: .6em .4em .5em .5em;
+  border-top: 1px solid rgba(233, 232, 232, 0);
+  border-bottom: solid 1px rgba(233, 232, 232, 0);
+  padding: 0.6em 0.4em 0.5em 0.5em;
   /* border-radius: 10em; */
-  transition: all .4s ease-in-out;
+  transition: all 0.4s ease-in-out;
   color: transparent;
   width: 26px;
   cursor: pointer;
@@ -138,17 +130,14 @@ export const Search = styled.input`
   }
 
   &:focus {
-    ${focusCss}
+    ${focusCss};
   }
 
   &:focus:hover {
     opacity: 1;
-
   }
 
-  ${searchFocus}
-
-  @media (max-width: 1200px) {
+  ${searchFocus} @media (max-width: 1200px) {
     right: 40px;
     top: -2px;
     background-size: 18px;
@@ -160,18 +149,17 @@ export const Search = styled.input`
   }
 
   @media (max-width: 360px) {
-    margin-top: .5em;
+    margin-top: 0.5em;
     display: block;
   }
-
 `
-Search.displayName = "Search"
+Search.displayName = 'Search'
 Search.propTypes = {
-  focus: PropTypes.bool,
+  focus: PropTypes.bool
 }
 Search.defaultProps = {
   focus: true,
-  type: 'search',
+  type: 'search'
 }
 
 export const TextInput = props => (
@@ -181,20 +169,12 @@ export const TextInput = props => (
     justifyContent={'flex-start'}
     mb={2}
   >
-    <Label
-      name={props.name}
-    >
-      {props.label}
-    </Label>
-    <Input
-      type={'text'}
-      {...props}
-    />
+    <Label name={props.name}>{props.label}</Label>
+    <Input type={'text'} {...props} />
   </Flex>
 )
 
-TextInput.displayName = "TextInput"
-
+TextInput.displayName = 'TextInput'
 
 export const TextareaInput = props => (
   <Flex
@@ -203,17 +183,11 @@ export const TextareaInput = props => (
     justifyContent={'flex-start'}
     mb={2}
   >
-    <Label
-      name={props.name}
-    >
-      {props.label}
-    </Label>
-    <Textarea
-      {...props}
-    />
+    <Label name={props.name}>{props.label}</Label>
+    <Textarea {...props} />
   </Flex>
 )
-TextareaInput.displayName = "TextareaInput"
+TextareaInput.displayName = 'TextareaInput'
 // TextareaInput.propTypes = {
 //   label: PropTypes.string,
 //   minHeight: PropTypes.string,
@@ -239,23 +213,15 @@ export const CheckboxInput = props => (
     justifyContent={'flex-start'}
     mb={2}
   >
-    <Checkbox
-      type={'checkbox'}
-      {...props}
-    />
-    <Label
-      name={props.name}
-    >
-      {props.label}
-    </Label>
-
+    <Checkbox type={'checkbox'} {...props} />
+    <Label name={props.name}>{props.label}</Label>
   </Flex>
 )
 
-CheckboxInput.displayName = "CheckboxInput"
-CheckboxInput.displayName = "CheckboxInput"
+CheckboxInput.displayName = 'CheckboxInput'
+CheckboxInput.displayName = 'CheckboxInput'
 CheckboxInput.defaultProps = {
-  label: '',
+  label: ''
 }
 
 export const Select = styled.select`
@@ -263,16 +229,10 @@ export const Select = styled.select`
   font-size: 1.1rem;
 `
 
-Select.displayName = "Select"
+Select.displayName = 'Select'
 
-
-export const Option = styled.option`
-
-`
-Option.displayName = "Option"
-
-
-
+export const Option = styled.option``
+Option.displayName = 'Option'
 
 const tiedye = keyframes`
   0% {
@@ -304,8 +264,6 @@ const ColorBox = styled.div`
   align-items: center;
 `
 
-
-
 const TitleInput = styled.input`
   font-size: 1.5rem;
   ${bold};
@@ -323,24 +281,16 @@ const TitleLabel = styled.label`
   display: none;
 `
 
-export const Title = (props) => (
-  <Flex
-    mb={3}
-    flexDirection={'column'}
-  >
-    <TitleLabel
-      name={props.name}
-    >
-      {props.label}
-    </TitleLabel>
+export const Title = props => (
+  <Flex mb={3} flexDirection={'column'}>
+    <TitleLabel name={props.name}>{props.label}</TitleLabel>
     <TitleInput
       name={props.name}
       value={props.value}
       onChange={props.onChange}
-      placeholder={"Add a title here."}
+      placeholder={'Add a title here.'}
       {...props}
     />
-
   </Flex>
 )
 
@@ -359,30 +309,20 @@ const DescriptionLabel = styled.label`
   display: none;
 `
 
-export const Description = (props) => (
-  <Flex
-    mb={3}
-    flexDirection={'column'}
-  >
-    <DescriptionLabel
-      name={props.name}
-    >
-      {props.label}
-    </DescriptionLabel>
+export const Description = props => (
+  <Flex mb={3} flexDirection={'column'}>
+    <DescriptionLabel name={props.name}>{props.label}</DescriptionLabel>
     <DescriptionTextarea
       name={props.name}
       value={props.value}
       onChange={props.onChange}
-      placeholder={"Enter a description here."}
+      placeholder={'Enter a description here.'}
       {...props}
     />
   </Flex>
 )
 
-
-
 class MultiSelect extends Component {
-
   static propTypes = {
     selections: PropTypes.arrayOf(
       PropTypes.shape({
@@ -407,162 +347,122 @@ class MultiSelect extends Component {
     showDrop: false
   }
 
-  render(){
-
+  render() {
     const {
-      props: {
-        label,
-        options,
-        selections
-      },
-      state: {
-        search,
-        showDrop
-      },
+      props: { label, options, selections },
+      state: { search, showDrop },
       handleSearchChange,
       handleUncheck,
       handleCheck
     } = this
 
-
-
-
-    let filteredOptions = options.slice().filter(
-      option => !selections.find(
-        selection => selection.value === option.value
+    let filteredOptions = options
+      .slice()
+      .filter(
+        option =>
+          !selections.find(selection => selection.value === option.value)
       )
-    )
 
-    filteredOptions = filteredOptions.filter(
-      option => {
-        let regexp = new RegExp(search, 'gi')
-        if (
-          option.name.match(regexp)
-        ) {
-          return true
-        }
-        return false
+    filteredOptions = filteredOptions.filter(option => {
+      let regexp = new RegExp(search, 'gi')
+      if (option.name.match(regexp)) {
+        return true
       }
-    )
+      return false
+    })
 
     return (
-      <Flex
-        flexWrap={'wrap'}
-        w={1}
-        alignItems={'flex-start'}
-        my={2}
-      >
-        <ChipContainer
-          flexWrap={'wrap'}
-        >
-          {selections.map( ({name, value}) => (
+      <Flex flexWrap={'wrap'} w={1} alignItems={'flex-start'} my={2}>
+        <ChipContainer flexWrap={'wrap'}>
+          {selections.map(({ name, value }) => (
             <Chip
               key={value}
               alignItems={'center'}
               justifyContent={'flex-start'}
               m={1}
             >
-              <ChipText
-                mx={2}
-              >
-                {name}
-              </ChipText>
+              <ChipText mx={2}>{name}</ChipText>
               <XBox
                 justifyContent={'center'}
                 alignItems={'center'}
-                onClick={()=>handleUncheck(value)}
+                onClick={() => handleUncheck(value)}
                 mx={2}
               >
                 x
               </XBox>
-
             </Chip>
           ))}
-          <SearchAndDrop
-            mx={2}
-          >
+          <SearchAndDrop mx={2}>
             <MultiSearch
               name={'search'}
               value={search}
               onChange={handleSearchChange}
               placeholder={'Search'}
-              onFocus={()=>this.setState({showDrop: true})}
-              onBlur={()=>{
-                setTimeout(
-                  () => {this.setState({showDrop: false})},
-                  200
-                )
-            }}
+              onFocus={() => this.setState({ showDrop: true })}
+              onBlur={() => {
+                setTimeout(() => {
+                  this.setState({ showDrop: false })
+                }, 200)
+              }}
             />
-            <DropDown
-              show={showDrop}
-            >
-              {filteredOptions.map( ({name, value}) => (
+            <DropDown show={showDrop}>
+              {filteredOptions.map(({ name, value }) => (
                 <DropBox
                   w={1}
                   key={value}
-                  onClick={()=>handleCheck(value)}
+                  onClick={() => handleCheck(value)}
                   px={2}
                   py={1}
                 >
                   {name}
-
                 </DropBox>
               ))}
-
             </DropDown>
           </SearchAndDrop>
         </ChipContainer>
-
       </Flex>
     )
   }
 
-  handleSearchChange = ({target: {value, name}}) => {
+  handleSearchChange = ({ target: { value, name } }) => {
     this.setState(
-      ()=>({[name]: value}),
-      ()=>{
+      () => ({ [name]: value }),
+      () => {
         this.props.onSearchChange(this.state.search)
       }
     )
-
   }
 
-  handleCheck = (value) => {
+  handleCheck = value => {
     this.props.onAdd(value)
   }
 
-  handleUncheck = (value) => {
+  handleUncheck = value => {
     this.props.onRemove(value)
   }
-
 }
 
 const Chip = styled(Flex)`
   border-radius: 15px;
-  border: 2px solid ${({theme}) => theme.color.green};
+  border: 2px solid ${({ theme }) => theme.color.green};
   padding: 5px;
   height: 35px;
-  color: ${({theme}) => theme.color.black};
-  background-color: ${({theme}) => theme.color.white};
+  color: ${({ theme }) => theme.color.black};
+  background-color: ${({ theme }) => theme.color.white};
   font-size: 15px;
   &:focus {
     background-color: red;
   }
 `
 
-const ChipContainer = styled(Flex)`
-
-`
+const ChipContainer = styled(Flex)``
 
 const ChipText = styled.span`
   white-space: nowrap;
 `
 
 const SearchAndDrop = styled(Flex)`
-
   position: relative;
-
 `
 
 const MultiSearch = styled.input`
@@ -583,32 +483,32 @@ const DropDown = styled.div`
   position: absolute;
   bottom: 0;
   transform: translateY(98%);
-  transition: all .2s;
+  transition: all 0.2s;
   background-color: white;
   border: 1px solid grey;
   z-index: 500;
   max-height: 400px;
   overflow-y: scroll;
-  ${({show}) => show ? `
+  ${({ show }) =>
+    show
+      ? `
     opacity: 1;
     display: flex;
 
-  `: undefined}
+  `
+      : undefined};
 `
-
 
 const XBox = styled(Flex)`
   color: black;
-  font-family: ${({theme}) => theme.font.bold};
+  font-family: ${({ theme }) => theme.font.bold};
   cursor: pointer;
 `
 
 const DropBox = styled(Flex)`
   &:hover {
-    background-color: ${({theme}) => theme.color.gray30};
+    background-color: ${({ theme }) => theme.color.gray30};
   }
 `
 
-export {
-  MultiSelect
-}
+export { MultiSelect }

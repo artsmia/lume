@@ -1,4 +1,4 @@
-import {compose, graphql} from 'react-apollo'
+import { compose, graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
 export const tipsQuery = gql`
@@ -15,7 +15,7 @@ export const tipsQuery = gql`
 `
 
 const localConfig = {
-  props({ownProps, data}){
+  props({ ownProps, data }) {
     return {
       ...ownProps,
       ...data

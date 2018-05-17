@@ -15,37 +15,25 @@ import {
   Option
 } from '../forms'
 
-
 const labelProps = () => ({
   bold: boolean('bold', false),
   light: boolean('light', false),
   uppercase: boolean('uppercase', false),
-  lowercase: boolean('lowercase', false),
+  lowercase: boolean('lowercase', false)
 })
-
 
 storiesOf('Form', module)
   .add(
     'Label',
     withInfo(`
       something here
-    `)(() => (
-      <Label
-        {...labelProps()}
-      >
-        {text('label','Some Input')}
-      </Label>
-    ))
+    `)(() => <Label {...labelProps()}>{text('label', 'Some Input')}</Label>)
   )
   .add(
     'Search',
     withInfo(`
       something here
-    `)(() => (
-      <Search
-        focus={boolean('focus', true)}
-      />
-    ))
+    `)(() => <Search focus={boolean('focus', true)} />)
   )
   .add(
     'TextInput',
@@ -53,8 +41,8 @@ storiesOf('Form', module)
       something here
     `)(() => (
       <TextInput
-        label={text('label','Email')}
-        placeholder={text('placeholder','Email Address')}
+        label={text('label', 'Email')}
+        placeholder={text('placeholder', 'Email Address')}
       />
     ))
   )
@@ -64,11 +52,10 @@ storiesOf('Form', module)
       something here
     `)(() => (
       <TextareaInput
-        label={text('label','About You')}
-        placeholder={text('placeholder','Tell us about yourself ')}
-        minHeight={text('minHeight','')}
-        width={text('width','')}
-
+        label={text('label', 'About You')}
+        placeholder={text('placeholder', 'Tell us about yourself ')}
+        minHeight={text('minHeight', '')}
+        width={text('width', '')}
       />
     ))
   )
@@ -78,13 +65,10 @@ storiesOf('Form', module)
       something here
     `)(() => (
       <Form>
+        <CheckboxInput label={'Hello'} placeholder={text('label', 'Vegan')} />
         <CheckboxInput
-          label={"Hello"}
-          placeholder={text('label','Vegan')}
-        />
-        <CheckboxInput
-          label={"Hello"}
-          placeholder={text('label','Gluten Free')}
+          label={'Hello'}
+          placeholder={text('label', 'Gluten Free')}
         />
       </Form>
     ))
@@ -95,21 +79,10 @@ storiesOf('Form', module)
       something here
     `)(() => (
       <Form>
-        <Label>
-          {text('label','Select with Options')}
-        </Label>
-        <Select
-        >
-          <Option
-            value={1}
-          >
-            {text('Option 1','One')}
-          </Option>
-          <Option
-            value={2}
-          >
-            {text('Option 1','Two')}
-          </Option>
+        <Label>{text('label', 'Select with Options')}</Label>
+        <Select>
+          <Option value={1}>{text('Option 1', 'One')}</Option>
+          <Option value={2}>{text('Option 1', 'Two')}</Option>
         </Select>
       </Form>
     ))

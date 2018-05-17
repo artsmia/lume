@@ -1,5 +1,5 @@
-const passport = require("passport")
-const Auth0Strategy = require("passport-auth0")
+const passport = require('passport')
+const Auth0Strategy = require('passport-auth0')
 
 const strategy = new Auth0Strategy(
   {

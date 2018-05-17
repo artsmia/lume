@@ -1,13 +1,9 @@
 import Organization from '../../db/models/Organization'
-import {Op} from 'sequelize'
+import { Op } from 'sequelize'
 
-export default async function(src, args, ctx){
+export default async function(src, args, ctx) {
   try {
-
-    const {
-      id,
-      subdomain
-    } = args.organization
+    const { id, subdomain } = args.organization
 
     return await Organization.findOne({
       where: {
@@ -17,11 +13,10 @@ export default async function(src, args, ctx){
           },
           {
             subdomain
-          },
+          }
         ]
       }
     })
-
   } catch (ex) {
     console.error(ex)
   }

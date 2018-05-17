@@ -18,5 +18,5 @@ export {
   Obj,
   Story,
   Organization,
-  User_Organization,
+  User_Organization
 }

@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import { H2 } from "../../mia-ui/text"
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import { H2 } from '../../mia-ui/text'
 import {
   Form,
   Label,
@@ -8,12 +8,12 @@ import {
   Select,
   Option,
   MultiSelect
-} from "../../mia-ui/forms"
-import { Button } from "../../mia-ui/buttons"
-import router from "next/router"
-import { Page, Card } from "../../mia-ui/layout"
-import Head from "../../shared/head"
-import { Flex, Box } from "grid-styled"
+} from '../../mia-ui/forms'
+import { Button } from '../../mia-ui/buttons'
+import router from 'next/router'
+import { Page, Card } from '../../mia-ui/layout'
+import Head from '../../shared/head'
+import { Flex, Box } from 'grid-styled'
 
 export default class OrgManager extends Component {
   static defaultProps = {
@@ -22,8 +22,8 @@ export default class OrgManager extends Component {
 
   state = {
     organizations: [],
-    name: "",
-    subdomain: "",
+    name: '',
+    subdomain: '',
     subdomainValid: false,
     subdomainInvalid: false
   }
@@ -59,9 +59,9 @@ export default class OrgManager extends Component {
 
     return (
       <Page>
-        <Head title={"Join or Create an Organization"} />
+        <Head title={'Join or Create an Organization'} />
 
-        <Card m={2} id={"join-org"}>
+        <Card m={2} id={'join-org'}>
           <H2>Join an Organization</H2>
 
           <Form>
@@ -80,29 +80,29 @@ export default class OrgManager extends Component {
             Join
           </Button>
         </Card>
-        <Card m={2} id={"create-org"}>
+        <Card m={2} id={'create-org'}>
           <H2>Create a New Organization</H2>
           <Form>
             <Label>Organization Name</Label>
             <Input
-              name={"name"}
-              type={"text"}
+              name={'name'}
+              type={'text'}
               onChange={change}
               valid={name}
               value={name}
             />
-            <Flex id={"subdomain"} w={1}>
+            <Flex id={'subdomain'} w={1}>
               <Flex w={1}>
                 <UrlSpan>https://lume.space/</UrlSpan>
                 <Input
-                  name={"subdomain"}
-                  type={"text"}
+                  name={'subdomain'}
+                  type={'text'}
                   onChange={handleSubdomainChange}
                   valid={subdomainValid}
                   invalid={subdomainInvalid}
                   errorMsg={subdomainErrorMsg}
                   value={subdomain}
-                  paddingLeft={"160px"}
+                  paddingLeft={'160px'}
                 />
               </Flex>
             </Flex>
@@ -122,13 +122,13 @@ export default class OrgManager extends Component {
 
   handleSubdomainChange = ({ target: { name, value } }) => {
     let invalidSubdomains = [
-      "login",
-      "logout",
-      "callback",
-      "error",
-      "auth",
-      "organizations",
-      "cms"
+      'login',
+      'logout',
+      'callback',
+      'error',
+      'auth',
+      'organizations',
+      'cms'
     ]
 
     this.props.organizations.forEach(org =>
@@ -138,31 +138,31 @@ export default class OrgManager extends Component {
     let subdomainValid = true
     let subdomainInvalid = false
 
-    let subdomainErrorMsg = ""
+    let subdomainErrorMsg = ''
 
     let newValue = value
 
     newValue = newValue
       .trim()
-      .replace(/[^a-zA-Z0-9]+/g, "-")
+      .replace(/[^a-zA-Z0-9]+/g, '-')
       .toLowerCase()
 
     if (newValue.length > 20) {
       subdomainValid = false
       subdomainInvalid = true
-      subdomainErrorMsg = "Subdomain must be less than 20 characters."
+      subdomainErrorMsg = 'Subdomain must be less than 20 characters.'
     }
 
     if (newValue.length < 5) {
       subdomainValid = false
       subdomainInvalid = true
-      subdomainErrorMsg = "Subdomain must be at least 5 characters."
+      subdomainErrorMsg = 'Subdomain must be at least 5 characters.'
     }
 
     if (invalidSubdomains.includes(newValue)) {
       subdomainValid = false
       subdomainInvalid = true
-      subdomainErrorMsg = "That subdomain is already taken."
+      subdomainErrorMsg = 'That subdomain is already taken.'
     }
 
     this.setState({
@@ -178,7 +178,7 @@ export default class OrgManager extends Component {
   }
 
   handleRemove = organizationId => {
-    this.setState({ organizationId: "" })
+    this.setState({ organizationId: '' })
   }
 
   joinOrg = async () => {
@@ -197,13 +197,13 @@ export default class OrgManager extends Component {
         emailDomain
       } = this.props.organizations.find(org => org.id === organizationId)
 
-      let role = "pending"
+      let role = 'pending'
 
       if (
         !newUsersRequireApproval ||
-        user.email.split("@")[1] === emailDomain
+        user.email.split('@')[1] === emailDomain
       ) {
-        role = "contributor"
+        role = 'contributor'
       }
 
       const {
@@ -220,10 +220,10 @@ export default class OrgManager extends Component {
 
       let organization = organizations.find(org => org.id === organizationId)
 
-      if (organization.role && organization.role !== "pending") {
+      if (organization.role && organization.role !== 'pending') {
         router.push(
           {
-            pathname: "/cms",
+            pathname: '/cms',
             query: {
               subdomain: organization.subdomain
             }
@@ -231,8 +231,8 @@ export default class OrgManager extends Component {
           `/${organization.subdomain}`
         )
       } else {
-        window.alert("Your request was sent")
-        router.push("/")
+        window.alert('Your request was sent')
+        router.push('/')
       }
     } catch (ex) {
       console.error(ex)
@@ -272,7 +272,7 @@ export default class OrgManager extends Component {
       if (organization) {
         router.push(
           {
-            pathname: "/cms",
+            pathname: '/cms',
             query: {
               subdomain: organization.subdomain
             }

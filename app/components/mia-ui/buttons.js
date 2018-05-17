@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import {
   colorList,
@@ -9,34 +9,28 @@ import {
   gray30,
   gray
 } from './colors'
-import {
-  bold as fontBold
-} from './fonts'
+import { bold as fontBold } from './fonts'
 import Link from 'next/link'
 
-
-const display = (props) => {
+const display = props => {
   switch (props.display) {
     case 'inline-block': {
-
       return css`
         display: inline-block;
       `
     }
     case 'block': {
-
       return css`
         display: block;
       `
     }
     default: {
-
       break
     }
   }
 }
 
-const color = ({color, theme}) => {
+const color = ({ color, theme }) => {
   switch (color) {
     case 'transparent':
     case 'white': {
@@ -54,7 +48,7 @@ const color = ({color, theme}) => {
   }
 }
 
-const round = ({round}) => {
+const round = ({ round }) => {
   if (round) {
     return css`
       height: 50px;
@@ -64,12 +58,11 @@ const round = ({round}) => {
       justify-content: center;
       align-items: center;
       padding: 0;
-
     `
   }
 }
 
-const roundSize = ({size}) => {
+const roundSize = ({ size }) => {
   if (round && size) {
     return css`
       height: ${size};
@@ -78,7 +71,6 @@ const roundSize = ({size}) => {
     `
   }
 }
-
 
 const buttonBaseStyles = css`
   border: none;
@@ -115,7 +107,7 @@ const buttonBaseProps = {
   /** 'dark', 'light', 'super-light' */
   color: PropTypes.oneOf(['', ...colorList]),
   /** Boolean makes the button round */
-  round: PropTypes.bool,
+  round: PropTypes.bool
 }
 
 const buttonBaseDefaultProps = {
@@ -123,47 +115,29 @@ const buttonBaseDefaultProps = {
   display: 'inline-block',
   border: '',
   color: 'black'
-
 }
 
 const StyledButton = styled.button`
-  ${buttonBaseStyles}
+  ${buttonBaseStyles};
 `
 
 const AButton = StyledButton.withComponent('a')
 
-export const Button = (props) => {
+export const Button = props => {
   if (props.a) {
-    return (
-      <AButton
-        {...props}
-      />
-    )
+    return <AButton {...props} />
   } else {
-    return (
-      <StyledButton
-        {...props}
-      />
-    )
+    return <StyledButton {...props} />
   }
 }
 
-Button.displayName = "Button"
+Button.displayName = 'Button'
 Button.propTypes = buttonBaseProps
 Button.defaultProps = buttonBaseDefaultProps
 
-
-export const NavButton = (props) => (
-  <Link
-    href={props.href}
-    as={props.as}
-  >
-    <Button
-      a
-      round
-      size={props.size}
-      href={props.as}
-    >
+export const NavButton = props => (
+  <Link href={props.href} as={props.as}>
+    <Button a round size={props.size} href={props.as}>
       {props.children}
     </Button>
   </Link>

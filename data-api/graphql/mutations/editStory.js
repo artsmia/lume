@@ -1,15 +1,10 @@
-import {
-  GraphQLID,
-  GraphQLString,
-  GraphQLNonNull,
-  GraphQLList
-} from 'graphql'
-import {TemplateEnum, VisibilityEnum} from '../types/enums'
+import { GraphQLID, GraphQLString, GraphQLNonNull, GraphQLList } from 'graphql'
+import { TemplateEnum, VisibilityEnum } from '../types/enums'
 import storyType from '../types/story'
 import resolve from '../resolvers/editStory'
 
 const editStory = {
-  name: "editStory",
+  name: 'editStory',
   type: storyType,
   args: {
     id: {
@@ -28,7 +23,7 @@ const editStory = {
       type: GraphQLID
     },
     template: {
-      type: TemplateEnum,
+      type: TemplateEnum
     },
     visibility: {
       type: VisibilityEnum

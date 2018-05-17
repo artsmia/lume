@@ -1,10 +1,10 @@
-import React, { Component } from "react"
-import fetch from "isomorphic-unfetch"
+import React, { Component } from 'react'
+import fetch from 'isomorphic-unfetch'
 
 export default function imgSrcProvider(WrappedComponent) {
   return class ImgSrcProvider extends Component {
     state = {
-      src: "/static/placeholder0.png"
+      src: '/static/placeholder0.png'
     }
 
     componentDidMount() {
@@ -17,7 +17,7 @@ export default function imgSrcProvider(WrappedComponent) {
 
     generateSrcFromProps = props => {
       try {
-        let src = "/static/placeholder0.png"
+        let src = '/static/placeholder0.png'
         if (props.image && props.image.organization) {
           const {
             image,
@@ -30,16 +30,16 @@ export default function imgSrcProvider(WrappedComponent) {
             quality
           } = props
 
-          let qual = quality || "m"
+          let qual = quality || 'm'
 
           switch (true) {
-            case subdomain === "local": {
+            case subdomain === 'local': {
               src = `${process.env.LOCAL_TILE_URL}/static/${
                 image.id
               }/${qual}.jpeg`
               break
             }
-            case host === "mia": {
+            case host === 'mia': {
               src = `https://cdn.dx.artsmia.org/thumbs/tn_${image.localId}.jpg`
               break
             }

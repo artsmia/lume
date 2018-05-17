@@ -1,4 +1,4 @@
-import styled, {css} from 'styled-components'
+import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import {
   regular as fontRegular,
@@ -7,62 +7,57 @@ import {
   black as fontBlack
 } from './fonts'
 
-import {
-  primaryTextColor,
-  gray60
-} from './colors'
+import { primaryTextColor, gray60 } from './colors'
 
-const bold = (props) => {
-  if (props.bold){
+const bold = props => {
+  if (props.bold) {
     return css`
-      ${fontBlack}
-      letter-spacing: -.025em;
+      ${fontBlack} letter-spacing: -.025em;
     `
   }
 }
-const light = (props) => {
-  if (props.light){
+const light = props => {
+  if (props.light) {
     return css`
-      ${fontLight}
-      letter-spacing: -0.01em;
+      ${fontLight} letter-spacing: -0.01em;
     `
   }
 }
-const uppercase = (props) => {
-  if (props.uppercase){
+const uppercase = props => {
+  if (props.uppercase) {
     return css`
       text-transform: uppercase;
     `
   }
 }
 
-const lowercase = (props) => {
-  if (props.lowercase){
+const lowercase = props => {
+  if (props.lowercase) {
     return css`
       text-transform: lowercase;
     `
   }
 }
 
-const align = (props) => {
+const align = props => {
   switch (props.align) {
-    case "center": {
+    case 'center': {
       return css`
         text-align: center;
       `
     }
-    case "right": {
+    case 'right': {
       return css`
         text-align: right;
       `
     }
-    case "justify": {
+    case 'justify': {
       return css`
         text-align: justify;
       `
     }
     default:
-    case "left": {
+    case 'left': {
       return css`
         text-align: left;
       `
@@ -70,13 +65,11 @@ const align = (props) => {
   }
 }
 
-const color = ({theme, color}) => {
+const color = ({ theme, color }) => {
   return css`
     color: ${theme.color[color]};
   `
 }
-
-
 
 export const TextBase = css`
   ${uppercase}
@@ -89,11 +82,9 @@ export const TextBase = css`
 
 const HBase = css`
   line-height: 1;
-  ${fontBlack}
-  letter-spacing: -.025em;
+  ${fontBlack} letter-spacing: -.025em;
   color: ${primaryTextColor};
-  ${TextBase}
-  margin: 0;
+  ${TextBase} margin: 0;
 `
 
 const basePropTypes = {
@@ -108,7 +99,7 @@ const basePropTypes = {
   /** Boolean to align the text */
   align: PropTypes.oneOf(['left', 'right', 'center', 'justify']),
   /** String to change color of letters */
-  color: PropTypes.string,
+  color: PropTypes.string
 }
 
 const baseDefaultProps = {
@@ -121,56 +112,49 @@ const baseDefaultProps = {
 
 export const Span = styled.span`
   font-size: 1.1rem;
-  ${fontLight }
-  ${TextBase}
+  ${fontLight} ${TextBase};
 `
 
-Span.displayName = "Span"
+Span.displayName = 'Span'
 Span.propTypes = basePropTypes
 Span.defaultProps = baseDefaultProps
 
-
 export const H1 = styled.h1`
-  ${HBase}
-  font-size: 3.125rem;
+  ${HBase} font-size: 3.125rem;
 `
-H1.displayName = "H1"
+H1.displayName = 'H1'
 H1.propTypes = basePropTypes
 H1.defaultProps = baseDefaultProps
 
 export const H2 = styled.h2`
-  ${HBase}
-  font-size: 1.563rem;
+  ${HBase} font-size: 1.563rem;
 `
 
-H2.displayName = "H2"
+H2.displayName = 'H2'
 H2.propTypes = basePropTypes
 H2.defaultProps = baseDefaultProps
 
 export const H3 = styled.h3`
-  ${HBase}
-  font-size: 1.031rem;
+  ${HBase} font-size: 1.031rem;
   line-height: 1.5;
 `
 
-H3.displayName = "H3"
+H3.displayName = 'H3'
 H3.propTypes = basePropTypes
 H3.defaultProps = baseDefaultProps
 
 export const H4 = styled.h4`
-  ${HBase}
-  font-size: 0.8rem;
+  ${HBase} font-size: 0.8rem;
 `
 
-H4.displayName = "H4"
+H4.displayName = 'H4'
 H4.propTypes = basePropTypes
 H4.defaultProps = baseDefaultProps
 
-export const H5 = styled.h5 `
-  ${HBase}
-  font-size: 0.8rem;
+export const H5 = styled.h5`
+  ${HBase} font-size: 0.8rem;
 `
-H5.displayName = "H5"
+H5.displayName = 'H5'
 H5.propTypes = basePropTypes
 H5.defaultProps = baseDefaultProps
 
@@ -178,24 +162,21 @@ export const P = styled.p`
   font-size: 1.031rem;
   line-height: 1.5;
   letter-spacing: -0.01em;
-  ${fontLight}
-  ${TextBase}
+  ${fontLight} ${TextBase};
 `
 
-P.displayName = "P"
+P.displayName = 'P'
 P.propTypes = basePropTypes
 P.defaultProps = baseDefaultProps
 
 export const Time = styled.time`
   font-size: 0.8rem;
-  ${fontBold}
-  margin-bottom: 1em;
+  ${fontBold} margin-bottom: 1em;
   display: inline-block;
-  ${TextBase}
-
+  ${TextBase};
 `
 
-Time.displayName = "Time"
+Time.displayName = 'Time'
 Time.propTypes = basePropTypes
 Time.defaultProps = baseDefaultProps
 

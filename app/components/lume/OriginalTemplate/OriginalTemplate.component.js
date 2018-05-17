@@ -1,28 +1,28 @@
-import React, { Component } from "react"
-import styled, { css } from "styled-components"
-import { TabContainer, TabHeader, Tab, TabBody } from "../../mia-ui/tabs"
-import Tombstone from "./Tombstone"
-import Zoomer, { StoryZoomer } from "../../shared/Zoomer"
-import ContentDisplaySwitcher from "../../contents/DisplaySwitcher"
-import { Button, NavButton } from "../../mia-ui/buttons"
-import { Icon } from "../../mia-ui/icons"
-import Link from "next/link"
-import Markdown from "react-markdown"
-import AdditionalImages from "./AdditionalImages"
-import AdditionalMedias from "./AdditionalMedias"
+import React, { Component } from 'react'
+import styled, { css } from 'styled-components'
+import { TabContainer, TabHeader, Tab, TabBody } from '../../mia-ui/tabs'
+import Tombstone from './Tombstone'
+import Zoomer, { StoryZoomer } from '../../shared/Zoomer'
+import ContentDisplaySwitcher from '../../contents/DisplaySwitcher'
+import { Button, NavButton } from '../../mia-ui/buttons'
+import { Icon } from '../../mia-ui/icons'
+import Link from 'next/link'
+import Markdown from 'react-markdown'
+import AdditionalImages from './AdditionalImages'
+import AdditionalMedias from './AdditionalMedias'
 
-import { Flex, Box } from "grid-styled"
-import { Expander } from "../../mia-ui/expanders"
-import { H3 } from "../../mia-ui/text"
-import Head from "../../shared/head"
-import Joyride from "react-joyride"
+import { Flex, Box } from 'grid-styled'
+import { Expander } from '../../mia-ui/expanders'
+import { H3 } from '../../mia-ui/text'
+import Head from '../../shared/head'
+import Joyride from 'react-joyride'
 
 export default class OriginalTemplate extends Component {
   constructor(props) {
     super(props)
 
     let selectedContent = {
-      id: ""
+      id: ''
     }
 
     if (props.router.query.state1 && props.story.contents) {
@@ -31,7 +31,7 @@ export default class OriginalTemplate extends Component {
       )
     } else {
       selectedContent =
-        props.story.contents.find(content => content.type === "obj") ||
+        props.story.contents.find(content => content.type === 'obj') ||
         props.story.contents[0]
     }
 
@@ -39,11 +39,11 @@ export default class OriginalTemplate extends Component {
       drawer: true,
       ...this.state,
       selectedContent,
-      selectedTab: this.props.router.query.state0 || "about",
+      selectedTab: this.props.router.query.state0 || 'about',
       grandTourIndex: 0,
       grandTourSteps: [
         {
-          target: "body",
+          target: 'body',
           content: (
             <div>
               <p>
@@ -61,11 +61,11 @@ export default class OriginalTemplate extends Component {
               </Button>
             </div>
           ),
-          placement: "center",
+          placement: 'center',
           disableBeacon: true
         },
         {
-          target: "#tombstone",
+          target: '#tombstone',
           content: (
             <div>
               <p>
@@ -83,11 +83,11 @@ export default class OriginalTemplate extends Component {
               </Button>
             </div>
           ),
-          placement: "right",
+          placement: 'right',
           disableBeacon: true
         },
         {
-          target: "#about",
+          target: '#about',
           content: (
             <div>
               <p>Additional information about the Object appears here.</p>
@@ -102,11 +102,11 @@ export default class OriginalTemplate extends Component {
               </Button>
             </div>
           ),
-          placement: "right",
+          placement: 'right',
           disableBeacon: true
         },
         {
-          target: "#tab-header",
+          target: '#tab-header',
           content: (
             <div>
               <p>
@@ -125,16 +125,16 @@ export default class OriginalTemplate extends Component {
               </Button>
             </div>
           ),
-          placement: "right",
+          placement: 'right',
           disableBeacon: true
         },
         {
-          target: "#details",
+          target: '#details',
           content: (
             <div>
               <p>
                 Object stories feature a list of details that explore some of
-                the nuances of the object.{" "}
+                the nuances of the object.{' '}
               </p>
               <Button
                 onClick={() => {
@@ -150,11 +150,11 @@ export default class OriginalTemplate extends Component {
               </Button>
             </div>
           ),
-          placement: "right",
+          placement: 'right',
           disableBeacon: true
         },
         {
-          target: "#detail-4",
+          target: '#detail-4',
           content: (
             <div>
               <p>
@@ -173,11 +173,11 @@ export default class OriginalTemplate extends Component {
               </Button>
             </div>
           ),
-          placement: "right",
+          placement: 'right',
           disableBeacon: true
         },
         {
-          target: "#feature-container",
+          target: '#feature-container',
           content: (
             <div>
               <p>
@@ -196,11 +196,11 @@ export default class OriginalTemplate extends Component {
               </Button>
             </div>
           ),
-          placement: "right",
+          placement: 'right',
           disableBeacon: true
         },
         {
-          target: "#more",
+          target: '#more',
           content: (
             <div>
               <p>
@@ -212,14 +212,14 @@ export default class OriginalTemplate extends Component {
                 onClick={() => {
                   this.props.router.push(
                     {
-                      pathname: "/"
+                      pathname: '/'
                       // pathname: '/lume/story',
                       // query: {
                       //   subdomain: 'mia',
                       //   storySlug: ''
                       // }
                     },
-                    "/"
+                    '/'
                   )
                 }}
               >
@@ -227,7 +227,7 @@ export default class OriginalTemplate extends Component {
               </Button>
             </div>
           ),
-          placement: "right",
+          placement: 'right',
           disableBeacon: true
         }
       ]
@@ -257,10 +257,10 @@ export default class OriginalTemplate extends Component {
       selectTabMore
     } = this
 
-    let objContent = story.contents.find(content => content.type === "obj")
+    let objContent = story.contents.find(content => content.type === 'obj')
 
     let firstDetailContent = story.contents.find(
-      content => content.type === "detail"
+      content => content.type === 'detail'
     )
 
     let firstContent = objContent || story.contents[0]
@@ -291,34 +291,34 @@ export default class OriginalTemplate extends Component {
         <SideContainer
           w={[3 / 4, 1 / 2, 1 / 3]}
           p={1}
-          justifyContent={"flex-start"}
-          alignItems={"flex-start"}
-          flexDirection={"column"}
+          justifyContent={'flex-start'}
+          alignItems={'flex-start'}
+          flexDirection={'column'}
           open={drawer}
         >
-          {this.props.router.pathname === "/lume/story" ? (
+          {this.props.router.pathname === '/lume/story' ? (
             <Flex w={1}>
               <Button
                 round
-                size={"40px"}
+                size={'40px'}
                 onClick={() => {
                   this.props.router.back()
                 }}
               >
-                <Icon color={"white"} icon={"arrow_back"} />
+                <Icon color={'white'} icon={'arrow_back'} />
               </Button>
               <NavButton
                 href={{
-                  pathname: "/lume",
+                  pathname: '/lume',
                   query: {
                     subdomain
                   }
                 }}
-                size={"40px"}
+                size={'40px'}
                 as={`/${subdomain}`}
                 round
               >
-                <Icon color={"white"} icon={"home"} />
+                <Icon color={'white'} icon={'home'} />
               </NavButton>
             </Flex>
           ) : null}
@@ -331,28 +331,28 @@ export default class OriginalTemplate extends Component {
 
           <TabContainer selectedTab={selectedTab}>
             <TabHeader>
-              <Tab name={"about"} onClick={selectTabAbout}>
+              <Tab name={'about'} onClick={selectTabAbout}>
                 About
               </Tab>
-              <Tab name={"details"} onClick={selectTabDetails}>
+              <Tab name={'details'} onClick={selectTabDetails}>
                 Details
               </Tab>
-              <Tab name={"more"} onClick={selectTabMore}>
+              <Tab name={'more'} onClick={selectTabMore}>
                 More
               </Tab>
             </TabHeader>
-            <TabBody name={"about"}>
-              <Box p={3} id={"about"}>
-                <Markdown source={objContent ? objContent.description : ""} />
+            <TabBody name={'about'}>
+              <Box p={3} id={'about'}>
+                <Markdown source={objContent ? objContent.description : ''} />
               </Box>
             </TabBody>
-            <TabBody name={"details"}>
+            <TabBody name={'details'}>
               <DetailsContainer
                 w={1}
-                justifyContent={"flex-start"}
-                alignItems={"flex-start"}
-                flexDirection={"column"}
-                id={"details"}
+                justifyContent={'flex-start'}
+                alignItems={'flex-start'}
+                flexDirection={'column'}
+                id={'details'}
               >
                 {otherContents.map((content, index) => (
                   <Expander
@@ -365,18 +365,18 @@ export default class OriginalTemplate extends Component {
                     onRequestClose={() => {
                       this.setState({
                         selectedContent: {
-                          type: "all"
+                          type: 'all'
                         }
                       })
                     }}
                     header={<H3>{content.title}</H3>}
                     icon={
-                      <Button round size={"35px"}>
+                      <Button round size={'35px'}>
                         <IndexSpan>{index + 1}</IndexSpan>
                       </Button>
                     }
                   >
-                    <Flex flexWrap={"wrap"} id={`detail-${content.index}`}>
+                    <Flex flexWrap={'wrap'} id={`detail-${content.index}`}>
                       <Box w={1} p={3}>
                         <Markdown source={content.description} />
                       </Box>
@@ -396,12 +396,12 @@ export default class OriginalTemplate extends Component {
                 ))}
               </DetailsContainer>
             </TabBody>
-            <TabBody name={"more"}>
-              <Flex flexWrap={"wrap"} id={"more"}>
+            <TabBody name={'more'}>
+              <Flex flexWrap={'wrap'} id={'more'}>
                 {story.relatedStories.map(story => (
                   <Link
                     href={{
-                      pathname: "/lume/story",
+                      pathname: '/lume/story',
                       query: {
                         subdomain,
                         storySlug: story.slug
@@ -426,10 +426,10 @@ export default class OriginalTemplate extends Component {
           }}
           open={drawer}
         >
-          <Icon icon={"menu"} color={"white"} />
+          <Icon icon={'menu'} color={'white'} />
         </DrawerButton>
 
-        <FeatureContainer w={[1, 1 / 2, 2 / 3]} id={"feature-container"}>
+        <FeatureContainer w={[1, 1 / 2, 2 / 3]} id={'feature-container'}>
           {this.showFeature()}
         </FeatureContainer>
         <Joyride
@@ -441,13 +441,13 @@ export default class OriginalTemplate extends Component {
               zIndex: 10000
             },
             buttonClose: {
-              display: "none"
+              display: 'none'
             },
             buttonNext: {
-              display: "none"
+              display: 'none'
             },
             buttonBack: {
-              display: "none"
+              display: 'none'
             }
           }}
           disableOverlayClose={true}
@@ -458,11 +458,11 @@ export default class OriginalTemplate extends Component {
 
   selectTabAbout = () => {
     let objContent = this.props.story.contents.find(
-      content => content.type === "obj"
+      content => content.type === 'obj'
     )
 
     this.setState({
-      selectedTab: "about",
+      selectedTab: 'about',
       selectedContent: objContent
     })
 
@@ -472,14 +472,14 @@ export default class OriginalTemplate extends Component {
       pathname
     } = this.props.router
 
-    if (pathname === "/lume/story") {
+    if (pathname === '/lume/story') {
       this.props.router.replace(
         {
-          pathname: "/lume/story",
+          pathname: '/lume/story',
           query: {
             subdomain,
             storySlug,
-            state0: "about"
+            state0: 'about'
           }
         },
         `/${subdomain}/${storySlug}`
@@ -489,14 +489,14 @@ export default class OriginalTemplate extends Component {
 
   selectTabDetails = () => {
     let objContent = this.props.story.contents.find(
-      content => content.type === "obj"
+      content => content.type === 'obj'
     )
 
     this.setState({
-      selectedTab: "details",
+      selectedTab: 'details',
       selectedContent: {
-        id: "",
-        type: "all"
+        id: '',
+        type: 'all'
       }
     })
 
@@ -506,14 +506,14 @@ export default class OriginalTemplate extends Component {
       pathname
     } = this.props.router
 
-    if (pathname === "/lume/story") {
+    if (pathname === '/lume/story') {
       this.props.router.replace(
         {
-          pathname: "/lume/story",
+          pathname: '/lume/story',
           query: {
             subdomain,
             storySlug,
-            state0: "details",
+            state0: 'details',
             grandTour: this.props.grandTour
           }
         },
@@ -524,14 +524,14 @@ export default class OriginalTemplate extends Component {
 
   selectTabMore = () => {
     let objContent = this.props.story.contents.find(
-      content => content.type === "obj"
+      content => content.type === 'obj'
     )
 
     this.setState({
-      selectedTab: "more",
+      selectedTab: 'more',
       selectedContent: {
-        id: "",
-        type: "all"
+        id: '',
+        type: 'all'
       }
     })
 
@@ -541,14 +541,14 @@ export default class OriginalTemplate extends Component {
       pathname
     } = this.props.router
 
-    if (pathname === "/lume/story") {
+    if (pathname === '/lume/story') {
       this.props.router.replace(
         {
-          pathname: "/lume/story",
+          pathname: '/lume/story',
           query: {
             subdomain,
             storySlug,
-            state0: "more",
+            state0: 'more',
             grandTour: this.props.grandTour
           }
         },
@@ -564,14 +564,14 @@ export default class OriginalTemplate extends Component {
       return null
     }
 
-    if (selectedContent.type !== "detail" && selectedContent.type !== "all") {
+    if (selectedContent.type !== 'detail' && selectedContent.type !== 'all') {
       return <ContentDisplaySwitcher content={selectedContent} />
     }
 
-    if (selectedContent.type === "detail" || selectedContent.type === "all") {
+    if (selectedContent.type === 'detail' || selectedContent.type === 'all') {
       return (
         <StoryZoomer
-          mode={"content"}
+          mode={'content'}
           storyId={this.props.story.id}
           selectedContentId={selectedContent.id}
           onContentSelection={this.handleContentSelection}
@@ -591,14 +591,14 @@ export default class OriginalTemplate extends Component {
       pathname
     } = this.props.router
 
-    if (pathname === "/lume/story") {
+    if (pathname === '/lume/story') {
       this.props.router.replace(
         {
-          pathname: "/lume/story",
+          pathname: '/lume/story',
           query: {
             subdomain,
             storySlug,
-            state0: "details",
+            state0: 'details',
             state1: content.index
           }
         },
@@ -618,7 +618,7 @@ const DrawerButton = styled(Button)`
     width: 50px;
     z-index: 5000;
     bottom: 10px;
-    left: ${({ open }) => (open ? "78%" : "10px")};
+    left: ${({ open }) => (open ? '78%' : '10px')};
   }
 `
 

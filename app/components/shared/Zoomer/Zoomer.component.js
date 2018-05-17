@@ -1,8 +1,8 @@
-import React, { Component } from "react"
-import styled from "styled-components"
-import PropTypes from "prop-types"
-const L = typeof window === "object" ? require("leaflet") : null
-const LDraw = typeof window === "object" ? require("leaflet-draw") : null
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
+const L = typeof window === 'object' ? require('leaflet') : null
+const LDraw = typeof window === 'object' ? require('leaflet-draw') : null
 
 export default class extends Component {
   static propTypes = {
@@ -36,7 +36,7 @@ export default class extends Component {
   }
 
   componentWillUnmount() {
-    console.log("Zoomer Unmounting")
+    console.log('Zoomer Unmounting')
     if (this.map) {
       this.map.remove()
     }
@@ -77,7 +77,7 @@ export default class extends Component {
           image = props.story.primaryImage
         } else {
           let firstDetail = props.story.contents.find(content => {
-            if (content.type === "detail" && content.image0) {
+            if (content.type === 'detail' && content.image0) {
               return true
             } else {
               return false
@@ -135,7 +135,7 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    console.log("Zoomer mounted")
+    console.log('Zoomer mounted')
     this.setup({})
   }
 
@@ -145,7 +145,7 @@ export default class extends Component {
 
   setup = async prevState => {
     try {
-      console.log("setup", this.state)
+      console.log('setup', this.state)
 
       if (this.state.image) {
         if (prevState.image) {
@@ -159,7 +159,7 @@ export default class extends Component {
 
         if (this.map) {
           if (this.state.content) {
-            if (this.props.mode === "editor") {
+            if (this.props.mode === 'editor') {
               await this.createDetailEditor()
             } else {
               await this.createContentLayer()
@@ -194,9 +194,9 @@ export default class extends Component {
 
   config = async image => {
     try {
-      if (process.env.FILE_STORAGE === "local") {
+      if (process.env.FILE_STORAGE === 'local') {
         return await this.localTileConfig()
-      } else if (this.state.image.host === "mia") {
+      } else if (this.state.image.host === 'mia') {
         return await this.miaTileConfig()
       } else {
         return await this.lumeTileConfig()
@@ -211,7 +211,7 @@ export default class extends Component {
       const response = await fetch(
         `https://tiles.dx.artsmia.org/${this.state.image.localId}.tif`,
         {
-          method: "GET"
+          method: 'GET'
         }
       )
 
@@ -235,7 +235,7 @@ export default class extends Component {
           this.state.image.id
         }/ImageProperties.xml`,
         {
-          method: "GET"
+          method: 'GET'
         }
       )
 
@@ -259,7 +259,7 @@ export default class extends Component {
       const response = await fetch(
         `${process.env.S3_URL}/mia-lume/${this.state.image.id}/info.json`,
         {
-          method: "GET"
+          method: 'GET'
         }
       )
 
@@ -280,7 +280,7 @@ export default class extends Component {
 
   createZoomer = async ({ height, width, tileUrl, tileSize }) => {
     try {
-      console.log("createZoomer")
+      console.log('createZoomer')
 
       // if (
       //   this.map
@@ -334,7 +334,7 @@ export default class extends Component {
 
       this.map.setView(initialLatLng, initialZoom)
 
-      this.map.on("zoomstart", e => {
+      this.map.on('zoomstart', e => {
         let zoomReq = e.target._zoom
 
         if (zoomReq < initialZoom) {
@@ -395,14 +395,14 @@ export default class extends Component {
           draw: {
             polygon: {
               allowIntersection: false,
-              title: "Hello?"
+              title: 'Hello?'
             },
             polyline: false,
             circle: false,
             marker: false,
             circlemarker: false
           },
-          position: "topright",
+          position: 'topright',
           edit: {
             featureGroup: this.editableLayers
           }
@@ -432,7 +432,7 @@ export default class extends Component {
       let outline = L.rectangle(this.bounds)
 
       this.contentLayer = L.polygon([outline._latlngs, ...details], {
-        fill: "black",
+        fill: 'black',
         stroke: 0,
         fillOpacity: 0.3
       })
@@ -472,7 +472,7 @@ export default class extends Component {
 
         this.indexMarkers.push(indexMarker)
 
-        indexMarker.on("click", () => {
+        indexMarker.on('click', () => {
           this.props.onContentSelection(marker)
         })
       })
@@ -489,7 +489,7 @@ const ZoomerMap = styled.div`
   .crop-button {
     height: 30px;
     width: 30px;
-    background: url("/static/crop.png") center;
+    background: url('/static/crop.png') center;
     background-size: cover;
     background-color: white;
     border: 1px solid ${({ theme }) => theme.color.gray30};
@@ -525,7 +525,7 @@ const ZoomerMap = styled.div`
     }
   }
 `
-if (typeof window === "object") {
+if (typeof window === 'object') {
   // L.Control.Cropper = L.Control.extend({
   //   onAdd(map) {
   //     map.cropStart = false
@@ -569,14 +569,14 @@ if (typeof window === "object") {
 
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({ z, x, y }) {
-      let tile = document.createElement("div")
-      let image = document.createElement("img")
+      let tile = document.createElement('div')
+      let image = document.createElement('img')
       image.src = this._url
-        .replace("{z}", z)
-        .replace("{x}", x)
-        .replace("{y}", y)
-        .replace("{s}", 0)
-      image.style["object-fit"] = "contain"
+        .replace('{z}', z)
+        .replace('{x}', x)
+        .replace('{y}', y)
+        .replace('{s}', 0)
+      image.style['object-fit'] = 'contain'
       tile.appendChild(image)
       return tile
     }

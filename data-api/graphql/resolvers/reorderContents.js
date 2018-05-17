@@ -1,5 +1,5 @@
-import Story from "../../db/models/Story"
-import Content from "../../db/models/Content"
+import Story from '../../db/models/Story'
+import Content from '../../db/models/Content'
 
 export default async function(src, args, ctx) {
   try {
@@ -12,7 +12,7 @@ export default async function(src, args, ctx) {
       include: [
         {
           model: Content,
-          as: "contents"
+          as: 'contents'
         }
       ]
     })
@@ -50,7 +50,7 @@ export default async function(src, args, ctx) {
       include: [
         {
           model: Content,
-          as: "contents"
+          as: 'contents'
         }
       ]
     })

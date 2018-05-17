@@ -1,11 +1,11 @@
-import React, { Component } from "react"
-import PropTypes from "prop-types"
-import styled from "styled-components"
-import { Flex, Box } from "grid-styled"
-import { gray60, blue } from "./colors"
-import { H2 } from "./text"
-import Link from "next/link"
-import getImgSrc from "../shared/ImgSrcProvider"
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { Flex, Box } from 'grid-styled'
+import { gray60, blue } from './colors'
+import { H2 } from './text'
+import Link from 'next/link'
+import getImgSrc from '../shared/ImgSrcProvider'
 
 const GridFlex = styled(Flex)`
   position: relative;
@@ -17,7 +17,7 @@ export const GridList = props => (
 )
 
 GridList.defaultProps = {
-  flexWrap: "wrap"
+  flexWrap: 'wrap'
 }
 
 const TileText = styled.div`
@@ -69,13 +69,13 @@ const TileEl = props => (
       <Link href={props.href} as={props.as}>
         <TileContainer
           href={props.as}
-          height={"180px" || props.height}
+          height={'180px' || props.height}
           selected={props.selected}
           id={props.id}
         >
           <TileImage src={props.src} alt={props.alt} />
           <TileText>
-            <H2 color={"white"}>{props.text}</H2>
+            <H2 color={'white'}>{props.text}</H2>
           </TileText>
         </TileContainer>
       </Link>
@@ -83,7 +83,7 @@ const TileEl = props => (
       <TileContainer height={props.height} selected={props.selected}>
         <TileImage src={props.src} alt={props.alt} />
         <TileText>
-          <H2 color={"white"}>{props.text}</H2>
+          <H2 color={'white'}>{props.text}</H2>
         </TileText>
       </TileContainer>
     )}

@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import OrgSettings from "../../components/cms/OrgSettings"
-import Template from "../../components/shared/Template"
-import Auth from "../../auth"
+import React, { Component } from 'react'
+import OrgSettings from '../../components/cms/OrgSettings'
+import Template from '../../components/shared/Template'
+import Auth from '../../auth'
 
 export default class Settings extends Component {
   static getInitialProps = async ctx => {

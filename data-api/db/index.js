@@ -5,11 +5,8 @@ import initialValues from './initialValues'
 
 // createAssociations()
 
-db.sync().then(()=> {
+db.sync().then(() => {
   initialValues()
-
 })
-
-
 
 export default db

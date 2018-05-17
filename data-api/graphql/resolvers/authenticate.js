@@ -1,6 +1,6 @@
-import User_Organization from "../../db/models/User_Organization"
-import Organization from "../../db/models/Organization"
-import { retrieveUserProfile } from "./user"
+import User_Organization from '../../db/models/User_Organization'
+import Organization from '../../db/models/Organization'
+import { retrieveUserProfile } from './user'
 
 export default async function(src, args, { verified, userId, authentication }) {
   try {
@@ -25,7 +25,7 @@ export default async function(src, args, { verified, userId, authentication }) {
       include: [
         {
           model: Organization,
-          as: "organization"
+          as: 'organization'
         }
       ]
     })

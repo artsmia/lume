@@ -8,12 +8,12 @@ import organizationType from './organization'
 import imageType from './image'
 import contentType from './content'
 import groupType from './group'
-import {VisibilityEnum, TemplateEnum} from './enums'
+import { VisibilityEnum, TemplateEnum } from './enums'
 
-import {organizationResolver} from '../resolvers/story'
+import { organizationResolver } from '../resolvers/story'
 
 const story = new GraphQLObjectType({
-  name: "story",
+  name: 'story',
   fields: () => ({
     id: {
       type: GraphQLID
@@ -42,7 +42,7 @@ const story = new GraphQLObjectType({
     },
     previewImage: {
       type: imageType,
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getPreviewImage()
         } catch (ex) {
@@ -52,16 +52,11 @@ const story = new GraphQLObjectType({
     },
     contents: {
       type: new GraphQLList(contentType),
-      async resolve(src){
+      async resolve(src) {
         try {
-
-
           let contents = await src.getContents({
-            order: [
-              ["index", "asc"]
-            ]
+            order: [['index', 'asc']]
           })
-
 
           return contents
         } catch (ex) {
@@ -71,7 +66,7 @@ const story = new GraphQLObjectType({
     },
     relatedStories: {
       type: new GraphQLList(story),
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getRelatedStories()
         } catch (ex) {
@@ -81,7 +76,7 @@ const story = new GraphQLObjectType({
     },
     groups: {
       type: new GraphQLList(groupType),
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getGroups()
         } catch (ex) {

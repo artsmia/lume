@@ -1,12 +1,8 @@
-import {
-  GraphQLID,
-  GraphQLString,
-  GraphQLNonNull
-} from 'graphql'
+import { GraphQLID, GraphQLString, GraphQLNonNull } from 'graphql'
 import resolve from '../resolvers/deleteCategory'
 
 const deleteCategory = {
-  name: "deleteCategory",
+  name: 'deleteCategory',
   type: GraphQLString,
   args: {
     id: {

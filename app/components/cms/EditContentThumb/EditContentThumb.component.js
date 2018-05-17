@@ -1,39 +1,31 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {H3, H4} from '../../mia-ui/text'
-import {Waiting} from '../../mia-ui/loading'
+import { H3, H4 } from '../../mia-ui/text'
+import { Waiting } from '../../mia-ui/loading'
 // import Image from '../../shared/Image'
 import { DragSource, DropTarget } from 'react-dnd'
-import {Flex, Box} from 'grid-styled'
-import {gray60} from '../../mia-ui/colors'
-import {ContentIcon} from '../../mia-ui/icons'
-import {ThumbImage, ThumbOverlay, ThumbContainer} from '../../mia-ui/lume'
+import { Flex, Box } from 'grid-styled'
+import { gray60 } from '../../mia-ui/colors'
+import { ContentIcon } from '../../mia-ui/icons'
+import { ThumbImage, ThumbOverlay, ThumbContainer } from '../../mia-ui/lume'
 import imgSrcProvider from '../../shared/ImgSrcProvider'
 
 const Thumb = imgSrcProvider(ThumbImage)
 
 class EditContentThumb extends Component {
-
   static defaultProps = {
     onSelect: PropTypes.func.isRequired,
-    contentId: PropTypes.string.isRequired,
-
+    contentId: PropTypes.string.isRequired
   }
 
-
   render() {
-    if (!this.props.content) return <Waiting/>
+    if (!this.props.content) return <Waiting />
 
     const {
       onSelect,
       contentId,
-      content: {
-        title,
-        type,
-        image0,
-        obj
-      },
+      content: { title, type, image0, obj },
       selected,
       connectDropTarget,
       connectDragSource
@@ -41,58 +33,36 @@ class EditContentThumb extends Component {
 
     let image = image0
 
-    if (
-      type === 'obj' &&
-      obj
-    ){
+    if (type === 'obj' && obj) {
       image = obj.primaryImage ? obj.primaryImage : image
     }
 
-    return connectDragSource(connectDropTarget(
-      <div
-        ref={ref => this.dragRef = ref}
-        style={{
-          width: "100%",
-          height: "100px",
-          marginBottom: "40px"
-        }}
-      >
-        <ThumbContainer
-          onClick={() => onSelect(contentId)}
-          selected={selected}
+    return connectDragSource(
+      connectDropTarget(
+        <div
+          ref={ref => (this.dragRef = ref)}
+          style={{
+            width: '100%',
+            height: '100px',
+            marginBottom: '40px'
+          }}
         >
+          <ThumbContainer
+            onClick={() => onSelect(contentId)}
+            selected={selected}
+          >
+            {image ? <Thumb image={image} /> : null}
 
-
-          {(image) ? (
-            <Thumb
-              image={image}
-            />
-          ): null}
-
-
-
-          <ThumbOverlay>
-
-            <H4
-              color={'white'}
-            >
-              {title ? title : type}
-            </H4>
-            <ContentIcon
-              type={type}
-              selected={selected}
-            />
-          </ThumbOverlay>
-
-        </ThumbContainer>
-      </div>
-    ))
+            <ThumbOverlay>
+              <H4 color={'white'}>{title ? title : type}</H4>
+              <ContentIcon type={type} selected={selected} />
+            </ThumbOverlay>
+          </ThumbContainer>
+        </div>
+      )
+    )
   }
-
 }
-
-
-
 
 const dragSpec = {
   beginDrag(props, monitor, component) {
@@ -103,14 +73,12 @@ const dragSpec = {
   }
 }
 
-
 function dragCollect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
   }
 }
-
 
 const dropSpec = {
   hover(props, monitor, component) {
@@ -147,20 +115,19 @@ const dropSpec = {
     props.onReorder(dragItem.index, hoverItem.index)
 
     monitor.getItem().index = hoverItem.index
-
   }
 }
 
-function dropCollect(connect, monitor){
+function dropCollect(connect, monitor) {
   return {
-    connectDropTarget: connect.dropTarget(),
+    connectDropTarget: connect.dropTarget()
   }
 }
 
 let Wrapped = EditContentThumb
 
-Wrapped = DropTarget("content", dropSpec, dropCollect)(Wrapped)
+Wrapped = DropTarget('content', dropSpec, dropCollect)(Wrapped)
 
-Wrapped = DragSource("content", dragSpec, dragCollect)(Wrapped)
+Wrapped = DragSource('content', dragSpec, dragCollect)(Wrapped)
 
 export default Wrapped

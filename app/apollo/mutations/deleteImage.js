@@ -1,6 +1,6 @@
-import { graphql } from "react-apollo"
-import gql from "graphql-tag"
-import { ImagesQuery } from "../queries/images"
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
+import { ImagesQuery } from '../queries/images'
 
 const deleteImage = gql`
   mutation deleteImage($id: ID!) {
@@ -37,7 +37,7 @@ const mutationConfig = {
         //     })
         //   )
         // }
-        refetchQueries: ["ImagesQuery"]
+        refetchQueries: ['ImagesQuery']
       })
   })
 }

@@ -1,35 +1,35 @@
-import React from "react"
-import { Component } from "react"
-import { TabContainer, TabHeader, Tab, TabBody } from "../../mia-ui/tabs"
-import { Button } from "../../mia-ui/buttons"
+import React from 'react'
+import { Component } from 'react'
+import { TabContainer, TabHeader, Tab, TabBody } from '../../mia-ui/tabs'
+import { Button } from '../../mia-ui/buttons'
 import {
   Search,
   CheckboxInput,
   Label,
   Input,
   Textarea
-} from "../../mia-ui/forms"
+} from '../../mia-ui/forms'
 // import MediaUploader from './MediaUploader'
-import styled from "styled-components"
-import PropTypes from "prop-types"
-import { GridList, Tile } from "../../mia-ui/lists"
-import { Flex, Box } from "grid-styled"
-import { H3 } from "../../mia-ui/text"
-import imgSrcProvider from "../../shared/ImgSrcProvider"
-import fetch from "isomorphic-unfetch"
-import ReactPlayer from "react-player"
-import { Icon } from "../../mia-ui/icons"
-import { Waiting } from "../../mia-ui/loading"
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import { GridList, Tile } from '../../mia-ui/lists'
+import { Flex, Box } from 'grid-styled'
+import { H3 } from '../../mia-ui/text'
+import imgSrcProvider from '../../shared/ImgSrcProvider'
+import fetch from 'isomorphic-unfetch'
+import ReactPlayer from 'react-player'
+import { Icon } from '../../mia-ui/icons'
+import { Waiting } from '../../mia-ui/loading'
 
 export default class MediaManager extends Component {
   state = {
-    selectedTab: "select",
-    search: "",
-    preview: "",
-    title: "",
-    description: "",
+    selectedTab: 'select',
+    search: '',
+    preview: '',
+    title: '',
+    description: '',
     hasRights: false,
-    selectedMediaId: "",
+    selectedMediaId: '',
     uploading: false
   }
 
@@ -66,31 +66,31 @@ export default class MediaManager extends Component {
         <TabContainer selectedTab={selectedTab}>
           <TabHeader>
             <Tab
-              name={"select"}
-              onClick={() => this.setState({ selectedTab: "select" })}
+              name={'select'}
+              onClick={() => this.setState({ selectedTab: 'select' })}
             >
               Select
             </Tab>
             <Tab
-              name={"add"}
-              onClick={() => this.setState({ selectedTab: "add" })}
+              name={'add'}
+              onClick={() => this.setState({ selectedTab: 'add' })}
             >
               Add
             </Tab>
           </TabHeader>
-          <TabBody name={"select"}>
+          <TabBody name={'select'}>
             <SelectFlex p={1}>
-              <OrgMediasFlex width={1 / 2} flexDirection={"column"} p={2}>
+              <OrgMediasFlex width={1 / 2} flexDirection={'column'} p={2}>
                 <Box width={1} mb={2}>
                   <Search
                     value={search}
-                    name={"search"}
+                    name={'search'}
                     onChange={handleSearchChange}
                   />
                 </Box>
 
                 {medias ? (
-                  <MediaList w={1} flexWrap={"wrap"} p={1}>
+                  <MediaList w={1} flexWrap={'wrap'} p={1}>
                     {medias.map(media => (
                       <MediaBox
                         key={media.id}
@@ -109,7 +109,7 @@ export default class MediaManager extends Component {
                         <p>You don't have any media yet</p>
                       ) : null}
                       {medias.length % 10 === 0 && medias.length !== 0 ? (
-                        <Button onClick={handleLoadMore} color={"white"}>
+                        <Button onClick={handleLoadMore} color={'white'}>
                           Load More
                         </Button>
                       ) : null}
@@ -134,20 +134,20 @@ export default class MediaManager extends Component {
 
             <Button onClick={handleMediaSave}>Select</Button>
           </TabBody>
-          <TabBody name={"add"}>
+          <TabBody name={'add'}>
             <Flex>
-              <Flex w={1 / 3} flexWrap={"wrap"} p={3}>
+              <Flex w={1 / 3} flexWrap={'wrap'} p={3}>
                 <Box w={1} my={2}>
-                  <input type={"file"} name={"files"} onChange={handleFile} />
+                  <input type={'file'} name={'files'} onChange={handleFile} />
                 </Box>
                 <Box w={1} my={2}>
                   <Label>Title</Label>
-                  <Input name={"title"} value={title} onChange={handleChange} />
+                  <Input name={'title'} value={title} onChange={handleChange} />
                 </Box>
                 <Box w={1} my={2}>
                   <Label>Description</Label>
                   <Textarea
-                    name={"description"}
+                    name={'description'}
                     value={description}
                     onChange={handleChange}
                   />
@@ -155,7 +155,7 @@ export default class MediaManager extends Component {
                 <Flex width={1} my={2}>
                   <Label>I have the right to distribute this media.</Label>
                   <CheckboxInput
-                    value={"hasRights"}
+                    value={'hasRights'}
                     checked={hasRights}
                     onChange={handleCheckbox}
                   />
@@ -185,10 +185,10 @@ export default class MediaManager extends Component {
   }
 
   renderMediaIcon = selectedMedia => {
-    if (selectedMedia.format === "mp4") {
-      return <Icon icon={"local_movies"} size={"70px"} />
+    if (selectedMedia.format === 'mp4') {
+      return <Icon icon={'local_movies'} size={'70px'} />
     } else {
-      return <Icon icon={"volume_up"} size={"70px"} />
+      return <Icon icon={'volume_up'} size={'70px'} />
     }
   }
 
@@ -245,19 +245,19 @@ export default class MediaManager extends Component {
 
       let form = new FormData()
 
-      form.append("file", file)
-      form.append("userId", localStorage.getItem("userId"))
-      form.append("title", title)
-      form.append("description", description)
-      form.append("subdomain", subdomain)
+      form.append('file', file)
+      form.append('userId', localStorage.getItem('userId'))
+      form.append('title', title)
+      form.append('description', description)
+      form.append('subdomain', subdomain)
 
       const url =
-        process.env.FILE_STORAGE === "s3"
+        process.env.FILE_STORAGE === 's3'
           ? `${process.env.API_URL}/media`
-          : "http://localhost:3001/upload"
+          : 'http://localhost:3001/upload'
 
       let options = {
-        method: "POST",
+        method: 'POST',
         body: form
       }
 
@@ -271,9 +271,9 @@ export default class MediaManager extends Component {
         uploading: false,
         files: [],
         hasRights: false,
-        description: "",
-        title: "",
-        preview: ""
+        description: '',
+        title: '',
+        preview: ''
       })
     } catch (ex) {
       console.error(ex)
@@ -316,7 +316,7 @@ const MediaBox = styled.div`
       ? `
     box-shadow: 0 0 10px 3px ${theme.color.green};
   `
-      : ""};
+      : ''};
 `
 
 const OrgMediasFlex = styled(Flex)`

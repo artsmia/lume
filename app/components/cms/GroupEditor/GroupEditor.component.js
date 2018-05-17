@@ -1,112 +1,68 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
-import {Button, RoundButton} from '../../mia-ui/buttons'
-import {Input, Textarea, Label} from '../../mia-ui/forms'
-import {Icon} from '../../mia-ui/icons'
-import {Flex, Box} from 'grid-styled'
+import { Button, RoundButton } from '../../mia-ui/buttons'
+import { Input, Textarea, Label } from '../../mia-ui/forms'
+import { Icon } from '../../mia-ui/icons'
+import { Flex, Box } from 'grid-styled'
 import ChangeImage from '../DefaultEditors/ChangeImage'
 
 export default class GroupEditor extends Component {
-
-
   render() {
-
-    if (!this.props.group) return <Container/>
+    if (!this.props.group) return <Container />
 
     const {
       props: {
         group,
         deleteGroup,
-        group: {
-          image
-        }
+        group: { image }
       },
-      state: {
-        title,
-        description,
-        slug
-      },
+      state: { title, description, slug },
       handleChange,
       handleSave,
       handleTitleChange
     } = this
 
     return (
-      <Container
-        flexWrap={'wrap'}
-        w={1}
-        pr={4}
-      >
-        <Flex
-          w={1}
-          justifyContent={'space-between'}
-        >
+      <Container flexWrap={'wrap'} w={1} pr={4}>
+        <Flex w={1} justifyContent={'space-between'}>
           <Input
-            name={"title"}
+            name={'title'}
             value={title}
             onChange={handleTitleChange}
-            placeholder={"Title"}
+            placeholder={'Title'}
           />
           <Button
             round
             onClick={deleteGroup}
-            title={"Delete Group"}
-            color={"red"}
+            title={'Delete Group'}
+            color={'red'}
           >
-            <Icon
-              color={'white'}
-              icon={'clear'}
-            />
+            <Icon color={'white'} icon={'clear'} />
           </Button>
         </Flex>
 
-        <Flex
-          w={1}
-        >
-          <Input
-            name={"slug"}
-            value={slug}
-            placeholder={"Slug"}
-            disabled
-          />
+        <Flex w={1}>
+          <Input name={'slug'} value={slug} placeholder={'Slug'} disabled />
         </Flex>
 
-        <GroupFlex
-          w={1}
-          py={2}
-        >
-
-          <Box
-            width={2/3}
-            pr={1}
-          >
+        <GroupFlex w={1} py={2}>
+          <Box width={2 / 3} pr={1}>
             <Textarea
-              name={"description"}
+              name={'description'}
               value={description}
               onChange={handleChange}
-              placeholder={"Description"}
+              placeholder={'Description'}
             />
           </Box>
-          <Box
-            width={1/3}
-          >
+          <Box width={1 / 3}>
             <ChangeImage
-              label={"Image"}
-              name={"imageId"}
+              label={'Image'}
+              name={'imageId'}
               image={image}
               onChange={handleChange}
             />
           </Box>
-
-
-
-
         </GroupFlex>
-
-
-
-
-
       </Container>
     )
   }
@@ -122,61 +78,57 @@ export default class GroupEditor extends Component {
   debounce = (func, time) => {
     if (this.bounce) {
       clearTimeout(this.bounce)
-      this.bounce = setTimeout(
-        func,
-        time
-      )
+      this.bounce = setTimeout(func, time)
     }
   }
 
-  handleTitleChange = (e) => {
-
+  handleTitleChange = e => {
     let value = e.target.value
 
-    let slugValue = value.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
+    let slugValue = value
+      .trim()
+      .replace(/[^a-zA-Z0-9]+/g, '-')
+      .toLowerCase()
 
-    if (slugValue.length < 5){
-      slugValue = slugValue.concat(`-${this.props.group.id.substring(0,5-slugValue.length)}`)
+    if (slugValue.length < 5) {
+      slugValue = slugValue.concat(
+        `-${this.props.group.id.substring(0, 5 - slugValue.length)}`
+      )
     }
 
     this.setState(
-      ()=>({
+      () => ({
         title: value,
         slug: slugValue
       }),
-      ()=>{
+      () => {
         this.debounce(this.handleSave, 2000)
       }
     )
-
   }
 
-  handleChange = ({target: {value, name}}) => {
+  handleChange = ({ target: { value, name } }) => {
     this.setState(
-      () => ({[name]: value}),
+      () => ({ [name]: value }),
       () => {
-        this.debounce(
-          this.handleSave,
-          1000
-        )
+        this.debounce(this.handleSave, 1000)
       }
     )
   }
 
-  stateFromProps = (props) => {
-    if (!props.group){
+  stateFromProps = props => {
+    if (!props.group) {
       return {}
     }
 
-    if (props.group.id !== this.state.id){
-
+    if (props.group.id !== this.state.id) {
       return {
         ...props.group
       }
     }
   }
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {}
     this.state = {
@@ -184,12 +136,10 @@ export default class GroupEditor extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({...this.stateFromProps(nextProps)})
+  componentWillReceiveProps(nextProps) {
+    this.setState({ ...this.stateFromProps(nextProps) })
   }
 }
 
-const Container = styled(Flex)`
-`
-const GroupFlex = styled(Flex)`
-`
+const Container = styled(Flex)``
+const GroupFlex = styled(Flex)``

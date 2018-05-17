@@ -1,20 +1,16 @@
 import gql from 'graphql-tag'
-import {graphql} from 'react-apollo'
+import { graphql } from 'react-apollo'
 
 const showSnack = gql`
-  mutation EditSnack (
-    $message: String
-  ) {
-    showSnack(
-      message: $message
-    ) @client
+  mutation EditSnack($message: String) {
+    showSnack(message: $message) @client
   }
 `
 
 const showSnackConfig = {
-  props({mutate}){
+  props({ mutate }) {
     return {
-      showSnack(variables){
+      showSnack(variables) {
         return mutate({
           variables
         })

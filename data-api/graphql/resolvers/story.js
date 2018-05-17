@@ -1,21 +1,19 @@
 import Story from '../../db/models/Story'
 import Organization from '../../db/models/Organization'
 
-
-export default async function(src, args, ctx){
+export default async function(src, args, ctx) {
   try {
-
     let story
 
-    if (args.id){
-      story =  await Story.findOne({
+    if (args.id) {
+      story = await Story.findOne({
         where: {
           id: args.id
         }
       })
     }
 
-    if (args.slugInput){
+    if (args.slugInput) {
       let organization = await Organization.findOne({
         where: args.slugInput.organization
       })
@@ -29,15 +27,13 @@ export default async function(src, args, ctx){
     }
 
     return story
-
   } catch (ex) {
     console.error(ex)
   }
 }
 
-export async function organizationResolver(src, args, ctx){
+export async function organizationResolver(src, args, ctx) {
   try {
-
     return await src.getOrganization()
   } catch (ex) {
     console.error(ex)

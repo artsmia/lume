@@ -2,10 +2,8 @@ import Obj from '../../db/models/Obj'
 import Organization from '../../db/models/Organization'
 import fetch from 'isomorphic-unfetch'
 
-
-export default async function(src, args, ctx){
+export default async function(src, args, ctx) {
   try {
-
     let obj
 
     if (args.id) {
@@ -13,17 +11,21 @@ export default async function(src, args, ctx){
         where: {
           id: args.id
         },
-        include: [{
-          model: Organization,
-          as: 'organization'
-        }]
+        include: [
+          {
+            model: Organization,
+            as: 'organization'
+          }
+        ]
       })
     } else {
       obj = await src.getObj({
-        include: [{
-          model: Organization,
-          as: 'organization'
-        }]
+        include: [
+          {
+            model: Organization,
+            as: 'organization'
+          }
+        ]
       })
     }
 
@@ -33,14 +35,11 @@ export default async function(src, args, ctx){
       obj.pullFromCustomApi &&
       obj.organization.customObjApiEndpoint &&
       obj.organization.customObjApiEnabled
-
-    ){
-
-
+    ) {
       let resp = await fetch(obj.organization.customObjApiEndpoint, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json'
         },
         body: JSON.stringify({
           id: obj.localId
@@ -56,7 +55,6 @@ export default async function(src, args, ctx){
     }
 
     return obj
-
   } catch (ex) {
     console.error(ex)
   }

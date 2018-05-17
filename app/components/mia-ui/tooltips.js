@@ -1,38 +1,32 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
-import {blue, white, black, gray60} from './colors'
-import {Icon} from './icons'
-import {Flex, Box} from 'grid-styled'
+import styled, { css } from 'styled-components'
+import { blue, white, black, gray60 } from './colors'
+import { Icon } from './icons'
+import { Flex, Box } from 'grid-styled'
 
-const Tip = styled.div`
+const Tip = styled.div``
 
-`
-
-
-const position = ({position}) => {
+const position = ({ position }) => {
   switch (position) {
     default:
-    case "below": {
+    case 'below': {
       return css`
-        ${Tip}{
+        ${Tip} {
           top: 120%;
           left: 50%;
           margin-left: -100px;
-
         }
 
         ${Tip}:after {
-          bottom: 100%;  /* At the top of the tooltip */
+          bottom: 100%; /* At the top of the tooltip */
           left: 45%;
           border-width: 5px;
           margin-left: 5px;
         }
       `
     }
-
   }
 }
-
 
 const Tool = styled.div`
   position: absolute;
@@ -45,10 +39,10 @@ const Tool = styled.div`
   align-items: center;
   font-size: 15px;
   color: white;
-  font-family: ${({theme}) => theme.font.bold};
+  font-family: ${({ theme }) => theme.font.bold};
   margin-top: 5px;
-  transition: .1s all;
-  ${Tip}{
+  transition: 0.1s all;
+  ${Tip} {
     visibility: hidden;
     width: 200px;
     background-color: ${gray60};
@@ -62,12 +56,10 @@ const Tool = styled.div`
   }
 
   ${Tip}:after {
-    content: " ";
+    content: ' ';
     position: absolute;
     border-style: solid;
     border-color: transparent transparent ${blue} transparent;
-
-
   }
 
   &:hover {
@@ -79,28 +71,18 @@ const Tool = styled.div`
   a {
     color: white;
   }
-  ${position}
+  ${position};
 `
 
 const Container = styled(Flex)`
   height: 0;
 `
 
-export const ToolTip = ({children, position}) => (
-  <Container
-    w={1}
-    pr={1}
-    justifyContent={'flex-end'}
-    alignItems={'flex-start'}
-  >
-    <Tool
-      position={position}
-    >
-
+export const ToolTip = ({ children, position }) => (
+  <Container w={1} pr={1} justifyContent={'flex-end'} alignItems={'flex-start'}>
+    <Tool position={position}>
       ?
-      <Tip>
-        {children}
-      </Tip>
+      <Tip>{children}</Tip>
     </Tool>
   </Container>
 )

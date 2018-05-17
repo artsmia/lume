@@ -11,40 +11,42 @@ export const GeometryEnum = new GraphQLEnumType({
   name: 'GeometryEnum',
   values: {
     Point: {
-      value: "Point"
+      value: 'Point'
     },
     Polygon: {
-      value: "Polygon"
+      value: 'Polygon'
     },
     Linestring: {
-      value: "Linestring"
+      value: 'Linestring'
     },
     MultiPoint: {
-      value: "MultiPoint"
+      value: 'MultiPoint'
     },
     MultiLineString: {
-      value: "MultiLineString"
+      value: 'MultiLineString'
     },
     MultiPolygon: {
-      value: "MultiPolygon"
+      value: 'MultiPolygon'
     },
     Feature: {
-      value: "Feature"
+      value: 'Feature'
     },
     FeatureCollection: {
-      value: "FeatureCollection"
-    },
+      value: 'FeatureCollection'
+    }
   }
 })
 
-const coordinates = new GraphQLList(new GraphQLList(new GraphQLList(GraphQLFloat)))
+const coordinates = new GraphQLList(
+  new GraphQLList(new GraphQLList(GraphQLFloat))
+)
 
 export const GeometryPropertiesInput = new GraphQLInputObjectType({
   name: 'GeometryPropertiesInput',
   fields: {
     name: {
       type: GraphQLString
-    },
+    }
   }
 })
 
@@ -56,7 +58,7 @@ export const GeometryInput = new GraphQLInputObjectType({
     },
     coordinates: {
       type: coordinates
-    },
+    }
   }
 })
 
@@ -91,8 +93,8 @@ export const FeatureCollectionInput = new GraphQLInputObjectType({
 })
 
 const geometryProperties = new GraphQLObjectType({
-  name: "geometryProperties",
-  fields: ()=>({
+  name: 'geometryProperties',
+  fields: () => ({
     name: {
       type: GraphQLString
     }
@@ -100,19 +102,19 @@ const geometryProperties = new GraphQLObjectType({
 })
 
 const geometry = new GraphQLObjectType({
-  name: "geometry",
+  name: 'geometry',
   fields: () => ({
     type: {
       type: GeometryEnum
     },
     coordinates: {
       type: coordinates
-    },
+    }
   })
 })
 
 const feature = new GraphQLObjectType({
-  name: "feature",
+  name: 'feature',
   fields: () => ({
     type: {
       type: GeometryEnum
@@ -122,14 +124,12 @@ const feature = new GraphQLObjectType({
     },
     properties: {
       type: geometryProperties
-    },
+    }
   })
 })
 
-
-
 const featureCollection = new GraphQLObjectType({
-  name: "featureCollection",
+  name: 'featureCollection',
   fields: () => ({
     type: {
       type: GeometryEnum
@@ -142,6 +142,5 @@ const featureCollection = new GraphQLObjectType({
     }
   })
 })
-
 
 export default featureCollection

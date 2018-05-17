@@ -1,14 +1,10 @@
-import {graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import groupFragment from '../fragments/group'
 
 export const CreateGroupMutation = gql`
-  mutation createGroup (
-    $categoryId: ID!
-  ) {
-    createGroup(
-      categoryId: $categoryId
-    ) {
+  mutation createGroup($categoryId: ID!) {
+    createGroup(categoryId: $categoryId) {
       ...GroupFragment
     }
   }
@@ -16,18 +12,17 @@ export const CreateGroupMutation = gql`
 `
 
 export const mutationConfig = {
-  props: ({mutate, ownProps: {categoryId}}) => {
+  props: ({ mutate, ownProps: { categoryId } }) => {
     return {
-      createGroup: () => mutate({
-        variables: {
-          categoryId
-        },
-        refetchQueries: [
-          "CategoryQuery"
-        ]
-      }),
+      createGroup: () =>
+        mutate({
+          variables: {
+            categoryId
+          },
+          refetchQueries: ['CategoryQuery']
+        })
     }
-  },
+  }
 }
 
 export default graphql(CreateGroupMutation, mutationConfig)

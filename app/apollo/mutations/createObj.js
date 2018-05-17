@@ -1,10 +1,10 @@
-import {graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import objFragment from '../fragments/obj'
-import {ObjsQuery} from '../queries/objs'
+import { ObjsQuery } from '../queries/objs'
 
 export const CreateObjMutation = gql`
-  mutation createObj (
+  mutation createObj(
     $organization: OrganizationInput!
     $localId: String
     $pullFromCustomApi: Boolean
@@ -21,9 +21,15 @@ export const CreateObjMutation = gql`
 `
 
 export const mutationConfig = {
-  props: ({mutate, ownProps: {router: {query: {subdomain}}} }) => ({
-    createObj: (variables) => {
-
+  props: ({
+    mutate,
+    ownProps: {
+      router: {
+        query: { subdomain }
+      }
+    }
+  }) => ({
+    createObj: variables => {
       return mutate({
         variables: {
           organization: {
@@ -31,10 +37,10 @@ export const mutationConfig = {
           },
           localId: variables.localId,
           pullFromCustomApi: variables.pullFromCustomApi
-        },
+        }
       })
     }
-  }),
+  })
 }
 
 export default graphql(CreateObjMutation, mutationConfig)

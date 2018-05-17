@@ -1,10 +1,9 @@
-import {graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import categoryFragment from '../fragments/category'
 
-
 const editCategory = gql`
-  mutation editCategory (
+  mutation editCategory(
     $id: ID!
     $title: String
     $description: String
@@ -20,19 +19,18 @@ const editCategory = gql`
     }
   }
   ${categoryFragment}
-
 `
 
 const mutationConfig = {
-  props: ({mutate, ownProps: {categoryId} }) => ({
-    editCategory: (category) => mutate({
-      variables: {
-        ...category,
-        id: categoryId
-      },
-    }),
-  }),
-
+  props: ({ mutate, ownProps: { categoryId } }) => ({
+    editCategory: category =>
+      mutate({
+        variables: {
+          ...category,
+          id: categoryId
+        }
+      })
+  })
 }
 
 export default graphql(editCategory, mutationConfig)

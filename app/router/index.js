@@ -1,17 +1,17 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv/config")
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv/config')
 }
 
-const express = require("express")
-const next = require("next")
-const fetch = require("isomorphic-unfetch")
-const session = require("express-session")
-const dev = process.env.NODE_ENV !== "production"
+const express = require('express')
+const next = require('next')
+const fetch = require('isomorphic-unfetch')
+const session = require('express-session')
+const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
 const passport =
-  process.env.AUTH_STRATEGY !== "local" ? require("./passport") : {}
+  process.env.AUTH_STRATEGY !== 'local' ? require('./passport') : {}
 
 let sessionConfig = {
   secret: process.env.SESSION_SECRET,
@@ -19,8 +19,8 @@ let sessionConfig = {
   saveUninitialized: false
 }
 
-if (process.env.SESSION_STORE === "redis") {
-  const RedisStore = require("connect-redis")(session)
+if (process.env.SESSION_STORE === 'redis') {
+  const RedisStore = require('connect-redis')(session)
   const redisOptions = {
     url: process.env.REDIS_URL
   }
@@ -33,7 +33,7 @@ app
   .then(() => {
     const server = express()
 
-    if (process.env.AUTH_STRATEGY !== "local") {
+    if (process.env.AUTH_STRATEGY !== 'local') {
       server.use(
         passport.initialize(),
         session(sessionConfig),
@@ -41,47 +41,47 @@ app
       )
 
       server.get(
-        "/login",
-        passport.authenticate("auth0", {
+        '/login',
+        passport.authenticate('auth0', {
           clientID: process.env.AUTH0_CLIENT_ID,
           domain: process.env.AUTH0_DOMAIN,
           redirectUri: `${process.env.CMS_URL}`,
           audience: `https://${process.env.AUTH0_DOMAIN}/userinfo`,
-          responseType: "code",
-          scope: "openid"
+          responseType: 'code',
+          scope: 'openid'
         }),
         (req, res) => {}
       )
 
-      server.get("/logout", (req, res) => {
+      server.get('/logout', (req, res) => {
         req.session.destroy()
-        let page = "/logout"
+        let page = '/logout'
         app.render(req, res, page)
       })
 
       server.get(
-        "/callback",
-        passport.authenticate("auth0", {
-          failureRedirect: "/"
+        '/callback',
+        passport.authenticate('auth0', {
+          failureRedirect: '/'
         }),
         (req, res) => {
-          res.redirect("/auth")
+          res.redirect('/auth')
         }
       )
     }
 
-    server.get("/error", (req, res) => {
-      const page = "/error"
+    server.get('/error', (req, res) => {
+      const page = '/error'
       app.render(req, res, page)
     })
 
-    server.get("/auth", (req, res) => {
-      const page = "/auth"
+    server.get('/auth', (req, res) => {
+      const page = '/auth'
       app.render(req, res, page)
     })
 
-    server.get("/organizations", (req, res) => {
-      const page = "/cms/organizations"
+    server.get('/organizations', (req, res) => {
+      const page = '/cms/organizations'
       app.render(req, res, page)
     })
 
@@ -98,9 +98,9 @@ app
     //   }
     // })
 
-    server.get("/:subdomain/pending", async (req, res) => {
+    server.get('/:subdomain/pending', async (req, res) => {
       try {
-        const page = "/cms/pendingApproval"
+        const page = '/cms/pendingApproval'
         const { subdomain } = req.params
         const params = {
           subdomain
@@ -111,8 +111,8 @@ app
       }
     })
 
-    server.get("/:subdomain/settings", (req, res) => {
-      const page = "/cms/orgSettings"
+    server.get('/:subdomain/settings', (req, res) => {
+      const page = '/cms/orgSettings'
       app.render(req, res, page, req.params)
     })
 
@@ -126,8 +126,8 @@ app
     //   app.render(req, res, page, params)
     // })
 
-    server.get("/:subdomain/group/:groupSlug", (req, res) => {
-      const page = "/lume"
+    server.get('/:subdomain/group/:groupSlug', (req, res) => {
+      const page = '/lume'
       const { subdomain, groupSlug } = req.params
 
       let params = {
@@ -137,8 +137,8 @@ app
       app.render(req, res, page, params)
     })
 
-    server.get("/:subdomain/:storySlug", (req, res) => {
-      const page = req.subdomains.includes("cms") ? "/cms/edit" : "/lume/story"
+    server.get('/:subdomain/:storySlug', (req, res) => {
+      const page = req.subdomains.includes('cms') ? '/cms/edit' : '/lume/story'
 
       const { subdomain, storySlug } = req.params
       const params = {
@@ -148,8 +148,8 @@ app
       app.render(req, res, page, params)
     })
 
-    server.get("/:subdomain/:storySlug/:state0", (req, res) => {
-      const page = "/lume/story"
+    server.get('/:subdomain/:storySlug/:state0', (req, res) => {
+      const page = '/lume/story'
       const { subdomain, storySlug, state0 } = req.params
       const params = {
         subdomain,
@@ -159,8 +159,8 @@ app
       app.render(req, res, page, params)
     })
 
-    server.get("/:subdomain/:storySlug/:state0/:state1", (req, res) => {
-      const page = "/lume/story"
+    server.get('/:subdomain/:storySlug/:state0/:state1', (req, res) => {
+      const page = '/lume/story'
       const { subdomain, storySlug, state0, state1 } = req.params
       const params = {
         subdomain,
@@ -171,8 +171,8 @@ app
       app.render(req, res, page, params)
     })
 
-    server.get("/:subdomain", (req, res) => {
-      const page = req.subdomains.includes("cms") ? "/cms" : "/lume"
+    server.get('/:subdomain', (req, res) => {
+      const page = req.subdomains.includes('cms') ? '/cms' : '/lume'
       let params = {
         ...req.params,
         ...req.query
@@ -180,7 +180,7 @@ app
       app.render(req, res, page, params)
     })
 
-    server.get("*", (req, res) => {
+    server.get('*', (req, res) => {
       return handle(req, res)
     })
 

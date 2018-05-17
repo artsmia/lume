@@ -1,13 +1,9 @@
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLID
-} from 'graphql'
+import { GraphQLObjectType, GraphQLString, GraphQLID } from 'graphql'
 import organizationType from './organization'
-import {HostEnum} from './enums'
+import { HostEnum } from './enums'
 
 const image = new GraphQLObjectType({
-  name: "image",
+  name: 'image',
   fields: () => ({
     id: {
       type: GraphQLID
@@ -26,7 +22,7 @@ const image = new GraphQLObjectType({
     },
     organization: {
       type: organizationType,
-      async resolve(src){
+      async resolve(src) {
         try {
           return await src.getOrganization()
         } catch (ex) {
@@ -39,7 +35,7 @@ const image = new GraphQLObjectType({
     },
     captionCredit: {
       type: GraphQLString
-    },
+    }
   })
 })
 

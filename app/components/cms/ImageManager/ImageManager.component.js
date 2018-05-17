@@ -1,20 +1,20 @@
-import React from "react"
-import { Component } from "react"
-import { TabContainer, TabHeader, Tab, TabBody } from "../../mia-ui/tabs"
-import { Button } from "../../mia-ui/buttons"
-import { Search, Input, Textarea } from "../../mia-ui/forms"
-import ImageUploader from "./ImageUploader"
-import styled from "styled-components"
-import PropTypes from "prop-types"
-import Zoomer from "../../shared/Zoomer"
-import { GridList, Tile } from "../../mia-ui/lists"
-import { Flex, Box } from "grid-styled"
-import { H3 } from "../../mia-ui/text"
-import { Loading, Waiting } from "../../mia-ui/loading"
+import React from 'react'
+import { Component } from 'react'
+import { TabContainer, TabHeader, Tab, TabBody } from '../../mia-ui/tabs'
+import { Button } from '../../mia-ui/buttons'
+import { Search, Input, Textarea } from '../../mia-ui/forms'
+import ImageUploader from './ImageUploader'
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import Zoomer from '../../shared/Zoomer'
+import { GridList, Tile } from '../../mia-ui/lists'
+import { Flex, Box } from 'grid-styled'
+import { H3 } from '../../mia-ui/text'
+import { Loading, Waiting } from '../../mia-ui/loading'
 
-import imgSrcProvider from "../../shared/ImgSrcProvider"
-import fetch from "isomorphic-unfetch"
-import { ImagesQuery } from "../../../apollo/queries/images"
+import imgSrcProvider from '../../shared/ImgSrcProvider'
+import fetch from 'isomorphic-unfetch'
+import { ImagesQuery } from '../../../apollo/queries/images'
 
 const ImageEl = styled.img`
   height: 100%;
@@ -25,18 +25,18 @@ const ImageEl = styled.img`
       ? `
     box-shadow: 0 0 10px 3px ${theme.color.green};
   `
-      : ""};
+      : ''};
 `
 const Image = imgSrcProvider(ImageEl)
 
 export default class ImageManager extends Component {
   state = {
-    selectedTab: "select",
-    search: "",
-    miaSearch: "",
+    selectedTab: 'select',
+    search: '',
+    miaSearch: '',
     miaImages: [],
     selectedMiaImage: {},
-    miaImageButton: "",
+    miaImageButton: '',
     loading: false
   }
 
@@ -75,47 +75,47 @@ export default class ImageManager extends Component {
     console.log(this.props)
 
     return (
-      <Container w={"80vw"}>
+      <Container w={'80vw'}>
         {loading ? <Waiting /> : null}
         <TabContainer selectedTab={selectedTab}>
           <TabHeader>
             <Tab
-              name={"select"}
-              onClick={() => this.setState({ selectedTab: "select" })}
+              name={'select'}
+              onClick={() => this.setState({ selectedTab: 'select' })}
             >
               Select
             </Tab>
 
-            {subdomain === "mia" ? (
+            {subdomain === 'mia' ? (
               <Tab
-                name={"mia"}
-                onClick={() => this.setState({ selectedTab: "mia" })}
+                name={'mia'}
+                onClick={() => this.setState({ selectedTab: 'mia' })}
               >
                 Mia Images
               </Tab>
             ) : null}
 
             <Tab
-              name={"upload"}
-              onClick={() => this.setState({ selectedTab: "upload" })}
+              name={'upload'}
+              onClick={() => this.setState({ selectedTab: 'upload' })}
             >
               Upload
             </Tab>
           </TabHeader>
 
-          <TabBody name={"select"}>
+          <TabBody name={'select'}>
             <SelectFlex p={1}>
-              <OrgImagesFlex width={1 / 2} flexDirection={"column"} p={2}>
+              <OrgImagesFlex width={1 / 2} flexDirection={'column'} p={2}>
                 <Box width={1} mb={2}>
                   <Input
                     value={search}
-                    name={"search"}
+                    name={'search'}
                     onChange={handleSearchChange}
-                    placeholder={"Search images"}
+                    placeholder={'Search images'}
                   />
                 </Box>
 
-                <ImageList w={1} flexWrap={"wrap"} p={1}>
+                <ImageList w={1} flexWrap={'wrap'} p={1}>
                   {images.map(image => (
                     <ImageBox
                       key={image.id}
@@ -125,7 +125,7 @@ export default class ImageManager extends Component {
                     >
                       <Image
                         image={image}
-                        quality={"s"}
+                        quality={'s'}
                         selected={selectedImageId === image.id}
                       />
                     </ImageBox>
@@ -135,7 +135,7 @@ export default class ImageManager extends Component {
                       <p>You don't have any images yet</p>
                     ) : null}
                     {images.length % 10 === 0 ? (
-                      <Button onClick={handleLoadMore} color={"white"}>
+                      <Button onClick={handleLoadMore} color={'white'}>
                         Load More
                       </Button>
                     ) : null}
@@ -146,11 +146,11 @@ export default class ImageManager extends Component {
               <ZoomerInputContainer
                 width={1 / 2}
                 p={2}
-                flexDirection={"column"}
-                justifyContent={"center"}
+                flexDirection={'column'}
+                justifyContent={'center'}
               >
                 {selectedImageId ? (
-                  <Zoomer imageId={selectedImageId} mode={"image"} />
+                  <Zoomer imageId={selectedImageId} mode={'image'} />
                 ) : (
                   <H3>Choose an image from the left</H3>
                 )}
@@ -158,10 +158,10 @@ export default class ImageManager extends Component {
                   <Flex>
                     <Input
                       name={`${selectedImageId}|title`}
-                      value={this.state[`${selectedImageId}|title`] || ""}
+                      value={this.state[`${selectedImageId}|title`] || ''}
                       onChange={handleChange}
                     />
-                    <Button color={"red"} onClick={handleDeleteImage}>
+                    <Button color={'red'} onClick={handleDeleteImage}>
                       Delete Image
                     </Button>
                   </Flex>
@@ -169,7 +169,7 @@ export default class ImageManager extends Component {
                 {selectedImageId ? (
                   <Textarea
                     name={`${selectedImageId}|description`}
-                    value={this.state[`${selectedImageId}|description`] || ""}
+                    value={this.state[`${selectedImageId}|description`] || ''}
                     onChange={handleChange}
                   />
                 ) : null}
@@ -179,19 +179,19 @@ export default class ImageManager extends Component {
             <Button onClick={handleImageSave}>Select</Button>
           </TabBody>
 
-          {subdomain === "mia" ? (
-            <TabBody name={"mia"}>
+          {subdomain === 'mia' ? (
+            <TabBody name={'mia'}>
               <SelectFlex p={1}>
-                <OrgImagesFlex width={1 / 2} flexDirection={"column"} p={2}>
+                <OrgImagesFlex width={1 / 2} flexDirection={'column'} p={2}>
                   <Box width={1} mb={2}>
                     <Search
                       value={miaSearch}
-                      name={"miaSearch"}
+                      name={'miaSearch'}
                       onChange={handleMiaImageSearchChange}
                     />
                   </Box>
 
-                  <ImageList w={1} flexWrap={"wrap"} p={1}>
+                  <ImageList w={1} flexWrap={'wrap'} p={1}>
                     {miaImages.map(image => (
                       <ImageBox
                         key={image._id}
@@ -219,17 +219,17 @@ export default class ImageManager extends Component {
                 </Flex>
               </SelectFlex>
 
-              {miaImageButton === "add" ? (
+              {miaImageButton === 'add' ? (
                 <Button onClick={addMiaImageToLume}>Add Image to Lume</Button>
               ) : null}
 
-              {miaImageButton === "use" ? (
+              {miaImageButton === 'use' ? (
                 <Button onClick={handleImageSave}>Use Image</Button>
               ) : null}
             </TabBody>
           ) : null}
 
-          <TabBody name={"upload"}>
+          <TabBody name={'upload'}>
             <ImageUploader subdomain={subdomain} refetch={handleRefetch} />
           </TabBody>
         </TabContainer>
@@ -248,14 +248,14 @@ export default class ImageManager extends Component {
 
   handleDeleteImage = () => {
     this.props.deleteImage({ id: this.state.selectedImageId })
-    this.setState({ selectedImageId: "" })
+    this.setState({ selectedImageId: '' })
   }
 
   handleChange = ({ target: { value, name } }) => {
     this.setState(
       () => ({ [name]: value }),
       this.debounce(() => {
-        let id = name.split("|")[0]
+        let id = name.split('|')[0]
         this.props.editImage({
           id,
           title: this.state[`${id}|title`],
@@ -277,7 +277,7 @@ export default class ImageManager extends Component {
     try {
       this.setState({
         selectedMiaImage,
-        miaImageButton: ""
+        miaImageButton: ''
       })
 
       let result = await this.props.client.query({
@@ -285,22 +285,22 @@ export default class ImageManager extends Component {
         variables: {
           filter: {
             organization: {
-              subdomain: "mia"
+              subdomain: 'mia'
             },
             limit: 10,
             localId: selectedMiaImage._id
           }
         },
-        fetchPolicy: "network-only"
+        fetchPolicy: 'network-only'
       })
 
       if (result.data.images[0]) {
         this.setState({
-          miaImageButton: "use",
+          miaImageButton: 'use',
           selectedImageId: result.data.images[0].id
         })
       } else {
-        this.setState({ miaImageButton: "add" })
+        this.setState({ miaImageButton: 'add' })
       }
     } catch (ex) {
       console.error(ex)
@@ -322,7 +322,7 @@ export default class ImageManager extends Component {
 
       let response = await fetch(
         `https://1.api.artsmia.org/full/${this.state.selectedMiaImage._id}.jpg`,
-        { mode: "cors" }
+        { mode: 'cors' }
       )
 
       let arrayBuffer = await response.arrayBuffer()
@@ -331,29 +331,29 @@ export default class ImageManager extends Component {
         [arrayBuffer],
         this.state.selectedMiaImage._source.title,
         {
-          type: "image/jpeg"
+          type: 'image/jpeg'
         }
       )
 
       let form = new FormData()
 
-      form.append("file", file)
-      form.append("userId", localStorage.getItem("userId"))
-      form.append("title", this.state.selectedMiaImage._source.title)
+      form.append('file', file)
+      form.append('userId', localStorage.getItem('userId'))
+      form.append('title', this.state.selectedMiaImage._source.title)
       form.append(
-        "description",
+        'description',
         this.state.selectedMiaImage._source.description
       )
-      form.append("subdomain", this.props.router.query.subdomain)
-      form.append("localId", this.state.selectedMiaImage._id)
+      form.append('subdomain', this.props.router.query.subdomain)
+      form.append('localId', this.state.selectedMiaImage._id)
 
       const url =
-        process.env.FILE_STORAGE === "s3"
+        process.env.FILE_STORAGE === 's3'
           ? `${process.env.API_URL}/image`
-          : "http://localhost:3001/upload"
+          : 'http://localhost:3001/upload'
 
       let options = {
-        method: "POST",
+        method: 'POST',
         body: form
       }
 
@@ -440,7 +440,7 @@ export default class ImageManager extends Component {
   handleRefetch = async () => {
     try {
       await this.props.refetch()
-      this.setState({ selectedTab: "select" })
+      this.setState({ selectedTab: 'select' })
     } catch (ex) {
       console.error(ex)
     }
@@ -478,7 +478,7 @@ const MiaImage = styled.img`
       ? `
     box-shadow: 0 0 10px 3px ${theme.color.green};
   `
-      : ""};
+      : ''};
 `
 
 const MiaDisplayImage = styled.img`

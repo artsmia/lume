@@ -13,7 +13,7 @@ const fragment = gql`
     description
     template
     visibility
-    previewImage{
+    previewImage {
       ...ImageFragment
     }
     groups {

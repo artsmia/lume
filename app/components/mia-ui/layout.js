@@ -1,7 +1,7 @@
-import React from "react"
-import { Flex, Box } from "grid-styled"
-import styled from "styled-components"
-import { black, white, gray60 } from "./colors"
+import React from 'react'
+import { Flex, Box } from 'grid-styled'
+import styled from 'styled-components'
+import { black, white, gray60 } from './colors'
 
 const PageFlex = styled(Flex)`
   width: 100%;
@@ -10,10 +10,10 @@ const PageFlex = styled(Flex)`
 `
 
 export const Page = props => (
-  <PageFlex flexWrap={"wrap"}>
+  <PageFlex flexWrap={'wrap'}>
     <Box
       width={[1, 3 / 4, 3 / 4, 2 / 3]}
-      mx={"auto"}
+      mx={'auto'}
       my={[1, 3, 3, 5]}
       p={[2, 3, 3, 4]}
     >

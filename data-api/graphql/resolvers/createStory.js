@@ -1,17 +1,19 @@
 import Organization from '../../db/models/Organization'
 import Story from '../../db/models/Story'
-import {Op} from 'sequelize'
+import { Op } from 'sequelize'
 
-export default async function(src, args, ctx){
+export default async function(src, args, ctx) {
   try {
-
     let organization = await Organization.findOne({
       where: {
         ...args.organization
       }
     })
 
-    let slug = args.title.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase()
+    let slug = args.title
+      .trim()
+      .replace(/[^a-zA-Z0-9]+/g, '-')
+      .toLowerCase()
 
     let storiesWithSlug = await Story.findAll({
       where: {
@@ -20,7 +22,7 @@ export default async function(src, args, ctx){
       }
     })
 
-    if (storiesWithSlug.length > 0){
+    if (storiesWithSlug.length > 0) {
       slug = slug.concat(`-${storiesWithSlug.length + 1}`)
     }
 
@@ -30,7 +32,6 @@ export default async function(src, args, ctx){
       title: args.title,
       slug
     })
-
   } catch (ex) {
     console.error(ex)
   }

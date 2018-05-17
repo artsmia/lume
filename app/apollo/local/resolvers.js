@@ -1,12 +1,12 @@
-import gql from "graphql-tag"
-import { tipsQuery } from "./getToolTips"
+import gql from 'graphql-tag'
+import { tipsQuery } from './getToolTips'
 
 export default {
   Mutation: {
     showSnack(obj, { message }, { cache }, info) {
       const data = {
         snack: {
-          __typename: "Snack",
+          __typename: 'Snack',
           message,
           snackId: Math.random()
         }
@@ -18,7 +18,7 @@ export default {
     setSaveStatus(obj, variables, { cache }, info) {
       const data = {
         saveStatus: {
-          __typename: "SaveStatus",
+          __typename: 'SaveStatus',
           ...variables
         }
       }
@@ -27,10 +27,10 @@ export default {
       return data
     },
     showTips(obj, { show }, { cache }, info) {
-      console.log("show tips")
+      console.log('show tips')
       let data = {
         toolTips: {
-          __typename: "ToolTips",
+          __typename: 'ToolTips',
           show
         }
       }
@@ -43,7 +43,7 @@ export default {
       data.toolTips.tips = tips
         .map(tip => ({
           ...tip,
-          __typename: "Tip"
+          __typename: 'Tip'
         }))
         .concat(...data.toolTips.tips)
 

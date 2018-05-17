@@ -1,43 +1,27 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
-import {Button} from '../../mia-ui/buttons'
-import {Label} from '../../mia-ui/forms'
+import { Button } from '../../mia-ui/buttons'
+import { Label } from '../../mia-ui/forms'
 import Zoomer from '../../shared/Zoomer'
-import {Flex, Box} from 'grid-styled'
+import { Flex, Box } from 'grid-styled'
 
 export default class DetailSelector extends Component {
-
   state = {
     modal: false
   }
 
-  render(){
-
+  render() {
     const {
-      props: {
-        value,
-        label,
-        detailImageId,
-      },
+      props: { value, label, detailImageId },
       handleCrop,
-      state: {
-        modal
-      }
+      state: { modal }
     } = this
     return (
-      <Flex
-        flexWrap={'wrap'}
-      >
-        <Box
-          w={1}
-        >
-          <Label>
-            {label}
-          </Label>
+      <Flex flexWrap={'wrap'}>
+        <Box w={1}>
+          <Label>{label}</Label>
         </Box>
-        <ZoomerBox
-          w={1}
-        >
+        <ZoomerBox w={1}>
           <Zoomer
             geometry={value}
             imageId={detailImageId}
@@ -45,17 +29,12 @@ export default class DetailSelector extends Component {
             crop={true}
           />
         </ZoomerBox>
-
-
       </Flex>
     )
   }
 
-  handleCrop = (value) => {
-    const {
-      onChange,
-      name
-    } = this.props
+  handleCrop = value => {
+    const { onChange, name } = this.props
 
     onChange({
       target: {
@@ -64,7 +43,6 @@ export default class DetailSelector extends Component {
       }
     })
   }
-
 }
 
 const ZoomerBox = styled(Box)`

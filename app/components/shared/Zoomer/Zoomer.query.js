@@ -2,12 +2,8 @@ import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
 const query = gql`
-  query ZoomerQuery (
-    $imageId: ID!
-  ) {
-    image (
-      id: $imageId
-    ) {
+  query ZoomerQuery($imageId: ID!) {
+    image(id: $imageId) {
       id
       host
       organization {
@@ -20,20 +16,16 @@ const query = gql`
   }
 `
 
-
 const queryConfig = {
-  options: ({imageId = ""}) => ({
+  options: ({ imageId = '' }) => ({
     variables: {
-      imageId,
-    },
+      imageId
+    }
   }),
   props: ({ ownProps, data }) => ({
     ...ownProps,
     ...data
-  }),
+  })
 }
-
-
-
 
 export default graphql(query, queryConfig)

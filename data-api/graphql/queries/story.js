@@ -6,10 +6,10 @@ import {
 } from 'graphql'
 import storyType from '../types/story'
 import resolve from '../resolvers/story'
-import {StorySlugInput} from '../types/inputs'
+import { StorySlugInput } from '../types/inputs'
 
 const story = {
-  name: "story",
+  name: 'story',
   type: storyType,
   args: {
     id: {
@@ -17,7 +17,7 @@ const story = {
     },
     slugInput: {
       type: StorySlugInput
-    },
+    }
   },
   resolve
 }

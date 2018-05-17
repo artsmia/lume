@@ -1,9 +1,9 @@
-import React, { Component } from "react"
-import Template from "../components/shared/Template"
-import router from "next/router"
-import { Loading } from "../components/mia-ui/loading"
-import withData from "../apollo"
-import Head from "../components/shared/head"
+import React, { Component } from 'react'
+import Template from '../components/shared/Template'
+import router from 'next/router'
+import { Loading } from '../components/mia-ui/loading'
+import withData from '../apollo'
+import Head from '../components/shared/head'
 
 export default class Logout extends Component {
   static getInitialProps = async ctx => {
@@ -13,7 +13,7 @@ export default class Logout extends Component {
   render() {
     return (
       <Template>
-        <Head title={"Logging Out"} />
+        <Head title={'Logging Out'} />
         <Loading />
       </Template>
     )
@@ -21,12 +21,12 @@ export default class Logout extends Component {
 
   componentDidMount() {
     try {
-      localStorage.removeItem("userId")
-      localStorage.removeItem("idToken")
+      localStorage.removeItem('userId')
+      localStorage.removeItem('idToken')
 
-      router.replace("/")
+      router.replace('/')
     } catch (ex) {
-      console.error("localStorage error")
+      console.error('localStorage error')
     }
   }
 }

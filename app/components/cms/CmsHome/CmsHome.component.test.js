@@ -1,19 +1,18 @@
 import React from 'react'
-import { shallow} from 'enzyme'
+import { shallow } from 'enzyme'
 import CmsHome from './CmsHome.component'
 
-describe("CmsHome component", ()=> {
-
+describe('CmsHome component', () => {
   let props
 
   let component
 
   let stubProps = {
     organization: {
-      name: "mia"
+      name: 'mia'
     },
     user: {
-      id: "123abc",
+      id: '123abc',
       organizations: [
         {
           subdomain: 'mia',
@@ -26,36 +25,25 @@ describe("CmsHome component", ()=> {
         subdomain: 'mia'
       }
     },
-    addTips(){
-      console.log("addTips")
+    addTips() {
+      console.log('addTips')
     }
   }
 
-
   const shallowComponent = () => {
-    component = shallow(
-      <CmsHome
-        {...props}
-      />
-    )
+    component = shallow(<CmsHome {...props} />)
   }
 
-  beforeEach( () => {
+  beforeEach(() => {
     component = undefined
     props = undefined
   })
 
-
-  it("shallows without errors", () => {
-
+  it('shallows without errors', () => {
     props = stubProps
 
     shallowComponent()
 
     expect(component).toHaveLength(1)
-
-
   })
-
-
 })

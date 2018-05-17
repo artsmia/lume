@@ -1,10 +1,9 @@
-import {graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import storyFragment from '../fragments/story'
 
-
 const editStory = gql`
-  mutation editStory (
+  mutation editStory(
     $id: ID!
     $title: String
     $description: String
@@ -32,11 +31,10 @@ const editStory = gql`
     }
   }
   ${storyFragment}
-
 `
 
 const mutationConfig = {
-  props: ({mutate, ownProps: {storyId} }) => ({
+  props: ({ mutate, ownProps: { storyId } }) => ({
     editStory: ({
       title,
       description,
@@ -47,22 +45,22 @@ const mutationConfig = {
       removeRelatedStoryId,
       setGroupsIds,
       slug
-    }) => mutate({
-      variables: {
-        id: storyId,
-        title,
-        description,
-        previewImageId,
-        template,
-        visibility,
-        addRelatedStoryId,
-        removeRelatedStoryId,
-        setGroupsIds,
-        slug
-      },
-    }),
-  }),
-
+    }) =>
+      mutate({
+        variables: {
+          id: storyId,
+          title,
+          description,
+          previewImageId,
+          template,
+          visibility,
+          addRelatedStoryId,
+          removeRelatedStoryId,
+          setGroupsIds,
+          slug
+        }
+      })
+  })
 }
 
 export default graphql(editStory, mutationConfig)

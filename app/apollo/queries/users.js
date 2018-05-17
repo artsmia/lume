@@ -1,14 +1,10 @@
 import gql from 'graphql-tag'
-import {graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 // import userFragment from '../fragments/user'
 
 export const UsersQuery = gql`
-  query UsersQuery (
-    $filter: FilterInput
-  ) {
-    users(
-      filter: $filter
-    ) {
+  query UsersQuery($filter: FilterInput) {
+    users(filter: $filter) {
       id
       name {
         given
@@ -21,29 +17,24 @@ export const UsersQuery = gql`
   }
 `
 
-
 export const queryConfig = {
-  options: (props) => {
-
-    const {
-      subdomain
-    } = props.router.query
+  options: props => {
+    const { subdomain } = props.router.query
 
     return {
       variables: {
         filter: {
           organization: {
             subdomain
-          },
+          }
         }
-      },
+      }
     }
   },
   props: ({ ownProps, data }) => ({
     ...ownProps,
     ...data
-  }),
+  })
 }
-
 
 export default graphql(UsersQuery, queryConfig)

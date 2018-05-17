@@ -1,11 +1,11 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
-import {Button} from '../../mia-ui/buttons'
-import {Label} from '../../mia-ui/forms'
-import {Modal} from '../../mia-ui/modals'
+import { Button } from '../../mia-ui/buttons'
+import { Label } from '../../mia-ui/forms'
+import { Modal } from '../../mia-ui/modals'
 import ImageManager from '../ImageManager'
 import router from 'next/router'
-import {Flex, Box} from 'grid-styled'
+import { Flex, Box } from 'grid-styled'
 import ImgSrcProvider from '../../shared/ImgSrcProvider'
 
 const Img = styled.img`
@@ -16,94 +16,51 @@ const Img = styled.img`
 const Image = ImgSrcProvider(Img)
 
 export default class ChangeImage extends Component {
-
   state = {
     modal: false
   }
 
-
-  render(){
-
+  render() {
     const {
       handleModalOpen,
       handleModalClose,
-      props: {
-        additionalImages,
-        label,
-        onRemove,
-        organization
-      },
+      props: { additionalImages, label, onRemove, organization },
       handleAdd,
-      state: {
-        modal,
-      }
+      state: { modal }
     } = this
 
-
     return (
-      <Flex
-        flexWrap={'wrap'}
-      >
-        <Box
-          w={1}
-        >
-          <Label>
-            {label}
-          </Label>
+      <Flex flexWrap={'wrap'}>
+        <Box w={1}>
+          <Label>{label}</Label>
         </Box>
 
-        <Flex
-          w={1}
-        >
-          {additionalImages.map( image => (
-            <Flex
-              key={image.id}
-              flexDirection={'column'}
-              mr={1}
-            >
-              <Image
-                image={image}
-              />
-              <Button
-                color={"red"}
-                onClick={()=>onRemove(image.id)}
-              >
+        <Flex w={1}>
+          {additionalImages.map(image => (
+            <Flex key={image.id} flexDirection={'column'} mr={1}>
+              <Image image={image} />
+              <Button color={'red'} onClick={() => onRemove(image.id)}>
                 Remove
               </Button>
             </Flex>
           ))}
         </Flex>
 
-        <Box
-          w={1}
-        >
-          <Button
-            onClick={handleModalOpen}
-          >
-            Add
-          </Button>
+        <Box w={1}>
+          <Button onClick={handleModalOpen}>Add</Button>
         </Box>
-
 
         <Modal
           open={modal}
           onClose={handleModalClose}
           header={`Edit Image`}
-          width={"60%"}
-
+          width={'60%'}
         >
-          {modal ? (
-            <ImageManager
-              onImageSave={handleAdd}
-            />
-  
-          ):null}
-
+          {modal ? <ImageManager onImageSave={handleAdd} /> : null}
         </Modal>
       </Flex>
     )
   }
-
 
   handleModalOpen = () => {
     this.setState({
@@ -117,14 +74,10 @@ export default class ChangeImage extends Component {
     })
   }
 
-  handleAdd = (imageId) => {
-    const {
-      onAdd,
-    } = this.props
+  handleAdd = imageId => {
+    const { onAdd } = this.props
 
     onAdd(imageId)
-    this.setState({modal: false})
+    this.setState({ modal: false })
   }
-
-
 }
