@@ -96,6 +96,7 @@ export default class Auth extends Component {
 
   setLocal = async () => {
     try {
+      console.log(this.props)
       let { idToken, id } = this.props.user
 
       localStorage.removeItem('userId')

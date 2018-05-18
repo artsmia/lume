@@ -77,28 +77,28 @@ export default class Template extends Component {
 
     return (
       <div>
-        {user ? (
-          <div>
-            <MenuCheck />
-            <Menu>
-              {user.organizations
-                ? user.organizations.map(({ subdomain, id, name }) => (
-                    <Item key={id}>
-                      <Link
-                        href={{
-                          pathname: '/cms',
-                          query: {
-                            subdomain
-                          }
-                        }}
-                        as={`/${subdomain}`}
-                      >
-                        <A>{name}</A>
-                      </Link>
-                    </Item>
-                  ))
-                : null}
-              <Hr />
+        <div>
+          <MenuCheck />
+          <Menu>
+            {user
+              ? user.organizations.map(({ subdomain, id, name }) => (
+                  <Item key={id}>
+                    <Link
+                      href={{
+                        pathname: '/cms',
+                        query: {
+                          subdomain
+                        }
+                      }}
+                      as={`/${subdomain}`}
+                    >
+                      <A>{name}</A>
+                    </Link>
+                  </Item>
+                ))
+              : null}
+            {user ? <Hr /> : null}
+            {user ? (
               <Item>
                 <Link
                   href={{
@@ -109,37 +109,45 @@ export default class Template extends Component {
                   <A>Join or Create an Organization</A>
                 </Link>
               </Item>
-              <Hr />
+            ) : null}
 
-              <Item>
-                <span>Show Tips</span>
-                <input
-                  type={'checkbox'}
-                  checked={showTips}
-                  onChange={() => {
-                    this.setState(({ showTips }) => ({ showTips: !showTips }))
-                  }}
-                />
-              </Item>
-              <Item>
+            {user ? <Hr /> : null}
+
+            <Item>
+              <span>Show Tips</span>
+              <input
+                type={'checkbox'}
+                checked={showTips}
+                onChange={() => {
+                  this.setState(({ showTips }) => ({ showTips: !showTips }))
+                }}
+              />
+            </Item>
+            {/* <Item>
                 <span>Show Tour</span>
                 <input
                   type={'checkbox'}
                   checked={showTour}
                   onChange={handleTourClick}
                 />
-              </Item>
-              <Hr />
-
+              </Item> */}
+            {user ? <Hr /> : null}
+            {user ? (
               <Item>
                 <Link href={'/logout'}>
                   <A>Logout</A>
                 </Link>
               </Item>
-            </Menu>
-            <ProfPic src={user.picture} />
-          </div>
-        ) : null}
+            ) : (
+              <Item>
+                <Link href={'/login'}>
+                  <A>Login or Signup</A>
+                </Link>
+              </Item>
+            )}
+          </Menu>
+          <ProfPic src={user ? user.picture : '/static/placeholder0.png'} />
+        </div>
 
         {children}
 
@@ -192,7 +200,6 @@ const Menu = styled.ul`
   transition: all 0.2s;
   opacity: 0;
   width: 140px;
-  display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   list-style-type: none;
@@ -201,6 +208,11 @@ const Menu = styled.ul`
   background-color: white;
   border: 1px solid grey;
   border-radius: 5px;
+  display: none;
+  &:hover {
+    opacity: 1;
+    display: flex;
+  }
 `
 
 const MenuCheck = styled.input`
@@ -215,6 +227,7 @@ const MenuCheck = styled.input`
 
   &:focus ~ ${Menu} {
     opacity: 1;
+    display: flex;
   }
 `
 

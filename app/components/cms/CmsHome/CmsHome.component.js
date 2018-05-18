@@ -58,7 +58,7 @@ export default class CmsHome extends Component {
           </Box>
           <Flex width={1 / 10} justifyContent={'flex-end'} id={'org-settings'}>
             {showSettings ? (
-              <NextA
+              <Link
                 href={{
                   pathname: '/cms/orgSettings',
                   query: {
@@ -67,13 +67,15 @@ export default class CmsHome extends Component {
                 }}
                 as={`/${subdomain}/settings`}
               >
-                <Icon
-                  icon={'settings'}
-                  color={'black'}
-                  title={'Settings'}
-                  size={'30px'}
-                />
-              </NextA>
+                <a>
+                  <Icon
+                    icon={'settings'}
+                    color={'black'}
+                    title={'Settings'}
+                    size={'30px'}
+                  />
+                </a>
+              </Link>
             ) : null}
           </Flex>
         </Flex>

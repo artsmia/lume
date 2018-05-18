@@ -29,26 +29,32 @@ export default class Auth {
     this.log('constructor')
     this.pathname = ctx.pathname
     this.query = ctx.query
-
-    if (process.browser) {
-      this.env = 'browser'
-    } else if (ctx.req) {
-      this.env = 'server'
-      this.session = ctx.req.session
-      this.res = ctx.res
-    } else {
-      console.log('not server or browser?')
-      this.authFail()
-    }
+    this.ctx = ctx
   }
 
   authenticate = async () => {
     try {
       this.log('authenticate')
+
+      console.log(`Attempting to authenticate for
+        pathname: ${this.pathname}
+        subdomain: ${this.query.subdomain}
+        `)
+
       await this.getUser()
 
       if (!this.user) {
+        this.log('No User found.')
+        this.log('Access Denied')
         this.authFail()
+        return
+      }
+
+      if (!this.user.organizations) {
+        this.log('User is not a member of any organizations.')
+        this.log('Access Denied')
+        this.authFail()
+        return
       }
 
       this.organization = this.user.organizations.find(
@@ -60,14 +66,19 @@ export default class Auth {
           this.log('Using local auth strategy')
           break
         }
-        case this.pathname === '/cms/orgSettings' &&
-          this.organization.role !== 'admin': {
-          this.log('Settings page is only for admins.')
+        case !this.user: {
+          this.log('No User found.')
+          this.log('Access Denied')
           this.authFail()
+          break
+        }
+        case this.pathname === '/cms/organizations': {
+          this.log('Access granted to organizations page.')
           break
         }
         case !this.organization: {
           this.log("Couldn't find permissions for this subdomain.")
+          this.log('Access Denied')
           this.authFail()
           break
         }
@@ -76,10 +87,22 @@ export default class Auth {
           this.pending()
           break
         }
-        case this.cmsRoles.includes(this.organization.role): {
-          this.log('Access granted.')
+        case this.pathname === '/cms/orgSettings' &&
+          this.organization.role !== 'admin': {
+          this.log('Must be an admin to access orgSettings.')
+          this.authFail()
           break
         }
+        case this.pathname === '/cms/orgSettings' &&
+          this.organization.role === 'admin': {
+          this.log('Admin access level found.')
+          break
+        }
+        case this.cmsRoles.includes(this.organization.role): {
+          this.log('Permissions found for organization.')
+          break
+        }
+
         default: {
           this.log('Default: Access denied.')
           this.authFail()
@@ -94,17 +117,18 @@ export default class Auth {
   getUser = async () => {
     try {
       this.log('getUser')
+      console.log(this.ctx)
       switch (true) {
         case process.env.AUTH_STRATEGY === 'local': {
           this.getUserLocal()
           break
         }
-        case this.env === 'browser': {
+        case process.browser: {
           this.getUserBrowser()
 
           break
         }
-        case this.env === 'server': {
+        case !process.browser: {
           this.getUserServer()
 
           break
@@ -115,7 +139,10 @@ export default class Auth {
       }
 
       if (this.user) {
+        console.log('user found', this.user)
         await this.fetchPermissions()
+      } else {
+        console.log('no user found')
       }
     } catch (ex) {
       this.ex('getUser', ex)
@@ -138,19 +165,21 @@ export default class Auth {
   getUserServer = () => {
     try {
       this.log('getUserServer')
-      if (this.session.passport) {
-        const { id, idToken } = this.session.passport.user
+      if (this.ctx.req.session) {
+        if (this.ctx.req.session.passport) {
+          const { id, idToken } = this.ctx.req.session.passport.user
 
-        if (idToken) {
-          if (this.isTokenExpired(idToken)) {
-            this.authFail()
+          if (idToken) {
+            if (this.isTokenExpired(idToken)) {
+              this.authFail()
+            }
           }
-        }
 
-        if (id && idToken) {
-          this.user = {
-            id,
-            idToken
+          if (id && idToken) {
+            this.user = {
+              id,
+              idToken
+            }
           }
         }
       }
@@ -204,9 +233,9 @@ export default class Auth {
   authFail = () => {
     try {
       this.log('authFail')
-      if (this.env === 'server') {
+      if (!process.browser) {
         this.authFailServer()
-      } else if (this.env === 'browser') {
+      } else if (process.browser) {
         this.authFailBrowser()
       }
     } catch (ex) {
@@ -217,7 +246,7 @@ export default class Auth {
   authFailServer = () => {
     try {
       this.log('authFailServer')
-      this.res.redirect('/logout')
+      this.ctx.res.redirect('/logout')
     } catch (ex) {
       this.ex('authFailServer', ex)
     }
@@ -235,7 +264,7 @@ export default class Auth {
   pending = () => {
     try {
       this.log('pending')
-      if (this.env === 'server') {
+      if (!process.browser) {
         this.pendingServer()
       } else {
         this.pendingClient()
@@ -248,7 +277,7 @@ export default class Auth {
   pendingServer = () => {
     try {
       this.log('pendingServer')
-      this.res.redirect(`/${this.query.subdomain}/pending`)
+      this.ctx.res.redirect(`/${this.query.subdomain}/pending`)
     } catch (ex) {
       this.ex('pendingServer', ex)
     }

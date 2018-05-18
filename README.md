@@ -6,27 +6,25 @@ If you are interested in contributing to Lume or running your own instance with 
 
 ## Table of Contents
 
-- [Running Lume](#running-lume)
-  - [Local Quickstart](#local-quickstart)
-  - [Configuration](#configuration)
-  - [Deploying with Now](#deploying-with-now)
-- [Overview](#overview)
-  - [app](#app)
-  - [data-api](#data-api)
-  - [image-tiler](#image-tiler)
-  - [local-tiler](#local-tiler)
-  - [mia-micro-obj](#mia-micro-obj)
-  - [mia-micro-obj-search](#mia-micro-obj-search)
-  - [scripts](#scripts)
-  - [.travis.yml](#.travis.yml)
-- [In Depth](#in-depth)
+* [Running Lume](#running-lume)
+  * [Local Quickstart](#local-quickstart)
+  * [Configuration](#configuration)
+  * [Deploying with Now](#deploying-with-now)
+* [Overview](#overview)
+  * [app](#app)
+  * [data-api](#data-api)
+  * [image-tiler](#image-tiler)
+  * [local-tiler](#local-tiler)
+  * [mia-micro-obj](#mia-micro-obj)
+  * [mia-micro-obj-search](#mia-micro-obj-search)
+  * [scripts](#scripts)
+  * [.travis.yml](#.travis.yml)
+* [In Depth](#in-depth)
 
-- [How To](#how-to)
-  - [Create a new type of content](#create-a-new-type-of-content)
+* [How To](#how-to)
+  * [Create a new type of content](#create-a-new-type-of-content)
 
 ## Running Lume
-
-
 
 ### Local Quickstart
 
@@ -34,11 +32,9 @@ If you're interested in contributing to Lume (or you just want to try it out on 
 
 Lume is a feature-rich, full stack application that utilizes a number of different services and can be configured in a number of different ways. In this quickstart, we are going to launch Lume in local mode.
 
+_Disclaimer: These directions are for Mac users. Because Lume is largely a Node application, some of its dependencies don't play well with Microsoft operating systems._
 
-*Disclaimer: These directions are for Mac users. Because Lume is largely a Node application, some of its dependencies don't play well with Microsoft operating systems.*
-
-
-1. Clone the repository
+1.  Clone the repository
 
 Open up your terminal, navigate to the directory where you like to keep your coding projects, clone the repository, and the navigate into the lume directory.
 
@@ -46,10 +42,9 @@ Open up your terminal, navigate to the directory where you like to keep your cod
 # /<your-code-directory>
 git clone https://github.com/artsmia/lume.git
 cd lume
-
 ```
 
-2. Edit the config file
+2.  Edit the config file
 
 When running locally, Lume takes all of its environment variables from a single `.env` configuration file located in `lume/config`.
 
@@ -60,8 +55,45 @@ To start, we will copy and rename the `.env.TEMPLATE` file. The file is currentl
 cp config/.env.TEMPLATE config/.env
 ```
 
+3.  Configure your local host file
 
-3. Install dependencies and start up the application(s)
+The default `.env.TEMPLATE` uses custom subdomain. To configure this you'll need to open up a terminal.
+
+```bash
+#this is assuming you have a mac and your hosts file is in etc
+#we are gong to edit the hosts file using vim –– you can use a different text editor if you like
+sudo vim /etc/hosts
+#you will likely be prompted for your password
+```
+
+Your `hosts` file should look something like this:
+
+```
+#
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1       localhost
+```
+
+To configure your hosts file, you just need to add the following on to the end:
+
+```
+127.0.0.1       dev.lume.space
+127.0.0.1       dev.cms.lume.space
+127.0.0.1       dev.api.lume.space
+```
+
+Vim tips:
+
+* press i to switch to insert mode
+* navigate with arrow keys to where you want to edit
+* when you're finished, escape will get you out of insert mode
+* the command `:wq` will save and close your vim session
+
+4.  Install dependencies and start up the application(s)
 
 Because Lume is actually made up of a number of different services, you'll need to open up three different terminal windows.
 
@@ -107,9 +139,9 @@ yarn install
 yarn start
 ```
 
-4. Try the site!
+5.  Try the site!
 
-Great! Now if everything worked, you should be able to visit http://localhost:3000 to see Lume running locally.
+Great! Now if everything worked, you should be able to visit http://dev.lume.space:3333 to see Lume running locally.
 
 ### Configuration
 
@@ -135,7 +167,6 @@ Each root level page component has been wrapped with a higher order component (H
 
 Most of the lower level components in the application then use the queries and mutations defined in the [queries](/app/apollo/queries) and [mutations](/app/apollo/mutations) directories to define their own data needs.
 
-
 #### [auth](/app/auth)
 
 Authorization is handled by [Auth0](https://auth0.com) and [`passport`](/app/router/passport.js)–– though this can be disabled by running the application in local mode.
@@ -160,13 +191,11 @@ These are the components that make up most of the CMS side of the application.
 
 These are the components that make up most of the storytelling side of the application.
 
-
 ##### [mia-ui](/app/components/mia-ui)
 
 Most of the lowest level presentational components are drawn from a shared library of home grown React components –– though many components will also define their own styled components at the end of the file.
 
 They have been styled with `styled-components` and `grid-styled` and are loosely styled to match Mia's own style guide.
-
 
 ##### [shared](/app/components/shared)
 

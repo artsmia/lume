@@ -47,10 +47,9 @@ export default class Home extends Component {
                 >
                   here
                 </Link>{' '}
-                or try creating your own stories by logging in or signing up
-                below.
+                or try creating your own stories. You can login or signup using
+                the menu in the top right.
               </P>
-              <Button onClick={linkToLogin}>Login or Signup</Button>
             </Box>
           ) : null}
 
@@ -104,21 +103,5 @@ export default class Home extends Component {
         </Flex>
       </Page>
     )
-  }
-
-  linkToLogin = () => {
-    if (process.env.AUTH_STRATEGY === 'local') {
-      router.push(
-        {
-          pathname: '/cms',
-          query: {
-            subdomain: 'local'
-          }
-        },
-        '/local/cms'
-      )
-    } else {
-      window.location.href = '/login'
-    }
   }
 }

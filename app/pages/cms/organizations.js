@@ -7,7 +7,7 @@ export default class New extends Component {
   static getInitialProps = async ctx => {
     try {
       let auth = new Auth(ctx)
-      await auth.getUser()
+      await auth.authenticate()
 
       return {
         user: auth.user,
