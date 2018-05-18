@@ -117,7 +117,6 @@ export default class Auth {
   getUser = async () => {
     try {
       this.log('getUser')
-      console.log(this.ctx)
       switch (true) {
         case process.env.AUTH_STRATEGY === 'local': {
           this.getUserLocal()

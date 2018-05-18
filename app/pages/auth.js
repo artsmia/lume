@@ -13,7 +13,6 @@ export default class Auth extends Component {
 
       await auth.getUser()
 
-      console.log(auth.user)
       return {
         user: auth.user
       }

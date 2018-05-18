@@ -30,9 +30,14 @@ const localConfig = {
 
 const saveStatus = graphql(SaveStatusQuery, localConfig)
 
-ExportComponent = compose(query, mutation, saveStatus, addTips, removeTips)(
-  ExportComponent
-)
+ExportComponent = compose(
+  query,
+  mutation,
+  saveStatus,
+  addTips,
+  removeTips,
+  withApollo
+)(ExportComponent)
 
 ExportComponent = withRouter(ExportComponent)
 

@@ -32,30 +32,12 @@ export default class Home extends Component {
             curators) to present content in an interactive and compelling way.
           </P>
 
-          {process.env.AUTH_STRATEGY !== 'local' ? (
-            <Box>
-              <P>
-                You can check out Mia's Lume{' '}
-                <Link
-                  href={{
-                    pathname: '/lume',
-                    query: {
-                      subdomain: 'mia'
-                    }
-                  }}
-                  as={'/mia'}
-                >
-                  here
-                </Link>{' '}
-                or try creating your own stories. You can login or signup using
-                the menu in the top right.
-              </P>
-            </Box>
-          ) : null}
-
           {process.env.AUTH_STRATEGY === 'local' ? (
             <Box>
-              <H3>You are currently using Lume in Local Mode</H3>
+              <H3>
+                You are currently using Lume in Local Mode. No need to
+                authenticate –– just create a new organization in the top right.
+              </H3>
             </Box>
           ) : null}
         </Card>
@@ -65,16 +47,7 @@ export default class Home extends Component {
             <Card>
               <H3>New to Lume? Check out our tutorials</H3>
 
-              <Link
-                href={{
-                  pathname: '/lume',
-                  query: {
-                    subdomain: 'mia',
-                    grandTour: true
-                  }
-                }}
-                as={`/mia`}
-              >
+              <Link href={`${process.env.LUME_URL}/mia?grandTour=true`}>
                 <a>Take a tour!</a>
               </Link>
             </Card>

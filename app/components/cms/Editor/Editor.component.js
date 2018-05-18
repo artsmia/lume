@@ -16,6 +16,8 @@ import { H3, H2 } from '../../mia-ui/text'
 import { Break } from '../../mia-ui/layout'
 import Head from '../../shared/head'
 import Joyride from 'react-joyride'
+import { Loading } from '../../mia-ui/loading'
+import { CreateContent } from '../../../apollo/mutations/createContent'
 
 export default class Editor extends Component {
   contentTypes = ['comparison', 'detail', 'obj', 'picture', 'movie']
@@ -59,8 +61,119 @@ export default class Editor extends Component {
     }
   ]
 
+  demoSteps = [
+    {
+      content: (
+        <div>
+          <p>Let's dive right in and we learn what everything is on the way.</p>
+          <Button
+            onClick={() => {
+              this.setState(({ demoIndex }) => ({
+                storyEditorDemo: true,
+                showDemo: false
+              }))
+            }}
+          >
+            Next
+          </Button>
+        </div>
+      ),
+      placement: 'center',
+      disableBeacon: true,
+      target: 'body'
+    },
+    {
+      content: (
+        <div>
+          <p>
+            We've edited some elements of our story but the real opportunity for
+            storytelling comes from a story's content blocks.
+          </p>
+          <p>
+            The bar on the side of our editor allows us to edit a specific
+            content block or our story itself. The sidebar is also where we find
+            the button that allows us to create new content blocks.
+          </p>
+          <Button
+            onClick={() => {
+              this.setState(({ demoIndex }) => ({
+                demoIndex: demoIndex + 1
+              }))
+            }}
+          >
+            Create a content block
+          </Button>
+        </div>
+      ),
+      target: '#sidebar',
+      disableBeacon: true,
+      placement: 'right'
+    },
+    {
+      content: (
+        <div>
+          <p>
+            There are currently five different types of content: picture, move,
+            object, comparison, and detail.
+          </p>
+
+          <p>
+            We're going to look at Object, Comparison, and Detail in this
+            walkthrough.
+          </p>
+
+          <p>First let's create an Object content.</p>
+          <Button
+            onClick={async () => {
+              try {
+                const {
+                  data: {
+                    createContent: { content }
+                  }
+                } = await this.props.client.mutate({
+                  mutation: CreateContent,
+                  variables: {
+                    storyId: this.props.story.id,
+                    type: 'obj'
+                  }
+                })
+                this.setState(({ demoIndex }) => ({
+                  demoIndex: demoIndex + 1
+                }))
+              } catch (ex) {
+                console.error(ex)
+              }
+            }}
+          >
+            Create a content block
+          </Button>
+        </div>
+      ),
+      target: '#create-content',
+      disableBeacon: true
+    }
+  ]
+
+  handleStoryEditorDemoFinish = () => {
+    this.setState(({ demoIndex }) => ({
+      storyEditorDemo: false,
+      demoIndex: demoIndex + 1,
+      showDemo: true
+    }))
+  }
+
+  handleDemoChange = async e => {
+    try {
+      console.log(e)
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
   render() {
-    if (!this.props.story) return null
+    console.log(this)
+
+    if (!this.props.story) return <Loading />
 
     const {
       props: {
@@ -166,13 +279,12 @@ export default class Editor extends Component {
           <Box w={1 / 3}>{renderSaveStatus()}</Box>
         </TopBar>
         <Workspace w={1}>
-          <Sidebar w={1 / 5}>
+          <Sidebar w={1 / 5} id={'sidebar'}>
             <Flex
               flexDirection={'column'}
               p={3}
               justifyContent={'flex-start'}
               alignItems={'center'}
-              id={'sidebar'}
             >
               <EditStoryThumb
                 storyId={storyId}
@@ -199,29 +311,58 @@ export default class Editor extends Component {
 
               <Break />
 
-              <Select
-                name={'contentType'}
-                onChange={handleChange}
-                value={contentType}
-              >
-                {contentTypes.map(type => (
-                  <Option key={type} value={type}>
-                    {type}
-                  </Option>
-                ))}
-              </Select>
-              <CreateContentButton storyId={storyId} type={contentType} />
+              <div id={'create-content'}>
+                <Select
+                  name={'contentType'}
+                  onChange={handleChange}
+                  value={contentType}
+                  innerRef={ref => {
+                    this.contentTypeRef = ref
+                  }}
+                >
+                  {contentTypes.map(type => (
+                    <Option key={type} value={type}>
+                      {type}
+                    </Option>
+                  ))}
+                </Select>
+                <CreateContentButton storyId={storyId} type={contentType} />
+              </div>
             </Flex>
           </Sidebar>
 
           <EditingPane width={1}>
-            {editing === 'story' ? <StoryEditor storyId={storyId} /> : null}
+            {editing === 'story' ? (
+              <StoryEditor
+                storyId={storyId}
+                onDemoFinish={this.handleStoryEditorDemoFinish}
+                showDemo={this.state.storyEditorDemo}
+              />
+            ) : null}
 
             {editing === 'content' ? (
               <EditorSwitcher content={selectedContent} />
             ) : null}
           </EditingPane>
         </Workspace>
+
+        <Joyride
+          run={this.state.showDemo} //this.props.router.query.demo ?  true : false}
+          steps={this.state.demoSteps}
+          callback={this.handleDemoChange}
+          stepIndex={this.state.demoIndex}
+          styles={{
+            buttonClose: {
+              display: 'none'
+            },
+            buttonNext: {
+              display: 'none'
+            },
+            buttonBack: {
+              display: 'none'
+            }
+          }}
+        />
       </FullPage>
     )
   }
@@ -240,6 +381,9 @@ export default class Editor extends Component {
     super(props)
     this.state = {}
     this.state = {
+      demoIndex: 1,
+      demoSteps: this.demoSteps,
+      showDemo: this.props.router.query.demo ? true : false,
       editing: 'story',
       selectedContent: null,
       contentType: 'comparison',
@@ -248,6 +392,7 @@ export default class Editor extends Component {
       preview: false,
       ...this.propsToState(props)
     }
+    this.contentTypeRef = React.createRef()
   }
 
   propsToState = props => {
@@ -331,6 +476,7 @@ export default class Editor extends Component {
 const FullPage = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
+  background-color: white;
 `
 
 const TopBar = styled(Flex)`

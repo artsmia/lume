@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import { StoryQuery } from '../queries/story'
 import contentFragment from '../fragments/content'
 
-const createContent = gql`
+export const CreateContent = gql`
   mutation createContent($storyId: ID!, $type: ContentTypeEnum!) {
     createContent(storyId: $storyId, type: $type) {
       ...ContentFragment
@@ -36,4 +36,4 @@ const mutationConfig = {
   })
 }
 
-export default graphql(createContent, mutationConfig)
+export default graphql(CreateContent, mutationConfig)

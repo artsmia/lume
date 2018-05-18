@@ -9,7 +9,7 @@ export const A = styled.a`
   text-decoration: none;
 `
 
-const LinkStyled = styled.a`
+export const LinkStyled = styled.a`
   color: ${black};
   border-bottom: 1px solid ${gray30};
   text-decoration: none;

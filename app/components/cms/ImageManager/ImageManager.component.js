@@ -15,6 +15,7 @@ import { Loading, Waiting } from '../../mia-ui/loading'
 import imgSrcProvider from '../../shared/ImgSrcProvider'
 import fetch from 'isomorphic-unfetch'
 import { ImagesQuery } from '../../../apollo/queries/images'
+import Joyride from 'react-joyride'
 
 const ImageEl = styled.img`
   height: 100%;
@@ -30,6 +31,70 @@ const ImageEl = styled.img`
 const Image = imgSrcProvider(ImageEl)
 
 export default class ImageManager extends Component {
+  demoSteps = [
+    {
+      target: '#select-images-container',
+      content: (
+        <div>
+          <p>
+            When your images are done uploading to Lume, they will appear here
+            amongst your other images.
+          </p>
+          <p>
+            Don't worry if your image doesn't appear immediately, it can take
+            several minutes for images to appear depending on your internet
+            speed. Lume allows for large images and it sometimes take a few
+            moments for our servers to break those images up into tiles.
+          </p>
+          <Button
+            onClick={() => {
+              this.setState(
+                ({ demoIndex }) => ({
+                  search: 'frankenstein'
+                }),
+                async () => {
+                  await this.handleSearch()
+                  let image = this.props.images.find(
+                    image => image.title === "Frankenstein's Monster, Actor"
+                  )
+                  this.handleImageSelect(image)
+                }
+              )
+              this.setState(({ demoIndex }) => ({
+                demoIndex: demoIndex + 1
+              }))
+            }}
+          >
+            Next
+          </Button>
+        </div>
+      ),
+      placement: 'right',
+      disableBeacon: true
+    },
+    {
+      target: '#image-manager-zoomer',
+      content: (
+        <div>
+          Once your image has finished uploading and you've selected it, you can
+          see it in all its high resolution glory using Lume's special tiled
+          image viewer.
+          <Button
+            onClick={() => {
+              this.setState({ showDemo: false })
+              this.handleImageSave()
+              this.props.onDemoFinish()
+            }}
+          >
+            Use Image for Story
+          </Button>
+        </div>
+      ),
+      placement: 'right',
+      disableBeacon: true
+    }
+  ]
+
   state = {
     selectedTab: 'select',
     search: '',
@@ -37,7 +102,42 @@ export default class ImageManager extends Component {
     miaImages: [],
     selectedMiaImage: {},
     miaImageButton: '',
-    loading: false
+    loading: false,
+    demoSteps: this.demoSteps,
+    demoIndex: 0,
+    showDemo: false,
+    uploaderDemoFinished: false
+  }
+
+  handleDemoChange = async ({ action, index, lifecycle, step }) => {
+    try {
+      // if (
+      //   action === 'update' &&
+      //   index === 0 &&
+      //   lifecycle === 'tooltip'
+      // ){
+      //
+      // }
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  handleUploaderDemoFinish = () => {
+    this.setState({
+      showDemo: true,
+      showUploaderDemo: false,
+      uploaderDemoFinished: true
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.showDemo && !this.state.uploaderDemoFinished) {
+      this.setState({
+        selectedTab: 'upload',
+        showUploaderDemo: true
+      })
+    }
   }
 
   render() {
@@ -72,8 +172,6 @@ export default class ImageManager extends Component {
       handleDeleteImage
     } = this
 
-    console.log(this.props)
-
     return (
       <Container w={'80vw'}>
         {loading ? <Waiting /> : null}
@@ -105,7 +203,12 @@ export default class ImageManager extends Component {
 
           <TabBody name={'select'}>
             <SelectFlex p={1}>
-              <OrgImagesFlex width={1 / 2} flexDirection={'column'} p={2}>
+              <OrgImagesFlex
+                width={1 / 2}
+                flexDirection={'column'}
+                p={2}
+                id={'select-images-container'}
+              >
                 <Box width={1} mb={2}>
                   <Input
                     value={search}
@@ -148,6 +251,7 @@ export default class ImageManager extends Component {
                 p={2}
                 flexDirection={'column'}
                 justifyContent={'center'}
+                id={'image-manager-zoomer'}
               >
                 {selectedImageId ? (
                   <Zoomer imageId={selectedImageId} mode={'image'} />
@@ -230,9 +334,31 @@ export default class ImageManager extends Component {
           ) : null}
 
           <TabBody name={'upload'}>
-            <ImageUploader subdomain={subdomain} refetch={handleRefetch} />
+            <ImageUploader
+              subdomain={subdomain}
+              refetch={handleRefetch}
+              showDemo={this.state.showUploaderDemo}
+              onDemoFinish={this.handleUploaderDemoFinish}
+            />
           </TabBody>
         </TabContainer>
+        <Joyride
+          run={this.state.showDemo}
+          steps={this.state.demoSteps}
+          stepIndex={this.state.demoIndex}
+          callback={this.handleDemoChange}
+          styles={{
+            buttonClose: {
+              display: 'none'
+            },
+            buttonNext: {
+              display: 'none'
+            },
+            buttonBack: {
+              display: 'none'
+            }
+          }}
+        />
       </Container>
     )
   }

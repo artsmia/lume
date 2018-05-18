@@ -7,10 +7,6 @@ import { Modal } from '../../mia-ui/modals'
 import Joyride from 'react-joyride'
 
 export default class CreateStoryButton extends Component {
-  static propTypes = {
-    userId: PropTypes.string.isRequired
-  }
-
   state = {
     modal: false,
     title: ''

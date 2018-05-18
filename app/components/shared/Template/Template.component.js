@@ -123,14 +123,14 @@ export default class Template extends Component {
                 }}
               />
             </Item>
-            {/* <Item>
-                <span>Show Tour</span>
-                <input
-                  type={'checkbox'}
-                  checked={showTour}
-                  onChange={handleTourClick}
-                />
-              </Item> */}
+            <Item>
+              <span>Show Tour</span>
+              <input
+                type={'checkbox'}
+                checked={showTour}
+                onChange={handleTourClick}
+              />
+            </Item>
             {user ? <Hr /> : null}
             {user ? (
               <Item>

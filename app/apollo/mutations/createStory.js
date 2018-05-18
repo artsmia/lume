@@ -22,7 +22,7 @@ export const CreateStoryMutation = gql`
 export const mutationConfig = {
   props: ({ mutate, ownProps }) => {
     const {
-      userId,
+      user: { id: userId },
       router: {
         query: { subdomain }
       }

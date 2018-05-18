@@ -58,7 +58,7 @@ export default class DeleteStoryButton extends Component {
             subdomain
           }
         },
-        `/cms/${subdomain}`
+        `/${subdomain}`
       )
     } catch (ex) {
       console.error(ex)

@@ -50,11 +50,11 @@ export default function imgSrcProvider(WrappedComponent) {
           }
         }
 
-        // let resp = await fetch(src)
-        //
-        // if (resp.status !== 200) {
-        //   src = "/static/spinner.gif"
-        // }
+        fetch(src).then(resp => {
+          if (resp.status !== 200) {
+            this.setState({ src: '/static/spinner.gif' })
+          }
+        })
 
         this.setState({ src })
       } catch (ex) {

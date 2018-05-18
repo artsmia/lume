@@ -7,6 +7,7 @@ import ImageManager from '../ImageManager'
 import router from 'next/router'
 import { Flex, Box } from 'grid-styled'
 import imgSrcProvider from '../../shared/ImgSrcProvider'
+import Joyride from 'react-joyride'
 
 const ImgEl = styled.img`
   height: auto;
@@ -27,6 +28,13 @@ export default class ChangeImage extends Component {
     subdomain: 'local'
   }
 
+  // handleDemoChange = async ({action, index, lifecycle, step}) => {
+  //   try {
+  //
+  //   } catch (ex) {
+  //     console.error(ex)
+  //   }
+  // }
   render() {
     const {
       handleModalOpen,
@@ -37,24 +45,53 @@ export default class ChangeImage extends Component {
     } = this
 
     return (
-      <Flex flexWrap={'wrap'}>
-        <Box w={1}>
+      <Flex flexDirection={'column'} alignItems={'flex-start'}>
+        <Box>
           <Label>{label}</Label>
         </Box>
-        <ImageBox w={1} onClick={handleModalOpen}>
+        <ImageBox onClick={handleModalOpen} id={this.props.id}>
           {image ? <Img image={image} /> : null}
-          <ChangeButton onClick={handleModalOpen} id={this.props.id}>
-            Change
-          </ChangeButton>
+          <ChangeButton onClick={handleModalOpen}>Change</ChangeButton>
         </ImageBox>
 
         <Modal open={modal} onClose={handleModalClose}>
           {modal ? (
-            <ImageManager subdomain={subdomain} onImageSave={handleChange} />
+            <ImageManager
+              subdomain={subdomain}
+              onImageSave={handleChange}
+              onDemoFinish={this.props.onDemoFinish}
+              showDemo={this.props.showDemo}
+            />
           ) : null}
         </Modal>
+        {/* <Joyride
+          run={this.props.showDemo ? true : false}
+          steps={this.state.demoSteps}
+          stepIndex={this.state.demoIndex}
+          callback={this.handleDemoChange}
+          styles={{
+            buttonClose: {
+              display: 'none'
+            },
+            buttonNext: {
+              display: 'none'
+            },
+            buttonBack: {
+              display: 'none'
+            }
+          }}
+        /> */}
       </Flex>
     )
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.showDemo) {
+      this.handleModalOpen()
+    }
+    if (!nextProps.showDemo && this.state.modal) {
+      this.handleModalClose()
+    }
   }
 
   componentDidMount() {
@@ -90,6 +127,7 @@ const ImageBox = styled(Flex)`
   height: 130px;
   width: 130px;
   position: relative;
+  border: 1px solid black;
 `
 const ChangeButton = styled(Button)`
   position: absolute;
