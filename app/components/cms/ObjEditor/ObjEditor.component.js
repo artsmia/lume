@@ -6,8 +6,34 @@ import { CheckboxInput, Label, Input } from '../../mia-ui/forms'
 import { Flex, Box } from 'grid-styled'
 import { Expander } from '../../mia-ui/expanders'
 import ImgSrcProvider from '../../shared/ImgSrcProvider'
+import Joyride from 'react-joyride'
+import { ImagesQuery } from '../../../apollo/queries/images'
 
 export default class ObjEditor extends Component {
+  wait = duration => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve()
+      }, duration)
+    })
+  }
+
+  write = async (text, name) => {
+    try {
+      for (let i = 0; i <= text.length; i++) {
+        await this.wait(15)
+        this.handleChange({
+          target: {
+            name,
+            value: text.slice(0, i)
+          }
+        })
+      }
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
   initialState = {
     id: '',
     title: '',
@@ -25,7 +51,71 @@ export default class ObjEditor extends Component {
   }
 
   state = {
-    ...this.initialState
+    ...this.initialState,
+    demoIndex: 0,
+    demoSteps: [
+      {
+        target: '#obj-editor',
+        content: (
+          <div>
+            <p>
+              Now that we've created an object, we can edit it and associate it
+              with an image.
+            </p>
+            <Button
+              onClick={() => {
+                this.props.onDemoFinish()
+              }}
+            >
+              Next
+            </Button>
+          </div>
+        ),
+        disableBeacon: true
+      }
+    ]
+  }
+
+  handleDemoChange = async ({ action, index, lifecycle, step }) => {
+    try {
+      if (
+        action === 'update' &&
+        index === 0 &&
+        lifecycle === 'tooltip' &&
+        !this.state.description
+      ) {
+        await this.write("Curator's Office", 'title')
+
+        await this.write('Mark Dion', 'attribution')
+
+        await this.write(
+          'G378, Minneapolis Institute of Art',
+          'currentLocation'
+        )
+
+        await this.write('2012-2013', 'date')
+
+        let {
+          data: { images }
+        } = await this.props.client.query({
+          query: ImagesQuery,
+          variables: {
+            filter: {
+              organization: {
+                subdomain: this.props.router.query.subdomain
+              },
+              search: "Curator's Office"
+            }
+          }
+        })
+
+        await this.handleImageChange({
+          target: { name: 'primaryImadeId', value: images[0].id }
+        })
+      }
+    } catch (ex) {
+      console.error(ex)
+    }
   }
 
   render() {
@@ -47,6 +137,7 @@ export default class ObjEditor extends Component {
         open={exp}
         onRequestOpen={() => this.setState({ exp: true })}
         onRequestClose={() => this.setState({ exp: false })}
+        id={'obj-editor'}
       >
         <Flex flexWrap={'wrap'} w={1}>
           {this.props.organization.customObjApiEnabled ? (
@@ -122,6 +213,25 @@ export default class ObjEditor extends Component {
             />
           </Box>
         </Flex>
+        <Joyride
+          run={this.props.showDemo} //this.props.router.query.demo ?  true : false}
+          steps={this.state.demoSteps}
+          stepIndex={this.state.demoIndex}
+          styles={{
+            buttonClose: {
+              display: 'none'
+            },
+            buttonNext: {
+              display: 'none'
+            },
+            buttonBack: {
+              display: 'none'
+            }
+          }}
+          disableOverlayClose={true}
+          disableCloseOnEscape={true}
+          callback={this.handleDemoChange}
+        />
       </Expander>
     )
   }
@@ -162,9 +272,10 @@ export default class ObjEditor extends Component {
 
   handleSave = () => {
     this.props.editObj({
-      ...this.state,
-      __typename: undefined,
-      exp: undefined
+      title: this.state.title,
+      attribution: this.state.attribution,
+      currentLocation: this.state.currentLocation,
+      date: this.state.date
     })
   }
 

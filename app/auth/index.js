@@ -138,7 +138,7 @@ export default class Auth {
       }
 
       if (this.user) {
-        console.log('user found', this.user)
+        console.log('user found')
         await this.fetchPermissions()
       } else {
         console.log('no user found')

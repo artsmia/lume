@@ -12,7 +12,8 @@ import {
   DirectionEnum,
   ContentTypeEnum,
   TemplateEnum,
-  VisibilityEnum
+  VisibilityEnum,
+  MediaEnum
 } from './enums'
 import { GeometryEnum, FeatureCollectionInput } from './geometry'
 
@@ -88,6 +89,9 @@ export const ObjInput = new GraphQLInputObjectType({
     },
     primaryImageId: {
       type: GraphQLID
+    },
+    primaryMediaType: {
+      type: MediaEnum
     }
   }
 })

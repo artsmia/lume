@@ -14,7 +14,8 @@ export default class Edit extends Component {
       return {
         storySlug,
         subdomain,
-        user: auth.user
+        user: auth.user,
+        demo: ctx.query.demo ? true : false
       }
     } catch (ex) {
       console.error(ex)

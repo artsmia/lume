@@ -327,7 +327,8 @@ export default class extends Component {
         noWrap: true,
         bounds: this.bounds,
         minZoom: Math.floor(initialZoom),
-        maxZoom
+        maxZoom,
+        errorTileUrl: '/static/spinner.gif'
       })
 
       const initialLatLng = [height / 2, -1 * width / 2]
@@ -342,6 +343,14 @@ export default class extends Component {
         } else {
           e.target._zoom = Math.round(zoomReq)
         }
+      })
+
+      this.map.on('tileload', tileEvent => {
+        console.log(tileEvent)
+      })
+
+      this.map.on('tileerror', tileError => {
+        console.log(tileError)
       })
 
       this.tiles.addTo(this.map)
@@ -486,6 +495,7 @@ const ZoomerMap = styled.div`
   height: 100%;
   width: 100%;
   display: block;
+  z-index: 99;
   .crop-button {
     height: 30px;
     width: 30px;

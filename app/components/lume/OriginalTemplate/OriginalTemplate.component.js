@@ -343,7 +343,7 @@ export default class OriginalTemplate extends Component {
             </TabHeader>
             <TabBody name={'about'}>
               <Box p={3} id={'about'}>
-                <Markdown source={objContent ? objContent.description : ''} />
+                <Markdown source={obj ? obj.description : story.description} />
               </Box>
             </TabBody>
             <TabBody name={'details'}>

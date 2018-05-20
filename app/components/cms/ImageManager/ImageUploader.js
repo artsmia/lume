@@ -7,8 +7,9 @@ import { Button } from '../../mia-ui/buttons'
 import { Spinner, Loading, Waiting } from '../../mia-ui/loading'
 import { Flex, Box } from 'grid-styled'
 import Joyride from 'react-joyride'
+import { ImagesQuery } from '../../../apollo/queries/images'
 
-export default class extends Component {
+export default class ImageUploader extends Component {
   wait = duration => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -71,7 +72,26 @@ export default class extends Component {
 
           <Button
             onClick={async () => {
-              await this.handleUpload()
+              console.log(this.props)
+
+              let {
+                data: { images }
+              } = await this.props.client.query({
+                query: ImagesQuery,
+                variables: {
+                  filter: {
+                    organization: {
+                      subdomain: this.props.router.query.subdomain
+                    },
+                    search: "Curator's Office"
+                  }
+                }
+              })
+
+              if (images.length < 1) {
+                await this.handleUpload()
+              }
+
               this.props.onDemoFinish()
             }}
           >
@@ -86,12 +106,12 @@ export default class extends Component {
   handleDemoChange = async ({ action, index, lifecycle, step }) => {
     try {
       if (action === 'update' && index === 0 && lifecycle === 'tooltip') {
-        let response = await fetch(`/static/frankenstein.jpg`)
+        let response = await fetch(`/static/curatorsoffice.jpg`)
 
         let arrayBuffer = await response.arrayBuffer()
 
         let files = [
-          new File([arrayBuffer], 'Frankenstein.jpg', {
+          new File([arrayBuffer], 'curatorsoffice.jpg', {
             type: 'image/jpeg'
           })
         ]
@@ -99,11 +119,8 @@ export default class extends Component {
         this.handleFile({ target: { name: 'files', files } })
       }
       if (action === 'update' && index === 1 && lifecycle === 'tooltip') {
-        await this.write("Frankenstein's Monster, Actor", 'title')
-        await this.write(
-          "A black and white photo of Boris Karloff, as Frankenstein's monster, using Jack Pierce's makeup design.",
-          'description'
-        )
+        await this.write("Curator's Office", 'title')
+        await this.write("A 1950's curator office.", 'description')
         this.setState({ hasRights: true })
       }
     } catch (ex) {

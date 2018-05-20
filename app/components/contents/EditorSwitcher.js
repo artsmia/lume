@@ -4,22 +4,34 @@ import MovieContentEditor from './movie/MovieEditor'
 import ObjContentEditor from './obj/ObjContentEditor'
 import PictureContentEditor from './picture/PictureEditor'
 
-export default ({ content }) => {
-  switch (content.type) {
+export default props => {
+  switch (props.content.type) {
     case 'comparison': {
-      return <ComparisonContentEditor contentId={content.id} />
+      return <ComparisonContentEditor contentId={props.content.id} />
     }
     case 'detail': {
-      return <DetailContentEditor contentId={content.id} />
+      return (
+        <DetailContentEditor
+          contentId={props.content.id}
+          showDemo={props.showDetailDemo}
+          onDemoFinish={props.onDetailDemoFinish}
+        />
+      )
     }
     case 'movie': {
-      return <MovieContentEditor contentId={content.id} />
+      return <MovieContentEditor contentId={props.content.id} />
     }
     case 'obj': {
-      return <ObjContentEditor contentId={content.id} />
+      return (
+        <ObjContentEditor
+          contentId={props.content.id}
+          showDemo={props.showObjContentDemo}
+          onDemoFinish={props.onObjContentDemoFinish}
+        />
+      )
     }
     case 'picture': {
-      return <PictureContentEditor contentId={content.id} />
+      return <PictureContentEditor contentId={props.content.id} />
     }
     default: {
       return null

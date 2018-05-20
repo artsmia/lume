@@ -69,8 +69,9 @@ export default class Editor extends Component {
           <Button
             onClick={() => {
               this.setState(({ demoIndex }) => ({
-                storyEditorDemo: true,
-                showDemo: false
+                showStoryEditorDemo: true,
+                showDemo: false,
+                storyDemoIndex: 0
               }))
             }}
           >
@@ -127,9 +128,7 @@ export default class Editor extends Component {
             onClick={async () => {
               try {
                 const {
-                  data: {
-                    createContent: { content }
-                  }
+                  data: { createContent: content }
                 } = await this.props.client.mutate({
                   mutation: CreateContent,
                   variables: {
@@ -137,8 +136,73 @@ export default class Editor extends Component {
                     type: 'obj'
                   }
                 })
+                await this.props.refetch()
+                this.handleContentSelection(content.id)
+
                 this.setState(({ demoIndex }) => ({
-                  demoIndex: demoIndex + 1
+                  demoIndex: demoIndex + 1,
+                  showObjContentDemo: true,
+                  showDemo: false
+                }))
+              } catch (ex) {
+                console.error(ex)
+              }
+            }}
+          >
+            Create a content block
+          </Button>
+        </div>
+      ),
+      target: '#create-content',
+      disableBeacon: true
+    },
+    {
+      content: (
+        <div>
+          <p>
+            At any time we can preview our story. This is what your story will
+            look like to your users.
+          </p>
+        </div>
+      ),
+      target: '#preview-button',
+      disableBeacon: true,
+      spotlightClicks: true
+    },
+    {
+      content: (
+        <div>
+          <p>Just click again to return to the editor.</p>
+        </div>
+      ),
+      target: '#preview-button',
+      disableBeacon: true,
+      spotlightClicks: true
+    },
+    {
+      content: (
+        <div>
+          <p>Let's create another content. This time a detail content.</p>
+
+          <Button
+            onClick={async () => {
+              try {
+                const {
+                  data: { createContent: content }
+                } = await this.props.client.mutate({
+                  mutation: CreateContent,
+                  variables: {
+                    storyId: this.props.story.id,
+                    type: 'detail'
+                  }
+                })
+                await this.props.refetch()
+                this.handleContentSelection(content.id)
+
+                this.setState(({ demoIndex }) => ({
+                  demoIndex: demoIndex + 1,
+                  showDetailDemo: true,
+                  showDemo: false
                 }))
               } catch (ex) {
                 console.error(ex)
@@ -156,23 +220,18 @@ export default class Editor extends Component {
 
   handleStoryEditorDemoFinish = () => {
     this.setState(({ demoIndex }) => ({
-      storyEditorDemo: false,
+      showStoryEditorDemo: false,
       demoIndex: demoIndex + 1,
       showDemo: true
     }))
   }
 
-  handleDemoChange = async e => {
-    try {
-      console.log(e)
-    } catch (ex) {
-      console.error(ex)
-    }
+  handleDemoChange = e => {
+    console.log(e)
   }
 
   render() {
     console.log(this)
-
     if (!this.props.story) return <Loading />
 
     const {
@@ -202,8 +261,9 @@ export default class Editor extends Component {
         <PreviewContainer w={1}>
           <PreviewButtonBox>
             <Button
-              onClick={() => this.setState({ preview: false })}
+              onClick={this.togglePreview}
               color={'blue'}
+              id={'preview-button'}
             >
               Return to Editing
             </Button>
@@ -222,6 +282,23 @@ export default class Editor extends Component {
             )}
           </PreviewButtonBox>
           <StoryPreview story={story} />
+          <Joyride
+            run={this.state.showDemo} //this.props.router.query.demo ?  true : false}
+            steps={this.state.demoSteps}
+            callback={this.handleDemoChange}
+            stepIndex={this.state.demoIndex}
+            styles={{
+              buttonClose: {
+                display: 'none'
+              },
+              buttonNext: {
+                display: 'none'
+              },
+              buttonBack: {
+                display: 'none'
+              }
+            }}
+          />
         </PreviewContainer>
       )
 
@@ -231,7 +308,7 @@ export default class Editor extends Component {
 
         <PreviewButtonBox width={1 / 6}>
           <Button
-            onClick={() => this.setState({ preview: true })}
+            onClick={this.togglePreview}
             color={'blue'}
             id={'preview-button'}
           >
@@ -336,18 +413,26 @@ export default class Editor extends Component {
               <StoryEditor
                 storyId={storyId}
                 onDemoFinish={this.handleStoryEditorDemoFinish}
-                showDemo={this.state.storyEditorDemo}
+                showDemo={this.state.showStoryEditorDemo}
+                demoIndex={this.state.storyDemoIndex}
               />
             ) : null}
 
             {editing === 'content' ? (
-              <EditorSwitcher content={selectedContent} />
+              <EditorSwitcher
+                content={selectedContent}
+                showObjContentDemo={this.state.showObjContentDemo}
+                onObjContentDemoFinish={this.handleObjDemoFinish}
+                showDetailDemo={this.state.showDetailDemo}
+                onDetailDemoFinish={this.handleDetailDemoFinish}
+              />
             ) : null}
           </EditingPane>
         </Workspace>
 
         <Joyride
-          run={this.state.showDemo} //this.props.router.query.demo ?  true : false}
+          debug={true}
+          run={this.state.showDemo}
           steps={this.state.demoSteps}
           callback={this.handleDemoChange}
           stepIndex={this.state.demoIndex}
@@ -367,6 +452,22 @@ export default class Editor extends Component {
     )
   }
 
+  handleDetailDemoFinish = () => {
+    this.setState({
+      showDetailDemo: false,
+      editing: 'story',
+      showStoryEditorDemo: true,
+      storyDemoIndex: 3
+    })
+  }
+
+  handleObjDemoFinish = () => {
+    this.setState({
+      showObjContentDemo: false,
+      showDemo: true
+    })
+  }
+
   renderSaveStatus = () => {
     const { synced } = this.props.saveStatus
 
@@ -381,9 +482,11 @@ export default class Editor extends Component {
     super(props)
     this.state = {}
     this.state = {
-      demoIndex: 1,
+      showStoryEditorDemo: false,
+      storyDemoIndex: 0,
+      demoIndex: 0,
       demoSteps: this.demoSteps,
-      showDemo: this.props.router.query.demo ? true : false,
+      showDemo: true,
       editing: 'story',
       selectedContent: null,
       contentType: 'comparison',
@@ -437,6 +540,12 @@ export default class Editor extends Component {
 
   togglePreview = () => {
     this.setState(({ preview }) => ({ preview: !preview }))
+    if (this.state.demoIndex === 3) {
+      this.setState({ demoIndex: 4 })
+    }
+    if (this.state.demoIndex === 4) {
+      this.setState({ demoIndex: 5 })
+    }
   }
 
   handleReorder = (dragIndex, hoverIndex) => {
@@ -507,7 +616,7 @@ const PreviewContainer = styled.div`
 
 const PreviewButtonBox = styled.div`
   position: absolute;
-  z-index: 1002;
+  z-index: 101;
   top: 8px;
   right: 110px;
 `

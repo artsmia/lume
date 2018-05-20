@@ -30,7 +30,7 @@ class ObjContentEditor extends Component {
         content,
         content: { obj }
       },
-      state: { modal, objId, description },
+      state: { modal, objId, description, title },
       handleSelect,
       handleChange,
       saveEdits
@@ -39,6 +39,12 @@ class ObjContentEditor extends Component {
     return (
       <Flex flexWrap={'wrap'} m={3}>
         <Box w={1}>
+          <Title
+            label={'Title'}
+            value={title}
+            name={'title'}
+            onChange={handleChange}
+          />
           <Description
             label={'Description'}
             value={description}
@@ -48,10 +54,22 @@ class ObjContentEditor extends Component {
         </Box>
 
         <Box w={1 / 2} pr={3}>
-          <ObjSelector onSelect={handleSelect} />
+          <ObjSelector
+            onSelect={handleSelect}
+            showDemo={this.state.showSelectorDemo && this.props.showDemo}
+            onDemoFinish={this.handleObjSelectorFinish}
+          />
         </Box>
 
-        <Box w={1 / 2}>{obj ? <ObjEditor objId={obj.id} /> : null}</Box>
+        <Box w={1 / 2}>
+          {obj ? (
+            <ObjEditor
+              objId={obj.id}
+              showDemo={this.state.showEditorDemo && this.props.showDemo}
+              onDemoFinish={this.handleObjEditorDemoFinish}
+            />
+          ) : null}
+        </Box>
 
         <Box w={1} my={5}>
           <DeleteContentButton contentId={this.props.content.id} />
@@ -61,6 +79,23 @@ class ObjContentEditor extends Component {
   }
 
   bounce = true
+
+  handleObjSelectorFinish = () => {
+    this.setState({
+      showSelectorDemo: false,
+      showEditorDemo: true
+    })
+  }
+
+  handleObjEditorDemoFinish = () => {
+    this.setState(
+      () => ({
+        showSelectorDemo: false,
+        showEditorDemo: false
+      }),
+      this.props.onDemoFinish
+    )
+  }
 
   debounce = (func, wait) => {
     if (this.bounce) {
@@ -81,12 +116,13 @@ class ObjContentEditor extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {}
     this.state = {
+      ...this.stateFromProps(props),
       modal: false,
-      objId: ''
-    }
-    this.state = {
-      ...this.stateFromProps(props)
+      objId: '',
+      showSelectorDemo: false,
+      showEditorDemo: false
     }
   }
 
@@ -107,7 +143,21 @@ class ObjContentEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let nextState = this.stateFromProps(nextProps)
+
     this.setState({ ...this.stateFromProps(nextProps) })
+
+    if (nextProps.showDemo) {
+      Object.assign(nextState, { showSelectorDemo: true })
+    }
+
+    if (!nextProps.showDemo) {
+      Object.assign(nextState, {
+        showSelectorDemo: false,
+        showEditorDemo: false
+      })
+    }
+    this.setState({ ...nextState })
   }
 
   handleSelect = objId => {
@@ -123,7 +173,8 @@ class ObjContentEditor extends Component {
     try {
       await this.props.editContent({
         id: this.state.id,
-        description: this.state.description
+        description: this.state.description,
+        title: this.state.title
       })
 
       this.props.setSaveStatus({

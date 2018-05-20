@@ -6,11 +6,52 @@ import { Link } from '../../mia-ui/links'
 import { Flex, Box } from 'grid-styled'
 import { Expander } from '../../mia-ui/expanders'
 import { H3 } from '../../mia-ui/text'
+import Joyride from 'react-joyride'
 
 export default class ObjSelector extends Component {
   state = {
     search: '',
-    exp: true
+    exp: true,
+    demoIndex: 0,
+    demoSteps: [
+      {
+        target: '#select-object',
+        content: (
+          <div>
+            <p>
+              This tool allows us to search our organization's objects to create
+              new objects. At Mia, the object's in our system typically refer to
+              a specic item in our collection.
+            </p>
+            <p>Many of our stories are centered around such objects.</p>
+
+            <Button
+              onClick={() => {
+                this.setState(({ demoIndex }) => ({
+                  demoIndex: demoIndex + 1
+                }))
+              }}
+            >
+              Next
+            </Button>
+          </div>
+        ),
+        disableBeacon: true
+      },
+      {
+        target: '#create-object',
+        content: (
+          <div>
+            <p>
+              Let's go ahead and create a new Object that corresponds to
+              Curator's Office.
+            </p>
+          </div>
+        ),
+        disableBeacon: true,
+        spotlightClicks: true
+      }
+    ]
   }
 
   render() {
@@ -29,12 +70,17 @@ export default class ObjSelector extends Component {
         open={exp}
         onRequestOpen={() => this.setState({ exp: true })}
         onRequestClose={() => this.setState({ exp: false })}
+        id="select-object"
       >
         <Flex w={1} flexWrap={'wrap'}>
           {this.props.organization ? (
             <Box w={1}>
               {!this.props.organization.customObjApiEnabled ? (
-                <Button onClick={handleCreate} color={'green'}>
+                <Button
+                  onClick={handleCreate}
+                  color={'green'}
+                  id={'create-object'}
+                >
                   Create Object
                 </Button>
               ) : null}
@@ -71,6 +117,25 @@ export default class ObjSelector extends Component {
               : null}
           </ObjList>
         </Flex>
+
+        <Joyride
+          run={this.props.showDemo} //this.props.router.query.demo ?  true : false}
+          steps={this.state.demoSteps}
+          stepIndex={this.state.demoIndex}
+          styles={{
+            buttonClose: {
+              display: 'none'
+            },
+            buttonNext: {
+              display: 'none'
+            },
+            buttonBack: {
+              display: 'none'
+            }
+          }}
+          disableOverlayClose={true}
+          disableCloseOnEscape={true}
+        />
       </Expander>
     )
   }
@@ -123,6 +188,11 @@ export default class ObjSelector extends Component {
       } = await this.props.createObj({})
 
       this.props.onSelect(objId)
+
+      if (this.state.demoIndex === 1 && this.props.showDemo) {
+        this.setState(({ demoIndex }) => ({ demoIndex: demoIndex + 1 }))
+        this.props.onDemoFinish()
+      }
     } catch (ex) {
       console.error(ex)
     }

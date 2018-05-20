@@ -43,6 +43,7 @@ export class Expander extends Component {
           this.container = ref
         }}
         border={this.props.border}
+        id={this.props.id}
       >
         <Header w={1} alignItems={'center'}>
           <A onClick={open ? handleCloseRequest : handleOpenRequest}>

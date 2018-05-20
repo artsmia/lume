@@ -14,7 +14,8 @@ if (process.env.DB_MODE === 'sqlite') {
 } else {
   db = new Sequelize(process.env.DB_URL, {
     logging: false,
-    charset: 'utf8'
+    charset: 'utf8',
+    dialect: 'mysql'
   })
 }
 

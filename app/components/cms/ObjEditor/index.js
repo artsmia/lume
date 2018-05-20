@@ -1,4 +1,4 @@
-import { compose } from 'react-apollo'
+import { compose, withApollo } from 'react-apollo'
 import Component from './ObjEditor.component.js'
 import query from '../../../apollo/queries/obj'
 import organization from '../../../apollo/queries/organization'
@@ -8,6 +8,8 @@ import { withRouter } from 'next/router'
 
 let ExportComponent = Component
 
-ExportComponent = compose(query, mutation, organization)(ExportComponent)
+ExportComponent = compose(query, mutation, organization, withApollo)(
+  ExportComponent
+)
 
 export default withRouter(ExportComponent)

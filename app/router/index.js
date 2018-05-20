@@ -143,8 +143,7 @@ app
       const { subdomain, storySlug } = req.params
       const params = {
         subdomain,
-        storySlug,
-        demo: true
+        storySlug
       }
       app.render(req, res, page, params)
     })

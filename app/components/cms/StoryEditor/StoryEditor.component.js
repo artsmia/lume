@@ -51,7 +51,7 @@ export default class StoryEditor extends Component {
   write = async (text, name) => {
     try {
       for (let i = 0; i <= text.length; i++) {
-        await this.wait(50)
+        await this.wait(15)
         this.handleChange({
           target: {
             name,
@@ -154,11 +154,8 @@ export default class StoryEditor extends Component {
           <Button
             onClick={() => {
               this.setState(({ demoIndex }) => ({
-                demoIndex: demoIndex + 1,
-                showDemo: false
+                demoIndex: demoIndex + 1
               }))
-
-              this.props.onDemoFinish()
             }}
           >
             Next
@@ -175,11 +172,12 @@ export default class StoryEditor extends Component {
       showDemo: true,
       changeImageDemoFinished: true
     }))
-    this.props.handleStoryEditorDemoFinish()
+    this.props.onDemoFinish()
   }
 
   handleDemoChange = async ({ action, index, lifecycle, step }) => {
     try {
+      console.log('handle')
       if (
         action === 'update' &&
         index === 0 &&
@@ -187,7 +185,7 @@ export default class StoryEditor extends Component {
         !this.state.description
       ) {
         await this.write(
-          'Frankenstein is a monster story by Mary Shelley. It is *the best.*',
+          "Curator's office is one of my *favorite* works at the Minneapolis Institute of Art.",
           'description'
         )
       }
@@ -345,7 +343,8 @@ export default class StoryEditor extends Component {
           </Flex>
         </Flex>
         <Joyride
-          run={this.state.showDemo ? true : false}
+          debug={true}
+          run={this.state.showDemo}
           steps={this.state.demoSteps}
           stepIndex={this.state.demoIndex}
           callback={this.handleDemoChange}
@@ -378,21 +377,27 @@ export default class StoryEditor extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {}
     this.state = {
-      demoIndex: 0,
+      showDemo: props.showDemo,
+      demoIndex: props.demoIndex,
       demoSteps: this.demoSteps,
       ...this.createStateFromProps(props)
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      ...this.createStateFromProps(nextProps)
+    let nextState = this.createStateFromProps(nextProps)
+
+    console.log(nextProps)
+    Object.assign(nextState, {
+      showDemo: nextProps.showDemo,
+      demoIndex: nextProps.demoIndex
     })
 
-    if (nextProps.showDemo && !this.state.showChangeImageDemo) {
-      this.setState({ showDemo: true })
-    }
+    console.log(nextState)
+
+    this.setState(nextState)
   }
 
   createStateFromProps = props => {
@@ -406,6 +411,8 @@ export default class StoryEditor extends Component {
         ...story,
         previewImageId: previewImage ? previewImage.id : ''
       }
+    } else {
+      return {}
     }
   }
 

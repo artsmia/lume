@@ -43,12 +43,12 @@ export default function({
       [Op.or]: [
         {
           title: {
-            [Op.regexp]: search
+            [Op.like]: search
           }
         },
         {
           description: {
-            [Op.regexp]: search
+            [Op.like]: search
           }
         }
       ]

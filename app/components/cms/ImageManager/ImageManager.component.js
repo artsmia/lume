@@ -50,19 +50,19 @@ export default class ImageManager extends Component {
             onClick={() => {
               this.setState(
                 ({ demoIndex }) => ({
-                  search: 'frankenstein'
+                  search: "Curator's office"
                 }),
                 async () => {
                   await this.handleSearch()
                   let image = this.props.images.find(
-                    image => image.title === "Frankenstein's Monster, Actor"
+                    image => image.title === "Curator's Office"
                   )
                   this.handleImageSelect(image)
+                  this.setState(({ demoIndex }) => ({
+                    demoIndex: demoIndex + 1
+                  }))
                 }
               )
-              this.setState(({ demoIndex }) => ({
-                demoIndex: demoIndex + 1
-              }))
             }}
           >
             Next
@@ -124,10 +124,13 @@ export default class ImageManager extends Component {
   }
 
   handleUploaderDemoFinish = () => {
+    console.log('handleUploaderDemoFinish', this)
+
     this.setState({
       showDemo: true,
       showUploaderDemo: false,
-      uploaderDemoFinished: true
+      uploaderDemoFinished: true,
+      selectedTab: 'select'
     })
   }
 
@@ -172,6 +175,8 @@ export default class ImageManager extends Component {
       handleDeleteImage
     } = this
 
+    console.log(this.props)
+
     return (
       <Container w={'80vw'}>
         {loading ? <Waiting /> : null}
@@ -202,6 +207,23 @@ export default class ImageManager extends Component {
           </TabHeader>
 
           <TabBody name={'select'}>
+            <Joyride
+              run={this.state.showDemo}
+              steps={this.state.demoSteps}
+              stepIndex={this.state.demoIndex}
+              callback={this.handleDemoChange}
+              styles={{
+                buttonClose: {
+                  display: 'none'
+                },
+                buttonNext: {
+                  display: 'none'
+                },
+                buttonBack: {
+                  display: 'none'
+                }
+              }}
+            />
             <SelectFlex p={1}>
               <OrgImagesFlex
                 width={1 / 2}
@@ -339,26 +361,11 @@ export default class ImageManager extends Component {
               refetch={handleRefetch}
               showDemo={this.state.showUploaderDemo}
               onDemoFinish={this.handleUploaderDemoFinish}
+              client={this.props.client}
+              router={this.props.router}
             />
           </TabBody>
         </TabContainer>
-        <Joyride
-          run={this.state.showDemo}
-          steps={this.state.demoSteps}
-          stepIndex={this.state.demoIndex}
-          callback={this.handleDemoChange}
-          styles={{
-            buttonClose: {
-              display: 'none'
-            },
-            buttonNext: {
-              display: 'none'
-            },
-            buttonBack: {
-              display: 'none'
-            }
-          }}
-        />
       </Container>
     )
   }
@@ -616,6 +623,7 @@ const MiaDisplayImage = styled.img`
 
 const ZoomerInputContainer = styled(Flex)`
   height: 100%;
+  min-height: 500px;
 `
 
 // const SearchRow = styled(Row)`

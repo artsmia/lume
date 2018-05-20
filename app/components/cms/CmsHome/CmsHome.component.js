@@ -41,7 +41,7 @@ export default class CmsHome extends Component {
             organization: {
               subdomain: this.props.router.query.subdomain
             },
-            slug: 'frankenstein-demo'
+            slug: 'curators-office-demo'
           }
         }
       })
@@ -52,26 +52,26 @@ export default class CmsHome extends Component {
             pathname: '/cms/edit',
             query: {
               subdomain: this.props.router.query.subdomain,
-              storySlug: 'frankenstein-demo',
+              storySlug: 'curators-office-demo',
               demo: true
             }
           },
-          `/${this.props.router.query.subdomain}/frankenstein-demo`
+          `/${this.props.router.query.subdomain}/curators-office-demo`
         )
       } else {
         await this.props.createStory({
-          title: 'Frankenstein (Demo)'
+          title: "Curator's Office (Demo)"
         })
         this.props.router.push(
           {
             pathname: '/cms/edit',
             query: {
               subdomain: this.props.router.query.subdomain,
-              storySlug: 'frankenstein-demo',
+              storySlug: 'curators-office-demo',
               demo: true
             }
           },
-          `/${this.props.router.query.subdomain}/frankenstein-demo`
+          `/${this.props.router.query.subdomain}/curators-office-demo`
         )
       }
     } catch (ex) {
