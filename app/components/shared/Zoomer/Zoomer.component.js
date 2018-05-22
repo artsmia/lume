@@ -495,7 +495,7 @@ const ZoomerMap = styled.div`
   height: 100%;
   width: 100%;
   display: block;
-  z-index: 99;
+  z-index: 98;
   .crop-button {
     height: 30px;
     width: 30px;

@@ -19,12 +19,46 @@ export default async function(src, args, ctx) {
     let storiesWithSlug = await Story.findAll({
       where: {
         organizationId: organization.id,
-        slug
-      }
+        [Op.or]: [
+          {
+            slug: slug
+          },
+          {
+            slug: {
+              [Op.regexp]: `${slug}-[0-9]*`
+            }
+          }
+        ]
+      },
+      logging: true
     })
 
     if (storiesWithSlug.length > 0) {
-      slug = slug.concat(`-${storiesWithSlug.length + 1}`)
+      let newIndex = storiesWithSlug.length
+
+      let newSlug = `${slug}-${newIndex}`
+
+      let found = storiesWithSlug.find(story => {
+        if (story.slug === newSlug) {
+          return true
+        } else {
+          return false
+        }
+      })
+
+      while (found) {
+        newIndex++
+        newSlug = `${slug}-${newIndex}`
+        found = storiesWithSlug.find(story => {
+          if (story.slug === newSlug) {
+            return true
+          } else {
+            return false
+          }
+        })
+      }
+
+      slug = newSlug
     }
 
     return await Story.create({

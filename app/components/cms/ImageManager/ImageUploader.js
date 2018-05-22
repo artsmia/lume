@@ -10,6 +10,8 @@ import Joyride from 'react-joyride'
 import { ImagesQuery } from '../../../apollo/queries/images'
 
 export default class ImageUploader extends Component {
+  tourId = 'ImageUploader'
+
   wait = duration => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -34,7 +36,7 @@ export default class ImageUploader extends Component {
     }
   }
 
-  demoSteps = [
+  demoSteps = () => [
     {
       target: '#upload-images-container',
       content: (
@@ -70,33 +72,33 @@ export default class ImageUploader extends Component {
             your story.
           </p>
 
-          <Button
-            onClick={async () => {
-              console.log(this.props)
-
-              let {
-                data: { images }
-              } = await this.props.client.query({
-                query: ImagesQuery,
-                variables: {
-                  filter: {
-                    organization: {
-                      subdomain: this.props.router.query.subdomain
-                    },
-                    search: "Curator's Office"
+          {this.props.showDemo && this.state.hasRights ? (
+            <Button
+              onClick={async () => {
+                let {
+                  data: { images }
+                } = await this.props.client.query({
+                  query: ImagesQuery,
+                  variables: {
+                    filter: {
+                      organization: {
+                        subdomain: this.props.router.query.subdomain
+                      },
+                      search: "Curator's Office"
+                    }
                   }
+                })
+
+                if (images.length < 1) {
+                  await this.handleUpload()
                 }
-              })
 
-              if (images.length < 1) {
-                await this.handleUpload()
-              }
-
-              this.props.onDemoFinish()
-            }}
-          >
-            Upload Image
-          </Button>
+                this.props.onDemoFinish()
+              }}
+            >
+              Next
+            </Button>
+          ) : null}
         </div>
       ),
       disableBeacon: true
@@ -145,7 +147,6 @@ export default class ImageUploader extends Component {
     title: '',
     snackMessage: '',
     snackId: Math.random(),
-    demoSteps: this.demoSteps,
     demoIndex: 0
   }
 
@@ -222,7 +223,7 @@ export default class ImageUploader extends Component {
         </Box>
         <Joyride
           run={this.props.showDemo ? true : false}
-          steps={this.state.demoSteps}
+          steps={this.demoSteps()}
           stepIndex={this.state.demoIndex}
           callback={this.handleDemoChange}
           styles={{
@@ -237,6 +238,27 @@ export default class ImageUploader extends Component {
             }
           }}
         />
+        {/* {this.props.tour ? (
+          <Joyride
+            run={this.props.tour.run(this)}
+            steps={this.props.tour.steps(this)}
+            stepIndex={this.props.tour.stepIndex}
+            callback={this.props.tour.callback(this)}
+            styles={{
+              buttonClose: {
+                display: 'none'
+              },
+              buttonNext: {
+                display: 'none'
+              },
+              buttonBack: {
+                display: 'none'
+              }
+            }}
+            disableOverlayClose={true}
+            disableCloseOnEscape={true}
+          />
+        ) : null} */}
       </Flex>
     )
   }

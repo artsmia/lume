@@ -151,12 +151,12 @@ class ObjContentEditor extends Component {
       Object.assign(nextState, { showSelectorDemo: true })
     }
 
-    if (!nextProps.showDemo) {
-      Object.assign(nextState, {
-        showSelectorDemo: false,
-        showEditorDemo: false
-      })
-    }
+    // if (!nextProps.showDemo) {
+    //   Object.assign(nextState, {
+    //     showSelectorDemo: false,
+    //     showEditorDemo: false
+    //   })
+    // }
     this.setState({ ...nextState })
   }
 

@@ -31,6 +31,30 @@ const ImageEl = styled.img`
 const Image = imgSrcProvider(ImageEl)
 
 export default class ImageManager extends Component {
+  wait = duration => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve()
+      }, duration)
+    })
+  }
+
+  write = async (text, name) => {
+    try {
+      for (let i = 0; i <= text.length; i++) {
+        await this.wait(50)
+        this.handleChange({
+          target: {
+            name,
+            value: text.slice(0, i)
+          }
+        })
+      }
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
   demoSteps = [
     {
       target: '#select-images-container',
@@ -48,21 +72,41 @@ export default class ImageManager extends Component {
           </p>
           <Button
             onClick={() => {
-              this.setState(
-                ({ demoIndex }) => ({
-                  search: "Curator's office"
-                }),
-                async () => {
-                  await this.handleSearch()
-                  let image = this.props.images.find(
-                    image => image.title === "Curator's Office"
-                  )
-                  this.handleImageSelect(image)
-                  this.setState(({ demoIndex }) => ({
-                    demoIndex: demoIndex + 1
-                  }))
-                }
+              this.setState(({ demoIndex }) => ({
+                demoIndex: demoIndex + 1
+              }))
+            }}
+          >
+            Next
+          </Button>
+        </div>
+      ),
+      placement: 'right',
+      disableBeacon: true
+    },
+    {
+      target: '#image-search',
+      content: (
+        <div>
+          <p>
+            When your images are done uploading to Lume, they will appear here
+            amongst your other images.
+          </p>
+          <p>
+            Don't worry if your image doesn't appear immediately, it can take
+            several minutes for images to appear depending on your internet
+            speed. Lume allows for large images and it sometimes take a few
+            moments for our servers to break those images up into tiles.
+          </p>
+          <Button
+            onClick={() => {
+              let image = this.props.images.find(
+                image => image.title === "Curator's Office"
               )
+              this.handleImageSelect(image)
+              this.setState(({ demoIndex }) => ({
+                demoIndex: demoIndex + 1
+              }))
             }}
           >
             Next
@@ -111,13 +155,10 @@ export default class ImageManager extends Component {
 
   handleDemoChange = async ({ action, index, lifecycle, step }) => {
     try {
-      // if (
-      //   action === 'update' &&
-      //   index === 0 &&
-      //   lifecycle === 'tooltip'
-      // ){
-      //
-      // }
+      if (action === 'update' && index === 1 && lifecycle === 'tooltip') {
+        await this.write("Curator's Office", 'search')
+        await this.handleSearch()
+      }
     } catch (ex) {
       console.error(ex)
     }
@@ -175,8 +216,6 @@ export default class ImageManager extends Component {
       handleDeleteImage
     } = this
 
-    console.log(this.props)
-
     return (
       <Container w={'80vw'}>
         {loading ? <Waiting /> : null}
@@ -231,7 +270,7 @@ export default class ImageManager extends Component {
                 p={2}
                 id={'select-images-container'}
               >
-                <Box width={1} mb={2}>
+                <Box width={1} mb={2} id={'image-search'}>
                   <Input
                     value={search}
                     name={'search'}
@@ -363,6 +402,7 @@ export default class ImageManager extends Component {
               onDemoFinish={this.handleUploaderDemoFinish}
               client={this.props.client}
               router={this.props.router}
+              tour={this.props.tour}
             />
           </TabBody>
         </TabContainer>

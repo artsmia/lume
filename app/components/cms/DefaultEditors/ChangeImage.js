@@ -61,6 +61,7 @@ export default class ChangeImage extends Component {
               onImageSave={handleChange}
               onDemoFinish={this.props.onDemoFinish}
               showDemo={this.props.showDemo}
+              //tour={this.props.tour}
             />
           ) : null}
         </Modal>

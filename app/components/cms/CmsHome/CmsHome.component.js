@@ -32,48 +32,50 @@ export default class CmsHome extends Component {
 
   startGuidedTour = async () => {
     try {
-      let {
-        data: { story }
-      } = await this.props.client.query({
-        query: StoryQuery,
-        variables: {
-          slugInput: {
-            organization: {
-              subdomain: this.props.router.query.subdomain
-            },
-            slug: 'curators-office-demo'
-          }
-        }
+      // let {
+      //   data: { story }
+      // } = await this.props.client.query({
+      //   query: StoryQuery,
+      //   variables: {
+      //     slugInput: {
+      //       organization: {
+      //         subdomain: this.props.router.query.subdomain
+      //       },
+      //       slug: 'curators-office-demo'
+      //     }
+      //   }
+      // })
+      //
+      // if (story) {
+      //   this.props.router.push(
+      //     {
+      //       pathname: '/cms/edit',
+      //       query: {
+      //         subdomain: this.props.router.query.subdomain,
+      //         storySlug: 'curators-office-demo',
+      //         demo: true
+      //       }
+      //     },
+      //     `/${this.props.router.query.subdomain}/curators-office-demo`
+      //   )
+      // } else {
+      const {
+        data: { createStory: story }
+      } = await this.props.createStory({
+        title: "Curator's Office (Demo)"
       })
-
-      if (story) {
-        this.props.router.push(
-          {
-            pathname: '/cms/edit',
-            query: {
-              subdomain: this.props.router.query.subdomain,
-              storySlug: 'curators-office-demo',
-              demo: true
-            }
-          },
-          `/${this.props.router.query.subdomain}/curators-office-demo`
-        )
-      } else {
-        await this.props.createStory({
-          title: "Curator's Office (Demo)"
-        })
-        this.props.router.push(
-          {
-            pathname: '/cms/edit',
-            query: {
-              subdomain: this.props.router.query.subdomain,
-              storySlug: 'curators-office-demo',
-              demo: true
-            }
-          },
-          `/${this.props.router.query.subdomain}/curators-office-demo`
-        )
-      }
+      this.props.router.push(
+        {
+          pathname: '/cms/edit',
+          query: {
+            subdomain: this.props.router.query.subdomain,
+            storySlug: story.slug,
+            demo: true
+          }
+        },
+        `/${this.props.router.query.subdomain}/${story.slug}`
+      )
+      // }
     } catch (ex) {
       console.error(ex)
     }

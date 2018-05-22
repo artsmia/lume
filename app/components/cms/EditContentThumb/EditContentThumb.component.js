@@ -40,6 +40,7 @@ class EditContentThumb extends Component {
     return connectDragSource(
       connectDropTarget(
         <div
+          id={this.props.id}
           ref={ref => (this.dragRef = ref)}
           style={{
             width: '100%',

@@ -25,6 +25,8 @@ import { Expander } from '../../mia-ui/expanders'
 import Joyride from 'react-joyride'
 
 export default class StoryEditor extends Component {
+  tourId = 'StoryEditor'
+
   static defaultProps = {
     storyId: PropTypes.string.isRequired
   }
@@ -64,7 +66,7 @@ export default class StoryEditor extends Component {
     }
   }
 
-  demoSteps = [
+  demoSteps = () => [
     {
       target: '#story-description',
       content: (
@@ -78,13 +80,16 @@ export default class StoryEditor extends Component {
             Bonus tip: all of the description fields in Lume allow you to use
             markdown styling to emphasis your writing!
           </p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({ demoIndex: demoIndex + 1 }))
-            }}
-          >
-            Next
-          </Button>
+
+          {this.state.descriptionDone ? (
+            <Button
+              onClick={() => {
+                this.setState(({ demoIndex }) => ({ demoIndex: demoIndex + 1 }))
+              }}
+            >
+              Next
+            </Button>
+          ) : null}
         </div>
       ),
       disableBeacon: true,
@@ -168,9 +173,7 @@ export default class StoryEditor extends Component {
 
   handleChangeImageDemoFinish = () => {
     this.setState(({ demoIndex }) => ({
-      showChangeImageDemo: false,
-      showDemo: true,
-      changeImageDemoFinished: true
+      showChangeImageDemo: false
     }))
     this.props.onDemoFinish()
   }
@@ -178,16 +181,12 @@ export default class StoryEditor extends Component {
   handleDemoChange = async ({ action, index, lifecycle, step }) => {
     try {
       console.log('handle')
-      if (
-        action === 'update' &&
-        index === 0 &&
-        lifecycle === 'tooltip' &&
-        !this.state.description
-      ) {
+      if (action === 'update' && index === 0 && lifecycle === 'tooltip') {
         await this.write(
           "Curator's office is one of my *favorite* works at the Minneapolis Institute of Art.",
           'description'
         )
+        this.setState({ descriptionDone: true })
       }
     } catch (ex) {
       console.error(ex)
@@ -243,8 +242,6 @@ export default class StoryEditor extends Component {
   ]
 
   render() {
-    console.log(this)
-
     if (!this.props.story) return null
 
     const {
@@ -295,6 +292,10 @@ export default class StoryEditor extends Component {
             id={'change-story-image'}
             showDemo={this.state.showChangeImageDemo}
             onDemoFinish={this.handleChangeImageDemoFinish}
+            onClick={e => {
+              console.log(e)
+            }}
+            //tour={this.props.tour}
           />
 
           <StoryGroupSelector
@@ -343,9 +344,8 @@ export default class StoryEditor extends Component {
           </Flex>
         </Flex>
         <Joyride
-          debug={true}
           run={this.state.showDemo}
-          steps={this.state.demoSteps}
+          steps={this.demoSteps()}
           stepIndex={this.state.demoIndex}
           callback={this.handleDemoChange}
           styles={{
@@ -362,6 +362,27 @@ export default class StoryEditor extends Component {
           disableOverlayClose={true}
           disableCloseOnEscape={true}
         />
+        {/* {this.props.tour ? (
+          <Joyride
+            run={this.props.tour.run(this)}
+            steps={this.props.tour.steps(this)}
+            stepIndex={this.props.tour.stepIndex}
+            callback={this.props.tour.callback(this)}
+            styles={{
+              buttonClose: {
+                display: 'none'
+              },
+              buttonNext: {
+                display: 'none'
+              },
+              buttonBack: {
+                display: 'none'
+              }
+            }}
+            disableOverlayClose={true}
+            disableCloseOnEscape={true}
+          />
+        ) : null} */}
       </Flex>
     )
   }
@@ -381,7 +402,7 @@ export default class StoryEditor extends Component {
     this.state = {
       showDemo: props.showDemo,
       demoIndex: props.demoIndex,
-      demoSteps: this.demoSteps,
+      //demoSteps: this.demoSteps(),
       ...this.createStateFromProps(props)
     }
   }
@@ -389,13 +410,16 @@ export default class StoryEditor extends Component {
   componentWillReceiveProps(nextProps) {
     let nextState = this.createStateFromProps(nextProps)
 
-    console.log(nextProps)
-    Object.assign(nextState, {
-      showDemo: nextProps.showDemo,
-      demoIndex: nextProps.demoIndex
-    })
-
-    console.log(nextState)
+    if (
+      nextProps.showDemo &&
+      this.state.demoIndex === 0 &&
+      nextProps.demoIndex === 0
+    ) {
+      Object.assign(nextState, {
+        showDemo: nextProps.showDemo,
+        demoIndex: nextProps.demoIndex
+      })
+    }
 
     this.setState(nextState)
   }
