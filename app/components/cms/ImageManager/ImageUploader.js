@@ -12,132 +12,14 @@ import { ImagesQuery } from '../../../apollo/queries/images'
 export default class ImageUploader extends Component {
   tourId = 'ImageUploader'
 
-  wait = duration => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve()
-      }, duration)
-    })
-  }
-
-  write = async (text, name) => {
-    try {
-      for (let i = 0; i <= text.length; i++) {
-        await this.wait(50)
-        this.handleChange({
-          target: {
-            name,
-            value: text.slice(0, i)
-          }
-        })
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  demoSteps = () => [
-    {
-      target: '#upload-images-container',
-      content: (
-        <div>
-          <p>
-            The image manager allows you to select from your existing images or
-            to upload new images.
-          </p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({ demoIndex: demoIndex + 1 }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      disableBeacon: true
-    },
-    {
-      target: '#upload-images-container',
-      content: (
-        <div>
-          <p>
-            Because Lume is a free to use and open source program, we ask that
-            all of our users ensure that they have the right to share any images
-            they use on Lume.
-          </p>
-          <p>
-            You should also make sure to include a title and description of your
-            image when you upload it. This will make it easier to search for
-            later and will allow users with screen readers to better understand
-            your story.
-          </p>
-
-          {this.props.showDemo && this.state.hasRights ? (
-            <Button
-              onClick={async () => {
-                let {
-                  data: { images }
-                } = await this.props.client.query({
-                  query: ImagesQuery,
-                  variables: {
-                    filter: {
-                      organization: {
-                        subdomain: this.props.router.query.subdomain
-                      },
-                      search: "Curator's Office"
-                    }
-                  }
-                })
-
-                if (images.length < 1) {
-                  await this.handleUpload()
-                }
-
-                this.props.onDemoFinish()
-              }}
-            >
-              Next
-            </Button>
-          ) : null}
-        </div>
-      ),
-      disableBeacon: true
-    }
-  ]
-
-  handleDemoChange = async ({ action, index, lifecycle, step }) => {
-    try {
-      if (action === 'update' && index === 0 && lifecycle === 'tooltip') {
-        let response = await fetch(`/static/curatorsoffice.jpg`)
-
-        let arrayBuffer = await response.arrayBuffer()
-
-        let files = [
-          new File([arrayBuffer], 'curatorsoffice.jpg', {
-            type: 'image/jpeg'
-          })
-        ]
-
-        this.handleFile({ target: { name: 'files', files } })
-      }
-      if (action === 'update' && index === 1 && lifecycle === 'tooltip') {
-        await this.write("Curator's Office", 'title')
-        await this.write("A 1950's curator office.", 'description')
-        this.setState({ hasRights: true })
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    try {
-      if (nextProps.showDemo) {
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   try {
+  //     if (nextProps.showDemo) {
+  //     }
+  //   } catch (ex) {
+  //     console.error(ex)
+  //   }
+  // }
 
   state = {
     files: [],
@@ -146,8 +28,7 @@ export default class ImageUploader extends Component {
     description: '',
     title: '',
     snackMessage: '',
-    snackId: Math.random(),
-    demoIndex: 0
+    snackId: Math.random()
   }
 
   render() {
@@ -221,24 +102,8 @@ export default class ImageUploader extends Component {
             <Preview src={preview} alt={`Preview of ${description}`} />
           ) : null}
         </Box>
-        <Joyride
-          run={this.props.showDemo ? true : false}
-          steps={this.demoSteps()}
-          stepIndex={this.state.demoIndex}
-          callback={this.handleDemoChange}
-          styles={{
-            buttonClose: {
-              display: 'none'
-            },
-            buttonNext: {
-              display: 'none'
-            },
-            buttonBack: {
-              display: 'none'
-            }
-          }}
-        />
-        {/* {this.props.tour ? (
+
+        {this.props.tour ? (
           <Joyride
             run={this.props.tour.run(this)}
             steps={this.props.tour.steps(this)}
@@ -258,7 +123,7 @@ export default class ImageUploader extends Component {
             disableOverlayClose={true}
             disableCloseOnEscape={true}
           />
-        ) : null} */}
+        ) : null}
       </Flex>
     )
   }

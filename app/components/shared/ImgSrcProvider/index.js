@@ -12,7 +12,9 @@ export default function imgSrcProvider(WrappedComponent) {
     }
 
     componentWillReceiveProps(nextProps) {
-      this.generateSrcFromProps(nextProps)
+      if (nextProps.src !== this.props.src) {
+        this.generateSrcFromProps(nextProps)
+      }
     }
 
     generateSrcFromProps = props => {

@@ -22,6 +22,8 @@ import Joyride from 'react-joyride'
 import { ImagesQuery } from '../../../apollo/queries/images'
 
 class DetailEditor extends Component {
+  tourId = 'DetailEditor'
+
   render() {
     if (!this.props.content) return null
 
@@ -102,186 +104,30 @@ class DetailEditor extends Component {
             <DeleteContentButton contentId={content.id} />
           </Box>
         </Flex>
-        <Joyride
-          run={this.props.showDemo ? true : false}
-          steps={this.state.demoSteps}
-          stepIndex={this.state.demoIndex}
-          callback={this.handleDemoChange}
-          styles={{
-            buttonClose: {
-              display: 'none'
-            },
-            buttonNext: {
-              display: 'none'
-            },
-            buttonBack: {
-              display: 'none'
-            }
-          }}
-          disableOverlayClose={true}
-          disableCloseOnEscape={true}
-        />
+        {this.props.tour ? (
+          <Joyride
+            run={this.props.tour.run(this)}
+            steps={this.props.tour.steps(this)}
+            stepIndex={this.props.tour.stepIndex}
+            callback={this.props.tour.callback(this)}
+            styles={{
+              buttonClose: {
+                display: 'none'
+              },
+              buttonNext: {
+                display: 'none'
+              },
+              buttonBack: {
+                display: 'none'
+              }
+            }}
+            disableOverlayClose={true}
+            disableCloseOnEscape={true}
+          />
+        ) : null}
       </Flex>
     )
   }
-
-  wait = duration => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve()
-      }, duration)
-    })
-  }
-
-  write = async (text, name) => {
-    try {
-      for (let i = 0; i <= text.length; i++) {
-        await this.wait(15)
-        this.handleChange({
-          target: {
-            name,
-            value: text.slice(0, i)
-          }
-        })
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  handleDemoChange = async ({ index, lifecycle, action }) => {
-    try {
-      if (action === 'update' && index === 0 && lifecycle === 'tooltip') {
-        await this.write('Subtext', 'title')
-        //await this.write("The bookshelf in particular offers a special glimpse into Kestle’s personal and professional interests, among them Basic Russian and Das Kapital.  Whether readings for pleasure or politics is uncertain, but perhaps the answer can be read in his eventual disappearance.", "description")
-
-        let {
-          data: { images }
-        } = await this.props.client.query({
-          query: ImagesQuery,
-          variables: {
-            filter: {
-              organization: {
-                subdomain: this.props.router.query.subdomain
-              },
-              search: "Curator's Office"
-            }
-          }
-        })
-
-        await this.handleChange({
-          target: { name: 'image0Id', value: images[0].id }
-        })
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  demoSteps = [
-    {
-      target: '#edit-details',
-      content: (
-        <div>
-          <p>
-            A detail content allows for a title, description, and image like
-            many of the other contents.{' '}
-          </p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({ demoIndex: demoIndex + 1 }))
-              this.props.editContent({
-                id: this.props.content.id,
-                geoJSON: {
-                  type: 'FeatureCollection',
-                  features: [
-                    {
-                      type: 'Feature',
-                      geometry: {
-                        type: 'Polygon',
-                        coordinates: [
-                          [
-                            [198.397487, -85.674805],
-                            [198.397487, -44.378906],
-                            [251.282861, -44.378906],
-                            [251.282861, -85.674805],
-                            [198.397487, -85.674805]
-                          ]
-                        ]
-                      }
-                    }
-                  ]
-                }
-              })
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      disableBeacon: true,
-      placement: 'right'
-    },
-    {
-      target: '#zoomer-box',
-      content: (
-        <div>
-          <p>
-            Notice how a detail contents allow you to highlight a selection from
-            the image.{' '}
-          </p>
-          <p>
-            You can use detail content's to draw attention to interesting
-            elements in your object's image.
-          </p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({ demoIndex: demoIndex + 1 }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      disableBeacon: true,
-      placement: 'left'
-    },
-    {
-      target: '#additional-images',
-      content: (
-        <div>
-          <p>You can also add more images.</p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({ demoIndex: demoIndex + 1 }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      disableBeacon: true,
-      placement: 'left'
-    },
-    {
-      target: '#additional-media',
-      content: (
-        <div>
-          <p>You can also add more media.</p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({ demoIndex: demoIndex + 1 }))
-              this.props.onDemoFinish()
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      disableBeacon: true,
-      placement: 'left'
-    }
-  ]
 
   bounce = true
 
@@ -297,9 +143,7 @@ class DetailEditor extends Component {
     this.state = {
       title: '',
       description: '',
-      image0Id: '',
-      demoIndex: 0,
-      demoSteps: this.demoSteps
+      image0Id: ''
     }
     this.state = {
       ...this.state,

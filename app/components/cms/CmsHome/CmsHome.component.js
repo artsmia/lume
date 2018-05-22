@@ -70,7 +70,7 @@ export default class CmsHome extends Component {
           query: {
             subdomain: this.props.router.query.subdomain,
             storySlug: story.slug,
-            demo: true
+            tour: true
           }
         },
         `/${this.props.router.query.subdomain}/${story.slug}`

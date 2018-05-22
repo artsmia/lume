@@ -12,6 +12,8 @@ export default async function(src, args, ctx) {
       }
     })
 
+    let result = []
+
     if (
       org.customObjApiEnabled &&
       org.customObjApiEndpoint &&
@@ -30,13 +32,14 @@ export default async function(src, args, ctx) {
         id: `localId:${item.localId}`
       }))
 
-      return data
-    } else {
-      let options = filter ? createOptions(filter) : {}
-
-      let objs = await Model.findAll(options)
-      return objs
+      results.push(...data)
     }
+    let options = filter ? createOptions(filter) : {}
+
+    let objs = await Model.findAll(options)
+    results.push(...objs)
+
+    return resulta
   } catch (ex) {
     console.error(ex)
   }

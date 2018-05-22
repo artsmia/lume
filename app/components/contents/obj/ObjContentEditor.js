@@ -54,21 +54,11 @@ class ObjContentEditor extends Component {
         </Box>
 
         <Box w={1 / 2} pr={3}>
-          <ObjSelector
-            onSelect={handleSelect}
-            showDemo={this.state.showSelectorDemo && this.props.showDemo}
-            onDemoFinish={this.handleObjSelectorFinish}
-          />
+          <ObjSelector onSelect={handleSelect} tour={this.props.tour} />
         </Box>
 
         <Box w={1 / 2}>
-          {obj ? (
-            <ObjEditor
-              objId={obj.id}
-              showDemo={this.state.showEditorDemo && this.props.showDemo}
-              onDemoFinish={this.handleObjEditorDemoFinish}
-            />
-          ) : null}
+          {obj ? <ObjEditor objId={obj.id} tour={this.props.tour} /> : null}
         </Box>
 
         <Box w={1} my={5}>
@@ -79,23 +69,6 @@ class ObjContentEditor extends Component {
   }
 
   bounce = true
-
-  handleObjSelectorFinish = () => {
-    this.setState({
-      showSelectorDemo: false,
-      showEditorDemo: true
-    })
-  }
-
-  handleObjEditorDemoFinish = () => {
-    this.setState(
-      () => ({
-        showSelectorDemo: false,
-        showEditorDemo: false
-      }),
-      this.props.onDemoFinish
-    )
-  }
 
   debounce = (func, wait) => {
     if (this.bounce) {
@@ -120,9 +93,7 @@ class ObjContentEditor extends Component {
     this.state = {
       ...this.stateFromProps(props),
       modal: false,
-      objId: '',
-      showSelectorDemo: false,
-      showEditorDemo: false
+      objId: ''
     }
   }
 
@@ -146,10 +117,6 @@ class ObjContentEditor extends Component {
     let nextState = this.stateFromProps(nextProps)
 
     this.setState({ ...this.stateFromProps(nextProps) })
-
-    if (nextProps.showDemo) {
-      Object.assign(nextState, { showSelectorDemo: true })
-    }
 
     // if (!nextProps.showDemo) {
     //   Object.assign(nextState, {

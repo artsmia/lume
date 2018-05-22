@@ -31,113 +31,7 @@ const ImageEl = styled.img`
 const Image = imgSrcProvider(ImageEl)
 
 export default class ImageManager extends Component {
-  wait = duration => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve()
-      }, duration)
-    })
-  }
-
-  write = async (text, name) => {
-    try {
-      for (let i = 0; i <= text.length; i++) {
-        await this.wait(50)
-        this.handleChange({
-          target: {
-            name,
-            value: text.slice(0, i)
-          }
-        })
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  demoSteps = [
-    {
-      target: '#select-images-container',
-      content: (
-        <div>
-          <p>
-            When your images are done uploading to Lume, they will appear here
-            amongst your other images.
-          </p>
-          <p>
-            Don't worry if your image doesn't appear immediately, it can take
-            several minutes for images to appear depending on your internet
-            speed. Lume allows for large images and it sometimes take a few
-            moments for our servers to break those images up into tiles.
-          </p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({
-                demoIndex: demoIndex + 1
-              }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      placement: 'right',
-      disableBeacon: true
-    },
-    {
-      target: '#image-search',
-      content: (
-        <div>
-          <p>
-            When your images are done uploading to Lume, they will appear here
-            amongst your other images.
-          </p>
-          <p>
-            Don't worry if your image doesn't appear immediately, it can take
-            several minutes for images to appear depending on your internet
-            speed. Lume allows for large images and it sometimes take a few
-            moments for our servers to break those images up into tiles.
-          </p>
-          <Button
-            onClick={() => {
-              let image = this.props.images.find(
-                image => image.title === "Curator's Office"
-              )
-              this.handleImageSelect(image)
-              this.setState(({ demoIndex }) => ({
-                demoIndex: demoIndex + 1
-              }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      placement: 'right',
-      disableBeacon: true
-    },
-    {
-      target: '#image-manager-zoomer',
-      content: (
-        <div>
-          Once your image has finished uploading and you've selected it, you can
-          see it in all its high resolution glory using Lume's special tiled
-          image viewer.
-          <Button
-            onClick={() => {
-              this.setState({ showDemo: false })
-              this.handleImageSave()
-              this.props.onDemoFinish()
-            }}
-          >
-            Use Image for Story
-          </Button>
-        </div>
-      ),
-      placement: 'right',
-      disableBeacon: true
-    }
-  ]
+  tourId = 'ImageManager'
 
   state = {
     selectedTab: 'select',
@@ -147,41 +41,8 @@ export default class ImageManager extends Component {
     selectedMiaImage: {},
     miaImageButton: '',
     loading: false,
-    demoSteps: this.demoSteps,
-    demoIndex: 0,
     showDemo: false,
     uploaderDemoFinished: false
-  }
-
-  handleDemoChange = async ({ action, index, lifecycle, step }) => {
-    try {
-      if (action === 'update' && index === 1 && lifecycle === 'tooltip') {
-        await this.write("Curator's Office", 'search')
-        await this.handleSearch()
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  handleUploaderDemoFinish = () => {
-    console.log('handleUploaderDemoFinish', this)
-
-    this.setState({
-      showDemo: true,
-      showUploaderDemo: false,
-      uploaderDemoFinished: true,
-      selectedTab: 'select'
-    })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.showDemo && !this.state.uploaderDemoFinished) {
-      this.setState({
-        selectedTab: 'upload',
-        showUploaderDemo: true
-      })
-    }
   }
 
   render() {
@@ -217,7 +78,7 @@ export default class ImageManager extends Component {
     } = this
 
     return (
-      <Container w={'80vw'}>
+      <Container w={'80vw'} id={'image-manager'}>
         {loading ? <Waiting /> : null}
         <TabContainer selectedTab={selectedTab}>
           <TabHeader>
@@ -246,7 +107,28 @@ export default class ImageManager extends Component {
           </TabHeader>
 
           <TabBody name={'select'}>
-            <Joyride
+            {this.props.tour ? (
+              <Joyride
+                run={this.props.tour.run(this)}
+                steps={this.props.tour.steps(this)}
+                stepIndex={this.props.tour.stepIndex}
+                callback={this.props.tour.callback(this)}
+                styles={{
+                  buttonClose: {
+                    display: 'none'
+                  },
+                  buttonNext: {
+                    display: 'none'
+                  },
+                  buttonBack: {
+                    display: 'none'
+                  }
+                }}
+                disableOverlayClose={true}
+                disableCloseOnEscape={true}
+              />
+            ) : null}
+            {/* <Joyride
               run={this.state.showDemo}
               steps={this.state.demoSteps}
               stepIndex={this.state.demoIndex}
@@ -262,7 +144,8 @@ export default class ImageManager extends Component {
                   display: 'none'
                 }
               }}
-            />
+            /> */}
+
             <SelectFlex p={1}>
               <OrgImagesFlex
                 width={1 / 2}
@@ -398,11 +281,12 @@ export default class ImageManager extends Component {
             <ImageUploader
               subdomain={subdomain}
               refetch={handleRefetch}
-              showDemo={this.state.showUploaderDemo}
-              onDemoFinish={this.handleUploaderDemoFinish}
               client={this.props.client}
               router={this.props.router}
               tour={this.props.tour}
+              returnToSelect={() => {
+                this.setState({ selectedTab: 'select' })
+              }}
             />
           </TabBody>
         </TabContainer>

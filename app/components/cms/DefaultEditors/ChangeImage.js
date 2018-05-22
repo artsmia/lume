@@ -23,6 +23,8 @@ const ImgEl = styled.img`
 const Img = imgSrcProvider(ImgEl)
 
 export default class ChangeImage extends Component {
+  tourId = 'ChangeImage'
+
   state = {
     modal: false,
     subdomain: 'local'
@@ -49,7 +51,7 @@ export default class ChangeImage extends Component {
         <Box>
           <Label>{label}</Label>
         </Box>
-        <ImageBox onClick={handleModalOpen} id={this.props.id}>
+        <ImageBox id={'change-image'}>
           {image ? <Img image={image} /> : null}
           <ChangeButton onClick={handleModalOpen}>Change</ChangeButton>
         </ImageBox>
@@ -59,41 +61,43 @@ export default class ChangeImage extends Component {
             <ImageManager
               subdomain={subdomain}
               onImageSave={handleChange}
-              onDemoFinish={this.props.onDemoFinish}
-              showDemo={this.props.showDemo}
-              //tour={this.props.tour}
+              tour={this.props.tour}
             />
           ) : null}
         </Modal>
-        {/* <Joyride
-          run={this.props.showDemo ? true : false}
-          steps={this.state.demoSteps}
-          stepIndex={this.state.demoIndex}
-          callback={this.handleDemoChange}
-          styles={{
-            buttonClose: {
-              display: 'none'
-            },
-            buttonNext: {
-              display: 'none'
-            },
-            buttonBack: {
-              display: 'none'
-            }
-          }}
-        /> */}
+        {this.props.tour ? (
+          <Joyride
+            run={this.props.tour.run(this)}
+            steps={this.props.tour.steps(this)}
+            stepIndex={this.props.tour.stepIndex}
+            callback={this.props.tour.callback(this)}
+            styles={{
+              buttonClose: {
+                display: 'none'
+              },
+              buttonNext: {
+                display: 'none'
+              },
+              buttonBack: {
+                display: 'none'
+              }
+            }}
+            disableOverlayClose={true}
+            disableCloseOnEscape={true}
+          />
+        ) : null}
       </Flex>
     )
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.showDemo) {
-      this.handleModalOpen()
-    }
-    if (!nextProps.showDemo && this.state.modal) {
-      this.handleModalClose()
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.showDemo) {
+  //     this.handleModalOpen()
+  //   }
+  //   if (!nextProps.showDemo && this.state.modal) {
+  //     this.handleModalClose()
+  //   }
+  // }
 
   componentDidMount() {
     this.setState({ subdomain: router.router.query.subdomain })
@@ -103,6 +107,9 @@ export default class ChangeImage extends Component {
     this.setState({
       modal: true
     })
+    if (this.props.tour) {
+      this.props.tour.nextStep()
+    }
   }
 
   handleModalClose = () => {

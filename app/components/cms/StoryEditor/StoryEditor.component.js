@@ -42,157 +42,6 @@ export default class StoryEditor extends Component {
     id: ''
   }
 
-  wait = duration => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve()
-      }, duration)
-    })
-  }
-
-  write = async (text, name) => {
-    try {
-      for (let i = 0; i <= text.length; i++) {
-        await this.wait(15)
-        this.handleChange({
-          target: {
-            name,
-            value: text.slice(0, i)
-          }
-        })
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  demoSteps = () => [
-    {
-      target: '#story-description',
-      content: (
-        <div>
-          <p>
-            Your story should definitely include a description. Try and keep it
-            short!
-          </p>
-
-          <p>
-            Bonus tip: all of the description fields in Lume allow you to use
-            markdown styling to emphasis your writing!
-          </p>
-
-          {this.state.descriptionDone ? (
-            <Button
-              onClick={() => {
-                this.setState(({ demoIndex }) => ({ demoIndex: demoIndex + 1 }))
-              }}
-            >
-              Next
-            </Button>
-          ) : null}
-        </div>
-      ),
-      disableBeacon: true,
-      spotlightClicks: true
-    },
-    {
-      target: '#save-status',
-      content: (
-        <div>
-          <p>
-            While you're editing, take not of the save status at the top of the
-            page. Lume will automatically save any edits you make so you don't
-            need to worry about losing your work.
-          </p>
-
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({ demoIndex: demoIndex + 1 }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      disableBeacon: true
-    },
-    {
-      target: '#change-story-image',
-      content: (
-        <div>
-          <p>
-            It's also important to give your story an image. Whenever a part of
-            your story allows you to include an image, Lume will provide you
-            with a tool that looks like this.
-          </p>
-
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({
-                showChangeImageDemo: true,
-                showDemo: false,
-                demoIndex: demoIndex + 1
-              }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      disableBeacon: true
-    },
-    {
-      target: '#story-slug',
-      content: (
-        <div>
-          <p>
-            One of the neat things about Lume is that every story has its own
-            unique url (which you'll be able to visit once you set your story's
-            visibility to published).
-          </p>
-          <p>
-            You have the ability to change the text that will appear in your
-            stories url by editing the Pretty Url field. Be careful though!
-            Editing this field could break old links for users if you've already
-            shared your story.
-          </p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({
-                demoIndex: demoIndex + 1
-              }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      disableBeacon: true
-    }
-  ]
-
-  handleChangeImageDemoFinish = () => {
-    this.setState(({ demoIndex }) => ({
-      showChangeImageDemo: false
-    }))
-    this.props.onDemoFinish()
-  }
-
-  handleDemoChange = async ({ action, index, lifecycle, step }) => {
-    try {
-      console.log('handle')
-      if (action === 'update' && index === 0 && lifecycle === 'tooltip') {
-        await this.write(
-          "Curator's office is one of my *favorite* works at the Minneapolis Institute of Art.",
-          'description'
-        )
-        this.setState({ descriptionDone: true })
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
   state = {
     ...this.initialValues,
     sync: true
@@ -289,13 +138,7 @@ export default class StoryEditor extends Component {
             name={'previewImageId'}
             image={previewImage}
             onChange={handleChange}
-            id={'change-story-image'}
-            showDemo={this.state.showChangeImageDemo}
-            onDemoFinish={this.handleChangeImageDemoFinish}
-            onClick={e => {
-              console.log(e)
-            }}
-            //tour={this.props.tour}
+            tour={this.props.tour}
           />
 
           <StoryGroupSelector
@@ -343,26 +186,8 @@ export default class StoryEditor extends Component {
             <DeleteStoryButton storyId={storyId} />
           </Flex>
         </Flex>
-        <Joyride
-          run={this.state.showDemo}
-          steps={this.demoSteps()}
-          stepIndex={this.state.demoIndex}
-          callback={this.handleDemoChange}
-          styles={{
-            buttonClose: {
-              display: 'none'
-            },
-            buttonNext: {
-              display: 'none'
-            },
-            buttonBack: {
-              display: 'none'
-            }
-          }}
-          disableOverlayClose={true}
-          disableCloseOnEscape={true}
-        />
-        {/* {this.props.tour ? (
+
+        {this.props.tour ? (
           <Joyride
             run={this.props.tour.run(this)}
             steps={this.props.tour.steps(this)}
@@ -382,7 +207,7 @@ export default class StoryEditor extends Component {
             disableOverlayClose={true}
             disableCloseOnEscape={true}
           />
-        ) : null} */}
+        ) : null}
       </Flex>
     )
   }
@@ -400,8 +225,6 @@ export default class StoryEditor extends Component {
     super(props)
     this.state = {}
     this.state = {
-      showDemo: props.showDemo,
-      demoIndex: props.demoIndex,
       //demoSteps: this.demoSteps(),
       ...this.createStateFromProps(props)
     }
@@ -409,17 +232,6 @@ export default class StoryEditor extends Component {
 
   componentWillReceiveProps(nextProps) {
     let nextState = this.createStateFromProps(nextProps)
-
-    if (
-      nextProps.showDemo &&
-      this.state.demoIndex === 0 &&
-      nextProps.demoIndex === 0
-    ) {
-      Object.assign(nextState, {
-        showDemo: nextProps.showDemo,
-        demoIndex: nextProps.demoIndex
-      })
-    }
 
     this.setState(nextState)
   }

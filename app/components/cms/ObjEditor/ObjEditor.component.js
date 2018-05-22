@@ -10,29 +10,7 @@ import Joyride from 'react-joyride'
 import { ImagesQuery } from '../../../apollo/queries/images'
 
 export default class ObjEditor extends Component {
-  wait = duration => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve()
-      }, duration)
-    })
-  }
-
-  write = async (text, name) => {
-    try {
-      for (let i = 0; i <= text.length; i++) {
-        await this.wait(15)
-        this.handleChange({
-          target: {
-            name,
-            value: text.slice(0, i)
-          }
-        })
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
+  tourId = 'ObjEditor'
 
   initialState = {
     id: '',
@@ -51,71 +29,7 @@ export default class ObjEditor extends Component {
   }
 
   state = {
-    ...this.initialState,
-    demoIndex: 0,
-    demoSteps: [
-      {
-        target: '#obj-editor',
-        content: (
-          <div>
-            <p>
-              Now that we've created an object, we can edit it and associate it
-              with an image.
-            </p>
-            <Button
-              onClick={() => {
-                this.props.onDemoFinish()
-              }}
-            >
-              Next
-            </Button>
-          </div>
-        ),
-        disableBeacon: true
-      }
-    ]
-  }
-
-  handleDemoChange = async ({ action, index, lifecycle, step }) => {
-    try {
-      if (
-        action === 'update' &&
-        index === 0 &&
-        lifecycle === 'tooltip' &&
-        !this.state.description
-      ) {
-        await this.write("Curator's Office", 'title')
-
-        await this.write('Mark Dion', 'attribution')
-
-        await this.write(
-          'G378, Minneapolis Institute of Art',
-          'currentLocation'
-        )
-
-        await this.write('2012-2013', 'date')
-
-        let {
-          data: { images }
-        } = await this.props.client.query({
-          query: ImagesQuery,
-          variables: {
-            filter: {
-              organization: {
-                subdomain: this.props.router.query.subdomain
-              },
-              search: "Curator's Office"
-            }
-          }
-        })
-
-        await this.handleImageChange({
-          target: { name: 'primaryImadeId', value: images[0].id }
-        })
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
+    ...this.initialState
   }
 
   render() {
@@ -130,7 +44,7 @@ export default class ObjEditor extends Component {
       state: { exp }
     } = this
 
-    let disabled = this.props.organization.customObjApiEnabled
+    let disabled = this.props.obj.pullFromCustomApi
 
     return (
       <Expander
@@ -140,29 +54,24 @@ export default class ObjEditor extends Component {
         id={'obj-editor'}
       >
         <Flex flexWrap={'wrap'} w={1}>
-          {this.props.organization.customObjApiEnabled ? (
-            <Flex w={1}>
-              <Label>Pulling From Custom API</Label>
-              <CheckboxInput
-                name={'pullFromCustomApi'}
-                checked={state.pullFromCustomApi}
-                onChange={handleCheck}
-                disabled
-              />
-            </Flex>
-          ) : null}
-          {this.props.organization.customObjApiEnabled ? (
-            <Box w={1}>
-              <Label>Local ID</Label>
-              <Input
-                placeholder={'Local ID'}
-                name={'localId'}
-                value={state.localId}
-                onChange={handleChange}
-                disabled={disabled}
-              />
-            </Box>
-          ) : null}
+          <Flex w={1}>
+            <Label>Pulling From Custom API</Label>
+            <CheckboxInput
+              name={'pullFromCustomApi'}
+              checked={state.pullFromCustomApi}
+              onChange={handleCheck}
+              disabled
+            />
+          </Flex>
+          <Box w={1}>
+            <Label>Local ID</Label>
+            <Input
+              placeholder={'Local ID'}
+              name={'localId'}
+              value={state.localId}
+              onChange={handleChange}
+            />
+          </Box>
 
           <Box w={1}>
             <Label>Title</Label>
@@ -213,25 +122,27 @@ export default class ObjEditor extends Component {
             />
           </Box>
         </Flex>
-        <Joyride
-          run={this.props.showDemo} //this.props.router.query.demo ?  true : false}
-          steps={this.state.demoSteps}
-          stepIndex={this.state.demoIndex}
-          styles={{
-            buttonClose: {
-              display: 'none'
-            },
-            buttonNext: {
-              display: 'none'
-            },
-            buttonBack: {
-              display: 'none'
-            }
-          }}
-          disableOverlayClose={true}
-          disableCloseOnEscape={true}
-          callback={this.handleDemoChange}
-        />
+        {this.props.tour ? (
+          <Joyride
+            run={this.props.tour.run(this)}
+            steps={this.props.tour.steps(this)}
+            stepIndex={this.props.tour.stepIndex}
+            callback={this.props.tour.callback(this)}
+            styles={{
+              buttonClose: {
+                display: 'none'
+              },
+              buttonNext: {
+                display: 'none'
+              },
+              buttonBack: {
+                display: 'none'
+              }
+            }}
+            disableOverlayClose={true}
+            disableCloseOnEscape={true}
+          />
+        ) : null}
       </Expander>
     )
   }

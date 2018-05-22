@@ -11,24 +11,14 @@ export default props => {
     }
     case 'detail': {
       return (
-        <DetailContentEditor
-          contentId={props.content.id}
-          showDemo={props.showDetailDemo}
-          onDemoFinish={props.onDetailDemoFinish}
-        />
+        <DetailContentEditor contentId={props.content.id} tour={props.tour} />
       )
     }
     case 'movie': {
       return <MovieContentEditor contentId={props.content.id} />
     }
     case 'obj': {
-      return (
-        <ObjContentEditor
-          contentId={props.content.id}
-          showDemo={props.showObjContentDemo}
-          onDemoFinish={props.onObjContentDemoFinish}
-        />
-      )
+      return <ObjContentEditor contentId={props.content.id} tour={props.tour} />
     }
     case 'picture': {
       return <PictureContentEditor contentId={props.content.id} />

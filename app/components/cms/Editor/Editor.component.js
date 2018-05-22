@@ -21,7 +21,7 @@ import { CreateContent } from '../../../apollo/mutations/createContent'
 import Tour from '../../shared/Tours'
 
 export default class Editor extends Component {
-  // tourId = "editor"
+  tourId = 'editor'
 
   contentTypes = ['comparison', 'detail', 'obj', 'picture', 'movie']
 
@@ -63,228 +63,6 @@ export default class Editor extends Component {
       placement: 'auto'
     }
   ]
-
-  demoSteps = () => [
-    {
-      content: (
-        <div>
-          <p>
-            Welcome to Lume's primary story editing screen. Let's get started
-            right away and we'll point out Lume's many features as we go along!
-          </p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({
-                demoIndex: demoIndex + 1
-              }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      placement: 'center',
-      disableBeacon: true,
-      target: 'body'
-    },
-    {
-      content: (
-        <div>
-          <p>
-            Whenever you first navigate to the Story Editor page, you will be
-            presented with the opportunity to edit the properties of your story
-            itself –– like its title, description, template, visibility, and
-            more. (as opposed to any contents you might add to it.)
-          </p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({
-                demoIndex: demoIndex + 1,
-                showStoryEditorDemo: true,
-                showDemo: false,
-                storyDemoIndex: 0
-              }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      disableBeacon: true,
-      target: '#editing-pane'
-    },
-    {
-      content: (
-        <div>
-          <p>
-            We've edited some elements of our story but the real opportunity for
-            storytelling comes from a story's content blocks.
-          </p>
-          <p>
-            The bar on the side of our editor allows us to edit a specific
-            content block or our story itself. The sidebar is also where we find
-            the button that allows us to create new content blocks.
-          </p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({
-                demoIndex: demoIndex + 1
-              }))
-            }}
-          >
-            Create a content block
-          </Button>
-        </div>
-      ),
-      target: '#sidebar',
-      disableBeacon: true,
-      placement: 'right'
-    },
-    {
-      content: (
-        <div>
-          <p>
-            There are currently five different types of content: picture, move,
-            object, comparison, and detail.
-          </p>
-
-          <p>
-            We're going to look at Object, Comparison, and Detail in this
-            walkthrough.
-          </p>
-
-          <p>First let's create an Object content.</p>
-          <Button
-            onClick={async () => {
-              try {
-                const {
-                  data: { createContent: content }
-                } = await this.props.client.mutate({
-                  mutation: CreateContent,
-                  variables: {
-                    storyId: this.props.story.id,
-                    type: 'obj'
-                  }
-                })
-                await this.props.refetch()
-                this.handleContentSelection(content.id)
-
-                this.setState(({ demoIndex }) => ({
-                  demoIndex: demoIndex + 1,
-                  showObjContentDemo: true,
-                  showDemo: false
-                }))
-              } catch (ex) {
-                console.error(ex)
-              }
-            }}
-          >
-            Create a content block
-          </Button>
-        </div>
-      ),
-      target: '#create-content',
-      disableBeacon: true
-    },
-    {
-      content: (
-        <div>
-          <p>
-            At any time we can preview our story. This is what your story will
-            look like to your users.
-          </p>
-        </div>
-      ),
-      target: '#preview-button',
-      disableBeacon: true,
-      spotlightClicks: true
-    },
-    {
-      content: (
-        <div>
-          <p>Just click again to return to the editor.</p>
-        </div>
-      ),
-      target: '#preview-button',
-      disableBeacon: true,
-      spotlightClicks: true
-    },
-    {
-      content: (
-        <div>
-          <p>Let's create another content. This time a detail content.</p>
-
-          <Button
-            onClick={async () => {
-              try {
-                const {
-                  data: { createContent: content }
-                } = await this.props.client.mutate({
-                  mutation: CreateContent,
-                  variables: {
-                    storyId: this.props.story.id,
-                    type: 'detail'
-                  }
-                })
-                await this.props.refetch()
-                this.handleContentSelection(content.id)
-
-                this.setState(({ demoIndex }) => ({
-                  demoIndex: demoIndex + 1,
-                  showDetailDemo: true,
-                  showDemo: false
-                }))
-              } catch (ex) {
-                console.error(ex)
-              }
-            }}
-          >
-            Create a content block
-          </Button>
-        </div>
-      ),
-      target: '#create-content',
-      disableBeacon: true
-    },
-    {
-      content: (
-        <div>
-          <p>
-            Later, if you're editing one of your story's contents, you can
-            return to editing the story itself by click on this button at the
-            top of your sidebar.
-          </p>
-          <Button
-            onClick={() => {
-              this.setState(({ demoIndex }) => ({
-                showDetailDemo: false,
-                editing: 'story',
-                showStoryEditorDemo: true,
-                storyDemoIndex: 3,
-                showDemo: false
-              }))
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      ),
-      disableBeacon: true,
-      target: '#story-thumb'
-    }
-  ]
-
-  handleStoryEditorDemoFinish = () => {
-    this.setState(({ demoIndex }) => ({
-      showStoryEditorDemo: false,
-      demoIndex: demoIndex + 1,
-      showDemo: true
-    }))
-  }
-
-  handleDemoChange = e => {
-    //console.log(e)
-  }
 
   render() {
     if (!this.props.story) return <Loading />
@@ -337,23 +115,25 @@ export default class Editor extends Component {
             )}
           </PreviewButtonBox>
           <StoryPreview story={story} />
-          <Joyride
-            run={this.state.showDemo} //this.props.router.query.demo ?  true : false}
-            steps={this.demoSteps()}
-            callback={this.handleDemoChange}
-            stepIndex={this.state.demoIndex}
-            styles={{
-              buttonClose: {
-                display: 'none'
-              },
-              buttonNext: {
-                display: 'none'
-              },
-              buttonBack: {
-                display: 'none'
-              }
-            }}
-          />
+          {this.state.tour ? (
+            <Joyride
+              run={this.state.tour.run(this)}
+              steps={this.state.tour.steps(this)}
+              callback={this.state.tour.callback(this)}
+              stepIndex={this.state.tour.stepIndex}
+              styles={{
+                buttonClose: {
+                  display: 'none'
+                },
+                buttonNext: {
+                  display: 'none'
+                },
+                buttonBack: {
+                  display: 'none'
+                }
+              }}
+            />
+          ) : null}
         </PreviewContainer>
       )
 
@@ -467,68 +247,47 @@ export default class Editor extends Component {
             {editing === 'story' ? (
               <StoryEditor
                 storyId={storyId}
-                onDemoFinish={this.handleStoryEditorDemoFinish}
-                showDemo={this.state.showStoryEditorDemo}
-                demoIndex={this.state.storyDemoIndex}
-                //tour={this.state.tour ? this.state.tour : false}
+                tour={this.state.tour ? this.state.tour : false}
               />
             ) : null}
 
             {editing === 'content' ? (
               <EditorSwitcher
                 content={selectedContent}
-                showObjContentDemo={this.state.showObjContentDemo}
-                onObjContentDemoFinish={this.handleObjDemoFinish}
-                showDetailDemo={this.state.showDetailDemo}
-                onDetailDemoFinish={this.handleDetailDemoFinish}
+                tour={this.state.tour ? this.state.tour : false}
               />
             ) : null}
           </EditingPane>
         </Workspace>
 
-        <Joyride
-          run={this.state.showDemo}
-          steps={this.demoSteps()}
-          callback={this.handleDemoChange}
-          stepIndex={this.state.demoIndex}
-          styles={{
-            buttonClose: {
-              display: 'none'
-            },
-            buttonNext: {
-              display: 'none'
-            },
-            buttonBack: {
-              display: 'none'
-            }
-          }}
-        />
-        {/* {this.state.tour ? (
-            <Joyride
-              run={this.state.tour.run(this)}
-              steps={this.state.tour.steps(this)}
-              callback={this.state.tour.callback(this)}
-              stepIndex={this.state.tour.stepIndex}
-              styles={{
-                buttonClose: {
-                  display: 'none'
-                },
-                buttonNext: {
-                  display: 'none'
-                },
-                buttonBack: {
-                  display: 'none'
-                }
-              }}
-            />
-          ):null} */}
+        {this.state.tour ? (
+          <Joyride
+            run={this.state.tour.run(this)}
+            steps={this.state.tour.steps(this)}
+            callback={this.state.tour.callback(this)}
+            stepIndex={this.state.tour.stepIndex}
+            styles={{
+              buttonClose: {
+                display: 'none'
+              },
+              buttonNext: {
+                display: 'none'
+              },
+              buttonBack: {
+                display: 'none'
+              }
+            }}
+          />
+        ) : null}
       </FullPage>
     )
   }
 
-  // componentDidMount(){
-  //   this.setState({tour: new Tour(this)})
-  // }
+  componentDidMount() {
+    if (this.props.router.query.tour) {
+      this.setState({ tour: new Tour(this) })
+    }
+  }
 
   handleDetailDemoFinish = () => {
     this.setState({
@@ -557,10 +316,6 @@ export default class Editor extends Component {
     super(props)
     this.state = {}
     this.state = {
-      showStoryEditorDemo: false,
-      storyDemoIndex: 0,
-      demoIndex: 0,
-      showDemo: true,
       editing: 'story',
       selectedContent: null,
       contentType: 'comparison',
@@ -613,12 +368,10 @@ export default class Editor extends Component {
   }
 
   togglePreview = () => {
-    this.setState(({ preview, demoIndex, showDemo }) => {
-      return {
-        preview: !preview,
-        demoIndex: showDemo ? demoIndex + 1 : demoIndex
-      }
-    })
+    this.setState(({ preview }) => ({ preview: !preview }))
+    if (this.state.tour) {
+      this.state.tour.nextStep()
+    }
   }
 
   handleReorder = (dragIndex, hoverIndex) => {
