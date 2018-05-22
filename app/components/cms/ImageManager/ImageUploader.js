@@ -165,7 +165,7 @@ export default class ImageUploader extends Component {
 
       const url =
         process.env.FILE_STORAGE === 'local'
-          ? 'http://localhost:3001/upload'
+          ? `${process.env.TILE_URL}/image`
           : `${process.env.API_URL}/image`
 
       let options = {

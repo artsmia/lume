@@ -15,6 +15,7 @@ import stories from './stories'
 import image from './image'
 import images from './images'
 import medias from './medias'
+// import search from './search'
 
 const query = new GraphQLObjectType({
   name: 'Query',
@@ -34,6 +35,7 @@ const query = new GraphQLObjectType({
     obj,
     objs,
     medias
+    // search
   }
 })
 

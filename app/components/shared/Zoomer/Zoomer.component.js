@@ -331,6 +331,18 @@ export default class extends Component {
         errorTileUrl: '/static/spinner.gif'
       })
 
+      this.tiles.on('tileload', tileload => {
+        console.log('tileload')
+
+        console.log(tileload)
+      })
+
+      this.tiles.on('tileerror', tileerror => {
+        console.log('tileerror')
+
+        console.log(tileerror)
+      })
+
       const initialLatLng = [height / 2, -1 * width / 2]
 
       this.map.setView(initialLatLng, initialZoom)
@@ -343,14 +355,6 @@ export default class extends Component {
         } else {
           e.target._zoom = Math.round(zoomReq)
         }
-      })
-
-      this.map.on('tileload', tileEvent => {
-        console.log(tileEvent)
-      })
-
-      this.map.on('tileerror', tileError => {
-        console.log(tileError)
       })
 
       this.tiles.addTo(this.map)
@@ -579,6 +583,7 @@ if (typeof window === 'object') {
 
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({ z, x, y }) {
+      console.log(this)
       let tile = document.createElement('div')
       let image = document.createElement('img')
       image.src = this._url
@@ -587,8 +592,8 @@ if (typeof window === 'object') {
         .replace('{y}', y)
         .replace('{s}', 0)
       image.style['object-fit'] = 'contain'
-      tile.appendChild(image)
-      return tile
+      //tile.appendChild(image)
+      return image
     }
   })
 

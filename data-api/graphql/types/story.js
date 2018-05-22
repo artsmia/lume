@@ -9,11 +9,15 @@ import imageType from './image'
 import contentType from './content'
 import groupType from './group'
 import { VisibilityEnum, TemplateEnum } from './enums'
-
+//import {DateScalar, DateThing} from './scalars'
+// import {CoreInterface} from './interfaces'
 import { organizationResolver } from '../resolvers/story'
 
-const story = new GraphQLObjectType({
+const StoryType = new GraphQLObjectType({
   name: 'story',
+  // interfaces: ()=>([
+  //   CoreInterface
+  // ]),
   fields: () => ({
     id: {
       type: GraphQLID
@@ -65,7 +69,7 @@ const story = new GraphQLObjectType({
       }
     },
     relatedStories: {
-      type: new GraphQLList(story),
+      type: new GraphQLList(StoryType),
       async resolve(src) {
         try {
           return await src.getRelatedStories()
@@ -87,4 +91,4 @@ const story = new GraphQLObjectType({
   })
 })
 
-export default story
+export default StoryType
