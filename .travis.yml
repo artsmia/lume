@@ -3,7 +3,7 @@ node_js:
 - node
 cache: npm
 script:
-- yarn install now -g
+- npm install now -g
 - cd app
 - now -t $NOW_TOKEN --dotenv=../config/.env.staging
 - now alias staging.lume.space -t $NOW_TOKEN
