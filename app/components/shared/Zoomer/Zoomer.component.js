@@ -308,7 +308,8 @@ export default class extends Component {
         crs: L.CRS.Simple,
         maxBounds: this.bounds,
         attributionControl: false,
-        maxZoom
+        maxZoom,
+        zoomSnap: 0
       })
 
       const container = this.map.getContainer()
@@ -318,7 +319,11 @@ export default class extends Component {
 
       const longDimension = Math.max(containerWidth, containerHeight)
 
-      const initialZoom = Math.log2(longDimension / tileSize)
+      const fitX = Math.log2(containerWidth / width)
+
+      const fitY = Math.log2(containerHeight / height)
+
+      const minZoom = Math.floor(Math.min(fitX, fitY) * 100) / 100
 
       this.tiles = L.tileLayer.knight(tileUrl, {
         tileSize,
@@ -326,42 +331,22 @@ export default class extends Component {
         minNativeZoom: 0,
         noWrap: true,
         bounds: this.bounds,
-        minZoom: Math.floor(initialZoom),
+        minZoom,
         maxZoom,
         errorTileUrl: '/static/spinner.gif'
       })
 
-      this.tiles.on('tileload', tileload => {
-        console.log('tileload')
-
-        console.log(tileload)
-      })
-
-      this.tiles.on('tileerror', tileerror => {
-        console.log('tileerror')
-
-        console.log(tileerror)
-      })
-
       const initialLatLng = [height / 2, -1 * width / 2]
 
-      this.map.setView(initialLatLng, initialZoom)
-
-      this.map.on('zoomstart', e => {
-        let zoomReq = e.target._zoom
-
-        if (zoomReq < initialZoom) {
-          e.target._zoom = initialZoom
-        } else {
-          e.target._zoom = Math.round(zoomReq)
-        }
-      })
+      this.map.setView(initialLatLng, minZoom)
 
       this.tiles.addTo(this.map)
 
       this.map.invalidateSize()
 
-      this.map.fitBounds(this.bounds)
+      this.map.setZoom(minZoom)
+
+      this.map.options.zoomSnap = 1
     } catch (ex) {
       console.error(ex)
     }
@@ -407,8 +392,7 @@ export default class extends Component {
         this.drawControl = new L.Control.Draw({
           draw: {
             polygon: {
-              allowIntersection: false,
-              title: 'Hello?'
+              allowIntersection: false
             },
             polyline: false,
             circle: false,
@@ -583,7 +567,6 @@ if (typeof window === 'object') {
 
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({ z, x, y }) {
-      console.log(this)
       let tile = document.createElement('div')
       let image = document.createElement('img')
       image.src = this._url
@@ -592,8 +575,9 @@ if (typeof window === 'object') {
         .replace('{y}', y)
         .replace('{s}', 0)
       image.style['object-fit'] = 'contain'
-      //tile.appendChild(image)
-      return image
+      //image.style['object-position'] = 'left top'
+      tile.appendChild(image)
+      return tile
     }
   })
 

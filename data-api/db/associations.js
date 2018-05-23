@@ -13,37 +13,59 @@ import {
 
 Category.hasMany(Group, {
   as: 'groups',
-  onDelete: 'cascade',
-  hooks: true
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'categoryId',
+  sourceKey: 'id'
 })
 
 Category.belongsTo(Image, {
-  as: 'image'
+  as: 'image',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+  foreignKey: 'imageId',
+  sourceKey: 'id',
+  constraints: false
 })
 
 Category.belongsTo(Organization, {
   as: 'organization',
-  onDelete: 'CASCADE'
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  sourceKey: 'id'
 })
 
 Content.belongsTo(Story, {
   as: 'story',
-  onDelete: 'CASCADE'
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'storyId',
+  sourceKey: 'id'
 })
 
 Content.belongsTo(Image, {
   as: 'image0',
   onDelete: 'SET NULL',
-  hooks: true,
-  constraints: false
+  onUpdate: 'CASCADE',
+  foreignKey: 'image0Id',
+  sourceKey: 'id'
 })
 
 Content.belongsTo(Image, {
-  as: 'image1'
+  as: 'image1',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+  foreignKey: 'image1Id',
+  sourceKey: 'id'
 })
 
 Content.belongsTo(Obj, {
-  as: 'obj'
+  as: 'obj',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+  foreignKey: 'objId',
+  sourceKey: 'id'
 })
 
 Content.belongsToMany(Image, {
@@ -57,11 +79,19 @@ Content.belongsToMany(Media, {
 })
 
 Group.belongsTo(Category, {
-  as: 'category'
+  as: 'category',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'categoryId',
+  sourceKey: 'id'
 })
 
 Group.belongsTo(Image, {
-  as: 'image'
+  as: 'image',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+  foreignKey: 'imageId',
+  sourceKey: 'id'
 })
 
 Group.belongsToMany(Story, {
@@ -69,12 +99,12 @@ Group.belongsToMany(Story, {
   through: 'story_group'
 })
 
-Image.hasMany(Group, {
-  as: 'groups'
-})
-
 Image.belongsTo(Organization, {
-  as: 'organization'
+  as: 'organization',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  sourceKey: 'id'
 })
 
 Image.belongsToMany(Content, {
@@ -83,7 +113,11 @@ Image.belongsToMany(Content, {
 })
 
 Media.belongsTo(Organization, {
-  as: 'organization'
+  as: 'organization',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  sourceKey: 'id'
 })
 
 Media.belongsToMany(Content, {
@@ -92,60 +126,93 @@ Media.belongsToMany(Content, {
 })
 
 Obj.belongsTo(Image, {
-  as: 'primaryImage'
+  as: 'primaryImage',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+  foreignKey: 'primaryImageId',
+  sourceKey: 'id'
 })
 
-Obj.hasMany(Content, {
-  as: 'contents'
+Obj.belongsTo(Media, {
+  as: 'primaryMedia',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+  foreignKey: 'primaryMediaId',
+  sourceKey: 'id'
 })
 
 Obj.belongsTo(Organization, {
-  as: 'organization'
+  as: 'organization',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  sourceKey: 'id'
 })
 
-Organization.hasOne(Image, {
-  as: 'orgImage'
+Organization.belongsTo(Image, {
+  as: 'orgImage',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+  foreignKey: 'orgImageId',
+  sourceKey: 'id',
+  constraints: false
 })
 
-Organization.hasOne(Image, {
-  as: 'locationImage'
+Organization.belongsTo(Image, {
+  as: 'locationImage',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+  foreignKey: 'locationImageId',
+  sourceKey: 'id',
+  constraints: false
 })
 
 Organization.hasMany(Story, {
   as: 'stories',
-  onDelete: 'cascade',
-  hooks: true
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  targetKey: 'id'
 })
 
 Organization.hasMany(Image, {
   as: 'images',
-  onDelete: 'cascade',
-  hooks: true
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  targetKey: 'id'
 })
 
 Organization.hasMany(Media, {
   as: 'medias',
-  onDelete: 'cascade',
-  hooks: true
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  targetKey: 'id'
 })
 
 Organization.hasMany(Obj, {
   as: 'objs',
-  onDelete: 'cascade',
-  hooks: true
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  targetKey: 'id'
 })
 
 Organization.hasMany(Category, {
   as: 'categories',
-  constraints: false,
-  onDelete: 'cascade',
-  hooks: true
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  targetKey: 'id'
 })
 
 Organization.hasMany(User_Organization, {
   as: 'users',
-  onDelete: 'cascade',
-  hooks: true
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  targetKey: 'id'
 })
 
 Story.belongsToMany(Group, {
@@ -159,21 +226,35 @@ Story.belongsToMany(Story, {
 })
 
 Story.belongsTo(Organization, {
-  as: 'organization'
+  as: 'organization',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  sourceKey: 'id'
 })
 
 Story.belongsTo(Image, {
-  as: 'previewImage'
+  as: 'previewImage',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+  foreignKey: 'previewImageId',
+  sourceKey: 'id'
 })
 
 Story.hasMany(Content, {
   as: 'contents',
-  onDelete: 'cascade',
-  hooks: true
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'storyId',
+  targetKey: 'id'
 })
 
 User_Organization.belongsTo(Organization, {
-  as: 'organization'
+  as: 'organization',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: 'organizationId',
+  targetKey: 'id'
 })
 
 //

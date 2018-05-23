@@ -4,22 +4,23 @@ import db from '../connect'
 const User_Organization = db.define(
   'user_organization',
   {
+    id: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      primaryKey: true
+    },
     userId: {
       type: Sequelize.STRING
     },
-    organizationId:
-      process.env.DB_MODE !== 'sqlite'
-        ? {
-            type: Sequelize.UUID,
-            references: {
-              model: 'organization',
-              key: 'id'
-            },
-            onDelete: 'cascade'
-          }
-        : {
-            type: Sequelize.UUID
-          },
+    // organizationId:{
+    //     type: Sequelize.UUID,
+    //     references: {
+    //       model: 'organization',
+    //       key: 'id'
+    //     },
+    //     onDelete: 'CASCADE',
+    //     onUpdate: 'CASCADE'
+    //   },
     role: {
       type: Sequelize.ENUM,
       values: ['admin', 'editor', 'contributor', 'pending']

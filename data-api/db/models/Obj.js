@@ -71,34 +71,36 @@ const Obj = db.define(
     pullFromCustomApi: {
       type: Sequelize.BOOLEAN,
       defaultValue: false
-    },
-    organizationId:
-      process.env.DB_MODE !== 'sqlite'
-        ? {
-            type: Sequelize.UUID,
-            references: {
-              model: 'organization',
-              key: 'id'
-            },
-            onDelete: 'cascade'
-          }
-        : {
-            type: Sequelize.UUID
-          },
-    primaryImageId: {
-      type: Sequelize.UUID,
-      references: {
-        model: 'image',
-        key: 'id'
-      }
-    },
-    primaryMediaId: {
-      type: Sequelize.UUID,
-      references: {
-        model: 'media',
-        key: 'id'
-      }
     }
+    // organizationId:{
+    //     type: Sequelize.UUID,
+    //     references: {
+    //       model: 'organization',
+    //       key: 'id'
+    //     },
+    //     onDelete: 'CASCADE',
+    //     onUpdate: 'CASCADE'
+    //   },
+    // primaryImageId: {
+    //   type: Sequelize.UUID,
+    //   references: {
+    //     model: 'image',
+    //     key: 'id'
+    //   },
+    //   allowNull: true,
+    //   onDelete: 'SET NULL',
+    //   onUpdate: 'CASCADE'
+    // },
+    // primaryMediaId: {
+    //   type: Sequelize.UUID,
+    //   references: {
+    //     model: 'media',
+    //     key: 'id'
+    //   },
+    //   allowNull: true,
+    //   onDelete: 'SET NULL',
+    //   onUpdate: 'CASCADE'
+    // }
   },
   {
     freezeTableName: true

@@ -37,45 +37,46 @@ const Content = db.define(
       type: Sequelize.STRING,
       allowNull: false,
       defaultValue: ''
-    },
-    image0Id:
-      process.env.DB_MODE !== 'sqlite'
-        ? {
-            type: Sequelize.UUID
-            // references: {
-            //   model: "image",
-            //   key: "id"
-            // },
-            // onDelete: "SET NULL",
-            // onUpdate: "CASCADE"
-          }
-        : {
-            type: Sequelize.UUID
-          },
-    image1Id:
-      process.env.DB_MODE !== 'sqlite'
-        ? {
-            type: Sequelize.UUID,
-            references: {
-              model: 'image',
-              key: 'id'
-            }
-          }
-        : {
-            type: Sequelize.UUID
-          },
-    objId:
-      process.env.DB_MODE !== 'sqlite'
-        ? {
-            type: Sequelize.UUID,
-            references: {
-              model: 'obj',
-              key: 'id'
-            }
-          }
-        : {
-            type: Sequelize.UUID
-          }
+    }
+    // storyId: {
+    //   type: Sequelize.UUID,
+    //   onDelete: 'CASCADE',
+    //   onUpdate: 'CASCADE',
+    //   references: {
+    //     model: "story",
+    //     key: "id"
+    //   },
+    // },
+    // image0Id:{
+    //     type: Sequelize.UUID,
+    //     allowNull: true,
+    //     references: {
+    //       model: "image",
+    //       key: "id"
+    //     },
+    //     onDelete: "SET NULL",
+    //     onUpdate: "CASCADE"
+    //   },
+    // image1Id:{
+    //     type: Sequelize.UUID,
+    //     allowNull: true,
+    //     references: {
+    //       model: "image",
+    //       key: "id"
+    //     },
+    //     onDelete: "SET NULL",
+    //     onUpdate: "CASCADE"
+    //   },
+    // objId:{
+    //     type: Sequelize.UUID,
+    //     allowNull: true,
+    //     onDelete: "SET NULL",
+    //     onUpdate: "CASCADE",
+    //     references: {
+    //       model: 'obj',
+    //       key: 'id'
+    //     }
+    //   }
   },
   {
     freezeTableName: true

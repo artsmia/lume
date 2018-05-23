@@ -23,26 +23,27 @@ const Group = db.define(
       type: Sequelize.TEXT,
       allowNull: false,
       defaultValue: ''
-    },
-    imageId: {
-      type: Sequelize.UUID,
-      references: {
-        model: 'image',
-        key: 'id'
-      }
-    },
-    categoryId:
-      process.env.DB_MODE !== 'sqlite'
-        ? {
-            type: Sequelize.UUID,
-            references: {
-              model: 'category',
-              key: 'id'
-            }
-          }
-        : {
-            type: Sequelize.UUID
-          }
+    }
+    // imageId: {
+    //   type: Sequelize.UUID,
+    //   references: {
+    //     model: 'image',
+    //     key: 'id'
+    //   },
+    //   allowNull: true,
+    //   onUpdate: 'CASCADE',
+    //   onDelete: 'SET NULL'
+    // },
+    // categoryId:{
+    //     type: Sequelize.UUID,
+    //     references: {
+    //       model: 'category',
+    //       key: 'id'
+    //     },
+    //     onUpdate: 'CASCADE',
+    //     onDelete: 'CASCADE'
+    //
+    //   }
   },
   {
     freezeTableName: true

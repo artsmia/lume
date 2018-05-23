@@ -2,7 +2,6 @@ import 'dotenv/config'
 import fetch from 'isomorphic-unfetch'
 import chalk from 'chalk'
 import db from '../data-api/db'
-import associations from '../data-api/db/associations'
 import Organization from '../data-api/db/models/Organization'
 import User_Organization from '../data-api/db/models/User_Organization'
 import Story from '../data-api/db/models/Story'
@@ -20,68 +19,62 @@ const log = msg => console.log(chalk.cyan(msg))
 
 async function populate() {
   try {
-    const Mia = await Organization.findOne({
-      where: {
-        subdomain: 'mia'
-      }
+    const Mia = await Organization.create({
+      subdomain: 'mia',
+      name: 'Minneapolis Institute of Art',
+      customObjApiEnabled: true,
+      customObjApiEndpoint:
+        ' https://iexj7ikn39.execute-api.us-west-2.amazonaws.com/prod/lume-mia-micro',
+      objSearchEndpoint:
+        'https://f2lx6xi5a2.execute-api.us-west-2.amazonaws.com/prod/mia-obj-search/',
+      customImageApiEnabled: false,
+      emailDomain: 'artsmia.org',
+      newUsersRequireApproval: true
     })
 
-    const Africa = await Organization.findOne({
-      where: {
-        subdomain: 'africa'
-      }
+    const Africa = await Organization.create({
+      subdomain: 'africa',
+      name: 'Eyes on Africa',
+      customObjApiEnabled: true,
+      customObjApiEndpoint:
+        ' https://iexj7ikn39.execute-api.us-west-2.amazonaws.com/prod/lume-mia-micro',
+      objSearchEndpoint:
+        'https://f2lx6xi5a2.execute-api.us-west-2.amazonaws.com/prod/mia-obj-search/',
+      customImageApiEnabled: false,
+      emailDomain: 'artsmia.org',
+      newUsersRequireApproval: true
     })
 
-    await Story.destroy({
-      where: {
-        [Op.or]: [
-          {
-            organizationId: Mia.id
-          },
-          {
-            organizationId: Africa.id
-          }
-        ]
-      },
-      cascade: true
+    const gretchenId = 'google-oauth2|112934604856216651589'
+    const carlId = 'google-oauth2|116437175748732542207'
+
+    await User_Organization.create({
+      organizationId: Mia.id,
+      userId: gretchenId,
+      role: 'admin'
     })
 
-    await Media.destroy({
-      where: {
-        [Op.or]: [
-          {
-            organizationId: Mia.id
-          },
-          {
-            organizationId: Africa.id
-          }
-        ]
-      },
-      cascade: true
+    await User_Organization.create({
+      organizationId: Mia.id,
+      userId: carlId,
+      role: 'admin'
     })
 
-    await Image.destroy({
-      where: {
-        [Op.or]: [
-          {
-            organizationId: Mia.id
-          },
-          {
-            organizationId: Africa.id
-          }
-        ]
-      }
+    await User_Organization.create({
+      organizationId: Africa.id,
+      userId: gretchenId,
+      role: 'admin'
     })
 
     const getImageDescTitle = async id => {
       try {
         const response = await fetch(`http://search.artsmia.org/id/${id}`)
 
-        const { title, description } = await response.json()
+        const json = await response.json()
 
         return {
-          title,
-          description
+          title: json ? json.title : '',
+          description: json ? json.description : ''
         }
       } catch (ex) {
         console.error(ex)

@@ -40,32 +40,27 @@ const Story = db.define(
     slug: {
       type: Sequelize.STRING,
       allowNull: false
-    },
-    organizationId:
-      process.env.DB_MODE !== 'sqlite'
-        ? {
-            type: Sequelize.UUID,
-            references: {
-              model: 'organization',
-              key: 'id'
-            },
-            onDelete: 'cascade'
-          }
-        : {
-            type: Sequelize.UUID
-          },
-    previewImageId:
-      process.env.DB_MODE !== 'sqlite'
-        ? {
-            type: Sequelize.UUID,
-            references: {
-              model: 'image',
-              key: 'id'
-            }
-          }
-        : {
-            type: Sequelize.UUID
-          }
+    }
+    // organizationId:{
+    //     type: Sequelize.UUID,
+    //     references: {
+    //       model: 'organization',
+    //       key: 'id'
+    //     },
+    //     onDelete: 'CASCADE',
+    //     onUpdate: 'CASCADE'
+    //
+    //   },
+    // previewImageId:{
+    //     type: Sequelize.UUID,
+    //     references: {
+    //       model: 'image',
+    //       key: 'id'
+    //     },
+    //     allowNull: true,
+    //     onDelete: 'SET NULL',
+    //     onUpdate: 'CASCADE'
+    //   }
   },
   {
     freezeTableName: true

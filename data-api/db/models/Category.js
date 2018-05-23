@@ -18,32 +18,29 @@ const Category = db.define(
       type: Sequelize.TEXT,
       allowNull: false,
       defaultValue: ''
-    },
-    organizationId:
-      process.env.DB_MODE !== 'sqlite'
-        ? {
-            type: Sequelize.UUID,
-            references: {
-              model: 'organization',
-              key: 'id'
-            },
-            onDelete: 'cascade'
-          }
-        : {
-            type: Sequelize.UUID
-          },
-    imageId:
-      process.env.DB_MODE !== 'sqlite'
-        ? {
-            type: Sequelize.UUID,
-            references: {
-              model: 'image',
-              key: 'id'
-            }
-          }
-        : {
-            type: Sequelize.UUID
-          }
+    }
+    // organizationId:{
+    //     type: Sequelize.UUID,
+    //     references: {
+    //       model: 'organization',
+    //       key: 'id'
+    //     },
+    //     onDelete: 'CASCADE',
+    //     onUpdate: 'CASCADE'
+    //
+    //   },
+    // imageId:{
+    //     type: Sequelize.UUID,
+    //     allowNull: true,
+    //     onDelete: 'SET NULL',
+    //     onUpdate: 'CASCADE',
+    //     references: {
+    //       model: 'image',
+    //       key: 'id'
+    //     },
+    //     constraints: false,
+    //
+    //   }
   },
   {
     freezeTableName: true

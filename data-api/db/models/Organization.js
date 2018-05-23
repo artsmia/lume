@@ -66,13 +66,30 @@ const Organization = db.define(
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false
-    },
-    orgImageId: {
-      type: Sequelize.UUID
-    },
-    locationImageId: {
-      type: Sequelize.UUID
     }
+    // orgImageId: {
+    //   type: Sequelize.UUID,
+    //   allowNull: true,
+    //   references: {
+    //     model: 'image',
+    //     key: 'id'
+    //   },
+    //   onDelete: 'SET NULL',
+    //   onUpdate: 'CASCADE',
+    //   constraints: false,
+    // },
+    // locationImageId: {
+    //   type: Sequelize.UUID,
+    //   allowNull: true,
+    //   references: {
+    //     model: 'image',
+    //     key: 'id'
+    //   },
+    //   onDelete: 'SET NULL',
+    //   onUpdate: 'CASCADE',
+    //   constraints: false,
+    //
+    // }
   },
   {
     freezeTableName: true
