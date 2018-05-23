@@ -2,6 +2,8 @@ import Organization from '../../db/models/Organization'
 import Group from '../../db/models/Group'
 import { Op } from 'sequelize'
 
+const searchOp = process.env.DB_MODE === 'mysql' ? Op.regexp : Op.like
+
 export default function({
   organization: { subdomain, id: organizationId },
   search,
@@ -43,12 +45,12 @@ export default function({
       [Op.or]: [
         {
           title: {
-            [Op.like]: search
+            [searchOp]: search
           }
         },
         {
           description: {
-            [Op.like]: search
+            [searchOp]: search
           }
         }
       ]

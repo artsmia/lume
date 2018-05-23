@@ -1,33 +1,18 @@
 language: node_js
-branches:
-  only:
-  - production
 node_js:
 - node
 cache: npm
-before_script:
-- cd app
-- npm install
-- cd ../data-api
-- npm install
-- cd ..
 script:
+- yarn install now -g
 - cd app
-- npm test
-- cd ../data-api
-- npm test
+- now -t $NOW_TOKEN --dotenv=../config/.env.staging
+- now alias staging.lume.space -t $NOW_TOKEN
+- now alias staging.cms.lume.space -t $NOW_TOKEN
 - cd ..
-after_success:
-- npm install now -g
-- cd app
-- npm run deploy
-- npm run alias
-- npm run scale
-- cd ../data-api
-- npm run prepare
-- npm run deploy
-- npm run alias
-- npm run scale
+- cd data-api
+- yarn run prepare
+- now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.staging
+- now alias staging.api.lume.space -t $NOW_TOKEN
 env:
   global:
   - secure: gdZUj9VHYqPYeyhRxel7v8Wc75dVIzYxcvYOxINy5z9ZevQJPOJ0P8r12ozb78aq4nmfP1lwHme//Tdt7GCJaxQh49qGb80PDJt04KP7QPxkyvpif3wVNGxEH40H19bmrrfKjkbbHtRy7b4/opitvk+/Q8xBctlVeS6qNuw9jlKJfcVYUqM4dtME9xpUgPf9cbRfdrRe8c9jBosyz29WTmE4WMVupuyp1fWPacEoU/C6LJCaMaAz6R5N8+bFqYRdw1N/OIusuzx6WjaQSbv7uHc+VeZKCG6XywJYsxrGe0Hv++r10TbiFoj/lOdfJwMdNZ0UiOenUkzHi9Zgg5h9LxJlinfcDu710gn5kwIpYa3mD/8UJpH2dsEdPiqkeDcfUxesRE5e0t5jFQIRYVnd8pe091IfePlBTBOiArech35StfUTmGCpotyoV1euHzLvUjWTE4U2TLtKNZ5H3eefrV8i6tHHh4KdipHmH5L5PjOlj6aArOEj3MNdmNmfgRTCNIrKM3uzK8NljSrRcI+9kNnDOCcaNlBzUz0CY4wPqdWxxTAISs5yC2vKpz6YMrFXzQv4KuHqiVxEYoFhS/MKqL/A5jEcdcwGomV/QSlP9H0/5Rhbla6DjpzPaXh4bRivvX7NVdL7fWbqwo8fR9wvsWqwjKYmKayncG27KGjhOwI=

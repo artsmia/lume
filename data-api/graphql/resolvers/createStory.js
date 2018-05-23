@@ -2,6 +2,8 @@ import Organization from '../../db/models/Organization'
 import Story from '../../db/models/Story'
 import { Op } from 'sequelize'
 
+const searchOp = process.env.DB_MODE === 'mysql' ? Op.regexp : Op.like
+
 export default async function(src, args, ctx) {
   try {
     let organization = await Organization.findOne({
@@ -25,7 +27,7 @@ export default async function(src, args, ctx) {
           },
           {
             slug: {
-              [Op.regexp]: `${slug}-[0-9]*`
+              [searchOp]: `${slug}-[0-9]*`
             }
           }
         ]

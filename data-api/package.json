@@ -61,10 +61,12 @@
       "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js dotenv_config_path=../config/.env.local",
     "prepare":
       "rm -rf build && babel ../data-api -d build --ignore node_modules",
-    "deploy": "now -e NODE_ENV=production --token=$NOW_TOKEN --npm",
     "alias": "now alias --token=$NOW_TOKEN",
     "scale": "now scale api.lume.space sfo 1 3 --token=$NOW_TOKEN",
     "now-start": "NODE_ENV=production node build",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "yarn run prepare && now -e NODE_ENV=production && now alias",
+    "travis-deploy":
+      "yarn run prepare && now -e NODE_ENV=production --token=$NOW_TOKEN && now alias --token=$NOW_TOKEN"
   }
 }
