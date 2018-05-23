@@ -10,6 +10,7 @@ script:
 - now alias staging.cms.lume.space -t $NOW_TOKEN
 - cd ..
 - cd data-api
+- yarn install -D
 - yarn run prepare
 - now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.staging
 - now alias staging.api.lume.space -t $NOW_TOKEN
