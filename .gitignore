@@ -21,3 +21,4 @@ env.md
 *.crt
 *.key
 compose.cert
+now.json
