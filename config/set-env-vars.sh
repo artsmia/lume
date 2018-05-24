@@ -20,7 +20,7 @@ fi
 
 
 echo "
-SUBDOMAIN=${SUBDOMAIN}.
+SUBDOMAIN=${SUBDOMAIN}
 LUME_URL=https://${SUBDOMAIN}lume.space
 CMS_URL=https://${SUBDOMAIN}cms.lume.space
 API_URL=https://${SUBDOMAIN}api.lume.space
