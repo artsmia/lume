@@ -95,7 +95,7 @@ Group.belongsTo(Image, {
 })
 
 Group.belongsToMany(Story, {
-  as: 'stories',
+  as: 'groups',
   through: 'story_group'
 })
 

@@ -13,7 +13,7 @@ import { VisibilityEnum, TemplateEnum } from './enums'
 // import {CoreInterface} from './interfaces'
 import { organizationResolver } from '../resolvers/story'
 
-const StoryType = new GraphQLObjectType({
+const story = new GraphQLObjectType({
   name: 'story',
   // interfaces: ()=>([
   //   CoreInterface
@@ -69,7 +69,7 @@ const StoryType = new GraphQLObjectType({
       }
     },
     relatedStories: {
-      type: new GraphQLList(StoryType),
+      type: new GraphQLList(story),
       async resolve(src) {
         try {
           return await src.getRelatedStories()
@@ -91,4 +91,4 @@ const StoryType = new GraphQLObjectType({
   })
 })
 
-export default StoryType
+export default story

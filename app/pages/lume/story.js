@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import Story from '../../components/lume/Story'
-import StaticStory from '../../components/lume/Story/Story.component'
 
 import Template from '../../components/shared/Template'
-import { withRouter } from 'next/router'
 
-class StoryPage extends Component {
+export default class StoryPage extends Component {
   static getInitialProps = async ctx => {
     try {
       return {
@@ -51,4 +49,4 @@ class StoryPage extends Component {
 // let ExportComponent =
 //   process.env.EXPORT_MODE === 'export' ? ExportStory : StoryPage
 
-export default StoryPage
+// export default StoryPage

@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import OrganizationHome from '../../components/lume/OrganizationHome'
-import ExportOrganizationHome from '../../components/lume/OrganizationHome/OrganizationHome.component.js'
 
 import Template from '../../components/shared/Template'
 import Auth from '../../auth'
-import { withRouter } from 'next/router'
 
-class LumeOrganization extends Component {
+export default class LumeOrganization extends Component {
   static getInitialProps = async ctx => {
     try {
       let auth = new Auth(ctx)
@@ -62,4 +60,4 @@ class LumeOrganization extends Component {
 // let ExportComponent =
 //   process.env.EXPORT_MODE === 'export' ? ExportHome : LumeOrganization
 
-export default LumeOrganization
+// export default LumeOrganization
