@@ -60,6 +60,10 @@ export default class Tour {
   run = ctx => {
     let steps = this.steps(ctx)
 
+    if (this.stepIndex >= steps.length) {
+      return false
+    }
+
     let step = steps[this.stepIndex]
 
     if (step.component === ctx.tourId) {
