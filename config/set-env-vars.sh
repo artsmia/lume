@@ -1,20 +1,29 @@
 #! /bin/bash
 
-TAG=$(echo $TRAVIS_COMMIT | cut -c1-6)
+TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
 
-echo $TAG
+
+
 
 if [$TRAVIS_BRANCH == 'production']
 then
-  echo "SUBDOMAIN=" >> ./config/.env.staging
+  SUBDOMAIN=""
+  ENV_FILE='production'
 elif [$TRAVIS_BRANCH == 'staging']
 then
-  echo "SUBDOMAIN=staging." >> ./config/.env.staging
+  SUBDOMAIN="staging."
+  ENV_FILE='staging'
 else
-  echo "SUBDOMAIN=$TAG." >> ./config/.env.staging
+  SUBDOMAIN="$TAG."
+  ENV_FILE='staging'
 fi
 
 
-echo "LUME_URL=https://$SUBDOMAINlume.space" >> ./config/.env.staging
-echo "CMS_URL=https://$SUBDOMAINcms.lume.space" >> ./config/.env.staging
-echo "API_URL=https://$SUBDOMAINapi.lume.space" >> ./config/.env.staging
+echo "
+SUBDOMAIN=${SUBDOMAIN}.
+LUME_URL=https://${SUBDOMAIN}lume.space
+CMS_URL=https://${SUBDOMAIN}cms.lume.space
+API_URL=https://${SUBDOMAIN}api.lume.space
+" >> ./config/.env.$ENV_FILE
+
+cp ./config.env.$ENV_FILE ./config/.env

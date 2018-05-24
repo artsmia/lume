@@ -5,20 +5,17 @@ cache: npm
 script:
 - npm install now -g
 - ./config/set-env-vars.sh
-- source ./config/.env.staging
-- echo $SUBDOMAIN
 - cd app
-- now -t $NOW_TOKEN --dotenv=../config/.env.staging
-- source ../config/.env.staging
+- now -t $NOW_TOKEN --dotenv=../config/.env
+- source ../config/.env
 - now alias "${SUBDOMAIN}lume.space" -t $NOW_TOKEN
 - now alias "${SUBDOMAIN}cms.lume.space" -t $NOW_TOKEN
 - cd ..
 - cd data-api
 - yarn install
 - yarn run prep-build
-- now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.staging
-- source ../config/.env.staging
-
+- now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env
+- source ../config/.env
 - now alias "${SUBDOMAIN}api.lume.space" -t $NOW_TOKEN
 env:
   global:
