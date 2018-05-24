@@ -1,6 +1,6 @@
 #! /bin/bash
 
-TAG=$(echo $TRAVIS_COMMIT | cut -c0-5)
+TAG=$(echo $TRAVIS_COMMIT | cut -c1-6)
 
 echo $TAG
 
