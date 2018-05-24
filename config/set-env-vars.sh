@@ -18,6 +18,3 @@ fi
 echo "LUME_URL=https://$SUBDOMAINlume.space" >> ./config/.env.staging
 echo "CMS_URL=https://$SUBDOMAINcms.lume.space" >> ./config/.env.staging
 echo "API_URL=https://$SUBDOMAINapi.lume.space" >> ./config/.env.staging
-
-
-export MY_TEST_VAR="hello there"
