@@ -13,17 +13,21 @@ export default async function(src, args, ctx) {
       })
     }
 
+    console.log(args)
+
     if (args.slugInput) {
       let organization = await Organization.findOne({
         where: args.slugInput.organization
       })
 
-      story = await Story.findOne({
-        where: {
-          organizationId: organization.id,
-          slug: args.slugInput.slug
-        }
-      })
+      if (organization) {
+        story = await Story.findOne({
+          where: {
+            organizationId: organization.id,
+            slug: args.slugInput.slug
+          }
+        })
+      }
     }
 
     return story

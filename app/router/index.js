@@ -177,7 +177,7 @@ app
         ...req.params,
         ...req.query
       }
-      req.url = `/${req.params.subdomain}`
+      //req.url = `/${req.params.subdomain}`
       app.render(req, res, page, params)
     })
 

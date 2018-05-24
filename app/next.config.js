@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const fs = require('fs')
+//const fs = require('fs')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv/config')
@@ -19,30 +19,30 @@ module.exports = {
       })
     )
     return config
-  },
-  exportPathMap: function(defaultPathMap) {
-    const data = JSON.parse(
-      fs.readFileSync(`${__dirname}/../data-api/export/data.json`, 'utf8')
-    )
-    return {
-      '/mia': {
-        page: '/lume',
-        query: {
-          subdomain: 'mia',
-          data
-        }
-      },
-      '/mia/duluth-living-room': {
-        page: '/lume/story',
-        query: {
-          subdomain: 'mia',
-          storySlug: 'duluth-living-room',
-          organization: data.organization,
-          story: data.stories.find(
-            story => story.storySlug === 'duluth-living-room'
-          )
-        }
-      }
-    }
   }
+  // exportPathMap: function(defaultPathMap) {
+  //   const data = JSON.parse(
+  //     fs.readFileSync(`${__dirname}/../data-api/export/data.json`, 'utf8')
+  //   )
+  //   return {
+  //     '/mia': {
+  //       page: '/lume',
+  //       query: {
+  //         subdomain: 'mia',
+  //         data
+  //       }
+  //     },
+  //     '/mia/duluth-living-room': {
+  //       page: '/lume/story',
+  //       query: {
+  //         subdomain: 'mia',
+  //         storySlug: 'duluth-living-room',
+  //         organization: data.organization,
+  //         story: data.stories.find(
+  //           story => story.storySlug === 'duluth-living-room'
+  //         )
+  //       }
+  //     }
+  //   }
+  // }
 }

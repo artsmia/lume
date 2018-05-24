@@ -36,30 +36,30 @@ class LumeOrganization extends Component {
   }
 }
 
-const ExportOrganizationHomeWithRouter = withRouter(ExportOrganizationHome)
+// const ExportOrganizationHomeWithRouter = withRouter(ExportOrganizationHome)
+//
+// class ExportHome extends Component {
+//   static getInitialProps = async ctx => {
+//     try {
+//       return {
+//         ...ctx.query
+//       }
+//     } catch (ex) {
+//       console.error(ex)
+//     }
+//   }
+//
+//   render() {
+//     console.log(process.env)
+//     return (
+//       <Template>
+//         <ExportOrganizationHomeWithRouter {...this.props.data} />
+//       </Template>
+//     )
+//   }
+// }
+//
+// let ExportComponent =
+//   process.env.EXPORT_MODE === 'export' ? ExportHome : LumeOrganization
 
-class ExportHome extends Component {
-  static getInitialProps = async ctx => {
-    try {
-      return {
-        ...ctx.query
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  render() {
-    console.log(process.env)
-    return (
-      <Template>
-        <ExportOrganizationHomeWithRouter {...this.props.data} />
-      </Template>
-    )
-  }
-}
-
-let ExportComponent =
-  process.env.EXPORT_MODE === 'export' ? ExportHome : LumeOrganization
-
-export default ExportComponent
+export default LumeOrganization

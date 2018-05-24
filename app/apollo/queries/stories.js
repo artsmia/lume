@@ -13,8 +13,9 @@ export const StoriesQuery = gql`
 
 export const queryConfig = {
   options: props => {
-    const { subdomain } = props.router.query
+    console.log(props.router)
 
+    const { subdomain } = props.router.query
     return {
       variables: {
         filter: {

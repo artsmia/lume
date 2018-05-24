@@ -24,31 +24,31 @@ class StoryPage extends Component {
     )
   }
 }
+//
+// const StaticStoryWithRouter = withRouter(StaticStory)
+//
+// class ExportStory extends Component {
+//   static getInitialProps = async ctx => {
+//     try {
+//       return {
+//         ...ctx.query
+//       }
+//     } catch (ex) {
+//       console.error(ex)
+//     }
+//   }
+//
+//   render() {
+//     console.log(process.env)
+//     return (
+//       <Template>
+//         <StaticStoryWithRouter {...this.props.data} />
+//       </Template>
+//     )
+//   }
+// }
+//
+// let ExportComponent =
+//   process.env.EXPORT_MODE === 'export' ? ExportStory : StoryPage
 
-const StaticStoryWithRouter = withRouter(StaticStory)
-
-class ExportStory extends Component {
-  static getInitialProps = async ctx => {
-    try {
-      return {
-        ...ctx.query
-      }
-    } catch (ex) {
-      console.error(ex)
-    }
-  }
-
-  render() {
-    console.log(process.env)
-    return (
-      <Template>
-        <StaticStoryWithRouter {...this.props.data} />
-      </Template>
-    )
-  }
-}
-
-let ExportComponent =
-  process.env.EXPORT_MODE === 'export' ? ExportStory : StoryPage
-
-export default ExportComponent
+export default StoryPage

@@ -8,6 +8,7 @@ import { compose } from 'react-apollo'
 
 class Story extends Component {
   render() {
+    if (!this.props.story) return null
     switch (this.props.story.template) {
       case 'original': {
         return <OriginalTemplate {...this.props} />

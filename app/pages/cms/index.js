@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CmsHome from '../../components/cms/CmsHome'
 import Template from '../../components/shared/Template'
 import Auth from '../../auth'
+
 export default class CmsIndex extends Component {
   static getInitialProps = async ctx => {
     try {
@@ -18,6 +19,7 @@ export default class CmsIndex extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <Template {...this.props}>
         <CmsHome {...this.props} />

@@ -6,6 +6,7 @@ import organizationQuery from '../../../apollo/queries/organization'
 import { withRouter } from 'next/router'
 
 let ExportComponent = Component
+
 ExportComponent = compose(query, organizationQuery)(ExportComponent)
 ExportComponent = withRouter(ExportComponent)
 

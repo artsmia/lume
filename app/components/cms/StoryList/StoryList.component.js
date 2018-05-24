@@ -32,6 +32,10 @@ export default class StoryList extends Component {
   }
 
   render() {
+    // if (!this.props.variables) return null
+    //
+    // if (!this.props.variables.search) return null
+
     const {
       handleLoadMore,
       handleSort,

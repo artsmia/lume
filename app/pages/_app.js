@@ -24,21 +24,21 @@ class MyApp extends App {
   }
 }
 
-class ExportApp extends App {
-  render() {
-    const { Component, pageProps } = this.props
+// class ExportApp extends App {
+//   render() {
+//     const { Component, pageProps } = this.props
+//
+//     return (
+//       <Container>
+//         <ThemeProvider>
+//           <Component {...pageProps} />
+//         </ThemeProvider>
+//       </Container>
+//     )
+//   }
+// }
+//
+// const ExportComponent =
+//   process.env.EXPORT_MODE === 'export' ? ExportApp : withApolloClient(MyApp)
 
-    return (
-      <Container>
-        <ThemeProvider>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </Container>
-    )
-  }
-}
-
-let ExportComponent =
-  process.env.EXPORT_MODE === 'export' ? ExportApp : withApolloClient(MyApp)
-
-export default ExportComponent
+export default withApolloClient(MyApp)

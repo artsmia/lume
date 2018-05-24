@@ -35,12 +35,12 @@ server.set('port', port)
 let corsOptions =
   process.env.NODE_ENV === 'production'
     ? {
-        origin: [/https:\/\/*.lume.space.*/, /http:\/\/*.lume.space.*/]
+        origin: [/https:\/\/.*.lume.space.*/, /http:\/\/.*.lume.space.*/]
       }
     : {
-        origin: [/http:\/\/*.lume.space:3333.*/]
+        origin: [/http:\/\/.*.lume.space:3333.*/]
       }
-server.use(cors(corsOptions), bodyParser.json())
+server.use(cors(), bodyParser.json())
 
 server.use('/media', upload.single('file'), s3Media)
 

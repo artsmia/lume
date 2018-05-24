@@ -82,7 +82,7 @@ export default class CmsHome extends Component {
   }
 
   render() {
-    // if (!this.props.organization) return <Loading/>
+    if (!this.props.organization) return <Loading />
     const {
       props: {
         user,
