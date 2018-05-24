@@ -4,17 +4,18 @@ node_js:
 cache: npm
 script:
 - npm install now -g
+- ./config/set-env-vars.sh
+- source ./config/.env.staging
+- echo $SUBDOMAIN
 - cd app
-- if [$TRAVIS_BRANCH == 'production']; then local SUBDOMAIN=''; elif [$TRAVIS_BRANCH == 'staging']; then local SUBDOMAIN='staging.'; else local SUBDOMAIN="$TRAVIS_COMMIT."; fi
-- local LUME_URL="https://$SUBDOMAINlume.space" local CMS_URL="https://$SUBDOMAINcms.lume.space" local API_URL="https://$SUBDOMAINapi.lume.space"
-- now -e LUME_URL="$LUME_URL" -e CMS_URL="$CMS_URL" -e API_URL="$API_URL" -t $NOW_TOKEN --dotenv=../config/.env.staging
+- now -e -t $NOW_TOKEN --dotenv=../config/.env.staging
 - now alias "$SUBDOMAINlume.space" -t $NOW_TOKEN
 - now alias "$SUBDOMAINcms.lume.space" -t $NOW_TOKEN
 - cd ..
 - cd data-api
 - yarn install
 - yarn run prep-build
-- now -e NODE_ENV=production -e LUME_URL="$LUME_URL" -e CMS_URL="$CMS_URL" -e API_URL="$API_URL" -t $NOW_TOKEN --dotenv=../config/.env.staging
+- now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.staging
 - now alias "$SUBDOMAINapi.lume.space" -t $NOW_TOKEN
 env:
   global:
