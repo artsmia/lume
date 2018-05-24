@@ -1,17 +1,17 @@
 #! /bin/bash
 
-echo $TRAVIS_COMMIT
-echo $TRAVIS_TAG
+TAG=${$TRAVIS_COMMIT:0-5}
 
+echo $TAG
 
 if [$TRAVIS_BRANCH == 'production']
 then
-  echo "SUBDOMAIN=$TRAVIS_TAG" >> ./config/.env.staging
+  echo "SUBDOMAIN=" >> ./config/.env.staging
 elif [$TRAVIS_BRANCH == 'staging']
 then
   echo "SUBDOMAIN=staging." >> ./config/.env.staging
 else
-  echo "SUBDOMAIN=$TRAVIS_TAG." >> ./config/.env.staging
+  echo "SUBDOMAIN=$TAG." >> ./config/.env.staging
 fi
 
 
