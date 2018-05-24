@@ -56,7 +56,17 @@ const Image = db.define(
     //   }
   },
   {
-    freezeTableName: true
+    freezeTableName: true,
+    hooks: {
+      afterDestroy: async (image, options) => {
+        try {
+          console.log(image.id)
+          console.log('this is where we make sure to delete the s3 files')
+        } catch (ex) {
+          console.error(ex)
+        }
+      }
+    }
   }
 )
 

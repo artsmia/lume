@@ -22,3 +22,4 @@ env.md
 *.key
 compose.cert
 now.json
+out

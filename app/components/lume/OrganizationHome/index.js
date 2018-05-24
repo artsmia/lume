@@ -52,4 +52,6 @@ ExportComponent = compose(OrganizationQuery, query)(ExportComponent)
 
 ExportComponent = withRouter(ExportComponent)
 
+// ExportComponent = process.env.EXPORT_MODE === 'export' ? ExportComponent : Component
+
 export default ExportComponent

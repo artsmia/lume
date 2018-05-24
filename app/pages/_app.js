@@ -24,4 +24,21 @@ class MyApp extends App {
   }
 }
 
-export default withApolloClient(MyApp)
+class ExportApp extends App {
+  render() {
+    const { Component, pageProps } = this.props
+
+    return (
+      <Container>
+        <ThemeProvider>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </Container>
+    )
+  }
+}
+
+let ExportComponent =
+  process.env.EXPORT_MODE === 'export' ? ExportApp : withApolloClient(MyApp)
+
+export default ExportComponent
