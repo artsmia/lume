@@ -35,17 +35,10 @@ server.set('port', port)
 let corsOptions =
   process.env.NODE_ENV === 'production'
     ? {
-        origin: [/https:\/\/lume.space.*/, /https:\/\/cms.lume.space.*/]
+        origin: [/https:\/\/*lume.space.*/]
       }
     : {
-        origin: [
-          /http:\/\/localhost:3333.*/,
-          /http:\/\/localhost:5555.*/,
-          /http:\/\/lume.space:3333.*/,
-          /http:\/\/cms.lume.space:3333.*/,
-          /http:\/\/dev.cms.lume.space:3333.*/,
-          /http:\/\/dev.lume.space:3333.*/
-        ]
+        origin: [/http:\/\/*.lume.space:3333.*/]
       }
 server.use(cors(corsOptions), bodyParser.json())
 
