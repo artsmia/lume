@@ -26,4 +26,4 @@ CMS_URL=https://${SUBDOMAIN}cms.lume.space
 API_URL=https://${SUBDOMAIN}api.lume.space
 " >> ./config/.env.$ENV_FILE
 
-cp ./config.env.$ENV_FILE ./config/.env
+cp ./config/.env.$ENV_FILE ./config/.env
