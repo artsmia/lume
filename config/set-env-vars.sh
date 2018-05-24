@@ -2,20 +2,22 @@
 
 TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
 
+echo $TRAVIS_BRANCH
 
+SUBDOMAIN="$TAG."
+ENV_FILE="staging"
 
-
-if [$TRAVIS_BRANCH == "production"]
+if [ $TRAVIS_BRANCH == "production" ]
 then
-  SUBDOMAIN=""
-  ENV_FILE="production"
-elif [$TRAVIS_BRANCH == 'staging']
+  $SUBDOMAIN=""
+  $ENV_FILE="production"
+elif [ $TRAVIS_BRANCH == 'staging' ]
 then
-  SUBDOMAIN="staging."
-  ENV_FILE="staging"
+  $SUBDOMAIN="staging."
+  $ENV_FILE="staging"
 else
-  SUBDOMAIN="$TAG."
-  ENV_FILE="staging"
+  $SUBDOMAIN="$TAG."
+  $ENV_FILE="staging"
 fi
 
 
