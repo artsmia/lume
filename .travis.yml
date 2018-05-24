@@ -5,7 +5,7 @@ cache: npm
 script:
 - npm install now -g
 - cd app
-- if [$TRAVIS_BRANCH == 'production']; then SUBDOMAIN=''; elif [$TRAVIS_BRANCH == 'staging']; then SUBDOMAIN='staging.'; else; SUBDOMAIN="$TRAVIS_COMMIT."; fi
+- if [$TRAVIS_BRANCH == 'production']; then SUBDOMAIN=''; elif [$TRAVIS_BRANCH == 'staging']; then SUBDOMAIN='staging.'; else SUBDOMAIN="$TRAVIS_COMMIT."; fi
 - LUME_URL="https://$SUBDOMAINlume.space" CMS_URL="https://$SUBDOMAINcms.lume.space" API_URL="https://$SUBDOMAINapi.lume.space"
 - now -e LUME_URL="$LUME_URL" -e CMS_URL="$CMS_URL" -e API_URL="$API_URL" -t $NOW_TOKEN --dotenv=../config/.env.staging
 - now alias "$SUBDOMAINlume.space" -t $NOW_TOKEN
