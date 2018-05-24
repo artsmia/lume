@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import { withRouter } from 'next/router'
 import Template from '../../components/shared/Template'
 import Auth from '../../auth'
 import Head from '../../components/shared/head'
 
-export default class PendingApproval extends Component {
+class PendingApproval extends Component {
   static getInitialProps = async ctx => {
     try {
       const auth = new Auth(ctx)
@@ -16,6 +17,10 @@ export default class PendingApproval extends Component {
     } catch (ex) {}
   }
 
+  componentDidMount() {
+    this.redirectIfMembershipApproved()
+  }
+
   render() {
     return (
       <Template user={this.props.user}>
@@ -24,4 +29,29 @@ export default class PendingApproval extends Component {
       </Template>
     )
   }
+
+  /**
+   * If a user has already been approved don't let them sit at the pending page
+   * thinking that they're still pending.
+   *
+   * TODO this should happen universally in `getInitialProps`?
+   */
+  redirectIfMembershipApproved = () => {
+    const { router, user: { organizations } } = this.props
+    const currentOrgMembership = organizations.find(
+      org => org.subdomain === router.query.subdomain
+    )
+
+    if (currentOrgMembership && currentOrgMembership.role !== 'pending') {
+      router.replace(
+        {
+          pathname: '/cms',
+          query: { subdomain: currentOrgMembership.subdomain }
+        },
+        `/${currentOrgMembership.subdomain}`
+      )
+    }
+  }
 }
+
+export default withRouter(PendingApproval)
