@@ -7,14 +7,17 @@ script:
 - ./config/set-env-vars.sh
 - source ./config/.env.staging
 - echo $SUBDOMAIN
+- echo $MY_TEST_VAR
 - cd app
-- now -e -t $NOW_TOKEN --dotenv=../config/.env.staging
+- source ../config/.env.staging
+- now -t $NOW_TOKEN --dotenv=../config/.env.staging
 - now alias "$SUBDOMAINlume.space" -t $NOW_TOKEN
 - now alias "$SUBDOMAINcms.lume.space" -t $NOW_TOKEN
 - cd ..
 - cd data-api
 - yarn install
 - yarn run prep-build
+- source ../config/.env.staging
 - now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.staging
 - now alias "$SUBDOMAINapi.lume.space" -t $NOW_TOKEN
 env:
