@@ -7,7 +7,7 @@ import { withRouter } from 'next/router'
 
 let ExportComponent = Component
 
-ExportComponent = compose(query, organizationQuery)(ExportComponent)
+ExportComponent = compose(organizationQuery, query)(ExportComponent)
 ExportComponent = withRouter(ExportComponent)
 
 export default ExportComponent
