@@ -78,7 +78,18 @@ export default class Template extends Component {
     return (
       <div>
         <div>
-          <MenuCheck />
+          <MenuCheck type={'checkbox'}
+            onClick={
+              ()=>{
+                this.setState(
+                  ({menu}) => ({
+                    menu: !menu
+                  })
+                )
+              }
+            }
+            checked={this.state.menu}
+          />
           <Menu>
             {user
               ? user.organizations.map(({ subdomain, id, name }) => (
@@ -213,6 +224,7 @@ const Menu = styled.ul`
     opacity: 1;
     display: flex;
   }
+
 `
 
 const MenuCheck = styled.input`
@@ -225,15 +237,22 @@ const MenuCheck = styled.input`
   opacity: 0;
   cursor: pointer;
 
-  &:focus ~ ${Menu} {
+  ${'' /* &:focus ~ ${Menu} {
+    opacity: 1;
+    display: flex;
+  } */}
+
+  &:checked ~ ${Menu} {
     opacity: 1;
     display: flex;
   }
+
+
 `
 
-MenuCheck.defaultProps = {
-  type: 'checkbox'
-}
+// MenuCheck.defaultProps = {
+//   type: 'checkbox'
+// }
 
 const A = styled.a`
   width: 100%;
