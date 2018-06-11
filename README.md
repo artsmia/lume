@@ -44,18 +44,8 @@ git clone https://github.com/artsmia/lume.git
 cd lume
 ```
 
-2.  Edit the config file
 
-When running locally, Lume takes all of its environment variables from a single `.env` configuration file located in `lume/config`.
-
-To start, we will copy and rename the `.env.TEMPLATE` file. The file is currently configured to run Lume in local mode however you may reconfigure it if you please.
-
-```bash
-# /lume
-cp config/.env.TEMPLATE config/.env
-```
-
-3.  Configure your local host file
+2.  Configure your local host file
 
 The default `.env.TEMPLATE` uses custom subdomain. To configure this you'll need to open up a terminal.
 
@@ -93,7 +83,7 @@ Vim tips:
 * when you're finished, escape will get you out of insert mode
 * the command `:wq` will save and close your vim session
 
-4.  Install dependencies and start up the application(s)
+3.  Install dependencies and start up the application(s)
 
 Because Lume is actually made up of a number of different services, you'll need to open up three different terminal windows.
 
@@ -108,7 +98,7 @@ cd app
 yarn install
 
 # start up the server
-yarn start
+yarn start:local
 ```
 
 In the second terminal:
@@ -122,7 +112,7 @@ cd data-api
 yarn install
 
 # start up the server
-yarn start
+yarn start:local
 ```
 
 In the third terminal:
@@ -139,7 +129,7 @@ yarn install
 yarn start
 ```
 
-5.  Try the site!
+4.  Try the site!
 
 Great! Now if everything worked, you should be able to visit http://dev.lume.space:3333 to see Lume running locally.
 
