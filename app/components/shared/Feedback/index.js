@@ -23,9 +23,9 @@ const BugInput = styled(Input)`
 class Feedback extends Component {
   state = {
     modal: false,
+    location: '',
     title: '',
     description: '',
-    location: this.props.router.asPath,
     expectedOutcome: '',
     browser: ''
   }
@@ -143,7 +143,7 @@ class Feedback extends Component {
 
             Browser: ${browser}
 
-            Submitted from: ${asPath}
+            Submitted from: ${window.location}
 
             User: ${user ? user.email : ''}
 
