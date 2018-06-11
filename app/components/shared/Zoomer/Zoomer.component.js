@@ -282,12 +282,6 @@ export default class extends Component {
     try {
       console.log('createZoomer')
 
-      // if (
-      //   this.map
-      // ) {
-      //   this.map.remove()
-      // }
-
       let larger = Math.max(height, width)
 
       let maxTiles = Math.ceil(larger / tileSize)
@@ -323,12 +317,16 @@ export default class extends Component {
 
       const fitY = Math.log2(containerHeight / height)
 
-      const minZoom = Math.floor(Math.min(fitX, fitY) * 100) / 100
+      let minZoom = Math.floor(Math.min(fitX, fitY) * 100) / 100
+
+      if (tileSize !== 512) {
+       minZoom = 2
+      }
 
       this.tiles = L.tileLayer.knight(tileUrl, {
         tileSize,
         maxNativeZoom: maxZoom,
-        minNativeZoom: 0,
+        // minNativeZoom: 0,
         noWrap: true,
         bounds: this.bounds,
         minZoom,
@@ -567,6 +565,8 @@ if (typeof window === 'object') {
 
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({ z, x, y }) {
+
+      console.log(this._url)
       let tile = document.createElement('div')
       let image = document.createElement('img')
       image.src = this._url
