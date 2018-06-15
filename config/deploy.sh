@@ -3,6 +3,7 @@
 TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
 
 echo $TRAVIS_BRANCH
+echo $TAG
 
 SUBDOMAIN="$TAG."
 ENV_FILE="staging"
