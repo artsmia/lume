@@ -59,3 +59,5 @@ if [ $TRAVIS_BRANCH != 'production' ]; then
   now alias "${BRANCH}api.lume.space" -t $NOW_TOKEN -T lume
   cd ..
 fi
+
+echo "All done. :)"
