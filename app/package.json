@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "lume-app",
   "version": "1.0.0",
   "dependencies": {
     "apollo-boost": "^0.1.4",

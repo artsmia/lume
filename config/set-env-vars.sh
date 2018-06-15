@@ -16,6 +16,7 @@ elif [ $TRAVIS_BRANCH == "staging" ]; then
 else
   SUBDOMAIN="$TAG."
   ENV_FILE="staging"
+  BRANCH="$TRAVIS_BRANCH."
 fi
 
 
@@ -27,3 +28,24 @@ API_URL=https://${SUBDOMAIN}api.lume.space
 " >> ./config/.env.$ENV_FILE
 
 cp ./config/.env.$ENV_FILE ./config/.env
+
+
+echo "
+SUBDOMAIN=${BRANCH}
+LUME_URL=https://${BRANCH}lume.space
+CMS_URL=https://${BRANCH}cms.lume.space
+API_URL=https://${BRANCH}api.lume.space
+" >> ./config/.env.$ENV_FILE ./config/.env.branch
+
+
+if [ $TRAVIS_BRANCH == 'team-switch' ]; then
+  cd app
+  now -t $NOW_TOKEN --dotenv=../config/.env.branch
+  now alias "${BRANCH}lume.space" -t $NOW_TOKEN
+  now alias "${BRANCH}cms.lume.space" -t $NOW_TOKEN
+  cd ../data-api
+  yarn install
+  yarn run prep-build
+  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.branch
+  now alias "${BRANCH}api.lume.space" -t $NOW_TOKEN
+fi
