@@ -25,7 +25,7 @@ CMS_URL=https://${SUBDOMAIN}cms.lume.space
 API_URL=https://${SUBDOMAIN}api.lume.space
 " >> ./config/.env
 
-now switch lume
+now switch lume -t $NOW_TOKEN
 cd app
 now -t $NOW_TOKEN --dotenv=../config/.env
 now alias "${SUBDOMAIN}lume.space" -t $NOW_TOKEN
