@@ -25,7 +25,7 @@ CMS_URL=https://${SUBDOMAIN}cms.lume.space
 API_URL=https://${SUBDOMAIN}api.lume.space
 " >> ./config/.env
 
-
+now switch lume
 cd app
 now -t $NOW_TOKEN --dotenv=../config/.env
 now alias "${SUBDOMAIN}lume.space" -t $NOW_TOKEN
@@ -36,7 +36,6 @@ yarn run prep-build
 now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env
 now alias "${SUBDOMAIN}api.lume.space" -t $NOW_TOKEN
 cd ..
-
 
 
 if [ $TRAVIS_BRANCH != 'production' ]; then
@@ -58,4 +57,5 @@ if [ $TRAVIS_BRANCH != 'production' ]; then
   cd ../data-api
   now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env
   now alias "${BRANCH}api.lume.space" -t $NOW_TOKEN
+  cd ..
 fi
