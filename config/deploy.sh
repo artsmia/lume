@@ -26,7 +26,7 @@ CMS_URL=https://${SUBDOMAIN}cms.lume.space
 API_URL=https://${SUBDOMAIN}api.lume.space
 " >> ./config/.env
 
-cd ../data-api
+cd /data-api
 yarn install
 yarn run prep-build
 cd ..
