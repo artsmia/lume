@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 import 'dotenv/config'
-
+import addCallback from './auth/addCallback'
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
