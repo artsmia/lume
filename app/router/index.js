@@ -187,8 +187,8 @@ app
 
     server.listen(process.env.CLIENT_PORT, err => {
       console.log(
-        `Lume is up and running at : ${process.env.CMS_URL ||
-          process.env.NOW_URL}`
+        `CMS isrunning at : ${process.env.CMS_URL}
+          Lume isrunning at : ${process.env.LUME_URL}`
       )
       if (err) throw err
     })

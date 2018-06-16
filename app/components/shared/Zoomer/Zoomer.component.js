@@ -278,8 +278,10 @@ export default class extends Component {
     }
   }
 
-  createZoomer = async ({ height, width, tileUrl, tileSize }) => {
+  createZoomer = async (config) => {
     try {
+
+      let { height, width, tileUrl, tileSize } = config
       console.log('createZoomer')
 
       let larger = Math.max(height, width)
@@ -318,6 +320,7 @@ export default class extends Component {
       const fitY = Math.log2(containerHeight / height)
 
       let minZoom = Math.floor(Math.min(fitX, fitY) * 100) / 100
+
 
       if (tileSize !== 512) {
        minZoom = 2
@@ -566,7 +569,6 @@ if (typeof window === 'object') {
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({ z, x, y }) {
 
-      console.log(this._url)
       let tile = document.createElement('div')
       let image = document.createElement('img')
       image.src = this._url
