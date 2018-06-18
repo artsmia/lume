@@ -5,9 +5,13 @@ TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
 SUBDOMAIN="$TAG."
 ENV_FILE="staging"
 
+echo $TRAVIS_BRANCH
+
+
 if [ $TRAVIS_BRANCH == "master" ]; then
   SUBDOMAIN=""
   ENV_FILE="production"
+  BRANCH=""
 else
   SUBDOMAIN="$TAG."
   ENV_FILE="staging"
