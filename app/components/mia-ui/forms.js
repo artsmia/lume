@@ -26,7 +26,6 @@ export const Label = styled.label`
 Label.displayName = 'Label'
 
 const InputEl = styled.input`
-  outline: none;
   padding: .65em;
   border-radius: 2px;
   box-shadow: inset 0 0px 0px ${transparent};
@@ -225,7 +224,6 @@ CheckboxInput.defaultProps = {
 }
 
 export const Select = styled.select`
-  outline: none;
   font-size: 1.1rem;
 `
 
@@ -468,7 +466,6 @@ const SearchAndDrop = styled(Flex)`
 const MultiSearch = styled.input`
   border: 1px solid black;
   border-radius: 2px;
-  outline: none;
   height: 35px;
   padding: 5px;
   width: 220px;
