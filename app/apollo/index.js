@@ -84,7 +84,6 @@ export default App => {
     static displayName = 'withApollo(App)'
     static async getInitialProps(ctx) {
       try {
-        console.log('withApollo static')
 
         const { Component, router } = ctx
 
@@ -94,15 +93,12 @@ export default App => {
 
         let appProps = {}
         if (App.getInitialProps) {
-          console.log('App getInitialProps start')
           appProps = await App.getInitialProps(ctx, apollo)
-          console.log('App getInitialProps done')
         }
 
         const apolloState = {}
 
         try {
-          console.log('getDataFromTree')
           // Run all GraphQL queries
           await getDataFromTree(
             <App
