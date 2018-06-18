@@ -8,6 +8,9 @@ makeEnvVars(){
 }
 
 deployApp(){
+  LUME_URL=""
+  CMS_URL=""
+  API_URL=""
   makeEnvVars $1
   cd app
   now -t $NOW_TOKEN --dotenv=../config/.env.$2 -T lume -e LUME_URL -e CMS_URL -e API_URL
@@ -18,6 +21,9 @@ deployApp(){
 }
 
 deployApi(){
+  LUME_URL=""
+  CMS_URL=""
+  API_URL=""
   makeEnvVars $1
   cd data-api
   now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$2 -T lume -e LUME_URL -e CMS_URL -e API_URL
