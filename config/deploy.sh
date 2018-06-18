@@ -48,8 +48,8 @@ else
 
   deployApp "$TAG." "staging" &
   deployApi "$TAG." "staging" &
-  deployApp $TRAVIS_BRANCH "staging" &
-  deployApi $TRAVIS_BRANCH "staging" &
+  deployApp "$TRAVIS_BRANCH." "staging" &
+  deployApi "$TRAVIS_BRANCH." "staging" &
   wait
 fi
 
