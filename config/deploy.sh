@@ -2,13 +2,10 @@
 
 TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
 
-echo $TRAVIS_BRANCH
-echo $TAG
-
 SUBDOMAIN="$TAG."
 ENV_FILE="staging"
 
-if [ $TRAVIS_BRANCH == "production" ]; then
+if [ $TRAVIS_BRANCH == "master" ]; then
   SUBDOMAIN=""
   ENV_FILE="production"
 else
@@ -61,7 +58,7 @@ deployApi &
 
 wait
 
-if [ $TRAVIS_BRANCH != 'production' ]; then
+if [ $TRAVIS_BRANCH != 'master' ]; then
 
   rm -f ./config/.env
   cp ./config/.env.$ENV_FILE ./config/.env
