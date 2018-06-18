@@ -319,12 +319,14 @@ export default class extends Component {
 
       const fitY = Math.log2(containerHeight / height)
 
-      let minZoom = Math.floor(Math.min(fitX, fitY) * 100) / 100
+      let fitZoom = Math.floor(Math.min(fitX, fitY) * 100) / 100
+      let minZoom = Math.floor(Math.min(fitX, fitY))
 
 
       if (tileSize !== 512) {
        minZoom = 2
       }
+
 
       this.tiles = L.tileLayer.knight(tileUrl, {
         tileSize,
@@ -339,15 +341,18 @@ export default class extends Component {
 
       const initialLatLng = [height / 2, -1 * width / 2]
 
-      this.map.setView(initialLatLng, minZoom)
+      this.map.setView(initialLatLng, fitZoom)
 
       this.tiles.addTo(this.map)
 
       this.map.invalidateSize()
 
-      this.map.setZoom(minZoom)
+      this.map.setZoom(fitZoom)
 
       this.map.options.zoomSnap = 1
+      this.map.options.minZoom = fitZoom
+
+      console.log(minZoom)
     } catch (ex) {
       console.error(ex)
     }
