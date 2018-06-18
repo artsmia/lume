@@ -8,11 +8,13 @@ makeEnvVars(){
 }
 
 deployApp(){
+  cd app
   LUME_URL=""
   CMS_URL=""
   API_URL=""
   makeEnvVars $1
-  cd app
+  echo LUME_URL
+  echo CMS_URL
   now -t $NOW_TOKEN --dotenv=../config/.env.$2 -T lume -e LUME_URL -e CMS_URL -e API_URL
   now alias "${1}lume.space" -t $NOW_TOKEN -T lume
   now alias "${1}cms.lume.space" -t $NOW_TOKEN -T lume
@@ -21,12 +23,12 @@ deployApp(){
 }
 
 deployApi(){
+  cd data-api
   LUME_URL=""
   CMS_URL=""
   API_URL=""
   makeEnvVars $1
-  cd data-api
-  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$2 -T lume -e LUME_URL -e CMS_URL -e API_URL
+  now -e NODE_ENV=production -e LUME_URL -e CMS_URL -e API_URL -t $NOW_TOKEN --dotenv=../config/.env.$2 -T lume 
   now alias "${1}api.lume.space" -t $NOW_TOKEN -T lume
   echo "Api is now deployed at ${1}api.lume.space"
 }
