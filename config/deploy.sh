@@ -12,11 +12,8 @@ makeEnvVars(){
 }
 
 deployApp(){
-  makeEnvVars $1 $2 $3
   cd app
-  echo LUME_URL
-  echo CMS_URL
-  now -t $NOW_TOKEN --dotenv=../config/.env.$3 -T lume
+  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$3 -T lume
   now alias "${1}lume.space" -t $NOW_TOKEN -T lume
   now alias "${1}cms.lume.space" -t $NOW_TOKEN -T lume
   echo "App is now deployed at ${1}lume.space and ${1}cms.lume.space"
@@ -24,11 +21,16 @@ deployApp(){
 }
 
 deployApi(){
-  makeEnvVars $1 $2 $3
   cd data-api
   now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$3 -T lume
   now alias "${1}api.lume.space" -t $NOW_TOKEN -T lume
   echo "Api is now deployed at ${1}api.lume.space"
+}
+
+deploy(){
+  deployApp $1 $2 $3 &
+  deployApi $1 $2 $2 &
+  wait
 }
 
 
@@ -43,19 +45,16 @@ echo "Beginning deployment for branch:${TRAVIS_BRANCH}"
 
 
 if [ $TRAVIS_BRANCH == "master" ]; then
-
-  deployApp "" "production" "prod" &
-  deployApi "" "production" "prod" &
-  wait
+  makeEnvVars "" "production" "prod"
+  deploy "" "production" "prod"
 
 
 else
   TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
-
-  deployApp "$TAG." "staging" "tag" &
-  deployApi "$TAG." "staging" "tag" &
-  deployApp "$TRAVIS_BRANCH." "staging" "branch" &
-  deployApi "$TRAVIS_BRANCH." "staging" "branch" &
+  makeEnvVars "$TAG." "staging" "tag"
+  makeEnvVars "$TRAVIS_BRANCH." "staging" "branch"
+  deploy "$TAG." "staging" "tag" &
+  deploy "$TRAVIS_BRANCH." "staging" "branch"
   wait
 fi
 
