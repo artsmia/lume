@@ -166,7 +166,6 @@ export default class extends Component {
 
               if (this.detailBounds) {
                 this.map.flyToBounds(this.detailBounds, {
-                  padding: [5, 5],
                   animate: false
                 })
               }
@@ -330,12 +329,12 @@ export default class extends Component {
 
       this.tiles = L.tileLayer.knight(tileUrl, {
         tileSize,
-        maxNativeZoom: maxZoom,
+        //maxNativeZoom: maxZoom,
         // minNativeZoom: 0,
         noWrap: true,
         bounds: this.bounds,
         minZoom,
-        maxZoom,
+        //maxZoom,
         errorTileUrl: '/static/spinner.gif'
       })
 
@@ -352,7 +351,6 @@ export default class extends Component {
       this.map.options.zoomSnap = 1
       this.map.options.minZoom = fitZoom
 
-      console.log(minZoom)
     } catch (ex) {
       console.error(ex)
     }
@@ -424,9 +422,11 @@ export default class extends Component {
         this.map.removeLayer(this.contentLayer)
       }
 
-      let details = this.state.content.geoJSON.features.map(feature => {
+      if (!this.state.content.geoJSON) {return}
+
+      let details = this.state.content.geoJSON ? this.state.content.geoJSON.features.map(feature => {
         return L.GeoJSON.geometryToLayer(feature)
-      })
+      }) : []
 
       details = details.map(detail => detail._latlngs)
 

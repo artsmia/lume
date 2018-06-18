@@ -10,7 +10,7 @@ export default class PictureDisplay extends Component {
 
     return (
       <Container>
-        {image0 ? <Zoomer contentId={this.props.content.id} /> : null}
+        <ContentZoomer contentId={this.props.content.id} />
       </Container>
     )
   }
