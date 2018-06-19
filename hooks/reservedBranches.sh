@@ -9,7 +9,7 @@ Checking for reserved branches: (${reserved[*]})
 branch="$(git symbolic-ref --short HEAD)"
 
 
-for name in "${reserved[*]}"
+for name in "${reserved[@]}"
 do
   echo "$name"
   echo "$branch"
