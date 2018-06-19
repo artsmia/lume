@@ -4,13 +4,11 @@ echo "Reserved Branches: cms, api, lume, dev"
 
 reserved=(cms api dev lume)
 
-echo $reserved
-
 branch=$(git symbolic-ref --short HEAD)
 
 echo ${reserved[*]}
 
-for name in $reserved
+for name in "${reserved[*]}"
 do
   echo $name
   if [ $name == $branch ]
