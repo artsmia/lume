@@ -1,87 +1,64 @@
 #! /bin/bash
 
-TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
 
-SUBDOMAIN="$TAG."
-ENV_FILE="staging"
+postToSlack(){
+  curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$1\"}" https://hooks.slack.com/services/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
 
-echo $TRAVIS_BRANCH
+}
 
+makeEnvVars(){
+  cp ./config/.env.$1 ./config/.env.$2
 
-if [ $TRAVIS_BRANCH == "master" ]; then
-  SUBDOMAIN=""
-  ENV_FILE="production"
-  BRANCH=""
-else
-  SUBDOMAIN="$TAG."
-  ENV_FILE="staging"
-  BRANCH="$TRAVIS_BRANCH."
-fi
+  echo "
+  LUME_URL=https://${1}.lume.space
+  CMS_URL=https://${1}.cms.lume.space
+  API_URL=https://${1}.api.lume.space
+  " >> ./config/.env.$2
 
-cp ./config/.env.$ENV_FILE ./config/.env
+}
 
-echo "
-SUBDOMAIN=${SUBDOMAIN}
-LUME_URL=https://${SUBDOMAIN}lume.space
-CMS_URL=https://${SUBDOMAIN}cms.lume.space
-API_URL=https://${SUBDOMAIN}api.lume.space
-" >> ./config/.env
+deployApp(){
+  cd app
+  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$1 -T lume --force
+  now alias "${2}lume.space" -t $NOW_TOKEN -T lume
+  now alias "${2}cms.lume.space" -t $NOW_TOKEN -T lume
+  postToSlack "App is now deployed at https://${2}lume.space."
+
+}
+
+deployApi(){
+  cd data-api
+  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$1 -T lume --force
+  now alias "${2}api.lume.space" -t $NOW_TOKEN -T lume
+}
+
+deploy(){
+  deployApp $1 $2 &
+  deployApi $1 $2 &
+  wait
+}
+
 
 cd data-api
 yarn install
 yarn run prep-build
 cd ..
 
-deployApp(){
-  cd app
-  now -t $NOW_TOKEN --dotenv=../config/.env -T lume
-  now alias "${SUBDOMAIN}lume.space" -t $NOW_TOKEN -T lume
-  now alias "${SUBDOMAIN}cms.lume.space" -t $NOW_TOKEN -T lume
-}
-
-deployApi(){
-  cd data-api
-  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env -T lume
-  now alias "${SUBDOMAIN}api.lume.space" -t $NOW_TOKEN -T lume
-}
-
-# cd app
-# now -t $NOW_TOKEN --dotenv=../config/.env -T lume
-# now alias "${SUBDOMAIN}lume.space" -t $NOW_TOKEN -T lume
-# now alias "${SUBDOMAIN}cms.lume.space" -t $NOW_TOKEN -T lume
-# cd ../data-api
-# yarn install
-# yarn run prep-build
-# now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env -T lume
-# now alias "${SUBDOMAIN}api.lume.space" -t $NOW_TOKEN -T lume
-# cd ..
 
 
-deployApp &
-deployApi &
+echo "Beginning deployment for branch:${TRAVIS_BRANCH}"
 
-wait
 
-if [ $TRAVIS_BRANCH != 'master' ]; then
+if [ $TRAVIS_BRANCH == "master" ]; then
 
-  rm -f ./config/.env
-  cp ./config/.env.$ENV_FILE ./config/.env
+  deploy 'production'
 
-  echo "
-  SUBDOMAIN=${BRANCH}
-  LUME_URL=https://${BRANCH}lume.space
-  CMS_URL=https://${BRANCH}cms.lume.space
-  API_URL=https://${BRANCH}api.lume.space
-  " >>  ./config/.env
 
-  cd app
-  now -t $NOW_TOKEN --dotenv=../config/.env -T lume
-  now alias "${BRANCH}lume.space" -t $NOW_TOKEN -T lume
-  now alias "${BRANCH}cms.lume.space" -t $NOW_TOKEN -T lume
-  cd ../data-api
-  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env -T lume
-  now alias "${BRANCH}api.lume.space" -t $NOW_TOKEN -T lume
-  cd ..
+else
+  TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
+  makeEnvVars "staging" "$TAG"
+  makeEnvVars "staging" "$TRAVIS_BRANCH"
+  deploy "$TAG" "$TAG." &
+  deploy "$TRAVIS_BRANCH" "$TRAVIS_BRANCH." &
+  wait
 fi
-
-echo "All done. :)"
