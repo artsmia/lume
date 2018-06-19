@@ -156,7 +156,12 @@ class Feedback extends Component {
 
       this.setState({
         modal: false,
-        sent: false
+        sent: false,
+        location: '',
+        title: '',
+        description: '',
+        expectedOutcome: '',
+        browser: ''
       })
 
       console.log(json)
