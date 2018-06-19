@@ -20,6 +20,8 @@ def lambda_handler(event, context):
 
         key = record['s3']['object']['key']
 
+        print(record['s3']['object']['key'])
+
         s3Dir = key.replace('/original.jpeg', '')
 
         download_path = '/tmp/original.jpeg'
