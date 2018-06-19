@@ -5,6 +5,7 @@ cache:
   - npm
   - yarn
 script:
+- ls
 - npm install now -g
 - ./config/deploy.sh
 env:

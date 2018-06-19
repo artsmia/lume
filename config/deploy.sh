@@ -14,7 +14,7 @@ makeEnvVars(){
 
 deployApp(){
   cd app
-  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$1 -T lume
+  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$1 -T lume --force
   now alias "${2}lume.space" -t $NOW_TOKEN -T lume
   now alias "${2}cms.lume.space" -t $NOW_TOKEN -T lume
   echo "App is now deployed at ${2}lume.space and ${2}cms.lume.space"
@@ -23,7 +23,7 @@ deployApp(){
 
 deployApi(){
   cd data-api
-  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$1 -T lume
+  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$1 -T lume --force
   now alias "${2}api.lume.space" -t $NOW_TOKEN -T lume
   echo "Api is now deployed at ${2}api.lume.space"
 }
