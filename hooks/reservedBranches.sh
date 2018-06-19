@@ -2,14 +2,13 @@
 
 echo "Reserved Branches: cms, api, lume, dev"
 
-declare -a reserved
-reserved=('cms' 'api' 'dev' 'lume')
+reserved=(cms api dev lume)
 
 echo $reserved
 
 branch=$(git symbolic-ref --short HEAD)
 
-echo $branch
+echo ${reserved[*]}
 
 for name in $reserved
 do
