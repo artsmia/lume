@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'production'){
     ]
 
     urls.forEach( url => {
-      if(!callbacks.find(url)){
+      if(!callbacks.includes(url)){
         callbacks.push(url)
       }
     })
