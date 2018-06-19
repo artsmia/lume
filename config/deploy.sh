@@ -45,8 +45,8 @@ echo "Beginning deployment for branch:${TRAVIS_BRANCH}"
 
 
 if [ $TRAVIS_BRANCH == "master" ]; then
-  makeEnvVars "" "production" "prod"
-  deploy "" "production" "prod"
+  makeEnvVars '' "production" "prod"
+  deploy '' "production" "prod"
 
 
 else
