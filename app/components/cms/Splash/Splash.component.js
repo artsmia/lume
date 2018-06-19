@@ -31,7 +31,14 @@ export default class Home extends Component {
             Foundation to allow anyone (especially museum educators and
             curators) to present content in an interactive and compelling way.
           </P>
-
+          {process.env.AUTH_STRATEGY !== 'local' ? (
+            <Button
+              a
+              href={'/login'}
+            >
+              Login or Signup
+            </Button>
+          ) : null}
           {process.env.AUTH_STRATEGY === 'local' ? (
             <Box>
               <H3>
