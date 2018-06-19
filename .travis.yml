@@ -2,10 +2,9 @@ language: node_js
 node_js:
 - node
 cache:
-  - npm
-  - yarn
+  directories:
+    - data-api/node_modules
 script:
-- ls
 - npm install now -g
 - ./config/deploy.sh
 env:
