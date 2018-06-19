@@ -1,14 +1,36 @@
 language: node_js
+git:
+  depth: 3
 node_js:
-- node
-cache:
-  directories:
-    - data-api/node_modules
-script:
-- npm install now -g
-- ./config/deploy.sh
+  - node
 env:
   global:
   - secure: gdZUj9VHYqPYeyhRxel7v8Wc75dVIzYxcvYOxINy5z9ZevQJPOJ0P8r12ozb78aq4nmfP1lwHme//Tdt7GCJaxQh49qGb80PDJt04KP7QPxkyvpif3wVNGxEH40H19bmrrfKjkbbHtRy7b4/opitvk+/Q8xBctlVeS6qNuw9jlKJfcVYUqM4dtME9xpUgPf9cbRfdrRe8c9jBosyz29WTmE4WMVupuyp1fWPacEoU/C6LJCaMaAz6R5N8+bFqYRdw1N/OIusuzx6WjaQSbv7uHc+VeZKCG6XywJYsxrGe0Hv++r10TbiFoj/lOdfJwMdNZ0UiOenUkzHi9Zgg5h9LxJlinfcDu710gn5kwIpYa3mD/8UJpH2dsEdPiqkeDcfUxesRE5e0t5jFQIRYVnd8pe091IfePlBTBOiArech35StfUTmGCpotyoV1euHzLvUjWTE4U2TLtKNZ5H3eefrV8i6tHHh4KdipHmH5L5PjOlj6aArOEj3MNdmNmfgRTCNIrKM3uzK8NljSrRcI+9kNnDOCcaNlBzUz0CY4wPqdWxxTAISs5yC2vKpz6YMrFXzQv4KuHqiVxEYoFhS/MKqL/A5jEcdcwGomV/QSlP9H0/5Rhbla6DjpzPaXh4bRivvX7NVdL7fWbqwo8fR9wvsWqwjKYmKayncG27KGjhOwI=
-git:
-  depth: 3
+cache:
+  directories:
+    - node_modules
+    - data-api/node_modules
+install:
+- npm install now -g
+- cd data-api && yarn install && cd ..
+script:
+  - cd data-api && yarn run build && cd ..
+deploy:
+  - provider: script
+    script: config/deployProd.sh
+    on:
+      master: true
+      all_branches: false
+    skip_cleanup: true
+  - provider: script
+    script: config/deployBranch.sh
+    on:
+      master: false
+      all_branches: true
+    skip_cleanup: true
+  # - provider: script
+  #   script: config/deployTag.sh
+  #   on:
+  #     master: false
+  #     all_branches: true
+  #   skip_cleanup: true
