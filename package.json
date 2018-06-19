@@ -7,11 +7,14 @@
   "respository": "https://github.com/artsmia/lume",
   "devDependencies": {
     "chalk": "^2.4.1",
-    "husky": "^0.14.3",
+    "husky": "^1.0.0-rc.9",
     "prettier": "^1.12.1",
     "pretty-quick": "^1.4.1"
   },
-  "scripts": {
-    "precommit": "pretty-quick --staged"
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged",
+      "pre-push": "./hooks/reservedBranches.sh"
+    }
   }
 }
