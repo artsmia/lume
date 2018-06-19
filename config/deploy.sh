@@ -22,7 +22,7 @@ deployApp(){
   now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$1 -T lume --force
   now alias "${2}lume.space" -t $NOW_TOKEN -T lume
   now alias "${2}cms.lume.space" -t $NOW_TOKEN -T lume
-  postToSlack "App is now deployed at https://${2}lume.space and https://${2}cms.lume.space"
+  postToSlack "App is now deployed at https://${2}lume.space."
 
 }
 
@@ -30,7 +30,6 @@ deployApi(){
   cd data-api
   now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.$1 -T lume --force
   now alias "${2}api.lume.space" -t $NOW_TOKEN -T lume
-  postToSlack "Api is now deployed at https://${2}api.lume.space"
 }
 
 deploy(){
