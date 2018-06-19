@@ -1,7 +1,7 @@
 #! /bin/bash
 
 
-reserved=("cms" "api" "dev" "lume")
+reserved=(cms api dev lume)
 
 echo "
 Checking for reserved branches: (${reserved[*]})
