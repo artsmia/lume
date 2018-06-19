@@ -2,9 +2,7 @@
 
 declare -a reserved=("cms" "api" "dev" "lume")
 
-echo "
-Checking for reserved branches: (${reserved[*]})
-"
+echo "Checking for reserved branches: (${reserved[*]})"
 
 branch="$(git symbolic-ref --short HEAD)"
 
@@ -18,6 +16,4 @@ do
   fi
 done
 
-echo "
-No problems here. $branch is approved.
-"
+echo "$branch is approved."
