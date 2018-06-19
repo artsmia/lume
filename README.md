@@ -1,6 +1,5 @@
 # Lume
 
-
 Welcome to Lume, a digital storytelling platform by the Minneapolis Institute of Art.
 
 If you are interested in contributing to Lume or running your own instance with further configuration, head over to the [Wiki](/wiki) for more detail information about Lume.
@@ -44,7 +43,6 @@ Open up your terminal, navigate to the directory where you like to keep your cod
 git clone https://github.com/artsmia/lume.git
 cd lume
 ```
-
 
 2.  Configure your local host file
 
