@@ -12,19 +12,25 @@ TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
 cp ./config/.env.staging ./config/.env.tag
 
 echo "
-LUME_URL=https://${2}.lume.space
-CMS_URL=https://${2}.cms.lume.space
-API_URL=https://${2}.api.lume.space
+LUME_URL=https://${TAG}.lume.space
+CMS_URL=https://${TAG}.cms.lume.space
+API_URL=https://${TAG}.api.lume.space
 " >> ./config/.env.tag
 
 
 deployApp(){
-  now ./app -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.tag -T lume --force && now alias "${TAG}.lume.space" -t $NOW_TOKEN -T lume && now alias "${TAG}.cms.lume.space" -t $NOW_TOKEN -T lume
+  APP_URL=$(now ./app -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.tag -T lume --force)
+  echo "${APP_URL}"
+  now alias "${APP_URL}" "${TAG}.lume.space" -t $NOW_TOKEN -T lume
+  now alias "${APP_URL}" "${TAG}.cms.lume.space" -t $NOW_TOKEN -T lume
 
 }
 
 deployApi(){
-  now ./data-api -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.tag -T lume --force && now alias "${tag}.api.lume.space" -t $NOW_TOKEN -T lume
+  API_URL=$(now ./data-api -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.tag -T lume --force)
+  echo "${API_URL}"
+
+  now alias "${API_URL}" "${TAG}.api.lume.space" -t $NOW_TOKEN -T lume
 }
 
 deployApp &
