@@ -13,56 +13,47 @@ import setSaveStatus from '../../../apollo/local/setSaveStatus'
 import { Flex, Box } from 'grid-styled'
 import { Title, Description } from '../../mia-ui/forms'
 import DeleteContentButton from '../../cms/DeleteContentButton'
-import {MapZoomer} from '../../shared/Zoomer'
+import { MapZoomer } from '../../shared/Zoomer'
 
 class MapEditor extends Component {
   render() {
     if (!this.props.content) return null
 
     const {
-      state: {
-        title,
-        description,
-        image0Id,
-        mapUrl,
-        mapKey
-      },
+      state: { title, description, image0Id, mapUrl, mapKey },
       saveEdits,
       handleChange,
       props: { organization, content }
     } = this
 
     return (
-      <Flex
-        w={1}
-      >
-
-      <Flex w={[1, 1 / 2]} flexWrap={'wrap'} m={3}>
-        <Box w={1}>
-          <Title
-            label={'Title'}
-            value={title}
-            name={'title'}
-            onChange={handleChange}
-          />
-        </Box>
-        <Box w={1}>
-          <Description
-            label={'Description'}
-            value={description}
-            name={'description'}
-            onChange={handleChange}
-          />
-        </Box>
-        <Box w={1}>
-          <ChangeImage
-            label={'Image'}
-            name={'image0Id'}
-            image={content.image0}
-            onChange={handleChange}
-          />
-        </Box>
-        {/* <Box w={1} id={'additional-images'}>
+      <Flex w={1}>
+        <Flex w={[1, 1 / 2]} flexWrap={'wrap'} m={3}>
+          <Box w={1}>
+            <Title
+              label={'Title'}
+              value={title}
+              name={'title'}
+              onChange={handleChange}
+            />
+          </Box>
+          <Box w={1}>
+            <Description
+              label={'Description'}
+              value={description}
+              name={'description'}
+              onChange={handleChange}
+            />
+          </Box>
+          <Box w={1}>
+            <ChangeImage
+              label={'Image'}
+              name={'image0Id'}
+              image={content.image0}
+              onChange={handleChange}
+            />
+          </Box>
+          {/* <Box w={1} id={'additional-images'}>
           <MultiImage
             label={'Additional Images'}
             additionalImages={additionalImages}
@@ -70,37 +61,28 @@ class MapEditor extends Component {
             onRemove={handleRemoveAdditionalImage}
           />
         </Box> */}
-        <Box
-          w={1}
-        >
-          <input
-            name={'mapUrl'}
-            value={mapUrl || ''}
-            onChange={handleChange}
-
-          />
-        </Box>
-        <Box
-          w={1}
-        >
-          <input
-            name={'mapKey'}
-            value={mapKey || ''}
-            onChange={handleChange}
-
-          />
-        </Box>
-        <Box w={1} my={5}>
-          <DeleteContentButton contentId={this.props.content.id} />
-        </Box>
+          <Box w={1}>
+            <input
+              name={'mapUrl'}
+              value={mapUrl || ''}
+              onChange={handleChange}
+            />
+          </Box>
+          <Box w={1}>
+            <input
+              name={'mapKey'}
+              value={mapKey || ''}
+              onChange={handleChange}
+            />
+          </Box>
+          <Box w={1} my={5}>
+            <DeleteContentButton contentId={this.props.content.id} />
+          </Box>
+        </Flex>
+        <Right w={[1, 1 / 2]} flexWrap={'wrap'} m={3}>
+          <MapZoomer contentId={this.props.content.id} />
+        </Right>
       </Flex>
-      <Right w={[1, 1 / 2]} flexWrap={'wrap'} m={3} >
-        <MapZoomer
-          contentId={this.props.content.id}
-        />
-      </Right>
-    </Flex>
-
     )
   }
 
@@ -118,7 +100,7 @@ class MapEditor extends Component {
     this.state = {
       title: '',
       description: '',
-      image0Id: '',
+      image0Id: ''
     }
 
     this.state = {
