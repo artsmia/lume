@@ -78,16 +78,13 @@ export default class Template extends Component {
     return (
       <div>
         <Container>
-          <MenuCheck type={'checkbox'}
-            onClick={
-              ()=>{
-                this.setState(
-                  ({menu}) => ({
-                    menu: !menu
-                  })
-                )
-              }
-            }
+          <MenuCheck
+            type={'checkbox'}
+            onClick={() => {
+              this.setState(({ menu }) => ({
+                menu: !menu
+              }))
+            }}
             checked={this.state.menu}
           />
           <Menu>
@@ -124,7 +121,7 @@ export default class Template extends Component {
 
             {user ? <Hr /> : null}
 
-            <Item>
+            {/* <Item>
               <span>Show Tips</span>
               <input
                 type={'checkbox'}
@@ -141,7 +138,7 @@ export default class Template extends Component {
                 checked={showTour}
                 onChange={handleTourClick}
               />
-            </Item>
+            </Item> */}
             {user ? <Hr /> : null}
             {user ? (
               <Item>
@@ -224,7 +221,6 @@ const Menu = styled.ul`
     opacity: 1;
     display: flex;
   }
-
 `
 
 const Container = styled.div`

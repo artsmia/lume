@@ -8,6 +8,7 @@ postToSlack(){
 
 deployApp(){
   APP_URL=$(now ./app -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.production -T lume --force)
+  echo "${APP_URL}"
   now alias "${APP_URL}" "lume.space" -t $NOW_TOKEN -T lume
   now alias "${APP_URL}" "cms.lume.space" -t $NOW_TOKEN -T lume
 }
@@ -17,9 +18,8 @@ deployApi(){
   now alias "${API_URL}" "api.lume.space" -t $NOW_TOKEN -T lume
 }
 
-deployApp &
-deployApi &
-wait
+deployApp
+deployApi
 
 
 postToSlack "Production has been updated at https://lume.space."
