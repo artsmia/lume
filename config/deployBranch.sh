@@ -27,7 +27,7 @@ deployApp(){
 
 deployApi(){
   API_URL=$(now ./data-api -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.branch -T lume --force)
-  now alias "${APP_URL}" "${BRANCH}.api.lume.space" -t $NOW_TOKEN -T lume
+  now alias "${API_URL}" "${BRANCH}.api.lume.space" -t $NOW_TOKEN -T lume
 }
 
 deployApp &
