@@ -7,7 +7,16 @@ if (process.env.NODE_ENV === 'production'){
     if (err) console.log(err)
     let {callbacks} = client
 
-    callbacks.push(`${process.env.CMS_URL}/callback`,`${process.env.LUME_URL}/callback` )
+
+    let urls = [
+      `${process.env.CMS_URL}/callback`,`${process.env.LUME_URL}/callback`
+    ]
+
+    urls.forEach( url => {
+      if(!callbacks.includes(url)){
+        callbacks.push(url)
+      }
+    })
 
     auth0.updateClient({
       client_id: process.env.AUTH0_CLIENT_ID,

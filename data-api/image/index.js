@@ -50,8 +50,12 @@ export default async function(req, res, next) {
 function upload(params) {
   return new Promise((resolve, reject) => {
     s3.upload(params, (err, data) => {
-      if (err) reject(err)
+      if (err) {
+        console.log("upload error", err)
+        reject(err)
+      }
       resolve(data)
+
     })
   })
 }

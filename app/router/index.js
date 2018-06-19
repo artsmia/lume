@@ -181,6 +181,16 @@ app
       app.render(req, res, page, params)
     })
 
+    server.get('/', (req, res) => {
+      const page = req.subdomains.includes('cms') ? '/cms/splash' : '/lume/splash'
+      let params = {
+        ...req.params,
+        ...req.query
+      }
+      //req.url = `/${req.params.subdomain}`
+      app.render(req, res, page, params)
+    })
+
     server.get('*', (req, res) => {
       return handle(req, res)
     })

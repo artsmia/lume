@@ -20,9 +20,11 @@ def lambda_handler(event, context):
 
         key = record['s3']['object']['key']
 
-        s3Dir = key.replace('/original.jpeg', '')
+        fileName = record['s3']['object']['key'][37:]
 
-        download_path = '/tmp/original.jpeg'
+        s3Dir = key[0:36]
+
+        download_path = f"/tmp/{fileName}"
 
         s3_client.download_file(bucket, key, download_path)
 

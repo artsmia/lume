@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Home from '../components/lume/Home'
+import Splash from '../components/cms/Splash'
 import Template from '../components/shared/Template'
 import Auth from '../auth'
 
@@ -18,7 +18,7 @@ export default class Index extends Component {
   render() {
     return (
       <Template user={this.props.user}>
-        <Home {...this.props} />
+        <Splash {...this.props} />
       </Template>
     )
   }
