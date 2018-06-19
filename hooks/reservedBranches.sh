@@ -2,4 +2,4 @@
 
 echo "Reserved Branches: cms, api, lume, dev"
 
-echo $@
+echo git rev-parse --branches
