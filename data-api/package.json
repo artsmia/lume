@@ -59,12 +59,9 @@
       "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js dotenv_config_path=../config/.env",
     "start:local":
       "DEPLOYMENT_ENV=local nodemon --exec babel-node index.js dotenv_config_path=../config/.env.local",
-    "prep-build":
+    "now-build": "echo 'Built on TravisCI'",
+    "build":
       "rm -rf build && npx babel ../data-api -d build --ignore node_modules",
-    "alias": "now alias --token=$NOW_TOKEN",
-    "scale": "now scale api.lume.space sfo 1 3 --token=$NOW_TOKEN",
-    "now-start": "NODE_ENV=production node build",
-    "test": "jest",
-    "deploy": "yarn run prep-build && now -e NODE_ENV=production && now alias"
+    "now-start": "NODE_ENV=production node build"
   }
 }

@@ -44,10 +44,6 @@
     "start:local":
       "BABEL_ENV=next node router dotenv_config_path=../config/.env.local",
     "build": "BABEL_ENV=next next build",
-    "now-start": "NODE_ENV=production node router",
-    "deploy": "now -e --token=$NOW_TOKEN",
-    "alias": "now alias --token=$NOW_TOKEN",
-    "scale": "now scale lume.space sfo 1 3 --token=$NOW_TOKEN",
-    "test": "jest"
+    "now-start": "NODE_ENV=production node router"
   }
 }
