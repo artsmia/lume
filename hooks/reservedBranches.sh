@@ -1,8 +1,12 @@
 #! /bin/bash
 
-echo "Reserved Branches: cms, api, lume, dev"
 
 reserved=(cms api dev lume)
+
+echo "
+Checking for reserved branches: (${reserved[*]})
+"
+echo ""
 
 branch=$(git symbolic-ref --short HEAD)
 
@@ -15,3 +19,7 @@ do
     exit 1
   fi
 done
+
+echo "
+No problems here. $branch is approved.
+"
