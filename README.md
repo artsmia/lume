@@ -1,5 +1,6 @@
 # Lume
 
+
 Welcome to Lume, a digital storytelling platform by the Minneapolis Institute of Art.
 
 If you are interested in contributing to Lume or running your own instance with further configuration, head over to the [Wiki](/wiki) for more detail information about Lume.
