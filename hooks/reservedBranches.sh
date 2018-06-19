@@ -2,7 +2,7 @@
 
 echo "Reserved Branches: cms, api, lume, dev"
 
-reserved=( 'cms' 'api' 'dev' 'lume' )
+reserved=(cms api dev lume)
 
 echo $reserved
 
