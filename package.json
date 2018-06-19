@@ -13,7 +13,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && ./hooks/reservedBranches.sh"
+      "pre-commit": "pretty-quick --staged && ./hooks/reservedBranches.sh",
+      "pre-push": "./hooks/reservedBranches.sh"
     }
   }
 }
