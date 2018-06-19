@@ -19,19 +19,15 @@ API_URL=https://${BRANCH}.api.lume.space
 
 
 deployApp(){
-  cd app
-  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.tag -T lume --force
+  now ./app -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.branch -T lume --force
   now alias "${BRANCH}.lume.space" -t $NOW_TOKEN -T lume
   now alias "${BRANCH}.cms.lume.space" -t $NOW_TOKEN -T lume
-  cd ..
 
 }
 
 deployApi(){
-  cd data-api
-  now -e NODE_ENV=production -t $NOW_TOKEN --dotenv=../config/.env.tag -T lume --force
+  now ./data-api -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.branch -T lume --force
   now alias "${BRANCH}.api.lume.space" -t $NOW_TOKEN -T lume
-  cd ..
 }
 
 deployApp &
