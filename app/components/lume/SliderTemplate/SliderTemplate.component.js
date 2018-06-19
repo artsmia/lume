@@ -34,6 +34,29 @@ export default class SliderTemplate extends Component {
     }
   }
 
+  componentDidMount(){
+    window.onbeforeprint = (e) => {
+      const {
+        router,
+        subdomain,
+        storySlug
+      } = this.props
+      router.push({
+        pathname: '/lume/story',
+        query: {
+          subdomain,
+          storySlug,
+          print: true
+        }
+      }, `/${subdomain}/${storySlug}/print`)
+    }
+  }
+
+  componentWillUnmount(){
+    window.onbeforeprint = undefined
+  }
+
+
   render() {
     const {
       state: { selectedContent, drawer },
@@ -120,6 +143,21 @@ export default class SliderTemplate extends Component {
                       round
                     >
                       <Icon color={'white'} icon={'home'} />
+                    </NavButton>
+                    <NavButton
+                      round
+                      size={'40px'}
+                      href={{
+                        pathname: '/lume/story',
+                        query: {
+                          subdomain,
+                          storySlug: story.slug,
+                          print: true
+                        }
+                      }}
+                      as={`/${subdomain}/${story.slug}/print`}
+                    >
+                      <Icon color={'white'} icon={'print'} />
                     </NavButton>
                   </Flex>
                 ) : null}

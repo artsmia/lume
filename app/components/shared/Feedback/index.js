@@ -184,6 +184,9 @@ const Container = styled(Flex)`
   @media only screen and (max-width: 40em) {
     visibility: hidden;
   }
+  @media print {
+    display: none;
+  }
 `
 
 export default withRouter(Feedback)

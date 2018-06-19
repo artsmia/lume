@@ -14,6 +14,8 @@ import StoryPreview from '../../lume/Story/Story.component'
 import { Flex, Box } from 'grid-styled'
 import { H3, H2 } from '../../mia-ui/text'
 import { Break } from '../../mia-ui/layout'
+import { Icon } from '../../mia-ui/icons'
+
 import Head from '../../shared/head'
 import Joyride from 'react-joyride'
 import { Loading } from '../../mia-ui/loading'
@@ -92,7 +94,7 @@ export default class Editor extends Component {
     if (preview)
       return (
         <PreviewContainer w={1}>
-          <PreviewButtonBox>
+          <PreviewButtonBox flexWrap={'nowrap'}>
             <Button
               onClick={this.togglePreview}
               color={'blue'}
@@ -113,8 +115,21 @@ export default class Editor extends Component {
                 Unpublished
               </Button>
             )}
+            <Button
+              round
+              size={'40px'}
+              onClick={()=>{this.setState({
+                print: false,
+                preview: false
+              })}}
+            >
+              <Icon
+                color={'white'}
+                icon={'print'}
+              />
+            </Button>
           </PreviewButtonBox>
-          <StoryPreview story={story} />
+          <StoryPreview story={story} print={this.state.print} />
           {this.state.tour ? (
             <Joyride
               run={this.state.tour.run(this)}
@@ -141,7 +156,10 @@ export default class Editor extends Component {
       <FullPage flexDirection={'column'} alignItems={'flex-start'}>
         {story ? <Head title={`Editing: ${story.title}`} /> : null}
 
-        <PreviewButtonBox width={1 / 6}>
+        <PreviewButtonBox flexWrap={'nowrap'}>
+
+
+
           <Button
             onClick={this.togglePreview}
             color={'blue'}
@@ -169,6 +187,20 @@ export default class Editor extends Component {
               Unpublished
             </Button>
           )}
+
+          <Button
+            round
+            size={'40px'}
+            onClick={()=>{this.setState(({print}) => ({
+              print: true,
+              preview: true
+            }))}}
+          >
+            <Icon
+              color={'white'}
+              icon={'print'}
+            />
+          </Button>
         </PreviewButtonBox>
         <TopBar w={1} p={2} alignItems={'center'} justifyContent={'flex-start'}>
           <Box w={1 / 6}>
@@ -188,7 +220,12 @@ export default class Editor extends Component {
             <H2>{story.title ? story.title : 'Untitled Story'}</H2>
           </Box>
 
+
           <Box w={1 / 3}>{renderSaveStatus()}</Box>
+
+
+
+
         </TopBar>
         <Workspace w={1}>
           <Sidebar w={1 / 5} id={'sidebar'}>
@@ -287,6 +324,18 @@ export default class Editor extends Component {
     if (this.props.router.query.tour) {
       this.setState({ tour: new Tour(this) })
     }
+
+    window.onbeforeprint = (e) => {
+      this.setState({
+        print: true,
+        preview: true
+      })
+    }
+  }
+
+
+  componentWillUnmount(){
+    window.onbeforeprint = undefined
   }
 
   handleDetailDemoFinish = () => {
@@ -440,9 +489,12 @@ const PreviewContainer = styled.div`
   max-height: 100vh;
 `
 
-const PreviewButtonBox = styled.div`
+const PreviewButtonBox = styled(Flex)`
   position: absolute;
   z-index: 99;
   top: 8px;
   right: 110px;
+  @media print {
+    display: none;
+  }
 `
