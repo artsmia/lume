@@ -33,9 +33,8 @@ deployApi(){
 }
 
 deploy(){
-  deployApp $1 $2 &
-  deployApi $1 $2 &
-  wait
+  deployApp "$1" "$2"
+  deployApi "$1" "$2"
 }
 
 
@@ -58,7 +57,6 @@ else
   TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
   makeEnvVars "staging" "$TAG"
   makeEnvVars "staging" "$TRAVIS_BRANCH"
-  deploy "$TAG" "$TAG." &
-  deploy "$TRAVIS_BRANCH" "$TRAVIS_BRANCH." &
-  wait
+  deploy "$TAG" "$TAG."
+  deploy "$TRAVIS_BRANCH" "$TRAVIS_BRANCH."
 fi
