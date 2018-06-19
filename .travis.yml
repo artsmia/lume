@@ -9,6 +9,7 @@ env:
 cache:
   directories:
     - node_modules
+    - data-api/node_modules
 install:
 - npm install now -g
 - cd data-api && yarn install && cd ..

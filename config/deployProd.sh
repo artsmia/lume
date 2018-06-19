@@ -7,14 +7,11 @@ postToSlack(){
 }
 
 deployApp(){
-  now ./app -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.production -T lume --force
-  now alias "lume.space" -t $NOW_TOKEN -T lume
-  now alias "cms.lume.space" -t $NOW_TOKEN -T lume
+  now ./app -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.production -T lume --force && now alias "lume.space" -t $NOW_TOKEN -T lume && now alias "cms.lume.space" -t $NOW_TOKEN -T lume
 }
 
 deployApi(){
-  now ./data-api -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.production -T lume --force
-  now alias "api.lume.space" -t $NOW_TOKEN -T lume
+  now ./data-api -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.production -T lume --force && now alias "api.lume.space" -t $NOW_TOKEN -T lume
 }
 
 deployApp &

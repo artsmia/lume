@@ -19,15 +19,12 @@ API_URL=https://${2}.api.lume.space
 
 
 deployApp(){
-  now ./app -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.tag -T lume --force
-  now alias "${TAG}.lume.space" -t $NOW_TOKEN -T lume
-  now alias "${TAG}.cms.lume.space" -t $NOW_TOKEN -T lume
+  now ./app -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.tag -T lume --force && now alias "${TAG}.lume.space" -t $NOW_TOKEN -T lume && now alias "${TAG}.cms.lume.space" -t $NOW_TOKEN -T lume
 
 }
 
 deployApi(){
-  now ./data-api -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.tag -T lume --force
-  now alias "${tag}.api.lume.space" -t $NOW_TOKEN -T lume
+  now ./data-api -e NODE_ENV=production -t $NOW_TOKEN --dotenv=./config/.env.tag -T lume --force && now alias "${tag}.api.lume.space" -t $NOW_TOKEN -T lume
 }
 
 deployApp &
