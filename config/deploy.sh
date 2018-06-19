@@ -10,9 +10,9 @@ makeEnvVars(){
   cp ./config/.env.$1 ./config/.env.$2
 
   echo "
-  LUME_URL=https://${1}.lume.space
-  CMS_URL=https://${1}.cms.lume.space
-  API_URL=https://${1}.api.lume.space
+  LUME_URL=https://${2}.lume.space
+  CMS_URL=https://${2}.cms.lume.space
+  API_URL=https://${2}.api.lume.space
   " >> ./config/.env.$2
 
 }
