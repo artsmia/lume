@@ -2,6 +2,7 @@
 
 echo "Reserved Branches: cms, api, lume, dev"
 
+declare -a reserved
 reserved=('cms' 'api' 'dev' 'lume')
 
 echo $reserved
