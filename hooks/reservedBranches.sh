@@ -1,17 +1,15 @@
 #! /bin/bash
 
-
-reserved=(cms api dev lume)
+declare -a reserved=("cms" "api" "dev" "lume")
 
 echo "
 Checking for reserved branches: (${reserved[*]})
 "
-echo ""
 
-branch=$(git symbolic-ref --short HEAD)
+branch="$(git symbolic-ref --short HEAD)"
 
 
-for name in "${reserved[*]}"
+for name in "${reserved[@]}"
 do
   if [ "$name" == "$branch" ]
   then
