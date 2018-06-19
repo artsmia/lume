@@ -435,9 +435,9 @@ export default class extends Component {
       let outline = L.rectangle(this.bounds)
 
       this.contentLayer = L.polygon([outline._latlngs, ...details], {
-        fill: 'black',
+        fillColor: 'black',
         stroke: 0,
-        fillOpacity: 0.3
+        fillOpacity: 0.8
       })
 
       this.map.addLayer(this.contentLayer)

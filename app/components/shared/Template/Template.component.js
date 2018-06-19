@@ -77,7 +77,7 @@ export default class Template extends Component {
 
     return (
       <div>
-        <div>
+        <Container>
           <MenuCheck type={'checkbox'}
             onClick={
               ()=>{
@@ -158,7 +158,7 @@ export default class Template extends Component {
             )}
           </Menu>
           <ProfPic src={user ? user.picture : '/static/placeholder0.png'} />
-        </div>
+        </Container>
 
         {children}
 
@@ -225,6 +225,12 @@ const Menu = styled.ul`
     display: flex;
   }
 
+`
+
+const Container = styled.div`
+  @media print {
+    display: none;
+  }
 `
 
 const MenuCheck = styled.input`

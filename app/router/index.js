@@ -137,6 +137,18 @@ app
       app.render(req, res, page, params)
     })
 
+    server.get('/:subdomain/:storySlug/print', (req, res) => {
+      const page = '/lume/story'
+
+      const { subdomain, storySlug } = req.params
+      const params = {
+        subdomain,
+        storySlug,
+        print: true
+      }
+      app.render(req, res, page, params)
+    })
+
     server.get('/:subdomain/:storySlug', (req, res) => {
       const page = req.subdomains.includes('cms') ? '/cms/edit' : '/lume/story'
 

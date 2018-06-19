@@ -17,6 +17,7 @@ import { H3 } from '../../mia-ui/text'
 import Head from '../../shared/head'
 import Joyride from 'react-joyride'
 
+
 export default class OriginalTemplate extends Component {
   constructor(props) {
     super(props)
@@ -234,6 +235,28 @@ export default class OriginalTemplate extends Component {
     }
   }
 
+  componentDidMount(){
+    window.onbeforeprint = (e) => {
+      const {
+        router,
+        subdomain,
+        storySlug
+      } = this.props
+      router.push({
+        pathname: '/lume/story',
+        query: {
+          subdomain,
+          storySlug,
+          print: true
+        }
+      }, `/${subdomain}/${storySlug}/print`)
+    }
+  }
+
+  componentWillUnmount(){
+    window.onbeforeprint = undefined
+  }
+
   render() {
     // if (this.props.story.contents.length < 1) {
     //   return <Container w={1} />
@@ -282,181 +305,200 @@ export default class OriginalTemplate extends Component {
     }
 
     return (
-      <Container w={1}>
-        <Head
-          title={story.title}
-          analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
-        />
+      <div>
+        <Container w={1}>
+          <Head
+            title={story.title}
+            analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
+          />
 
-        <SideContainer
-          w={[3 / 4, 1 / 2, 1 / 3]}
-          p={1}
-          justifyContent={'flex-start'}
-          alignItems={'flex-start'}
-          flexDirection={'column'}
-          open={drawer}
-        >
-          {this.props.router.pathname === '/lume/story' ? (
-            <Flex w={1}>
-              <Button
-                round
-                size={'40px'}
-                onClick={() => {
-                  this.props.router.back()
-                }}
-              >
-                <Icon color={'white'} icon={'arrow_back'} />
-              </Button>
-              <NavButton
-                href={{
-                  pathname: '/lume',
-                  query: {
-                    subdomain
-                  }
-                }}
-                size={'40px'}
-                as={`/${subdomain}`}
-                round
-              >
-                <Icon color={'white'} icon={'home'} />
-              </NavButton>
-            </Flex>
-          ) : null}
-
-          {obj ? (
-            <Tombstone obj={obj} />
-          ) : (
-            <Tombstone obj={{ title: story.title }} />
-          )}
-
-          <TabContainer selectedTab={selectedTab}>
-            <TabHeader>
-              <Tab name={'about'} onClick={selectTabAbout}>
-                About
-              </Tab>
-              <Tab name={'details'} onClick={selectTabDetails}>
-                Details
-              </Tab>
-              <Tab name={'more'} onClick={selectTabMore}>
-                More
-              </Tab>
-            </TabHeader>
-            <TabBody name={'about'}>
-              <Box p={3} id={'about'}>
-                <Markdown
-                  source={
-                    objContent ? objContent.description : story.description
-                  }
-                />
-              </Box>
-            </TabBody>
-            <TabBody name={'details'}>
-              <DetailsContainer
-                w={1}
-                justifyContent={'flex-start'}
-                alignItems={'flex-start'}
-                flexDirection={'column'}
-                id={'details'}
-              >
-                {otherContents.map((content, index) => (
-                  <Expander
-                    border={false}
-                    key={content.id}
-                    open={selectedContent.id === content.id}
-                    onRequestOpen={() => {
-                      handleContentSelection(content)
-                    }}
-                    onRequestClose={() => {
-                      this.setState({
-                        selectedContent: {
-                          type: 'all'
-                        }
-                      })
-                    }}
-                    header={<H3>{content.title}</H3>}
-                    icon={
-                      <Button round size={'35px'}>
-                        <IndexSpan>{index + 1}</IndexSpan>
-                      </Button>
+          <SideContainer
+            w={[3 / 4, 1 / 2, 1 / 3]}
+            p={1}
+            justifyContent={'flex-start'}
+            alignItems={'flex-start'}
+            flexDirection={'column'}
+            open={drawer}
+          >
+            {this.props.router.pathname === '/lume/story' ? (
+              <Flex w={1}>
+                <Button
+                  round
+                  size={'40px'}
+                  onClick={() => {
+                    this.props.router.back()
+                  }}
+                >
+                  <Icon color={'white'} icon={'arrow_back'} />
+                </Button>
+                <NavButton
+                  href={{
+                    pathname: '/lume',
+                    query: {
+                      subdomain
                     }
-                  >
-                    <Flex flexWrap={'wrap'} id={`detail-${content.index}`}>
-                      <Box w={1} p={3}>
-                        <Markdown source={content.description} />
-                      </Box>
-
-                      <Flex w={1} p={3}>
-                        <AdditionalImages
-                          additionalImages={content.additionalImages}
-                          organization={organization}
-                        />
-                        <AdditionalMedias
-                          additionalMedias={content.additionalMedias}
-                          organization={organization}
-                        />
-                      </Flex>
-                    </Flex>
-                  </Expander>
-                ))}
-              </DetailsContainer>
-            </TabBody>
-            <TabBody name={'more'}>
-              <Flex flexWrap={'wrap'} id={'more'}>
-                {story.relatedStories.map(story => (
-                  <Link
-                    href={{
-                      pathname: '/lume/story',
-                      query: {
-                        subdomain,
-                        storySlug: story.slug
-                      }
-                    }}
-                    as={`/${subdomain}/${story.slug}`}
-                    key={story.id}
-                  >
-                    <RelatedStoryBox w={1} my={2} mx={1} p={2}>
-                      {story.title}
-                    </RelatedStoryBox>
-                  </Link>
-                ))}
+                  }}
+                  size={'40px'}
+                  as={`/${subdomain}`}
+                  round
+                >
+                  <Icon color={'white'} icon={'home'} />
+                </NavButton>
+                <NavButton
+                  round
+                  size={'40px'}
+                  href={{
+                    pathname: '/lume/story',
+                    query: {
+                      subdomain,
+                      storySlug: story.slug,
+                      print: true
+                    }
+                  }}
+                  as={`/${subdomain}/${story.slug}/print`}
+                >
+                  <Icon color={'white'} icon={'print'} />
+                </NavButton>
               </Flex>
-            </TabBody>
-          </TabContainer>
-        </SideContainer>
-        <DrawerButton
-          round
-          onClick={() => {
-            this.setState(({ drawer }) => ({ drawer: !drawer }))
-          }}
-          open={drawer}
-        >
-          <Icon icon={'menu'} color={'white'} />
-        </DrawerButton>
+            ) : null}
 
-        <FeatureContainer w={[1, 1 / 2, 2 / 3]} id={'feature-container'}>
-          {this.showFeature()}
-        </FeatureContainer>
-        <Joyride
-          run={this.props.grandTour ? true : false}
-          steps={this.state.grandTourSteps}
-          stepIndex={this.state.grandTourIndex}
-          styles={{
-            options: {
-              zIndex: 10000
-            },
-            buttonClose: {
-              display: 'none'
-            },
-            buttonNext: {
-              display: 'none'
-            },
-            buttonBack: {
-              display: 'none'
-            }
-          }}
-          disableOverlayClose={true}
-        />
-      </Container>
+            {obj ? (
+              <Tombstone obj={obj} />
+            ) : (
+              <Tombstone obj={{ title: story.title }} />
+            )}
+
+            <TabContainer selectedTab={selectedTab}>
+              <TabHeader>
+                <Tab name={'about'} onClick={selectTabAbout}>
+                  About
+                </Tab>
+                <Tab name={'details'} onClick={selectTabDetails}>
+                  Details
+                </Tab>
+                <Tab name={'more'} onClick={selectTabMore}>
+                  More
+                </Tab>
+              </TabHeader>
+              <TabBody name={'about'}>
+                <Box p={3} id={'about'}>
+                  <Markdown
+                    source={
+                      objContent ? objContent.description : story.description
+                    }
+                  />
+                </Box>
+              </TabBody>
+              <TabBody name={'details'}>
+                <DetailsContainer
+                  w={1}
+                  justifyContent={'flex-start'}
+                  alignItems={'flex-start'}
+                  flexDirection={'column'}
+                  id={'details'}
+                >
+                  {otherContents.map((content, index) => (
+                    <Expander
+                      border={false}
+                      key={content.id}
+                      open={selectedContent.id === content.id}
+                      onRequestOpen={() => {
+                        handleContentSelection(content)
+                      }}
+                      onRequestClose={() => {
+                        this.setState({
+                          selectedContent: {
+                            type: 'all'
+                          }
+                        })
+                      }}
+                      header={<H3>{content.title}</H3>}
+                      icon={
+                        <Button round size={'35px'}>
+                          <IndexSpan>{index + 1}</IndexSpan>
+                        </Button>
+                      }
+                    >
+                      <Flex flexWrap={'wrap'} id={`detail-${content.index}`}>
+                        <Box w={1} p={3}>
+                          <Markdown source={content.description} />
+                        </Box>
+
+                        <Flex w={1} p={3}>
+                          <AdditionalImages
+                            additionalImages={content.additionalImages}
+                            organization={organization}
+                          />
+                          <AdditionalMedias
+                            additionalMedias={content.additionalMedias}
+                            organization={organization}
+                          />
+                        </Flex>
+                      </Flex>
+                    </Expander>
+                  ))}
+                </DetailsContainer>
+              </TabBody>
+              <TabBody name={'more'}>
+                <Flex flexWrap={'wrap'} id={'more'}>
+                  {story.relatedStories.map(story => (
+                    <Link
+                      href={{
+                        pathname: '/lume/story',
+                        query: {
+                          subdomain,
+                          storySlug: story.slug
+                        }
+                      }}
+                      as={`/${subdomain}/${story.slug}`}
+                      key={story.id}
+                    >
+                      <RelatedStoryBox w={1} my={2} mx={1} p={2}>
+                        {story.title}
+                      </RelatedStoryBox>
+                    </Link>
+                  ))}
+                </Flex>
+              </TabBody>
+            </TabContainer>
+          </SideContainer>
+          <DrawerButton
+            round
+            onClick={() => {
+              this.setState(({ drawer }) => ({ drawer: !drawer }))
+            }}
+            open={drawer}
+          >
+            <Icon icon={'menu'} color={'white'} />
+          </DrawerButton>
+
+          <FeatureContainer w={[1, 1 / 2, 2 / 3]} id={'feature-container'}>
+            {this.showFeature()}
+          </FeatureContainer>
+          <Joyride
+            run={this.props.grandTour ? true : false}
+            steps={this.state.grandTourSteps}
+            stepIndex={this.state.grandTourIndex}
+            styles={{
+              options: {
+                zIndex: 10000
+              },
+              buttonClose: {
+                display: 'none'
+              },
+              buttonNext: {
+                display: 'none'
+              },
+              buttonBack: {
+                display: 'none'
+              }
+            }}
+            disableOverlayClose={true}
+          />
+        </Container>
+
+      </div>
+
     )
   }
 
@@ -634,6 +676,11 @@ const DetailsContainer = styled.div`
 const Container = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
+
+
+  @media print {
+    display: none;
+  }
 `
 const SideContainer = styled(Flex)`
   height: 100vh;
