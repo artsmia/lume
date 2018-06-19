@@ -1,5 +1,6 @@
 #! /bin/bash
 
+
 makeEnvVars(){
   cp ./config/.env.$2 ./config/.env.$3
 
@@ -45,8 +46,8 @@ echo "Beginning deployment for branch:${TRAVIS_BRANCH}"
 
 
 if [ $TRAVIS_BRANCH == "master" ]; then
-  makeEnvVars "''" 'production' 'prod'
-  deploy "''" 'prod'
+  makeProdEnvVars
+  deploy '' 'production'
 
 
 else

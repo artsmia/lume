@@ -5,7 +5,6 @@ if (process.env.NODE_ENV === 'production'){
     client_id: process.env.AUTH0_CLIENT_ID
   }, (err, client) => {
     if (err) console.log(err)
-    console.log(client)
     let {callbacks} = client
 
     callbacks.push(`${process.env.CMS_URL}/callback`,`${process.env.LUME_URL}/callback` )
@@ -16,7 +15,6 @@ if (process.env.NODE_ENV === 'production'){
       callbacks
     }, (err, client) => {
       if (err) console.log(err)
-      console.log(client)
     })
 
   })
