@@ -28,10 +28,16 @@ export default class extends Component {
   }
 
   render() {
-    if (!this.state.image) {
+    if (!this.state.image && !this.props.content) {
       return <div />
     } else {
-      return <ZoomerMap innerRef={mapRef => (this.mapRef = mapRef)} />
+      return (
+        <ZoomerMap
+          innerRef={mapRef => {
+            this.mapRef = mapRef
+          }}
+        />
+      )
     }
   }
 
@@ -146,37 +152,45 @@ export default class extends Component {
   setup = async prevState => {
     try {
       console.log('setup', this.state)
-
-      if (this.state.image) {
-        if (prevState.image) {
-          if (prevState.image.id !== this.state.image.id) {
-            this.map.remove()
-            await this.setupImage()
-          }
-        } else {
-          await this.setupImage()
-        }
-
-        if (this.map) {
-          if (this.state.content) {
-            if (this.props.mode === 'editor') {
-              await this.createDetailEditor()
-            } else {
-              await this.createContentLayer()
-
-              if (this.detailBounds) {
-                this.map.flyToBounds(this.detailBounds, {
-                  animate: false
-                })
-              }
-            }
-          }
-
-          if (this.state.markers) {
-            await this.createMarkers()
+      console.log(this.props)
+      if (this.props.content) {
+        if (this.props.content.type === 'map') {
+          if (this.props.content.mapUrl) {
+            await this.setupMap()
           }
         }
       }
+
+      // if (this.state.image) {
+      //   if (prevState.image) {
+      //     if (prevState.image.id !== this.state.image.id) {
+      //       this.map.remove()
+      //       await this.setupImage()
+      //     }
+      //   } else {
+      //     await this.setupImage()
+      //   }
+      //
+      //   if (this.map) {
+      //     if (this.state.content) {
+      //       if (this.props.mode === 'editor') {
+      //         await this.createDetailEditor()
+      //       } else {
+      //         await this.createContentLayer()
+      //
+      //         if (this.detailBounds) {
+      //           this.map.flyToBounds(this.detailBounds, {
+      //             animate: false
+      //           })
+      //         }
+      //       }
+      //     }
+      //
+      //     if (this.state.markers) {
+      //       await this.createMarkers()
+      //     }
+      //   }
+      // }
     } catch (ex) {
       console.error(ex)
     }
@@ -277,9 +291,29 @@ export default class extends Component {
     }
   }
 
-  createZoomer = async (config) => {
+  setupMap = async () => {
     try {
+      console.log('setupMap')
 
+      console.log(this.mapRef)
+
+      this.newMap = L.map(this.mapRef).setView([10, 20], 5)
+
+      console.log(this.props.content)
+
+      this.tileMap = L.tileLayer(this.props.content.mapUrl, {
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken:
+          'pk.eyJ1IjoiY2FybHBlYXNsZWUiLCJhIjoiY2ppbHZ0ZjJoMGw2cjNwc3pwZDl6OHluMCJ9.3ZcaF7H5a31u8_LB_VaR_Q'
+      })
+
+      this.tileMap.addTo(this.newMap)
+    } catch (e) {}
+  }
+
+  createZoomer = async config => {
+    try {
       let { height, width, tileUrl, tileSize } = config
       console.log('createZoomer')
 
@@ -321,11 +355,9 @@ export default class extends Component {
       let fitZoom = Math.floor(Math.min(fitX, fitY) * 100) / 100
       let minZoom = Math.floor(Math.min(fitX, fitY))
 
-
       if (tileSize !== 512) {
-       minZoom = 2
+        minZoom = 2
       }
-
 
       this.tiles = L.tileLayer.knight(tileUrl, {
         tileSize,
@@ -350,7 +382,6 @@ export default class extends Component {
 
       this.map.options.zoomSnap = 1
       this.map.options.minZoom = fitZoom
-
     } catch (ex) {
       console.error(ex)
     }
@@ -422,11 +453,15 @@ export default class extends Component {
         this.map.removeLayer(this.contentLayer)
       }
 
-      if (!this.state.content.geoJSON) {return}
+      if (!this.state.content.geoJSON) {
+        return
+      }
 
-      let details = this.state.content.geoJSON ? this.state.content.geoJSON.features.map(feature => {
-        return L.GeoJSON.geometryToLayer(feature)
-      }) : []
+      let details = this.state.content.geoJSON
+        ? this.state.content.geoJSON.features.map(feature => {
+            return L.GeoJSON.geometryToLayer(feature)
+          })
+        : []
 
       details = details.map(detail => detail._latlngs)
 
@@ -486,8 +521,10 @@ export default class extends Component {
 }
 
 const ZoomerMap = styled.div`
+  min-height: 500px;
   height: 100%;
   width: 100%;
+  position: relative;
   display: block;
   z-index: 98;
   .crop-button {
@@ -573,7 +610,6 @@ if (typeof window === 'object') {
 
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({ z, x, y }) {
-
       let tile = document.createElement('div')
       let image = document.createElement('img')
       image.src = this._url

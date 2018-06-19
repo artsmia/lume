@@ -17,6 +17,9 @@ export const ContentTypeEnum = new GraphQLEnumType({
     },
     picture: {
       value: 'picture'
+    },
+    map: {
+      value: 'map'
     }
   }
 })

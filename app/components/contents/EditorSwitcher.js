@@ -3,6 +3,7 @@ import DetailContentEditor from './detail/DetailEditor'
 import MovieContentEditor from './movie/MovieEditor'
 import ObjContentEditor from './obj/ObjContentEditor'
 import PictureContentEditor from './picture/PictureEditor'
+import MapContentEditor from './map/MapEditor'
 
 export default props => {
   switch (props.content.type) {
@@ -22,6 +23,9 @@ export default props => {
     }
     case 'picture': {
       return <PictureContentEditor contentId={props.content.id} />
+    }
+    case 'map': {
+      return <MapContentEditor contentId={props.content.id} />
     }
     default: {
       return null

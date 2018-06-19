@@ -80,6 +80,12 @@ const contentType = new GraphQLObjectType({
           console.error(ex)
         }
       }
+    },
+    mapUrl: {
+      type: GraphQLString
+    },
+    mapKey: {
+      type: GraphQLString
     }
   })
 })

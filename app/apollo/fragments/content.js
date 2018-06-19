@@ -36,6 +36,8 @@ const fragment = gql`
     additionalMedias {
       ...MediaFragment
     }
+    mapUrl
+    mapKey
   }
   ${imageFragment}
   ${mediaFragment}

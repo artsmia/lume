@@ -5,8 +5,14 @@ import PropTypes from 'prop-types'
 export default class CreateContentButton extends Component {
   static propTypes = {
     storyId: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['comparison', 'picture', 'movie', 'obj', 'detail'])
-      .isRequired
+    type: PropTypes.oneOf([
+      'comparison',
+      'picture',
+      'movie',
+      'obj',
+      'detail',
+      'map'
+    ]).isRequired
   }
 
   render() {

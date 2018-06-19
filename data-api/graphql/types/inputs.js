@@ -176,6 +176,12 @@ export const ContentInput = new GraphQLInputObjectType({
     },
     removeAdditionalMediaId: {
       type: GraphQLID
+    },
+    mapUrl: {
+      type: GraphQLString
+    },
+    mapKey: {
+      type: GraphQLString
     }
   }
 })
