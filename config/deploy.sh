@@ -5,9 +5,9 @@ makeEnvVars(){
   cp ./config/.env.$1 ./config/.env.$2
 
   echo "
-  LUME_URL=https://${1}lume.space
-  CMS_URL=https://${1}cms.lume.space
-  API_URL=https://${1}api.lume.space
+  LUME_URL=https://${1}.lume.space
+  CMS_URL=https://${1}.cms.lume.space
+  API_URL=https://${1}.api.lume.space
   " >> ./config/.env.$2
 
 }
@@ -53,7 +53,7 @@ if [ $TRAVIS_BRANCH == "master" ]; then
 else
   TAG=$(echo $TRAVIS_COMMIT | cut -c1-7)
   makeEnvVars "staging" "$TAG"
-  makeEnvVars "staging" "$TAG"
+  makeEnvVars "staging" "$TRAVIS_BRANCH"
   deploy "$TAG" "$TAG." &
   deploy "$TRAVIS_BRANCH" "$TRAVIS_BRANCH." &
   wait
