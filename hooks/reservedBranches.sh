@@ -2,10 +2,8 @@
 
 declare -a reserved=("cms" "api" "dev" "lume")
 
-echo "Checking for reserved branches: (${reserved[*]})"
 
 branch="$(git symbolic-ref --short HEAD)"
-
 
 for name in "${reserved[@]}"
 do
