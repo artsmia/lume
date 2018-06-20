@@ -23,7 +23,7 @@ deploy:
   - provider: script
     script: config/deployBranch.sh
     on:
-      master: false
+      condition: $TRAVIS_BRANCH != 'master'
     skip_cleanup: true
   # - provider: script
   #   script: config/deployTag.sh
