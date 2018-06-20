@@ -6,6 +6,7 @@ from PIL import Image
 import PIL.Image
 import json
 import base64
+from io import BytesIO
 
 s3_client = boto3.client('s3')
 
@@ -37,21 +38,29 @@ def lambda_handler(event, context):
 
     image = Image.open(originalPath)
 
-    newPath = f"/tmp/{id}.jpeg"
 
-    image.save(fp=newPath)
+    output = BytesIO()
+    image.save(output, format='PNG')
 
-    with open(newPath, 'rb') as imageFile:
-        encoded = base64.b64encode(imageFile.read())
+    imageString = output.getvalue()
+
+    output.close()
+
+    # newPath = f"/tmp/{id}.jpeg"
+    #
+    # image.save(fp=newPath)
+
+    # with open(newPath, 'rb') as imageFile:
+    #     encoded = base64.b64encode(imageFile.read())
 
 
     return {
         'statusCode': 200,
         'headers': {
             'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'image/jpeg'
+            'Content-Type': 'image/png'
         },
         'isBase64Encoded': True,
-        'body': encoded
+        'body': f"{imageString}"
         # 'body': 'yo'
     }
