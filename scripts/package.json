@@ -36,6 +36,9 @@
   "scripts": {
     "deploy:tiler":
       "cd ../image-tiler && rm -rf ImageTiler.zip && cp TilerDeps.zip ImageTiler.zip && zip ImageTiler.zip lambda_function.py && cd ../scripts && babel-node deploy-tiler dotenv_config_path=../config/.env",
+      "deploy:iiif":
+        "cd ../iiif && rm -rf IIIF.zip && cp IIIFDeps.zip IIIF.zip && zip IIIF.zip lambda_function.py && cd ../scripts && babel-node deploy-iiif dotenv_config_path=../config/.env",
+
     "mia": "babel-node mia-data.js dotenv_config_path=../config/.env"
   }
 }
