@@ -330,6 +330,7 @@ export default class extends Component {
         // minNativeZoom: 0,
         noWrap: true,
         bounds: this.bounds,
+        detectRetina: true,
         minZoom,
         //maxZoom,
         errorTileUrl: '/static/spinner.gif'
