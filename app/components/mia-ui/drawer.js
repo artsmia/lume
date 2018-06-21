@@ -35,7 +35,7 @@ export const Drawer = styled(Flex)`
       : null};
 `
 
-export const DrawerButton = styled.div`
+export const DrawerButton = styled.button`
   position: fixed;
   top: 15px;
   left: 15px;
@@ -95,7 +95,7 @@ export const DrawerButton = styled.div`
 
           span:nth-child(3) {
             transform: rotate(-45deg);
-            bottom: 10px;
+            bottom: 8px;
             left: 12px;
             width: 36px;
           }

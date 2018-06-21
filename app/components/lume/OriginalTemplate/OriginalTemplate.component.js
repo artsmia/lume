@@ -43,6 +43,8 @@ export default class OriginalTemplate extends Component {
         props.story.contents[0]
     }
 
+    this.backButtonRef = React.createRef()
+
     this.state = {
       drawer: true,
       ...this.state,
@@ -243,6 +245,8 @@ export default class OriginalTemplate extends Component {
   }
 
   componentDidMount() {
+    this.backButtonRef.focus()
+
     window.onbeforeprint = e => {
       const { router, subdomain, storySlug } = this.props
       router.push(
@@ -261,6 +265,37 @@ export default class OriginalTemplate extends Component {
 
   componentWillUnmount() {
     window.onbeforeprint = undefined
+  }
+
+  tabKeyDown = e => {
+    let tabOrder = ['about', 'details', 'more']
+
+    let leftUp = [37, 38]
+    let rightDown = [39, 40]
+
+    let direction
+
+    let currentTabIndex = tabOrder.findIndex(
+      tab => tab === this.state.selectedTab
+    )
+
+    let nextTabIndex = 0
+
+    if (leftUp.includes(e.keyCode)) {
+      nextTabIndex = currentTabIndex - 1
+    } else if (rightDown.includes(e.keyCode)) {
+      nextTabIndex = currentTabIndex + 1
+    } else {
+      return
+    }
+
+    if (nextTabIndex <= 0) {
+      this.selectTabAbout()
+    } else if (nextTabIndex === 1) {
+      this.selectTabDetails()
+    } else if (nextTabIndex >= 2) {
+      this.selectTabMore()
+    }
   }
 
   render() {
@@ -334,6 +369,9 @@ export default class OriginalTemplate extends Component {
                   onClick={() => {
                     this.props.router.back()
                   }}
+                  innerRef={ref => {
+                    this.backButtonRef = ref
+                  }}
                 >
                   <Icon color={'white'} icon={'arrow_back'} />
                 </Button>
@@ -368,21 +406,29 @@ export default class OriginalTemplate extends Component {
               </Flex>
             ) : null}
 
-            {obj ? (
-              <Tombstone obj={obj} />
-            ) : (
-              <Tombstone obj={{ title: story.title }} />
-            )}
+            <Tombstone obj={obj ? obj : story.title} />
 
             <TabContainer selectedTab={selectedTab}>
               <TabHeader>
-                <Tab name={'about'} onClick={selectTabAbout}>
+                <Tab
+                  name={'about'}
+                  onClick={selectTabAbout}
+                  onKeyDown={this.tabKeyDown}
+                >
                   About
                 </Tab>
-                <Tab name={'details'} onClick={selectTabDetails}>
+                <Tab
+                  name={'details'}
+                  onClick={selectTabDetails}
+                  onKeyDown={this.tabKeyDown}
+                >
                   Details
                 </Tab>
-                <Tab name={'more'} onClick={selectTabMore}>
+                <Tab
+                  name={'more'}
+                  onClick={selectTabMore}
+                  onKeyDown={this.tabKeyDown}
+                >
                   More
                 </Tab>
               </TabHeader>
@@ -420,7 +466,7 @@ export default class OriginalTemplate extends Component {
                       }}
                       header={<H3>{content.title}</H3>}
                       icon={
-                        <Button round size={'35px'}>
+                        <Button round size={'35px'} tabIndex={'0'}>
                           <IndexSpan>{index + 1}</IndexSpan>
                         </Button>
                       }
@@ -446,7 +492,12 @@ export default class OriginalTemplate extends Component {
                 </DetailsContainer>
               </TabBody>
               <TabBody name={'more'}>
-                <Flex flexWrap={'wrap'} id={'more'}>
+                <Flex
+                  flexDirection={'column'}
+                  justifyContent={'flex-start'}
+                  alignItems={'flex-start'}
+                  id={'more'}
+                >
                   {story.relatedStories.map(story => (
                     <Link
                       href={{
@@ -458,10 +509,11 @@ export default class OriginalTemplate extends Component {
                       }}
                       as={`/${subdomain}/${story.slug}`}
                       key={story.id}
+                      passHref
                     >
-                      <RelatedStoryBox w={1} my={2} mx={1} p={2}>
+                      <RelatedStoryLink tabIndex={'0'}>
                         {story.title}
-                      </RelatedStoryBox>
+                      </RelatedStoryLink>
                     </Link>
                   ))}
                 </Flex>
@@ -550,26 +602,26 @@ export default class OriginalTemplate extends Component {
       }
     })
 
-    const {
-      query: { subdomain, storySlug, state0 },
-      replace,
-      pathname
-    } = this.props.router
-
-    if (pathname === '/lume/story') {
-      this.props.router.replace(
-        {
-          pathname: '/lume/story',
-          query: {
-            subdomain,
-            storySlug,
-            state0: 'details',
-            grandTour: this.props.grandTour
-          }
-        },
-        `/${subdomain}/${storySlug}/details`
-      )
-    }
+    // const {
+    //   query: { subdomain, storySlug, state0 },
+    //   replace,
+    //   pathname
+    // } = this.props.router
+    //
+    // if (pathname === '/lume/story') {
+    //   this.props.router.replace(
+    //     {
+    //       pathname: '/lume/story',
+    //       query: {
+    //         subdomain,
+    //         storySlug,
+    //         state0: 'details',
+    //         grandTour: this.props.grandTour
+    //       }
+    //     },
+    //     `/${subdomain}/${storySlug}/details`
+    //   )
+    // }
   }
 
   selectTabMore = () => {
@@ -722,10 +774,15 @@ const FeatureContainer = styled(Flex)`
   }
 `
 
-const RelatedStoryBox = styled(Box)`
+const RelatedStoryLink = styled.a`
   border: 1px solid lightgrey;
   font-size: 20px;
   cursor: pointer;
+  margin: 3px 0;
+  padding: 5px;
+  width: 100%;
+  color: black;
+  text-decoration: none;
 `
 
 const IndexSpan = styled.span`
