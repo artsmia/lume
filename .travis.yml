@@ -22,9 +22,8 @@ deploy:
   - provider: script
     script: config/deployBranch.sh
     on:
-      branches:
-        except:
-          - master
+      all_branches: true
+      condition: "! $TRAVIS_BRANCH =~ ^master$"
     skip_cleanup: true
   # - provider: script
   #   script: config/deployTag.sh
