@@ -277,9 +277,8 @@ export default class extends Component {
     }
   }
 
-  createZoomer = async (config) => {
+  createZoomer = async config => {
     try {
-
       let { height, width, tileUrl, tileSize } = config
       console.log('createZoomer')
 
@@ -321,11 +320,9 @@ export default class extends Component {
       let fitZoom = Math.floor(Math.min(fitX, fitY) * 100) / 100
       let minZoom = Math.floor(Math.min(fitX, fitY))
 
-
       if (tileSize !== 512) {
-       minZoom = 2
+        minZoom = 2
       }
-
 
       this.tiles = L.tileLayer.knight(tileUrl, {
         tileSize,
@@ -350,7 +347,6 @@ export default class extends Component {
 
       this.map.options.zoomSnap = 1
       this.map.options.minZoom = fitZoom
-
     } catch (ex) {
       console.error(ex)
     }
@@ -422,11 +418,15 @@ export default class extends Component {
         this.map.removeLayer(this.contentLayer)
       }
 
-      if (!this.state.content.geoJSON) {return}
+      if (!this.state.content.geoJSON) {
+        return
+      }
 
-      let details = this.state.content.geoJSON ? this.state.content.geoJSON.features.map(feature => {
-        return L.GeoJSON.geometryToLayer(feature)
-      }) : []
+      let details = this.state.content.geoJSON
+        ? this.state.content.geoJSON.features.map(feature => {
+            return L.GeoJSON.geometryToLayer(feature)
+          })
+        : []
 
       details = details.map(detail => detail._latlngs)
 
@@ -460,7 +460,17 @@ export default class extends Component {
       this.indexMarkers = []
 
       markers.forEach(({ sw, marker }) => {
-        let html = `<div class="index-icon"> ${marker.index} </div>`
+        let markerIndex = marker.index
+
+        if (this.state.markers[0]) {
+          if (this.state.markers[0].type !== 'obj') {
+            markerIndex = markerIndex + 1
+          }
+        }
+
+        console.log(markerIndex)
+
+        let html = `<div class="index-icon"> ${markerIndex} </div>`
 
         let icon = L.divIcon({
           html
@@ -573,7 +583,6 @@ if (typeof window === 'object') {
 
   L.TileLayer.Knight = L.TileLayer.extend({
     createTile({ z, x, y }) {
-
       let tile = document.createElement('div')
       let image = document.createElement('img')
       image.src = this._url

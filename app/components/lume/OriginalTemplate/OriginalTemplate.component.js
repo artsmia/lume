@@ -17,7 +17,6 @@ import { H3 } from '../../mia-ui/text'
 import Head from '../../shared/head'
 import Joyride from 'react-joyride'
 
-
 export default class OriginalTemplate extends Component {
   constructor(props) {
     super(props)
@@ -27,8 +26,16 @@ export default class OriginalTemplate extends Component {
     }
 
     if (props.router.query.state1 && props.story.contents) {
+      let contentIndex = parseInt(props.router.query.state1)
+
+      if (props.story.contents[0]) {
+        if (props.story.contents[0].type !== 'obj') {
+          contentIndex = contentIndex - 1
+        }
+      }
+
       selectedContent = props.story.contents.find(
-        content => content.index === parseInt(props.router.query.state1)
+        content => content.index === contentIndex
       )
     } else {
       selectedContent =
@@ -235,25 +242,24 @@ export default class OriginalTemplate extends Component {
     }
   }
 
-  componentDidMount(){
-    window.onbeforeprint = (e) => {
-      const {
-        router,
-        subdomain,
-        storySlug
-      } = this.props
-      router.push({
-        pathname: '/lume/story',
-        query: {
-          subdomain,
-          storySlug,
-          print: true
-        }
-      }, `/${subdomain}/${storySlug}/print`)
+  componentDidMount() {
+    window.onbeforeprint = e => {
+      const { router, subdomain, storySlug } = this.props
+      router.push(
+        {
+          pathname: '/lume/story',
+          query: {
+            subdomain,
+            storySlug,
+            print: true
+          }
+        },
+        `/${subdomain}/${storySlug}/print`
+      )
     }
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     window.onbeforeprint = undefined
   }
 
@@ -496,9 +502,7 @@ export default class OriginalTemplate extends Component {
             disableOverlayClose={true}
           />
         </Container>
-
       </div>
-
     )
   }
 
@@ -637,6 +641,12 @@ export default class OriginalTemplate extends Component {
       pathname
     } = this.props.router
 
+    let contentIndex = content.index
+
+    if (this.props.story.contents[0].type !== 'obj') {
+      contentIndex = contentIndex + 1
+    }
+
     if (pathname === '/lume/story') {
       this.props.router.replace(
         {
@@ -645,10 +655,10 @@ export default class OriginalTemplate extends Component {
             subdomain,
             storySlug,
             state0: 'details',
-            state1: content.index
+            state1: contentIndex
           }
         },
-        `/${subdomain}/${storySlug}/details/${content.index}`
+        `/${subdomain}/${storySlug}/details/${contentIndex}`
       )
     }
   }
@@ -676,7 +686,6 @@ const DetailsContainer = styled.div`
 const Container = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
-
 
   @media print {
     display: none;
