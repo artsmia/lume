@@ -39,25 +39,32 @@ export const DrawerButton = styled.button`
   position: fixed;
   top: 15px;
   left: 15px;
-  transition: all 0.4s;
-  height: 50px;
-  width: 50px;
-  opacity: 1;
+  transition: all 0.2s;
+  height: 40px;
+  width: 40px;
+  opacity: 0.85;
   z-index: 2;
   cursor: pointer;
   background-color: white;
-  border-radius: 50px;
+  border-radius: 40px;
+  margin-left: 10px;
+
+  &:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: -2px 2px 1px rgba(0, 0, 0, 0.2);
+  }
 
   span {
     display: block;
     position: absolute;
-    height: 5px;
-    width: 30px;
+    height: 4px;
+    width: 50%;
     background: ${black};
     opacity: 1;
-    right: 10px;
     transform: rotate(0deg);
     transition: all 0.2s ease-in-out;
+    left: 30%;
   }
 
   span:nth-child(1) {
@@ -83,9 +90,8 @@ export const DrawerButton = styled.button`
 
           span:nth-child(1) {
             transform: rotate(45deg);
-            top: 10px;
-            left: 12px;
-            width: 36px;
+            top: 24%;
+            width: 60%;
           }
 
           span:nth-child(2) {
@@ -95,9 +101,8 @@ export const DrawerButton = styled.button`
 
           span:nth-child(3) {
             transform: rotate(-45deg);
-            bottom: 8px;
-            left: 12px;
-            width: 36px;
+            bottom: 24%;
+            width: 60%;
           }
         `
       : null};
