@@ -402,7 +402,7 @@ export default class Home extends Component {
                   <Tile
                     key={id}
                     id={title === 'Writing Desk' ? 'writing-desk' : undefined}
-                    w={[1, 1, 1 / 2, 1 / 4]}
+                    w={[1, 1, 1 / 2, 1 / 3]}
                     p={1}
                     key={id}
                     text={title}
