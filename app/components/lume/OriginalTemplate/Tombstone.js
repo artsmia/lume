@@ -102,7 +102,9 @@ const ShowMore = styled.button`
   width: 100%;
   border: 0;
   background-color: white;
-  justify-content: center;
+  justify-content: left;
+  text-align: left;
+  padding: 0;
 `
 const More = styled.div`
   display: flex;
