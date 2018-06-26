@@ -157,7 +157,9 @@ export default class SliderTemplate extends Component {
               {selectedContent ? (
                 <Box w={1}>
                   <H3>{selectedContent.title}</H3>
-                  <Markdown source={selectedContent.description} />
+                  <MarkdownContainer>
+                    <Markdown source={selectedContent.description} />
+                  </MarkdownContainer>
                   <Flex>
                     <AdditionalImages
                       additionalImages={selectedContent.additionalImages}
@@ -287,6 +289,9 @@ const ContentContainer = styled(Flex)`
   @media only screen and (max-width: 40em) {
     position: absolute;
   }
+`
+const MarkdownContainer = styled(Box)`
+  font-family: ${({ theme }) => theme.font.light};
 `
 
 const SideContainer = styled(Flex)`

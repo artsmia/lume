@@ -433,13 +433,13 @@ export default class OriginalTemplate extends Component {
                 </Tab>
               </TabHeader>
               <TabBody name={'about'}>
-                <Box p={3} id={'about'}>
+                <MarkdownContainer p={3} id={'about'}>
                   <Markdown
                     source={
                       objContent ? objContent.description : story.description
                     }
                   />
-                </Box>
+                </MarkdownContainer>
               </TabBody>
               <TabBody name={'details'}>
                 <DetailsContainer
@@ -472,9 +472,9 @@ export default class OriginalTemplate extends Component {
                       }
                     >
                       <Flex flexWrap={'wrap'} id={`detail-${content.index}`}>
-                        <Box w={1} p={3}>
+                        <MarkdownContainer w={1} p={3}>
                           <Markdown source={content.description} />
-                        </Box>
+                        </MarkdownContainer>
 
                         <Flex w={1} p={3}>
                           <AdditionalImages
@@ -715,6 +715,10 @@ export default class OriginalTemplate extends Component {
     }
   }
 }
+
+const MarkdownContainer = styled(Box)`
+  font-family: ${({ theme }) => theme.font.light};
+`
 
 const DrawerButton = styled(Button)`
   transition: 0.2s all;
