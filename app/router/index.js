@@ -9,6 +9,7 @@ const session = require('express-session')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
+const chalk = require('chalk')
 
 const passport =
   process.env.AUTH_STRATEGY !== 'local' ? require('./passport') : {}
@@ -194,7 +195,9 @@ app
     })
 
     server.get('/', (req, res) => {
-      const page = req.subdomains.includes('cms') ? '/cms/splash' : '/lume/splash'
+      const page = req.subdomains.includes('cms')
+        ? '/cms/splash'
+        : '/lume/splash'
       let params = {
         ...req.params,
         ...req.query
@@ -209,8 +212,10 @@ app
 
     server.listen(process.env.CLIENT_PORT, err => {
       console.log(
-        `CMS isrunning at : ${process.env.CMS_URL}
-          Lume isrunning at : ${process.env.LUME_URL}`
+        chalk.cyan(`
+CMS is running at: ${process.env.CMS_URL}
+Lume is running at: ${process.env.LUME_URL}
+`)
       )
       if (err) throw err
     })

@@ -181,8 +181,8 @@ const Container = styled(Flex)`
   width: 60px;
   height: 60px;
   z-index: 5000;
-  @media only screen and (max-width: 40em) {
-    visibility: hidden;
+  @media only screen and (max-width: 1025px) {
+    display: none;
   }
   @media print {
     display: none;

@@ -16,6 +16,8 @@ export default class SliderTemplate extends Component {
   constructor(props) {
     super(props)
 
+    this.backButtonRef = React.createRef()
+
     let selectedIndex = props.router.query.state0
       ? parseInt(props.router.query.state0) - 1
       : 0
@@ -34,28 +36,28 @@ export default class SliderTemplate extends Component {
     }
   }
 
-  componentDidMount(){
-    window.onbeforeprint = (e) => {
-      const {
-        router,
-        subdomain,
-        storySlug
-      } = this.props
-      router.push({
-        pathname: '/lume/story',
-        query: {
-          subdomain,
-          storySlug,
-          print: true
-        }
-      }, `/${subdomain}/${storySlug}/print`)
+  componentDidMount() {
+    this.backButtonRef.focus()
+
+    window.onbeforeprint = e => {
+      const { router, subdomain, storySlug } = this.props
+      router.push(
+        {
+          pathname: '/lume/story',
+          query: {
+            subdomain,
+            storySlug,
+            print: true
+          }
+        },
+        `/${subdomain}/${storySlug}/print`
+      )
     }
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     window.onbeforeprint = undefined
   }
-
 
   render() {
     const {
@@ -77,20 +79,6 @@ export default class SliderTemplate extends Component {
           title={story.title}
           analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
         />
-        {selectedContent ? (
-          <PageButtonContainer w={1} justifyContent={'space-between'}>
-            {selectedContent.index !== 0 ? (
-              <Button onClick={() => slide(-1)}>Back</Button>
-            ) : (
-              <div />
-            )}
-            {selectedContent.index < story.contents.length - 1 ? (
-              <Button onClick={() => slide(1)}>Forward</Button>
-            ) : (
-              <div />
-            )}
-          </PageButtonContainer>
-        ) : null}
 
         <BookContainer flexDirection={'column'}>
           <HeaderFooter w={1} justifyContent={'center'} alignItems={'center'}>
@@ -127,6 +115,9 @@ export default class SliderTemplate extends Component {
                       size={'40px'}
                       onClick={() => {
                         this.props.router.back()
+                      }}
+                      innerRef={ref => {
+                        this.backButtonRef = ref
                       }}
                     >
                       <Icon color={'white'} icon={'arrow_back'} />
@@ -166,7 +157,9 @@ export default class SliderTemplate extends Component {
               {selectedContent ? (
                 <Box w={1}>
                   <H3>{selectedContent.title}</H3>
-                  <Markdown source={selectedContent.description} />
+                  <MarkdownContainer>
+                    <Markdown source={selectedContent.description} />
+                  </MarkdownContainer>
                   <Flex>
                     <AdditionalImages
                       additionalImages={selectedContent.additionalImages}
@@ -190,6 +183,24 @@ export default class SliderTemplate extends Component {
             )}
           </HeaderFooter>
         </BookContainer>
+        {selectedContent ? (
+          <PageButtonContainer w={1} justifyContent={'space-between'}>
+            {selectedContent.index !== 0 ? (
+              <Button tabIndex={'0'} onClick={() => slide(-1)}>
+                Back
+              </Button>
+            ) : (
+              <div />
+            )}
+            {selectedContent.index < story.contents.length - 1 ? (
+              <Button tabIndex={'0'} onClick={() => slide(1)}>
+                Forward
+              </Button>
+            ) : (
+              <div />
+            )}
+          </PageButtonContainer>
+        ) : null}
       </Container>
     )
   }
@@ -278,6 +289,9 @@ const ContentContainer = styled(Flex)`
   @media only screen and (max-width: 40em) {
     position: absolute;
   }
+`
+const MarkdownContainer = styled(Box)`
+  font-family: ${({ theme }) => theme.font.light};
 `
 
 const SideContainer = styled(Flex)`

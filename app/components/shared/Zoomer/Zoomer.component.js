@@ -365,6 +365,7 @@ export default class extends Component {
         // minNativeZoom: 0,
         noWrap: true,
         bounds: this.bounds,
+        detectRetina: true,
         minZoom,
         //maxZoom,
         errorTileUrl: '/static/spinner.gif'
@@ -495,7 +496,17 @@ export default class extends Component {
       this.indexMarkers = []
 
       markers.forEach(({ sw, marker }) => {
-        let html = `<div class="index-icon"> ${marker.index} </div>`
+        let markerIndex = marker.index
+
+        if (this.state.markers[0]) {
+          if (this.state.markers[0].type !== 'obj') {
+            markerIndex = markerIndex + 1
+          }
+        }
+
+        console.log(markerIndex)
+
+        let html = `<div class="index-icon"> ${markerIndex} </div>`
 
         let icon = L.divIcon({
           html

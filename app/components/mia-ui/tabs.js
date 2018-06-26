@@ -70,7 +70,7 @@ export class TabHeader extends Component {
       }
     })
     return (
-      <HeaderContainer flex={'0 0 auto'} id={'tab-header'}>
+      <HeaderContainer flex={'0 0 auto'} id={'tab-header'} role={'tablist'}>
         {childrenWithProps}
       </HeaderContainer>
     )
@@ -82,17 +82,43 @@ export class Tab extends Component {
     name: PropTypes.string.isRequired
   }
 
+  constructor(props) {
+    super(props)
+    this.tabRef = React.createRef()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedTab === this.props.name) {
+      this.tabRef.focus()
+    }
+  }
+
   render() {
     const {
       props: { name, children, selectedTab, selectTab, onClick }
     } = this
+
+    let selected = name === selectedTab ? true : false
+
     return (
-      <TabButton selected={name === selectedTab} onClick={onClick}>
+      <TabButton
+        selected={selected}
+        aria-selected={selected}
+        onClick={onClick}
+        tabIndex={name === selectedTab ? '0' : '1'}
+        role={'tab'}
+        onKeyDown={this.props.onKeyDown || null}
+        innerRef={ref => {
+          this.tabRef = ref
+        }}
+      >
         {children}
       </TabButton>
     )
   }
 }
+
+// export const Tab = React.forwardRef(TabComponent)
 
 export class TabBody extends Component {
   static propTypes = {
@@ -123,12 +149,14 @@ const HeaderContainer = styled(Flex)`
   align-items: stretch;
 `
 
-const TabButton = styled.a`
+const TabButton = styled.button`
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: none;
+  font-size: 14px;
   border-bottom: ${({ selected, theme }) =>
     selected
       ? `3px solid ${theme.color.blue}`

@@ -10,10 +10,6 @@ export default class ObjDisplay extends Component {
     if (!this.props.content.obj) return null
 
     const { primaryMediaType, primaryImage, videoUrl } = this.props.content.obj
-
-    console.log('ObjDisplay')
-    console.log(this.props)
-
     return (
       <Container>
         {primaryMediaType === 'image' && primaryImage ? (

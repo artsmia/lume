@@ -35,29 +35,36 @@ export const Drawer = styled(Flex)`
       : null};
 `
 
-export const DrawerButton = styled.div`
+export const DrawerButton = styled.button`
   position: fixed;
   top: 15px;
   left: 15px;
-  transition: all 0.4s;
-  height: 50px;
-  width: 50px;
-  opacity: 1;
+  transition: all 0.2s;
+  height: 40px;
+  width: 40px;
+  opacity: 0.85;
   z-index: 2;
   cursor: pointer;
   background-color: white;
-  border-radius: 50px;
+  border-radius: 40px;
+  margin-left: 10px;
+
+  &:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: -2px 2px 1px rgba(0, 0, 0, 0.2);
+  }
 
   span {
     display: block;
     position: absolute;
-    height: 5px;
-    width: 30px;
+    height: 4px;
+    width: 50%;
     background: ${black};
     opacity: 1;
-    right: 10px;
     transform: rotate(0deg);
     transition: all 0.2s ease-in-out;
+    left: 25%;
   }
 
   span:nth-child(1) {
@@ -76,16 +83,27 @@ export const DrawerButton = styled.div`
     transform-origin: left center;
   }
 
+  @media only screen and (max-width: 400px) {
+    left: auto;
+    right: 20px;
+    margin-left: 0;
+  }
+
   ${({ open }) =>
     open
       ? css`
-          left: ${drawerWidth};
+          @media only screen and (min-width: 401px) {
+            left: ${drawerWidth};
+          }
+
+          span {
+            left: 26%;
+          }
 
           span:nth-child(1) {
             transform: rotate(45deg);
-            top: 10px;
-            left: 12px;
-            width: 36px;
+            top: 24%;
+            width: 60%;
           }
 
           span:nth-child(2) {
@@ -95,9 +113,8 @@ export const DrawerButton = styled.div`
 
           span:nth-child(3) {
             transform: rotate(-45deg);
-            bottom: 10px;
-            left: 12px;
-            width: 36px;
+            bottom: 24%;
+            width: 60%;
           }
         `
       : null};
@@ -124,68 +141,68 @@ export const DrawerPage = styled(Box)`
         `
       : null};
 `
-
-export const DrawerCheck = styled.input`
-  margin: 10px;
-  z-index: 3;
-  position: fixed;
-  top: 5px;
-  left: 5px;
-  transition: all 0.4s;
-  height: 50px;
-  width: 50px;
-  opacity: 0;
-  cursor: pointer;
-
-  &:checked {
-    left: ${drawerWidth};
-  }
-
-  &:checked ~ ${DrawerButton} {
-    left: ${drawerWidth};
-
-    span:nth-child(1) {
-      transform: rotate(45deg);
-      top: 10px;
-      left: 12px;
-      width: 36px;
-    }
-
-    span:nth-child(2) {
-      width: 0%;
-      opacity: 0;
-    }
-
-    span:nth-child(3) {
-      transform: rotate(-45deg);
-      bottom: 10px;
-      left: 12px;
-      width: 36px;
-    }
-  }
-
-  &:checked ~ ${Drawer} {
-    transform: translateX(0);
-  }
-
-  &:checked ~ ${DrawerPage} {
-    margin-left: ${drawerWidth};
-  }
-
-  @media only screen and (max-width: 400px) {
-    &:checked ~ ${DrawerPage} {
-      margin-left: ${drawerWidthMobile};
-    }
-
-    &:checked {
-      left: ${drawerWidthMobile};
-    }
-    &:checked ~ ${DrawerButton} {
-      left: ${drawerWidthMobile};
-    }
-  }
-`
-
-DrawerCheck.defaultProps = {
-  type: 'checkbox'
-}
+//
+// export const DrawerCheck = styled.input`
+//   margin: 10px;
+//   z-index: 3;
+//   position: fixed;
+//   top: 5px;
+//   left: 5px;
+//   transition: all 0.4s;
+//   height: 50px;
+//   width: 50px;
+//   opacity: 0;
+//   cursor: pointer;
+//
+//   &:checked {
+//     left: ${drawerWidth};
+//   }
+//
+//   &:checked ~ ${DrawerButton} {
+//     left: ${drawerWidth};
+//
+//     span:nth-child(1) {
+//       transform: rotate(45deg);
+//       top: 10px;
+//       left: 12px;
+//       width: 36px;
+//     }
+//
+//     span:nth-child(2) {
+//       width: 0%;
+//       opacity: 0;
+//     }
+//
+//     span:nth-child(3) {
+//       transform: rotate(-45deg);
+//       bottom: 10px;
+//       left: 12px;
+//       width: 36px;
+//     }
+//   }
+//
+//   &:checked ~ ${Drawer} {
+//     transform: translateX(0);
+//   }
+//
+//   &:checked ~ ${DrawerPage} {
+//     margin-left: ${drawerWidth};
+//   }
+//
+//   @media only screen and (max-width: 400px) {
+//     &:checked ~ ${DrawerPage} {
+//       margin-left: ${drawerWidthMobile};
+//     }
+//
+//     &:checked {
+//       left: ${drawerWidthMobile};
+//     }
+//     &:checked ~ ${DrawerButton} {
+//       left: ${drawerWidthMobile};
+//     }
+//   }
+// `
+//
+// DrawerCheck.defaultProps = {
+//   type: 'checkbox'
+// }

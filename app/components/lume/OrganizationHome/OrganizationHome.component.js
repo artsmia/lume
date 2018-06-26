@@ -6,12 +6,7 @@ import { Label, CheckboxInput, Search, Input } from '../../mia-ui/forms'
 import Router from 'next/router'
 import { H3, H2, H4 } from '../../mia-ui/text'
 import { Flex, Box } from 'grid-styled'
-import {
-  Drawer,
-  DrawerCheck,
-  DrawerButton,
-  DrawerPage
-} from '../../mia-ui/drawer'
+import { Drawer, DrawerButton, DrawerPage } from '../../mia-ui/drawer'
 import { GridList, Tile } from '../../mia-ui/lists'
 import { Loading } from '../../mia-ui/loading'
 import Head from '../../shared/head'
@@ -402,7 +397,7 @@ export default class Home extends Component {
                   <Tile
                     key={id}
                     id={title === 'Writing Desk' ? 'writing-desk' : undefined}
-                    w={[1, 1, 1 / 2, 1 / 4]}
+                    w={[1, 1, 1 / 2, 1 / 3]}
                     p={1}
                     key={id}
                     text={title}

@@ -78,7 +78,6 @@ const buttonBaseStyles = css`
   padding: .75em;
   ${fontBold}
   font-size: 0.8rem;
-  outline: none !important;
   cursor: pointer;
   vertical-align: middle;
   transition: all .4s ease-in-out;
@@ -136,8 +135,8 @@ Button.propTypes = buttonBaseProps
 Button.defaultProps = buttonBaseDefaultProps
 
 export const NavButton = props => (
-  <Link href={props.href} as={props.as}>
-    <Button a round size={props.size} href={props.as}>
+  <Link href={props.href} as={props.as} passHref>
+    <Button a round size={props.size} {...props}>
       {props.children}
     </Button>
   </Link>

@@ -59,7 +59,3 @@ export const theme = {
   alternateTextColor: white,
   primaryColor: blue
 }
-
-export default ({ children }) => (
-  <ThemeProvider theme={theme}>{children}</ThemeProvider>
-)

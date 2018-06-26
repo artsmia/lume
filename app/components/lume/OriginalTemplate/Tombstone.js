@@ -56,6 +56,7 @@ export default class AppTombstone extends Component {
           onClick={() =>
             this.setState(({ showMore }) => ({ showMore: !showMore }))
           }
+          onBlur={this.props.onBlur}
         >
           {showMore ? 'Hide' : 'Show More'}
         </ShowMore>
@@ -101,7 +102,9 @@ const ShowMore = styled.button`
   width: 100%;
   border: 0;
   background-color: white;
-  justify-content: center;
+  justify-content: left;
+  text-align: left;
+  padding: 0;
 `
 const More = styled.div`
   display: flex;
