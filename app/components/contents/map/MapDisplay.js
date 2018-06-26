@@ -10,7 +10,7 @@ export default class MapDisplay extends Component {
 
     return (
       <Container>
-        {image0 ? <MapZoomer contentId={this.props.content.id} /> : null}
+        <MapZoomer contentId={this.props.content.id} />
       </Container>
     )
   }

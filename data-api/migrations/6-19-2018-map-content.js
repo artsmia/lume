@@ -24,7 +24,10 @@ module.exports = {
       }),
       queryInterface.removeColumn('content', 'mapKey', Sequelize.STRING, {
         defaultValue: ''
-      })
+      }),
+      queryInterface.sequelize.query(
+        "ALTER TABLE content CHANGE type type ENUM('comparison', 'detail', 'movie', 'obj', 'picture');"
+      )
     ]
   }
 }

@@ -158,39 +158,44 @@ export default class extends Component {
           if (this.props.content.mapUrl) {
             await this.setupMap()
           }
+          if (this.props.mode === 'editor') {
+            await this.createMapEditor()
+          } else {
+            await this.showMapContent()
+          }
         }
       }
 
-      // if (this.state.image) {
-      //   if (prevState.image) {
-      //     if (prevState.image.id !== this.state.image.id) {
-      //       this.map.remove()
-      //       await this.setupImage()
-      //     }
-      //   } else {
-      //     await this.setupImage()
-      //   }
-      //
-      //   if (this.map) {
-      //     if (this.state.content) {
-      //       if (this.props.mode === 'editor') {
-      //         await this.createDetailEditor()
-      //       } else {
-      //         await this.createContentLayer()
-      //
-      //         if (this.detailBounds) {
-      //           this.map.flyToBounds(this.detailBounds, {
-      //             animate: false
-      //           })
-      //         }
-      //       }
-      //     }
-      //
-      //     if (this.state.markers) {
-      //       await this.createMarkers()
-      //     }
-      //   }
-      // }
+      if (this.state.image) {
+        if (prevState.image) {
+          if (prevState.image.id !== this.state.image.id) {
+            this.map.remove()
+            await this.setupImage()
+          }
+        } else {
+          await this.setupImage()
+        }
+
+        if (this.map) {
+          if (this.state.content) {
+            if (this.props.mode === 'editor') {
+              await this.createDetailEditor()
+            } else {
+              await this.createContentLayer()
+
+              if (this.detailBounds) {
+                this.map.flyToBounds(this.detailBounds, {
+                  animate: false
+                })
+              }
+            }
+          }
+
+          if (this.state.markers) {
+            await this.createMarkers()
+          }
+        }
+      }
     } catch (ex) {
       console.error(ex)
     }
@@ -291,24 +296,101 @@ export default class extends Component {
     }
   }
 
+  showMapContent = async () => {
+    try {
+      if (this.mapContentLayer) {
+        this.map.removeLayer(this.mapContentLayer)
+      }
+
+      let layers = this.state.content.geoJSON
+        ? this.state.content.geoJSON.features.map(feature => {
+            return L.GeoJSON.geometryToLayer(feature)
+          })
+        : []
+
+      this.mapContentLayer = new L.FeatureGroup(layers)
+
+      this.map.addLayer(this.mapContentLayer)
+    } catch (e) {}
+  }
+
+  createMapEditor = async () => {
+    try {
+      if (this.editableLayers) {
+        this.map.removeLayer(this.editableLayers)
+      }
+
+      let layers = this.state.content.geoJSON
+        ? this.state.content.geoJSON.features.map(feature => {
+            return L.GeoJSON.geometryToLayer(feature)
+          })
+        : []
+
+      this.editableLayers = new L.FeatureGroup(layers)
+
+      this.map.addLayer(this.editableLayers)
+
+      this.map.on(L.Draw.Event.CREATED, e => {
+        this.editableLayers.addLayer(e.layer)
+
+        this.props.editContent({
+          geoJSON: this.editableLayers.toGeoJSON()
+        })
+      })
+
+      this.map.on(L.Draw.Event.EDITED, e => {
+        this.props.editContent({
+          geoJSON: this.editableLayers.toGeoJSON()
+        })
+      })
+
+      this.map.on(L.Draw.Event.DELETED, e => {
+        this.props.editContent({
+          geoJSON: this.editableLayers.toGeoJSON()
+        })
+      })
+
+      if (!this.drawControl) {
+        this.drawControl = new L.Control.Draw({
+          draw: {
+            polygon: {
+              allowIntersection: false
+            },
+            rectangle: false,
+            polyline: false,
+            circle: false,
+            circlemarker: false
+          },
+          position: 'topright',
+          edit: {
+            featureGroup: this.editableLayers
+          }
+        })
+
+        this.map.addControl(this.drawControl)
+      }
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
   setupMap = async () => {
     try {
       console.log('setupMap')
 
       console.log(this.mapRef)
 
-      this.newMap = L.map(this.mapRef).setView([10, 20], 5)
+      this.map = L.map(this.mapRef).setView([10, 20], 5)
 
       console.log(this.props.content)
 
       this.tileMap = L.tileLayer(this.props.content.mapUrl, {
         maxZoom: 18,
         id: 'mapbox.streets',
-        accessToken:
-          'pk.eyJ1IjoiY2FybHBlYXNsZWUiLCJhIjoiY2ppbHZ0ZjJoMGw2cjNwc3pwZDl6OHluMCJ9.3ZcaF7H5a31u8_LB_VaR_Q'
+        accessToken: this.props.content.mapKey
       })
 
-      this.tileMap.addTo(this.newMap)
+      this.tileMap.addTo(this.map)
     } catch (e) {}
   }
 

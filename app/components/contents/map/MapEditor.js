@@ -80,7 +80,7 @@ class MapEditor extends Component {
           </Box>
         </Flex>
         <Right w={[1, 1 / 2]} flexWrap={'wrap'} m={3}>
-          <MapZoomer contentId={this.props.content.id} />
+          <MapZoomer contentId={this.props.content.id} mode={'editor'} />
         </Right>
       </Flex>
     )
