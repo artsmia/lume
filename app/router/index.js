@@ -195,7 +195,9 @@ app
     })
 
     server.get('/', (req, res) => {
-      const page = req.subdomains.includes('cms') ? '/cms/splash' : '/lume/splash'
+      const page = req.subdomains.includes('cms')
+        ? '/cms/splash'
+        : '/lume/splash'
       let params = {
         ...req.params,
         ...req.query
