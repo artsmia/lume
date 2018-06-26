@@ -6,6 +6,7 @@
     "apollo-link": "^1.0.7",
     "apollo-link-context": "^1.0.8",
     "apollo-link-state": "^0.4.0",
+    "chalk": "^2.4.1",
     "connect-ensure-login": "^0.1.1",
     "connect-redis": "^3.3.3",
     "dotenv": "^5.0.1",

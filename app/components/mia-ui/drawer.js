@@ -64,7 +64,7 @@ export const DrawerButton = styled.button`
     opacity: 1;
     transform: rotate(0deg);
     transition: all 0.2s ease-in-out;
-    left: 30%;
+    left: 25%;
   }
 
   span:nth-child(1) {
@@ -83,10 +83,22 @@ export const DrawerButton = styled.button`
     transform-origin: left center;
   }
 
+  @media only screen and (max-width: 400px) {
+    left: auto;
+    right: 20px;
+    margin-left: 0;
+  }
+
   ${({ open }) =>
     open
       ? css`
-          left: ${drawerWidth};
+          @media only screen and (min-width: 401px) {
+            left: ${drawerWidth};
+          }
+
+          span {
+            left: 26%;
+          }
 
           span:nth-child(1) {
             transform: rotate(45deg);
@@ -129,68 +141,68 @@ export const DrawerPage = styled(Box)`
         `
       : null};
 `
-
-export const DrawerCheck = styled.input`
-  margin: 10px;
-  z-index: 3;
-  position: fixed;
-  top: 5px;
-  left: 5px;
-  transition: all 0.4s;
-  height: 50px;
-  width: 50px;
-  opacity: 0;
-  cursor: pointer;
-
-  &:checked {
-    left: ${drawerWidth};
-  }
-
-  &:checked ~ ${DrawerButton} {
-    left: ${drawerWidth};
-
-    span:nth-child(1) {
-      transform: rotate(45deg);
-      top: 10px;
-      left: 12px;
-      width: 36px;
-    }
-
-    span:nth-child(2) {
-      width: 0%;
-      opacity: 0;
-    }
-
-    span:nth-child(3) {
-      transform: rotate(-45deg);
-      bottom: 10px;
-      left: 12px;
-      width: 36px;
-    }
-  }
-
-  &:checked ~ ${Drawer} {
-    transform: translateX(0);
-  }
-
-  &:checked ~ ${DrawerPage} {
-    margin-left: ${drawerWidth};
-  }
-
-  @media only screen and (max-width: 400px) {
-    &:checked ~ ${DrawerPage} {
-      margin-left: ${drawerWidthMobile};
-    }
-
-    &:checked {
-      left: ${drawerWidthMobile};
-    }
-    &:checked ~ ${DrawerButton} {
-      left: ${drawerWidthMobile};
-    }
-  }
-`
-
-DrawerCheck.defaultProps = {
-  type: 'checkbox'
-}
+//
+// export const DrawerCheck = styled.input`
+//   margin: 10px;
+//   z-index: 3;
+//   position: fixed;
+//   top: 5px;
+//   left: 5px;
+//   transition: all 0.4s;
+//   height: 50px;
+//   width: 50px;
+//   opacity: 0;
+//   cursor: pointer;
+//
+//   &:checked {
+//     left: ${drawerWidth};
+//   }
+//
+//   &:checked ~ ${DrawerButton} {
+//     left: ${drawerWidth};
+//
+//     span:nth-child(1) {
+//       transform: rotate(45deg);
+//       top: 10px;
+//       left: 12px;
+//       width: 36px;
+//     }
+//
+//     span:nth-child(2) {
+//       width: 0%;
+//       opacity: 0;
+//     }
+//
+//     span:nth-child(3) {
+//       transform: rotate(-45deg);
+//       bottom: 10px;
+//       left: 12px;
+//       width: 36px;
+//     }
+//   }
+//
+//   &:checked ~ ${Drawer} {
+//     transform: translateX(0);
+//   }
+//
+//   &:checked ~ ${DrawerPage} {
+//     margin-left: ${drawerWidth};
+//   }
+//
+//   @media only screen and (max-width: 400px) {
+//     &:checked ~ ${DrawerPage} {
+//       margin-left: ${drawerWidthMobile};
+//     }
+//
+//     &:checked {
+//       left: ${drawerWidthMobile};
+//     }
+//     &:checked ~ ${DrawerButton} {
+//       left: ${drawerWidthMobile};
+//     }
+//   }
+// `
+//
+// DrawerCheck.defaultProps = {
+//   type: 'checkbox'
+// }
