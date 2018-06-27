@@ -245,7 +245,9 @@ export default class OriginalTemplate extends Component {
   }
 
   componentDidMount() {
-    this.backButtonRef.focus()
+    if (this.backButtonRef.focus) {
+      this.backButtonRef.focus()
+    }
 
     window.onbeforeprint = e => {
       const { router, subdomain, storySlug } = this.props

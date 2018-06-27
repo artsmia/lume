@@ -37,7 +37,9 @@ export default class SliderTemplate extends Component {
   }
 
   componentDidMount() {
-    this.backButtonRef.focus()
+    if (this.backButtonRef.focus) {
+      this.backButtonRef.focus()
+    }
 
     window.onbeforeprint = e => {
       const { router, subdomain, storySlug } = this.props
