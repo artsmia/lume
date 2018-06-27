@@ -35,9 +35,7 @@ class MapEditor extends Component {
         mapUrl,
         mapKey,
         mapUrlSelect,
-        customMapToken,
-        additionalImages,
-        additionalMedias
+        customMapToken
       },
       saveEdits,
       handleChange,
@@ -45,7 +43,11 @@ class MapEditor extends Component {
       handleAddAdditionalMedia,
       handleRemoveAdditionalImage,
       handleRemoveAdditionalMedia,
-      props: { organization, content }
+      props: {
+        organization,
+        content,
+        content: { additionalImages, additionalMedias }
+      }
     } = this
 
     return (
@@ -67,22 +69,15 @@ class MapEditor extends Component {
               onChange={handleChange}
             />
           </Box>
-          <Box w={1}>
+          {/* <Box w={1}>
             <ChangeImage
               label={'Image'}
               name={'image0Id'}
               image={content.image0}
               onChange={handleChange}
             />
-          </Box>
-          {/* <Box w={1} id={'additional-images'}>
-          <MultiImage
-            label={'Additional Images'}
-            additionalImages={additionalImages}
-            onAdd={handleAddAdditionalImage}
-            onRemove={handleRemoveAdditionalImage}
-          />
-        </Box> */}
+          </Box> */}
+
           <Box w={1} my={1}>
             <Label>Map</Label>
             <Select
