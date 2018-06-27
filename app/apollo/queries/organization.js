@@ -14,12 +14,8 @@ export const query = gql`
 export const options = {
   options: props => {
     const {
-      router: {
-        query
-      },
+      router: { query }
     } = props
-
-    console.log(props)
 
     let subdomain = props.subdomain ? props.subdomain : query.subdomain
 

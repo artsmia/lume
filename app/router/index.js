@@ -195,9 +195,10 @@ app
     })
 
     server.get('/', (req, res) => {
-      const page = req.subdomains.includes('cms')
-        ? '/cms/splash'
-        : '/lume/splash'
+      if (req.subdomains.includes('cms')){
+        res.redirect('/login')
+      }
+      const page = '/lume/splash'
       let params = {
         ...req.params,
         ...req.query

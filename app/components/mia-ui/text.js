@@ -20,6 +20,7 @@ const light = props => {
   if (props.light) {
     return css`
       ${fontLight} letter-spacing: -0.01em;
+      font-weight: regular;
     `
   }
 }
