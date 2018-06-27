@@ -28,15 +28,20 @@ export default class extends Component {
   }
 
   render() {
-    if (!this.state.image) {
+    if (!this.state.image && !this.props.content) {
       return <div />
     } else {
-      return <ZoomerMap innerRef={mapRef => (this.mapRef = mapRef)} />
+      return (
+        <ZoomerMap
+          innerRef={mapRef => {
+            this.mapRef = mapRef
+          }}
+        />
+      )
     }
   }
 
   componentWillUnmount() {
-    console.log('Zoomer Unmounting')
     if (this.map) {
       this.map.remove()
     }
@@ -135,7 +140,6 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    console.log('Zoomer mounted')
     this.setup({})
   }
 
@@ -145,7 +149,21 @@ export default class extends Component {
 
   setup = async prevState => {
     try {
-      console.log('setup', this.state)
+      if (this.props.content) {
+        if (this.props.content.type === 'map') {
+          if (
+            this.props.content.mapUrl ||
+            prevState.content.mapUrl !== this.props.content.mapUrl
+          ) {
+            await this.setupMap()
+          }
+          if (this.props.mode === 'editor') {
+            await this.createMapEditor()
+          } else {
+            await this.showMapContent()
+          }
+        }
+      }
 
       if (this.state.image) {
         if (prevState.image) {
@@ -277,10 +295,116 @@ export default class extends Component {
     }
   }
 
+  showMapContent = async () => {
+    try {
+      if (this.mapContentLayer) {
+        this.map.removeLayer(this.mapContentLayer)
+      }
+
+      let layers = this.state.content.geoJSON
+        ? this.state.content.geoJSON.features.map(feature => {
+            return L.GeoJSON.geometryToLayer(feature)
+          })
+        : []
+
+      this.mapContentLayer = new L.FeatureGroup(layers)
+
+      if (this.state.content.title) {
+        this.mapContentLayer.bindTooltip(this.state.content.title)
+      }
+
+      this.map.addLayer(this.mapContentLayer)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  createMapEditor = async () => {
+    try {
+      if (this.editableLayers) {
+        this.map.removeLayer(this.editableLayers)
+      }
+
+      let layers = this.state.content.geoJSON
+        ? this.state.content.geoJSON.features.map(feature => {
+            return L.GeoJSON.geometryToLayer(feature)
+          })
+        : []
+
+      this.editableLayers = new L.FeatureGroup(layers)
+
+      this.map.addLayer(this.editableLayers)
+
+      this.map.on(L.Draw.Event.CREATED, e => {
+        this.editableLayers.addLayer(e.layer)
+
+        this.props.editContent({
+          geoJSON: this.editableLayers.toGeoJSON()
+        })
+      })
+
+      this.map.on(L.Draw.Event.EDITED, async e => {
+        await this.props.editContent({
+          geoJSON: this.editableLayers.toGeoJSON()
+        })
+      })
+
+      this.map.on(L.Draw.Event.DELETED, e => {
+        this.props.editContent({
+          geoJSON: this.editableLayers.toGeoJSON()
+        })
+      })
+
+      if (this.drawControl) {
+        this.map.removeControl(this.drawControl)
+      }
+
+      this.drawControl = new L.Control.Draw({
+        draw: {
+          polygon: {
+            allowIntersection: false
+          },
+          rectangle: false,
+          polyline: false,
+          circle: false,
+          circlemarker: false
+        },
+        position: 'topright',
+        edit: {
+          featureGroup: this.editableLayers
+        }
+      })
+
+      this.map.addControl(this.drawControl)
+    } catch (ex) {
+      console.error(ex)
+    }
+  }
+
+  setupMap = async () => {
+    try {
+      if (this.tileMap) {
+        this.map.removeLayer(this.tileMap)
+      }
+
+      if (!this.map) {
+        this.map = L.map(this.mapRef).setView([0, 0], 2)
+      }
+
+      this.tileMap = L.tileLayer(this.props.content.mapUrl, {
+        maxZoom: 18,
+        accessToken: this.props.content.mapKey || process.env.MAPBOX_API_TOKEN
+      })
+
+      this.tileMap.addTo(this.map)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   createZoomer = async config => {
     try {
       let { height, width, tileUrl, tileSize } = config
-      console.log('createZoomer')
 
       let larger = Math.max(height, width)
 
@@ -389,25 +513,26 @@ export default class extends Component {
         })
       })
 
-      if (!this.drawControl) {
-        this.drawControl = new L.Control.Draw({
-          draw: {
-            polygon: {
-              allowIntersection: false
-            },
-            polyline: false,
-            circle: false,
-            marker: false,
-            circlemarker: false
-          },
-          position: 'topright',
-          edit: {
-            featureGroup: this.editableLayers
-          }
-        })
-
-        this.map.addControl(this.drawControl)
+      if (this.drawControl) {
+        this.map.removeControl(this.drawControl)
       }
+      this.drawControl = new L.Control.Draw({
+        draw: {
+          polygon: {
+            allowIntersection: false
+          },
+          polyline: false,
+          circle: false,
+          marker: false,
+          circlemarker: false
+        },
+        position: 'topright',
+        edit: {
+          featureGroup: this.editableLayers
+        }
+      })
+
+      this.map.addControl(this.drawControl)
     } catch (ex) {
       console.error(ex)
     }
@@ -469,8 +594,6 @@ export default class extends Component {
           }
         }
 
-        console.log(markerIndex)
-
         let html = `<div class="index-icon"> ${markerIndex} </div>`
 
         let icon = L.divIcon({
@@ -497,8 +620,10 @@ export default class extends Component {
 }
 
 const ZoomerMap = styled.div`
+  min-height: 500px;
   height: 100%;
   width: 100%;
+  position: relative;
   display: block;
   z-index: 98;
   .crop-button {

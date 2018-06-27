@@ -1,6 +1,4 @@
-import { ApolloClient } from 'apollo-boost'
-import { HttpLink } from 'apollo-boost'
-import { InMemoryCache } from 'apollo-boost'
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
 import fetch from 'isomorphic-unfetch'
 import Head from 'next/head'
 import { getDataFromTree } from 'react-apollo'
@@ -84,7 +82,6 @@ export default App => {
     static displayName = 'withApollo(App)'
     static async getInitialProps(ctx) {
       try {
-
         const { Component, router } = ctx
 
         // Run all GraphQL queries in the component tree

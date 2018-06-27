@@ -11,7 +11,7 @@ const Content = db.define(
     },
     type: {
       type: Sequelize.ENUM,
-      values: ['comparison', 'detail', 'movie', 'obj', 'picture'],
+      values: ['comparison', 'detail', 'movie', 'obj', 'picture', 'map'],
       allowNull: false,
       defaultValue: 'picture'
     },
@@ -34,6 +34,16 @@ const Content = db.define(
       type: Sequelize.JSON
     },
     videoUrl: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: ''
+    },
+    mapUrl: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: ''
+    },
+    mapKey: {
       type: Sequelize.STRING,
       allowNull: false,
       defaultValue: ''

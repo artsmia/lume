@@ -25,7 +25,7 @@ import Tour from '../../shared/Tours'
 export default class Editor extends Component {
   tourId = 'editor'
 
-  contentTypes = ['comparison', 'detail', 'obj', 'picture', 'movie']
+  contentTypes = ['comparison', 'detail', 'obj', 'picture', 'movie', 'map']
 
   tips = [
     {
@@ -118,15 +118,14 @@ export default class Editor extends Component {
             <Button
               round
               size={'40px'}
-              onClick={()=>{this.setState({
-                print: false,
-                preview: false
-              })}}
+              onClick={() => {
+                this.setState({
+                  print: false,
+                  preview: false
+                })
+              }}
             >
-              <Icon
-                color={'white'}
-                icon={'print'}
-              />
+              <Icon color={'white'} icon={'print'} />
             </Button>
           </PreviewButtonBox>
           <StoryPreview story={story} print={this.state.print} />
@@ -157,9 +156,6 @@ export default class Editor extends Component {
         {story ? <Head title={`Editing: ${story.title}`} /> : null}
 
         <PreviewButtonBox flexWrap={'nowrap'}>
-
-
-
           <Button
             onClick={this.togglePreview}
             color={'blue'}
@@ -191,15 +187,14 @@ export default class Editor extends Component {
           <Button
             round
             size={'40px'}
-            onClick={()=>{this.setState(({print}) => ({
-              print: true,
-              preview: true
-            }))}}
+            onClick={() => {
+              this.setState(({ print }) => ({
+                print: true,
+                preview: true
+              }))
+            }}
           >
-            <Icon
-              color={'white'}
-              icon={'print'}
-            />
+            <Icon color={'white'} icon={'print'} />
           </Button>
         </PreviewButtonBox>
         <TopBar w={1} p={2} alignItems={'center'} justifyContent={'flex-start'}>
@@ -220,12 +215,7 @@ export default class Editor extends Component {
             <H2>{story.title ? story.title : 'Untitled Story'}</H2>
           </Box>
 
-
           <Box w={1 / 3}>{renderSaveStatus()}</Box>
-
-
-
-
         </TopBar>
         <Workspace w={1}>
           <Sidebar w={1 / 5} id={'sidebar'}>
@@ -325,7 +315,7 @@ export default class Editor extends Component {
       this.setState({ tour: new Tour(this) })
     }
 
-    window.onbeforeprint = (e) => {
+    window.onbeforeprint = e => {
       this.setState({
         print: true,
         preview: true
@@ -333,8 +323,7 @@ export default class Editor extends Component {
     }
   }
 
-
-  componentWillUnmount(){
+  componentWillUnmount() {
     window.onbeforeprint = undefined
   }
 

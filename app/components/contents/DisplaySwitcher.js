@@ -3,6 +3,7 @@ import DetailContentDisplay from './detail/Display'
 import MovieContentDisplay from './movie/Display'
 import ObjContentDisplay from './obj/Display'
 import PictureContentDisplay from './picture/Display'
+import MapContentDisplay from './map/MapDisplay'
 
 export default ({ content }) => {
   switch (content.type) {
@@ -20,6 +21,9 @@ export default ({ content }) => {
     }
     case 'picture': {
       return <PictureContentDisplay content={content} />
+    }
+    case 'map': {
+      return <MapContentDisplay content={content} />
     }
     default: {
       return null

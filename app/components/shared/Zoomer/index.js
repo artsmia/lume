@@ -12,3 +12,5 @@ export default compose(query)(Component)
 export const ContentZoomer = compose(editContent, contentQuery)(Component)
 
 export const StoryZoomer = compose(storyQuery)(Component)
+
+export const MapZoomer = compose(editContent, contentQuery)(Component)
