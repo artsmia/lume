@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ChangeImage, MultiImage } from '../../cms/DefaultEditors'
+import { ChangeImage, MultiImage, MultiMedia } from '../../cms/DefaultEditors'
 import query from '../../../apollo/queries/content'
 import OrganizationQuery from '../../../apollo/queries/organization'
 import { withRouter } from 'next/router'
@@ -35,10 +35,16 @@ class MapEditor extends Component {
         mapUrl,
         mapKey,
         mapUrlSelect,
-        customMapToken
+        customMapToken,
+        additionalImages,
+        additionalMedias
       },
       saveEdits,
       handleChange,
+      handleAddAdditionalImage,
+      handleAddAdditionalMedia,
+      handleRemoveAdditionalImage,
+      handleRemoveAdditionalMedia,
       props: { organization, content }
     } = this
 
@@ -77,7 +83,7 @@ class MapEditor extends Component {
             onRemove={handleRemoveAdditionalImage}
           />
         </Box> */}
-          <Box w={1}>
+          <Box w={1} my={1}>
             <Label>Map</Label>
             <Select
               name={'mapUrlSelect'}
@@ -104,7 +110,7 @@ class MapEditor extends Component {
               />
             ) : null}
           </Box>
-          <Box w={1}>
+          <Box w={1} my={1}>
             <CheckboxInput
               label={'Use Custom Map Token'}
               checked={customMapToken}
@@ -119,6 +125,22 @@ class MapEditor extends Component {
                 onChange={handleChange}
               />
             ) : null}
+          </Box>
+          <Box w={1} id={'additional-images'}>
+            <MultiImage
+              label={'Additional Images'}
+              additionalImages={additionalImages}
+              onAdd={handleAddAdditionalImage}
+              onRemove={handleRemoveAdditionalImage}
+            />
+          </Box>
+          <Box w={1} id={'additional-media'}>
+            <MultiMedia
+              label={'Additional Media'}
+              additionalMedias={additionalMedias}
+              onAdd={handleAddAdditionalMedia}
+              onRemove={handleRemoveAdditionalMedia}
+            />
           </Box>
           <Box w={1} my={5}>
             <DeleteContentButton contentId={this.props.content.id} />
@@ -211,6 +233,30 @@ class MapEditor extends Component {
         this.debounce(this.saveEdits, 2000)
       }
     )
+  }
+
+  handleAddAdditionalImage = addAdditionalImageId => {
+    this.props.editContent({
+      addAdditionalImageId
+    })
+  }
+
+  handleRemoveAdditionalImage = removeAdditionalImageId => {
+    this.props.editContent({
+      removeAdditionalImageId
+    })
+  }
+
+  handleAddAdditionalMedia = addAdditionalMediaId => {
+    this.props.editContent({
+      addAdditionalMediaId
+    })
+  }
+
+  handleRemoveAdditionalMedia = removeAdditionalMediaId => {
+    this.props.editContent({
+      removeAdditionalMediaId
+    })
   }
 
   saveEdits = async () => {
