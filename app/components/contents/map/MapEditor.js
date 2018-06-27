@@ -11,7 +11,15 @@ import { H2 } from '../../mia-ui/text'
 import { Row, Column } from '../../mia-ui/layout'
 import setSaveStatus from '../../../apollo/local/setSaveStatus'
 import { Flex, Box } from 'grid-styled'
-import { Title, Description } from '../../mia-ui/forms'
+import {
+  Title,
+  Description,
+  TextInput,
+  Select,
+  Option,
+  CheckboxInput,
+  Label
+} from '../../mia-ui/forms'
 import DeleteContentButton from '../../cms/DeleteContentButton'
 import { MapZoomer } from '../../shared/Zoomer'
 
@@ -20,7 +28,15 @@ class MapEditor extends Component {
     if (!this.props.content) return null
 
     const {
-      state: { title, description, image0Id, mapUrl, mapKey },
+      state: {
+        title,
+        description,
+        image0Id,
+        mapUrl,
+        mapKey,
+        mapUrlSelect,
+        customMapToken
+      },
       saveEdits,
       handleChange,
       props: { organization, content }
@@ -62,18 +78,47 @@ class MapEditor extends Component {
           />
         </Box> */}
           <Box w={1}>
-            <input
-              name={'mapUrl'}
-              value={mapUrl || ''}
-              onChange={handleChange}
-            />
+            <Label>Map</Label>
+            <Select
+              name={'mapUrlSelect'}
+              value={mapUrlSelect}
+              onChange={this.handleSelectChange}
+            >
+              {this.mapIds.map(id => (
+                <Option
+                  key={id}
+                  value={`https://api.tiles.mapbox.com/v4/mapbox.${id}/{z}/{x}/{y}.png?access_token={accessToken}`}
+                >
+                  {id}
+                </Option>
+              ))}
+              <Option value={'custom'}>Custom</Option>
+            </Select>
+
+            {mapUrlSelect === 'custom' ? (
+              <TextInput
+                label={'Map Url'}
+                name={'mapUrl'}
+                value={mapUrl || ''}
+                onChange={handleChange}
+              />
+            ) : null}
           </Box>
           <Box w={1}>
-            <input
-              name={'mapKey'}
-              value={mapKey || ''}
-              onChange={handleChange}
+            <CheckboxInput
+              label={'Use Custom Map Token'}
+              checked={customMapToken}
+              name={'customMapToken'}
+              onChange={this.handleCheck}
             />
+            {customMapToken ? (
+              <TextInput
+                label={'Map Access Token'}
+                name={'mapKey'}
+                value={mapKey || ''}
+                onChange={handleChange}
+              />
+            ) : null}
           </Box>
           <Box w={1} my={5}>
             <DeleteContentButton contentId={this.props.content.id} />
@@ -85,6 +130,46 @@ class MapEditor extends Component {
       </Flex>
     )
   }
+
+  handleCheck = ({ target: { name, checked } }) => {
+    this.setState({ [name]: checked })
+  }
+
+  handleSelectChange = ({ target: { name, value } }) => {
+    if (value === 'custom') {
+      this.setState({
+        [name]: value,
+        mapUrl: ''
+      })
+    } else {
+      this.setState(
+        () => ({
+          [name]: value,
+          mapUrl: value
+        }),
+        () => {
+          this.debounce(this.saveEdits, 500)
+        }
+      )
+    }
+  }
+
+  mapIds = [
+    'streets',
+    'light',
+    'dark',
+    'satellite',
+    'streets-satellite',
+    'wheatpaste',
+    'streets-basic',
+    'comic',
+    'outdoors',
+    'run-bike-hike',
+    'pencil',
+    'pirates',
+    'emerald',
+    'high-contrast'
+  ]
 
   bounce = true
 
@@ -100,7 +185,9 @@ class MapEditor extends Component {
     this.state = {
       title: '',
       description: '',
-      image0Id: ''
+      image0Id: '',
+      mapUrlSelect: '',
+      customMapToken: false
     }
 
     this.state = {
@@ -152,12 +239,23 @@ class MapEditor extends Component {
     }
     let {
       content,
-      content: { image0 }
+      content: { image0, mapUrl, mapKey }
     } = props
+
+    let mapUrls = this.mapIds.map(
+      id =>
+        `https://api.tiles.mapbox.com/v4/mapbox.${id}/{z}/{x}/{y}.png?access_token={accessToken}`
+    )
+
+    let mapUrlSelect = mapUrls.includes(mapUrl) ? mapUrl : 'custom'
+
+    let customMapToken = mapKey ? true : false
 
     return {
       ...content,
-      image0Id: image0 ? image0.id : ''
+      image0Id: image0 ? image0.id : '',
+      mapUrlSelect,
+      customMapToken
     }
   }
 }

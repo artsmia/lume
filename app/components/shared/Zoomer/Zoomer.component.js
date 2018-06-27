@@ -42,7 +42,6 @@ export default class extends Component {
   }
 
   componentWillUnmount() {
-    console.log('Zoomer Unmounting')
     if (this.map) {
       this.map.remove()
     }
@@ -141,7 +140,6 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    console.log('Zoomer mounted')
     this.setup({})
   }
 
@@ -151,11 +149,12 @@ export default class extends Component {
 
   setup = async prevState => {
     try {
-      console.log('setup', this.state)
-      console.log(this.props)
       if (this.props.content) {
         if (this.props.content.type === 'map') {
-          if (this.props.content.mapUrl) {
+          if (
+            this.props.content.mapUrl ||
+            prevState.content.mapUrl !== this.props.content.mapUrl
+          ) {
             await this.setupMap()
           }
           if (this.props.mode === 'editor') {
@@ -310,8 +309,14 @@ export default class extends Component {
 
       this.mapContentLayer = new L.FeatureGroup(layers)
 
+      if (this.state.content.title) {
+        this.mapContentLayer.bindTooltip(this.state.content.title)
+      }
+
       this.map.addLayer(this.mapContentLayer)
-    } catch (e) {}
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   createMapEditor = async () => {
@@ -338,8 +343,8 @@ export default class extends Component {
         })
       })
 
-      this.map.on(L.Draw.Event.EDITED, e => {
-        this.props.editContent({
+      this.map.on(L.Draw.Event.EDITED, async e => {
+        await this.props.editContent({
           geoJSON: this.editableLayers.toGeoJSON()
         })
       })
@@ -350,25 +355,27 @@ export default class extends Component {
         })
       })
 
-      if (!this.drawControl) {
-        this.drawControl = new L.Control.Draw({
-          draw: {
-            polygon: {
-              allowIntersection: false
-            },
-            rectangle: false,
-            polyline: false,
-            circle: false,
-            circlemarker: false
-          },
-          position: 'topright',
-          edit: {
-            featureGroup: this.editableLayers
-          }
-        })
-
-        this.map.addControl(this.drawControl)
+      if (this.drawControl) {
+        this.map.removeControl(this.drawControl)
       }
+
+      this.drawControl = new L.Control.Draw({
+        draw: {
+          polygon: {
+            allowIntersection: false
+          },
+          rectangle: false,
+          polyline: false,
+          circle: false,
+          circlemarker: false
+        },
+        position: 'topright',
+        edit: {
+          featureGroup: this.editableLayers
+        }
+      })
+
+      this.map.addControl(this.drawControl)
     } catch (ex) {
       console.error(ex)
     }
@@ -376,28 +383,28 @@ export default class extends Component {
 
   setupMap = async () => {
     try {
-      console.log('setupMap')
+      if (this.tileMap) {
+        this.map.removeLayer(this.tileMap)
+      }
 
-      console.log(this.mapRef)
-
-      this.map = L.map(this.mapRef).setView([10, 20], 5)
-
-      console.log(this.props.content)
+      if (!this.map) {
+        this.map = L.map(this.mapRef).setView([0, 0], 2)
+      }
 
       this.tileMap = L.tileLayer(this.props.content.mapUrl, {
         maxZoom: 18,
-        id: 'mapbox.streets',
-        accessToken: this.props.content.mapKey
+        accessToken: this.props.content.mapKey || process.env.MAPBOX_API_TOKEN
       })
 
       this.tileMap.addTo(this.map)
-    } catch (e) {}
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   createZoomer = async config => {
     try {
       let { height, width, tileUrl, tileSize } = config
-      console.log('createZoomer')
 
       let larger = Math.max(height, width)
 
@@ -506,25 +513,26 @@ export default class extends Component {
         })
       })
 
-      if (!this.drawControl) {
-        this.drawControl = new L.Control.Draw({
-          draw: {
-            polygon: {
-              allowIntersection: false
-            },
-            polyline: false,
-            circle: false,
-            marker: false,
-            circlemarker: false
-          },
-          position: 'topright',
-          edit: {
-            featureGroup: this.editableLayers
-          }
-        })
-
-        this.map.addControl(this.drawControl)
+      if (this.drawControl) {
+        this.map.removeControl(this.drawControl)
       }
+      this.drawControl = new L.Control.Draw({
+        draw: {
+          polygon: {
+            allowIntersection: false
+          },
+          polyline: false,
+          circle: false,
+          marker: false,
+          circlemarker: false
+        },
+        position: 'topright',
+        edit: {
+          featureGroup: this.editableLayers
+        }
+      })
+
+      this.map.addControl(this.drawControl)
     } catch (ex) {
       console.error(ex)
     }
@@ -585,8 +593,6 @@ export default class extends Component {
             markerIndex = markerIndex + 1
           }
         }
-
-        console.log(markerIndex)
 
         let html = `<div class="index-icon"> ${markerIndex} </div>`
 
