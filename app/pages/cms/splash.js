@@ -10,7 +10,8 @@ export default class CmsSplash extends Component {
 
       await auth.getUser()
       return {
-        user: auth.user
+        user: auth.user,
+        subdomain: 'mia'
       }
     } catch (ex) {}
   }

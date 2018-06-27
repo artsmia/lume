@@ -32,10 +32,7 @@ export default class Home extends Component {
             curators) to present content in an interactive and compelling way.
           </P>
           {process.env.AUTH_STRATEGY !== 'local' ? (
-            <Button
-              a
-              href={'/login'}
-            >
+            <Button a href={'/login'}>
               Login or Signup
             </Button>
           ) : null}
@@ -66,15 +63,7 @@ export default class Home extends Component {
               <P>See more examples of what you can create with Lume.</P>
 
               <Flex>
-                <Link
-                  href={{
-                    pathname: '/lume',
-                    query: {
-                      subdomain: 'mia'
-                    }
-                  }}
-                  as={'/mia'}
-                >
+                <Link href={`${process.env.LUME_URL}/mia`}>
                   <a>Minneapolis Institute of Art</a>
                 </Link>
               </Flex>

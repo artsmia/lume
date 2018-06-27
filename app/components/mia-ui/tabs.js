@@ -156,7 +156,8 @@ const TabButton = styled.button`
   justify-content: center;
   align-items: center;
   border: none;
-  font-size: 14px;
+  font-size: 16px;
+  background-color: ${({ theme }) => theme.color.white};
   border-bottom: ${({ selected, theme }) =>
     selected
       ? `3px solid ${theme.color.blue}`

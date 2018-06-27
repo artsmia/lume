@@ -74,13 +74,13 @@ const Container = styled.div`
 
 const Title = styled.h1`
   font-family: ${({ theme }) => theme.font.regular};
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin: 0;
 `
 
 const Attribution = styled.h2`
   font-family: ${({ theme }) => theme.font.light};
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin: 0;
 `
 
@@ -98,7 +98,7 @@ const CurrentLocation = styled.h3`
 
 const ShowMore = styled.button`
   font-family: ${({ theme }) => theme.font.light};
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   width: 100%;
   border: 0;
   background-color: white;
@@ -114,6 +114,6 @@ const More = styled.div`
 
 const MoreText = styled.h5`
   font-family: ${({ theme }) => theme.font.light};
-  font-size: 0.9rem;
+  font-size: 1rem;
   margin: 0;
 `

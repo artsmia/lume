@@ -348,12 +348,14 @@ export default class OriginalTemplate extends Component {
     }
 
     return (
-      <div>
+      <Flex w={1}>
         <Container w={1}>
-          <Head
-            title={story.title}
-            analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
-          />
+          {this.props.router.pathname === '/lume/story' ? (
+            <Head
+              title={story.title}
+              analyticsId={customAnalyticsEnabled ? customAnalyticsId : false}
+            />
+          ) : null}
 
           <SideContainer
             w={[3 / 4, 1 / 2, 1 / 3]}
@@ -364,7 +366,7 @@ export default class OriginalTemplate extends Component {
             open={drawer}
           >
             {this.props.router.pathname === '/lume/story' ? (
-              <Flex w={1}>
+              <Flex w={1} flex={'1 0 auto'}>
                 <Button
                   round
                   size={'40px'}
@@ -495,6 +497,7 @@ export default class OriginalTemplate extends Component {
               </TabBody>
               <TabBody name={'more'}>
                 <Flex
+                  w={1}
                   flexDirection={'column'}
                   justifyContent={'flex-start'}
                   alignItems={'flex-start'}
@@ -556,7 +559,7 @@ export default class OriginalTemplate extends Component {
             disableOverlayClose={true}
           />
         </Container>
-      </div>
+      </Flex>
     )
   }
 
@@ -720,6 +723,7 @@ export default class OriginalTemplate extends Component {
 
 const MarkdownContainer = styled(Box)`
   font-family: ${({ theme }) => theme.font.light};
+  font-size: 16px;
 `
 
 const DrawerButton = styled(Button)`
@@ -744,6 +748,7 @@ const DetailsContainer = styled.div`
 const Container = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
+  font-family: ${({ theme }) => theme.font.light};
 
   @media print {
     display: none;

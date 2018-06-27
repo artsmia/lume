@@ -227,6 +227,7 @@ const Container = styled.div`
   @media print {
     display: none;
   }
+  font-family: ${({ theme }) => theme.font.light};
 `
 
 const MenuCheck = styled.input`

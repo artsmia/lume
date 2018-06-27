@@ -294,6 +294,7 @@ const ContentContainer = styled(Flex)`
 `
 const MarkdownContainer = styled(Box)`
   font-family: ${({ theme }) => theme.font.light};
+  font-size: 16px;
 `
 
 const SideContainer = styled(Flex)`

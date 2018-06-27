@@ -427,7 +427,8 @@ export default class extends Component {
         maxBounds: this.bounds,
         attributionControl: false,
         maxZoom,
-        zoomSnap: 0
+        zoomSnap: 0,
+        detectRetin: true
       })
 
       const container = this.map.getContainer()
@@ -708,19 +709,19 @@ if (typeof window === 'object') {
   // }
 
   L.TileLayer.Knight = L.TileLayer.extend({
-    createTile({ z, x, y }) {
-      let tile = document.createElement('div')
-      let image = document.createElement('img')
-      image.src = this._url
-        .replace('{z}', z)
-        .replace('{x}', x)
-        .replace('{y}', y)
-        .replace('{s}', 0)
-      image.style['object-fit'] = 'contain'
-      //image.style['object-position'] = 'left top'
-      tile.appendChild(image)
-      return tile
-    }
+    // createTile({ z, x, y }) {
+    //   let tile = document.createElement('div')
+    //   let image = document.createElement('img')
+    //   image.src = this._url
+    //     .replace('{z}', z)
+    //     .replace('{x}', x)
+    //     .replace('{y}', y)
+    //     .replace('{s}', 0)
+    //   image.style['object-fit'] = 'contain'
+    //   //image.style['object-position'] = 'left top'
+    //   tile.appendChild(image)
+    //   return tile
+    // }
   })
 
   L.tileLayer.knight = function(...args) {

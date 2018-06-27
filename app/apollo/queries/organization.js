@@ -15,9 +15,14 @@ export const options = {
   options: props => {
     const {
       router: {
-        query: { subdomain }
-      }
+        query
+      },
     } = props
+
+    console.log(props)
+
+    let subdomain = props.subdomain ? props.subdomain : query.subdomain
+
     return {
       variables: {
         subdomain
