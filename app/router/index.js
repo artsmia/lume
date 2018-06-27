@@ -195,7 +195,7 @@ app
     })
 
     server.get('/', (req, res) => {
-      if (req.subdomains.includes('cms')){
+      if (req.subdomains.includes('cms')) {
         res.redirect('/login')
       }
       const page = '/lume/splash'
