@@ -95,9 +95,7 @@ injectGlobal`
   }
   body {
     color: #231f20;
-    ${
-      '' /* font-family: "Mia Light", "Helvetica Neue", Helvetica, san-serif; */
-    }
+    font-family: "Helvetica Neue", Helvetica, san-serif; 
     background: #fff;
 
     /* Flexbox in use for sticky footer  */

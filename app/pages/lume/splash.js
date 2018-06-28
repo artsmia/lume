@@ -250,15 +250,16 @@ export default class LumeSplash extends Component {
             </WhiteFlex>
           </ParallaxBanner>
           <Parallax>
-            <BlackFlex px={5} py={3} flexDirection={'column'}>
+            <CreditFlex px={5} py={3} flexDirection={'column'}>
               <Box my={4}>
-                <H2 color={'white'}>Created by</H2>
+                <H2>Created by</H2>
               </Box>
 
               <Box my={4}>
-                <H3 color={'white'}>Generous Support Provided By</H3>
+                <H3>Generous Support Provided By</H3>
+                <img src={'/static/knight.png'} />
               </Box>
-            </BlackFlex>
+            </CreditFlex>
           </Parallax>
         </Template>
       </ParallaxProvider>
@@ -266,8 +267,8 @@ export default class LumeSplash extends Component {
   }
 }
 
-const BlackFlex = styled(Flex)`
-  background-color: black;
+const CreditFlex = styled(Flex)`
+  background-color: white;
 `
 
 const CheckoutFlex = styled(Flex)`
