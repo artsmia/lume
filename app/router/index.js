@@ -139,13 +139,14 @@ app
     })
 
     server.get('/:subdomain/:storySlug/print', (req, res) => {
-      const page = '/lume/story'
+      const page = req.subdomains.includes('cms') ? '/cms/edit' : '/lume/story'
 
       const { subdomain, storySlug } = req.params
       const params = {
         subdomain,
         storySlug,
-        print: true
+        print: true,
+        preview: true
       }
       app.render(req, res, page, params)
     })

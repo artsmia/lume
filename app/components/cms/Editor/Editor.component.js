@@ -91,7 +91,7 @@ export default class Editor extends Component {
       renderSaveStatus
     } = this
 
-    if (preview)
+    if (preview || (preview && this.props.router.query.print))
       return (
         <PreviewContainer w={1}>
           <PreviewButtonBox flexWrap={'nowrap'}>
@@ -115,20 +115,11 @@ export default class Editor extends Component {
                 Unpublished
               </Button>
             )}
-            <Button
-              round
-              size={'40px'}
-              onClick={() => {
-                this.setState({
-                  print: false,
-                  preview: false
-                })
-              }}
-            >
+            <Button round size={'40px'} onClick={this.togglePrint}>
               <Icon color={'white'} icon={'print'} />
             </Button>
           </PreviewButtonBox>
-          <StoryPreview story={story} print={this.state.print} />
+          <StoryPreview story={story} print={this.props.router.query.print} />
           {this.state.tour ? (
             <Joyride
               run={this.state.tour.run(this)}
@@ -184,16 +175,7 @@ export default class Editor extends Component {
             </Button>
           )}
 
-          <Button
-            round
-            size={'40px'}
-            onClick={() => {
-              this.setState(({ print }) => ({
-                print: true,
-                preview: true
-              }))
-            }}
-          >
+          <Button round size={'40px'} onClick={this.togglePrint}>
             <Icon color={'white'} icon={'print'} />
           </Button>
         </PreviewButtonBox>
@@ -360,6 +342,7 @@ export default class Editor extends Component {
       contents: [],
       initialized: false,
       preview: props.router.query.preview,
+      print: props.router.query.print,
       ...this.propsToState(props)
     }
     this.contentTypeRef = React.createRef()
@@ -375,7 +358,8 @@ export default class Editor extends Component {
 
       Object.assign(state, {
         contents,
-        preview: props.router.query.preview
+        preview: props.router.query.preview,
+        print: props.router.query.print
       })
 
       if (this.state.selectedContent) {
@@ -406,6 +390,35 @@ export default class Editor extends Component {
       contentIds: this.state.contents.map(content => content.id),
       storyId: this.props.story.id
     })
+  }
+
+  togglePrint = () => {
+    const { subdomain, storySlug, preview, print } = this.props.router.query
+
+    let as = `/${subdomain}/${storySlug}`
+    let newPreview = false
+    let newPrint = false
+    if (!print) {
+      as = as.concat('/print')
+      newPreview = true
+      newPrint = true
+    }
+    this.props.router.push(
+      {
+        pathname: '/cms/editor',
+        query: {
+          subdomain,
+          storySlug,
+          preview: newPreview,
+          print: newPrint
+        }
+      },
+      as
+    )
+
+    if (this.state.tour) {
+      this.state.tour.nextStep()
+    }
   }
 
   togglePreview = () => {
