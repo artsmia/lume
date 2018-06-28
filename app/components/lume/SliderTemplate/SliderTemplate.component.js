@@ -267,7 +267,8 @@ const TopFlex = styled(Flex)`
 const Container = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
-  max-width: 100vw;
+  width: 100%;
+  position: relative;
 `
 
 const PageButtonContainer = styled(Flex)`
@@ -282,8 +283,9 @@ const HeaderFooter = styled(Flex)`
 const BookContainer = styled(Flex)`
   height: 100vh;
   max-height: 100vh;
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
+  position: absolute;
+  ${'' /* max-width: 100vw; */};
 `
 
 const ContentContainer = styled(Flex)`
@@ -300,9 +302,10 @@ const MarkdownContainer = styled(Box)`
 const SideContainer = styled(Flex)`
   height: 100%;
   transition: 0.2s all;
+  background-color: white;
+
   @media only screen and (max-width: 40em) {
     position: absolute;
-    background-color: white;
     z-index: 4000;
     right: 0;
     ${({ open }) =>

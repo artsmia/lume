@@ -69,7 +69,6 @@ const Container = styled.div`
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-  background-color: white;
 `
 
 const Title = styled.h1`

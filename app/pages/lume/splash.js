@@ -36,6 +36,16 @@ export default class LumeSplash extends Component {
     selectedStorySlug: 'olive-trees'
   }
 
+  constructor(props) {
+    super(props)
+    this.takeTour = React.createRef()
+  }
+
+  componentDidMount() {
+    console.log(this.takeTour)
+    this.takeTour.focus()
+  }
+
   render() {
     return (
       <ParallaxProvider>
@@ -77,7 +87,14 @@ export default class LumeSplash extends Component {
                 </H2>
               </Box>
               <Flex alignItems={'center'} mt={3}>
-                <Button a href={'/mia?grandTour=true'} color={'white'}>
+                <Button
+                  a
+                  href={'/mia?grandTour=true'}
+                  color={'white'}
+                  innerRef={ref => {
+                    this.takeTour = ref
+                  }}
+                >
                   Take the Tour
                 </Button>
                 <Button a href={'/login'} color={'white'}>
@@ -123,13 +140,19 @@ export default class LumeSplash extends Component {
                     onClick={() => {
                       this.setState({ selectedStorySlug: 'olive-trees' })
                     }}
+                    tabIndex={'0'}
+                    onKeyPress={({ keyCode }) => {
+                      if (keyCode === 0) {
+                        this.setState({ selectedStorySlug: 'olive-trees' })
+                      }
+                    }}
                   >
                     <H3
                       light
                       color={
                         this.state.selectedStorySlug === 'olive-trees'
-                          ? 'gray60'
-                          : 'black'
+                          ? 'black'
+                          : 'gray60'
                       }
                     >
                       Olive Trees, Vincent Van Gogh
@@ -143,14 +166,23 @@ export default class LumeSplash extends Component {
                         selectedStorySlug: 'royal-propaganda-in-the-renaissance'
                       })
                     }}
+                    tabIndex={'0'}
+                    onKeyPress={({ keyCode }) => {
+                      if (keyCode === 0) {
+                        this.setState({
+                          selectedStorySlug:
+                            'royal-propaganda-in-the-renaissance'
+                        })
+                      }
+                    }}
                   >
                     <H3
                       light
                       color={
                         this.state.selectedStorySlug ===
                         'royal-propaganda-in-the-renaissance'
-                          ? 'gray60'
-                          : 'black'
+                          ? 'black'
+                          : 'gray60'
                       }
                     >
                       Royal Propaganda in the Renaissance
