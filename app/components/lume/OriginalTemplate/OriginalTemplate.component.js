@@ -366,7 +366,7 @@ export default class OriginalTemplate extends Component {
             open={drawer}
           >
             {this.props.router.pathname === '/lume/story' ? (
-              <Flex w={1} flex={'1 0 auto'}>
+              <Flex w={1} flex={'0 0 auto'}>
                 <Button
                   round
                   size={'40px'}
