@@ -359,7 +359,7 @@ export default class Editor extends Component {
       contentType: 'comparison',
       contents: [],
       initialized: false,
-      preview: false,
+      preview: props.router.query.preview,
       ...this.propsToState(props)
     }
     this.contentTypeRef = React.createRef()
@@ -373,7 +373,10 @@ export default class Editor extends Component {
         .slice()
         .sort((a, b) => a.index - b.index)
 
-      Object.assign(state, { contents })
+      Object.assign(state, {
+        contents,
+        preview: props.router.query.preview
+      })
 
       if (this.state.selectedContent) {
         if (
@@ -406,7 +409,26 @@ export default class Editor extends Component {
   }
 
   togglePreview = () => {
-    this.setState(({ preview }) => ({ preview: !preview }))
+    const { subdomain, storySlug, preview } = this.props.router.query
+
+    let as = `/${subdomain}/${storySlug}`
+    let newPreview = false
+    if (!preview) {
+      as = as.concat('/preview')
+      newPreview = true
+    }
+    this.props.router.push(
+      {
+        pathname: '/cms/editor',
+        query: {
+          subdomain,
+          storySlug,
+          preview: newPreview
+        }
+      },
+      as
+    )
+
     if (this.state.tour) {
       this.state.tour.nextStep()
     }

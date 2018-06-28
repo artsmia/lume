@@ -161,6 +161,17 @@ app
       app.render(req, res, page, params)
     })
 
+    server.get('/:subdomain/:storySlug/preview', (req, res) => {
+      const page = '/cms/edit'
+      const { subdomain, storySlug } = req.params
+      const params = {
+        subdomain,
+        storySlug,
+        preview: true
+      }
+      app.render(req, res, page, params)
+    })
+
     server.get('/:subdomain/:storySlug/:state0', (req, res) => {
       const page = '/lume/story'
       const { subdomain, storySlug, state0 } = req.params
