@@ -25,6 +25,9 @@ if (process.env.SESSION_STORE === 'redis') {
   const redisOptions = {
     url: process.env.REDIS_URL
   }
+
+  console.log(process.env.REDIS_URL)
+
   let store = new RedisStore(redisOptions)
   Object.assign(sessionConfig, { store })
 }
@@ -40,6 +43,8 @@ app
         session(sessionConfig),
         passport.session()
       )
+
+      console.log(process.env.REDIS_URL)
 
       server.get(
         '/login',
