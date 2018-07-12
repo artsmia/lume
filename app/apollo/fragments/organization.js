@@ -20,9 +20,6 @@ const fragment = gql`
     categories {
       ...CategoryFragment
     }
-    orgImage {
-      ...ImageFragment
-    }
     locationEnabled
     locationImage {
       ...ImageFragment
