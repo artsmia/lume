@@ -117,6 +117,10 @@ export default class Auth {
   getUser = async () => {
     try {
       this.log('getUser')
+      console.info({
+        SESSION_STORE: process.env.SESSION_STORE,
+        redis: process.env.REDIS_URL
+      })
       switch (true) {
         case process.env.AUTH_STRATEGY === 'local': {
           this.getUserLocal()
