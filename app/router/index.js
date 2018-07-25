@@ -30,16 +30,13 @@ if (process.env.SESSION_STORE === 'redis') {
 
   let store = new RedisStore(redisOptions)
   Object.assign(sessionConfig, { store })
-} else if ( process.env.SESSION_STORE === 'mysql'){
-    const MySQLStore = require('express-mysql-session')(session)
-    const mysql = require('mysql')
-    const connection = mysql.createSession(process.env.DB_URL)
-    let store = new MySQLStore({},connection)
-    Object.assign(sessionConfig, { store })
-
+} else if (process.env.SESSION_STORE === 'mysql') {
+  const MySQLStore = require('express-mysql-session')(session)
+  const mysql = require('mysql')
+  const connection = mysql.createConnection(process.env.DB_URL)
+  let store = new MySQLStore({}, connection)
+  Object.assign(sessionConfig, { store })
 }
-
-
 
 app
   .prepare()
