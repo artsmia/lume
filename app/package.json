@@ -39,13 +39,15 @@
   },
   "devDependencies": {
     "path": "^0.12.7",
-    "prop-types": "^15.6.0",
-    "webpack": "^3.12.0"
+    "prop-types": "^15.6.0"
   },
   "scripts": {
     "start": "BABEL_ENV=next node router dotenv_config_path=../config/.env",
-    "start:local": "BABEL_ENV=next node router dotenv_config_path=../config/.env.local",
-    "build": "BABEL_ENV=next next build",
-    "now-start": "NODE_ENV=production node router"
+    "start:local":
+      "BABEL_ENV=next node router dotenv_config_path=../config/.env.local",
+    "build": "NODE_ENV=production next build",
+    "now-start": "NODE_ENV=production node router",
+    "deploy:prod":
+      "now -T lume -e NODE_ENV=production --dotenv=../config/.env.production --force"
   }
 }

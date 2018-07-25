@@ -1,5 +1,8 @@
 #! /bin/bash
 
+TRAVIS_BRANCH="mysql-session"
+NOW_TOKEN="I3wbJ2G4qIIiV6Rxlp97i2OQ"
+
 postToSlack(){
   curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$1\"}" https://hooks.slack.com/services/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
 
