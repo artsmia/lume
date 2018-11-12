@@ -587,7 +587,7 @@ export default class extends Component {
       this.indexMarkers = []
 
       markers.forEach(({ sw, marker }) => {
-        let markerIndex = marker.index
+        let markerIndex = marker.index - 1
 
         if (this.state.markers[0]) {
           if (this.state.markers[0].type !== 'obj') {
